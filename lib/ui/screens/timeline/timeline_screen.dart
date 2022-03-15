@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:flutter/gestures.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 
@@ -56,17 +55,17 @@ class _WondersTimelineState extends State<WondersTimeline> {
     super.dispose();
   }
 
-  void _handleScroll() {
-    print(controller.offset);
-    print(controller.position.maxScrollExtent);
-  }
-
-  void _changeScale(double d) {
-    // setState(() {
-    //   _zoom += d;
-    //   _zoom = _zoom.clamp(0, 1.0);
-    // });
-  }
+  // void _handleScroll() {
+  //   // print(controller.offset);
+  //   // print(controller.position.maxScrollExtent);
+  // }
+  //
+  // void _changeScale(double d) {
+  //   // setState(() {
+  //   //   _zoom += d;
+  //   //   _zoom = _zoom.clamp(0, 1.0);
+  //   // });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +83,7 @@ class _WondersTimelineState extends State<WondersTimeline> {
               physics: ClampingScrollPhysics(),
               child: Placeholder(fallbackHeight: size),
             ),
-            Container(
+            SizedBox(
               height: 100,
               child: Slider(
                 onChanged: (double value) => setState(() {
@@ -137,7 +136,7 @@ class _TimelineScrubber extends StatelessWidget {
               if (scroller.position.maxScrollExtent > 0) {
                 scrollOffset = scroller.position.pixels / scroller.position.maxScrollExtent;
               }
-              print(scroller.position.maxScrollExtent);
+              // print(scroller.position.maxScrollExtent);
               final viewportSize = scroller.position.viewportDimension;
               viewPort = viewportSize / (scroller.position.maxScrollExtent + viewportSize);
               viewPort = viewPort.clamp(0, 1);

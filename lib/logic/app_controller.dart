@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/data/wonder_data.dart';
 
 class AppController {
   /// Indicates to the rest of the app that bootstrap has not completed.

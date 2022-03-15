@@ -2,6 +2,8 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/buttons.dart';
 
 class WonderDetailsBottomMenu extends StatelessWidget {
+  const WonderDetailsBottomMenu({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
