@@ -2,8 +2,10 @@ name: integration_tests
 on: [workflow_dispatch]
 jobs:
   drive:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@v1
     - uses: subosito/flutter-action@v1
-    - run: flutter test
+    - run: |
+        flutter config --enable-windows-desktop  
+        flutter test -d macos integration_test/smoke_test.dart
