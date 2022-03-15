@@ -3,7 +3,7 @@ name: widget_tests
 on: [workflow_dispatch]
 jobs:
   drive:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
     - uses: subosito/flutter-action@v1
