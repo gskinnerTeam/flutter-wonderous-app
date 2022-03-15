@@ -1,4 +1,4 @@
-name: tests
+name: integration_tests
 on: [workflow_dispatch]
 jobs:
   drive:
