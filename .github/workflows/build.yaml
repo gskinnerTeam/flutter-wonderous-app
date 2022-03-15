@@ -1,0 +1,51 @@
+name: buildv
+on: [push, workflow_dispatch] # Where this will be run on
+jobs:
+  drive:
+    runs-on: macos-latest # Type of server this will run on
+
+    env:
+      # Point the `ruby/setup-ruby` action at this Gemfile, so it caches dependencies for us.
+      BUNDLE_GEMFILE: ${{ github.workspace }}/ios/Gemfile
+
+    steps: # What it will do (one of these will use fastlane)
+    - uses: actions/checkout@v2
+
+    # ------------ TESTS
+
+    # - run: flutter test
+
+    # - run: |
+    #     flutter config --enable-macos-desktop  
+    #     flutter test -d macos integration_test/smoke_test.dart
+
+    # ------------ FRAMEWORK SETUP
+
+    - name: Setup ruby & Bundler
+      uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+
+    - name: Setup flutter
+      uses: subosito/flutter-action@v1
+      with:
+        channel: 'beta'
+
+    - name: Download dependencies
+      run: |
+        flutter pub get
+        cd ./ios && pod install
+
+    # ------------ FASTLANE
+
+    - name: Testflight Deployment
+      run: | 
+        cd ./ios
+        bundle exec fastlane release
+        bundle exec fastlane deploy
+
+    - name: Play Store Test Deployment
+      run: | 
+        cd ./android
+        bundle exec fastlane release
+        bundle exec fastlane deploy

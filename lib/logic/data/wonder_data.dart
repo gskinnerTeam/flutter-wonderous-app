@@ -1,0 +1,43 @@
+import 'package:copy_with_extension/copy_with_extension.dart';
+import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'wonder_data.g.dart';
+
+enum WonderType {
+  petra,
+  machuPicchu,
+}
+
+@JsonSerializable()
+@CopyWith()
+class WonderData extends Equatable {
+  const WonderData({
+    required this.type,
+    required this.title,
+    this.imageUrls = const [],
+    this.facts = const [],
+    required this.desc,
+    this.startYr = 0,
+    this.endYr = 0,
+    this.lat = 0,
+    this.lng = 0,
+  });
+
+  @JsonKey(defaultValue: WonderType.petra)
+  final WonderType type;
+  final String title;
+  final String desc;
+  final List<String> imageUrls;
+  final List<String> facts;
+  final int startYr;
+  final int endYr;
+  final double lat;
+  final double lng;
+
+  factory WonderData.fromJson(Map<String, dynamic> json) => _$WonderDataFromJson(json);
+  Map<String, dynamic> toJson() => _$WonderDataToJson(this);
+
+  @override
+  List<Object?> get props => [type, title, desc, imageUrls, facts];
+}
