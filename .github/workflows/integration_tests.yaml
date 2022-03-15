@@ -8,4 +8,4 @@ jobs:
     - uses: subosito/flutter-action@v1
     - run: |
         flutter config --enable-windows-desktop  
-        flutter test -d macos integration_test/smoke_test.dart
+        flutter test -d windows integration_test/smoke_test.dart
