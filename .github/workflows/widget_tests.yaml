@@ -1,6 +1,6 @@
 
 name: widget_tests
-on: [push, workflow_dispatch]
+on: [workflow_dispatch]
 jobs:
   drive:
     runs-on: windows-latest
