@@ -1,8 +1,8 @@
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/buttons.dart';
-import 'layers/machu_picchu.dart';
-import 'layers/petra.dart';
+import 'package:wonders/ui/screens/home/layers/machu_picchu.dart';
+import 'package:wonders/ui/screens/home/layers/petra.dart';
 
 /// PageView sandwiched between Foreground and Background layers
 /// arranged in a parallax style
