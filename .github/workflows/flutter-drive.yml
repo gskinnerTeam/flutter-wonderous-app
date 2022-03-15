@@ -1,5 +1,5 @@
 name: flutter drive
-on: []
+on: [workflow_dispatch]
 jobs:
   drive:
     strategy:
