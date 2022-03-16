@@ -4,8 +4,8 @@
 - [Milestones](https://github.com/gskinnerTeam/flutter-wonders-app/milestones?direction=asc&sort=due_date&state=open)
 - [Project Boards](https://github.com/orgs/gskinnerTeam/projects/4/views/4)
   - [Issues for QA](https://github.com/orgs/gskinnerTeam/projects/4/views/6)
-- [Google Docs](https://drive.google.com/drive/folders/1tKwqBFGll87pK-iXon0AwpW36oRDCYAt)
-  - [Wonders Data](https://drive.google.com/drive/folders/1U2Z1axcJh8v65fUiXmJEDJKAdtK1R4WA) 
+- [Google Drive Folder](https://drive.google.com/drive/folders/1tKwqBFGll87pK-iXon0AwpW36oRDCYAt)
+  - [Wonders Data Folder](https://drive.google.com/drive/folders/1U2Z1axcJh8v65fUiXmJEDJKAdtK1R4WA) 
     - [Chichen Itza](https://docs.google.com/document/d/1_YDWlRiAFz-8kPvHJo2X5UyNi6jk5YGlBBwe2v5KcN4/edit)
 - [Figma Project](https://www.figma.com/file/814LAO3wAzMNbB7YYPZpnZ/Wireframe)
   - [Artifacts](https://www.figma.com/file/814LAO3wAzMNbB7YYPZpnZ/Wireframe?node-id=785%3A7621)
@@ -21,19 +21,29 @@ To access QA builds, send your Apple Id or Google Play email address to the dev 
 
 If you can not access the builds, your id is likely not registered. Bug the dev team to double check.
 
-# Wonder Editor
-To run the editor as a developer:
-- `flutter run -r lib/editor.dart`
-
-[ TODO: Add macOs binary for designers to use ]
-
 # Dev Info
+
+### Build and Deploy
+Continuous deployment is handled by CodeMagic using the apps@gskinner.com account. 
+- To trigger a build, create a git tag starting with "v" and push
+  - Successful builds will be automatically be deployed to TestFlight and Googe Play internal track.
+  - Failed builds will send a slack msg to `#google-flutter4-2022-dev` channel // TODO
+
+### Helper Scripts
+There are various python scripts in the `/py` folder. Including:
 - `py\builder.py` - Generates toJson and copyWith
 - `py\icon-builder.py` - Generate icons from /assets/marketing/icon.xxx
 
-# App Styling
-There is an `AppStyle` instance, which can be access with `context.style`. eg:
-```
+### App Styling
+Use context extensions for styling. 
+- `context.style` - Provides access to all style categories
+- `context.colors`
+- `context.insets`
+- `context.textStyles`
+- `context.times`
+
+Eg:
+```dart
 // Colors
 backgroundColor: context.colors.bg,
 // Times
@@ -43,8 +53,4 @@ style: context.textStyles.body
 // etc...
 ```
 
-Note: `context.style` is only safe to use from within build() methods, as it calls `context.watch` internally.
-Use `context.read<AppStyle>()` if you need to access it outside of build (eg, initState).
-
-### Build and Deploy Instructions
-[ TODO - Add fastlane build instructions ]
+Note: `context.style` is only safe to use from within build() methods, as it calls `context.watch` internally. Use `context.read<AppStyle>()` if you need to access it outside of build (eg, initState).
