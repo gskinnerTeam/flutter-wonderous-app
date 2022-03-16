@@ -1,5 +1,5 @@
 <a href="https://github.com/gskinnerTeam/flutter-wonders-app/actions"><img src="https://github.com/gskinnerTeam/flutter-wonders-app/workflows/integration_tests/badge.svg" alt="Build Status"></a>  <a href="https://github.com/gskinnerTeam/flutter-wonders-app/actions"><img src="https://github.com/gskinnerTeam/flutter-wonders-app/workflows/widget_tests/badge.svg" alt="Build Status"></a>
-# Project Links
+# Links & Info
 
 - [Milestones](https://github.com/gskinnerTeam/flutter-wonders-app/milestones?direction=asc&sort=due_date&state=open)
 - [Project Boards](https://github.com/orgs/gskinnerTeam/projects/4/views/4)
