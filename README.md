@@ -31,8 +31,8 @@ Continuous deployment is handled by CodeMagic using the apps@gskinner.com accoun
 
 ### Helper Scripts
 There are various python scripts in the `/py` folder. Including:
-- `py\builder.py` - Generates toJson and copyWith
-- `py\icon-builder.py` - Generate icons from /assets/marketing/icon.xxx
+- `builder.py` - Generates toJson and copyWith
+- `icon-builder.py` - Generate icons from /assets/marketing/icon.xxx
 
 ### App Styling
 Use context extensions for styling. 
