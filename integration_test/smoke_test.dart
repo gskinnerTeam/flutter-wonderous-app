@@ -10,7 +10,6 @@ void main() async {
     registerSingletons(useMocks: true);
     await tester.pumpWidget(WondersApp()); // Create main app
     app.bootstrap();
-    await tester.pumpAndSettle(); // Finish animations and scheduled microtasks
     await tester.pump(Duration(seconds: 2)); // Render another frame in 2s
   });
 }

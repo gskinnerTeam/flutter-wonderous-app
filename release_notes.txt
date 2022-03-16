@@ -1,2 +1,4 @@
 # 0.0.2
-- Initial release, no real functionality
+- Basic navigation structure
+- Examples of hero transitions between pages
+- Blocked in home carousel effect
