@@ -1,9 +1,6 @@
 name: tests_remote
 on: 
   workflow_dispatch:
-  push:
-    branches:
-      - master
 jobs:
   tests_remote:
     runs-on: [macos-latest]
