@@ -1,5 +1,5 @@
 name: integration_tests
-on: [workflow_dispatch]
+on: [workflow_dispatch, push]
 jobs:
   drive:
     runs-on: windows-latest
