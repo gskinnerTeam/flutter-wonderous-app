@@ -19,7 +19,7 @@ To access QA builds, send your Apple Id or Google Play email to Jess who will ma
 - Android, download from play store
   - https://play.google.com/apps/testing/com.gskinner.flutter.wonders
 
-If you can not access the builds, your id is likely not registered. Ask Jess to check with the developers.
+If you can not see the build in TestFlight or GooglePlay, your email address is likely not registered. Ask Jess to check with the developers.
 
 # Dev Info
 
