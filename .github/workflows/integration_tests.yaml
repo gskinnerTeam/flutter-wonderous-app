@@ -1,5 +1,5 @@
 name: integration_tests
-on: [workflow_dispatch, pull_request]
+on: [workflow_dispatch]
 jobs:
   integration_tests:
     runs-on: windows-latest
