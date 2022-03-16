@@ -806,6 +806,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.10.0"
+  statsfl:
+    dependency: "direct main"
+    description:
+      name: statsfl
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1+1"
   stream_channel:
     dependency: transitive
     description:
