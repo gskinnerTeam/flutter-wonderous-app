@@ -1,6 +1,6 @@
 
 name: widget_tests
-on: [workflow_dispatch,pull_request]
+on: [workflow_dispatch]
 jobs:
   widget_tests:
     runs-on: ubuntu-latest
