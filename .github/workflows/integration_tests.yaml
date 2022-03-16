@@ -1,7 +1,7 @@
 name: integration_tests
 on: [workflow_dispatch, push]
 jobs:
-  drive:
+  integration_tests:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v1
