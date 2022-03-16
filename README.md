@@ -13,13 +13,13 @@
 - [Time Tracker](https://timetracker.gskinner.com/#c=CD164420-AFD3-4BD6-B60D-BDEB28253846&p=82826D2A-E5E5-4D56-B689-B9DBF169A2D0&t=EAB922B4-2402-49CC-9666-D3FA76A2C33A)
 
 # QA Builds
-To access QA builds, send your Apple Id or Google Play email address to the dev team.
+To access QA builds, send your Apple Id or Google Play email to Jess who will make sure it gets added.
 - iOS, use TestFlight:
   - https://apps.apple.com/us/app/testflight/id899247664
 - Android, download from play store
   - https://play.google.com/apps/testing/com.gskinner.flutter.wonders
 
-If you can not access the builds, your id is likely not registered. Bug the dev team to double check.
+If you can not access the builds, your id is likely not registered. Ask Jess to check with the developers.
 
 # Dev Info
 
