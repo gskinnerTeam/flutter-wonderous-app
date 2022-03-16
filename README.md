@@ -1,4 +1,4 @@
-<a href="https://github.com/gskinnerTeam/flutter-wonders-app/actions"><img src="https://github.com/gskinnerTeam/flutter-wonders-app/workflows/integration_tests/badge.svg" alt="Build Status"></a>  <a href="https://github.com/gskinnerTeam/flutter-wonders-app/actions"><img src="https://github.com/gskinnerTeam/flutter-wonders-app/workflows/widget_tests/badge.svg" alt="Build Status"></a>
+[![tests](https://github.com/gskinnerTeam/flutter-wonders-app/actions/workflows/tests.yaml/badge.svg)](https://github.com/gskinnerTeam/flutter-wonders-app/actions/workflows/tests.yaml)
 # Links & Info
 
 - [Milestones](https://github.com/gskinnerTeam/flutter-wonders-app/milestones?direction=asc&sort=due_date&state=open)
@@ -25,7 +25,7 @@ If you can not see the build in TestFlight or GooglePlay, your email address is 
 
 ### Build and Deploy
 Continuous deployment is handled by CodeMagic using the apps@gskinner.com account. 
-- To trigger a build, create a git tag starting with "v" and push
+- To trigger a build, create a git tag starting with "v" and push to master
   - Successful builds will be automatically be deployed to TestFlight and Googe Play internal track.
   - Failed builds will send a slack msg to `#google-flutter4-2022-dev` channel // TODO
 
