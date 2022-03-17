@@ -5,6 +5,7 @@ import 'package:wonders/main.dart';
 import 'package:wonders/ui/app_scaffold.dart';
 import 'package:wonders/ui/screens/gallery/image_gallery.dart';
 import 'package:wonders/ui/screens/home/wonders_home_screen.dart';
+import 'package:wonders/ui/screens/search/search_screen.dart';
 import 'package:wonders/ui/screens/splash_screen.dart';
 import 'package:wonders/ui/screens/timeline/timeline_screen.dart';
 import 'package:wonders/ui/screens/wonder_details/wonders_details_screen.dart';
@@ -15,6 +16,7 @@ class ScreenPaths {
   static String wonderDetails(WonderType type) => '/wonder/${type.name}';
   static String wonderGallery(WonderType type) => '/gallery/${type.name}';
   static String timeline(WonderType type) => '/timeline/${type.name}';
+  static String search(WonderType type) => '/search/${type.name}';
 }
 
 WonderType parseWonderType(String value) => WonderType.values.asNameMap()[value] ?? WonderType.machuPicchu;
@@ -34,6 +36,9 @@ final appRouter = GoRouter(
     }),
     AppRoute('/timeline/:id', (s) {
       return TimelineScreen(type: parseWonderType(s.params['id']!));
+    }),
+    AppRoute('/search/:id', (s) {
+      return SearchScreen(type: parseWonderType(s.params['id']!));
     })
   ],
 );

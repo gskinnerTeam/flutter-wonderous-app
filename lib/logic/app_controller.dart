@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/data/wonder_data.dart';
 
 class AppController {
   /// Indicates to the rest of the app that bootstrap has not completed.
@@ -17,6 +18,8 @@ class AppController {
     settings.scheduleSave(); // test save calls on each boot
     await wonders.init();
     isBootstrapComplete = true;
-    appRouter.go(ScreenPaths.home);
+    // A43 - For testing search view
+    // appRouter.go(ScreenPaths.home);
+    appRouter.go(ScreenPaths.search(WonderType.petra));
   }
 }

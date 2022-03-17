@@ -1,4 +1,6 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/search_controller.dart';
+import 'package:wonders/logic/search_service.dart';
 import 'package:wonders/logic/wonders_controller.dart';
 import 'package:wonders/logic/wonders_service.dart';
 import 'package:wonders/logic/wonders_service_mock.dart';
@@ -24,6 +26,8 @@ void registerSingletons({required bool useMocks}) {
   GetIt.I.registerLazySingleton<AppController>(() => AppController());
   GetIt.I.registerLazySingleton<WondersController>(() => WondersController());
   GetIt.I.registerLazySingleton<WondersService>(() => WondersService());
+  GetIt.I.registerLazySingleton<SearchService>(() => SearchService());
+  GetIt.I.registerLazySingleton<SearchController>(() => SearchController());
   if (useMocks) {
     GetIt.I.pushNewScope();
     GetIt.I.registerLazySingleton<WondersService>(() => WondersServiceMock());
@@ -35,3 +39,4 @@ void registerSingletons({required bool useMocks}) {
 AppController get app => GetIt.I.get<AppController>();
 WondersController get wonders => GetIt.I.get<WondersController>();
 SettingsController get settings => GetIt.I.get<SettingsController>();
+SearchController get search => GetIt.I.get<SearchController>();
