@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:gtween/gtween.dart';
 import 'package:wonders/common_libs.dart';
 
 class MotionBlurController {
@@ -41,7 +40,7 @@ class _MotionBlurState extends State<MotionBlur> {
   }
 
   Widget _buildBlur(Widget child, Animation<double> anim) {
-    double amt = sin(anim.value * pi) * 15;
+    double amt = sin(anim.value * pi) * 10;
     if (widget.dir.dx != 0 && widget.dir.dy != 0) {
       amt *= .3; // When moving diagonally, lessen the amt for a better effect
     }

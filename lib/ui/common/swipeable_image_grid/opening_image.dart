@@ -34,7 +34,7 @@ class OpeningImage extends StatelessWidget {
                   builder: (_, value, child) => Transform.scale(child: child, scale: value),
                   child: Image.network(
                     mockImg((size.width * 1.5).round()),
-                    fit: BoxFit.fitHeight,
+                    fit: BoxFit.cover,
                     filterQuality: FilterQuality.high,
                     scale: 1,
                   ),

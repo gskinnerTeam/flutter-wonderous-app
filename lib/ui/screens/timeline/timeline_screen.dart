@@ -60,47 +60,13 @@ class _WondersTimelineState extends State<WondersTimeline> {
   //   // print(controller.position.maxScrollExtent);
   // }
   //
-  // void _changeScale(double d) {
-  //   // setState(() {
-  //   //   _zoom += d;
-  //   //   _zoom = _zoom.clamp(0, 1.0);
-  //   // });
-  // }
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      _minSize = constraints.biggest.height;
-      _maxSize = constraints.biggest.height * 3;
-      double size = lerpDouble(_minSize, _maxSize, _zoom) ?? _maxSize;
-
-      return GestureDetector(
-        onScaleUpdate: _handlePinchZoom,
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              controller: controller,
-              physics: ClampingScrollPhysics(),
-              child: Placeholder(fallbackHeight: size),
-            ),
-            SizedBox(
-              height: 100,
-              child: Slider(
-                onChanged: (double value) => setState(() {
-                  _zoom = value;
-                  // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
-                  controller.notifyListeners();
-                }),
-                value: _zoom,
-                min: 0,
-                max: 1,
-              ),
-            ),
-          ],
-        ),
-      );
+  void _changeScale(double d) {
+    setState(() {
+      _zoom += d;
+      _zoom = _zoom.clamp(0, 1.0);
     });
   }
+
   //
   // void _handleMouseZoom(e) {
   //   if (e is PointerScrollEvent) {
@@ -114,7 +80,47 @@ class _WondersTimelineState extends State<WondersTimeline> {
   // }
 
   void _handlePinchZoom(ScaleUpdateDetails details) {
-    //_changeScale(details.scale);
+    _changeScale(details.scale);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(builder: (context, constraints) {
+      _minSize = constraints.biggest.height;
+      _maxSize = constraints.biggest.height * 3;
+      double size = lerpDouble(_minSize, _maxSize, _zoom) ?? _maxSize;
+
+      return GestureDetector(
+        //onScaleUpdate: _handlePinchZoom,
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              controller: controller,
+              physics: ClampingScrollPhysics(),
+              child: Placeholder(fallbackHeight: size),
+            ),
+            BottomCenter(
+              child: Padding(
+                padding: EdgeInsets.all(context.insets.xl),
+                child: SizedBox(
+                  height: 100,
+                  child: Slider(
+                    onChanged: (double value) => setState(() {
+                      _zoom = value;
+                      // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+                      controller.notifyListeners();
+                    }),
+                    value: _zoom,
+                    min: 0,
+                    max: 1,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    });
   }
 }
 
@@ -146,7 +152,7 @@ class _TimelineScrubber extends StatelessWidget {
               child: Align(
                 alignment: Alignment(-1 + scrollOffset * 2, 0),
                 child: FractionallySizedBox(
-                  child: ColoredBox(color: Colors.red),
+                  child: ColoredBox(color: Colors.red.withOpacity(.3)),
                   widthFactor: viewPort,
                   heightFactor: 1,
                 ),

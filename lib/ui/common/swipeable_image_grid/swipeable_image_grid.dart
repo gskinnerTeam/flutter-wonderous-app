@@ -1,3 +1,4 @@
+import 'package:flutter/scheduler.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/eight_way_swipe_detector.dart';
 import 'package:wonders/ui/common/motion_blur.dart';
@@ -5,10 +6,10 @@ import 'package:wonders/ui/common/swipeable_image_grid/animated_cutout_overlay.d
 import 'package:wonders/ui/common/swipeable_image_grid/opening_image.dart';
 
 class SwipeableImageGrid extends StatefulWidget {
-  SwipeableImageGrid({Key? key, this.gridCount = 5, this.imageSize = const Size(300, 450)}) : super(key: key) {
+  SwipeableImageGrid({Key? key, this.gridCount = 5, this.imageSize}) : super(key: key) {
     assert(gridCount % 2 == 1 && gridCount > 2, 'Grid count must be an odd number equal to 3 or more');
   }
-  final Size imageSize;
+  final Size? imageSize;
   final int gridCount;
 
   @override
@@ -19,14 +20,13 @@ class _SwipeableImageGridState extends State<SwipeableImageGrid> {
   late int _index = ((widget.gridCount * widget.gridCount) / 2).round();
   int get gridCount => widget.gridCount;
   int get halfGridCount => (widget.gridCount / 2).floor();
-  double get imgW => widget.imageSize.width;
-  double get imgH => widget.imageSize.height;
+  Size get imageSize => widget.imageSize ?? Size(context.widthPct(.5), context.heightPct(.5));
+  double get imgW => imageSize.width;
+  double get imgH => imageSize.height;
   int get imgCount => pow(gridCount, 2).round();
-  MotionBlurController? _blurController;
   Offset _lastSwipeDir = Offset.zero;
 
   void setIndex(int value) {
-    _blurController?.restart();
     setState(() => _index = value);
   }
 
@@ -63,19 +63,16 @@ class _SwipeableImageGridState extends State<SwipeableImageGrid> {
     // Get transform offset for the current _index
     final padding = context.insets.lg;
     final gridOffset = _calculateCurrentOffset(padding);
+    timeDilation = 1;
 
     /// Layout
-    // A cutout sits on top of everything, animating itself each time index changes
     return AnimatedCutoutOverlay(
-      cutoutSize: widget.imageSize,
+      cutoutSize: imageSize,
+      // A cutout sits on top of everything, animating itself each time index changes
       animationKey: ValueKey(_index),
       duration: context.times.fast,
       // A motion blur, runs each time index is changed
-      child: MotionBlur(
-        context.times.med * .4,
-        onInit: (c) => _blurController = c,
-        dir: _lastSwipeDir,
-        // Use an overflow box, so the grid of images can be any size it wants
+      child: ClipRect(
         child: OverflowBox(
           maxWidth: gridCount * imgW + padding * (gridCount - 1),
           maxHeight: gridCount * imgH + padding * (gridCount - 1),
@@ -95,11 +92,15 @@ class _SwipeableImageGridState extends State<SwipeableImageGrid> {
                 runSpacing: padding,
                 children: List.generate(
                   imgCount,
-                  (index) => GestureDetector(
-                    // Index can also be changed by tapping
-                    onTap: index == _index ? null : () => setIndex(index),
-                    child: OpeningImage(widget.imageSize, selected: index == _index),
-                  ),
+                  (index) {
+                    final child = GestureDetector(
+                      // Index can also be changed by tapping
+                      onTap: index == _index ? null : () => setIndex(index),
+                      child: OpeningImage(imageSize, selected: index == _index),
+                    );
+                    if (_index == index) return MotionBlur(context.times.fast, child: child, dir: _lastSwipeDir);
+                    return child;
+                  },
                 ),
               ),
             ),

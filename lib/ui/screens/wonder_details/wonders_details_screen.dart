@@ -37,21 +37,35 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
     WonderData? wonder = wonders.firstWhereOrNull((w) => w.type == widget.type);
     wonder ??= wonders.first;
 
-    return Column(
-      children: [
-        Expanded(
-          child: IndexedStack(
-            index: _tabController.index,
+    return ColoredBox(
+      color: Colors.black,
+      child: Stack(
+        children: [
+          /// Content & Tab Menu
+          Column(
             children: [
-              _WonderHistory(wonder),
-              Container(color: Colors.black, child: SwipeableImageGrid()),
-              TimelineScreen(type: widget.type),
-              Placeholder(),
+              Expanded(
+                child: IndexedStack(
+                  index: _tabController.index,
+                  children: [
+                    _WonderHistory(wonder),
+                    SwipeableImageGrid(),
+                    Center(child: Text('Artifacts', style: context.textStyles.h1)),
+                    TimelineScreen(type: widget.type),
+                  ],
+                ).gTweener.fade().withInit((t) => _fade = t),
+              ),
+              WonderDetailsBottomMenu(tabController: _tabController),
             ],
-          ).gTweener.fade().withInit((t) => _fade = t),
-        ),
-        WonderDetailsBottomMenu(tabController: _tabController),
-      ],
+          ),
+
+          /// Shared "Up" btn
+          Padding(
+            padding: EdgeInsets.all(context.insets.lg),
+            child: Transform.rotate(angle: pi * .5, child: BackButton()),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -66,8 +80,15 @@ class _WonderHistory extends StatelessWidget {
       slivers: [
         SliverAppBar(
           pinned: true,
-          flexibleSpace: WonderIllustration(data.type),
-          expandedHeight: 220,
+          leading: SizedBox.shrink(),
+          collapsedHeight: 80,
+          flexibleSpace: SafeArea(
+              child: Padding(
+            padding: EdgeInsets.all(context.insets.lg),
+            child: WonderIllustration(data.type),
+          )),
+          expandedHeight: context.heightPct(.3),
+          backgroundColor: context.colors.accent,
         ),
         SliverToBoxAdapter(
           child: Padding(

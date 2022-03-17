@@ -5,10 +5,10 @@ enum ColorThemeType { orange, green }
 class ColorTheme {
   const ColorTheme._({
     required this.accent,
-    this.bg = Colors.white,
-    this.surface1 = const Color(0xffeeeeee),
-    this.fg = Colors.black,
-    this.isDark = false,
+    this.bg = Colors.black,
+    this.surface1 = const Color(0xff1a1a1a),
+    this.fg = Colors.white,
+    this.isDark = true,
   });
   final Color bg;
   final Color surface1;

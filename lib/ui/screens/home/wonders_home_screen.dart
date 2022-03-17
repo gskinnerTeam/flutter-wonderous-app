@@ -1,4 +1,3 @@
-import 'package:simple_gesture_detector/simple_gesture_detector.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/buttons.dart';
 import 'package:wonders/ui/common/eight_way_swipe_detector.dart';
@@ -30,10 +29,8 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
 
   void _handlePageViewChanged(v) => setState(() => _wonderIndex = v);
 
-  void _handleVerticalDrag(SwipeDirection dir) {
-    if (dir == SwipeDirection.up) {
-      _showDetailsPage();
-    }
+  void _handleSwipe(Offset dir) {
+    if (dir.dy == -1 && dir.dx == 0) _showDetailsPage();
   }
 
   void _showDetailsPage() => context.push(ScreenPaths.wonderDetails(wonders.all.value[_wonderIndex].type));
@@ -50,9 +47,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
 
     /// Layer children in a stack with bg on bottom and bg on top
     return EightWaySwipeDetector(
-      onSwipe: (dir) {
-        if (dir.dy == -1 && dir.dx == 0) _showDetailsPage();
-      },
+      onSwipe: _handleSwipe,
       child: Stack(children: [
         /// Bg
         Positioned.fill(

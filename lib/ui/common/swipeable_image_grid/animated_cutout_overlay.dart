@@ -1,4 +1,3 @@
-import 'package:gtween/gtween.dart';
 import 'package:wonders/common_libs.dart';
 
 /// An overlay with a transparent cutout in the middle.
@@ -23,7 +22,7 @@ class AnimatedCutoutOverlay extends StatelessWidget {
           duration: duration,
           autoPlay: false,
           onInit: (t) => t.animation.forward().then((_) => t.animation.reverse()),
-          child: IgnorePointer(child: Container(color: Colors.black.withOpacity(.6))),
+          child: IgnorePointer(child: Container(color: Colors.black.withOpacity(.85))),
         )
       ],
     );

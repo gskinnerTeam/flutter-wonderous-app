@@ -740,13 +740,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
-  simple_gesture_detector:
-    dependency: "direct main"
-    description:
-      name: simple_gesture_detector
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.0"
   simple_rich_text:
     dependency: "direct main"
     description:

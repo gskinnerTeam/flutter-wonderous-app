@@ -32,7 +32,6 @@ dependencies:
   provider: ^6.0.2
   reactives: ^0.2.0
   simple_rich_text: ^2.0.49
-  simple_gesture_detector: ^0.2.0
   sized_context: ^1.0.0+1
   shared_preferences: ^2.0.13
   statsfl: ^2.0.1+1

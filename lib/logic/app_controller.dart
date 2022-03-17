@@ -7,6 +7,8 @@ class AppController {
   /// The router will use this to prevent redirects while bootstrapping.
   bool isBootstrapComplete = false;
 
+  final enableAdvancedEffects = ValueNotifier(true);
+
   /// The current global style of the app.
   // final style = ValueNotifier<AppStyles>(AppStyles(scale: 1, colors: DefaultColorTheme()));
 

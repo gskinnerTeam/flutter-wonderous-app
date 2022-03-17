@@ -7,6 +7,7 @@ class WondersAppScaffold extends StatelessWidget with GetItMixin {
 
   @override
   Widget build(BuildContext context) {
+    print('Build!');
     final size = MediaQuery.of(context).size;
     final theme = ColorTheme(watchX((SettingsController s) => s.themeType));
     // Construct an AppStyle using app size and current themeType.

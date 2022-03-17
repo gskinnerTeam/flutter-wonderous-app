@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/main.dart';
 import 'package:wonders/ui/app_scaffold.dart';
-import 'package:wonders/ui/screens/gallery/image_gallery.dart';
+import 'package:wonders/ui/screens/image_gallery/image_gallery_screen.dart';
 import 'package:wonders/ui/screens/home/wonders_home_screen.dart';
 import 'package:wonders/ui/screens/splash_screen.dart';
 import 'package:wonders/ui/screens/timeline/timeline_screen.dart';
@@ -43,7 +43,7 @@ String? _handleRedirect(GoRouterState state) {
   if (!app.isBootstrapComplete && state.location != ScreenPaths.splash) {
     return ScreenPaths.splash;
   }
-  print('Navigate to: ${state.location}');
+  debugPrint('Navigate to: ${state.location}');
   return null; // do nothing
 }
 
