@@ -17,7 +17,7 @@ class ScreenPaths {
   static String timeline(WonderType type) => '/timeline/${type.name}';
 }
 
-WonderType parseWonderType(String value) => WonderType.values.asNameMap()[value] ?? WonderType.machuPicchu;
+WonderType _parseWonderType(String value) => WonderType.values.asNameMap()[value] ?? WonderType.machuPicchu;
 
 final appRouter = GoRouter(
   redirect: _handleRedirect,
@@ -27,22 +27,23 @@ final appRouter = GoRouter(
     AppRoute(ScreenPaths.splash, (_) => SplashScreen()),
     AppRoute(ScreenPaths.home, (_) => WondersHomeScreen()),
     AppRoute('/wonder/:id', (s) {
-      return WonderDetailsScreen(type: parseWonderType(s.params['id']!));
+      return WonderDetailsScreen(type: _parseWonderType(s.params['id']!));
     }),
     AppRoute('/gallery/:id', (s) {
-      return ImageGalleryScreen(type: parseWonderType(s.params['id']!));
+      return ImageGalleryScreen(type: _parseWonderType(s.params['id']!));
     }),
     AppRoute('/timeline/:id', (s) {
-      return TimelineScreen(type: parseWonderType(s.params['id']!));
+      return TimelineScreen(type: _parseWonderType(s.params['id']!));
     })
   ],
 );
 
-String? _handleRedirect(state) {
+String? _handleRedirect(GoRouterState state) {
   // Prevent anyone from navigating away from `/` if app is starting up.
   if (!app.isBootstrapComplete && state.location != ScreenPaths.splash) {
     return ScreenPaths.splash;
   }
+  print('Navigate to: ${state.location}');
   return null; // do nothing
 }
 

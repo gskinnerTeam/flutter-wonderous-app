@@ -1,6 +1,7 @@
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/buttons.dart';
+import 'package:wonders/ui/common/eight_way_swipe_detector.dart';
 import 'package:wonders/ui/screens/home/layers/machu_picchu.dart';
 import 'package:wonders/ui/screens/home/layers/petra.dart';
 
@@ -48,10 +49,10 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
     }).toList();
 
     /// Layer children in a stack with bg on bottom and bg on top
-    return SimpleGestureDetector(
-      onVerticalSwipe: _handleVerticalDrag,
-      swipeConfig: const SimpleSwipeConfig(verticalThreshold: 75),
-      behavior: HitTestBehavior.translucent,
+    return EightWaySwipeDetector(
+      onSwipe: (dir) {
+        if (dir.dy == -1 && dir.dx == 0) _showDetailsPage();
+      },
       child: Stack(children: [
         /// Bg
         Positioned.fill(

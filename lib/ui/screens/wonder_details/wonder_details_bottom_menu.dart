@@ -2,7 +2,8 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/buttons.dart';
 
 class WonderDetailsBottomMenu extends StatelessWidget {
-  const WonderDetailsBottomMenu({Key? key}) : super(key: key);
+  const WonderDetailsBottomMenu({Key? key, required this.tabController}) : super(key: key);
+  final TabController tabController;
 
   @override
   Widget build(BuildContext context) {
@@ -10,9 +11,10 @@ class WonderDetailsBottomMenu extends StatelessWidget {
       color: context.colors.surface1,
       child: Row(
         children: [
-          _TabBtn(icon: Icons.timeline_outlined, onPressed: () {}),
-          _TabBtn(icon: Icons.map, onPressed: () {}),
-          _TabBtn(icon: Icons.search, onPressed: () {}),
+          _TabBtn(icon: Icons.info_outline, onPressed: () => tabController.index = 0),
+          _TabBtn(icon: Icons.image_outlined, onPressed: () => tabController.index = 1),
+          _TabBtn(icon: Icons.search, onPressed: () => tabController.index = 2),
+          _TabBtn(icon: Icons.timelapse, onPressed: () => tabController.index = 3),
         ],
       ),
     );
@@ -28,7 +30,13 @@ class _TabBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: AppBtn(
-        child: Padding(padding: EdgeInsets.all(context.insets.xl), child: Icon(icon, color: context.colors.accent)),
+        child: Padding(
+            padding: EdgeInsets.all(context.insets.lg),
+            child: Icon(
+              icon,
+              color: context.colors.accent,
+              size: 32,
+            )),
         onPressed: onPressed,
       ),
     );

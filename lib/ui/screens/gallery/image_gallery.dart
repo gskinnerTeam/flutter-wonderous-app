@@ -1,6 +1,6 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
-import 'package:wonders/ui/common/wonder_illustrations.dart';
+import '../../common/swipeable_image_grid/swipeable_image_grid.dart';
 
 class ImageGalleryScreen extends StatelessWidget {
   const ImageGalleryScreen({Key? key, required this.type}) : super(key: key);
@@ -8,15 +8,14 @@ class ImageGalleryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverAppBar(
-          pinned: true,
-          expandedHeight: 400,
-          flexibleSpace: WonderIllustration(type),
-        ),
-        SliverToBoxAdapter(child: Placeholder(fallbackHeight: 2000))
-      ],
+    return ColoredBox(
+      color: Colors.black,
+      child: Stack(
+        children: [
+          SwipeableImageGrid(),
+          BackButton(color: context.colors.bg),
+        ],
+      ),
     );
   }
 }

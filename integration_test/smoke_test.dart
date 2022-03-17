@@ -11,5 +11,7 @@ void main() async {
     await tester.pumpWidget(WondersApp()); // Create main app
     app.bootstrap();
     await tester.pump(Duration(seconds: 2)); // Render another frame in 2s
+    await tester.pump(Duration(seconds: 2)); // Render another frame in 2s
+    await tester.pump(Duration(seconds: 2)); // Render another frame in 2s
   });
 }
