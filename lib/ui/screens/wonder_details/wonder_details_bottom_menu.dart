@@ -11,10 +11,10 @@ class WonderDetailsBottomMenu extends StatelessWidget {
       color: context.colors.surface1,
       child: Row(
         children: [
-          _TabBtn(icon: Icons.info_outline, onPressed: () => tabController.index = 0),
-          _TabBtn(icon: Icons.image_outlined, onPressed: () => tabController.index = 1),
-          _TabBtn(icon: Icons.search, onPressed: () => tabController.index = 2),
-          _TabBtn(icon: Icons.timelapse, onPressed: () => tabController.index = 3),
+          _TabBtn(0, tabController, icon: Icons.info_outline),
+          _TabBtn(1, tabController, icon: Icons.image_outlined),
+          _TabBtn(2, tabController, icon: Icons.search),
+          _TabBtn(3, tabController, icon: Icons.timelapse),
         ],
       ),
     );
@@ -22,8 +22,9 @@ class WonderDetailsBottomMenu extends StatelessWidget {
 }
 
 class _TabBtn extends StatelessWidget {
-  const _TabBtn({Key? key, required this.onPressed, required this.icon}) : super(key: key);
-  final VoidCallback? onPressed;
+  const _TabBtn(this.index, this.tabController, {Key? key, required this.icon}) : super(key: key);
+  final int index;
+  final TabController tabController;
   final IconData icon;
 
   @override
@@ -34,10 +35,10 @@ class _TabBtn extends StatelessWidget {
             padding: EdgeInsets.all(context.insets.lg),
             child: Icon(
               icon,
-              color: context.colors.accent,
+              color: index == tabController.index ? context.colors.fg : context.colors.accent,
               size: 32,
             )),
-        onPressed: onPressed,
+        onPressed: () => tabController.index = index,
       ),
     );
   }

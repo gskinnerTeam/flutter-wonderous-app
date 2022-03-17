@@ -4,11 +4,17 @@ import 'package:wonders/common_libs.dart';
 /// When index changes, the box animates its size for a nice effect
 class AnimatedCutoutOverlay extends StatelessWidget {
   const AnimatedCutoutOverlay(
-      {Key? key, required this.child, required this.cutoutSize, required this.animationKey, this.duration})
+      {Key? key,
+      required this.child,
+      required this.cutoutSize,
+      required this.animationKey,
+      this.duration,
+      required this.swipeDir})
       : super(key: key);
   final Widget child;
   final Size cutoutSize;
   final Key animationKey;
+  final Offset swipeDir;
   final Duration? duration;
   @override
   Widget build(BuildContext context) {
@@ -31,7 +37,10 @@ class AnimatedCutoutOverlay extends StatelessWidget {
   /// Scales from 1 --> (1 - zoomAmt) --> 1
   Widget _buildAnimatedCutout(Widget child, Animation<double> anim) {
     const zoomAmt = .15;
-    final size = cutoutSize * (1 - zoomAmt * anim.value);
+    final size = Size(
+      cutoutSize.width * (1 - zoomAmt * anim.value * swipeDir.dx.abs()),
+      cutoutSize.height * (1 - zoomAmt * anim.value * swipeDir.dy.abs()),
+    );
     return ClipPath(clipper: _CutoutClipper(size), child: child);
   }
 }

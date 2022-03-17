@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/main.dart';
 import 'package:wonders/ui/app_scaffold.dart';
-import 'package:wonders/ui/screens/image_gallery/image_gallery_screen.dart';
 import 'package:wonders/ui/screens/home/wonders_home_screen.dart';
 import 'package:wonders/ui/screens/splash_screen.dart';
 import 'package:wonders/ui/screens/timeline/timeline_screen.dart';
@@ -28,9 +27,6 @@ final appRouter = GoRouter(
     AppRoute(ScreenPaths.home, (_) => WondersHomeScreen()),
     AppRoute('/wonder/:id', (s) {
       return WonderDetailsScreen(type: _parseWonderType(s.params['id']!));
-    }),
-    AppRoute('/gallery/:id', (s) {
-      return ImageGalleryScreen(type: _parseWonderType(s.params['id']!));
     }),
     AppRoute('/timeline/:id', (s) {
       return TimelineScreen(type: _parseWonderType(s.params['id']!));

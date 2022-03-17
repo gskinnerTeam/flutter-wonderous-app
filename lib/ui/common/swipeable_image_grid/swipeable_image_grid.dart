@@ -3,7 +3,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/eight_way_swipe_detector.dart';
 import 'package:wonders/ui/common/motion_blur.dart';
 import 'package:wonders/ui/common/swipeable_image_grid/animated_cutout_overlay.dart';
-import 'package:wonders/ui/common/swipeable_image_grid/opening_image.dart';
+import 'package:wonders/ui/common/swipeable_image_grid/opening_grid_image.dart';
 
 class SwipeableImageGrid extends StatefulWidget {
   SwipeableImageGrid({Key? key, this.gridCount = 5, this.imageSize}) : super(key: key) {
@@ -18,15 +18,17 @@ class SwipeableImageGrid extends StatefulWidget {
 
 class _SwipeableImageGridState extends State<SwipeableImageGrid> {
   late int _index = ((widget.gridCount * widget.gridCount) / 2).round();
+  late int _prevIndex = _index;
   int get gridCount => widget.gridCount;
   int get halfGridCount => (widget.gridCount / 2).floor();
-  Size get imageSize => widget.imageSize ?? Size(context.widthPct(.5), context.heightPct(.5));
+  Size get imageSize => widget.imageSize ?? Size(context.widthPct(.55), context.heightPct(.55));
   double get imgW => imageSize.width;
   double get imgH => imageSize.height;
   int get imgCount => pow(gridCount, 2).round();
   Offset _lastSwipeDir = Offset.zero;
 
   void setIndex(int value) {
+    _prevIndex = _index;
     setState(() => _index = value);
   }
 
@@ -68,9 +70,10 @@ class _SwipeableImageGridState extends State<SwipeableImageGrid> {
     /// Layout
     return AnimatedCutoutOverlay(
       cutoutSize: imageSize,
+      swipeDir: _lastSwipeDir,
       // A cutout sits on top of everything, animating itself each time index changes
       animationKey: ValueKey(_index),
-      duration: context.times.fast,
+      duration: context.times.med * .35,
       // A motion blur, runs each time index is changed
       child: ClipRect(
         child: OverflowBox(
@@ -82,26 +85,24 @@ class _SwipeableImageGridState extends State<SwipeableImageGrid> {
             onSwipe: _handleSwipe,
             child: TweenAnimationBuilder<Offset>(
               tween: Tween(begin: gridOffset, end: gridOffset),
-              duration: context.times.med,
-              curve: Curves.easeOutBack,
+              duration: context.times.med * .7,
+              curve: Curves.easeOut,
               // Move the entire grid so that the selected image is centered on screen
               builder: (_, value, child) => Transform.translate(offset: value, child: child),
               // Use a wrap to display the images
               child: Wrap(
                 spacing: padding,
                 runSpacing: padding,
-                children: List.generate(
-                  imgCount,
-                  (index) {
-                    final child = GestureDetector(
-                      // Index can also be changed by tapping
-                      onTap: index == _index ? null : () => setIndex(index),
-                      child: OpeningImage(imageSize, selected: index == _index),
-                    );
-                    if (_index == index) return MotionBlur(context.times.fast, child: child, dir: _lastSwipeDir);
-                    return child;
-                  },
-                ),
+                children: List.generate(imgCount, (index) {
+                  bool selected = index == _index;
+                  return MotionBlur(context.times.med * .6,
+                      animationKey: ValueKey(_index),
+                      enabled: selected,
+                      dir: _lastSwipeDir,
+                      child: GestureDetector(
+                          onTap: selected ? null : () => setIndex(index),
+                          child: OpeningGridImage(imageSize, selected: selected)));
+                }),
               ),
             ),
           ),

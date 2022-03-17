@@ -3,8 +3,8 @@ import 'package:wonders/common_libs.dart';
 
 /// An image that opens into a full-screen interactive viewer
 //TODO: This should take an ImageData, or a url, or maybe an unsplash id??
-class OpeningImage extends StatelessWidget {
-  const OpeningImage(this.size, {Key? key, required this.selected}) : super(key: key);
+class OpeningGridImage extends StatelessWidget {
+  const OpeningGridImage(this.size, {Key? key, required this.selected}) : super(key: key);
   final bool selected;
   final Size size;
 
