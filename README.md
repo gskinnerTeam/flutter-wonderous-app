@@ -35,8 +35,12 @@ There are various python scripts in the `/py` folder. Including:
 - `icon-builder.py` - Generate icons from /assets/marketing/icon.xxx
 
 ### App Styling
-Use context extensions for styling.
-- `context.style`
+Use `context.style` extension to watch the current app style.
+```
+final style = context.style;
+return Container(color: style.colors.bg)l
+```
+Or use shortcuts to access the various categories directly:
 - `context.colors`
 - `context.insets`
 - `context.textStyles`
@@ -53,4 +57,4 @@ style: context.textStyles.body
 // etc...
 ```
 
-Note: `context.style` is only safe to use from within build() methods, as it calls `context.watch` internally. Use `context.read<AppStyle>()` if you need to access it outside of build (eg, initState).
+Note: `context.style` is only safe to use from within `build()` methods because it calls `context.watch` internally. Use `context.read<AppStyle>()` if you need to access it outside of build (eg, `initState`).
