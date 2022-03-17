@@ -45,8 +45,6 @@ Or use shortcuts to access the various categories directly:
 - `context.insets`
 - `context.textStyles`
 - `context.times`
-
-Eg:
 ```dart
 // Colors
 backgroundColor: context.colors.bg,
