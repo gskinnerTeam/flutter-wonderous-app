@@ -1,11 +1,10 @@
-import 'package:flutter_placeholder_textlines/flutter_placeholder_textlines.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/wonders_controller.dart';
 import 'package:wonders/ui/common/swipeable_image_grid/swipeable_image_grid.dart';
-import 'package:wonders/ui/common/wonder_illustrations.dart';
 import 'package:wonders/ui/screens/timeline/timeline_screen.dart';
 import 'package:wonders/ui/screens/wonder_details/wonder_details_bottom_menu.dart';
+import 'package:wonders/ui/screens/wonder_details/wonder_history_panel.dart';
 
 class WonderDetailsScreen extends StatefulWidget with GetItStatefulWidgetMixin {
   WonderDetailsScreen({Key? key, required this.type}) : super(key: key);
@@ -42,20 +41,18 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
       child: Stack(
         children: [
           /// Content & Tab Menu
-          Column(
+          Stack(
             children: [
-              Expanded(
-                child: IndexedStack(
-                  index: _tabController.index,
-                  children: [
-                    _WonderHistory(wonder),
-                    SwipeableImageGrid(),
-                    Center(child: Text('Artifacts', style: context.textStyles.h1)),
-                    TimelineScreen(type: widget.type),
-                  ],
-                ).gTweener.fade().withInit((t) => _fade = t),
-              ),
-              WonderDetailsBottomMenu(tabController: _tabController),
+              IndexedStack(
+                index: _tabController.index,
+                children: [
+                  WonderHistoryPanel(wonder),
+                  SwipeableImageGrid(),
+                  Center(child: Text('Artifacts', style: context.textStyles.h1)),
+                  Padding(padding: EdgeInsets.only(bottom: 80), child: TimelineScreen(type: widget.type)),
+                ],
+              ).gTweener.fade().withInit((t) => _fade = t),
+              BottomCenter(child: WonderDetailsBottomMenu(tabController: _tabController)),
             ],
           ),
 
@@ -66,46 +63,6 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
           ),
         ],
       ),
-    );
-  }
-}
-
-class _WonderHistory extends StatelessWidget {
-  const _WonderHistory(this.data, {Key? key}) : super(key: key);
-  final WonderData data;
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverAppBar(
-          pinned: true,
-          leading: SizedBox.shrink(),
-          collapsedHeight: 80,
-          flexibleSpace: SafeArea(
-              child: Padding(
-            padding: EdgeInsets.all(context.insets.lg),
-            child: WonderIllustration(data.type),
-          )),
-          expandedHeight: context.heightPct(.3),
-          backgroundColor: context.colors.accent,
-        ),
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: EdgeInsets.all(context.insets.lg),
-            child: SeparatedColumn(
-              separatorBuilder: () => Gap(context.insets.xl),
-              children: const [
-                PlaceholderLines(count: 3),
-                Placeholder(fallbackHeight: 300),
-                PlaceholderLines(count: 6),
-                Placeholder(fallbackHeight: 300),
-                PlaceholderLines(count: 6),
-              ],
-            ),
-          ),
-        )
-      ],
     );
   }
 }
