@@ -8,7 +8,7 @@ class WonderDetailsBottomMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: context.colors.surface1,
+      color: context.colors.surface1.withOpacity(0),
       child: Row(
         children: [
           _TabBtn(0, tabController, icon: Icons.info_outline),
@@ -32,7 +32,7 @@ class _TabBtn extends StatelessWidget {
     return Expanded(
       child: AppBtn(
         child: Padding(
-            padding: EdgeInsets.all(context.insets.lg),
+            padding: EdgeInsets.all(context.insets.med),
             child: Icon(
               icon,
               color: index == tabController.index ? context.colors.fg : context.colors.accent,

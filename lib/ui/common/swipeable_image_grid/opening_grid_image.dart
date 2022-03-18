@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
 
 /// An image that opens into a full-screen interactive viewer
@@ -32,12 +33,10 @@ class OpeningGridImage extends StatelessWidget {
                   curve: Curves.easeOut,
                   tween: Tween(begin: 1, end: selected ? 1.15 : 1),
                   builder: (_, value, child) => Transform.scale(child: child, scale: value),
-                  child: Image.network(
-                    mockImg((size.width * 1.5).round()),
-                    fit: BoxFit.cover,
-                    filterQuality: FilterQuality.high,
-                    scale: 1,
-                  ),
+                  child: CachedNetworkImage(
+                      imageUrl: mockImg((size.width * 1.5).round()),
+                      fit: BoxFit.cover,
+                      filterQuality: FilterQuality.high),
                 ),
               ),
             ),

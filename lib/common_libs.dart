@@ -15,5 +15,5 @@ export 'package:sized_context/sized_context.dart';
 export 'package:wonders/logic/app_controller.dart';
 export 'package:wonders/logic/settings_controller.dart';
 export 'package:wonders/main.dart';
-export 'package:wonders/router.dart';
+export 'routing/router.dart';
 export 'package:wonders/styles/styles.dart';

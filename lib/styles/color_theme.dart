@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wonders/logic/utils/color_utils.dart';
 
 enum ColorThemeType { orange, green }
 
@@ -15,6 +16,8 @@ class ColorTheme {
   final Color fg;
   final Color accent;
   final bool isDark;
+
+  Color shift(Color c, double d) => ColorUtils.shiftHsl(c, d * (isDark ? -1 : 1));
 
   factory ColorTheme(ColorThemeType type) {
     switch (type) {

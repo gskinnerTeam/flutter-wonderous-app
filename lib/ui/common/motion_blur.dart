@@ -1,6 +1,5 @@
-import 'dart:ui';
-
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/ui/common/directional_blur.dart';
 
 class MotionBlur extends StatefulWidget {
   const MotionBlur(this.duration,
@@ -38,16 +37,12 @@ class _MotionBlurState extends State<MotionBlur> {
   }
 
   Widget _buildBlur(Widget child, Animation<double> anim) {
-    double amt = sin(anim.value * pi) * 10;
+    double amt = sin(anim.value * pi) * 15;
     if (widget.enabled == false) amt = 0;
-    double amtX = widget.dir.dx != 0 ? amt : 0;
-    double amtY = widget.dir.dy != 0 ? amt : 0;
-    // Scale back xBlur when moving diagonally for a better visual effect
-    if (amtY != 0 && amtX != 0) {
-      amtX *= .25;
-      amtY *= .25;
+    final angle = atan2(widget.dir.dy, widget.dir.dx);
+    if (angle.abs() != pi * .25) {
+      amt = 0;
     }
-    final filter = ImageFilter.blur(sigmaX: amtX, sigmaY: amtY, tileMode: TileMode.decal);
-    return ImageFiltered(imageFilter: filter, child: child);
+    return DirectionalBlur(blurAmount: amt, angle: -angle, child: child);
   }
 }

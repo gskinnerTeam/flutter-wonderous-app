@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
-import 'package:wonders/main.dart';
+import 'package:wonders/routing/app_route.dart';
 import 'package:wonders/ui/app_scaffold.dart';
 import 'package:wonders/ui/screens/home/wonders_home_screen.dart';
 import 'package:wonders/ui/screens/splash_screen.dart';
 import 'package:wonders/ui/screens/timeline/timeline_screen.dart';
+import 'package:wonders/ui/screens/video_player/video_playback_screen.dart';
 import 'package:wonders/ui/screens/wonder_details/wonders_details_screen.dart';
 
 class ScreenPaths {
@@ -14,6 +14,7 @@ class ScreenPaths {
   static String wonderDetails(WonderType type) => '/wonder/${type.name}';
   static String wonderGallery(WonderType type) => '/gallery/${type.name}';
   static String timeline(WonderType type) => '/timeline/${type.name}';
+  static String video(String id) => '/video/$id';
 }
 
 WonderType _parseWonderType(String value) => WonderType.values.asNameMap()[value] ?? WonderType.machuPicchu;
@@ -30,6 +31,9 @@ final appRouter = GoRouter(
     }),
     AppRoute('/timeline/:id', (s) {
       return TimelineScreen(type: _parseWonderType(s.params['id']!));
+    }),
+    AppRoute('/video/:id', (s) {
+      return FullscreenVideoPage(id: s.params['id']!);
     })
   ],
 );
@@ -41,35 +45,4 @@ String? _handleRedirect(GoRouterState state) {
   }
   debugPrint('Navigate to: ${state.location}');
   return null; // do nothing
-}
-
-/// Custom GoRoute sub-class to make the router declaration easier to read
-class AppRoute extends GoRoute {
-  AppRoute(String path, Widget Function(GoRouterState s) builder, {List<GoRoute> routes = const []})
-      : super(path: path, routes: routes, pageBuilder: (_, s) => FadingPage(builder(s), key: s.pageKey));
-}
-
-/// Custom page transition
-class FadingPage extends Page {
-  const FadingPage(this.child, {LocalKey? key}) : super(key: key);
-  final Widget child;
-
-  @override
-  Route createRoute(BuildContext context) {
-    return PageRouteBuilder(
-      settings: this,
-      transitionsBuilder: (_, anim1, anim2, child) {
-        return FadeTransition(
-          opacity: Tween<double>(begin: 0, end: 1).animate(anim1),
-          child: FadeTransition(
-            opacity: Tween<double>(begin: 1, end: 0).animate(anim2),
-            child: child,
-          ),
-        );
-      },
-      pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
-        return Scaffold(body: child);
-      },
-    );
-  }
 }

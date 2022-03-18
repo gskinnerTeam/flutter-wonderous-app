@@ -62,7 +62,7 @@ class _WondersTimelineState extends State<WondersTimeline> {
   //
   void _changeScale(double d) {
     setState(() {
-      _zoom += d;
+      _zoom = d;
       _zoom = _zoom.clamp(0, 1.0);
     });
   }
@@ -91,7 +91,7 @@ class _WondersTimelineState extends State<WondersTimeline> {
       double size = lerpDouble(_minSize, _maxSize, _zoom) ?? _maxSize;
 
       return GestureDetector(
-        //onScaleUpdate: _handlePinchZoom,
+        onScaleUpdate: _handlePinchZoom,
         child: Stack(
           children: [
             SingleChildScrollView(
@@ -99,11 +99,11 @@ class _WondersTimelineState extends State<WondersTimeline> {
               physics: ClampingScrollPhysics(),
               child: Placeholder(fallbackHeight: size),
             ),
-            BottomCenter(
+            Center(
               child: Padding(
-                padding: EdgeInsets.all(context.insets.xl),
+                padding: EdgeInsets.all(context.insets.xl * 2),
                 child: SizedBox(
-                  height: 100,
+                  height: max(60, context.heightPct(.1)),
                   child: Slider(
                     onChanged: (double value) => setState(() {
                       _zoom = value;

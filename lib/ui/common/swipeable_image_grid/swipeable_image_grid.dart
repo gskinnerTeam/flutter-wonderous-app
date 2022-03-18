@@ -19,15 +19,13 @@ class SwipeableImageGrid extends StatefulWidget {
 class _SwipeableImageGridState extends State<SwipeableImageGrid> {
   late int _index = ((widget.gridCount * widget.gridCount) / 2).round();
   late int _prevIndex = _index;
-  int get gridCount => widget.gridCount;
-  int get halfGridCount => (widget.gridCount / 2).floor();
-  Size get imageSize => widget.imageSize ?? Size(context.widthPct(.55), context.heightPct(.55));
-  double get imgW => imageSize.width;
-  double get imgH => imageSize.height;
-  int get imgCount => pow(gridCount, 2).round();
   Offset _lastSwipeDir = Offset.zero;
 
-  void setIndex(int value) {
+  Size get _imgSize => widget.imageSize ?? Size(context.widthPct(.65), context.heightPct(.55));
+  int get _gridCount => widget.gridCount;
+  int get _imgCount => pow(_gridCount, 2).round();
+
+  void _setIndex(int value) {
     _prevIndex = _index;
     setState(() => _index = value);
   }
@@ -36,26 +34,26 @@ class _SwipeableImageGridState extends State<SwipeableImageGrid> {
   void _handleSwipe(Offset dir) {
     // Calculate new index, y swipes move by an entire row, x swipes move one index at a time
     int newIndex = _index;
-    if (dir.dy != 0) newIndex += gridCount * (dir.dy > 0 ? -1 : 1);
+    if (dir.dy != 0) newIndex += _gridCount * (dir.dy > 0 ? -1 : 1);
     if (dir.dx != 0) newIndex += (dir.dx > 0 ? -1 : 1);
     // After calculating new index, exit early if we don't like it...
-    if (newIndex < 0 || newIndex > imgCount - 1) return; // keep the index in range
-    if (dir.dx < 0 && newIndex % gridCount == 0) return; // prevent right-swipe when at right side
-    if (dir.dx > 0 && newIndex % gridCount == gridCount - 1) return; // prevent left-swipe when at left side
+    if (newIndex < 0 || newIndex > _imgCount - 1) return; // keep the index in range
+    if (dir.dx < 0 && newIndex % _gridCount == 0) return; // prevent right-swipe when at right side
+    if (dir.dx > 0 && newIndex % _gridCount == _gridCount - 1) return; // prevent left-swipe when at left side
     _lastSwipeDir = dir;
-    setIndex(newIndex);
+    _setIndex(newIndex);
   }
 
   /// Determine the required offset to show the current selected index.
   /// index=0 is top-left, and the index=max is bottom-right.
   Offset _calculateCurrentOffset(double padding) {
-    double halfCount = (gridCount / 2).floorToDouble();
-    Size paddedImageSize = Size(imgW + padding, imgH + padding);
+    double halfCount = (_gridCount / 2).floorToDouble();
+    Size paddedImageSize = Size(_imgSize.width + padding, _imgSize.height + padding);
     // Get the starting offset that would show the top-left image (index 0)
     final originOffset = Offset(halfCount * paddedImageSize.width, halfCount * paddedImageSize.height);
     // Add the offset for the row/col
-    int col = _index % gridCount;
-    int row = (_index / gridCount).floor();
+    int col = _index % _gridCount;
+    int row = (_index / _gridCount).floor();
     final indexedOffset = Offset(-paddedImageSize.width * col, -paddedImageSize.height * row);
     return originOffset + indexedOffset;
   }
@@ -67,41 +65,53 @@ class _SwipeableImageGridState extends State<SwipeableImageGrid> {
     final gridOffset = _calculateCurrentOffset(padding);
     timeDilation = 1;
 
-    /// Layout
+    // Layout
+    final swipeDuration = context.times.med * .55;
+    // A overlay with a transparent middle sits on top of everything, animating itself each time index changes
     return AnimatedCutoutOverlay(
-      cutoutSize: imageSize,
+      cutoutSize: _imgSize,
       swipeDir: _lastSwipeDir,
-      // A cutout sits on top of everything, animating itself each time index changes
       animationKey: ValueKey(_index),
-      duration: context.times.med * .35,
-      // A motion blur, runs each time index is changed
+      duration: swipeDuration * .5,
+      // Clip the overflow box to prevent rendering outside of the viewport
+      // TODO: Check whether clipping the OverflowBox is actually a perf win?
       child: ClipRect(
         child: OverflowBox(
-          maxWidth: gridCount * imgW + padding * (gridCount - 1),
-          maxHeight: gridCount * imgH + padding * (gridCount - 1),
+          maxWidth: _gridCount * _imgSize.width + padding * (_gridCount - 1),
+          maxHeight: _gridCount * _imgSize.height + padding * (_gridCount - 1),
           alignment: Alignment.center,
           // Detect swipes in order to change index
           child: EightWaySwipeDetector(
             onSwipe: _handleSwipe,
             child: TweenAnimationBuilder<Offset>(
               tween: Tween(begin: gridOffset, end: gridOffset),
-              duration: context.times.med * .7,
+              duration: swipeDuration,
               curve: Curves.easeOut,
-              // Move the entire grid so that the selected image is centered on screen
+              // Move the entire grid so that the selected index is centered on screen
               builder: (_, value, child) => Transform.translate(offset: value, child: child),
               // Use a wrap to display the images
               child: Wrap(
                 spacing: padding,
                 runSpacing: padding,
-                children: List.generate(imgCount, (index) {
+                children: List.generate(_imgCount, (index) {
                   bool selected = index == _index;
-                  return MotionBlur(context.times.med * .6,
+                  bool wasSelected = index == _prevIndex;
+                  return ClipRRect(
+                    borderRadius: BorderRadius.circular(6),
+                    // Wrap a motion blur around the selected and previous items
+                    child: MotionBlur(
+                      swipeDuration,
+                      // use a key to force motion blurs to re-run when index changes
                       animationKey: ValueKey(_index),
-                      enabled: selected,
+                      enabled: selected || wasSelected,
                       dir: _lastSwipeDir,
+                      // Make each img tappable, so user can easily jump between them
                       child: GestureDetector(
-                          onTap: selected ? null : () => setIndex(index),
-                          child: OpeningGridImage(imageSize, selected: selected)));
+                        onTap: selected ? null : () => _setIndex(index),
+                        child: OpeningGridImage(_imgSize, selected: selected),
+                      ),
+                    ),
+                  );
                 }),
               ),
             ),

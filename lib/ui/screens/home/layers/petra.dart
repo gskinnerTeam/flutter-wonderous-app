@@ -9,7 +9,7 @@ class PetraBg extends StatelessWidget {
   const PetraBg({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Container(color: Colors.red);
+  Widget build(BuildContext context) => Container(color: Colors.red.shade900);
 }
 
 /// Midground

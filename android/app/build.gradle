@@ -40,7 +40,7 @@ android {
             resolutionStrategy { force 'androidx.core:core-ktx:1.6.0' }
         }
         applicationId "com.gskinner.flutter.wonders"
-        minSdkVersion 18
+        minSdkVersion 23
         targetSdkVersion flutter.targetSdkVersion
         multiDexEnabled true
         versionCode flutterVersionCode.toInteger()

@@ -147,16 +147,10 @@ extension $WonderDataCopyWith on WonderData {
 // **************************************************************************
 
 WonderData _$WonderDataFromJson(Map<String, dynamic> json) => WonderData(
-      type: $enumDecodeNullable(_$WonderTypeEnumMap, json['type']) ??
-          WonderType.petra,
+      type: $enumDecodeNullable(_$WonderTypeEnumMap, json['type']) ?? WonderType.petra,
       title: json['title'] as String,
-      imageUrls: (json['imageUrls'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const [],
-      facts:
-          (json['facts'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-              const [],
+      imageUrls: (json['imageUrls'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const [],
+      facts: (json['facts'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const [],
       desc: json['desc'] as String,
       startYr: json['startYr'] as int? ?? 0,
       endYr: json['endYr'] as int? ?? 0,
@@ -164,8 +158,7 @@ WonderData _$WonderDataFromJson(Map<String, dynamic> json) => WonderData(
       lng: (json['lng'] as num?)?.toDouble() ?? 0,
     );
 
-Map<String, dynamic> _$WonderDataToJson(WonderData instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$WonderDataToJson(WonderData instance) => <String, dynamic>{
       'type': _$WonderTypeEnumMap[instance.type],
       'title': instance.title,
       'desc': instance.desc,
