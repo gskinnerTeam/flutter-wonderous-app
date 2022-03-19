@@ -48,8 +48,7 @@ class SearchService {
     if (dateBegin != null) urlParams['dateBegin'] = dateBegin;
     if (dateEnd != null) urlParams['dateEnd'] = dateEnd;
 
-    HttpResponse response =
-        await _request('public/collection/v1/objects', method: MethodType.get, urlParams: urlParams);
+    HttpResponse response = await _request('public/collection/v1/search', method: MethodType.get, urlParams: urlParams);
     return ServiceResult.fromResponse(response);
   }
 
@@ -64,8 +63,8 @@ class SearchService {
     Encoding? encoding,
   }) async {
     url = '$baseMETUrl/$url';
-    urlParams = {};
-    headers = {};
+    urlParams ??= {};
+    headers ??= {};
 
     String jsonBody = json.encode(body);
 

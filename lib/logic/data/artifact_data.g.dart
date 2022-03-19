@@ -10,11 +10,10 @@ ArtifactData _$ArtifactDataFromJson(Map<String, dynamic> json) => ArtifactData(
       title: json['title'] as String,
       desc: json['desc'] as String,
       image: json['image'] as String,
-      year: json['year'] as int,
+      year: json['year'] as String,
     );
 
-Map<String, dynamic> _$ArtifactDataToJson(ArtifactData instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ArtifactDataToJson(ArtifactData instance) => <String, dynamic>{
       'title': instance.title,
       'desc': instance.desc,
       'image': instance.image,

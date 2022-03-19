@@ -28,17 +28,23 @@ class SearchController {
       // Source: https://metmuseum.github.io/
       ArtifactData data = ArtifactData(
           title: response.content?['title'] ?? '',
-          desc: (response.content?['culture'] ?? '') +
+          desc: (response.content?['department'] ?? '') +
               ' ' +
               (response.content?['objectName'] ?? '') +
               ' - ' +
-              (response.content?['period'] ?? ''),
+              (response.content?['repository'] ?? ''),
           image: response.content?['primaryImage'] ?? '',
-          year: int.parse(response.content?['accessionYear'] ?? ''));
+          year: response.content?['accessionYear'] ?? response.content?['objectDate'] ?? '');
       return data;
     }
 
     return null;
+  }
+
+  /// Returns list of artifact IDs by search query */
+  Future<List<int>> searchForArtifacts(String query) async {
+    ServiceResult response = await GetIt.I.get<SearchService>().searchForArtifacts(query);
+    return _parseObjectIdsFromResponse(response);
   }
 
   /// Returns list of artifact IDs by search query */
@@ -55,7 +61,7 @@ class SearchController {
 
   List<int> _parseObjectIdsFromResponse(ServiceResult response) {
     if (response is! ServiceError) {
-      List<dynamic> idList = response.content?['objectIDs']?.toList();
+      List<dynamic> idList = (response.content?['objectIDs'] ?? []).toList();
       List<int> intList = idList.map((e) => e as int).toList();
       return intList;
     }
@@ -64,7 +70,7 @@ class SearchController {
 
   List<DepartmentData> _parseDepartmentsFromResponse(ServiceResult response) {
     if (response is! ServiceError) {
-      List<dynamic> idList = response.content?['departments']?.toList();
+      List<dynamic> idList = (response.content?['departments'] ?? []).toList();
       List<DepartmentData> depList =
           idList.map((e) => DepartmentData(departmentId: e['departmentId'], displayName: e['displayName'])).toList();
       return depList;

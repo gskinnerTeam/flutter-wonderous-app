@@ -13,7 +13,9 @@ class ArtifactData {
   final String title;
   final String desc;
   final String image;
-  final int year;
+  final String year; // Year from the API can have extra elements like 'ca.' and 'around'.
+
+  ArtifactData.empty({this.title = 'Untitled', this.desc = 'Artifact Not Found', this.image = '', this.year = ''});
 
   factory ArtifactData.fromJson(Map<String, dynamic> json) => _$ArtifactDataFromJson(json);
   Map<String, dynamic> toJson() => _$ArtifactDataToJson(this);
