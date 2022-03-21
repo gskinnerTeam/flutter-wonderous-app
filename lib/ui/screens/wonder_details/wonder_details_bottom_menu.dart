@@ -2,17 +2,19 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/buttons.dart';
 
 class WonderDetailsBottomMenu extends StatelessWidget {
-  const WonderDetailsBottomMenu({Key? key}) : super(key: key);
+  const WonderDetailsBottomMenu({Key? key, required this.tabController}) : super(key: key);
+  final TabController tabController;
 
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: context.colors.surface1,
+      color: context.colors.surface1.withOpacity(0),
       child: Row(
         children: [
-          _TabBtn(icon: Icons.timeline_outlined, onPressed: () {}),
-          _TabBtn(icon: Icons.map, onPressed: () {}),
-          _TabBtn(icon: Icons.search, onPressed: () {}),
+          _TabBtn(0, tabController, icon: Icons.info_outline),
+          _TabBtn(1, tabController, icon: Icons.image_outlined),
+          _TabBtn(2, tabController, icon: Icons.search),
+          _TabBtn(3, tabController, icon: Icons.timelapse),
         ],
       ),
     );
@@ -20,16 +22,23 @@ class WonderDetailsBottomMenu extends StatelessWidget {
 }
 
 class _TabBtn extends StatelessWidget {
-  const _TabBtn({Key? key, required this.onPressed, required this.icon}) : super(key: key);
-  final VoidCallback? onPressed;
+  const _TabBtn(this.index, this.tabController, {Key? key, required this.icon}) : super(key: key);
+  final int index;
+  final TabController tabController;
   final IconData icon;
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: AppBtn(
-        child: Padding(padding: EdgeInsets.all(context.insets.xl), child: Icon(icon, color: context.colors.accent)),
-        onPressed: onPressed,
+        child: Padding(
+            padding: EdgeInsets.all(context.insets.med),
+            child: Icon(
+              icon,
+              color: index == tabController.index ? context.colors.fg : context.colors.accent,
+              size: 32,
+            )),
+        onPressed: () => tabController.index = index,
       ),
     );
   }

@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:wonders/logic/utils/color_utils.dart';
 
 enum ColorThemeType { orange, green }
 
 class ColorTheme {
   const ColorTheme._({
     required this.accent,
-    this.bg = Colors.white,
-    this.surface1 = const Color(0xffeeeeee),
-    this.fg = Colors.black,
-    this.isDark = false,
+    this.bg = Colors.black,
+    this.surface1 = const Color(0xff1a1a1a),
+    this.fg = Colors.white,
+    this.isDark = true,
   });
   final Color bg;
   final Color surface1;
   final Color fg;
   final Color accent;
   final bool isDark;
+
+  Color shift(Color c, double d) => ColorUtils.shiftHsl(c, d * (isDark ? -1 : 1));
 
   factory ColorTheme(ColorThemeType type) {
     switch (type) {

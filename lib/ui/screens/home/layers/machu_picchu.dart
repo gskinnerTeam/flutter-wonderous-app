@@ -9,7 +9,7 @@ class MachuPicchuBg extends StatelessWidget {
   const MachuPicchuBg({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Container(color: Colors.blue);
+  Widget build(BuildContext context) => Container(color: Colors.blue.shade900);
 }
 
 /// Midground

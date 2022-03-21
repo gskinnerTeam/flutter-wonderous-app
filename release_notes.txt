@@ -1,3 +1,8 @@
+# 0.0.3
+- Added image gallery grid spike
+- Added functional tab menu
+- Includes some initial timeline explorations
+
 # 0.0.2
 - Basic navigation structure
 - Examples of hero transitions between pages

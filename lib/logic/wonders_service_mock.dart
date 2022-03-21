@@ -9,7 +9,7 @@ class WondersServiceMock extends WondersService {
     return [
       WonderData(
         type: WonderType.petra,
-        title: 'Chichen Iza',
+        title: 'Petra',
         desc: lorem(),
         startYr: -100,
         endYr: 100,
@@ -18,7 +18,7 @@ class WondersServiceMock extends WondersService {
       ),
       WonderData(
         type: WonderType.machuPicchu,
-        title: 'The Great Wall',
+        title: 'Machu Picchu',
         desc: lorem(),
         startYr: -100,
         endYr: 100,

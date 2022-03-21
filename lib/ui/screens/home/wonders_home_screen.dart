@@ -1,6 +1,7 @@
-import 'package:simple_gesture_detector/simple_gesture_detector.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/buttons.dart';
+import 'package:wonders/ui/common/eight_way_swipe_detector.dart';
 import 'package:wonders/ui/screens/home/layers/machu_picchu.dart';
 import 'package:wonders/ui/screens/home/layers/petra.dart';
 
@@ -15,6 +16,7 @@ class WondersHomeScreen extends StatefulWidget with GetItStatefulWidgetMixin {
 
 class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMixin {
   final _pageController = PageController(viewportFraction: 1);
+  final _screenshots = ScreenshotController();
   late int _wonderIndex = _pageController.initialPage;
   final _wonderLayerSets = [
     ParallaxLayerSet(bg: PetraBg(), mg: PetraMg(), fgBuilder: (v) => PetraFg(isShowing: v)),
@@ -29,13 +31,14 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
 
   void _handlePageViewChanged(v) => setState(() => _wonderIndex = v);
 
-  void _handleVerticalDrag(SwipeDirection dir) {
-    if (dir == SwipeDirection.up) {
-      _showDetailsPage();
-    }
+  void _handleSwipe(Offset dir) {
+    if (dir.dy == -1 && dir.dx == 0) _showDetailsPage();
   }
 
   void _showDetailsPage() => context.push(ScreenPaths.wonderDetails(wonders.all.value[_wonderIndex].type));
+
+  void _handleSaveWallPaperPressed() async =>
+      app.saveWallpaper(context, _wonderLayerSets[_wonderIndex].mg, name: 'wonder$_wonderIndex');
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +51,8 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
     }).toList();
 
     /// Layer children in a stack with bg on bottom and bg on top
-    return SimpleGestureDetector(
-      onVerticalSwipe: _handleVerticalDrag,
-      swipeConfig: const SimpleSwipeConfig(verticalThreshold: 75),
-      behavior: HitTestBehavior.translucent,
+    return EightWaySwipeDetector(
+      onSwipe: _handleSwipe,
       child: Stack(children: [
         /// Bg
         Positioned.fill(
@@ -59,11 +60,14 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
         ),
 
         /// Mg
-        PageView(
-          controller: _pageController,
-          children: mgChildren,
-          physics: BouncingScrollPhysics(),
-          onPageChanged: _handlePageViewChanged,
+        Screenshot(
+          controller: _screenshots,
+          child: PageView(
+            controller: _pageController,
+            children: mgChildren,
+            physics: BouncingScrollPhysics(),
+            onPageChanged: _handlePageViewChanged,
+          ),
         ),
 
         /// Fg
@@ -76,19 +80,29 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
         ),
 
         /// Floating controls / UI
-        BottomCenter(
-          child: AnimatedSwitcher(
-            duration: context.style.times.fast,
-            child: Column(
-              key: ValueKey(_wonderIndex),
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(wonders.all.value[_wonderIndex].title, style: context.style.text.h1),
-                Text('${_wonderIndex + 1}/${_wonderLayerSets.length}', style: context.style.text.h1),
-                AppBtn(child: Icon(Icons.arrow_downward, size: 64), onPressed: _showDetailsPage),
-                Gap(context.style.insets.lg),
-              ],
-            ),
+        AnimatedSwitcher(
+          duration: context.style.times.fast,
+          child: Column(
+            key: ValueKey(_wonderIndex),
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(width: double.infinity),
+              Gap(context.insets.xl * 3),
+
+              /// Save Background Btn
+              AppBtn(child: Text('Save Background'), onPressed: _handleSaveWallPaperPressed),
+              Spacer(),
+
+              /// Title
+              Text(wonders.all.value[_wonderIndex].title, style: context.style.text.h1),
+
+              /// Page indicator
+              Text('${_wonderIndex + 1}/${_wonderLayerSets.length}', style: context.style.text.h1),
+
+              /// Down arrow
+              AppBtn(child: Icon(Icons.arrow_downward, size: 64), onPressed: _showDetailsPage),
+              Gap(context.style.insets.lg),
+            ],
           ),
         )
       ]),

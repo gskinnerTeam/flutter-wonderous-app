@@ -60,12 +60,28 @@ class _WondersTimelineState extends State<WondersTimeline> {
   //   // print(controller.position.maxScrollExtent);
   // }
   //
-  // void _changeScale(double d) {
-  //   // setState(() {
-  //   //   _zoom += d;
-  //   //   _zoom = _zoom.clamp(0, 1.0);
-  //   // });
+  void _changeScale(double d) {
+    setState(() {
+      _zoom = d;
+      _zoom = _zoom.clamp(0, 1.0);
+    });
+  }
+
+  //
+  // void _handleMouseZoom(e) {
+  //   if (e is PointerScrollEvent) {
+  //     final scaleDelta = .05 * (e.scrollDelta.dy > 0 ? -1 : 1);
+  //     _changeScale(scaleDelta);
+  //     //print(scaleDelta);
+  //     // fix position
+  //     final moveDelta = (_maxSize - _minSize) * scaleDelta;
+  //     //_scroller.position.jumpTo(max(_scroller.position.pixels + moveDelta / 2, 0));
+  //   }
   // }
+
+  void _handlePinchZoom(ScaleUpdateDetails details) {
+    _changeScale(details.scale);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,38 +99,28 @@ class _WondersTimelineState extends State<WondersTimeline> {
               physics: ClampingScrollPhysics(),
               child: Placeholder(fallbackHeight: size),
             ),
-            SizedBox(
-              height: 100,
-              child: Slider(
-                onChanged: (double value) => setState(() {
-                  _zoom = value;
-                  // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
-                  controller.notifyListeners();
-                }),
-                value: _zoom,
-                min: 0,
-                max: 1,
+            Center(
+              child: Padding(
+                padding: EdgeInsets.all(context.insets.xl * 2),
+                child: SizedBox(
+                  height: max(60, context.heightPct(.1)),
+                  child: Slider(
+                    onChanged: (double value) => setState(() {
+                      _zoom = value;
+                      // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+                      controller.notifyListeners();
+                    }),
+                    value: _zoom,
+                    min: 0,
+                    max: 1,
+                  ),
+                ),
               ),
             ),
           ],
         ),
       );
     });
-  }
-  //
-  // void _handleMouseZoom(e) {
-  //   if (e is PointerScrollEvent) {
-  //     final scaleDelta = .05 * (e.scrollDelta.dy > 0 ? -1 : 1);
-  //     _changeScale(scaleDelta);
-  //     //print(scaleDelta);
-  //     // fix position
-  //     final moveDelta = (_maxSize - _minSize) * scaleDelta;
-  //     //_scroller.position.jumpTo(max(_scroller.position.pixels + moveDelta / 2, 0));
-  //   }
-  // }
-
-  void _handlePinchZoom(ScaleUpdateDetails details) {
-    //_changeScale(details.scale);
   }
 }
 
@@ -146,7 +152,7 @@ class _TimelineScrubber extends StatelessWidget {
               child: Align(
                 alignment: Alignment(-1 + scrollOffset * 2, 0),
                 child: FractionallySizedBox(
-                  child: ColoredBox(color: Colors.red),
+                  child: ColoredBox(color: Colors.red.withOpacity(.3)),
                   widthFactor: viewPort,
                   heightFactor: 1,
                 ),
