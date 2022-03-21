@@ -1,3 +1,5 @@
+import 'package:wonders/logic/data/artifact_data.dart';
+import 'package:wonders/logic/data/department_data.dart';
 import 'package:wonders/logic/utils/http_client.dart';
 import 'dart:convert';
 
@@ -6,26 +8,28 @@ class SearchService {
 
   void init() {}
 
-  Future<ServiceResult> getObjectIDList({DateTime? date, String? departmentIds}) async {
+  Future<ServiceResult<List<int>?>> getObjectIDList({DateTime? date, String? departmentIds}) async {
     HttpResponse response = await _request('public/collection/v1/objects', method: MethodType.get, urlParams: {
       'metadataDate': date, // in the format YYYY-MM-DD
       'departmentIds': departmentIds // use | as delimiter
     });
-    return ServiceResult.fromResponse(response);
+    return ServiceResult(response, _parseObjectIdsFromResponse);
   }
 
-  Future<ServiceResult> getDepartmentList() async {
+  Future<ServiceResult<List<DepartmentData>?>> getDepartmentList() async {
     HttpResponse? response = await _request('public/collection/v1/departments', method: MethodType.get);
-    return ServiceResult.fromResponse(response);
+    return ServiceResult(response, _parseDepartmentsFromResponse);
   }
 
-  Future<ServiceResult> getObjectByID(int id) async {
+  Future<ServiceResult<ArtifactData?>> getObjectByID(int id) async {
     HttpResponse? response = await _request('public/collection/v1/objects/$id', method: MethodType.get);
-    return ServiceResult.fromResponse(response);
+    return ServiceResult(response, _parseSearchResponse);
   }
 
-  Future<ServiceResult> searchForArtifacts(String query,
-      {bool? isHighlight,
+  Future<ServiceResult<List<int>?>> searchForArtifacts(String query,
+      {int count = 10,
+      int offset = 0,
+      bool? isHighlight,
       bool? isTitle,
       bool? isKeywordTag,
       int? departmentId,
@@ -49,7 +53,7 @@ class SearchService {
     if (dateEnd != null) urlParams['dateEnd'] = dateEnd;
 
     HttpResponse response = await _request('public/collection/v1/search', method: MethodType.get, urlParams: urlParams);
-    return ServiceResult.fromResponse(response);
+    return ServiceResult(response, _parseObjectIdsFromResponse);
   }
 
   // ------------------------------------------------
@@ -72,5 +76,37 @@ class SearchService {
         urlParams: urlParams, method: method, headers: headers, body: jsonBody, encoding: encoding);
 
     return response;
+  }
+
+  List<int>? _parseObjectIdsFromResponse(Map<String, dynamic> content) {
+    List<dynamic> idList = (content['objectIDs'] ?? []).toList();
+    List<int> intList = idList.map((e) => e as int).toList();
+    return intList;
+  }
+
+  List<DepartmentData>? _parseDepartmentsFromResponse(Map<String, dynamic> content) {
+    List<dynamic> idList = (content['departments'] ?? []).toList();
+    List<DepartmentData> depList =
+        idList.map((e) => DepartmentData(departmentId: e['departmentId'], displayName: e['displayName'])).toList();
+    return depList;
+  }
+
+  ArtifactData? _parseSearchResponse(Map<String, dynamic> content) {
+    // Source: https://metmuseum.github.io/
+    ArtifactData? data;
+    try {
+      data = ArtifactData(
+          title: content['title'] ?? '',
+          desc: (content['department'] ?? '') +
+              ' ' +
+              (content['objectName'] ?? '') +
+              ' - ' +
+              (content['repository'] ?? ''),
+          image: content['primaryImage'] ?? '',
+          year: content['accessionYear'] ?? content['objectDate'] ?? '');
+    } catch (e) {
+      var i = 0;
+    }
+    return data;
   }
 }

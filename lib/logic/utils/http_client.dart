@@ -167,36 +167,17 @@ class HttpResponse {
   }
 }
 
-class ServiceResult {
+class ServiceResult<R> {
   final HttpResponse response;
 
-  Map<String, dynamic>? content;
-  ServiceError? error;
-  bool parseError = false;
+  R? content;
 
+  bool get parseError => content == null;
   bool get success => response.success && !parseError;
 
-  ServiceResult(this.response);
-
-  ServiceResult.fromResponse(this.response) {
-    try {
-      if (StringUtils.isNotEmpty(response.body)) {
-        if (response.success) {
-          content = jsonDecode(response.body ?? '') as Map<String, dynamic>;
-        } else {
-          error = jsonDecode(response.body ?? '') as ServiceError;
-        }
-      }
-    } catch (error) {
-      parseError = true;
+  ServiceResult(this.response, R Function(Map<String, dynamic>) parser) {
+    if (StringUtils.isNotEmpty(response.body) && response.success) {
+      content = parser.call(jsonDecode(response.body!));
     }
   }
-}
-
-class ServiceError {
-  int code;
-  final String message;
-  final String target;
-
-  ServiceError({required this.code, required this.message, required this.target});
 }
