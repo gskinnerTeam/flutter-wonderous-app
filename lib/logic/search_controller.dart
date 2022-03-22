@@ -4,14 +4,14 @@ import 'package:wonders/logic/data/department_data.dart';
 import 'package:wonders/logic/search_service.dart';
 
 class SearchController {
-  List<DepartmentData>? departmentList;
-  Map<int, ArtifactData> _artifactHash = {};
+  final departmentList = ValueNotifier([] as List<DepartmentData>);
+  final Map<int, ArtifactData> _artifactHash = {};
 
   SearchService get service => GetIt.I.get<SearchService>();
 
   /// Return list of departments with titles and IDs.
   Future<void> getAllDepartments() async {
-    departmentList = (await service.getDepartmentList()).content ?? [];
+    departmentList.value = (await service.getDepartmentList()).content ?? [];
   }
 
   /// Returns artifact data by ID. Returns null if artifact cannot be found. */

@@ -17,8 +17,7 @@ class SearchScreen extends StatefulWidget with GetItStatefulWidgetMixin {
 
 class _SearchScreenState extends State<SearchScreen> with GetItStateMixin {
   //final _pageController = PageController(viewportFraction: 1);
-  List<int> searchResultsIds = [];
-  List<ArtifactData> searchResultsData = [];
+  List<ArtifactData> searchResults = [];
   bool isLoading = false;
   bool isEmpty = false;
   double width = 0;
@@ -47,35 +46,12 @@ class _SearchScreenState extends State<SearchScreen> with GetItStateMixin {
       isLoading = true;
     });
 
-    searchResultsIds = await search.searchForArtifacts(query);
-    populateResultsData(0, 20);
-  }
+    searchResults = await search.searchForArtifacts(query);
 
-  void populateResultsData(int start, int end) async {
-    // Ensure we're not out of bounds.
-    end = math.min(end, searchResultsIds.length);
-    if (searchResultsIds.isNotEmpty) {
-      ArtifactData result;
-      // Load in atifact data.
-      for (var i = 0, l = math.min(end - start, searchResultsIds.length); i < l; i++) {
-        result = await search.getArtifactByID(searchResultsIds[i]) ?? ArtifactData.empty();
-        while (searchResultsData.length <= i) {
-          searchResultsData.add(ArtifactData.empty());
-        }
-        searchResultsData[i] = result;
-      }
-
-      // Update the list.
-      setState(() {
-        isLoading = false;
-      });
-    } else {
-      // Empty list.
-      setState(() {
-        isLoading = false;
-        isEmpty = true;
-      });
-    }
+    setState(() {
+      isLoading = false;
+      isEmpty = searchResults.isEmpty;
+    });
   }
 
   @override
@@ -98,10 +74,10 @@ class _SearchScreenState extends State<SearchScreen> with GetItStateMixin {
         crossAxisCount: 2,
         crossAxisSpacing: 10,
         mainAxisSpacing: 12,
-        itemCount: searchResultsData.length,
+        itemCount: searchResults.length,
         clipBehavior: Clip.antiAlias,
         itemBuilder: (BuildContext context, int index) {
-          var data = searchResultsData[index];
+          var data = searchResults[index];
           return Image.network(data.image);
         },
       ))

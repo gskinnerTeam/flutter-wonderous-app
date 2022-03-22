@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:developer';
+import 'dart:developer' as Dev;
 
 import 'package:http/http.dart' as http;
 import 'package:wonders/common_libs.dart';
@@ -119,10 +119,10 @@ class HttpClient {
 
     if (_logResponseUrlEnabled) {
       int msSince = DateTime.now().millisecondsSinceEpoch - startMs;
-      log('>[HttpClient.send response] ${response.statusCode} ${msSince}ms url: $url');
+      Dev.log('>[HttpClient.send response] ${response.statusCode} ${msSince}ms url: $url');
     }
     if (_logResponseBodyEnabled) {
-      log(">${response.body ?? "null"}");
+      Dev.log(">${response.body ?? "null"}");
     }
 
     return response;
