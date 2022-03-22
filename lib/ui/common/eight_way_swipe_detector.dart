@@ -9,25 +9,38 @@ class EightWaySwipeDetector extends StatelessWidget {
   Widget build(BuildContext context) {
     Offset _startPos = Offset.zero;
     Offset _endPos = Offset.zero;
+    bool _isPanning = false;
+
+    void _triggerSwipe() {
+      if (_isPanning == false) return;
+      _isPanning = false;
+      // Calculate a degree for the swipe, from 0 - 360
+      double dx = _endPos.dx - _startPos.dx;
+      double dy = _endPos.dy - _startPos.dy;
+      if ((dx.abs() + dy.abs()) < 20) return; // ignore very small swipes
+      // Get the angle of the line between start and end position
+      final rads = atan2(dy, dx);
+      // Convert rads to degrees, (0 to 360)
+      final degrees = (rads * 180 / pi + 180);
+      // Using the angle, get a direction
+      Offset dir = _calculateDirection(degrees);
+      onSwipe?.call(dir);
+    }
+
     return StatefulBuilder(
       builder: (_, __) {
         return GestureDetector(
             behavior: HitTestBehavior.translucent,
-            onPanStart: (d) => _startPos = d.localPosition,
-            onPanUpdate: (d) => _endPos = d.localPosition,
-            onPanEnd: (d) {
-              // Calculate a degree for the swipe, from 0 - 360
-              double dx = _endPos.dx - _startPos.dx;
-              double dy = _endPos.dy - _startPos.dy;
-              if ((dx.abs() + dy.abs()) < 20) return; // ignore very small swipes
-              // Get the angle of the line between start and end position
-              final rads = atan2(dy, dx);
-              // Convert rads to degrees, (0 to 360)
-              final degrees = (rads * 180 / pi + 180);
-              // Using the angle, get a direction
-              Offset dir = _calculateDirection(degrees);
-              onSwipe?.call(dir);
+            onPanStart: (d) {
+              _isPanning = true;
+              _startPos = d.localPosition;
             },
+            onPanUpdate: (d) {
+              _endPos = d.localPosition;
+              final delta = (_endPos - _startPos).distance;
+              if (delta > 40) _triggerSwipe();
+            },
+            onPanEnd: (d) => _triggerSwipe(),
             child: child);
       },
     );

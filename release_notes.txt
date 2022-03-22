@@ -1,3 +1,7 @@
+# 0.0.4
+- Swiping image grid is easier / quicker
+-
+
 # 0.0.3
 - Added image gallery grid spike
 - Added functional tab menu

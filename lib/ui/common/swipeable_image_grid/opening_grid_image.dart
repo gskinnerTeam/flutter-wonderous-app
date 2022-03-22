@@ -3,7 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
 
 /// An image that opens into a full-screen interactive viewer
-//TODO: This should take an ImageData, or a url, or maybe an unsplash id??
+//TODO: This should take a list of ImageData or urls(?)
 class OpeningGridImage extends StatelessWidget {
   const OpeningGridImage(this.size, {Key? key, required this.selected}) : super(key: key);
   final bool selected;
@@ -12,7 +12,8 @@ class OpeningGridImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String mockImg(int size, {int quality = 95}) =>
-        'https://images.unsplash.com/photo-1595450653862-394dfc73053d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=$size&q=$quality';
+        'https://images.unsplash.com/photo-1595450653862-394dfc73053d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=$quality';
+
     return OpenContainer(
       tappable: selected,
       transitionDuration: context.times.med,

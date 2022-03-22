@@ -21,9 +21,11 @@ class _SwipeableImageGridState extends State<SwipeableImageGrid> {
   late int _prevIndex = _index;
   Offset _lastSwipeDir = Offset.zero;
 
-  Size get _imgSize => widget.imageSize ?? Size(context.widthPct(.65), context.heightPct(.55));
   int get _gridCount => widget.gridCount;
   int get _imgCount => pow(_gridCount, 2).round();
+
+  Size get _imgSize => (widget.imageSize ?? Size(context.widthPct(.65), context.heightPct(.55))) * _scale;
+  double _scale = 1;
 
   void _setIndex(int value) {
     _prevIndex = _index;
@@ -58,6 +60,8 @@ class _SwipeableImageGridState extends State<SwipeableImageGrid> {
     return originOffset + indexedOffset;
   }
 
+  void _handleImageTapped(int index) => _setIndex(index);
+
   @override
   Widget build(BuildContext context) {
     // Get transform offset for the current _index
@@ -68,56 +72,92 @@ class _SwipeableImageGridState extends State<SwipeableImageGrid> {
     // Layout
     final swipeDuration = context.times.med * .55;
     // A overlay with a transparent middle sits on top of everything, animating itself each time index changes
-    return AnimatedCutoutOverlay(
-      cutoutSize: _imgSize,
-      swipeDir: _lastSwipeDir,
-      animationKey: ValueKey(_index),
-      duration: swipeDuration * .5,
-      // Clip the overflow box to prevent rendering outside of the viewport
-      // TODO: Check whether clipping the OverflowBox is actually a perf win?
-      child: ClipRect(
-        child: OverflowBox(
-          maxWidth: _gridCount * _imgSize.width + padding * (_gridCount - 1),
-          maxHeight: _gridCount * _imgSize.height + padding * (_gridCount - 1),
-          alignment: Alignment.center,
-          // Detect swipes in order to change index
-          child: EightWaySwipeDetector(
-            onSwipe: _handleSwipe,
-            child: TweenAnimationBuilder<Offset>(
-              tween: Tween(begin: gridOffset, end: gridOffset),
-              duration: swipeDuration,
-              curve: Curves.easeOut,
-              // Move the entire grid so that the selected index is centered on screen
-              builder: (_, value, child) => Transform.translate(offset: value, child: child),
-              // Use a wrap to display the images
-              child: Wrap(
-                spacing: padding,
-                runSpacing: padding,
-                children: List.generate(_imgCount, (index) {
-                  bool selected = index == _index;
-                  bool wasSelected = index == _prevIndex;
-                  return ClipRRect(
-                    borderRadius: BorderRadius.circular(6),
-                    // Wrap a motion blur around the selected and previous items
-                    child: MotionBlur(
-                      swipeDuration,
-                      // use a key to force motion blurs to re-run when index changes
-                      animationKey: ValueKey(_index),
-                      enabled: selected || wasSelected,
-                      dir: _lastSwipeDir,
-                      // Make each img tappable, so user can easily jump between them
-                      child: GestureDetector(
-                        onTap: selected ? null : () => _setIndex(index),
-                        child: OpeningGridImage(_imgSize, selected: selected),
+    return Stack(
+      children: [
+        AnimatedCutoutOverlay(
+          cutoutSize: _imgSize,
+          swipeDir: _lastSwipeDir,
+          animationKey: ValueKey(_index),
+          duration: swipeDuration * .5,
+          // Clip the overflow box to prevent rendering outside of the viewport
+          // TODO: Check whether clipping the OverflowBox is actually a perf win?
+          child: ClipRect(
+            child: OverflowBox(
+              maxWidth: _gridCount * _imgSize.width + padding * (_gridCount - 1),
+              maxHeight: _gridCount * _imgSize.height + padding * (_gridCount - 1),
+              alignment: Alignment.center,
+              // Detect swipes in order to change index
+              child: EightWaySwipeDetector(
+                onSwipe: _handleSwipe,
+                // Move the entire grid so that the selected index is centered on screen
+                child: GTweener(
+                  [GMove(from: gridOffset, to: gridOffset)],
+                  duration: swipeDuration,
+                  curve: Curves.easeOut,
+                  // Use a wrap to display the images
+                  child: GridView.count(
+                      primary: false,
+                      physics: NeverScrollableScrollPhysics(),
+                      crossAxisCount: _gridCount,
+                      childAspectRatio: _imgSize.width / _imgSize.height,
+                      crossAxisSpacing: padding,
+                      mainAxisSpacing: padding,
+                      children: List.generate(
+                        _imgCount,
+                        (index) {
+                          bool selected = index == _index;
+                          bool wasSelected = index == _prevIndex;
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(6),
+                            // Wrap a motion blur around the selected and previous items
+                            child: MotionBlur(
+                              swipeDuration,
+                              // use a key to force motion blurs to re-run when index changes
+                              animationKey: ValueKey(_index),
+                              enabled: selected || wasSelected,
+                              dir: _lastSwipeDir,
+                              // Make each img tappable, so user can easily jump between them
+                              child: GestureDetector(
+                                onTap: selected ? null : () => _handleImageTapped(index),
+                                child: OpeningGridImage(_imgSize, selected: selected),
+                              ),
+                            ),
+                          );
+                        },
+                      )
+                      // Wrap(
+                      //   spacing: padding,
+                      //   runSpacing: padding,
+                      //   children: List.generate(_imgCount, (index) {
+                      //     bool selected = index == _index;
+                      //     bool wasSelected = index == _prevIndex;
+                      //     return ClipRRect(
+                      //       borderRadius: BorderRadius.circular(6),
+                      //       // Wrap a motion blur around the selected and previous items
+                      //       child: MotionBlur(
+                      //         swipeDuration,
+                      //         // use a key to force motion blurs to re-run when index changes
+                      //         animationKey: ValueKey(_index),
+                      //         enabled: selected || wasSelected,
+                      //         dir: _lastSwipeDir,
+                      //         // Make each img tappable, so user can easily jump between them
+                      //         child: GestureDetector(
+                      //           onTap: selected ? null : () => _handleImageTapped(index),
+                      //           child: OpeningGridImage(_imgSize, selected: selected),
+                      //         ),
+                      //       ),
+                      //     );
+                      //   }),
+                      // ),
                       ),
-                    ),
-                  );
-                }),
+                ),
               ),
             ),
           ),
         ),
-      ),
+        Center(
+            child: SizedBox(height: 100, child: Slider(value: _scale, onChanged: (v) => setState(() => _scale = v)))),
+      ],
     );
   }
 }

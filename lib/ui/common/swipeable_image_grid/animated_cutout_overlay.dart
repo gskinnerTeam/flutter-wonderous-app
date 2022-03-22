@@ -26,7 +26,6 @@ class AnimatedCutoutOverlay extends StatelessWidget {
           key: animationKey,
           curve: Curves.easeOut,
           duration: duration,
-          autoPlay: false,
           onInit: (t) => t.animation.forward().then((_) => t.animation.reverse()),
           child: IgnorePointer(child: Container(color: Colors.black.withOpacity(.85))),
         )
