@@ -16,7 +16,11 @@ class WonderDetailsScreen extends StatefulWidget with GetItStatefulWidgetMixin {
 
 class _WonderDetailsScreenState extends State<WonderDetailsScreen>
     with GetItStateMixin, SingleTickerProviderStateMixin {
-  late final _tabController = TabController(length: 4, vsync: this)..addListener(_handleTabChanged);
+  late final _tabController = TabController(
+    length: 4,
+    vsync: this,
+    initialIndex: app.selectedWondersTab.value,
+  )..addListener(_handleTabChanged);
   GTweenerController? _fade;
 
   @override
@@ -27,6 +31,8 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
 
   void _handleTabChanged() {
     _fade?.forward(from: 0);
+    // Hoist the selected tab up to the app controller, so it will be remembered when we return to this view.
+    app.selectedWondersTab.value = _tabController.index;
     setState(() {});
   }
 
@@ -40,27 +46,16 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
       color: Colors.black,
       child: Stack(
         children: [
-          /// Content & Tab Menu
-          Stack(
+          IndexedStack(
+            index: _tabController.index,
             children: [
-              IndexedStack(
-                index: _tabController.index,
-                children: [
-                  WonderHistoryPanel(wonder),
-                  SwipeableImageGrid(),
-                  Center(child: Text('Artifacts', style: context.textStyles.h1)),
-                  Padding(padding: EdgeInsets.only(bottom: 80), child: TimelineScreen(type: widget.type)),
-                ],
-              ).gTweener.fade().withInit((t) => _fade = t),
-              BottomCenter(child: WonderDetailsBottomMenu(tabController: _tabController)),
+              WonderHistoryPanel(wonder),
+              SwipeableImageGrid(),
+              Center(child: Text('Artifacts', style: context.textStyles.h1)),
+              Padding(padding: EdgeInsets.only(bottom: 80), child: TimelineScreen(type: widget.type)),
             ],
-          ),
-
-          /// Shared "Up" btn
-          Padding(
-            padding: EdgeInsets.all(context.insets.lg),
-            child: Transform.rotate(angle: pi * .5, child: BackButton()),
-          ),
+          ).gTweener.fade().withInit((t) => _fade = t),
+          BottomCenter(child: WonderDetailsBottomMenu(tabController: _tabController)),
         ],
       ),
     );
