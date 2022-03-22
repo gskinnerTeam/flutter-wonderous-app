@@ -41,7 +41,6 @@ dependencies:
   shared_preferences: ^2.0.13
   simple_rich_text: ^2.0.49
   sized_context: ^1.0.0+1
-  shared_preferences: ^2.0.13
   statsfl: ^2.0.1+1
   unsplash_client: ^2.1.0+3
   window_interface: ^0.3.1
