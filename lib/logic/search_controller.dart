@@ -17,15 +17,19 @@ class SearchController {
 
   /// Returns artifact data by ID. Returns null if artifact cannot be found. */
   Future<ArtifactData?> getArtifactByID(int id) async {
+    ArtifactData? a;
     if (!_artifactHash.containsKey(id)) {
       // No data for artifact. Populate it for now and next time.
-      ArtifactData? a = (await service.getObjectByID(id)).content;
+      a = (await service.getObjectByID(id)).content;
       if (a != null) {
         _artifactHash[id] = a;
       }
+    } else {
+      // Data is already stored. Use the reference instead of a server call.
+      a = _artifactHash[id];
     }
 
-    return _artifactHash[id];
+    return a;
   }
 
   /// Returns list of artifact IDs by search query */
@@ -46,7 +50,12 @@ class SearchController {
     for (i; i < l; i++) {
       futures.add(getArtifactByID(ids[i]));
     }
-    var futureResults = (await Future.wait<ArtifactData?>(futures));
+
+    // Make all future calls simultaneously.
+    final futureResults = (await Future.wait<ArtifactData?>(futures));
+
+    // Trim null results before returning.
+    futureResults.removeWhere((r) => r == null);
     return futureResults;
   }
 }

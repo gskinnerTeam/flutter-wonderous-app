@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 
 class DeviceUtils {
   static const _desktopPlatforms = [TargetPlatform.macOS, TargetPlatform.windows, TargetPlatform.linux];
@@ -12,4 +15,8 @@ class DeviceUtils {
   static bool get isMacOS => defaultTargetPlatform == TargetPlatform.macOS;
   static bool get isAndroid => defaultTargetPlatform == TargetPlatform.android;
   static bool get isIOS => defaultTargetPlatform == TargetPlatform.iOS;
+
+  static Future<bool> get isConnected async {
+    return (await DataConnectionChecker().connectionStatus) == DataConnectionStatus.connected;
+  }
 }

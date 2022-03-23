@@ -1,6 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
-import 'dart:developer' as debug;
+import 'dart:developer' as dev;
 
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/logic/data/department_data.dart';
@@ -8,8 +7,6 @@ import 'package:wonders/logic/utils/http_client.dart';
 
 class SearchService {
   static String baseMETUrl = 'https://collectionapi.metmuseum.org';
-
-  void init() {}
 
   Future<ServiceResult<List<int>?>> getObjectIDList({DateTime? date, String? departmentIds}) async {
     HttpResponse response = await _request('public/collection/v1/objects', method: MethodType.get, urlParams: {
@@ -107,7 +104,7 @@ class SearchService {
           image: content['primaryImage'] ?? '',
           year: content['accessionYear'] ?? content['objectDate'] ?? '');
     } catch (e) {
-      var i = 0;
+      dev.log('Error: Search response missing content.');
     }
     return data;
   }

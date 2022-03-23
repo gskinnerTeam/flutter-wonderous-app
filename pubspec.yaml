@@ -14,6 +14,7 @@ dependencies:
   cached_network_image: ^3.2.0
   collection: ^1.15.0
   copy_with_extension: ^4.0.0
+  data_connection_checker: ^0.3.4
   equatable: ^2.0.3
   extra_alignments: ^1.0.0+1
   file_picker: ^4.5.1

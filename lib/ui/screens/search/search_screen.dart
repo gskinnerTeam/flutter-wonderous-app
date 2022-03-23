@@ -2,6 +2,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:wonders/logic/utils/device_utils.dart';
 import 'package:wonders/ui/common/wonder_illustrations.dart';
 
 /// PageView sandwiched between Foreground and Background layers
@@ -21,23 +22,15 @@ class _SearchScreenState extends State<SearchScreen> with GetItStateMixin {
   List<ArtifactData?> searchResultsAll = [];
   bool isLoading = false;
   bool isEmpty = false;
-  double width = 0;
-  double height = 0;
+  bool isDisconnected = false;
+
   List<bool> imagesReady = [];
 
   @override
   void initState() {
     // Search test.
     super.initState();
-
     scrollController.addListener(() {});
-  }
-
-  void resize() {
-    setState(() {
-      width = MediaQuery.of(context).size.width;
-      height = MediaQuery.of(context).size.height;
-    });
   }
 
   void searchForStuff(String query) async {
@@ -45,8 +38,16 @@ class _SearchScreenState extends State<SearchScreen> with GetItStateMixin {
       return;
     }
 
+    if (!await DeviceUtils.isConnected) {
+      setState(() {
+        isDisconnected = true;
+      });
+      return;
+    }
+
     setState(() {
       isEmpty = false;
+      isDisconnected = false;
       isLoading = true;
     });
 
@@ -66,6 +67,8 @@ class _SearchScreenState extends State<SearchScreen> with GetItStateMixin {
       resultsText = 'Loading, one sec...';
     } else if (isEmpty) {
       resultsText = 'Sorry, no results found';
+    } else if (isDisconnected) {
+      resultsText = 'You appear to be offline';
     } else if (searchResultsAll.isNotEmpty) {
       resultsText = '${searchResultsAll.length} results found';
     }
