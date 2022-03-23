@@ -1,7 +1,10 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:developer' as debug;
+
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/logic/data/department_data.dart';
 import 'package:wonders/logic/utils/http_client.dart';
-import 'dart:convert';
 
 class SearchService {
   static String baseMETUrl = 'https://collectionapi.metmuseum.org';
@@ -74,7 +77,6 @@ class SearchService {
 
     HttpResponse? response = await HttpClient.send(url,
         urlParams: urlParams, method: method, headers: headers, body: jsonBody, encoding: encoding);
-
     return response;
   }
 

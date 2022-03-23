@@ -4,6 +4,7 @@ import 'dart:developer' as Dev;
 import 'package:http/http.dart' as http;
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/utils/string_utils.dart';
+import 'dart:developer' as Debug;
 
 enum NetErrorType {
   none,
@@ -177,7 +178,11 @@ class ServiceResult<R> {
 
   ServiceResult(this.response, R Function(Map<String, dynamic>) parser) {
     if (StringUtils.isNotEmpty(response.body) && response.success) {
-      content = parser.call(jsonDecode(response.body!));
+      try {
+        content = parser.call(jsonDecode(response.body!));
+      } on FormatException catch (e) {
+        Debug.log('ParseError: ${e.message}');
+      }
     }
   }
 }
