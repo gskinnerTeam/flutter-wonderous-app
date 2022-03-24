@@ -9,13 +9,15 @@ class AnimatedCutoutOverlay extends StatelessWidget {
       required this.cutoutSize,
       required this.animationKey,
       this.duration,
-      required this.swipeDir})
+      required this.swipeDir,
+      required this.opacity})
       : super(key: key);
   final Widget child;
   final Size cutoutSize;
   final Key animationKey;
   final Offset swipeDir;
   final Duration? duration;
+  final double opacity;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -27,7 +29,7 @@ class AnimatedCutoutOverlay extends StatelessWidget {
           curve: Curves.easeOut,
           duration: duration,
           onInit: (t) => t.animation.forward().then((_) => t.animation.reverse()),
-          child: IgnorePointer(child: Container(color: Colors.black.withOpacity(.85))),
+          child: IgnorePointer(child: Container(color: Colors.black.withOpacity(opacity))),
         )
       ],
     );

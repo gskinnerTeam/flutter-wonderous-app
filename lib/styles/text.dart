@@ -6,7 +6,9 @@ class AppTextStyles {
   final double scale;
   late final _baseFont1 = TextStyle(fontSize: 12 * scale);
 
+  late final btn = _baseFont1.copyWith(fontSize: 12 * scale);
   late final body = _baseFont1.copyWith(fontSize: 14 * scale);
   late final h1 = _baseFont1.copyWith(fontSize: 32 * scale);
   late final h2 = _baseFont1.copyWith(fontSize: 24 * scale);
+  late final h3 = _baseFont1.copyWith(fontSize: 18 * scale);
 }

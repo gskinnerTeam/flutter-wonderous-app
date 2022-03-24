@@ -3,13 +3,14 @@ import 'package:wonders/ui/common/directional_blur.dart';
 
 class MotionBlur extends StatefulWidget {
   const MotionBlur(this.duration,
-      {Key? key, required this.child, required this.dir, this.animationKey, this.enabled = true})
+      {Key? key, required this.child, required this.dir, this.animationKey, this.enabled = true, this.blurStrength = 5})
       : super(key: key);
   final Widget child;
   final Duration duration;
   final Offset dir;
   final Key? animationKey;
   final bool enabled;
+  final double blurStrength;
   @override
   State<MotionBlur> createState() => _MotionBlurState();
 }
@@ -37,12 +38,9 @@ class _MotionBlurState extends State<MotionBlur> {
   }
 
   Widget _buildBlur(Widget child, Animation<double> anim) {
-    double amt = sin(anim.value * pi) * 15;
+    double amt = sin(anim.value * pi) * 5;
     if (widget.enabled == false) amt = 0;
     final angle = atan2(widget.dir.dy, widget.dir.dx);
-    if (angle.abs() != pi * .25) {
-      amt = 0;
-    }
     return DirectionalBlur(blurAmount: amt, angle: -angle, child: child);
   }
 }

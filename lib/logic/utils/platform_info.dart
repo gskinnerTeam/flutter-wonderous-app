@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-class DeviceUtils {
+class PlatformInfo {
   static const _desktopPlatforms = [TargetPlatform.macOS, TargetPlatform.windows, TargetPlatform.linux];
   static const _mobilePlatforms = [TargetPlatform.android, TargetPlatform.iOS];
 

@@ -1,4 +1,6 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/unsplash_controller.dart';
+import 'package:wonders/logic/unsplash_service.dart';
 import 'package:wonders/logic/wonders_controller.dart';
 import 'package:wonders/logic/wonders_service.dart';
 import 'package:wonders/logic/wonders_service_mock.dart';
@@ -20,10 +22,17 @@ class WondersApp extends StatelessWidget {
 
 /// Create singletons (controllers and services) that can be shared across the app.
 void registerSingletons({required bool useMocks}) {
-  GetIt.I.registerLazySingleton<SettingsController>(() => SettingsController());
+  // Top level app controller
   GetIt.I.registerLazySingleton<AppController>(() => AppController());
+  // Settings
+  GetIt.I.registerLazySingleton<SettingsController>(() => SettingsController());
+  // Unsplash
+  GetIt.I.registerLazySingleton<UnsplashController>(() => UnsplashController());
+  GetIt.I.registerLazySingleton<UnsplashService>(() => UnsplashService());
+  // Wonders
   GetIt.I.registerLazySingleton<WondersController>(() => WondersController());
   GetIt.I.registerLazySingleton<WondersService>(() => WondersService());
+  // Testing mocks
   if (useMocks) {
     GetIt.I.pushNewScope();
     GetIt.I.registerLazySingleton<WondersService>(() => WondersServiceMock());
@@ -31,7 +40,8 @@ void registerSingletons({required bool useMocks}) {
 }
 
 /// Add syntax sugar for quickly accessing the main controllers in the app
-/// We do not create shortcuts for services, to discourage their use directly in the ui layer.
+/// We deliberately do not create shortcuts for services, to discourage their use directly in the ui layer.
 AppController get app => GetIt.I.get<AppController>();
 WondersController get wonders => GetIt.I.get<WondersController>();
 SettingsController get settings => GetIt.I.get<SettingsController>();
+UnsplashController get unsplash => GetIt.I.get<UnsplashController>();

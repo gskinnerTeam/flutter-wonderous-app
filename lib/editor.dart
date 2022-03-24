@@ -129,7 +129,7 @@ class _EditorAppState extends State<_EditorApp> {
                   child: _EditorTabs(
                     wonder: _wonder,
                     tabs: [
-                      _EditorTab('images', _wonder.imageUrls, (List<String> v) => _wonder.copyWith(imageUrls: v)),
+                      _EditorTab('images', _wonder.imageIds, (List<String> v) => _wonder.copyWith(imageUrls: v)),
                       _EditorTab('facts', _wonder.facts, (List<String> v) => _wonder.copyWith(facts: v)),
                     ],
                     onChanged: (v) => wonder = v,

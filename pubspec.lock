@@ -312,13 +312,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
-  flutter_placeholder_textlines:
-    dependency: "direct main"
-    description:
-      name: flutter_placeholder_textlines
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.2"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -434,6 +427,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.3"
+  image_fade:
+    dependency: "direct main"
+    description:
+      name: image_fade
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.0"
   image_gallery_saver:
     dependency: "direct main"
     description:
@@ -481,6 +481,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  loading_indicator:
+    dependency: "direct main"
+    description:
+      name: loading_indicator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.3"
   logging:
     dependency: transitive
     description:
@@ -674,6 +681,13 @@ packages:
     dependency: "direct main"
     description:
       name: reactives
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.0"
+  rnd:
+    dependency: "direct main"
+    description:
+      name: rnd
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.0"
