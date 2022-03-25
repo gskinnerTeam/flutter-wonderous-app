@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
@@ -60,6 +61,10 @@ class _SearchScreenState extends State<SearchScreen> with GetItStateMixin {
     });
   }
 
+  void handleImagePressed(ArtifactData artifact) {
+    context.push(ScreenPaths.artifact(artifact.objectID.toString()));
+  }
+
   @override
   Widget build(BuildContext context) {
     String resultsText = '';
@@ -113,24 +118,24 @@ class _SearchScreenState extends State<SearchScreen> with GetItStateMixin {
               var data = searchResultsAll[index];
               return Padding(
                   padding: EdgeInsets.all(context.insets.lg),
-                  child: Image.network(data?.image ?? '',
-                      loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
-                            border: Border.all(color: context.colors.surface1, width: 3)),
-                        child: AspectRatio(
-                            aspectRatio: 1,
-                            child: Center(
-                                heightFactor: 1,
-                                child: CircularProgressIndicator(
-                                    color: context.colors.fg,
-                                    semanticsLabel: data?.title,
-                                    value: loadingProgress.expectedTotalBytes != null
-                                        ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                                        : null))));
-                  }));
+                  child: GestureDetector(
+                      onTap: () => handleImagePressed(data!),
+                      child: CachedNetworkImage(
+                          imageUrl: data!.image,
+                          placeholder: (BuildContext context, String url) {
+                            return Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                                    border: Border.all(color: context.colors.surface1, width: 3)),
+                                child: AspectRatio(
+                                    aspectRatio: 1,
+                                    child: Center(
+                                        heightFactor: 1,
+                                        child: CircularProgressIndicator(
+                                          color: context.colors.fg,
+                                          semanticsLabel: data.title,
+                                        ))));
+                          })));
             },
           ))
         ]));

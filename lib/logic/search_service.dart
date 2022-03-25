@@ -95,6 +95,7 @@ class SearchService {
     ArtifactData? data;
     try {
       data = ArtifactData(
+          objectID: content['objectID'],
           title: content['title'] ?? '',
           desc: (content['department'] ?? '') +
               ' ' +

@@ -204,13 +204,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.2"
-  data_connection_checker:
-    dependency: "direct main"
-    description:
-      name: data_connection_checker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.4"
   equatable:
     dependency: "direct main"
     description:
@@ -460,6 +453,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  internet_connection_checker:
+    dependency: "direct main"
+    description:
+      name: internet_connection_checker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1+3"
   io:
     dependency: transitive
     description:

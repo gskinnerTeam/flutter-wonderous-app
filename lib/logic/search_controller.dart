@@ -32,14 +32,24 @@ class SearchController {
     return a;
   }
 
-  /// Returns list of artifact IDs by search query */
+  /// Returns list of artifact IDs by search query.
+  /// - count; number of results to return
+  /// - offset: offset the returned list of elements (used for multiple chunks of results)
+  /// - isTitle: true if query is part of a title
+  /// - isKeyword: true if query is part of a subject keyword
+  /// - location: string of location names (cities, countries, etc). Multiple entries are separated by | operator.
+  /// - startYear: minimum year range. Set to negative value for B.C. Must include endYear.
+  /// - endYear: maximum year range. Set to negative value for B.C. Must include startYear.
   Future<List<ArtifactData?>> searchForArtifacts(String query,
-      {int count = 1000, int offset = 0, bool? isTitle, bool? isKeyword}) async {
-    final result = await service.searchForArtifacts(
-      query,
-      isTitle: isTitle,
-      isKeywordTag: isKeyword,
-    );
+      {int count = 1000,
+      int offset = 0,
+      bool? isTitle,
+      bool? isKeyword,
+      String? location,
+      int? startYear,
+      int? endYear}) async {
+    final result = await service.searchForArtifacts(query,
+        isTitle: isTitle, isKeywordTag: isKeyword, geoLocation: location, dateBegin: startYear, dateEnd: endYear);
 
     final ids = result.content ?? [];
 
@@ -55,7 +65,7 @@ class SearchController {
     final futureResults = (await Future.wait<ArtifactData?>(futures));
 
     // Trim null results before returning.
-    futureResults.removeWhere((r) => r == null);
+    futureResults.removeWhere((r) => r == null || r.image.isEmpty);
     return futureResults;
   }
 }

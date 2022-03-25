@@ -2,6 +2,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/routing/app_route.dart';
 import 'package:wonders/ui/app_scaffold.dart';
+import 'package:wonders/ui/screens/artifact/artifact_screen.dart';
 import 'package:wonders/ui/screens/home/wonders_home_screen.dart';
 import 'package:wonders/ui/screens/search/search_screen.dart';
 import 'package:wonders/ui/screens/splash_screen.dart';
@@ -16,6 +17,7 @@ class ScreenPaths {
   static String wonderGallery(WonderType type) => '/gallery/${type.name}';
   static String timeline(WonderType type) => '/timeline/${type.name}';
   static String video(String id) => '/video/$id';
+  static String artifact(String id) => '/artifact/$id';
   static String search(WonderType type) => '/search/${type.name}';
 }
 
@@ -39,6 +41,9 @@ final appRouter = GoRouter(
     }),
     AppRoute('/search/:id', (s) {
       return SearchScreen(type: _parseWonderType(s.params['id']!));
+    }),
+    AppRoute('/artifact/:id', (s) {
+      return ArtifactScreen(id: s.params['id']!);
     })
   ],
 );
