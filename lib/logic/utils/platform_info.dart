@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
-class DeviceUtils {
+class PlatformInfo {
   static const _desktopPlatforms = [TargetPlatform.macOS, TargetPlatform.windows, TargetPlatform.linux];
   static const _mobilePlatforms = [TargetPlatform.android, TargetPlatform.iOS];
 

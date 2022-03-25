@@ -15,7 +15,7 @@ class WonderData extends Equatable {
   const WonderData({
     required this.type,
     required this.title,
-    this.imageUrls = const [],
+    this.imageIds = const [],
     this.facts = const [],
     required this.desc,
     this.startYr = 0,
@@ -28,7 +28,7 @@ class WonderData extends Equatable {
   final WonderType type;
   final String title;
   final String desc;
-  final List<String> imageUrls;
+  final List<String> imageIds;
   final List<String> facts;
   final int startYr;
   final int endYr;
@@ -39,5 +39,5 @@ class WonderData extends Equatable {
   Map<String, dynamic> toJson() => _$WonderDataToJson(this);
 
   @override
-  List<Object?> get props => [type, title, desc, imageUrls, facts];
+  List<Object?> get props => [type, title, desc, imageIds, facts];
 }

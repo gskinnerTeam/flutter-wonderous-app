@@ -11,31 +11,24 @@ class WonderDetailsBottomMenu extends StatelessWidget {
     double largeBtnHeight = 60;
     double tabBtnHeight = largeBtnHeight * .85;
 
-    return Stack(
-      children: [
-        BottomCenter(
-          child: SizedBox(
-            height: largeBtnHeight,
-            child: Padding(
-              padding: EdgeInsets.only(top: largeBtnHeight - tabBtnHeight),
-              child: Container(
-                color: context.colors.surface1,
-                child: Row(
-                  children: [
-                    /// Use an invisible wonder btn as placeholder
-                    Opacity(opacity: 0, child: _WonderHomeBtn(largeBtnHeight)),
-                    _TabBtn(0, tabController, icon: Icons.info_outline),
-                    _TabBtn(1, tabController, icon: Icons.image_outlined),
-                    _TabBtn(2, tabController, icon: Icons.search),
-                    _TabBtn(3, tabController, icon: Icons.timelapse),
-                  ],
-                ),
-              ),
-            ),
+    return SizedBox(
+      height: largeBtnHeight,
+      child: Padding(
+        padding: EdgeInsets.only(top: largeBtnHeight - tabBtnHeight),
+        child: Container(
+          color: context.colors.surface1,
+          child: Row(
+            children: [
+              /// Use an invisible wonder btn as placeholder
+              Opacity(opacity: 0, child: _WonderHomeBtn(largeBtnHeight)),
+              _TabBtn(0, tabController, icon: Icons.info_outline),
+              _TabBtn(1, tabController, icon: Icons.image_outlined),
+              _TabBtn(2, tabController, icon: Icons.search),
+              _TabBtn(3, tabController, icon: Icons.timelapse),
+            ],
           ),
         ),
-        _WonderHomeBtn(largeBtnHeight),
-      ],
+      ),
     );
   }
 }

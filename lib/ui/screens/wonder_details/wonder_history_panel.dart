@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/utils/you_tube_utils.dart';
+import 'package:wonders/ui/common/circle_button.dart';
 import 'package:wonders/ui/common/placeholder_image.dart';
 import 'package:wonders/ui/common/placeholder_text.dart';
 import 'package:wonders/ui/common/wonder_illustrations.dart';
@@ -13,18 +14,27 @@ class WonderHistoryPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void handleVideoPressed() => context.push(ScreenPaths.video('cnMa-Sm9H4k'));
+    void _handleBackPressed() => context.pop();
 
     return CustomScrollView(
       slivers: [
         SliverAppBar(
           pinned: true,
-          leading: SizedBox.shrink(),
           collapsedHeight: 80,
+          leading: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CircleButton(
+              bgColor: context.colors.surface1,
+              onPressed: _handleBackPressed,
+              child: Icon(Icons.arrow_upward, size: 24),
+            ),
+          ),
           flexibleSpace: SafeArea(
-              child: Padding(
-            padding: EdgeInsets.all(context.insets.lg),
-            child: WonderIllustration(data.type),
-          )),
+            child: Padding(
+              padding: EdgeInsets.all(context.insets.lg),
+              child: WonderIllustration(data.type),
+            ),
+          ),
           expandedHeight: context.heightPct(.3),
           backgroundColor: context.colors.accent,
         ),

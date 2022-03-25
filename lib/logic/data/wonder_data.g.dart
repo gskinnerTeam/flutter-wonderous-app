@@ -109,8 +109,8 @@ class _$WonderDataCWProxyImpl implements _$WonderDataCWProxy {
           ? _value.facts
           // ignore: cast_nullable_to_non_nullable
           : facts as List<String>,
-      imageUrls: imageUrls == const $CopyWithPlaceholder() || imageUrls == null
-          ? _value.imageUrls
+      imageIds: imageUrls == const $CopyWithPlaceholder() || imageUrls == null
+          ? _value.imageIds
           // ignore: cast_nullable_to_non_nullable
           : imageUrls as List<String>,
       lat: lat == const $CopyWithPlaceholder() || lat == null
@@ -149,7 +149,7 @@ extension $WonderDataCopyWith on WonderData {
 WonderData _$WonderDataFromJson(Map<String, dynamic> json) => WonderData(
       type: $enumDecodeNullable(_$WonderTypeEnumMap, json['type']) ?? WonderType.petra,
       title: json['title'] as String,
-      imageUrls: (json['imageUrls'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const [],
+      imageIds: (json['imageUrls'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const [],
       facts: (json['facts'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const [],
       desc: json['desc'] as String,
       startYr: json['startYr'] as int? ?? 0,
@@ -162,7 +162,7 @@ Map<String, dynamic> _$WonderDataToJson(WonderData instance) => <String, dynamic
       'type': _$WonderTypeEnumMap[instance.type],
       'title': instance.title,
       'desc': instance.desc,
-      'imageUrls': instance.imageUrls,
+      'imageUrls': instance.imageIds,
       'facts': instance.facts,
       'startYr': instance.startYr,
       'endYr': instance.endYr,

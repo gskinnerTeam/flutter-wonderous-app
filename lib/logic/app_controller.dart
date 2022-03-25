@@ -6,6 +6,7 @@ import 'package:screenshot/screenshot.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/utils/device_utils.dart';
+import 'package:wonders/logic/utils/platform_info.dart';
 import 'package:wonders/ui/modals/app_modals.dart';
 import 'package:wonders/ui/screens/wallpaper_preview/wallpaper_preview.dart';
 
@@ -29,6 +30,7 @@ class AppController {
     appRouter.go(ScreenPaths.search(WonderType.petra));
   }
 
+  /// Walks user through flow to save a Wonder Poster to their gallery
   Future<void> saveWallpaper(BuildContext context, Widget widget, {required String name}) async {
     bool result = await showModal(context,
         child: OkCancelModal(
@@ -42,7 +44,7 @@ class AppController {
       showModal(context, child: LoadingModal(title: 'Saving Image. Please wait...'));
       await ScreenshotController().captureFromWidget(widget).then((Uint8List? image) async {
         if (image != null) {
-          if (DeviceUtils.isMobile) {
+          if (PlatformInfo.isMobile) {
             await ImageGallerySaver.saveImage(image, quality: 95, name: name);
           } else {
             await Future.delayed(.5.seconds);

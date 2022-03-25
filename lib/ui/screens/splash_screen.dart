@@ -19,6 +19,7 @@ class SplashScreen extends StatelessWidget {
     return Column(children: [
       ListView(children: [Placeholder(fallbackHeight: 1000)])
     ]);
+
     */
 
     return Scaffold(

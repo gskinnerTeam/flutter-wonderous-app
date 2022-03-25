@@ -21,8 +21,9 @@ class CircleButton extends StatelessWidget {
       onPressed: onPressed,
       child: child,
       style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.zero,
           shape: CircleBorder(),
-          padding: EdgeInsets.all(padding ?? context.insets.lg),
+          minimumSize: Size(60, 60),
           primary: bgColor,
           onPrimary: splashColor),
     );

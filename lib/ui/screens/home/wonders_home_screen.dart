@@ -40,6 +40,8 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
   void _handleSaveWallPaperPressed() async =>
       app.saveWallpaper(context, _wonderLayerSets[_wonderIndex].mg, name: 'wonder$_wonderIndex');
 
+  void _handleSettingsPressed() => context.push(ScreenPaths.settings);
+
   @override
   Widget build(BuildContext context) {
     /// Collect children for the various layers
@@ -91,6 +93,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
 
               /// Save Background Btn
               AppBtn(child: Text('Save Background'), onPressed: _handleSaveWallPaperPressed),
+              AppBtn(child: Text('Settings'), onPressed: _handleSettingsPressed),
               Spacer(),
 
               /// Title
