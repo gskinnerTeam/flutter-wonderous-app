@@ -26,25 +26,32 @@ class _ArtifactScreenState extends State<ArtifactScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(context.style.insets.lg),
-      child: SingleChildScrollView(
-        /// Vertically scrolling timeline, manages a ScrollController.
-        child: Expanded(
-          child: Column(
-            children: [
-              // Close button
-              SafeArea(
-                child: Align(
-                  alignment: Alignment.topRight,
-                  child: Padding(
-                    padding: EdgeInsets.all(context.insets.lg),
-                    child: const CloseButton(),
-                  ),
-                ),
-              ),
+    return Column(children: [
+      // Close button
+      SafeArea(
+        child: Align(
+          alignment: Alignment.topRight,
+          child: Padding(
+            padding: EdgeInsets.all(context.insets.lg),
+            child: const CloseButton(),
+          ),
+        ),
+      ),
 
-              (artifact == null)
+      // Content
+      Padding(
+        padding: EdgeInsets.all(context.style.insets.lg),
+
+        /// Scrolling timeline, manages a ScrollController.
+        child: Flex(
+          direction: context.isLandscape ? Axis.horizontal : Axis.vertical,
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          textBaseline: TextBaseline.alphabetic,
+          children: [
+            Expanded(
+              child: (artifact == null)
                   ?
                   // Progress indicator
                   Center(
@@ -56,31 +63,40 @@ class _ArtifactScreenState extends State<ArtifactScreen> {
                   // Main image
                   CachedNetworkImage(
                       imageUrl: artifact!.image,
+                      fit: BoxFit.fitHeight,
                       placeholder: (BuildContext context, String url) => const CircularProgressIndicator()),
+            ),
 
-              // Text section
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: context.style.insets.lg),
-                child: SingleChildScrollView(
-                  child: Expanded(
+            // Text section
+            Flexible(
+              flex: 1,
+              fit: FlexFit.loose,
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: context.style.insets.lg),
+                  child: SingleChildScrollView(
+                      child: Expanded(
                     child: Column(
                       children: [
+                        // Title (or "loading" if artifact isn't loaded yet)
                         Padding(
                             padding: EdgeInsets.only(top: context.style.insets.lg),
                             child: Text(artifact?.title ?? 'Loading...')),
+                        // Subtitle
                         Padding(
                             padding: EdgeInsets.only(top: context.style.insets.sm), child: Text(artifact?.year ?? '')),
+                        // Description
                         Padding(
                             padding: EdgeInsets.only(top: context.style.insets.lg), child: Text(artifact?.desc ?? '')),
                       ],
                     ),
-                  ),
+                  )),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
-    );
+    ]);
   }
 }

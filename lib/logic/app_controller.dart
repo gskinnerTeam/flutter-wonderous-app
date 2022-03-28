@@ -5,7 +5,6 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
-import 'package:wonders/logic/utils/device_utils.dart';
 import 'package:wonders/logic/utils/platform_info.dart';
 import 'package:wonders/ui/modals/app_modals.dart';
 import 'package:wonders/ui/screens/wallpaper_preview/wallpaper_preview.dart';

@@ -3,8 +3,8 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:wonders/logic/utils/device_utils.dart';
 import 'package:wonders/ui/common/wonder_illustrations.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 /// PageView sandwiched between Foreground and Background layers
 /// arranged in a parallax style
@@ -39,7 +39,8 @@ class _SearchScreenState extends State<SearchScreen> with GetItStateMixin {
       return;
     }
 
-    if (!await DeviceUtils.isConnected) {
+    InternetConnectionStatus status = (await InternetConnectionChecker().connectionStatus);
+    if (status == InternetConnectionStatus.disconnected) {
       setState(() {
         isDisconnected = true;
       });
