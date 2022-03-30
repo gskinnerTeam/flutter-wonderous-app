@@ -5,27 +5,27 @@ class CircleButton extends StatelessWidget {
     Key? key,
     required this.child,
     required this.onPressed,
-    this.splashColor,
+    this.border,
     this.bgColor,
     this.padding,
   }) : super(key: key);
   final VoidCallback? onPressed;
   final Color? bgColor;
-  final Color? splashColor;
+  final BorderSide? border;
   final Widget child;
   final double? padding;
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return TextButton(
       onPressed: onPressed,
-      child: child,
-      style: ElevatedButton.styleFrom(
+      child: ClipRRect(borderRadius: BorderRadius.circular(99), child: child),
+      style: TextButton.styleFrom(
           padding: EdgeInsets.zero,
-          shape: CircleBorder(),
+          backgroundColor: bgColor,
+          shape: CircleBorder(side: border ?? BorderSide.none),
           minimumSize: Size(60, 60),
-          primary: bgColor,
-          onPrimary: splashColor),
+          primary: bgColor),
     );
   }
 }

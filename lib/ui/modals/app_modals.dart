@@ -74,12 +74,12 @@ class _BaseContentModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(context.insets.xl),
-      child: SeparatedColumn(mainAxisSize: MainAxisSize.min, separatorBuilder: () => Gap(context.insets.lg), children: [
+      padding: EdgeInsets.all(context.insets.lg),
+      child: SeparatedColumn(mainAxisSize: MainAxisSize.min, separatorBuilder: () => Gap(context.insets.md), children: [
         if (title != null) Text(title!, style: context.textStyles.h2),
         if (child != null) child!,
         if (msg != null) Text(msg!, style: context.textStyles.body),
-        Gap(context.insets.lg),
+        Gap(context.insets.md),
         Row(children: buttons.map((e) => Expanded(child: e)).toList())
       ]),
     );

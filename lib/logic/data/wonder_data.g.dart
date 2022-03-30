@@ -147,7 +147,7 @@ extension $WonderDataCopyWith on WonderData {
 // **************************************************************************
 
 WonderData _$WonderDataFromJson(Map<String, dynamic> json) => WonderData(
-      type: $enumDecodeNullable(_$WonderTypeEnumMap, json['type']) ?? WonderType.petra,
+      type: $enumDecodeNullable(_$WonderTypeEnumMap, json['type']) ?? WonderType.colosseum,
       title: json['title'] as String,
       imageIds: (json['imageUrls'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const [],
       facts: (json['facts'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const [],
@@ -171,6 +171,6 @@ Map<String, dynamic> _$WonderDataToJson(WonderData instance) => <String, dynamic
     };
 
 const _$WonderTypeEnumMap = {
-  WonderType.petra: 'petra',
-  WonderType.machuPicchu: 'machuPicchu',
+  WonderType.colosseum: 'petra',
+  WonderType.chichenItza: 'machuPicchu',
 };

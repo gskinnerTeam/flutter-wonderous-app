@@ -20,9 +20,10 @@ class AppController {
   /// Initialize the app and all main actors.
   /// Loads settings, sets up services etc.
   Future<void> bootstrap() async {
+    FlutterError.onError = _handleFlutterError;
+
     await settings.load();
     settings.scheduleSave(); // test save calls on each boot
-    await wonders.init();
     isBootstrapComplete = true;
     // A43 - For testing search view
     // appRouter.go(ScreenPaths.home);
@@ -53,5 +54,9 @@ class AppController {
         }
       });
     }
+  }
+
+  void _handleFlutterError(FlutterErrorDetails details) {
+    FlutterError.dumpErrorToConsole(details);
   }
 }

@@ -36,7 +36,7 @@ class _FullscreenVideoPageState extends State<FullscreenVideoPage> with Reactive
           ),
           SafeArea(
             child: Padding(
-              padding: EdgeInsets.all(context.insets.lg),
+              padding: EdgeInsets.all(context.insets.md),
               child: const BackButton(),
             ),
           ),

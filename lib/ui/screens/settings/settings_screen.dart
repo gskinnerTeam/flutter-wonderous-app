@@ -16,7 +16,7 @@ class SettingsScreen extends StatelessWidget with GetItMixin {
         title: Text('Settings', style: context.textStyles.h2),
       ),
       body: Padding(
-        padding: EdgeInsets.all(context.insets.xl),
+        padding: EdgeInsets.all(context.insets.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -24,19 +24,19 @@ class SettingsScreen extends StatelessWidget with GetItMixin {
             SwitchListTile(
               value: enableFpsMeter,
               onChanged: _handleFpsToggle,
-              title: Text('Enable Fps Meter', style: context.textStyles.btn),
+              title: Text('Enable Fps Meter', style: context.textStyles.caption),
             ),
             Divider(),
             Text('Image Grid', style: context.textStyles.h3),
             SwitchListTile(
               value: enableBlur,
               onChanged: _handleMotionBlurToggle,
-              title: Text('Enable Motion Blur', style: context.textStyles.btn),
+              title: Text('Enable Motion Blur', style: context.textStyles.caption),
             ),
             Row(
               children: [
-                Gap(context.insets.med),
-                Text('Swipe Threshold (${(swipeThreshold * 100).round()})', style: context.textStyles.btn),
+                Gap(context.insets.sm),
+                Text('Swipe Threshold (${(swipeThreshold * 100).round()})', style: context.textStyles.caption),
                 Expanded(
                   child: Slider(
                     value: swipeThreshold,

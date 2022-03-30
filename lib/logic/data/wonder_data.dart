@@ -1,13 +1,9 @@
 import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:wonders/logic/data/wonder_type.dart';
 
 part 'wonder_data.g.dart';
-
-enum WonderType {
-  petra,
-  machuPicchu,
-}
 
 @JsonSerializable()
 @CopyWith()
@@ -24,7 +20,7 @@ class WonderData extends Equatable {
     this.lng = 0,
   });
 
-  @JsonKey(defaultValue: WonderType.petra)
+  @JsonKey(defaultValue: WonderType.colosseum)
   final WonderType type;
   final String title;
   final String desc;
