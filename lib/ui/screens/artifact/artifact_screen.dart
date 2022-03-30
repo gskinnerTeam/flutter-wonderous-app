@@ -12,6 +12,7 @@ class ArtifactScreen extends StatefulWidget {
 
 class _ArtifactScreenState extends State<ArtifactScreen> {
   ArtifactData? artifact;
+  bool isLiked = false;
 
   @override
   void initState() {
@@ -26,77 +27,102 @@ class _ArtifactScreenState extends State<ArtifactScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      // Close button
-      SafeArea(
-        child: Align(
-          alignment: Alignment.topRight,
-          child: Padding(
-            padding: EdgeInsets.all(context.insets.lg),
-            child: const CloseButton(),
+    var _textBox = Padding(
+      padding: EdgeInsets.symmetric(horizontal: context.style.insets.lg),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // Title (or "loading" if artifact isn't loaded yet)
+          Flexible(
+            fit: FlexFit.loose,
+            child: Padding(
+              padding: EdgeInsets.only(top: context.style.insets.lg),
+              child: Text(artifact?.title ?? 'Loading...'),
+            ),
+          ),
+          // Subtitle
+          Flexible(
+            fit: FlexFit.loose,
+            child: Padding(
+              padding: EdgeInsets.only(top: context.style.insets.sm),
+              child: Text(artifact?.year ?? ''),
+            ),
+          ),
+          // Description
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(top: context.style.insets.lg),
+              child: Text(artifact?.desc ?? ''),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    return Column(
+      children: [
+        // Close button
+        SafeArea(
+          child: Align(
+            alignment: Alignment.topLeft,
+            child: Padding(
+              padding: EdgeInsets.all(context.insets.lg),
+              child: const CloseButton(),
+            ),
           ),
         ),
-      ),
 
-      // Content
-      Padding(
-        padding: EdgeInsets.all(context.style.insets.lg),
-
-        /// Scrolling timeline, manages a ScrollController.
-        child: Flex(
-          direction: context.isLandscape ? Axis.horizontal : Axis.vertical,
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          textBaseline: TextBaseline.alphabetic,
-          children: [
-            Expanded(
-              child: (artifact == null)
-                  ?
-                  // Progress indicator
-                  Center(
-                      child: CircularProgressIndicator(
-                        color: context.colors.fg,
-                      ),
-                    )
-                  :
-                  // Main image
-                  CachedNetworkImage(
-                      imageUrl: artifact!.image,
-                      fit: BoxFit.fitHeight,
-                      placeholder: (BuildContext context, String url) => const CircularProgressIndicator()),
-            ),
-
-            // Text section
-            Flexible(
-              flex: 1,
-              fit: FlexFit.loose,
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: context.style.insets.lg),
-                  child: SingleChildScrollView(
-                      child: Expanded(
-                    child: Column(
-                      children: [
-                        // Title (or "loading" if artifact isn't loaded yet)
-                        Padding(
-                            padding: EdgeInsets.only(top: context.style.insets.lg),
-                            child: Text(artifact?.title ?? 'Loading...')),
-                        // Subtitle
-                        Padding(
-                            padding: EdgeInsets.only(top: context.style.insets.sm), child: Text(artifact?.year ?? '')),
-                        // Description
-                        Padding(
-                            padding: EdgeInsets.only(top: context.style.insets.lg), child: Text(artifact?.desc ?? '')),
-                      ],
-                    ),
-                  )),
-                ),
+        // Like button
+        SafeArea(
+          child: Align(
+            alignment: Alignment.topRight,
+            child: Padding(
+              padding: EdgeInsets.all(context.insets.lg),
+              child: IconButton(
+                icon: Icon(isLiked ? Icons.favorite : Icons.favorite_border),
+                onPressed: () {
+                  setState(() => isLiked = !isLiked);
+                },
               ),
             ),
-          ],
+          ),
         ),
-      ),
-    ]);
+
+        // Content
+        Expanded(
+          child: Center(
+            child: Flex(
+              direction: context.isLandscape ? Axis.horizontal : Axis.vertical,
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: (artifact == null)
+                      ?
+                      // Progress indicator
+                      Center(
+                          child: CircularProgressIndicator(
+                            color: context.colors.fg,
+                          ),
+                        )
+                      : CachedNetworkImage(
+                          imageUrl: artifact!.image,
+                          fit: BoxFit.fitHeight,
+                          placeholder: (BuildContext context, String url) => const CircularProgressIndicator()),
+                ),
+
+                // Text section
+                Expanded(flex: 1, child: _textBox),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
