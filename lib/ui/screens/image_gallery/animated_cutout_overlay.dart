@@ -37,7 +37,7 @@ class AnimatedCutoutOverlay extends StatelessWidget {
 
   /// Scales from 1 --> (1 - zoomAmt) --> 1
   Widget _buildAnimatedCutout(Widget child, Animation<double> anim) {
-    const zoomAmt = .15;
+    const zoomAmt = .25;
     final size = Size(
       cutoutSize.width * (1 - zoomAmt * anim.value * swipeDir.dx.abs()),
       cutoutSize.height * (1 - zoomAmt * anim.value * swipeDir.dy.abs()),

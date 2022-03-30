@@ -1,11 +1,15 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
-import 'package:wonders/logic/wonders_service.dart';
+import 'package:wonders/logic/data/wonders/chichen_itza.dart';
+import 'package:wonders/logic/data/wonders/colosseum.dart';
+import 'package:wonders/logic/data/wonders/taj_mahal.dart';
 
 class WondersController {
-  ValueNotifier<List<WonderData>> all = ValueNotifier([]);
+  ValueNotifier<List<WonderData>> all = ValueNotifier([chichenItzaData, tajMahalData, colosseumData]);
 
-  Future<void> init() async {
-    all.value = await GetIt.I.get<WondersService>().getWonderData();
+  WonderData byType(WonderType value) {
+    WonderData? result = all.value.firstWhereOrNull((w) => w.type == value);
+    if (result == null) throw ('Could not find data for wonder type $value');
+    return result;
   }
 }

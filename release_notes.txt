@@ -1,6 +1,9 @@
 # 0.0.4
-- Swiping image grid is easier / quicker
--
+- Image Gallery - swiping is easier / quicker
+- Image Gallery - added next/prev buttons in fullscreen view
+- HomeScreen - diagonal page selector
+- HomeScreen - added Chichen Itza and Taj home page assets
+- Settings panel
 
 # 0.0.3
 - Added image gallery grid spike

@@ -10,13 +10,13 @@ class TransitionInOutBuilder extends StatefulWidget {
 }
 
 class _TransitionInOutBuilderState extends State<TransitionInOutBuilder> with SingleTickerProviderStateMixin {
-  late final _anim = AnimationController(vsync: this, duration: context.read<AppStyle>().times.fast)
+  late final _anim = AnimationController(vsync: this, duration: context.read<AppStyle>().times.med * .75)
     ..addListener(() => setState(() {}));
 
   @override
   void initState() {
     super.initState();
-    if (widget.isShowing) _anim.forward();
+    if (widget.isShowing) _anim.forward(from: 0);
   }
 
   @override

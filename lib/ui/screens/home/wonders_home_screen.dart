@@ -1,9 +1,13 @@
 import 'package:screenshot/screenshot.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/data/wonder_data.dart';
+import 'package:wonders/ui/common/blend_mask.dart';
 import 'package:wonders/ui/common/buttons.dart';
+import 'package:wonders/ui/common/diagonal_page_indicator.dart';
 import 'package:wonders/ui/common/eight_way_swipe_detector.dart';
-import 'package:wonders/ui/screens/home/layers/machu_picchu.dart';
-import 'package:wonders/ui/screens/home/layers/petra.dart';
+import 'package:wonders/ui/screens/home/animated_clouds.dart';
+import 'package:wonders/ui/screens/home/wonder_layers/chichen_itza_layer.dart';
+import 'package:wonders/ui/screens/home/wonder_layers/taj_mahal_layer.dart';
 
 /// PageView sandwiched between Foreground and Background layers
 /// arranged in a parallax style
@@ -18,15 +22,11 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
   final _pageController = PageController(viewportFraction: 1);
   final _screenshots = ScreenshotController();
   late int _wonderIndex = _pageController.initialPage;
-  final _wonderLayerSets = [
-    ParallaxLayerSet(bg: PetraBg(), mg: PetraMg(), fgBuilder: (v) => PetraFg(isShowing: v)),
-    ParallaxLayerSet(bg: MachuPicchuBg(), mg: MachuPicchuMg(), fgBuilder: (v) => MachuPicchuFg(isShowing: v)),
-    ParallaxLayerSet(bg: PetraBg(), mg: PetraMg(), fgBuilder: (v) => PetraFg(isShowing: v)),
-    ParallaxLayerSet(bg: MachuPicchuBg(), mg: MachuPicchuMg(), fgBuilder: (v) => MachuPicchuFg(isShowing: v)),
-    ParallaxLayerSet(bg: PetraBg(), mg: PetraMg(), fgBuilder: (v) => PetraFg(isShowing: v)),
-    ParallaxLayerSet(bg: MachuPicchuBg(), mg: MachuPicchuMg(), fgBuilder: (v) => MachuPicchuFg(isShowing: v)),
-    ParallaxLayerSet(bg: PetraBg(), mg: PetraMg(), fgBuilder: (v) => PetraFg(isShowing: v)),
-    ParallaxLayerSet(bg: MachuPicchuBg(), mg: MachuPicchuMg(), fgBuilder: (v) => MachuPicchuFg(isShowing: v)),
+
+  /// Create an array of all the parallax layers
+  final List<WonderHomeLayersConfig> _wonderLayerSets = [
+    chichenItzaHomeLayers,
+    tajMahalHomeLayers,
   ];
 
   void _handlePageViewChanged(v) => setState(() => _wonderIndex = v);
@@ -45,7 +45,6 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
   @override
   Widget build(BuildContext context) {
     /// Collect children for the various layers
-    final bgChild = _wonderLayerSets[_wonderIndex].bg;
     final mgChildren = _wonderLayerSets.map((e) => e.mg).toList();
     final fgChildren = _wonderLayerSets.map((e) {
       bool isShowing = _wonderLayerSets.indexOf(e) == _wonderIndex;
@@ -58,28 +57,44 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
       child: Stack(children: [
         /// Bg
         Positioned.fill(
-          child: AnimatedSwitcher(duration: context.style.times.fast, child: bgChild),
+          child: AnimatedSwitcher(
+            duration: context.style.times.fast,
+            child: _wonderLayerSets[_wonderIndex].bg,
+          ),
         ),
+
+        /// Clouds fly in, and then fly out...
+        /// Each wonder can have it's own showable cloud layer?
+        AnimatedCloudStack(),
 
         /// Mg
         Screenshot(
           controller: _screenshots,
           child: PageView(
             controller: _pageController,
-            children: mgChildren,
+            children: mgChildren.map((e) {
+              return AnimatedOpacity(
+                opacity: mgChildren.indexOf(e) == _wonderIndex ? 1 : 0,
+                duration: context.times.fast,
+                child: e,
+              );
+            }).toList(),
             physics: BouncingScrollPhysics(),
             onPageChanged: _handlePageViewChanged,
           ),
         ),
 
         /// Fg
-        BottomCenter(
-          child: FractionallySizedBox(
-            heightFactor: .4,
-            widthFactor: 1,
-            child: Stack(children: fgChildren),
-          ),
-        ),
+        IgnorePointer(
+            child: Stack(children: [
+          /// Each wonder has it's own foreground, that animates in and out
+          ...fgChildren,
+
+          /// Bottom Gradient, animates when color changes
+          BottomCenter(
+            child: _AnimatedGradient(_wonderLayerSets[_wonderIndex].fgColor),
+          )
+        ])),
 
         /// Floating controls / UI
         AnimatedSwitcher(
@@ -89,22 +104,34 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(width: double.infinity),
-              Gap(context.insets.xl * 3),
+              Gap(context.insets.lg * 3),
 
               /// Save Background Btn
               AppBtn(child: Text('Save Background'), onPressed: _handleSaveWallPaperPressed),
               AppBtn(child: Text('Settings'), onPressed: _handleSettingsPressed),
               Spacer(),
 
-              /// Title
-              Text(wonders.all.value[_wonderIndex].title, style: context.style.text.h1),
+              IgnorePointer(
+                child: Column(children: [
+                  /// Page indicator
+                  DiagonalPageIndicator(current: _wonderIndex + 1, total: _wonderLayerSets.length),
+                  Gap(context.insets.md),
 
-              /// Page indicator
-              Text('${_wonderIndex + 1}/${_wonderLayerSets.length}', style: context.style.text.h1),
+                  /// Title
+                  SizedBox(
+                    width: 350,
+                    child: Text(
+                      _wonderLayerSets[_wonderIndex].data.title.toUpperCase(),
+                      style: context.style.text.titleFont.copyWith(fontSize: 64, height: 1),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ]),
+              ),
 
               /// Down arrow
               AppBtn(child: Icon(Icons.arrow_downward, size: 64), onPressed: _showDetailsPage),
-              Gap(context.style.insets.lg),
+              Gap(context.style.insets.md),
             ],
           ),
         )
@@ -113,16 +140,41 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
   }
 }
 
+class _AnimatedGradient extends StatelessWidget {
+  _AnimatedGradient(this.fgColor, {Key? key}) : super(key: key);
+  final Color fgColor;
+  late final _gradientDec = BoxDecoration(
+      gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [fgColor.withOpacity(0), fgColor.withOpacity(.75)],
+          stops: const [0, 1]));
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: context.heightPx * .6,
+      child: AnimatedContainer(
+        duration: context.times.med,
+        decoration: _gradientDec,
+      ),
+    );
+  }
+}
+
 /// Represents a set of layers for a single wonder
-class ParallaxLayerSet {
-  ParallaxLayerSet({required this.bg, required this.mg, required this.fgBuilder});
+class WonderHomeLayersConfig {
+  WonderHomeLayersConfig(this.data,
+      {required this.bg, required this.mg, required this.fgBuilder, required this.fgColor});
+  WonderData data;
+  final Color fgColor;
   final Widget bg;
   final Widget mg;
   final Widget Function(bool isShowing) fgBuilder;
 }
 
-/// A shared API for all foreground layers that the [_FgStack] can use
-abstract class HomeParallaxLayer extends StatelessWidget {
-  const HomeParallaxLayer({Key? key, required this.isShowing}) : super(key: key);
+/// A shared API for widgets that have an `isShowing` field
+abstract class ShowableLayer extends StatelessWidget {
+  const ShowableLayer({Key? key, required this.isShowing}) : super(key: key);
   final bool isShowing;
 }

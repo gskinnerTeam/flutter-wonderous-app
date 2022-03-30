@@ -2,10 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/utils/you_tube_utils.dart';
-import 'package:wonders/ui/common/circle_button.dart';
 import 'package:wonders/ui/common/placeholder_image.dart';
 import 'package:wonders/ui/common/placeholder_text.dart';
-import 'package:wonders/ui/common/wonder_illustrations.dart';
 
 class WonderHistoryPanel extends StatelessWidget {
   const WonderHistoryPanel(this.data, {Key? key}) : super(key: key);
@@ -18,31 +16,29 @@ class WonderHistoryPanel extends StatelessWidget {
 
     return CustomScrollView(
       slivers: [
+        SliverToBoxAdapter(
+          child: Placeholder(
+            fallbackHeight: 500,
+          ),
+        ),
         SliverAppBar(
           pinned: true,
-          collapsedHeight: 80,
-          leading: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CircleButton(
-              bgColor: context.colors.surface1,
-              onPressed: _handleBackPressed,
-              child: Icon(Icons.arrow_upward, size: 24),
-            ),
-          ),
+          collapsedHeight: 130,
+          expandedHeight: 500,
+          backgroundColor: context.colors.accent1,
+          leading: SizedBox.shrink(),
           flexibleSpace: SafeArea(
             child: Padding(
-              padding: EdgeInsets.all(context.insets.lg),
-              child: WonderIllustration(data.type),
+              padding: EdgeInsets.all(context.insets.md),
+              child: SizedBox.shrink(), // WonderIllustration(data.type),
             ),
           ),
-          expandedHeight: context.heightPct(.3),
-          backgroundColor: context.colors.accent,
         ),
         SliverToBoxAdapter(
           child: Padding(
-            padding: EdgeInsets.all(context.insets.lg),
+            padding: EdgeInsets.all(context.insets.md),
             child: SeparatedColumn(
-              separatorBuilder: () => Gap(context.insets.lg),
+              separatorBuilder: () => Gap(context.insets.md),
               children: [
                 PlaceholderText(count: 3),
                 GestureDetector(
@@ -64,7 +60,8 @@ class WonderHistoryPanel extends StatelessWidget {
               ],
             ),
           ),
-        )
+        ),
+        SliverToBoxAdapter(child: SizedBox(height: 100)),
       ],
     );
   }

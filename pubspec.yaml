@@ -41,6 +41,7 @@ dependencies:
   sized_context: ^1.0.0+1
   shared_preferences: ^2.0.13
   statsfl: ^2.0.1+1
+  widget_mask: ^1.0.0+0 # todo: remove if not used
   window_interface: ^0.3.1
   unsplash_client: ^2.1.0+3
   youtube_player_iframe: ^2.2.2
@@ -61,37 +62,18 @@ flutter_icons:
   ios: true
   image_path: "assets/marketing/icon.png"
 
-# The following section is specific to Flutter.
 flutter:
 
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
   assets:
-   - assets/images/
+    - assets/images/
+    - assets/images/chichen_itza/
+    - assets/images/colosseum/
+    - assets/images/taj_mahal/
 
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware.
+  fonts:
+   - family: Tenor
+     fonts:
+       - asset: assets/fonts/TenorSans-Regular.ttf
 
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
-
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages

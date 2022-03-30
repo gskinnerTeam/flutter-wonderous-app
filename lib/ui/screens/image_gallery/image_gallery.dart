@@ -1,9 +1,4 @@
-import 'dart:async';
-
-import 'package:flutter/scheduler.dart';
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/common/buttons.dart';
-import 'package:wonders/ui/common/circle_button.dart';
 import 'package:wonders/ui/common/eight_way_swipe_detector.dart';
 import 'package:wonders/ui/common/motion_blur.dart';
 import 'package:wonders/ui/common/pages_routes.dart';
@@ -32,7 +27,7 @@ class _ImageGalleryState extends State<ImageGallery> {
   int get _gridCount => widget.gridCount;
   int get _imgCount => pow(_gridCount, 2).round();
 
-  double _scale = 1;
+  final double _scale = 1;
 
   void _setIndex(int value) {
     _prevIndex = _index;
@@ -83,12 +78,15 @@ class _ImageGalleryState extends State<ImageGallery> {
 
   @override
   Widget build(BuildContext context) {
-    double smallSide = context.sizePx.shortestSide * .7;
-    Size imgSize = (widget.imageSize ?? Size(smallSide, smallSide)) * _scale;
-    // Get transform offset for the current _index
-    final padding = context.insets.lg;
-    final gridOffset = _calculateCurrentOffset(padding, imgSize);
     Duration swipeDuration = context.times.med * .55;
+    Size imgSize = (widget.imageSize ?? Size(context.widthPx * .6, context.heightPx * .6));
+    // Get transform offset for the current _index
+    final padding = context.insets.sm;
+    var gridOffset = _calculateCurrentOffset(padding, imgSize);
+    // For some reason we need to add in half of the top-padding when this view does not use a safeArea.
+    // TODO: Try and figure out why we need to incorporate top padding here, it's counter-intuitive. Maybe GridView or another of the material components is doing something we don't want?
+    gridOffset += Offset(0, -context.mq.padding.top / 2);
+
     // Layout
     return Stack(
       children: [
@@ -98,10 +96,10 @@ class _ImageGalleryState extends State<ImageGallery> {
           cutoutSize: imgSize,
           swipeDir: _lastSwipeDir,
           duration: swipeDuration * .5,
-          opacity: .8,
+          opacity: .7,
           // TODO: Check whether clipping the OverflowBox is actually a perf win?
           // Clip the overflow box to prevent rendering outside of the viewport
-          child: ClipRect(
+          child: SafeArea(
             child: OverflowBox(
               maxWidth: _gridCount * imgSize.width + padding * (_gridCount - 1),
               maxHeight: _gridCount * imgSize.height + padding * (_gridCount - 1),
@@ -114,10 +112,16 @@ class _ImageGalleryState extends State<ImageGallery> {
                   tween: Tween(begin: gridOffset, end: gridOffset),
                   duration: swipeDuration,
                   curve: Curves.easeOut,
-                  builder: (_, value, child) => Transform.translate(offset: value, child: child),
-                  child: Wrap(
-                    spacing: padding,
-                    runSpacing: padding,
+                  builder: (_, value, child) => Transform.translate(
+                    offset: value,
+                    child: child,
+                  ),
+                  child: GridView.count(
+                    physics: NeverScrollableScrollPhysics(),
+                    crossAxisCount: widget.gridCount,
+                    childAspectRatio: imgSize.aspectRatio,
+                    mainAxisSpacing: padding,
+                    crossAxisSpacing: padding,
                     children: List.generate(_imgCount, (index) {
                       bool selected = index == _index;
                       bool wasSelected = index == _prevIndex;
@@ -137,15 +141,12 @@ class _ImageGalleryState extends State<ImageGallery> {
                             child: SizedBox(
                               width: imgSize.width,
                               height: imgSize.height,
-                              child: ClipRect(
-                                /// Scale image when selected
-                                child: TweenAnimationBuilder<double>(
-                                  duration: context.times.med,
-                                  curve: Curves.easeOut,
-                                  tween: Tween(begin: 1, end: selected ? 1.15 : 1),
-                                  builder: (_, value, child) => Transform.scale(child: child, scale: value),
-                                  child: UnsplashPhoto(widget.photoIds[index], fit: BoxFit.cover, targetSize: 600),
-                                ),
+                              child: TweenAnimationBuilder<double>(
+                                duration: context.times.med,
+                                curve: Curves.easeOut,
+                                tween: Tween(begin: 1, end: selected ? 1.15 : 1),
+                                builder: (_, value, child) => Transform.scale(child: child, scale: value),
+                                child: UnsplashPhoto(widget.photoIds[index], fit: BoxFit.cover, targetSize: 600),
                               ),
                             ),
                           ),

@@ -2,8 +2,6 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/unsplash_controller.dart';
 import 'package:wonders/logic/unsplash_service.dart';
 import 'package:wonders/logic/wonders_controller.dart';
-import 'package:wonders/logic/wonders_service.dart';
-import 'package:wonders/logic/wonders_service_mock.dart';
 
 void main() {
   registerSingletons(useMocks: true);
@@ -31,11 +29,9 @@ void registerSingletons({required bool useMocks}) {
   GetIt.I.registerLazySingleton<UnsplashService>(() => UnsplashService());
   // Wonders
   GetIt.I.registerLazySingleton<WondersController>(() => WondersController());
-  GetIt.I.registerLazySingleton<WondersService>(() => WondersService());
   // Testing mocks
   if (useMocks) {
-    GetIt.I.pushNewScope();
-    GetIt.I.registerLazySingleton<WondersService>(() => WondersServiceMock());
+    //GetIt.I.pushNewScope();
   }
 }
 

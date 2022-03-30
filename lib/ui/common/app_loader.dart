@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:wonders/common_libs.dart';
 
@@ -9,6 +8,6 @@ class AppLoader extends StatelessWidget {
   Widget build(BuildContext context) => SizedBox(
         width: 40,
         height: 40,
-        child: LoadingIndicator(colors: [context.colors.accent], indicatorType: Indicator.ballRotateChase),
+        child: LoadingIndicator(colors: [context.colors.accent1], indicatorType: Indicator.ballRotateChase),
       );
 }

@@ -1,6 +1,5 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/buttons.dart';
-import 'package:wonders/ui/common/eight_way_swipe_detector.dart';
 import 'package:wonders/ui/common/unsplash_image.dart';
 
 class FullScreenPhotoViewer extends StatefulWidget {
@@ -28,7 +27,7 @@ class _FullScreenPhotoViewerState extends State<FullScreenPhotoViewer> {
         children: [
           Expanded(
             child: InteractiveViewer(
-              child: UnsplashPhoto(_id, fit: BoxFit.cover, targetSize: context.diagonalPx.round() * 2),
+              child: UnsplashPhoto(_id, fit: BoxFit.cover, targetSize: context.diagonalPx.round()),
             ),
           ),
           Row(

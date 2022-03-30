@@ -3,15 +3,15 @@ import 'package:wonders/styles/insets.dart';
 import 'package:wonders/styles/text.dart';
 import 'package:wonders/styles/times.dart';
 
-export 'color_theme.dart';
+export 'colors.dart';
 
 class AppStyle {
-  AppStyle({required this.screenSize, required this.colors}) {
+  AppStyle({required this.screenSize}) {
     scale = _calculateScale(screenSize);
   }
 
   /// The current theme colors for the app
-  final ColorTheme colors;
+  final AppColors colors = AppColors();
 
   /// Padding and margin values
   late final AppInsets insets = AppInsets(scale);
@@ -50,6 +50,6 @@ extension StyleContextExtension on BuildContext {
   AppStyle get style => watch<AppStyle>();
   AppInsets get insets => style.insets;
   AppTextStyles get textStyles => style.text;
-  ColorTheme get colors => style.colors;
+  AppColors get colors => style.colors;
   AppTimes get times => style.times;
 }

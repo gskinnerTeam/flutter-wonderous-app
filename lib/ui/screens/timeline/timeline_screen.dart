@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/data/wonder_data.dart';
 
 class TimelineScreen extends StatefulWidget {
   final WonderType type;
@@ -101,7 +100,7 @@ class _WondersTimelineState extends State<WondersTimeline> {
             ),
             Center(
               child: Padding(
-                padding: EdgeInsets.all(context.insets.xl * 2),
+                padding: EdgeInsets.all(context.insets.lg * 2),
                 child: SizedBox(
                   height: max(60, context.heightPct(.1)),
                   child: Slider(

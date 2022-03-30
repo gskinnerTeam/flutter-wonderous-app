@@ -1,14 +1,21 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 @immutable
 class AppTextStyles {
   AppTextStyles(this.scale);
   final double scale;
-  late final _baseFont1 = TextStyle(fontSize: 12 * scale);
+  final TextStyle titleFont = TextStyle(fontFamily: 'Tenor');
+  final TextStyle contentFont = TextStyle(fontFamily: 'Raleway');
 
-  late final btn = _baseFont1.copyWith(fontSize: 12 * scale);
-  late final body = _baseFont1.copyWith(fontSize: 14 * scale);
-  late final h1 = _baseFont1.copyWith(fontSize: 32 * scale);
-  late final h2 = _baseFont1.copyWith(fontSize: 24 * scale);
-  late final h3 = _baseFont1.copyWith(fontSize: 18 * scale);
+  //TODO: Change these to final when design system has stopped changing
+  TextStyle get caption =>
+      contentFont.copyWith(fontSize: 16 * scale, fontWeight: FontWeight.w500, fontStyle: FontStyle.italic);
+  TextStyle get body => contentFont.copyWith(fontSize: 16 * scale);
+  TextStyle get h1 => titleFont.copyWith(fontSize: 64 * scale);
+  TextStyle get h2 => titleFont.copyWith(fontSize: 32 * scale);
+  TextStyle get h3 => titleFont.copyWith(fontSize: 20 * scale);
+  TextStyle get quote => titleFont.copyWith(fontSize: 48 * scale);
 }
