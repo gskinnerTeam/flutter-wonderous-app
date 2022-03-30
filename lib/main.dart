@@ -1,4 +1,6 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/search_controller.dart';
+import 'package:wonders/logic/search_service.dart';
 import 'package:wonders/logic/unsplash_controller.dart';
 import 'package:wonders/logic/unsplash_service.dart';
 import 'package:wonders/logic/wonders_controller.dart';
@@ -22,6 +24,9 @@ class WondersApp extends StatelessWidget {
 void registerSingletons({required bool useMocks}) {
   // Top level app controller
   GetIt.I.registerLazySingleton<AppController>(() => AppController());
+  // Search
+  GetIt.I.registerLazySingleton<SearchController>(() => SearchController());
+  GetIt.I.registerLazySingleton<SearchService>(() => SearchService());
   // Settings
   GetIt.I.registerLazySingleton<SettingsController>(() => SettingsController());
   // Unsplash
@@ -38,6 +43,7 @@ void registerSingletons({required bool useMocks}) {
 /// Add syntax sugar for quickly accessing the main controllers in the app
 /// We deliberately do not create shortcuts for services, to discourage their use directly in the ui layer.
 AppController get app => GetIt.I.get<AppController>();
-WondersController get wonders => GetIt.I.get<WondersController>();
+SearchController get search => GetIt.I.get<SearchController>();
 SettingsController get settings => GetIt.I.get<SettingsController>();
 UnsplashController get unsplash => GetIt.I.get<UnsplashController>();
+WondersController get wonders => GetIt.I.get<WondersController>();

@@ -27,7 +27,7 @@ class AppController {
     isBootstrapComplete = true;
     // A43 - For testing search view
     // appRouter.go(ScreenPaths.home);
-    appRouter.go(ScreenPaths.search(WonderType.petra));
+    appRouter.go(ScreenPaths.search(WonderType.chichenItza));
   }
 
   /// Walks user through flow to save a Wonder Poster to their gallery

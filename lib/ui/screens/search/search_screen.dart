@@ -1,9 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
-import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:wonders/ui/common/wonder_illustrations.dart';
+import 'package:wonders/ui/common/window_header.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 /// PageView sandwiched between Foreground and Background layers
@@ -79,66 +78,106 @@ class _SearchScreenState extends State<SearchScreen> with GetItStateMixin {
       resultsText = '${searchResultsAll.length} results found';
     }
 
+    Color colorBody = context.style.colors.body;
+    Color colorCaption = context.style.colors.caption;
+
     /// Collect children for the various layers
-    return Padding(
-        padding: EdgeInsets.symmetric(horizontal: context.insets.lg),
-        child: CustomScrollView(controller: scrollController, cacheExtent: 2000, slivers: [
-          SliverAppBar(
-            pinned: true,
-            leading: SizedBox.shrink(),
-            collapsedHeight: 80,
-            flexibleSpace: SafeArea(
-                child: Padding(
-              padding: EdgeInsets.all(context.insets.lg),
-              child: WonderIllustration(widget.type),
-            )),
-            expandedHeight: context.heightPct(.3),
-            backgroundColor: context.colors.accent,
-          ),
-          SliverToBoxAdapter(
-              child: TextField(
+    return Flex(
+      mainAxisSize: MainAxisSize.max,
+      direction: Axis.vertical,
+      children: [
+        // Header
+        SafeArea(
+          child: WindowHeader(widget.type, 'Browse Artifacts'),
+        ),
+
+        // Content
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: context.insets.md),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Search box
+                TextField(
                   onSubmitted: searchForStuff,
                   maxLines: 1,
+                  style: TextStyle(color: colorCaption),
                   decoration: InputDecoration(
-                      icon: Icon(Icons.search),
-                      iconColor: context.style.colors.fg,
-                      helperText: 'Search type or material'))),
-          SliverToBoxAdapter(
-              child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: context.insets.lg),
-                  child: Text(resultsText, style: context.textStyles.body))),
-          SliverToBoxAdapter(
-              child: MasonryGridView.count(
-            shrinkWrap: true,
-            crossAxisCount: 2,
-            crossAxisSpacing: context.insets.sm,
-            mainAxisSpacing: context.insets.lg,
-            itemCount: searchResultsAll.length,
-            clipBehavior: Clip.antiAlias,
-            itemBuilder: (BuildContext context, int index) {
-              var data = searchResultsAll[index];
-              return Padding(
-                  padding: EdgeInsets.all(context.insets.lg),
-                  child: GestureDetector(
-                      onTap: () => handleImagePressed(data!),
-                      child: CachedNetworkImage(
-                          imageUrl: data!.image,
-                          placeholder: (BuildContext context, String url) {
-                            return Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                                    border: Border.all(color: context.colors.surface1, width: 3)),
-                                child: AspectRatio(
-                                    aspectRatio: 1,
-                                    child: Center(
-                                        heightFactor: 1,
-                                        child: CircularProgressIndicator(
-                                          color: context.colors.fg,
-                                          semanticsLabel: data.title,
-                                        ))));
-                          })));
-            },
-          ))
-        ]));
+                      icon: Icon(Icons.search, color: colorCaption),
+                      focusedBorder: InputBorder.none,
+                      fillColor: context.style.colors.bg,
+                      iconColor: colorCaption,
+                      labelStyle: TextStyle(color: colorCaption),
+                      hintStyle: TextStyle(color: colorCaption.withAlpha(125)),
+                      prefixStyle: TextStyle(color: colorCaption),
+                      focusColor: colorCaption,
+                      hintText: 'Search type or material'),
+                ),
+
+                // Results feedback
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: context.insets.sm),
+                  child: Text(
+                    resultsText,
+                    style: context.textStyles.body.copyWith(color: colorBody),
+                  ),
+                ),
+
+                // Artifacts grid
+                Expanded(
+                  child: CustomScrollView(
+                    controller: scrollController,
+                    cacheExtent: 2000,
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: MasonryGridView.count(
+                          shrinkWrap: true,
+                          crossAxisCount: 2,
+                          crossAxisSpacing: context.insets.sm,
+                          mainAxisSpacing: context.insets.sm,
+                          itemCount: searchResultsAll.length,
+                          clipBehavior: Clip.antiAlias,
+                          itemBuilder: (BuildContext context, int index) {
+                            var data = searchResultsAll[index];
+                            return GestureDetector(
+                              onTap: () => handleImagePressed(data!),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(context.style.insets.xs),
+                                child: CachedNetworkImage(
+                                    imageUrl: data!.image,
+                                    placeholder: (BuildContext context, String url) {
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                                            border: Border.all(color: context.colors.accent2, width: 3)),
+                                        child: AspectRatio(
+                                          aspectRatio: 1,
+                                          child: Center(
+                                            heightFactor: 1,
+                                            child: CircularProgressIndicator(
+                                              color: context.colors.body,
+                                              semanticsLabel: data.title,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }),
+                              ),
+                            );
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

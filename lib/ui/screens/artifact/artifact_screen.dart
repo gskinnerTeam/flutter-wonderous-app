@@ -107,7 +107,7 @@ class _ArtifactScreenState extends State<ArtifactScreen> {
                       // Progress indicator
                       Center(
                           child: CircularProgressIndicator(
-                            color: context.colors.fg,
+                            color: context.colors.body,
                           ),
                         )
                       : CachedNetworkImage(
