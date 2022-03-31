@@ -1,4 +1,3 @@
-import 'package:widget_mask/widget_mask.dart';
 import 'package:wonders/common_libs.dart';
 
 class DiagonalPageIndicator extends StatelessWidget {
@@ -51,7 +50,7 @@ class _DiagonalClipper extends CustomClipper<Path> {
 
   @override
   Path getClip(Size size) {
-    final double lineGap = 0;
+    const double lineGap = 2;
     if (leftSide) {
       return Path()
         ..lineTo(size.width - lineGap, 0)

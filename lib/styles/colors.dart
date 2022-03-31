@@ -11,7 +11,7 @@ class AppColors {
   final Color text = Colors.white;
   final Color textOnBg = Colors.black;
 
-  final bool isDark = true;
+  final bool isDark = false;
 
   Color shift(Color c, double d) => ColorUtils.shiftHsl(c, d * (isDark ? -1 : 1));
 }

@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/unsplash_photo_data.dart';
-import 'package:wonders/ui/common/app_loader.dart';
+import 'package:wonders/ui/common/controls/app_loader.dart';
 
 class UnsplashPhoto extends StatelessWidget {
   const UnsplashPhoto(this.id, {Key? key, this.fit = BoxFit.cover, required this.targetSize}) : super(key: key);

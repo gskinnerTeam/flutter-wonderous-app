@@ -1,8 +1,8 @@
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/common/animated_fractional_offset.dart';
-import 'package:wonders/ui/common/buttons.dart';
-import 'package:wonders/ui/common/circle_button.dart';
-import 'package:wonders/ui/common/wonder_illustrations.dart';
+import 'package:wonders/ui/common/controls/buttons.dart';
+import 'package:wonders/ui/common/controls/circle_button.dart';
+import 'package:wonders/ui/wonder_illustrations/chichen_itza_illustration.dart';
+import 'package:wonders/ui/wonder_illustrations/wonder_illustration_config.dart';
 
 class WonderDetailsBottomMenu extends StatelessWidget {
   const WonderDetailsBottomMenu({Key? key, required this.tabController, this.showBg = false}) : super(key: key);
@@ -12,7 +12,7 @@ class WonderDetailsBottomMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color tabIconColor = showBg ? context.colors.textOnBg : context.colors.text;
-    final double homeBtnSize = 70;
+    const double homeBtnSize = 70;
     return Stack(children: [
       Padding(
         padding: EdgeInsets.only(top: context.insets.xs),
@@ -23,10 +23,9 @@ class WonderDetailsBottomMenu extends StatelessWidget {
                 children: [
                   // Background
                   Positioned.fill(
-                    child: AnimatedFractionalOffset(
+                    child: AnimatedOpacity(
                       duration: context.times.fast,
-                      curve: Curves.easeOut,
-                      offset: Offset(0, showBg ? 0 : 1),
+                      opacity: showBg ? 1 : 0,
                       child: ColoredBox(color: context.colors.bg),
                     ),
                   ),
@@ -77,7 +76,7 @@ class _WonderHomeBtn extends StatelessWidget {
       child: SizedBox(
           width: size,
           height: size,
-          child: Transform.scale(scale: 1.3, child: WonderIllustration(WonderType.chichenItza))),
+          child: Transform.scale(scale: 1.3, child: ChichenItzaIllustration(config: WonderIllustrationConfig.mg()))),
     );
   }
 }

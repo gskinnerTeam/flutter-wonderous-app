@@ -1,6 +1,6 @@
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/common/buttons.dart';
-import 'package:wonders/ui/common/unsplash_image.dart';
+import 'package:wonders/ui/common/controls/buttons.dart';
+import 'package:wonders/ui/common/unsplash_photo.dart';
 
 class FullScreenPhotoViewer extends StatefulWidget {
   const FullScreenPhotoViewer(this.initialId, this.idList, {Key? key}) : super(key: key);

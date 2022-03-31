@@ -1,5 +1,5 @@
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/common/glass_card.dart';
+import 'package:wonders/ui/common/cards/glass_card.dart';
 
 class ExpandingTimeRangeSelector extends StatefulWidget {
   const ExpandingTimeRangeSelector({

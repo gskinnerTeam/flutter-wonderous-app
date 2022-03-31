@@ -7,23 +7,35 @@ part of 'wonder_data.dart';
 // **************************************************************************
 
 abstract class _$WonderDataCWProxy {
-  WonderData desc(String desc);
+  WonderData constructionInfo(String constructionInfo);
 
   WonderData endYr(int endYr);
 
   WonderData facts(List<String> facts);
 
-  WonderData imageUrls(List<String> imageUrls);
+  WonderData historyInfo(String historyInfo);
+
+  WonderData imageIds(List<String> imageIds);
 
   WonderData lat(double lat);
 
   WonderData lng(double lng);
 
+  WonderData locationInfo(String locationInfo);
+
+  WonderData quote1(String quote1);
+
+  WonderData regionTitle(String regionTitle);
+
   WonderData startYr(int startYr);
+
+  WonderData subTitle(String subTitle);
 
   WonderData title(String title);
 
   WonderData type(WonderType type);
+
+  WonderData unsplashCollectionId(String unsplashCollectionId);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `WonderData(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -32,15 +44,21 @@ abstract class _$WonderDataCWProxy {
   /// WonderData(...).copyWith(id: 12, name: "My name")
   /// ````
   WonderData call({
-    String? desc,
+    String? constructionInfo,
     int? endYr,
     List<String>? facts,
-    List<String>? imageUrls,
+    String? historyInfo,
+    List<String>? imageIds,
     double? lat,
     double? lng,
+    String? locationInfo,
+    String? quote1,
+    String? regionTitle,
     int? startYr,
+    String? subTitle,
     String? title,
     WonderType? type,
+    String? unsplashCollectionId,
   });
 }
 
@@ -51,7 +69,8 @@ class _$WonderDataCWProxyImpl implements _$WonderDataCWProxy {
   const _$WonderDataCWProxyImpl(this._value);
 
   @override
-  WonderData desc(String desc) => this(desc: desc);
+  WonderData constructionInfo(String constructionInfo) =>
+      this(constructionInfo: constructionInfo);
 
   @override
   WonderData endYr(int endYr) => this(endYr: endYr);
@@ -60,7 +79,10 @@ class _$WonderDataCWProxyImpl implements _$WonderDataCWProxy {
   WonderData facts(List<String> facts) => this(facts: facts);
 
   @override
-  WonderData imageUrls(List<String> imageUrls) => this(imageUrls: imageUrls);
+  WonderData historyInfo(String historyInfo) => this(historyInfo: historyInfo);
+
+  @override
+  WonderData imageIds(List<String> imageIds) => this(imageIds: imageIds);
 
   @override
   WonderData lat(double lat) => this(lat: lat);
@@ -69,13 +91,30 @@ class _$WonderDataCWProxyImpl implements _$WonderDataCWProxy {
   WonderData lng(double lng) => this(lng: lng);
 
   @override
+  WonderData locationInfo(String locationInfo) =>
+      this(locationInfo: locationInfo);
+
+  @override
+  WonderData quote1(String quote1) => this(quote1: quote1);
+
+  @override
+  WonderData regionTitle(String regionTitle) => this(regionTitle: regionTitle);
+
+  @override
   WonderData startYr(int startYr) => this(startYr: startYr);
+
+  @override
+  WonderData subTitle(String subTitle) => this(subTitle: subTitle);
 
   @override
   WonderData title(String title) => this(title: title);
 
   @override
   WonderData type(WonderType type) => this(type: type);
+
+  @override
+  WonderData unsplashCollectionId(String unsplashCollectionId) =>
+      this(unsplashCollectionId: unsplashCollectionId);
 
   @override
 
@@ -86,21 +125,28 @@ class _$WonderDataCWProxyImpl implements _$WonderDataCWProxy {
   /// WonderData(...).copyWith(id: 12, name: "My name")
   /// ````
   WonderData call({
-    Object? desc = const $CopyWithPlaceholder(),
+    Object? constructionInfo = const $CopyWithPlaceholder(),
     Object? endYr = const $CopyWithPlaceholder(),
     Object? facts = const $CopyWithPlaceholder(),
-    Object? imageUrls = const $CopyWithPlaceholder(),
+    Object? historyInfo = const $CopyWithPlaceholder(),
+    Object? imageIds = const $CopyWithPlaceholder(),
     Object? lat = const $CopyWithPlaceholder(),
     Object? lng = const $CopyWithPlaceholder(),
+    Object? locationInfo = const $CopyWithPlaceholder(),
+    Object? quote1 = const $CopyWithPlaceholder(),
+    Object? regionTitle = const $CopyWithPlaceholder(),
     Object? startYr = const $CopyWithPlaceholder(),
+    Object? subTitle = const $CopyWithPlaceholder(),
     Object? title = const $CopyWithPlaceholder(),
     Object? type = const $CopyWithPlaceholder(),
+    Object? unsplashCollectionId = const $CopyWithPlaceholder(),
   }) {
     return WonderData(
-      desc: desc == const $CopyWithPlaceholder() || desc == null
-          ? _value.desc
+      constructionInfo: constructionInfo == const $CopyWithPlaceholder() ||
+              constructionInfo == null
+          ? _value.constructionInfo
           // ignore: cast_nullable_to_non_nullable
-          : desc as String,
+          : constructionInfo as String,
       endYr: endYr == const $CopyWithPlaceholder() || endYr == null
           ? _value.endYr
           // ignore: cast_nullable_to_non_nullable
@@ -109,10 +155,15 @@ class _$WonderDataCWProxyImpl implements _$WonderDataCWProxy {
           ? _value.facts
           // ignore: cast_nullable_to_non_nullable
           : facts as List<String>,
-      imageIds: imageUrls == const $CopyWithPlaceholder() || imageUrls == null
+      historyInfo:
+          historyInfo == const $CopyWithPlaceholder() || historyInfo == null
+              ? _value.historyInfo
+              // ignore: cast_nullable_to_non_nullable
+              : historyInfo as String,
+      imageIds: imageIds == const $CopyWithPlaceholder() || imageIds == null
           ? _value.imageIds
           // ignore: cast_nullable_to_non_nullable
-          : imageUrls as List<String>,
+          : imageIds as List<String>,
       lat: lat == const $CopyWithPlaceholder() || lat == null
           ? _value.lat
           // ignore: cast_nullable_to_non_nullable
@@ -121,10 +172,28 @@ class _$WonderDataCWProxyImpl implements _$WonderDataCWProxy {
           ? _value.lng
           // ignore: cast_nullable_to_non_nullable
           : lng as double,
+      locationInfo:
+          locationInfo == const $CopyWithPlaceholder() || locationInfo == null
+              ? _value.locationInfo
+              // ignore: cast_nullable_to_non_nullable
+              : locationInfo as String,
+      quote1: quote1 == const $CopyWithPlaceholder() || quote1 == null
+          ? _value.quote1
+          // ignore: cast_nullable_to_non_nullable
+          : quote1 as String,
+      regionTitle:
+          regionTitle == const $CopyWithPlaceholder() || regionTitle == null
+              ? _value.regionTitle
+              // ignore: cast_nullable_to_non_nullable
+              : regionTitle as String,
       startYr: startYr == const $CopyWithPlaceholder() || startYr == null
           ? _value.startYr
           // ignore: cast_nullable_to_non_nullable
           : startYr as int,
+      subTitle: subTitle == const $CopyWithPlaceholder() || subTitle == null
+          ? _value.subTitle
+          // ignore: cast_nullable_to_non_nullable
+          : subTitle as String,
       title: title == const $CopyWithPlaceholder() || title == null
           ? _value.title
           // ignore: cast_nullable_to_non_nullable
@@ -133,6 +202,12 @@ class _$WonderDataCWProxyImpl implements _$WonderDataCWProxy {
           ? _value.type
           // ignore: cast_nullable_to_non_nullable
           : type as WonderType,
+      unsplashCollectionId:
+          unsplashCollectionId == const $CopyWithPlaceholder() ||
+                  unsplashCollectionId == null
+              ? _value.unsplashCollectionId
+              // ignore: cast_nullable_to_non_nullable
+              : unsplashCollectionId as String,
     );
   }
 }
@@ -147,22 +222,41 @@ extension $WonderDataCopyWith on WonderData {
 // **************************************************************************
 
 WonderData _$WonderDataFromJson(Map<String, dynamic> json) => WonderData(
-      type: $enumDecodeNullable(_$WonderTypeEnumMap, json['type']) ?? WonderType.colosseum,
+      type: $enumDecodeNullable(_$WonderTypeEnumMap, json['type']) ??
+          WonderType.chichenItza,
       title: json['title'] as String,
-      imageIds: (json['imageUrls'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const [],
-      facts: (json['facts'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const [],
-      desc: json['desc'] as String,
+      subTitle: json['subTitle'] as String,
+      regionTitle: json['regionTitle'] as String,
       startYr: json['startYr'] as int? ?? 0,
       endYr: json['endYr'] as int? ?? 0,
       lat: (json['lat'] as num?)?.toDouble() ?? 0,
       lng: (json['lng'] as num?)?.toDouble() ?? 0,
+      imageIds: (json['imageIds'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      unsplashCollectionId: json['unsplashCollectionId'] as String,
+      quote1: json['quote1'] as String,
+      facts:
+          (json['facts'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              const [],
+      historyInfo: json['historyInfo'] as String,
+      constructionInfo: json['constructionInfo'] as String,
+      locationInfo: json['locationInfo'] as String,
     );
 
-Map<String, dynamic> _$WonderDataToJson(WonderData instance) => <String, dynamic>{
+Map<String, dynamic> _$WonderDataToJson(WonderData instance) =>
+    <String, dynamic>{
       'type': _$WonderTypeEnumMap[instance.type],
       'title': instance.title,
-      'desc': instance.desc,
-      'imageUrls': instance.imageIds,
+      'subTitle': instance.subTitle,
+      'regionTitle': instance.regionTitle,
+      'historyInfo': instance.historyInfo,
+      'constructionInfo': instance.constructionInfo,
+      'locationInfo': instance.locationInfo,
+      'quote1': instance.quote1,
+      'unsplashCollectionId': instance.unsplashCollectionId,
+      'imageIds': instance.imageIds,
       'facts': instance.facts,
       'startYr': instance.startYr,
       'endYr': instance.endYr,
@@ -171,6 +265,6 @@ Map<String, dynamic> _$WonderDataToJson(WonderData instance) => <String, dynamic
     };
 
 const _$WonderTypeEnumMap = {
-  WonderType.colosseum: 'petra',
-  WonderType.chichenItza: 'machuPicchu',
+  WonderType.chichenItza: 'chichenItza',
+  WonderType.tajMahal: 'tajMahal',
 };

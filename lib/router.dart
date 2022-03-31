@@ -4,7 +4,7 @@ import 'package:wonders/ui/screens/artifact/artifact_screen.dart';
 import 'package:wonders/ui/screens/home/wonders_home_screen.dart';
 import 'package:wonders/ui/screens/search/search_screen.dart';
 import 'package:wonders/ui/screens/settings/settings_screen.dart';
-import 'package:wonders/ui/screens/splash_screen.dart';
+import 'package:wonders/ui/screens/splash/splash_screen.dart';
 import 'package:wonders/ui/screens/timeline/timeline_screen.dart';
 import 'package:wonders/ui/screens/video_player/video_playback_screen.dart';
 import 'package:wonders/ui/screens/wonder_details/wonders_details_screen.dart';

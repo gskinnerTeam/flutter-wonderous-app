@@ -1,6 +1,6 @@
 import 'package:reactives/reactives.dart';
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/common/app_loader.dart';
+import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class FullscreenVideoPage extends StatefulWidget {

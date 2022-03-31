@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:drop_cap_text/drop_cap_text.dart';
+import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/utils/you_tube_utils.dart';
@@ -40,7 +42,12 @@ class WonderHistoryPanel extends StatelessWidget {
             child: SeparatedColumn(
               separatorBuilder: () => Gap(context.insets.md),
               children: [
-                PlaceholderText(count: 3),
+                DropCapText(
+                  lorem(paragraphs: 1, words: 40),
+                  style: context.textStyles.body,
+                  dropCapPadding: EdgeInsets.only(right: context.insets.xs),
+                  dropCapStyle: context.textStyles.dropCase.copyWith(color: context.colors.accent1),
+                ),
                 GestureDetector(
                   onTap: handleVideoPressed,
                   child: SizedBox(

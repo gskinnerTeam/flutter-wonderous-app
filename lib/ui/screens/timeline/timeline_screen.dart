@@ -16,35 +16,40 @@ class _TimelineScreenState extends State<TimelineScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        /// Vertically scrolling timeline, manages a ScrollController.
-        Expanded(
-          child: WondersTimeline(controller: _scroller),
-        ),
+    return LayoutBuilder(builder: (_, constraints) {
+      // Determine min and max size of the timeline based on the size available to this widget
+      const scrubberSize = 150.0;
+      final minSize = constraints.biggest.height - scrubberSize;
+      final maxSize = constraints.biggest.height * 3;
+      return Column(
+        children: [
+          /// Vertically scrolling timeline, manages a ScrollController.
+          Expanded(
+            child: _Viewport(controller: _scroller, minSize: minSize, maxSize: maxSize),
+          ),
 
-        /// Mini Horizontal timeline
-        _TimelineScrubber(_scroller),
-      ],
-    );
+          /// Mini Horizontal timeline, reacts to the state of the timeline,
+          /// and drives it's scroll position on Hz drag
+          _Scrubber(_scroller, size: scrubberSize, timelineSize: minSize),
+        ],
+      );
+    });
   }
 }
 
-class TimelineController extends ChangeNotifier {}
-
-class WondersTimeline extends StatefulWidget {
-  const WondersTimeline({Key? key, this.controller}) : super(key: key);
+class _Viewport extends StatefulWidget {
+  const _Viewport({Key? key, this.controller, required this.minSize, required this.maxSize}) : super(key: key);
   final ScrollController? controller;
+  final double minSize;
+  final double maxSize;
   @override
-  State<WondersTimeline> createState() => _WondersTimelineState();
+  State<_Viewport> createState() => _ViewportState();
 }
 
-class _WondersTimelineState extends State<WondersTimeline> {
+class _ViewportState extends State<_Viewport> {
   late final ScrollController _controller = ScrollController();
 
   double _zoom = .5;
-  double _minSize = 500;
-  double _maxSize = 2000;
 
   ScrollController get controller => widget.controller ?? ScrollController();
 
@@ -54,11 +59,6 @@ class _WondersTimelineState extends State<WondersTimeline> {
     super.dispose();
   }
 
-  // void _handleScroll() {
-  //   // print(controller.offset);
-  //   // print(controller.position.maxScrollExtent);
-  // }
-  //
   void _changeScale(double d) {
     setState(() {
       _zoom = d;
@@ -85,10 +85,7 @@ class _WondersTimelineState extends State<WondersTimeline> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      _minSize = constraints.biggest.height;
-      _maxSize = constraints.biggest.height * 3;
-      double size = lerpDouble(_minSize, _maxSize, _zoom) ?? _maxSize;
-
+      double size = lerpDouble(widget.minSize, widget.maxSize, _zoom) ?? widget.maxSize;
       return GestureDetector(
         onScaleUpdate: _handlePinchZoom,
         child: Stack(
@@ -98,45 +95,58 @@ class _WondersTimelineState extends State<WondersTimeline> {
               physics: ClampingScrollPhysics(),
               child: Placeholder(fallbackHeight: size),
             ),
-            Center(
-              child: Padding(
-                padding: EdgeInsets.all(context.insets.lg * 2),
-                child: SizedBox(
-                  height: max(60, context.heightPct(.1)),
-                  child: Slider(
-                    onChanged: (double value) => setState(() {
-                      _zoom = value;
-                      // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
-                      controller.notifyListeners();
-                    }),
-                    value: _zoom,
-                    min: 0,
-                    max: 1,
-                  ),
-                ),
-              ),
-            ),
+
+            /// SB: Add a debug slider, so we can play with zoom easier on desktop
+            _buildDebugScroller(context),
           ],
         ),
       );
     });
   }
+
+  Center _buildDebugScroller(BuildContext context) {
+    void handleZoomSliderChanged(double value) => setState(() {
+          _zoom = value;
+          // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+          controller.notifyListeners();
+        });
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.all(context.insets.lg * 2),
+        child: SizedBox(
+          height: max(60, context.heightPct(.1)),
+          child: Slider(onChanged: handleZoomSliderChanged, value: _zoom, min: 0, max: 1),
+        ),
+      ),
+    );
+  }
 }
 
-class _TimelineScrubber extends StatelessWidget {
-  const _TimelineScrubber(this.scroller, {Key? key}) : super(key: key);
+class _Scrubber extends StatelessWidget {
+  const _Scrubber(this.scroller, {Key? key, required this.timelineSize, required this.size}) : super(key: key);
   final ScrollController scroller;
+  final double timelineSize;
+  final double size;
 
   @override
   Widget build(BuildContext context) {
+    void _handleScrubberPan(DragUpdateDetails details) {
+      // TODO: This drag multiplier is close... but not exactly right.
+      double dragMultiplier = (scroller.position.maxScrollExtent + timelineSize) / context.widthPx;
+      double newPos = scroller.position.pixels + details.delta.dx * dragMultiplier;
+      scroller.position.jumpTo(newPos.clamp(0, scroller.position.maxScrollExtent));
+    }
+
     return Stack(
       children: [
-        Placeholder(fallbackHeight: 200),
+        Placeholder(fallbackHeight: size),
         AnimatedBuilder(
           animation: scroller,
           builder: (_, __) {
+            // Get current scroll offset and move the viewport to match
             double scrollOffset = 0;
             double viewPort = 1;
+            // SB: Need to add these checks because Flutter throws an error out if you ask it for scroll position when hasClients=false
             if (scroller.hasClients) {
               if (scroller.position.maxScrollExtent > 0) {
                 scrollOffset = scroller.position.pixels / scroller.position.maxScrollExtent;
@@ -148,12 +158,16 @@ class _TimelineScrubber extends StatelessWidget {
               //print(viewPort);
             }
             return Positioned.fill(
-              child: Align(
-                alignment: Alignment(-1 + scrollOffset * 2, 0),
-                child: FractionallySizedBox(
-                  child: ColoredBox(color: Colors.red.withOpacity(.3)),
-                  widthFactor: viewPort,
-                  heightFactor: 1,
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onPanUpdate: _handleScrubberPan,
+                child: Align(
+                  alignment: Alignment(-1 + scrollOffset * 2, 0),
+                  child: FractionallySizedBox(
+                    child: ColoredBox(color: Colors.red.withOpacity(.3)),
+                    widthFactor: viewPort,
+                    heightFactor: 1,
+                  ),
                 ),
               ),
             );
