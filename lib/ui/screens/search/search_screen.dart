@@ -73,8 +73,8 @@ class _SearchScreenState extends State<SearchScreen> with GetItStateMixin {
       resultsText = '${searchResultsAll.length} results found';
     }
 
-    Color colorBody = context.style.colors.body;
-    Color colorCaption = context.style.colors.caption;
+    Color colorBody = context.colors.body;
+    Color colorCaption = context.colors.caption;
 
     /// Collect children for the various layers
     return Flex(
@@ -101,7 +101,7 @@ class _SearchScreenState extends State<SearchScreen> with GetItStateMixin {
                   decoration: InputDecoration(
                       icon: Icon(Icons.search, color: colorCaption),
                       focusedBorder: InputBorder.none,
-                      fillColor: context.style.colors.bg,
+                      fillColor: context.colors.bg,
                       iconColor: colorCaption,
                       labelStyle: TextStyle(color: colorCaption),
                       hintStyle: TextStyle(color: colorCaption.withAlpha(125)),
@@ -138,13 +138,13 @@ class _SearchScreenState extends State<SearchScreen> with GetItStateMixin {
                             return GestureDetector(
                               onTap: () => handleImagePressed(data!),
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(context.style.insets.xs),
+                                borderRadius: BorderRadius.circular(context.insets.xs),
                                 child: CachedNetworkImage(
                                     imageUrl: data!.image,
                                     placeholder: (BuildContext context, String url) {
                                       return Container(
                                         decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(Radius.circular(context.style.corners.md)),
+                                            borderRadius: BorderRadius.all(Radius.circular(context.corners.md)),
                                             border: Border.all(color: context.colors.accent2, width: 3)),
                                         child: AspectRatio(
                                           aspectRatio: 1,

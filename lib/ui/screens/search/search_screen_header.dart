@@ -8,9 +8,9 @@ class SearchScreenHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: context.style.colors.greyStrong,
+      color: context.colors.greyStrong,
       child: Padding(
-          padding: EdgeInsets.all(context.style.insets.md),
+          padding: EdgeInsets.all(context.insets.md),
           child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -27,7 +27,7 @@ class SearchScreenHeader extends StatelessWidget {
                   padding: EdgeInsets.only(top: context.insets.xs),
                   child: Text(
                     title,
-                    style: context.textStyles.body.copyWith(color: context.style.colors.bg),
+                    style: context.textStyles.body.copyWith(color: context.colors.bg),
                   ),
                 ),
 
@@ -36,7 +36,7 @@ class SearchScreenHeader extends StatelessWidget {
                   padding: EdgeInsets.only(top: context.insets.xs),
                   child: Text(
                     type.name,
-                    style: context.textStyles.titleFont.copyWith(color: context.style.colors.accent1),
+                    style: context.textStyles.titleFont.copyWith(color: context.colors.accent1),
                   ),
                 ),
               ])),

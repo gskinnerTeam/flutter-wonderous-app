@@ -6,7 +6,7 @@ import 'dart:math' as math;
 
 class SearchController {
   final departmentList = ValueNotifier(<DepartmentData>[]);
-  final Map<int, ArtifactData> _artifactHash = {};
+  final Map<String, ArtifactData> _artifactHash = {};
 
   SearchService get service => GetIt.I.get<SearchService>();
 
@@ -16,7 +16,7 @@ class SearchController {
   }
 
   /// Returns artifact data by ID. Returns null if artifact cannot be found. */
-  Future<ArtifactData?> getArtifactByID(int id) async {
+  Future<ArtifactData?> getArtifactByID(String id) async {
     ArtifactData? a;
     if (!_artifactHash.containsKey(id)) {
       // No data for artifact. Populate it for now and next time.

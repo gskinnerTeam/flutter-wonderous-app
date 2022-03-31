@@ -14,7 +14,7 @@ class AppStyle {
   /// The current theme colors for the app
   final AppColors colors = AppColors();
 
-  /// Text styles
+  /// Rounded edge corner radii
   late final AppCorners corners = AppCorners(scale);
 
   /// Padding and margin values
@@ -56,5 +56,6 @@ extension StyleContextExtension on BuildContext {
   AppTextStyles get textStyles => style.text;
   AppColors get colors => style.colors;
   AppTimes get times => style.times;
+  AppTextStyles get text => style.text;
   AppCorners get corners => style.corners;
 }

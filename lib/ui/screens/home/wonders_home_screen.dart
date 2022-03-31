@@ -100,7 +100,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
 
         /// Floating controls / UI
         AnimatedSwitcher(
-          duration: context.style.times.fast,
+          duration: context.times.fast,
           child: Column(
             key: ValueKey(_wonderIndex),
             mainAxisSize: MainAxisSize.min,
@@ -124,7 +124,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
                     width: 350,
                     child: Text(
                       currentWonder.title.toUpperCase(),
-                      style: context.style.text.titleFont.copyWith(fontSize: 64, height: 1),
+                      style: context.text.titleFont.copyWith(fontSize: 64, height: 1),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -134,7 +134,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
               /// TODO: Add the page selector that expands upwards when you drag
               /// Down arrow
               AppBtn(child: Icon(Icons.arrow_downward, size: 64), onPressed: _showDetailsPage),
-              Gap(context.style.insets.md),
+              Gap(context.insets.md),
             ],
           ),
         )

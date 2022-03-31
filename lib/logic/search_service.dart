@@ -8,7 +8,7 @@ import 'package:wonders/logic/utils/http_client.dart';
 class SearchService {
   static String baseMETUrl = 'https://collectionapi.metmuseum.org';
 
-  Future<ServiceResult<List<int>?>> getObjectIDList({DateTime? date, String? departmentIds}) async {
+  Future<ServiceResult<List<String>?>> getObjectIDList({DateTime? date, String? departmentIds}) async {
     HttpResponse response = await _request('public/collection/v1/objects', method: MethodType.get, urlParams: {
       'metadataDate': date, // in the format YYYY-MM-DD
       'departmentIds': departmentIds // use | as delimiter
@@ -21,12 +21,12 @@ class SearchService {
     return ServiceResult(response, _parseDepartmentsFromResponse);
   }
 
-  Future<ServiceResult<ArtifactData?>> getObjectByID(int id) async {
+  Future<ServiceResult<ArtifactData?>> getObjectByID(String id) async {
     HttpResponse? response = await _request('public/collection/v1/objects/$id', method: MethodType.get);
     return ServiceResult(response, _parseSearchResponse);
   }
 
-  Future<ServiceResult<List<int>?>> searchForArtifacts(String query,
+  Future<ServiceResult<List<String>?>> searchForArtifacts(String query,
       {int count = 10,
       int offset = 0,
       bool? isHighlight,
@@ -90,10 +90,9 @@ class SearchService {
     return response;
   }
 
-  List<int>? _parseObjectIdsFromResponse(Map<String, dynamic> content) {
+  List<String>? _parseObjectIdsFromResponse(Map<String, dynamic> content) {
     List<dynamic> idList = (content['objectIDs'] ?? []).toList();
-    List<int> intList = idList.map((e) => e as int).toList();
-    return intList;
+    return idList.map((e) => e as String).toList();
   }
 
   List<DepartmentData>? _parseDepartmentsFromResponse(Map<String, dynamic> content) {
