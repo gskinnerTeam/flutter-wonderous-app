@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:wonders/logic/utils/rest_utils.dart';
 import 'package:wonders/logic/utils/string_utils.dart';
 import 'dart:developer' as dev;
 
@@ -36,7 +37,7 @@ class HttpClient {
         _urlParams[key] = value.toString();
       });
 
-      url += RESTUtils.encodeParams(_urlParams);
+      url += RestUtils.encodeParams(_urlParams);
     }
 
     response = await HttpClient.get(url, headers: headers);

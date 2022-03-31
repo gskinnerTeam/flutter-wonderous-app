@@ -30,7 +30,6 @@
 .pub-cache/
 .pub/
 /build/
-pubspec.lock
 
 # Web related
 lib/generated_plugin_registrant.dart
@@ -45,4 +44,3 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-/macos
