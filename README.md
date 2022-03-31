@@ -11,6 +11,7 @@
   - [Artifacts](https://www.figma.com/file/814LAO3wAzMNbB7YYPZpnZ/Wireframe?node-id=785%3A7621)
   - [Timeline](https://www.figma.com/file/814LAO3wAzMNbB7YYPZpnZ/Wireframe?node-id=785%3A6853)
 - [Time Tracker](https://timetracker.gskinner.com/#c=CD164420-AFD3-4BD6-B60D-BDEB28253846&p=82826D2A-E5E5-4D56-B689-B9DBF169A2D0&t=EAB922B4-2402-49CC-9666-D3FA76A2C33A)
+  - [ Tempo Time Tracker](https://gskinner.atlassian.net/plugins/servlet/ac/io.tempo.jira/tempo-app#!)
 
 # QA Builds
 To access QA builds, send your Apple Id or Google Play email to Jess who will make sure it gets added.
