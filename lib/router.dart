@@ -16,7 +16,7 @@ class ScreenPaths {
   static String wonderDetails(WonderType type) => '/wonder/${type.name}';
   static String timeline(WonderType type) => '/timeline/${type.name}';
   static String video(String id) => '/video/$id';
-  static String artifact(String id) => '/artifact/$id';
+  static String artifact(String id, WonderType type) => '/artifact/${type.name}/$id';
   static String search(WonderType type) => '/search/${type.name}';
 }
 
@@ -51,8 +51,8 @@ final appRouter = GoRouter(
     AppRoute('/search/:id', (s) {
       return SearchScreen(type: _parseWonderType(s.params['id']!));
     }),
-    AppRoute('/artifact/:id', (s) {
-      return ArtifactScreen(id: s.params['id']!);
+    AppRoute('/artifact/:type/:id', (s) {
+      return ArtifactScreen(id: s.params['id']!, type: _parseWonderType(s.params['type']!));
     })
   ],
 );

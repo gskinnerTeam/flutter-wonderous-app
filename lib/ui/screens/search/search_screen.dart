@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:wonders/ui/common/window_header.dart';
+import 'package:wonders/ui/screens/search/search_screen_header.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 /// PageView sandwiched between Foreground and Background layers
@@ -38,14 +38,7 @@ class _SearchScreenState extends State<SearchScreen> with GetItStateMixin {
       return;
     }
 
-    InternetConnectionStatus status = (await InternetConnectionChecker().connectionStatus);
-    if (status == InternetConnectionStatus.disconnected) {
-      setState(() {
-        isDisconnected = true;
-      });
-      return;
-    }
-
+    // Reset the view state; show that it's loading and prevent subsequent calls until complete.
     setState(() {
       isEmpty = false;
       isDisconnected = false;
@@ -55,6 +48,7 @@ class _SearchScreenState extends State<SearchScreen> with GetItStateMixin {
     // Get all search results, with a limit.
     searchResultsAll = await search.searchForArtifacts(query, count: 1000);
 
+    // Load complete. Show results.
     setState(() {
       isLoading = false;
       isEmpty = searchResultsAll.isEmpty;
@@ -62,7 +56,8 @@ class _SearchScreenState extends State<SearchScreen> with GetItStateMixin {
   }
 
   void handleImagePressed(ArtifactData artifact) {
-    context.push(ScreenPaths.artifact(artifact.objectID.toString()));
+    // User clicked image. Open Artifact Details view
+    context.push(ScreenPaths.artifact(artifact.objectId.toString(), widget.type));
   }
 
   @override
@@ -88,7 +83,7 @@ class _SearchScreenState extends State<SearchScreen> with GetItStateMixin {
       children: [
         // Header
         SafeArea(
-          child: WindowHeader(widget.type, 'Browse Artifacts'),
+          child: SearchScreenHeader(widget.type, 'Browse Artifacts'),
         ),
 
         // Content
@@ -96,14 +91,12 @@ class _SearchScreenState extends State<SearchScreen> with GetItStateMixin {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: context.insets.md),
             child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Search box
+                // TODO: Look into an autocompleting search box - may need to use department names and a hard-coded list of common terms.
                 TextField(
                   onSubmitted: searchForStuff,
-                  maxLines: 1,
                   style: TextStyle(color: colorCaption),
                   decoration: InputDecoration(
                       icon: Icon(Icons.search, color: colorCaption),
@@ -151,12 +144,13 @@ class _SearchScreenState extends State<SearchScreen> with GetItStateMixin {
                                     placeholder: (BuildContext context, String url) {
                                       return Container(
                                         decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                                            borderRadius: BorderRadius.all(Radius.circular(context.style.corners.md)),
                                             border: Border.all(color: context.colors.accent2, width: 3)),
                                         child: AspectRatio(
                                           aspectRatio: 1,
                                           child: Center(
                                             heightFactor: 1,
+                                            // TODO: Use premade AppLoader to show progress.
                                             child: CircularProgressIndicator(
                                               color: context.colors.body,
                                               semanticsLabel: data.title,

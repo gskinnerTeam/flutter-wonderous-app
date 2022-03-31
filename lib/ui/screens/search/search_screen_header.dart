@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
 
-class WindowHeader extends StatelessWidget {
-  const WindowHeader(this.type, this.title, {Key? key}) : super(key: key);
+class SearchScreenHeader extends StatelessWidget {
+  const SearchScreenHeader(this.type, this.title, {Key? key}) : super(key: key);
   final WonderType type;
   final String title;
 

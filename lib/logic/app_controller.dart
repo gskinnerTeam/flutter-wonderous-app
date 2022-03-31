@@ -25,9 +25,8 @@ class AppController {
     await settings.load();
     settings.scheduleSave(); // test save calls on each boot
     isBootstrapComplete = true;
-    // A43 - For testing search view
-    // appRouter.go(ScreenPaths.home);
-    appRouter.go(ScreenPaths.search(WonderType.chichenItza));
+
+    appRouter.go(ScreenPaths.home);
   }
 
   /// Walks user through flow to save a Wonder Poster to their gallery

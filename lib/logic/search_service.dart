@@ -52,6 +52,8 @@ class SearchService {
     if (dateBegin != null) urlParams['dateBegin'] = dateBegin;
     if (dateEnd != null) urlParams['dateEnd'] = dateEnd;
 
+    // TODO: run a check for images with odd sizes. To do this:
+    // - check the artifact's dimensions for multiple artifacts; see how often it relates to the image dimensions (should be at least a bit related)
     HttpResponse response = await _request('public/collection/v1/search', method: MethodType.get, urlParams: urlParams);
     return ServiceResult(response, _parseObjectIdsFromResponse);
   }
@@ -71,6 +73,17 @@ class SearchService {
     headers ??= {};
 
     String jsonBody = json.encode(body);
+
+    /* TODO: Check that there's an internet connection and return the appropriate result if there isn't.
+
+    InternetConnectionStatus status = (await InternetConnectionChecker().connectionStatus);
+    if (status == InternetConnectionStatus.disconnected) {
+      setState(() {
+        isDisconnected = true;
+      });
+      return;
+    }
+    */
 
     HttpResponse? response = await HttpClient.send(url,
         urlParams: urlParams, method: method, headers: headers, body: jsonBody, encoding: encoding);
@@ -94,8 +107,15 @@ class SearchService {
     // Source: https://metmuseum.github.io/
     ArtifactData? data;
     try {
+      String yearStr = content['accessionYear'] ?? content['objectDate'] ?? '';
+      int year = 0;
+      RegExpMatch? possibleYear = RegExp(r'[0-9-]{1,4}.*?').firstMatch(yearStr);
+      if (possibleYear != null) {
+        year = int.parse(yearStr.substring(possibleYear.start, possibleYear.end));
+      }
+
       data = ArtifactData(
-          objectID: content['objectID'],
+          objectId: content['objectID'],
           title: content['title'] ?? '',
           desc: (content['department'] ?? '') +
               ' ' +
@@ -103,7 +123,8 @@ class SearchService {
               ' - ' +
               (content['repository'] ?? ''),
           image: content['primaryImage'] ?? '',
-          year: content['accessionYear'] ?? content['objectDate'] ?? '');
+          year: year,
+          yearStr: yearStr);
     } catch (e) {
       dev.log('Error: Search response missing content.');
     }

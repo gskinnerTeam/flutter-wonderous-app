@@ -3,126 +3,160 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 
 class ArtifactScreen extends StatefulWidget {
+  final WonderType type;
   final String id;
-  const ArtifactScreen({Key? key, required this.id}) : super(key: key);
+  const ArtifactScreen({Key? key, required this.type, required this.id}) : super(key: key);
 
   @override
   State<ArtifactScreen> createState() => _ArtifactScreenState();
 }
 
 class _ArtifactScreenState extends State<ArtifactScreen> {
-  ArtifactData? artifact;
-  bool isLiked = false;
+  ArtifactData? _artifact;
 
   @override
   void initState() {
     super.initState();
-    getArtifact();
+    _getArtifact();
   }
 
-  void getArtifact() async {
+  void _getArtifact() async {
     var newArtifact = await search.getArtifactByID(int.parse(widget.id));
-    setState(() => artifact = newArtifact);
+    setState(() => _artifact = newArtifact);
   }
 
   @override
   Widget build(BuildContext context) {
-    var _textBox = Padding(
+    // Create a grid of text fields, labels and content.
+    var textBox = Padding(
       padding: EdgeInsets.symmetric(horizontal: context.style.insets.lg),
       child: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          // Type
+          Padding(
+            padding: EdgeInsets.only(top: context.style.insets.lg),
+            child: Text(
+              widget.type.name,
+              style: context.textStyles.titleFont.copyWith(color: context.style.colors.accent1),
+            ),
+          ),
+
           // Title (or "loading" if artifact isn't loaded yet)
-          Flexible(
-            fit: FlexFit.loose,
-            child: Padding(
-              padding: EdgeInsets.only(top: context.style.insets.lg),
-              child: Text(artifact?.title ?? 'Loading...'),
+          Padding(
+            padding: EdgeInsets.only(top: context.style.insets.lg),
+            child: Text(
+              _artifact?.title ?? 'Loading...',
+              style: context.textStyles.titleFont.copyWith(color: context.style.colors.accent1),
             ),
           ),
-          // Subtitle
-          Flexible(
-            fit: FlexFit.loose,
-            child: Padding(
-              padding: EdgeInsets.only(top: context.style.insets.sm),
-              child: Text(artifact?.year ?? ''),
-            ),
-          ),
+
+          // TODO - compass rose line break here
+
+/*
           // Description
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(top: context.style.insets.lg),
-              child: Text(artifact?.desc ?? ''),
+          GridView(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2), children: [
+            Text(
+              'Label',
+              style: context.textStyles.titleFont.copyWith(color: context.style.colors.accent2),
             ),
-          ),
+            Text('A whole bunch of data parameters!',
+                style: context.textStyles.titleFont.copyWith(color: context.style.colors.bg)),
+            Text(
+              'Label',
+              style: context.textStyles.titleFont.copyWith(color: context.style.colors.accent2),
+            ),
+            Text('A whole bunch of data parameters!',
+                style: context.textStyles.titleFont.copyWith(color: context.style.colors.bg)),
+            Text(
+              'Label',
+              style: context.textStyles.titleFont.copyWith(color: context.style.colors.accent2),
+            ),
+            Text('A whole bunch of data parameters!',
+                style: context.textStyles.titleFont.copyWith(color: context.style.colors.bg)),
+          ])
+
+*/
+
+          /*
+          Expanded(
+              child: Column(mainAxisSize: MainAxisSize.min, children: [
+            Row(mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Padding(
+                  padding: EdgeInsets.only(right: context.style.insets.md),
+                  child: Text(
+                    'Label',
+                    style: context.textStyles.titleFont.copyWith(color: context.style.colors.accent2),
+                  )),
+              Text('A whole bunch of data parameters!',
+                  style: context.textStyles.titleFont.copyWith(color: context.style.colors.bg)),
+            ])
+          ])),
+          */
         ],
       ),
     );
 
-    return Column(
-      children: [
-        // Close button
-        SafeArea(
-          child: Align(
-            alignment: Alignment.topLeft,
-            child: Padding(
-              padding: EdgeInsets.all(context.insets.lg),
-              child: const CloseButton(),
-            ),
+    return Container(
+      color: context.style.colors.greyStrong,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          // Close button
+          Stack(
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: ClipOval(
+                  child: Container(
+                    color: context.style.colors.greyStrong,
+                    child: Padding(
+                      padding: EdgeInsets.all(context.insets.md),
+                      child: const CloseButton(),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ),
 
-        // Like button
-        SafeArea(
-          child: Align(
-            alignment: Alignment.topRight,
-            child: Padding(
-              padding: EdgeInsets.all(context.insets.lg),
-              child: IconButton(
-                icon: Icon(isLiked ? Icons.favorite : Icons.favorite_border),
-                onPressed: () {
-                  setState(() => isLiked = !isLiked);
-                },
+          // Content
+          Expanded(
+            child: Center(
+              child: Flex(
+                direction: context.isLandscape ? Axis.horizontal : Axis.vertical,
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                textBaseline: TextBaseline.alphabetic,
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: (_artifact == null)
+                        ?
+                        // Progress indicator
+                        Center(
+                            child: CircularProgressIndicator(
+                              color: context.colors.body,
+                            ),
+                          )
+                        : CachedNetworkImage(
+                            imageUrl: _artifact!.image,
+                            fit: BoxFit.fitHeight,
+                            placeholder: (BuildContext context, String url) => const CircularProgressIndicator()),
+                  ),
+
+                  // Text section
+                  Expanded(flex: 1, child: textBox),
+                ],
               ),
             ),
           ),
-        ),
-
-        // Content
-        Expanded(
-          child: Center(
-            child: Flex(
-              direction: context.isLandscape ? Axis.horizontal : Axis.vertical,
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              textBaseline: TextBaseline.alphabetic,
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: (artifact == null)
-                      ?
-                      // Progress indicator
-                      Center(
-                          child: CircularProgressIndicator(
-                            color: context.colors.body,
-                          ),
-                        )
-                      : CachedNetworkImage(
-                          imageUrl: artifact!.image,
-                          fit: BoxFit.fitHeight,
-                          placeholder: (BuildContext context, String url) => const CircularProgressIndicator()),
-                ),
-
-                // Text section
-                Expanded(flex: 1, child: _textBox),
-              ],
-            ),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
