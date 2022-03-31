@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/utils/platform_info.dart';
 import 'package:wonders/ui/modals/app_modals.dart';
 import 'package:wonders/ui/screens/wallpaper_preview/wallpaper_preview.dart';
@@ -25,7 +24,6 @@ class AppController {
     await settings.load();
     settings.scheduleSave(); // test save calls on each boot
     isBootstrapComplete = true;
-
     appRouter.go(ScreenPaths.home);
   }
 
