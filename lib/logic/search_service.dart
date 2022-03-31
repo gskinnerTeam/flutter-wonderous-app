@@ -109,9 +109,9 @@ class SearchService {
     try {
       String yearStr = content['accessionYear'] ?? content['objectDate'] ?? '';
       int year = 0;
-      RegExpMatch? possibleYear = RegExp(r'[0-9-]{1,4}.*?').firstMatch(yearStr);
+      RegExpMatch? possibleYear = RegExp(r'[0-9-]{1,5}.*?').firstMatch(yearStr);
       if (possibleYear != null) {
-        year = int.parse(yearStr.substring(possibleYear.start, possibleYear.end));
+        year = int.parse(possibleYear.input);
       }
 
       data = ArtifactData(
