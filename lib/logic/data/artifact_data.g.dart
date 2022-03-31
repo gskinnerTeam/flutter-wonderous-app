@@ -9,17 +9,27 @@ part of 'artifact_data.dart';
 ArtifactData _$ArtifactDataFromJson(Map<String, dynamic> json) => ArtifactData(
       objectId: json['objectId'] as int,
       title: json['title'] as String,
-      desc: json['desc'] as String,
       image: json['image'] as String,
       year: json['year'] as int,
       yearStr: json['year'] as String,
+      date: json['objectDate'] as String,
+      period: json['period'] as String,
+      country: json['country'] as String,
+      medium: json['medium'] as String,
+      dimension: json['dimension'] as String,
+      classification: json['classification'] as String,
     );
 
 Map<String, dynamic> _$ArtifactDataToJson(ArtifactData instance) => <String, dynamic>{
-      'objectId': instance.objectId,
+      'objectID': instance.objectId,
       'title': instance.title,
-      'desc': instance.desc,
       'image': instance.image,
       'year': instance.year,
       'yearStr': instance.yearStr,
+      'objectDate': instance.date,
+      'period': instance.period,
+      'country': instance.country,
+      'medium': instance.medium,
+      'dimension': instance.dimension,
+      'classification': instance.classification,
     };

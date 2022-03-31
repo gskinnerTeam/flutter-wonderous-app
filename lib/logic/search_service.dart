@@ -115,16 +115,18 @@ class SearchService {
       }
 
       data = ArtifactData(
-          objectId: content['objectID'],
-          title: content['title'] ?? '',
-          desc: (content['department'] ?? '') +
-              ' ' +
-              (content['objectName'] ?? '') +
-              ' - ' +
-              (content['repository'] ?? ''),
-          image: content['primaryImage'] ?? '',
-          year: year,
-          yearStr: yearStr);
+        objectId: content['objectID'],
+        title: content['title'] ?? '',
+        image: content['primaryImage'] ?? '',
+        year: year,
+        yearStr: yearStr,
+        date: content['objectDate'] ?? '',
+        period: content['period'] ?? '',
+        country: content['country'] ?? '',
+        medium: content['medium'] ?? '',
+        dimension: content['dimension'] ?? '',
+        classification: content['classification'] ?? '',
+      );
     } catch (e) {
       dev.log('Error: Search response missing content.');
     }
