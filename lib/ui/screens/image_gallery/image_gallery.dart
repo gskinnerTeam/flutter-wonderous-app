@@ -1,8 +1,9 @@
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/common/eight_way_swipe_detector.dart';
-import 'package:wonders/ui/common/motion_blur.dart';
+import 'package:wonders/ui/common/controls/circle_button.dart';
+import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
+import 'package:wonders/ui/common/animated_motion_blur.dart';
 import 'package:wonders/ui/common/pages_routes.dart';
-import 'package:wonders/ui/common/unsplash_image.dart';
+import 'package:wonders/ui/common/unsplash_photo.dart';
 import 'package:wonders/ui/screens/image_gallery/animated_cutout_overlay.dart';
 import 'package:wonders/ui/screens/image_gallery/fullscreen_photo_viewer.dart';
 
@@ -27,7 +28,12 @@ class _ImageGalleryState extends State<ImageGallery> {
   int get _gridCount => widget.gridCount;
   int get _imgCount => pow(_gridCount, 2).round();
 
-  final double _scale = 1;
+  double _scale = 1;
+  bool _skipNextOffsetTween = false;
+  void _handleZoomToggled() => setState(() {
+        _skipNextOffsetTween = true;
+        _scale = _scale == 1 ? .65 : 1;
+      });
 
   void _setIndex(int value) {
     _prevIndex = _index;
@@ -79,13 +85,15 @@ class _ImageGalleryState extends State<ImageGallery> {
   @override
   Widget build(BuildContext context) {
     Duration swipeDuration = context.times.med * .55;
-    Size imgSize = (widget.imageSize ?? Size(context.widthPx * .6, context.heightPx * .6));
+    Size imgSize = (widget.imageSize ?? Size(context.widthPx * .7, context.heightPx * .6)) * _scale;
     // Get transform offset for the current _index
     final padding = context.insets.sm;
     var gridOffset = _calculateCurrentOffset(padding, imgSize);
     // For some reason we need to add in half of the top-padding when this view does not use a safeArea.
     // TODO: Try and figure out why we need to incorporate top padding here, it's counter-intuitive. Maybe GridView or another of the material components is doing something we don't want?
     gridOffset += Offset(0, -context.mq.padding.top / 2);
+    final offsetTweenDuration = _skipNextOffsetTween ? Duration.zero : swipeDuration;
+    _skipNextOffsetTween = false;
 
     // Layout
     return Stack(
@@ -96,7 +104,7 @@ class _ImageGalleryState extends State<ImageGallery> {
           cutoutSize: imgSize,
           swipeDir: _lastSwipeDir,
           duration: swipeDuration * .5,
-          opacity: .7,
+          opacity: _scale == 1 ? .7 : .5,
           // TODO: Check whether clipping the OverflowBox is actually a perf win?
           // Clip the overflow box to prevent rendering outside of the viewport
           child: SafeArea(
@@ -110,7 +118,7 @@ class _ImageGalleryState extends State<ImageGallery> {
                 threshold: 10 + 100 * settings.swipeThreshold.value,
                 child: TweenAnimationBuilder<Offset>(
                   tween: Tween(begin: gridOffset, end: gridOffset),
-                  duration: swipeDuration,
+                  duration: offsetTweenDuration,
                   curve: Curves.easeOut,
                   builder: (_, value, child) => Transform.translate(
                     offset: value,
@@ -128,7 +136,7 @@ class _ImageGalleryState extends State<ImageGallery> {
                       return ClipRRect(
                         borderRadius: BorderRadius.circular(6),
                         // Wrap a motion blur around the selected and previous items
-                        child: MotionBlur(
+                        child: AnimatedMotionBlur(
                           swipeDuration,
                           // use a key to force motion blurs to re-run when index changes
                           animationKey: ValueKey(_index),
@@ -159,15 +167,15 @@ class _ImageGalleryState extends State<ImageGallery> {
             ),
           ),
         ),
-        // Positioned.fill(
-        //   child: BottomCenter(
-        //     child: Padding(
-        //       padding: const EdgeInsets.only(bottom: 80),
-        //       child: CircleButton(
-        //           child: Icon(_scale == 1 ? Icons.zoom_out : Icons.zoom_in), onPressed: _handleZoomToggled),
-        //     ),
-        //   ),
-        // )
+        Positioned.fill(
+          child: BottomCenter(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 80),
+              child: CircleButton(
+                  child: Icon(_scale == 1 ? Icons.zoom_out : Icons.zoom_in), onPressed: _handleZoomToggled),
+            ),
+          ),
+        )
       ],
     );
   }

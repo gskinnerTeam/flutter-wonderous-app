@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/common/opening_card.dart';
+import 'package:wonders/ui/common/cards/opening_card.dart';
 
 class GlassCard extends StatelessWidget {
   const GlassCard({Key? key, this.child, this.padding}) : super(key: key);

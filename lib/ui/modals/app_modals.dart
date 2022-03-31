@@ -1,6 +1,6 @@
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/common/buttons.dart';
+import 'package:wonders/ui/common/controls/buttons.dart';
 
 Future<bool> showModal(BuildContext context, {required Widget child}) async {
   return await showMaterialModalBottomSheet(expand: false, context: context, builder: (_) => child) ?? false;

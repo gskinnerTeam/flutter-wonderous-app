@@ -2,7 +2,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/app_scaffold.dart';
 import 'package:wonders/ui/screens/home/wonders_home_screen.dart';
 import 'package:wonders/ui/screens/settings/settings_screen.dart';
-import 'package:wonders/ui/screens/splash_screen.dart';
+import 'package:wonders/ui/screens/splash/splash_screen.dart';
 import 'package:wonders/ui/screens/timeline/timeline_screen.dart';
 import 'package:wonders/ui/screens/video_player/video_playback_screen.dart';
 import 'package:wonders/ui/screens/wonder_details/wonders_details_screen.dart';

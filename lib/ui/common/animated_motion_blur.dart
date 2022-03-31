@@ -1,8 +1,8 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/directional_blur.dart';
 
-class MotionBlur extends StatefulWidget {
-  const MotionBlur(this.duration,
+class AnimatedMotionBlur extends StatefulWidget {
+  const AnimatedMotionBlur(this.duration,
       {Key? key, required this.child, required this.dir, this.animationKey, this.enabled = true, this.blurStrength = 5})
       : super(key: key);
   final Widget child;
@@ -12,14 +12,14 @@ class MotionBlur extends StatefulWidget {
   final bool enabled;
   final double blurStrength;
   @override
-  State<MotionBlur> createState() => _MotionBlurState();
+  State<AnimatedMotionBlur> createState() => _AnimatedMotionBlurState();
 }
 
-class _MotionBlurState extends State<MotionBlur> {
+class _AnimatedMotionBlurState extends State<AnimatedMotionBlur> {
   GTweenerController? _blur;
 
   @override
-  void didUpdateWidget(covariant MotionBlur oldWidget) {
+  void didUpdateWidget(covariant AnimatedMotionBlur oldWidget) {
     if (oldWidget.animationKey != widget.animationKey) {
       _blur?.animation.forward(from: 0);
     }
