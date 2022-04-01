@@ -1,4 +1,3 @@
-import 'package:screenshot/screenshot.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/wonders_controller.dart';
 import 'package:wonders/ui/common/controls/buttons.dart';
@@ -116,7 +115,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
                       width: 350,
                       child: Text(
                         currentWonder.title.toUpperCase(),
-                        style: context.style.text.titleFont.copyWith(fontSize: 64, height: 1),
+                        style: context.style.text.h1.copyWith(height: 1),
                         textAlign: TextAlign.center,
                       ),
                     ),

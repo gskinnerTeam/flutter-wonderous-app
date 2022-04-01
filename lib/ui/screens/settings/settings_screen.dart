@@ -15,7 +15,7 @@ class SettingsScreen extends StatelessWidget with GetItMixin {
       appBar: AppBar(
         title: Text('Settings', style: context.textStyles.h2),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: EdgeInsets.all(context.insets.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

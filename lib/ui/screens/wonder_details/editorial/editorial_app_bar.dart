@@ -1,8 +1,8 @@
 part of 'wonder_editorial_screen.dart';
 
 // TODO: This needs to take the actual thumbnail for this widget
-class _CollapsingAppBar extends StatelessWidget {
-  const _CollapsingAppBar(this.wonderType, {Key? key, required this.imageId}) : super(key: key);
+class _EditorialAppBar extends StatelessWidget {
+  const _EditorialAppBar(this.wonderType, {Key? key, required this.imageId}) : super(key: key);
   final String imageId;
   final WonderType wonderType;
   @override

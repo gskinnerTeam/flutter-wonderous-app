@@ -9,6 +9,7 @@ export 'colors.dart';
 class AppStyle {
   AppStyle({required this.screenSize}) {
     scale = _calculateScale(screenSize);
+    debugPrint('appStyle.scale=$scale');
   }
 
   /// The current theme colors for the app
@@ -37,10 +38,10 @@ class AppStyle {
   double _calculateScale(Size size) {
     final diagonalPx = (size.shortestSide + size.longestSide) / 2;
     Map<int, double> breakPts = {
-      1200: 1.4,
+      1100: 1.4,
       800: 1.25,
       600: 1,
-      300: .9,
+      300: .8,
       0: .75,
     };
     for (var bp in breakPts.keys) {
