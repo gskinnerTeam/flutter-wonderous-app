@@ -1,6 +1,7 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/blend_mask.dart';
 import 'package:wonders/ui/wonder_illustrations/paint_textures.dart';
+import 'package:wonders/ui/wonder_illustrations/wonder_hero.dart';
 import 'package:wonders/ui/wonder_illustrations/wonder_illustration_builder.dart';
 import 'package:wonders/ui/wonder_illustrations/wonder_illustration_config.dart';
 
@@ -43,7 +44,7 @@ class TajMahalIllustration extends StatelessWidget {
             child: Stack(
               clipBehavior: Clip.none,
               children: [
-                Center(child: Hero(tag: 'taj', child: Image.asset('assets/images/taj_mahal/taj-mahal.png'))),
+                Center(child: WonderHero(config, 'taj', child: Image.asset('assets/images/taj_mahal/taj-mahal.png'))),
                 Center(
                   child: Transform.translate(
                     offset: Offset(0, size * .22),
