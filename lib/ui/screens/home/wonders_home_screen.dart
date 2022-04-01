@@ -111,10 +111,10 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
                     Gap(context.insets.md),
 
                     /// Title
-                    SizedBox(
-                      width: 350,
+                    FractionallySizedBox(
+                      widthFactor: .8,
                       child: Text(
-                        currentWonder.title.toUpperCase(),
+                        currentWonder.titleWithBreaks.toUpperCase(),
                         style: context.style.text.h1.copyWith(height: 1),
                         textAlign: TextAlign.center,
                       ),
