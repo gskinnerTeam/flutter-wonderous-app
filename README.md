@@ -28,7 +28,7 @@ If you can not see the build in TestFlight or GooglePlay, your email address is 
 Continuous deployment is handled by CodeMagic using the apps@gskinner.com account. 
 - To trigger a build, create a git tag starting with "v" and push to master
   - Successful builds will be automatically be deployed to TestFlight and Googe Play internal track.
-  - Failed builds will send a slack msg to `#google-flutter4-2022-dev` channel // TODO
+  - Failed builds will send a slack msg to `#google-flutter4-2022-dev` channel
 
 ### Helper Scripts
 There are various python scripts in the `/py` folder. Including:
@@ -36,12 +36,9 @@ There are various python scripts in the `/py` folder. Including:
 - `icon-builder.py` - Generate icons from /assets/marketing/icon.xxx
 
 ### App Styling
-Use `context.style` extension to watch the current app style.
-```
-final style = context.style;
-return Container(color: style.colors.bg)l
-```
-Or use shortcuts to access the various categories directly:
+See the `AppStyles` class for a full list of available styles. 
+
+Use shortcuts to access the various style categories:
 - `context.colors`
 - `context.insets`
 - `context.textStyles`
@@ -56,4 +53,4 @@ style: context.textStyles.body
 // etc...
 ```
 
-Note: `context.style` is only safe to use from within `build()` methods because it calls `context.watch` internally. Use `context.read<AppStyle>()` if you need to access it outside of build (eg, `initState`).
+Note: Style extensions are only safe to use from within `build()` methods because they call providers `context.watch` internally. Use `context.read<AppStyle>()` if you need to access it outside of build (eg, `initState`).
