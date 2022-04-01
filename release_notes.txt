@@ -4,7 +4,7 @@
   - added next/prev buttons in fullscreen view
   - added zoom btn (temp, just to play with)
 - HomeScreen
-  - diagonal page selector
+  - added stylized page indicator
   - added Chichen Itza and Taj home page assets
 - Editorial View
   - Initial pass at editorial page content
