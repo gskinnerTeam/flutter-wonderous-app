@@ -24,6 +24,7 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
   @override
   Widget build(BuildContext context) {
     final padding = context.insets.md;
+
     return LayoutBuilder(builder: (_, constraints) {
       return GestureDetector(
         onTap: () => setState(() => _isPanelOpen = !_isPanelOpen),
@@ -55,7 +56,8 @@ class _OpenedTimeRange extends StatelessWidget {
           separatorBuilder: () => Gap(context.insets.md),
           children: [
             Text('${state.widget.startYr} - ${state.widget.endYr} AD - Chichen Itza', style: context.textStyles.h3),
-            Placeholder(fallbackWidth: double.infinity, fallbackHeight: 100)
+            Container(width: double.infinity, height: 100, color: Colors.pink),
+            Gap(context.insets.xs),
           ],
         ),
       );

@@ -11,6 +11,7 @@ class WondersAppScaffold extends StatelessWidget with GetItMixin {
     final size = MediaQuery.of(context).size;
     // Construct an AppStyle using app size and current themeType.
     final styles = AppStyle(screenSize: size);
+    GTweener.defaultDuration = styles.times.fast;
     bool enableFpsMeter = watchX((SettingsController c) => c.enableFpsMeter);
     // Pass our custom style down to the tree with provider and inject a themData to style existing Material components.
     return StatsFl(

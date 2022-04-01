@@ -19,6 +19,7 @@ dependencies:
   extra_alignments: ^1.0.0+1
   file_picker: ^4.5.1
   flextras: ^0.0.2
+  flutter_circular_text: ^0.3.1
   flutter_lorem: ^2.0.0
   gap: ^2.0.0
   get_it: ^7.2.0

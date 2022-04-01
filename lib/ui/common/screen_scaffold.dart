@@ -1,13 +1,28 @@
 import 'package:wonders/common_libs.dart';
 
 class ScreenScaffold extends StatelessWidget {
-  const ScreenScaffold({Key? key, required this.child, this.bgColor}) : super(key: key);
+  const ScreenScaffold({Key? key, required this.child, this.bgColor, this.isDark = false, this.enableSafeArea = true})
+      : super(key: key);
   final Widget child;
+
+  /// Optional bgColor override
   final Color? bgColor;
 
+  /// Controls background and text color (defers to bgColor if set)
+  final bool isDark;
+
+  /// If this is set to false, the child is responsible for handling its own safe areas.
+  final bool enableSafeArea;
+
   @override
-  Widget build(BuildContext context) => Scaffold(
-        backgroundColor: context.colors.bg,
-        body: SafeArea(child: child),
+  Widget build(BuildContext context) => Theme(
+        data: Theme.of(context).copyWith(
+          primaryColor: Colors.red,
+          textTheme: (isDark ? ThemeData.dark() : ThemeData.light()).textTheme,
+        ),
+        child: Scaffold(
+          backgroundColor: bgColor ?? (isDark ? context.colors.greyStrong : context.colors.bg),
+          body: enableSafeArea ? SafeArea(child: child) : child,
+        ),
       );
 }

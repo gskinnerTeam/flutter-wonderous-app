@@ -36,7 +36,7 @@ class TajMahalIllustration extends StatelessWidget {
             )
           ],
       mgBuilder: (_, __) {
-        const double size = 320;
+        double size = 320;
         return [
           Transform.translate(
             offset: Offset(0, -size * .1),
@@ -55,17 +55,19 @@ class TajMahalIllustration extends StatelessWidget {
                     ),
                   ),
                 ),
-                Center(
-                  child: UnconstrainedBox(
-                    child: SizedBox(
-                      height: size * 1,
-                      child: FractionalTranslation(
-                        translation: Offset(0, 1.13),
-                        child: Image.asset('assets/images/taj_mahal/pool.png', fit: BoxFit.fitHeight),
+                if (config.enableFg) ...[
+                  Center(
+                    child: UnconstrainedBox(
+                      child: SizedBox(
+                        height: size * 1,
+                        child: FractionalTranslation(
+                          translation: Offset(0, 1.13),
+                          child: Image.asset('assets/images/taj_mahal/pool.png', fit: BoxFit.fitHeight),
+                        ),
                       ),
                     ),
-                  ),
-                ),
+                  )
+                ],
               ],
             ),
           )
@@ -83,7 +85,7 @@ class TajMahalIllustration extends StatelessWidget {
                   child: Transform.rotate(
                     angle: pi * -.1 * (1 - curvedAnim),
                     child: FractionalTranslation(
-                      translation: Offset(-.4, -.3),
+                      translation: Offset(-.4, -.2),
                       child: Image.asset('assets/images/taj_mahal/mangos-left.png'),
                     ),
                   ),
@@ -95,7 +97,7 @@ class TajMahalIllustration extends StatelessWidget {
                   child: Transform.rotate(
                     angle: pi * .1 * (1 - curvedAnim),
                     child: FractionalTranslation(
-                      translation: Offset(.5, -.25),
+                      translation: Offset(.5, -.15),
                       child: Image.asset('assets/images/taj_mahal/mangos-right.png'),
                     ),
                   ),
