@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:wonders/ui/screens/search/search_screen_header.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
@@ -150,11 +151,7 @@ class _SearchScreenState extends State<SearchScreen> with GetItStateMixin {
                                           aspectRatio: 1,
                                           child: Center(
                                             heightFactor: 1,
-                                            // TODO: Use premade AppLoader to show progress.
-                                            child: CircularProgressIndicator(
-                                              color: context.colors.body,
-                                              semanticsLabel: data.title,
-                                            ),
+                                            child: AppLoader(),
                                           ),
                                         ),
                                       );

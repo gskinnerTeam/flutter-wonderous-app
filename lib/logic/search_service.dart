@@ -92,7 +92,7 @@ class SearchService {
 
   List<String>? _parseObjectIdsFromResponse(Map<String, dynamic> content) {
     List<dynamic> idList = (content['objectIDs'] ?? []).toList();
-    return idList.map((e) => e as String).toList();
+    return idList.map((e) => e.toString()).toList();
   }
 
   List<DepartmentData>? _parseDepartmentsFromResponse(Map<String, dynamic> content) {
