@@ -46,13 +46,15 @@ class _WonderIllustrationBuilderState extends State<WonderIllustrationBuilder> w
 
   @override
   Widget build(BuildContext context) {
-    //if (_anim.value == 0) SizedBox.expand();
+    // Optimization: no need to return all of these children if the widget is fully invisible.
+    if (_anim.value == 0 && widget.config.enableAnims) return SizedBox.expand();
+    Animation<double> anim = widget.config.enableAnims ? _anim : AlwaysStoppedAnimation(1);
     return FadeTransition(
-      opacity: _anim,
-      child: Stack(key: ValueKey(_anim.value == 0), children: [
-        if (widget.config.enableBg) ...widget.bgBuilder(context, _anim),
-        if (widget.config.enableMg) ...widget.mgBuilder(context, _anim),
-        if (widget.config.enableFg) ...widget.fgBuilder(context, _anim),
+      opacity: anim,
+      child: Stack(key: ValueKey(anim.value == 0), children: [
+        if (widget.config.enableBg) ...widget.bgBuilder(context, anim),
+        if (widget.config.enableMg) ...widget.mgBuilder(context, anim),
+        if (widget.config.enableFg) ...widget.fgBuilder(context, anim),
       ]),
     );
   }

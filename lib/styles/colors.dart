@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/utils/color_utils.dart';
 
 class AppColors {
@@ -11,7 +11,32 @@ class AppColors {
   final Color text = Colors.white;
   final Color textOnBg = Colors.black;
 
+  //TODO @ AG - move over the remaining 6 colors
+  final Color tajBg = const Color(0xFF80433F);
+  final Color tajFg = const Color(0xFFFAE5C8);
+
+  final Color chichenFg = const Color(0xFFFFB144);
+  final Color chichenBg = const Color(0xFF174126);
+
   final bool isDark = false;
+
+  Color wonderFg(WonderType type) {
+    switch (type) {
+      case WonderType.chichenItza:
+        return chichenFg;
+      case WonderType.tajMahal:
+        return tajFg;
+    }
+  }
+
+  Color wonderBg(WonderType type) {
+    switch (type) {
+      case WonderType.chichenItza:
+        return chichenBg;
+      case WonderType.tajMahal:
+        return tajBg;
+    }
+  }
 
   Color shift(Color c, double d) => ColorUtils.shiftHsl(c, d * (isDark ? -1 : 1));
 }
