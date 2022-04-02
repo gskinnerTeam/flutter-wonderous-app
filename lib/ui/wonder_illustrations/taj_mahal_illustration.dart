@@ -12,64 +12,75 @@ class TajMahalIllustration extends StatelessWidget {
   @override
   Widget build(BuildContext context) => WonderIllustrationBuilder(
       config: config,
-      bgBuilder: (_, __) => [
-            Container(color: Color(0xff8b4641)),
-            Positioned.fill(
-              child: BlendMask(
-                blendModes: const [BlendMode.overlay],
-                opacity: .3,
-                child: FractionalTranslation(
-                  translation: Offset(.2, .1),
-                  child: RollerPaint1(Colors.white, scale: 2),
-                ),
+      bgBuilder: (_, anim) {
+        final curvedAnim = Curves.easeOut.transform(anim.value);
+        return [
+          Container(color: Color(0xff8b4641)),
+          Positioned.fill(
+            child: BlendMask(
+              blendModes: const [BlendMode.overlay],
+              opacity: .3,
+              child: FractionalTranslation(
+                translation: Offset(.2, .1),
+                child: RollerPaint1(Colors.white, scale: 2),
               ),
             ),
-            Center(
-              child: Transform.translate(
-                offset: Offset(-150, -310),
-                child: GTweener(
-                  [GMove(from: Offset(-100, 20))],
-                  duration: context.times.med,
-                  curve: Curves.easeOut,
-                  child: Image.asset('assets/images/taj_mahal/sun.png'),
-                ),
-              ),
-            )
-          ],
+          ),
+          TopLeft(
+            child: FractionalTranslation(
+              translation: Offset(-.2 + curvedAnim * .2, .4 - curvedAnim * .2),
+              child: WonderHero(config, 'taj-sun', child: Image.asset('assets/images/taj_mahal/sun.png')),
+            ),
+          )
+        ];
+      },
       mgBuilder: (_, __) {
-        double size = 320;
+        double size = 280;
         return [
           Transform.translate(
             offset: Offset(0, -size * .1),
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Center(child: WonderHero(config, 'taj', child: Image.asset('assets/images/taj_mahal/taj-mahal.png'))),
-                Center(
-                  child: Transform.translate(
-                    offset: Offset(0, size * .22),
-                    child: UnconstrainedBox(
-                      child: SizedBox(
-                        height: size,
-                        child: Image.asset('assets/images/taj_mahal/wall.png', fit: BoxFit.fitHeight),
-                      ),
-                    ),
-                  ),
-                ),
-                if (config.enableFg) ...[
+            child: Transform.scale(
+              scale: .7,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
                   Center(
-                    child: UnconstrainedBox(
-                      child: SizedBox(
-                        height: size * 1,
-                        child: FractionalTranslation(
-                          translation: Offset(0, 1.13),
-                          child: Image.asset('assets/images/taj_mahal/pool.png', fit: BoxFit.fitHeight),
+                      child: WonderHero(
+                    config,
+                    'taj',
+                    child: Stack(
+                      children: [
+                        Image.asset('assets/images/taj_mahal/taj-mahal.png'),
+                        Positioned.fill(
+                          child: BottomCenter(
+                            child: FractionalTranslation(
+                              translation: Offset(0, .2),
+                              child: UnconstrainedBox(
+                                child: SizedBox(
+                                  height: size,
+                                  child: Image.asset('assets/images/taj_mahal/wall.png', fit: BoxFit.fitHeight),
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                        if (config.enableFg) ...[
+                          Positioned.fill(
+                            child: BottomCenter(
+                              child: UnconstrainedBox(
+                                child: FractionalTranslation(
+                                  translation: Offset(0, 1.13),
+                                  child: Image.asset('assets/images/taj_mahal/pool.png', fit: BoxFit.fitHeight),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ],
                     ),
-                  )
+                  )),
                 ],
-              ],
+              ),
             ),
           )
         ];

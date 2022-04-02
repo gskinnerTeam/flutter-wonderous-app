@@ -5,12 +5,12 @@ class _CircularTitleBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double circleSize = 190;
-    double barSize = 124;
+    double barSize = 105;
     return SizedBox(
       height: barSize,
       child: Stack(
         children: [
-          BottomCenter(child: Container(height: 80, color: context.colors.bg)),
+          BottomCenter(child: Container(height: barSize - 40, color: context.colors.bg)),
           Center(
             child: ClipRect(
               child: UnconstrainedBox(
@@ -41,13 +41,6 @@ class _CircularTitleBar extends StatelessWidget {
                           position: CircularTextPosition.inside,
                         ),
                       ),
-                      // child: Text(
-                      //   'Facts and History'.toUpperCase(),
-                      //   style: context.textStyles.h1.copyWith(
-                      //     fontSize: 15,
-                      //     color: context.colors.accent1,
-                      //   ),
-                      // ),
                     ),
                   ),
                 ),

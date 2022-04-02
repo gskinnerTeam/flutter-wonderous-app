@@ -7,9 +7,16 @@ class _EditorialAppBar extends StatelessWidget {
   final WonderType wonderType;
   @override
   Widget build(BuildContext context) {
+    ArchType? archType;
+    switch (wonderType) {
+      case WonderType.tajMahal:
+        archType = ArchType.spade;
+        break;
+      default:
+        archType = ArchType.pyramid;
+    }
     return LayoutBuilder(builder: (_, constraints) {
       bool showTitleBar = constraints.biggest.height < 300;
-      bool showCredits = constraints.biggest.height > 450;
       return AnimatedSwitcher(
         duration: context.times.fast,
         child: Stack(
@@ -19,8 +26,8 @@ class _EditorialAppBar extends StatelessWidget {
             /// Masked image
             ClipPath(
               // Switch arch type to Rect if we are showing the title bar
-              clipper: ArchClipper(showTitleBar ? ArchType.rect : ArchType.spade),
-              child: UnsplashPhoto(imageId, targetSize: (context.widthPx * 1.5).round()),
+              clipper: ArchClipper(showTitleBar ? ArchType.rect : archType!),
+              child: Image.asset('assets/images/${wonders.getAssetFolder(wonderType)}/photo1.jpg', fit: BoxFit.cover),
             ),
 
             if (showTitleBar) ...[

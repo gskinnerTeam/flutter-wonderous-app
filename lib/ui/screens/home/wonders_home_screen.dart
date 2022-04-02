@@ -115,6 +115,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
                       widthFactor: .8,
                       child: Text(
                         currentWonder.titleWithBreaks.toUpperCase(),
+
                         style: context.style.text.h1.copyWith(height: 1),
                         textAlign: TextAlign.center,
                       ),

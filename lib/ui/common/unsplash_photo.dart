@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/unsplash_photo_data.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
@@ -17,34 +19,68 @@ class UnsplashPhoto extends StatelessWidget {
         future: unsplash.getInfo(id),
         builder: (_, snapshot) {
           if (snapshot.hasData == false) return Container(); // Loading...
-          String? url = snapshot.data?.getSizedUrl(targetSize?.round() ?? 600);
-          return url == null
-              ? _LoadError()
-              : Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    CachedNetworkImage(imageUrl: url, fit: fit, placeholder: (_, __) => Center(child: AppLoader())),
-                    if (showCredits) ...[
-                      BottomCenter(
-                        child: AnimatedOpacity(
-                          opacity: showCredits ? 1 : 0,
-                          duration: context.times.fast,
-                          child: Container(
-                            width: double.infinity,
-                            color: Colors.black.withOpacity(.5),
-                            padding: EdgeInsets.all(context.insets.xs),
-                            //TODO: Add proper credits and apply for unsplash
-                            child: Text(
-                              'Photo by Nikolai Tesla on Unsplash',
-                              style: context.style.text.caption.copyWith(color: context.colors.text),
-                            ),
-                          ),
-                        ),
-                      )
-                    ]
-                  ],
-                );
+          UnsplashPhotoData? data = snapshot.data;
+          String? url = data?.getSizedUrl(targetSize?.round() ?? 600);
+          if (data == null || url == null) return _LoadError();
+          return Stack(
+            fit: StackFit.expand,
+            children: [
+              CachedNetworkImage(
+                imageUrl: url,
+                fit: fit,
+                placeholder: (_, __) => Center(child: AppLoader()),
+              ),
+              if (showCredits) ...[
+                BottomCenter(
+                  child: AnimatedOpacity(
+                    opacity: showCredits ? 1 : 0,
+                    duration: context.times.fast,
+                    child: _UnsplashPhotoAttribution(data),
+                  ),
+                )
+              ]
+            ],
+          );
         });
+  }
+}
+
+class _UnsplashPhotoAttribution extends StatelessWidget {
+  const _UnsplashPhotoAttribution(this.data, {Key? key}) : super(key: key);
+  final UnsplashPhotoData data;
+
+  @override
+  Widget build(BuildContext context) {
+    void handleUserNamePressed() => app.showWebView(context, data.photographerUrl);
+    void handleUnsplashPressed() => app.showWebView(context, UnsplashPhotoData.unsplashUrl);
+
+    final style = context.style.text.caption.copyWith(color: context.colors.text, height: 1);
+    return Container(
+      width: double.infinity,
+      color: Colors.black.withOpacity(.5),
+      child: Row(
+        children: [
+          Gap(context.insets.sm),
+          Text('Photo by', style: style),
+          TextButton(
+              style: TextButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  splashFactory: NoSplash.splashFactory,
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+              child: Text('${data.ownerUsername}', style: style.copyWith(fontWeight: FontWeight.bold)),
+              onPressed: handleUserNamePressed),
+          Text('on', style: style),
+          TextButton(
+              style: TextButton.styleFrom(
+                padding: EdgeInsets.zero,
+                splashFactory: NoSplash.splashFactory,
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              ),
+              child: Text('Unsplash', style: style.copyWith(fontWeight: FontWeight.bold)),
+              onPressed: handleUnsplashPressed),
+        ],
+      ),
+    );
   }
 }
 

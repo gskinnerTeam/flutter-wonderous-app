@@ -20,6 +20,7 @@ dependencies:
   file_picker: ^4.5.1
   flextras: ^0.0.2
   flutter_circular_text: ^0.3.1
+  flutter_inappwebview: ^5.3.2
   flutter_lorem: ^2.0.0
   gap: ^2.0.0
   get_it: ^7.2.0
@@ -27,7 +28,6 @@ dependencies:
   go_router: ^3.0.1
   gtween:
     git: https://github.com/gskinnerTeam/flutter-gtween.git
-  image_fade: ^0.3.0
   image_gallery_saver: ^1.7.1
   json_annotation: ^4.4.0
   loading_indicator: ^3.0.3
@@ -38,7 +38,6 @@ dependencies:
   reactives: ^0.2.0
   rnd: ^0.2.0
   screenshot: ^1.2.3
-  share_plus: ^4.0.1
   simple_rich_text: ^2.0.49
   sized_context: ^1.0.0+1
   shared_preferences: ^2.0.13

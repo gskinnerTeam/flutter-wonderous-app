@@ -15,6 +15,12 @@ class UnsplashService {
     final photo = await client.photos.get(id).go();
     final data = photo.data;
     if (data == null) return null;
-    return UnsplashPhotoData(id: id, width: data.width, height: data.height, url: '${data.urls.raw}');
+    return UnsplashPhotoData(
+        id: id,
+        width: data.width,
+        height: data.height,
+        url: '${data.urls.raw}',
+        ownerName: data.user.name,
+        ownerUsername: data.user.username);
   }
 }

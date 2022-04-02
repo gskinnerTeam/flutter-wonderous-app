@@ -47,9 +47,9 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (_, constraints) {
       bool shortMode = constraints.biggest.height < 700;
-      double _headerHeight = shortMode ? 250 : 330;
-      double _minAppBarHeight = shortMode ? 40 : 190;
-      double _maxAppBarHeight = shortMode ? 500 : 700;
+      double _illustrationHeight = shortMode ? 250 : 330;
+      double _minAppBarHeight = shortMode ? 40 : 120;
+      double _maxAppBarHeight = shortMode ? 400 : 500;
 
       return ColoredBox(
         color: context.colors.wonderBg(widget.data.type),
@@ -57,7 +57,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
           children: [
             /// Illustration - Sits underneath the scrolling content, fades out as it scrolls
             SizedBox(
-              height: _headerHeight,
+              height: _illustrationHeight,
               child: ValueListenableBuilder<double>(
                 valueListenable: _scrollPos,
                 builder: (_, value, child) {
@@ -77,10 +77,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
               slivers: [
                 /// Invisible padding at the top of the list, so the illustration shows through the btm
                 SliverToBoxAdapter(
-                  child: EightWaySwipeDetector(
-                    onSwipe: _handleListTopSwipe,
-                    child: SizedBox(height: _headerHeight + context.insets.md),
-                  ),
+                  child: SizedBox(height: _illustrationHeight + context.insets.md),
                 ),
 
                 /// Text content, animates itself to hide behind the app bar as it scrolls up
@@ -90,7 +87,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                         builder: (_, value, child) {
                           double offsetAmt = max(0, value * .3);
                           double opacity = (1 - offsetAmt / 150).clamp(0, 1);
-                          ;
+
                           return Transform.translate(
                             offset: Offset(0, offsetAmt),
                             child: Opacity(opacity: opacity, child: child),
@@ -98,7 +95,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                         },
                         child: _TitleText(widget.data))),
 
-                /// App bar
+                /// Collapsing App bar, pins to the top of the list
                 SliverAppBar(
                   pinned: true,
                   collapsedHeight: _minAppBarHeight,
@@ -120,16 +117,27 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                 ),
 
                 /// Editorial content (text and images)
-                SliverToBoxAdapter(
-                  child: _EditorialContent(widget.data),
-                ),
+                SliverToBoxAdapter(child: _EditorialContent(widget.data)),
 
                 /// Bottom padding
-                SliverToBoxAdapter(
-                  child: Container(height: 100, color: context.colors.bg),
-                ),
+                SliverToBoxAdapter(child: Container(height: 100, color: context.colors.bg)),
               ],
             ),
+
+            /// Invisible hit area that sits on top of the list when it is scrolled all the way to the top
+            /// Enables a swipe down gesture, to go back to the home page. Otherwise the scroll view will absorb any vertical swipes.
+            ValueListenableBuilder<double>(
+              valueListenable: _scrollPos,
+              builder: (_, value, child) => (value > 0) ? SizedBox.shrink() : child!,
+              child: SizedBox(
+                height: _illustrationHeight,
+                width: double.infinity,
+                child: EightWaySwipeDetector(
+                  onSwipe: _handleListTopSwipe,
+                  child: ColoredBox(color: Colors.red.withOpacity(0)),
+                ),
+              ),
+            )
           ],
         ),
       );
