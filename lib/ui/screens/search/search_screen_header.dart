@@ -18,7 +18,7 @@ class SearchScreenHeader extends StatelessWidget {
               children: [
                 // Close button
                 Align(
-                  alignment: Alignment.bottomRight,
+                  alignment: Alignment.topRight,
                   child: const CloseButton(),
                 ),
 
@@ -26,7 +26,7 @@ class SearchScreenHeader extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(top: context.insets.xs),
                   child: Text(
-                    title,
+                    title.toUpperCase(),
                     style: context.textStyles.body.copyWith(color: context.colors.bg),
                   ),
                 ),
@@ -35,7 +35,7 @@ class SearchScreenHeader extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(top: context.insets.xs),
                   child: Text(
-                    type.name,
+                    type.name.toUpperCase(),
                     style: context.textStyles.titleFont.copyWith(color: context.colors.accent1),
                   ),
                 ),

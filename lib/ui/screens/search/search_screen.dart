@@ -75,6 +75,7 @@ class _SearchScreenState extends State<SearchScreen> with GetItStateMixin {
     }
 
     Color colorBody = context.colors.body;
+    Color colorSearchBox = context.colors.text;
     Color colorCaption = context.colors.caption;
 
     /// Collect children for the various layers
@@ -89,82 +90,92 @@ class _SearchScreenState extends State<SearchScreen> with GetItStateMixin {
 
         // Content
         Expanded(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: context.insets.md),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Search box
-                // TODO: Look into an autocompleting search box - may need to use department names and a hard-coded list of common terms.
-                TextField(
-                  onSubmitted: searchForStuff,
-                  style: TextStyle(color: colorCaption),
-                  decoration: InputDecoration(
-                      icon: Icon(Icons.search, color: colorCaption),
-                      focusedBorder: InputBorder.none,
-                      fillColor: context.colors.bg,
-                      iconColor: colorCaption,
-                      labelStyle: TextStyle(color: colorCaption),
-                      hintStyle: TextStyle(color: colorCaption.withAlpha(125)),
-                      prefixStyle: TextStyle(color: colorCaption),
-                      focusColor: colorCaption,
-                      hintText: 'Search type or material'),
-                ),
-
-                // Results feedback
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: context.insets.sm),
-                  child: Text(
-                    resultsText,
-                    style: context.textStyles.body.copyWith(color: colorBody),
-                  ),
-                ),
-
-                // Artifacts grid
-                Expanded(
-                  child: CustomScrollView(
-                    controller: scrollController,
-                    cacheExtent: 2000,
-                    slivers: [
-                      SliverToBoxAdapter(
-                        child: MasonryGridView.count(
-                          shrinkWrap: true,
-                          crossAxisCount: 2,
-                          crossAxisSpacing: context.insets.sm,
-                          mainAxisSpacing: context.insets.sm,
-                          itemCount: searchResultsAll.length,
-                          clipBehavior: Clip.antiAlias,
-                          itemBuilder: (BuildContext context, int index) {
-                            var data = searchResultsAll[index];
-                            return GestureDetector(
-                              onTap: () => handleImagePressed(data!),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(context.insets.xs),
-                                child: CachedNetworkImage(
-                                    imageUrl: data!.image,
-                                    placeholder: (BuildContext context, String url) {
-                                      return Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(Radius.circular(context.corners.md)),
-                                            border: Border.all(color: context.colors.accent2, width: 3)),
-                                        child: AspectRatio(
-                                          aspectRatio: 1,
-                                          child: Center(
-                                            heightFactor: 1,
-                                            child: AppLoader(),
-                                          ),
-                                        ),
-                                      );
-                                    }),
-                              ),
-                            );
-                          },
+          child: Container(
+            color: context.colors.bg,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: context.insets.md, vertical: context.insets.sm),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Search box
+                  // TODO: Look into an autocompleting search box - may need to use department names and a hard-coded list of common terms.
+                  TextField(
+                    onSubmitted: searchForStuff,
+                    style: TextStyle(color: colorCaption),
+                    decoration: InputDecoration(
+                        icon: Icon(Icons.search, color: colorCaption),
+                        filled: true,
+                        fillColor: colorSearchBox,
+                        iconColor: colorCaption,
+                        labelStyle: TextStyle(color: colorCaption),
+                        hintStyle: TextStyle(color: colorCaption.withAlpha(125)),
+                        prefixStyle: TextStyle(color: colorCaption),
+                        focusColor: colorCaption,
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: colorSearchBox),
+                            borderRadius: BorderRadius.circular(context.corners.md)),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: colorSearchBox),
+                          borderRadius: BorderRadius.circular(context.corners.md),
                         ),
-                      )
-                    ],
+                        hintText: 'Search type or material'),
                   ),
-                ),
-              ],
+
+                  // Results feedback
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: context.insets.sm),
+                    child: Text(
+                      resultsText,
+                      style: context.textStyles.body.copyWith(color: colorBody),
+                    ),
+                  ),
+
+                  // Artifacts grid
+                  Expanded(
+                    child: CustomScrollView(
+                      controller: scrollController,
+                      cacheExtent: 2000,
+                      slivers: [
+                        SliverToBoxAdapter(
+                          child: MasonryGridView.count(
+                            shrinkWrap: true,
+                            crossAxisCount: 2,
+                            crossAxisSpacing: context.insets.sm,
+                            mainAxisSpacing: context.insets.sm,
+                            itemCount: searchResultsAll.length,
+                            clipBehavior: Clip.antiAlias,
+                            itemBuilder: (BuildContext context, int index) {
+                              var data = searchResultsAll[index];
+                              return GestureDetector(
+                                onTap: () => handleImagePressed(data!),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(context.insets.xs),
+                                  child: CachedNetworkImage(
+                                      imageUrl: data!.image,
+                                      placeholder: (BuildContext context, String url) {
+                                        return Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(Radius.circular(context.corners.md)),
+                                              border: Border.all(color: context.colors.accent2, width: 3)),
+                                          child: AspectRatio(
+                                            aspectRatio: 1,
+                                            child: Center(
+                                              heightFactor: 1,
+                                              child: AppLoader(),
+                                            ),
+                                          ),
+                                        );
+                                      }),
+                                ),
+                              );
+                            },
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
