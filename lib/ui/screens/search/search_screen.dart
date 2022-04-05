@@ -4,7 +4,6 @@ import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:wonders/ui/screens/search/search_screen_header.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 /// PageView sandwiched between Foreground and Background layers
 /// arranged in a parallax style
@@ -18,41 +17,54 @@ class SearchScreen extends StatefulWidget with GetItStatefulWidgetMixin {
 
 class _SearchScreenState extends State<SearchScreen> with GetItStateMixin {
   //final _pageController = PageController(viewportFraction: 1);
-  ScrollController scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
+  final TextEditingController _textController = TextEditingController();
 
-  List<ArtifactData?> searchResultsAll = [];
-  bool isLoading = false;
-  bool isEmpty = false;
-  bool isDisconnected = false;
+  // TODO: Get prebuilt list of common autocomplete terms.
+  List<String> _kOptions = [
+    'hat',
+    'coin',
+    'urn',
+    'vase',
+    'statue',
+    'painting',
+    'sculpture',
+    'graffiti',
+    'art',
+    'clothing',
+    'tool'
+  ];
 
-  List<bool> imagesReady = [];
+  List<ArtifactData?> _searchResultsAll = [];
+  bool _isLoading = false;
+  bool _isEmpty = false;
 
   @override
   void initState() {
     // Search test.
     super.initState();
-    scrollController.addListener(() {});
+    _scrollController.addListener(() {});
   }
 
-  void searchForStuff(String query) async {
-    if (isLoading) {
+  void searchForStuff(String? query) async {
+    query = query ?? _textController.text;
+    if (_isLoading) {
       return;
     }
 
     // Reset the view state; show that it's loading and prevent subsequent calls until complete.
     setState(() {
-      isEmpty = false;
-      isDisconnected = false;
-      isLoading = true;
+      _isEmpty = false;
+      _isLoading = true;
     });
 
     // Get all search results, with a limit.
-    searchResultsAll = await search.searchForArtifacts(query, count: 1000);
+    _searchResultsAll = await search.searchForArtifacts(query, count: 1000);
 
     // Load complete. Show results.
     setState(() {
-      isLoading = false;
-      isEmpty = searchResultsAll.isEmpty;
+      _isLoading = false;
+      _isEmpty = _searchResultsAll.isEmpty;
     });
   }
 
@@ -64,14 +76,12 @@ class _SearchScreenState extends State<SearchScreen> with GetItStateMixin {
   @override
   Widget build(BuildContext context) {
     String resultsText = '';
-    if (isLoading) {
+    if (_isLoading) {
       resultsText = 'Loading, one sec...';
-    } else if (isEmpty) {
+    } else if (_isEmpty) {
       resultsText = 'Sorry, no results found';
-    } else if (isDisconnected) {
-      resultsText = 'You appear to be offline';
-    } else if (searchResultsAll.isNotEmpty) {
-      resultsText = '${searchResultsAll.length} results found';
+    } else if (_searchResultsAll.isNotEmpty) {
+      resultsText = '${_searchResultsAll.length} results found';
     }
 
     Color colorBody = context.colors.body;
@@ -99,26 +109,67 @@ class _SearchScreenState extends State<SearchScreen> with GetItStateMixin {
                 children: [
                   // Search box
                   // TODO: Look into an autocompleting search box - may need to use department names and a hard-coded list of common terms.
-                  TextField(
-                    onSubmitted: searchForStuff,
-                    style: TextStyle(color: colorCaption),
-                    decoration: InputDecoration(
-                        icon: Icon(Icons.search, color: colorCaption),
-                        filled: true,
-                        fillColor: colorSearchBox,
-                        iconColor: colorCaption,
-                        labelStyle: TextStyle(color: colorCaption),
-                        hintStyle: TextStyle(color: colorCaption.withAlpha(125)),
-                        prefixStyle: TextStyle(color: colorCaption),
-                        focusColor: colorCaption,
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: colorSearchBox),
-                            borderRadius: BorderRadius.circular(context.corners.md)),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: colorSearchBox),
-                          borderRadius: BorderRadius.circular(context.corners.md),
-                        ),
-                        hintText: 'Search type or material'),
+
+                  Autocomplete(
+                    optionsBuilder: (TextEditingValue textEditingValue) {
+                      if (textEditingValue.text == '') {
+                        return const Iterable<String>.empty();
+                      }
+
+                      // Start with a list of results from a prebaked list of strings. TODO: Make this more thorough, like a JSON based on Wonder type.
+                      List<String> results = _kOptions.where((String option) {
+                        return option.contains(textEditingValue.text.toLowerCase());
+                      }).toList();
+
+                      // Use titles of artifacts that have already been loaded.
+                      List<ArtifactData> allArtifacts = search.getAllArtifacts();
+                      if (allArtifacts.isNotEmpty) {
+                        List<ArtifactData?> artifacts = allArtifacts.where((ArtifactData? data) {
+                          return data?.title.toLowerCase().contains(textEditingValue.text.toLowerCase()) ?? false;
+                        }).toList();
+                        for (var artifact in artifacts) {
+                          if (artifact != null) {
+                            results.add(artifact.title);
+                          }
+                        }
+                      }
+
+                      // Sort everything in alphabetical order.
+                      results.sort((a, b) {
+                        return a.toLowerCase().compareTo(b.toLowerCase());
+                      });
+
+                      // Return the autocomplete results.
+                      return results;
+                    },
+                    onSelected: searchForStuff,
+                    fieldViewBuilder: (context, textController, focusNode, onFieldSubmitted) {
+                      return TextField(
+                        controller: _textController,
+                        onSubmitted: (query) {
+                          onFieldSubmitted();
+                        },
+                        focusNode: focusNode,
+                        style: TextStyle(color: colorCaption),
+                        decoration: InputDecoration(
+                            icon: Icon(Icons.search, color: colorCaption),
+                            filled: true,
+                            fillColor: colorSearchBox,
+                            iconColor: colorCaption,
+                            labelStyle: TextStyle(color: colorCaption),
+                            hintStyle: TextStyle(color: colorCaption.withAlpha(125)),
+                            prefixStyle: TextStyle(color: colorCaption),
+                            focusColor: colorCaption,
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: colorSearchBox),
+                                borderRadius: BorderRadius.circular(context.corners.md)),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: colorSearchBox),
+                              borderRadius: BorderRadius.circular(context.corners.md),
+                            ),
+                            hintText: 'Search type or material'),
+                      );
+                    },
                   ),
 
                   // Results feedback
@@ -133,7 +184,7 @@ class _SearchScreenState extends State<SearchScreen> with GetItStateMixin {
                   // Artifacts grid
                   Expanded(
                     child: CustomScrollView(
-                      controller: scrollController,
+                      controller: _scrollController,
                       cacheExtent: 2000,
                       slivers: [
                         SliverToBoxAdapter(
@@ -142,10 +193,10 @@ class _SearchScreenState extends State<SearchScreen> with GetItStateMixin {
                             crossAxisCount: 2,
                             crossAxisSpacing: context.insets.sm,
                             mainAxisSpacing: context.insets.sm,
-                            itemCount: searchResultsAll.length,
+                            itemCount: _searchResultsAll.length,
                             clipBehavior: Clip.antiAlias,
                             itemBuilder: (BuildContext context, int index) {
-                              var data = searchResultsAll[index];
+                              var data = _searchResultsAll[index];
                               return GestureDetector(
                                 onTap: () => handleImagePressed(data!),
                                 child: ClipRRect(

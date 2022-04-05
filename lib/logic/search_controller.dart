@@ -15,6 +15,11 @@ class SearchController {
     departmentList.value = (await service.getDepartmentList()).content ?? [];
   }
 
+  /// Return list of hashed artifact data.
+  List<ArtifactData> get allLoadedArtifacts {
+    return _artifactHash.values.toList();
+  }
+
   /// Returns artifact data by ID. Returns null if artifact cannot be found. */
   Future<ArtifactData?> getArtifactByID(String id) async {
     ArtifactData? a;

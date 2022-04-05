@@ -2,18 +2,18 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
-import 'package:wonders/ui/screens/artifact/artifact_data_element.dart';
+import 'package:wonders/ui/screens/artifact_details/artifact_data_element.dart';
 
-class ArtifactScreen extends StatefulWidget {
+class ArtifactDetailsScreen extends StatefulWidget {
   final WonderType type;
   final String id;
-  const ArtifactScreen({Key? key, required this.type, required this.id}) : super(key: key);
+  const ArtifactDetailsScreen({Key? key, required this.type, required this.id}) : super(key: key);
 
   @override
-  State<ArtifactScreen> createState() => _ArtifactScreenState();
+  State<ArtifactDetailsScreen> createState() => _ArtifactDetailsScreenState();
 }
 
-class _ArtifactScreenState extends State<ArtifactScreen> {
+class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
   ArtifactData? _artifact;
 
   @override
@@ -90,6 +90,7 @@ class _ArtifactScreenState extends State<ArtifactScreen> {
             padding: EdgeInsets.only(top: context.insets.sm),
             child: Text(
               _artifact?.title ?? 'Loading...',
+              textAlign: TextAlign.center,
               style: context.textStyles.h2.copyWith(color: context.colors.bg),
             ),
           ),

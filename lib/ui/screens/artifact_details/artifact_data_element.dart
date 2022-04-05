@@ -17,7 +17,8 @@ class ArtifactDataElement extends StatelessWidget {
       padding: EdgeInsets.only(bottom: context.insets.md),
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             child: Text(
@@ -25,7 +26,12 @@ class ArtifactDataElement extends StatelessWidget {
               style: context.textStyles.titleFont.copyWith(color: context.colors.accent2),
             ),
           ),
-          Expanded(child: Text(c, style: context.textStyles.body.copyWith(color: context.colors.bg))),
+          Expanded(
+            child: Text(
+              c,
+              style: context.textStyles.body.copyWith(color: context.colors.bg),
+            ),
+          ),
         ],
       ),
     );
