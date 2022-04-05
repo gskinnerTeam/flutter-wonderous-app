@@ -5,7 +5,7 @@ import 'package:wonders/logic/data/wonders_data/mock_data.dart';
 final tajMahalData = WonderData(
   type: WonderType.tajMahal,
   title: 'Taj Mahal',
-  subTitle: 'TODO',
+  subTitle: 'subtitle goes here',
   regionTitle: 'TODO',
   startYr: 550,
   endYr: 1550,

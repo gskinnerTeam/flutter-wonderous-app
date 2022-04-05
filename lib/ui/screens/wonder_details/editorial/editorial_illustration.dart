@@ -13,7 +13,10 @@ class _TopIllustration extends StatelessWidget {
           offset: Offset(0, 60),
           child: Transform.scale(
             scale: .95,
-            child: WonderIllustration(type, config: WonderIllustrationConfig.mg(enableAnims: false)),
+            child: WonderIllustration(
+              type,
+              config: WonderIllustrationConfig.mg(enableAnims: false),
+            ),
           ),
         ),
       ],

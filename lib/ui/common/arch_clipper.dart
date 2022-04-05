@@ -2,6 +2,7 @@ import 'package:wonders/common_libs.dart';
 
 enum ArchType {
   spade,
+  pyramid,
   rect,
 }
 
@@ -51,13 +52,22 @@ class ArchPoint {
 }
 
 List<ArchPoint> _getArchPts(Size size, ArchType type) {
+  double distanceFromTop = 100;
   switch (type) {
+    case ArchType.pyramid:
+      return [
+        ArchPoint(Offset(0, size.height)),
+        ArchPoint(Offset(0, distanceFromTop)),
+        ArchPoint(Offset(size.width / 2, 0)),
+        ArchPoint(Offset(size.width, distanceFromTop)),
+        ArchPoint(Offset(size.width, size.height)),
+      ];
     case ArchType.spade:
       return [
         ArchPoint(Offset(0, size.height)),
-        ArchPoint(Offset(0, min(size.height * .3, 200))),
-        ArchPoint(Offset(size.width / 2, 0), Offset(0, size.height * .2)),
-        ArchPoint(Offset(size.width, min(size.height * .3, 200)), Offset(size.width, size.height * .2)),
+        ArchPoint(Offset(0, distanceFromTop)),
+        ArchPoint(Offset(size.width / 2, 0), Offset(0, distanceFromTop * .66)),
+        ArchPoint(Offset(size.width, distanceFromTop), Offset(size.width, distanceFromTop * .66)),
         ArchPoint(Offset(size.width, size.height)),
       ];
     case ArchType.rect:

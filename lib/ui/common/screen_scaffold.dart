@@ -20,9 +20,9 @@ class ScreenScaffold extends StatelessWidget {
           primaryColor: Colors.red,
           textTheme: (isDark ? ThemeData.dark() : ThemeData.light()).textTheme,
         ),
-        child: Scaffold(
-          backgroundColor: bgColor ?? (isDark ? context.colors.greyStrong : context.colors.bg),
-          body: enableSafeArea ? SafeArea(child: child) : child,
+        child: Container(
+          color: bgColor ?? (isDark ? context.colors.greyStrong : context.colors.bg),
+          child: enableSafeArea ? SafeArea(child: child) : child,
         ),
       );
 }

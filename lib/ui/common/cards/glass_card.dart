@@ -43,7 +43,7 @@ class OpeningGlassCard extends StatelessWidget {
   final EdgeInsets? padding;
 
   @override
-  Widget build(BuildContext context) => OpeningCard(
+  Widget build(BuildContext context) => OpeningBox(
       padding: padding,
       isOpen: isOpen,
       openBuilder: openBuilder,
