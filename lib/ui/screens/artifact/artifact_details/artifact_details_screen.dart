@@ -16,6 +16,7 @@ class ArtifactDetailsScreen extends StatefulWidget {
 
 class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
   ArtifactData? _artifact;
+  double _textHeight = 1.2;
 
   @override
   void initState() {
@@ -92,7 +93,7 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
             child: Text(
               _artifact?.title ?? 'Loading...',
               textAlign: TextAlign.center,
-              style: context.textStyles.h2.copyWith(color: context.colors.bg),
+              style: context.textStyles.h2.copyWith(color: context.colors.bg, height: _textHeight),
             ),
           ),
 

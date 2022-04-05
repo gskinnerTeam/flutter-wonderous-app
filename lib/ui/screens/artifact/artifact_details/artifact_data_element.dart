@@ -6,6 +6,8 @@ class ArtifactDataElement extends StatelessWidget {
   final String? title;
   final String? content;
 
+  final double textHeight = 1.2;
+
   @override
   Widget build(BuildContext context) {
     // Note: Flutter's syntax correction does not believe StringUtils.isEmpty is a null check,
@@ -23,13 +25,13 @@ class ArtifactDataElement extends StatelessWidget {
           Expanded(
             child: Text(
               t.toUpperCase(),
-              style: context.textStyles.titleFont.copyWith(color: context.colors.accent2),
+              style: context.textStyles.titleFont.copyWith(color: context.colors.accent2, height: textHeight),
             ),
           ),
           Expanded(
             child: Text(
               c,
-              style: context.textStyles.body.copyWith(color: context.colors.bg),
+              style: context.textStyles.body.copyWith(color: context.colors.bg, height: textHeight),
             ),
           ),
         ],
