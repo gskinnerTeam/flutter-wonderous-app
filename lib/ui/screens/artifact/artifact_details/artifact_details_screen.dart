@@ -96,14 +96,31 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
             ),
           ),
 
-          // TODO - compass rose line break here
+          // Compass rose line break
           Padding(
             padding: EdgeInsets.symmetric(vertical: context.insets.xxl),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
               children: [
-                SvgPicture.asset(
-                  './assets/images/compass-full.svg',
-                  semanticsLabel: 'Line break',
+                Expanded(
+                  child: Container(
+                    decoration:
+                        BoxDecoration(border: Border(bottom: BorderSide(width: 1, color: context.colors.accent2))),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: context.insets.xs),
+                  child: SvgPicture.asset(
+                    './assets/images/compass-full.svg',
+                    semanticsLabel: 'Line break',
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    decoration:
+                        BoxDecoration(border: Border(bottom: BorderSide(width: 1, color: context.colors.accent2))),
+                  ),
                 ),
               ],
             ),
