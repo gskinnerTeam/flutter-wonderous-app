@@ -1,4 +1,4 @@
-part of 'wonder_editorial_screen.dart';
+part of '../editorial_screen.dart';
 
 class _TopIllustration extends StatelessWidget {
   const _TopIllustration(this.type, {Key? key}) : super(key: key);

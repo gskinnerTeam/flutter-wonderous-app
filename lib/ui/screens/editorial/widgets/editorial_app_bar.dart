@@ -1,4 +1,4 @@
-part of 'wonder_editorial_screen.dart';
+part of '../editorial_screen.dart';
 
 // TODO: This needs to take the actual thumbnail for this widget
 class _EditorialAppBar extends StatelessWidget {

@@ -68,6 +68,6 @@ class AppRoute extends GoRoute {
       : super(
           path: path,
           routes: routes,
-          builder: (_, state) => builder(state),
+          builder: (_, state) => Scaffold(body: builder(state)),
         );
 }

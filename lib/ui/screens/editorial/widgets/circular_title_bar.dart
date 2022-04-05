@@ -1,4 +1,4 @@
-part of 'wonder_editorial_screen.dart';
+part of '../editorial_screen.dart';
 
 class _CircularTitleBar extends StatelessWidget {
   const _CircularTitleBar({Key? key, required this.titles, required this.index}) : super(key: key);

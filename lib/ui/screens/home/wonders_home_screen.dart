@@ -4,6 +4,7 @@ import 'package:wonders/ui/common/controls/buttons.dart';
 import 'package:wonders/ui/common/controls/diagonal_page_indicator.dart';
 import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
 import 'package:wonders/ui/common/screen_scaffold.dart';
+import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 import 'package:wonders/ui/wonder_illustrations/wonder_illustration.dart';
 
@@ -61,48 +62,46 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
     /// Midground children will go in a PageView, sandwiched by Background and Foreground layers which are fixed on screen.
     /// UI controls and a gradient will float on top of it all.
     /// Entire view is wrapped in a swipe detector to enable a down-swipe into the wonder details.
-    return ScreenScaffold(
-      isDark: true,
-      enableSafeArea: false,
-      child: EightWaySwipeDetector(
-        onSwipe: _handleSwipe,
-        child: Stack(children: [
-          /// Sun / Clouds
-          ...bgChildren,
+    return EightWaySwipeDetector(
+      onSwipe: _handleSwipe,
+      child: Stack(children: [
+        /// Sun / Clouds
+        ...bgChildren,
 
-          /// Wonder
-          PageView(
-            controller: _pageController,
-            children: mgChildren,
-            physics: BouncingScrollPhysics(),
-            onPageChanged: _handlePageViewChanged,
-          ),
+        /// Wonder
+        PageView(
+          controller: _pageController,
+          children: mgChildren,
+          physics: BouncingScrollPhysics(),
+          onPageChanged: _handlePageViewChanged,
+        ),
 
-          /// Foreground decorators
-          ...fgChildren.map((e) => IgnorePointer(child: e)),
+        /// Foreground decorators
+        ...fgChildren.map((e) => IgnorePointer(child: e)),
 
-          /// Foreground gradient
-          BottomCenter(
-            // TODO: Gradient should get darker when pulling up...
-            child: _AnimatedGradient(context.colors.wonderBg(currentWonder.type)),
-          ),
+        /// Foreground gradient
+        BottomCenter(
+          // TODO: Gradient should get darker when pulling up...
+          child: _AnimatedGradient(context.colors.wonderBg(currentWonder.type)),
+        ),
 
-          /// Floating controls / UI
-          AnimatedSwitcher(
-            duration: context.style.times.fast,
-            child: Column(
-              key: ValueKey(_wonderIndex),
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(width: double.infinity),
-                Gap(context.insets.lg * 3),
+        /// Floating controls / UI
+        AnimatedSwitcher(
+          duration: context.style.times.fast,
+          child: Column(
+            key: ValueKey(_wonderIndex),
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(width: double.infinity),
+              Gap(context.insets.lg * 3),
 
-                /// Save Background Btn
-                // AppBtn(child: Text('Save Background'), onPressed: _handleSaveWallPaperPressed),
-                AppBtn(child: Text('Settings'), onPressed: _handleSettingsPressed),
-                Spacer(),
+              /// Save Background Btn
+              // AppBtn(child: Text('Save Background'), onPressed: _handleSaveWallPaperPressed),
+              AppBtn(child: Text('Settings'), onPressed: _handleSettingsPressed),
+              Spacer(),
 
-                IgnorePointer(
+              IgnorePointer(
+                child: LightText(
                   child: Column(children: [
                     /// Page indicator
                     DiagonalPageIndicator(current: _wonderIndex + 1, total: wonders.length),
@@ -113,24 +112,24 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
                       widthFactor: .8,
                       child: Text(
                         currentWonder.titleWithBreaks.toUpperCase(),
-                        style: context.style.text.h1.copyWith(height: 1),
+                        style: context.textStyles.h1.copyWith(height: 1),
                         textAlign: TextAlign.center,
                       ),
                     ),
                   ]),
                 ),
+              ),
 
-                /// TODO: Add the page selector that expands upwards when you drag
-                /// Down arrow
-                AppBtn(
-                    child: Icon(Icons.arrow_downward, size: 64, color: Theme.of(context).primaryColor),
-                    onPressed: _showDetailsPage),
-                Gap(context.style.insets.md),
-              ],
-            ),
-          )
-        ]),
-      ),
+              /// TODO: Add the page selector that expands upwards when you drag
+              /// Down arrow
+              AppBtn(
+                  child: Icon(Icons.arrow_downward, size: 64, color: Theme.of(context).primaryColor),
+                  onPressed: _showDetailsPage),
+              Gap(context.style.insets.md),
+            ],
+          ),
+        )
+      ]),
     );
   }
 }

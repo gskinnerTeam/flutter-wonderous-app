@@ -41,8 +41,9 @@ class AppStyle {
       1100: 1.4,
       800: 1.25,
       600: 1,
-      300: .8,
-      0: .75,
+      400: .95,
+      300: .85,
+      0: .8,
     };
     for (var bp in breakPts.keys) {
       if (bp <= diagonalPx) return breakPts[bp]!;

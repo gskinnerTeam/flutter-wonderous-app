@@ -5,7 +5,7 @@ import 'package:wonders/ui/common/controls/buttons.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_screen.dart';
 import 'package:wonders/ui/screens/image_gallery/image_gallery.dart';
 import 'package:wonders/ui/screens/timeline/timeline_screen.dart';
-import 'package:wonders/ui/screens/wonder_details/editorial/wonder_editorial_screen.dart';
+import 'package:wonders/ui/screens/editorial/editorial_screen.dart';
 import 'package:wonders/ui/screens/wonder_details/wonder_details_tab_menu.dart';
 
 class WonderDetailsScreen extends StatefulWidget with GetItStatefulWidgetMixin {
