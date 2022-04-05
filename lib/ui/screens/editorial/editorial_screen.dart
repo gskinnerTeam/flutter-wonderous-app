@@ -1,21 +1,22 @@
 import 'dart:async';
 
+import 'package:drop_cap_text/drop_cap_text.dart';
 import 'package:flutter_circular_text/circular_text.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/arch_clipper.dart';
 import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
-import 'package:wonders/ui/common/placeholder_image.dart';
-import 'package:wonders/ui/common/placeholder_text.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 import 'package:wonders/ui/wonder_illustrations/wonder_illustration.dart';
 
-part 'circular_title_bar.dart';
-part 'editorial_app_bar.dart';
-part 'editorial_content.dart';
-part 'editorial_illustration.dart';
-part 'editorial_title.dart';
+part 'widgets/circular_title_bar.dart';
+part 'widgets/editorial_app_bar.dart';
+part 'widgets/editorial_content.dart';
+part 'widgets/editorial_illustration.dart';
+part 'widgets/editorial_title.dart';
+part 'widgets/editorial_section_divider.dart';
 
 class WonderEditorialScreen extends StatefulWidget {
   const WonderEditorialScreen(this.data, {Key? key, required this.onScroll}) : super(key: key);

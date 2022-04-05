@@ -1,4 +1,4 @@
-part of 'wonder_editorial_screen.dart';
+part of '../editorial_screen.dart';
 
 class _TitleText extends StatelessWidget {
   const _TitleText(this.data, {Key? key}) : super(key: key);
