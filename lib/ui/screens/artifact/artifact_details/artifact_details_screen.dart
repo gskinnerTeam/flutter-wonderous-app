@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
-import 'package:wonders/ui/screens/artifact_details/artifact_data_element.dart';
+import 'package:wonders/ui/screens/artifact/artifact_details/artifact_data_element.dart';
 
 class ArtifactDetailsScreen extends StatefulWidget {
   final WonderType type;
@@ -97,10 +98,16 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
 
           // TODO - compass rose line break here
           Padding(
-              padding: EdgeInsets.symmetric(vertical: context.insets.xxl),
-              child: Container(
-                decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 1, color: context.colors.accent2))),
-              )),
+            padding: EdgeInsets.symmetric(vertical: context.insets.xxl),
+            child: Row(
+              children: [
+                SvgPicture.asset(
+                  './assets/images/compass-full.svg',
+                  semanticsLabel: 'Line break',
+                ),
+              ],
+            ),
+          ),
 
           // Description
           Column(mainAxisSize: MainAxisSize.min, children: [

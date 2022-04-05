@@ -1,5 +1,5 @@
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/wonder_illustrations/wonder_illustration_config.dart';
+import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 
 /// Utility class that wraps a normal [Hero] widget, but respects WonderIllustrationConfig.enableHero setting
 class WonderHero extends StatelessWidget {

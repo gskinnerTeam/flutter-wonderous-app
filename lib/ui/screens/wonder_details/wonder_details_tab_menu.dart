@@ -1,8 +1,8 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/controls/buttons.dart';
 import 'package:wonders/ui/common/controls/circle_button.dart';
+import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 import 'package:wonders/ui/wonder_illustrations/wonder_illustration.dart';
-import 'package:wonders/ui/wonder_illustrations/wonder_illustration_config.dart';
 
 class WonderDetailsTabMenu extends StatelessWidget {
   const WonderDetailsTabMenu({Key? key, required this.tabController, this.showBg = false, required this.wonderType})

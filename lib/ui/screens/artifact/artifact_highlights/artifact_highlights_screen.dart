@@ -2,8 +2,7 @@ import 'package:wonders/common_libs.dart';
 
 class ArtifactHighlightsScreen extends StatefulWidget {
   final WonderType type;
-  final String id;
-  const ArtifactHighlightsScreen({Key? key, required this.type, required this.id}) : super(key: key);
+  const ArtifactHighlightsScreen({Key? key, required this.type}) : super(key: key);
 
   @override
   State<ArtifactHighlightsScreen> createState() => _ArtifactScreenState();

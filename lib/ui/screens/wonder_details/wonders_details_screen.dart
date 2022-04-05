@@ -1,9 +1,8 @@
-import 'package:flutter/scheduler.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/wonders_controller.dart';
 import 'package:wonders/ui/common/controls/buttons.dart';
-import 'package:wonders/ui/screens/artifact_search/artifact_search_screen.dart';
+import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_screen.dart';
 import 'package:wonders/ui/screens/image_gallery/image_gallery.dart';
 import 'package:wonders/ui/screens/timeline/timeline_screen.dart';
 import 'package:wonders/ui/screens/wonder_details/editorial/wonder_editorial_screen.dart';
@@ -72,7 +71,6 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
                 tabController: _tabController,
                 wonderType: wonder!.type,
                 showBg: showTabBarBg,
-                showHomeBtn: value || tabIndex != 0,
               ),
             ),
           ),
