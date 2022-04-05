@@ -13,12 +13,20 @@ class _TitleText extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: context.insets.sm),
             separatorBuilder: () => Gap(context.insets.sm),
             children: [
-              Expanded(child: Divider().gTweener.scale(curve: Curves.easeOut).withDelay(.5.seconds)),
+              Expanded(
+                  child: Divider(color: context.colors.wonderFg(data.type))
+                      .gTweener //TODO: Add some shortcut widgets for GTWeener? FadeIn(delay), SlideIn(), ScaleIn(),
+                      .scale(curve: Curves.easeOut)
+                      .withDelay(.5.seconds)),
               Text(
                 data.subTitle.toUpperCase(),
-                style: context.textStyles.body.copyWith(color: context.colors.accent2),
-              ),
-              Expanded(child: Divider().gTweener.scale(curve: Curves.easeOut).withDelay(.5.seconds)),
+                style: context.textStyles.body.copyWith(color: context.colors.text),
+              ).gTweener.fade().withDelay(.1.seconds),
+              Expanded(
+                  child: Divider(color: context.colors.wonderFg(data.type))
+                      .gTweener
+                      .scale(curve: Curves.easeOut)
+                      .withDelay(.5.seconds)),
             ],
           ),
           Gap(context.insets.md),

@@ -4,8 +4,8 @@ import 'package:wonders/ui/common/controls/buttons.dart';
 import 'package:wonders/ui/common/controls/diagonal_page_indicator.dart';
 import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
 import 'package:wonders/ui/common/screen_scaffold.dart';
+import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 import 'package:wonders/ui/wonder_illustrations/wonder_illustration.dart';
-import 'package:wonders/ui/wonder_illustrations/wonder_illustration_config.dart';
 
 /// PageView sandwiched between Foreground and Background layers
 /// arranged in a parallax style
@@ -58,15 +58,14 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
       return WonderIllustration(e.type, config: config);
     }).toList();
 
+    /// Midground children will go in a PageView, sandwiched by Background and Foreground layers which are fixed on screen.
+    /// UI controls and a gradient will float on top of it all.
     /// Entire view is wrapped in a swipe detector to enable a down-swipe into the wonder details.
     return ScreenScaffold(
       isDark: true,
       enableSafeArea: false,
       child: EightWaySwipeDetector(
         onSwipe: _handleSwipe,
-
-        /// Midground children will go in a PageView, sandwiched by Background and Foreground
-        /// UI controls and a gradient will float on top
         child: Stack(children: [
           /// Sun / Clouds
           ...bgChildren,
@@ -83,9 +82,8 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
           ...fgChildren.map((e) => IgnorePointer(child: e)),
 
           /// Foreground gradient
-          // TODO: How to get the foreground color for each gradient? Do we want to define this in AppColors?
-          // TODO: Would be cool if this gradient got darker when pulling down...
           BottomCenter(
+            // TODO: Gradient should get darker when pulling up...
             child: _AnimatedGradient(context.colors.wonderBg(currentWonder.type)),
           ),
 
@@ -115,7 +113,6 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
                       widthFactor: .8,
                       child: Text(
                         currentWonder.titleWithBreaks.toUpperCase(),
-
                         style: context.style.text.h1.copyWith(height: 1),
                         textAlign: TextAlign.center,
                       ),

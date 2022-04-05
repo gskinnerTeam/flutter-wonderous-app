@@ -2,9 +2,16 @@ part of 'wonder_editorial_screen.dart';
 
 // TODO: This needs to take the actual thumbnail for this widget
 class _EditorialAppBar extends StatelessWidget {
-  const _EditorialAppBar(this.wonderType, {Key? key, required this.imageId}) : super(key: key);
+  _EditorialAppBar(
+    this.wonderType, {
+    Key? key,
+    required this.imageId,
+    required this.sectionIndex,
+  }) : super(key: key);
   final String imageId;
   final WonderType wonderType;
+  final ValueNotifier<int> sectionIndex;
+  final _titleKey = UniqueKey();
   @override
   Widget build(BuildContext context) {
     ArchType? archType;
@@ -16,38 +23,57 @@ class _EditorialAppBar extends StatelessWidget {
         archType = ArchType.pyramid;
     }
     return LayoutBuilder(builder: (_, constraints) {
-      bool showTitleBar = constraints.biggest.height < 300;
-      return AnimatedSwitcher(
-        duration: context.times.fast,
-        child: Stack(
-          key: ValueKey(showTitleBar),
-          fit: StackFit.expand,
-          children: [
-            /// Masked image
-            ClipPath(
-              // Switch arch type to Rect if we are showing the title bar
-              clipper: ArchClipper(showTitleBar ? ArchType.rect : archType!),
-              child: Image.asset('assets/images/${wonders.getAssetFolder(wonderType)}/photo1.jpg', fit: BoxFit.cover),
-            ),
+      bool showOverlay = constraints.biggest.height < 300;
 
-            if (showTitleBar) ...[
-              /// Colored overlay
-              ClipRect(
-                child: ColoredBox(color: context.colors.wonderBg(wonderType).withOpacity(.8))
-                    .gTweener
-                    .move(from: Offset(0, -200))
-                    .withDelay(.0.seconds),
-              ),
-
-              /// Titlebar
-              BottomCenter(
-                child: ClipRect(
-                  child: _CircularTitleBar().gTweener.move(from: Offset(0, 100), curve: Curves.easeOut),
+      return Stack(
+        fit: StackFit.expand,
+        children: [
+          /// Masked image
+          AnimatedSwitcher(
+            duration: context.times.fast,
+            switchInCurve: Curves.easeIn,
+            child: Stack(
+              key: ValueKey(showOverlay),
+              fit: StackFit.expand,
+              children: [
+                ClipPath(
+                  // Switch arch type to Rect if we are showing the title bar
+                  clipper: ArchClipper(showOverlay ? ArchType.rect : archType!),
+                  // TODO: Make helpers for photo1 etc
+                  child:
+                      Image.asset('assets/images/${wonders.getAssetFolder(wonderType)}/photo-1.png', fit: BoxFit.cover),
                 ),
-              )
-            ],
-          ],
-        ),
+                if (showOverlay) ...[
+                  /// Colored overlay
+                  ClipRect(
+                    child: ColoredBox(color: context.colors.wonderBg(wonderType).withOpacity(.8))
+                        .gTweener
+                        .move(from: Offset(0, -200))
+                        .withDelay(.0.seconds),
+                  ),
+                ],
+              ],
+            ),
+          ),
+
+          /// Titlebar
+          BottomCenter(
+            key: _titleKey,
+            child: ClipRect(
+              child: ValueListenableBuilder<int>(
+                valueListenable: sectionIndex,
+                builder: (_, value, __) => _CircularTitleBar(
+                  index: sectionIndex.value,
+                  titles: const [
+                    'Facts and History',
+                    'Location Info',
+                    'Construction',
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       );
     });
   }
