@@ -1,14 +1,13 @@
 import 'dart:async';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_circular_text/circular_text.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
-import 'package:wonders/logic/utils/you_tube_utils.dart';
 import 'package:wonders/ui/common/arch_clipper.dart';
 import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
 import 'package:wonders/ui/common/placeholder_image.dart';
 import 'package:wonders/ui/common/placeholder_text.dart';
+import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 import 'package:wonders/ui/wonder_illustrations/wonder_illustration.dart';
 

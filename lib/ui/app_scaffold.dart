@@ -1,4 +1,3 @@
-import 'package:flutter/scheduler.dart';
 import 'package:statsfl/statsfl.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/app_scroll_behavior.dart';
@@ -9,8 +8,8 @@ class WondersAppScaffold extends StatelessWidget with GetItMixin {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     // Construct an AppStyle using app size and current themeType.
+    final size = MediaQuery.of(context).size;
     final styles = AppStyle(screenSize: size);
     GTweener.defaultDuration = styles.times.fast;
     // Respect fps meter setting
@@ -25,11 +24,11 @@ class WondersAppScaffold extends StatelessWidget with GetItMixin {
         child: Theme(
           data: styles.colors.toThemeData(),
           //Custom scroll behavior to make responsive testing easier on desktop
-          child: ScrollConfiguration(
-            behavior: AppScrollBehavior(),
-            // Provide a default texts style to allow Hero's to render text properly
-            child: DefaultTextStyle(
-              style: styles.text.body,
+          child: DefaultTextStyle(
+            style: styles.text.body,
+            child: ScrollConfiguration(
+              behavior: AppScrollBehavior(),
+              // Provide a default texts style to allow Hero's to render text properly
               child: child,
             ),
           ),

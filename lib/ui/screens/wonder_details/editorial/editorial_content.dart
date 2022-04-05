@@ -14,7 +14,7 @@ class _EditorialContent extends StatelessWidget {
       child: SeparatedColumn(
         separatorBuilder: () => Gap(context.insets.md),
         children: [
-          LoremPlaceholder(dropCase: true),
+          LoremPlaceholder(dropCase: false),
           Theme(
             data: Theme.of(context).copyWith(textTheme: ThemeData.light().textTheme),
             child: Text('hello', style: context.textStyles.h1),

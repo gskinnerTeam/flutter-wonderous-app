@@ -5,38 +5,40 @@ class _TitleText extends StatelessWidget {
   final WonderData data;
 
   @override
-  Widget build(BuildContext context) => Column(
-        children: [
-          Gap(context.insets.md),
-          Gap(30),
-          SeparatedRow(
-            padding: EdgeInsets.symmetric(horizontal: context.insets.sm),
-            separatorBuilder: () => Gap(context.insets.sm),
-            children: [
-              Expanded(
-                  child: Divider(color: context.colors.wonderFg(data.type))
-                      .gTweener //TODO: Add some shortcut widgets for GTWeener? FadeIn(delay), SlideIn(), ScaleIn(),
-                      .scale(curve: Curves.easeOut)
-                      .withDelay(.5.seconds)),
-              Text(
-                data.subTitle.toUpperCase(),
-                style: context.textStyles.body.copyWith(color: context.colors.text),
-              ).gTweener.fade().withDelay(.1.seconds),
-              Expanded(
-                  child: Divider(color: context.colors.wonderFg(data.type))
-                      .gTweener
-                      .scale(curve: Curves.easeOut)
-                      .withDelay(.5.seconds)),
-            ],
-          ),
-          Gap(context.insets.md),
-          Text(
-            data.title.toUpperCase(),
-            style: context.textStyles.h1.copyWith(color: context.colors.bg),
-            textAlign: TextAlign.center,
-          ).gTweener.fade().withDuration(context.times.slow).withDelay(.3.seconds),
-          Gap(30),
-          Gap(context.insets.md),
-        ],
+  Widget build(BuildContext context) => LightText(
+        child: Column(
+          children: [
+            Gap(context.insets.md),
+            Gap(30),
+            SeparatedRow(
+              padding: EdgeInsets.symmetric(horizontal: context.insets.sm),
+              separatorBuilder: () => Gap(context.insets.sm),
+              children: [
+                Expanded(
+                    child: Divider(color: context.colors.wonderFg(data.type))
+                        .gTweener //TODO: Add some shortcut widgets for GTWeener? FadeIn(delay), SlideIn(), ScaleIn(),
+                        .scale(curve: Curves.easeOut)
+                        .withDelay(.5.seconds)),
+                Text(
+                  data.subTitle.toUpperCase(),
+                  style: context.textStyles.body,
+                ).gTweener.fade().withDelay(.1.seconds),
+                Expanded(
+                    child: Divider(color: context.colors.wonderFg(data.type))
+                        .gTweener
+                        .scale(curve: Curves.easeOut)
+                        .withDelay(.5.seconds)),
+              ],
+            ),
+            Gap(context.insets.md),
+            Text(
+              data.title.toUpperCase(),
+              style: context.textStyles.h1,
+              textAlign: TextAlign.center,
+            ).gTweener.fade().withDuration(context.times.slow).withDelay(.3.seconds),
+            Gap(30),
+            Gap(context.insets.md),
+          ],
+        ),
       );
 }
