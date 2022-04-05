@@ -2,6 +2,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/utils/color_utils.dart';
 
 class AppColors {
+  /// Common
   final Color bg = Color(0xFFEBE6E4);
   final Color accent1 = Color(0xFFE4935D);
   final Color accent2 = Color(0xFFBEABA1);
@@ -11,6 +12,7 @@ class AppColors {
   final Color text = Colors.white;
   final Color textOnBg = Colors.black;
 
+  /// Wonders
   final Color wallFg = const Color(0xFFC1D9D1);
   final Color wallBg = const Color(0xFF70322E);
 
@@ -37,6 +39,7 @@ class AppColors {
 
   final bool isDark = false;
 
+  /// Helper methods
   Color wonderFg(WonderType type) {
     switch (type) {
       case WonderType.chichenItza:
@@ -56,9 +59,7 @@ class AppColors {
   }
 
   Color shift(Color c, double d) => ColorUtils.shiftHsl(c, d * (isDark ? -1 : 1));
-}
 
-extension ColorThemeExtensions on AppColors {
   ThemeData toThemeData() {
     /// Create a TextTheme and ColorScheme, that we can use to generate ThemeData
     TextTheme txtTheme = (isDark ? ThemeData.dark() : ThemeData.light()).textTheme;
