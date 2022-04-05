@@ -11,12 +11,29 @@ class AppColors {
   final Color text = Colors.white;
   final Color textOnBg = Colors.black;
 
-  //TODO @ AG - move over the remaining 6 colors
-  final Color tajBg = const Color(0xFF80433F);
-  final Color tajFg = const Color(0xFFFAE5C8);
+  final Color wallFg = const Color(0xFFC1D9D1);
+  final Color wallBg = const Color(0xFF70322E);
 
-  final Color chichenFg = const Color(0xFFFFB144);
-  final Color chichenBg = const Color(0xFF174126);
+  final Color petraFg = const Color(0xFF1B2E60);
+  final Color petraBg = const Color(0xFFDC762A);
+
+  final Color colosseumFg = const Color(0xFFFEB547);
+  final Color colosseumBg = const Color(0xFF1F9890);
+
+  final Color chichenFg = const Color(0xFFE2CFBB);
+  final Color chichenBg = const Color(0xFF204A1F);
+
+  final Color machuFg = const Color(0xFFCBC424);
+  final Color machuBg = const Color(0xFF60330A);
+
+  final Color tajBg = const Color(0xFFED7967);
+  final Color tajFg = const Color(0xFF80433F);
+
+  final Color redeemerFg = const Color(0xFFED7967);
+  final Color redeemerBg = const Color(0xFF255451);
+
+  final Color gizaFg = const Color(0xFF8489D0);
+  final Color gizaBg = const Color(0xFF2F2657);
 
   final bool isDark = false;
 
