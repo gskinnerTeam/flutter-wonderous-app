@@ -1,7 +1,7 @@
 import 'package:flutter/scheduler.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
-import 'package:wonders/logic/wonders_controller.dart';
+import 'package:wonders/logic/wonders_logic.dart';
 import 'package:wonders/ui/common/controls/buttons.dart';
 import 'package:wonders/ui/screens/artifact_search/artifact_search_screen.dart';
 import 'package:wonders/ui/screens/image_gallery/image_gallery.dart';
@@ -45,7 +45,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
 
   @override
   Widget build(BuildContext context) {
-    final wonders = watchX((WondersController w) => w.all);
+    final wonders = watchX((WondersLogic w) => w.all);
     WonderData? wonder = wonders.firstWhereOrNull((w) => w.type == widget.type);
     wonder ??= wonders.first;
     int tabIndex = _tabController.index;

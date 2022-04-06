@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/utils/persistent_controller.dart';
+import 'package:wonders/logic/persistent_logic.dart';
 
-class SettingsController extends PersistentController {
+class SettingsLogic extends PersistentLogic {
   @override
   String get fileName => 'settings.dat';
 

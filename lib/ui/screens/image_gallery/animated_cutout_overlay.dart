@@ -1,7 +1,8 @@
 import 'package:wonders/common_libs.dart';
 
-/// An overlay with a transparent cutout in the middle.
-/// When index changes, the box animates its size for a nice effect
+/// An overlay with a animated cutout in the middle.
+/// When index changes, the box animates its size for a nice effect.
+/// Uses[_CutoutClipper] to create the cutout.
 class AnimatedCutoutOverlay extends StatelessWidget {
   const AnimatedCutoutOverlay(
       {Key? key,
@@ -35,17 +36,19 @@ class AnimatedCutoutOverlay extends StatelessWidget {
     );
   }
 
-  /// Scales from 1 --> (1 - zoomAmt) --> 1
+  /// Scales from 1 --> (1 - scaleAmt) --> 1
   Widget _buildAnimatedCutout(Widget child, Animation<double> anim) {
-    const zoomAmt = .25;
+    // controls how much the center cutout will shrink when changing images
+    const scaleAmt = .25;
     final size = Size(
-      cutoutSize.width * (1 - zoomAmt * anim.value * swipeDir.dx.abs()),
-      cutoutSize.height * (1 - zoomAmt * anim.value * swipeDir.dy.abs()),
+      cutoutSize.width * (1 - scaleAmt * anim.value * swipeDir.dx.abs()),
+      cutoutSize.height * (1 - scaleAmt * anim.value * swipeDir.dy.abs()),
     );
     return ClipPath(clipper: _CutoutClipper(size), child: child);
   }
 }
 
+/// Creates an overlay with a hole in the middle of a certain size.
 class _CutoutClipper extends CustomClipper<Path> {
   _CutoutClipper(this.cutoutSize);
   final Size cutoutSize;
@@ -54,11 +57,20 @@ class _CutoutClipper extends CustomClipper<Path> {
   Path getClip(Size size) {
     double padX = (size.width - cutoutSize.width) / 2;
     double padY = (size.height - cutoutSize.height) / 2;
+
     return Path.combine(
       PathOperation.difference,
       Path()..addRect(Rect.fromLTWH(0, 0, size.width, size.height)),
       Path()
-        ..addRRect(RRect.fromLTRBR(padX, padY, size.width - padX, size.height - padY, Radius.circular(6)))
+        ..addRRect(
+          RRect.fromLTRBR(
+            padX,
+            padY,
+            size.width - padX,
+            size.height - padY,
+            Radius.circular(6),
+          ),
+        )
         ..close(),
     );
   }

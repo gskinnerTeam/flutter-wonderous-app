@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
-import 'package:wonders/logic/utils/json_prefs_file.dart';
-import 'package:wonders/logic/utils/throttler.dart';
+import 'package:wonders/logic/common/json_prefs_file.dart';
+import 'package:wonders/logic/common/throttler.dart';
 
-abstract class PersistentController {
+abstract class PersistentLogic {
   late final _file = JsonPrefsFile(fileName);
   final throttle = Throttler(const Duration(seconds: 2));
 

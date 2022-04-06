@@ -1,5 +1,5 @@
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/utils/color_utils.dart';
+import 'package:wonders/logic/common/color_utils.dart';
 
 class AppColors {
   /// Common

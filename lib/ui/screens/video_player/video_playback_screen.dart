@@ -7,6 +7,8 @@ class FullscreenVideoPage extends StatefulWidget {
   const FullscreenVideoPage({Key? key, required this.id}) : super(key: key);
   final String id;
 
+  static String getThumbnail(String id) => 'http://img.youtube.com/vi/$id/mqdefault.jpg';
+
   @override
   State<FullscreenVideoPage> createState() => _FullscreenVideoPageState();
 }

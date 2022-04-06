@@ -6,11 +6,11 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/utils/platform_info.dart';
+import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/ui/modals/app_modals.dart';
 import 'package:wonders/ui/screens/wallpaper_preview/wallpaper_preview.dart';
 
-class AppController {
+class AppLogic {
   /// Indicates to the rest of the app that bootstrap has not completed.
   /// The router will use this to prevent redirects while bootstrapping.
   bool isBootstrapComplete = false;

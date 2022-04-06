@@ -1,17 +1,12 @@
 part of '../editorial_screen.dart';
 
 // TODO: This needs to take the actual thumbnail for this widget
-class _EditorialAppBar extends StatelessWidget {
-  _EditorialAppBar(
-    this.wonderType, {
-    Key? key,
-    required this.imageId,
-    required this.sectionIndex,
-  }) : super(key: key);
+class _AppBar extends StatelessWidget {
+  _AppBar(this.wonderType, {Key? key, required this.imageId, required this.sectionIndex}) : super(key: key);
   final String imageId;
   final WonderType wonderType;
   final ValueNotifier<int> sectionIndex;
-  final _titleKey = UniqueKey();
+
   @override
   Widget build(BuildContext context) {
     ArchType? archType;
@@ -58,18 +53,19 @@ class _EditorialAppBar extends StatelessWidget {
 
           /// Titlebar
           BottomCenter(
-            key: _titleKey,
             child: ClipRect(
               child: ValueListenableBuilder<int>(
                 valueListenable: sectionIndex,
-                builder: (_, value, __) => _CircularTitleBar(
-                  index: sectionIndex.value,
-                  titles: const [
-                    'Facts and History',
-                    'Location Info',
-                    'Construction',
-                  ],
-                ),
+                builder: (_, value, __) {
+                  return _CircularTitleBar(
+                    index: value,
+                    titles: const [
+                      'Facts and History',
+                      'Location Info',
+                      'Construction',
+                    ],
+                  );
+                },
               ),
             ),
           ),

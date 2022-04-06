@@ -1,9 +1,11 @@
 part of '../editorial_screen.dart';
 
-class _EditorialContent extends StatelessWidget {
-  const _EditorialContent(this.data, {Key? key, required this.scrollNotifier}) : super(key: key);
+class _ScrollingContent extends StatelessWidget {
+  const _ScrollingContent(this.data, {Key? key, required this.scrollNotifier, required this.sectionNotifier})
+      : super(key: key);
   final WonderData data;
   final ValueNotifier<double> scrollNotifier;
+  final ValueNotifier<int> sectionNotifier;
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +22,14 @@ class _EditorialContent extends StatelessWidget {
             dropCapPadding: EdgeInsets.only(right: context.insets.xs, top: 10),
             dropCapStyle: context.textStyles.dropCase.copyWith(color: context.colors.accent1),
           ),
-          _EditorialSectionDivider(scrollNotifier, index: 1),
+          _SectionDivider(scrollNotifier, sectionNotifier, index: 1),
           DropCapText(
             _formatText(data.locationInfo),
             style: context.textStyles.body,
             dropCapPadding: EdgeInsets.only(right: context.insets.xs, top: 10),
             dropCapStyle: context.textStyles.dropCase.copyWith(color: context.colors.accent1),
           ),
-          _EditorialSectionDivider(scrollNotifier, index: 2),
+          _SectionDivider(scrollNotifier, sectionNotifier, index: 2),
           DropCapText(
             _formatText(data.constructionInfo),
             style: context.textStyles.body,

@@ -1,3 +1,4 @@
+import 'package:flutter/scheduler.dart';
 import 'package:statsfl/statsfl.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/app_scroll_behavior.dart';
@@ -8,12 +9,13 @@ class WondersAppScaffold extends StatelessWidget with GetItMixin {
 
   @override
   Widget build(BuildContext context) {
+    timeDilation = 1;
     // Construct an AppStyle using app size and current themeType.
     final size = MediaQuery.of(context).size;
     final styles = AppStyle(screenSize: size);
     GTweener.defaultDuration = styles.times.fast;
     // Respect fps meter setting
-    bool enableFpsMeter = watchX((SettingsController c) => c.enableFpsMeter);
+    bool enableFpsMeter = watchX((SettingsLogic c) => c.enableFpsMeter);
     // Pass our custom style down to the tree with provider and inject a themData to style existing Material components.
     return StatsFl(
       height: 30,

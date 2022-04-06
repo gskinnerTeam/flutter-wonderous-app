@@ -3,7 +3,7 @@ import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/data/wonders_data/chichen_itza_data.dart';
 import 'package:wonders/logic/data/wonders_data/taj_mahal_data.dart';
 
-class WondersController {
+class WondersLogic {
   ValueNotifier<List<WonderData>> all = ValueNotifier([chichenItzaData, tajMahalData]);
 
   String getAssetFolder(WonderType type) {

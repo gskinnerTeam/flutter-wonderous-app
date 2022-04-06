@@ -1,5 +1,5 @@
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/wonders_controller.dart';
+import 'package:wonders/logic/wonders_logic.dart';
 import 'package:wonders/ui/common/controls/buttons.dart';
 import 'package:wonders/ui/common/controls/diagonal_page_indicator.dart';
 import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
@@ -39,7 +39,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
 
   @override
   Widget build(BuildContext context) {
-    final wonders = watchX((WondersController w) => w.all);
+    final wonders = watchX((WondersLogic w) => w.all);
     final currentWonder = wonders[_wonderIndex];
     bool isSelected(WonderType t) => t == wonders[_wonderIndex].type;
 
