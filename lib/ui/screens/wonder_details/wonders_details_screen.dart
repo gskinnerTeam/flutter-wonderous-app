@@ -1,3 +1,4 @@
+import 'package:flutter/scheduler.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/wonders_controller.dart';
@@ -5,7 +6,7 @@ import 'package:wonders/ui/common/controls/buttons.dart';
 import 'package:wonders/ui/screens/artifact_search/artifact_search_screen.dart';
 import 'package:wonders/ui/screens/image_gallery/image_gallery.dart';
 import 'package:wonders/ui/screens/timeline/timeline_screen.dart';
-import 'package:wonders/ui/screens/wonder_details/editorial/wonder_editorial_screen.dart';
+import 'package:wonders/ui/screens/editorial/editorial_screen.dart';
 import 'package:wonders/ui/screens/wonder_details/wonder_details_tab_menu.dart';
 
 class WonderDetailsScreen extends StatefulWidget with GetItStatefulWidgetMixin {
@@ -25,6 +26,8 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
   )..addListener(_handleTabChanged);
   GTweenerController? _fade;
 
+  final _detailsHasScrolled = ValueNotifier(false);
+
   @override
   void dispose() {
     _tabController.dispose();
@@ -39,6 +42,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
   }
 
   void _handleSettingsPressed() => context.push(ScreenPaths.settings);
+
   @override
   Widget build(BuildContext context) {
     final wonders = watchX((WondersController w) => w.all);
@@ -53,23 +57,29 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
           IndexedStack(
             index: _tabController.index,
             children: [
-              WonderEditorialScreen(wonder),
+              WonderEditorialScreen(wonder, onScroll: _handleDetailsScrolled),
               ImageGallery(photoIds: wonder.imageIds),
-              // TODO: Need a better way to get the height of the tab bar here... options? MeasuredWidget, Hardcoded height,
+              // TODO: Need a better way to get the height of the tab bar here... options? MeasuredWidget, static height,
               Padding(padding: EdgeInsets.only(bottom: 48), child: ArtifactSearchScreen(type: widget.type)),
               Padding(padding: EdgeInsets.only(bottom: 48), child: TimelineScreen(type: widget.type)),
             ],
           ).gTweener.fade().withInit((t) => _fade = t),
           TopRight(child: AppBtn(child: Text('Settings'), onPressed: _handleSettingsPressed)),
           BottomCenter(
-            child: WonderDetailsTabMenu(
-              tabController: _tabController,
-              wonderType: wonder.type,
-              showBg: showTabBarBg,
+            child: ValueListenableBuilder<bool>(
+              valueListenable: _detailsHasScrolled,
+              builder: (_, value, ___) => WonderDetailsTabMenu(
+                tabController: _tabController,
+                wonderType: wonder!.type,
+                showBg: showTabBarBg,
+                showHomeBtn: value || tabIndex != 0,
+              ),
             ),
           ),
         ],
       ),
     );
   }
+
+  void _handleDetailsScrolled(double scrollPos) => _detailsHasScrolled.value = scrollPos > 0;
 }

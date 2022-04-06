@@ -1,8 +1,8 @@
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/wonder_illustrations/paint_textures.dart';
-import 'package:wonders/ui/wonder_illustrations/wonder_hero.dart';
-import 'package:wonders/ui/wonder_illustrations/wonder_illustration_builder.dart';
-import 'package:wonders/ui/wonder_illustrations/wonder_illustration_config.dart';
+import 'package:wonders/ui/wonder_illustrations/common/paint_textures.dart';
+import 'package:wonders/ui/wonder_illustrations/common/wonder_hero.dart';
+import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_builder.dart';
+import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 
 class ChichenItzaIllustration extends StatelessWidget {
   const ChichenItzaIllustration({Key? key, required this.config}) : super(key: key);

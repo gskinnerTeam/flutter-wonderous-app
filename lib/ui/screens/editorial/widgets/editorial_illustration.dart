@@ -1,4 +1,4 @@
-part of 'wonder_editorial_screen.dart';
+part of '../editorial_screen.dart';
 
 class _TopIllustration extends StatelessWidget {
   const _TopIllustration(this.type, {Key? key}) : super(key: key);
@@ -13,7 +13,10 @@ class _TopIllustration extends StatelessWidget {
           offset: Offset(0, 60),
           child: Transform.scale(
             scale: .95,
-            child: WonderIllustration(type, config: WonderIllustrationConfig.mg(enableAnims: false)),
+            child: WonderIllustration(
+              type,
+              config: WonderIllustrationConfig.mg(enableAnims: false),
+            ),
           ),
         ),
       ],

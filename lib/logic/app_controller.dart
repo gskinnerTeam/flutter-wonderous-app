@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:wonders/common_libs.dart';
@@ -54,5 +56,29 @@ class AppController {
 
   void _handleFlutterError(FlutterErrorDetails details) {
     FlutterError.dumpErrorToConsole(details);
+  }
+
+  /// TODO: talk to design team about whether we should link out or use an inline view.
+  /// TODO: Switch from Cupertino to one of the AnimationPage routes?
+  void showWebView(BuildContext context, String url) => Navigator.push(
+        context,
+        CupertinoPageRoute(builder: (_) => FullscreenWebView(url)),
+      );
+}
+
+class FullscreenWebView extends StatelessWidget {
+  const FullscreenWebView(this.url, {Key? key}) : super(key: key);
+  final String url;
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(),
+        body: InAppWebView(
+          initialUrlRequest: URLRequest(url: Uri.parse(url)),
+        ),
+      ),
+    );
   }
 }

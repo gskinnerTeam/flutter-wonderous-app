@@ -1,70 +1,91 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/ui/common/cards/opening_card.dart';
 import 'package:wonders/ui/common/controls/buttons.dart';
 import 'package:wonders/ui/common/controls/circle_button.dart';
+import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 import 'package:wonders/ui/wonder_illustrations/wonder_illustration.dart';
-import 'package:wonders/ui/wonder_illustrations/wonder_illustration_config.dart';
 
 class WonderDetailsTabMenu extends StatelessWidget {
-  const WonderDetailsTabMenu({Key? key, required this.tabController, this.showBg = false, required this.wonderType})
+  const WonderDetailsTabMenu(
+      {Key? key, required this.tabController, this.showBg = false, required this.wonderType, required this.showHomeBtn})
       : super(key: key);
   final TabController tabController;
   final bool showBg;
   final WonderType wonderType;
+  final bool showHomeBtn;
 
   @override
   Widget build(BuildContext context) {
     Color tabIconColor = showBg ? context.colors.textOnBg : context.colors.text;
     const double homeBtnSize = 70;
-    return Stack(children: [
-      Padding(
-        padding: EdgeInsets.only(top: context.insets.xs),
-        child: Stack(
-          children: [
-            BottomCenter(
-              child: Stack(
-                children: [
-                  // Background
-                  Positioned.fill(
-                    child: AnimatedOpacity(
-                      duration: context.times.fast,
-                      opacity: showBg ? 1 : 0,
-                      child: ColoredBox(color: context.colors.bg),
-                    ),
-                  ),
-                  // Buttons
-                  Padding(
-                    padding: EdgeInsets.only(bottom: context.insets.xs),
-                    child: Row(
-                      children: [
-                        AnimatedContainer(
-                          duration: context.times.fast,
-                          curve: Curves.easeOut,
-                          width: homeBtnSize + context.insets.xs * 2,
-                          height: 1,
-                        ),
-                        _TabBtn(0, tabController, icon: Icons.info_outline, iconColor: tabIconColor),
-                        _TabBtn(1, tabController, icon: Icons.image_outlined, iconColor: tabIconColor),
-                        _TabBtn(2, tabController, icon: Icons.search, iconColor: tabIconColor),
-                        _TabBtn(3, tabController, icon: Icons.timelapse, iconColor: tabIconColor),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+    const double buttonInset = 12;
+    return Stack(
+      children: [
+        //Background
+        Positioned.fill(
+          child: AnimatedOpacity(
+            duration: context.times.fast,
+            opacity: showBg ? 1 : 0,
+            child: Padding(
+              padding: EdgeInsets.only(top: buttonInset),
+              child: ColoredBox(color: context.colors.bg),
             ),
-            BottomLeft(
-              child: Padding(
-                padding: EdgeInsets.all(context.insets.xs),
-                child: _WonderHomeBtn(
-                  size: homeBtnSize,
-                  wonderType: wonderType,
+          ),
+        ),
+        // Buttons
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: context.insets.xs).copyWith(bottom: context.insets.xs),
+          // TabButtons are a Stack with a row of icon buttons, and an illustrated home button sitting on top.
+          // The home buttons shows / hides itself based on `showHomeBtn`
+          // The row contains an animated placeholder gap which makes room for the icon as it transitions in.
+          child: Stack(
+            children: [
+              // Main tab btns + animated gap
+              Padding(
+                padding: EdgeInsets.only(top: buttonInset),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    AnimatedContainer(
+                        curve: Curves.easeOut,
+                        duration: context.times.fast,
+                        width: showHomeBtn ? homeBtnSize : 0,
+                        height: 0),
+                    _TabBtn(0, tabController, icon: Icons.info_outline, iconColor: tabIconColor),
+                    _TabBtn(1, tabController, icon: Icons.image_outlined, iconColor: tabIconColor),
+                    _TabBtn(2, tabController, icon: Icons.search, iconColor: tabIconColor),
+                    _TabBtn(3, tabController, icon: Icons.timelapse, iconColor: tabIconColor),
+                  ],
                 ),
               ),
-            ),
-          ],
+
+              // Home btn, animates into view
+              TweenAnimationBuilder<double>(
+                duration: context.times.fast,
+                tween: Tween(begin: 0, end: showHomeBtn ? 1 : 0),
+                child: _WonderHomeBtn(size: homeBtnSize, wonderType: wonderType),
+                builder: (_, value, child) {
+                  final curvedValue = Curves.easeOut.transform(value);
+                  return Transform.scale(
+                    scale: .5 + .5 * curvedValue,
+                    child: Transform.translate(
+                      offset: Offset(0, 100 * (1 - curvedValue)),
+                      child: AnimatedOpacity(
+                        opacity: showHomeBtn ? 1 : 0,
+                        child: child!,
+                        duration: context.times.fast,
+                      ),
+                    ),
+                  );
+                },
+                // Wonder Button
+              ),
+            ],
+          ),
         ),
-      ),
-    ]);
+      ],
+    );
   }
 }
 

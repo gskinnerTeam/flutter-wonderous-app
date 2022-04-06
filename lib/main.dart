@@ -12,10 +12,12 @@ void main() {
 class WondersApp extends StatelessWidget {
   const WondersApp({Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context) => MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      routerDelegate: appRouter.routerDelegate,
-      routeInformationParser: appRouter.routeInformationParser);
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        routerDelegate: appRouter.routerDelegate,
+        routeInformationParser: appRouter.routeInformationParser);
+  }
 }
 
 /// Create singletons (controllers and services) that can be shared across the app.
