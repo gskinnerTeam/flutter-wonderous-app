@@ -18,3 +18,4 @@ export 'package:wonders/logic/settings_controller.dart';
 export 'package:wonders/main.dart';
 export 'package:wonders/router.dart';
 export 'package:wonders/styles/styles.dart';
+export 'package:rnd/rnd.dart';

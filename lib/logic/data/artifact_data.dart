@@ -16,12 +16,14 @@ class ArtifactData {
     required this.medium,
     required this.dimension,
     required this.classification,
+    required this.objectType,
   });
   final int objectId; // Artifact ID, used to identify through MET server calls.
   final String title; // Artifact title / name
   final String image; // Artifact primary image URL (can have multiple)
   final int year; // Base year number. If negative, it's B.C. If positive, it's A.D.
   final String yearStr; // Year from the API can have extras like 'ca. 1995'. Parsed to int, but the raw is stored here.
+  final String objectType; // Type of thing (coin, basic, cup etc)
 
   final String date; // Date of creation
   final String period; // Time period of creation

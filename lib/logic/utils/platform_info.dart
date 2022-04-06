@@ -16,7 +16,6 @@ class PlatformInfo {
   static bool get isAndroid => defaultTargetPlatform == TargetPlatform.android;
   static bool get isIOS => defaultTargetPlatform == TargetPlatform.iOS;
 
-  static Future<bool> get isConnected async {
-    return await InternetConnectionChecker().hasConnection;
-  }
+  static Future<bool> get isConnected async => await InternetConnectionChecker().hasConnection;
+  static Future<bool> get isDisconnected async => (await isConnected) == false;
 }

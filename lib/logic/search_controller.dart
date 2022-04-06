@@ -16,25 +16,22 @@ class SearchController {
   }
 
   /// Return list of hashed artifact data.
-  List<ArtifactData> get allLoadedArtifacts {
-    return _artifactHash.values.toList();
-  }
+  List<ArtifactData> get allLoadedArtifacts => _artifactHash.values.toList();
 
   /// Returns artifact data by ID. Returns null if artifact cannot be found. */
   Future<ArtifactData?> getArtifactByID(String id) async {
-    ArtifactData? a;
+    ArtifactData? results;
     if (!_artifactHash.containsKey(id)) {
       // No data for artifact. Populate it for now and next time.
-      a = (await service.getObjectByID(id)).content;
-      if (a != null) {
-        _artifactHash[id] = a;
+      results = (await service.getObjectByID(id)).content;
+      if (results != null) {
+        _artifactHash[id] = results;
       }
     } else {
       // Data is already stored. Use the reference instead of a server call.
-      a = _artifactHash[id];
+      results = _artifactHash[id];
     }
-
-    return a;
+    return results;
   }
 
   /// Returns list of artifact IDs by search query.
@@ -45,6 +42,8 @@ class SearchController {
   /// - location: string of location names (cities, countries, etc). Multiple entries are separated by | operator.
   /// - startYear: minimum year range. Set to negative value for B.C. Must include endYear.
   /// - endYear: maximum year range. Set to negative value for B.C. Must include startYear.
+
+  //TODO: Should make some sort of SearchConfig class here, so we don't need to pass a ton of params
   Future<List<ArtifactData?>> searchForArtifacts(String query,
       {int count = 1000,
       int offset = 0,
@@ -67,10 +66,10 @@ class SearchController {
     }
 
     // Make all future calls simultaneously.
-    final futureResults = (await Future.wait<ArtifactData?>(futures));
+    final results = (await Future.wait<ArtifactData?>(futures));
 
     // Trim null results before returning.
-    futureResults.removeWhere((r) => r == null || r.image.isEmpty);
-    return futureResults;
+    results.removeWhere((r) => r == null || r.image.isEmpty);
+    return results;
   }
 }
