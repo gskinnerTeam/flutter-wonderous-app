@@ -12,15 +12,23 @@ class TajMahalIllustration extends StatelessWidget {
   @override
   Widget build(BuildContext context) => WonderIllustrationBuilder(
       config: config,
-      bgBuilder: (_, __) => [
-            Container(color: Color(0xff8b4641)),
+      bgBuilder: (_, anim) => [
+            AnimatedBuilder(
+                animation: anim,
+                builder: (context, child) {
+                  return Container(color: Color(0xff8b4641).withOpacity(anim.value));
+                }),
             Positioned.fill(
               child: BlendMask(
                 blendModes: const [BlendMode.overlay],
                 opacity: .3,
                 child: FractionalTranslation(
                   translation: Offset(.2, .1),
-                  child: RollerPaint1(Colors.white, scale: 2),
+                  child: AnimatedBuilder(
+                      animation: anim,
+                      builder: (context, child) {
+                        return RollerPaint1(Colors.white.withOpacity(anim.value), scale: 2);
+                      }),
                 ),
               ),
             ),
@@ -31,12 +39,12 @@ class TajMahalIllustration extends StatelessWidget {
                   [GMove(from: Offset(-100, 20))],
                   duration: context.times.med,
                   curve: Curves.easeOut,
-                  child: Image.asset('assets/images/taj_mahal/sun.png'),
+                  child: Image.asset('assets/images/taj_mahal/sun.png', opacity: anim),
                 ),
               ),
             )
           ],
-      mgBuilder: (_, __) {
+      mgBuilder: (_, anim) {
         double size = 320;
         return [
           Transform.translate(
@@ -44,14 +52,18 @@ class TajMahalIllustration extends StatelessWidget {
             child: Stack(
               clipBehavior: Clip.none,
               children: [
-                Center(child: WonderHero(config, 'taj', child: Image.asset('assets/images/taj_mahal/taj-mahal.png'))),
+                Center(
+                    child: WonderHero(config, 'taj',
+                        child: Image.asset('assets/images/taj_mahal/taj-mahal.png', opacity: anim),
+                      ),
+                    ),
                 Center(
                   child: Transform.translate(
                     offset: Offset(0, size * .22),
                     child: UnconstrainedBox(
                       child: SizedBox(
                         height: size,
-                        child: Image.asset('assets/images/taj_mahal/wall.png', fit: BoxFit.fitHeight),
+                        child: Image.asset('assets/images/taj_mahal/wall.png', fit: BoxFit.fitHeight, opacity: anim),
                       ),
                     ),
                   ),
@@ -63,7 +75,7 @@ class TajMahalIllustration extends StatelessWidget {
                         height: size * 1,
                         child: FractionalTranslation(
                           translation: Offset(0, 1.13),
-                          child: Image.asset('assets/images/taj_mahal/pool.png', fit: BoxFit.fitHeight),
+                          child: Image.asset('assets/images/taj_mahal/pool.png', fit: BoxFit.fitHeight, opacity: anim),
                         ),
                       ),
                     ),
@@ -71,41 +83,37 @@ class TajMahalIllustration extends StatelessWidget {
                 ],
               ],
             ),
-          )
+          ),
         ];
       },
       fgBuilder: (context, anim) {
         final curvedAnim = Curves.easeOut.transform(anim.value);
         return [
-          FadeTransition(
-            opacity: anim,
-            child: Stack(children: [
-              BottomLeft(
-                child: FractionalTranslation(
-                  translation: Offset(-.3 * (1 - curvedAnim), 0),
-                  child: Transform.rotate(
-                    angle: pi * -.1 * (1 - curvedAnim),
-                    child: FractionalTranslation(
+          Stack(children: [
+            BottomLeft(
+              child: FractionalTranslation(
+                translation: Offset(-.3 * (1 - curvedAnim), 0),
+                child: Transform.rotate(
+                  angle: pi * -.1 * (1 - curvedAnim),
+                  child: FractionalTranslation(
                       translation: Offset(-.4, -.2),
-                      child: Image.asset('assets/images/taj_mahal/mangos-left.png'),
-                    ),
+                      child: Image.asset('assets/images/taj_mahal/mangos-left.png', opacity: anim)),
+                ),
+              ),
+            ),
+            BottomRight(
+              child: FractionalTranslation(
+                translation: Offset(.3 * (1 - curvedAnim), 0),
+                child: Transform.rotate(
+                  angle: pi * .1 * (1 - curvedAnim),
+                  child: FractionalTranslation(
+                    translation: Offset(.5, -.15),
+                    child: Image.asset('assets/images/taj_mahal/mangos-right.png', opacity: anim),
                   ),
                 ),
               ),
-              BottomRight(
-                child: FractionalTranslation(
-                  translation: Offset(.3 * (1 - curvedAnim), 0),
-                  child: Transform.rotate(
-                    angle: pi * .1 * (1 - curvedAnim),
-                    child: FractionalTranslation(
-                      translation: Offset(.5, -.15),
-                      child: Image.asset('assets/images/taj_mahal/mangos-right.png'),
-                    ),
-                  ),
-                ),
-              ),
-            ]),
-          )
+            ),
+          ])
         ];
       });
 }

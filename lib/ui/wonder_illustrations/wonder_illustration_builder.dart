@@ -7,9 +7,13 @@ import 'package:wonders/ui/wonder_illustrations/wonder_illustration_config.dart'
 ///
 /// Also manages an AnimationController that is passed to each layer if it would like to animate itself on or off screen.
 class WonderIllustrationBuilder extends StatefulWidget {
-  const WonderIllustrationBuilder(
-      {Key? key, required this.config, required this.fgBuilder, required this.mgBuilder, required this.bgBuilder})
-      : super(key: key);
+  const WonderIllustrationBuilder({
+    Key? key,
+    required this.config,
+    required this.fgBuilder,
+    required this.mgBuilder,
+    required this.bgBuilder,
+  }) : super(key: key);
   final List<Widget> Function(BuildContext context, Animation<double> animation) fgBuilder;
   final List<Widget> Function(BuildContext context, Animation<double> animation) mgBuilder;
   final List<Widget> Function(BuildContext context, Animation<double> animation) bgBuilder;
@@ -49,13 +53,11 @@ class _WonderIllustrationBuilderState extends State<WonderIllustrationBuilder> w
     // Optimization: no need to return all of these children if the widget is fully invisible.
     if (_anim.value == 0 && widget.config.enableAnims) return SizedBox.expand();
     Animation<double> anim = widget.config.enableAnims ? _anim : AlwaysStoppedAnimation(1);
-    return FadeTransition(
-      opacity: anim,
-      child: Stack(key: ValueKey(anim.value == 0), children: [
-        if (widget.config.enableBg) ...widget.bgBuilder(context, anim),
-        if (widget.config.enableMg) ...widget.mgBuilder(context, anim),
-        if (widget.config.enableFg) ...widget.fgBuilder(context, anim),
-      ]),
-    );
+
+    return Stack(key: ValueKey(anim.value == 0), children: [
+      if (widget.config.enableBg) ...widget.bgBuilder(context, _anim),
+      if (widget.config.enableMg) ...widget.mgBuilder(context, _anim),
+      if (widget.config.enableFg) ...widget.fgBuilder(context, _anim),
+    ]);
   }
 }
