@@ -6,6 +6,8 @@ import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:wonders/ui/screens/artifact/artifact_highlights/artifact_blurred_bg.dart';
 import 'dart:math' as math;
 
+import 'package:wonders/ui/screens/artifact/artifact_highlights/artifact_image_page.dart';
+
 class ArtifactHighlightsScreen extends StatefulWidget {
   final WonderType type;
   const ArtifactHighlightsScreen({Key? key, required this.type}) : super(key: key);
@@ -15,7 +17,7 @@ class ArtifactHighlightsScreen extends StatefulWidget {
 }
 
 class _ArtifactScreenState extends State<ArtifactHighlightsScreen> {
-  final _controller = PageController(initialPage: 0, viewportFraction: 0.8, keepPage: true);
+  final _controller = PageController(initialPage: 0, viewportFraction: 0.4, keepPage: true);
   final _highlightedArtifactIds = [
     '503940',
     '312595',
@@ -32,7 +34,7 @@ class _ArtifactScreenState extends State<ArtifactHighlightsScreen> {
   void initState() {
     _controller.addListener(() {
       setState(() {
-        _currentPage = _controller.page ?? 0;
+        _currentPage = _controller.page ?? 0.0;
       });
     });
 
@@ -56,103 +58,85 @@ class _ArtifactScreenState extends State<ArtifactHighlightsScreen> {
     });
   }
 
+  void onArtifactTap(int index) {
+    // TODO: Animate this!
+
+    context.push(ScreenPaths.artifact(_loadedArtifacts[index % _loadedArtifacts.length].objectId.toString()));
+  }
+
   @override
   Widget build(BuildContext context) {
+    double bottomHalfHeight = 300;
+
     if (_currentArtifact == null) {
       return Center(child: AppLoader());
     }
 
-    final pageView = PageView.builder(
+    final pageViewArtifacts = PageView.builder(
       controller: _controller,
       onPageChanged: changeArtifactIndex,
       itemCount: _highlightedArtifactIds.length,
+      clipBehavior: Clip.none,
       itemBuilder: (context, index) {
-        return FittedBox(
-          child: CachedNetworkImage(
-            // Show immediately; don't delay the appearance on the sides.
-            fadeOutDuration: const Duration(milliseconds: 0),
-            fadeInDuration: const Duration(milliseconds: 0),
-
-            // Image URL ref.
-            imageUrl: _loadedArtifacts[index % _loadedArtifacts.length].image,
-
-            // Build the image previewer.
-            imageBuilder: (context, imageProvider) {
-              // TWEAKABLE: Setup some repeated parameters so it's easy to edit.
-              // Scale of the elements, compared to max screen dimensions (maintains aspect ratio).
-              double elementScale = 0.5;
-              // Extra scale for the middle element.
-              double elementScaleMidAdd = 0.1;
-              // Height scale to make middle element like a capsule.
-              double mainElementHeightScale = 0.4;
-              // Vertical offset of the whole carousel.
-              double vertOffset = 20;
-
-              // Calculated variables.
-              double elementWidth = 50;
-              double offset = math.max(-2, math.min(2, _currentPage - double.parse(index.toString())));
-              double mainElementScaleUp =
-                  1 + (mainElementHeightScale - (math.min(1, offset.abs()) * mainElementHeightScale));
-
-              double xAngle = math.asin((offset) * math.pi / 4.0);
-              double yAngle = math.acos((offset.abs()) * math.pi / 4.0);
-
-              // Transform object to animate pages.
-              return Transform(
-                origin: Offset(elementWidth / 2, (elementWidth / 2) * mainElementScaleUp),
-
-                transform: Matrix4.identity()
-                  ..translate(
-                    xAngle * (elementWidth * 2.0 / 5.0),
-                    yAngle * (-elementWidth * 2.0 / 5.0) + vertOffset,
-                  )
-                  ..scale((elementScale + elementScaleMidAdd) - (offset.abs() * elementScaleMidAdd)),
-
-                // Inside the container, width and height determine aspect ratio
-                child: Container(
-                  width: elementWidth,
-                  height: elementWidth * mainElementScaleUp,
-
-                  // Round the edges, but make a capsule rather than a circle by only setting to width.
-                  decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
-
-                    // Display image
-                    image: DecorationImage(
-                      image: imageProvider,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
+        return ArtifactImagePage(
+          index: index,
+          currentPage: _currentPage,
+          artifact: _loadedArtifacts[index % _loadedArtifacts.length],
+          onClick: onArtifactTap,
         );
       },
     );
 
     return Container(
-      color: context.colors.bg,
+      color: context.colors.greyStrong,
       child: Stack(
         fit: StackFit.expand,
         children: [
           // Background Image
           Align(
             alignment: Alignment.topCenter,
-            child: AnimatedSwitcher(
-              child: ArtifactBlurredBg(url: _currentArtifact?.image ?? ''),
-              duration: Duration(seconds: 1),
+            child: Column(
+              children: [
+                Expanded(
+                  child: AnimatedSwitcher(
+                    child: ArtifactBlurredBg(
+                        key: ValueKey(_currentArtifact?.objectId), url: _currentArtifact?.image ?? ''),
+                    duration: Duration(milliseconds: 300),
+                  ),
+                ),
+              ],
             ),
           ),
+
           // Big circle - part of the background
-          Align(
-            alignment: Alignment.center,
+          Positioned(
+            bottom: bottomHalfHeight - (context.widthPx / 2),
+            left: 0,
+            right: 0,
             child: Container(
+              height: context.widthPx,
               decoration: BoxDecoration(
                 color: context.colors.bg,
                 shape: BoxShape.circle,
               ),
+            ),
+          ),
+
+          // White space, covering bottom half.
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(height: bottomHalfHeight, color: context.colors.bg),
+          ),
+
+          // Carousel images
+          Align(
+            alignment: Alignment.bottomCenter,
+            heightFactor: 0.5,
+            child: FutureBuilder(
+              future: Future.value(true),
+              builder: (BuildContext context, AsyncSnapshot<void> snap) {
+                return snap.hasData ? pageViewArtifacts : Container();
+              },
             ),
           ),
 
@@ -165,17 +149,6 @@ class _ArtifactScreenState extends State<ArtifactHighlightsScreen> {
                 'HIGHLIGHTS',
                 style: context.textStyles.h3.copyWith(color: context.colors.bg, fontSize: 14),
               ),
-            ),
-          ),
-
-          // Carousel
-          Align(
-            alignment: Alignment.center,
-            child: FutureBuilder(
-              future: Future.value(true),
-              builder: (BuildContext context, AsyncSnapshot<void> snap) {
-                return snap.hasData ? pageView : Container();
-              },
             ),
           ),
 

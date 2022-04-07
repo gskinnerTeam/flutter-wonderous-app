@@ -6,9 +6,8 @@ import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:wonders/ui/screens/artifact/artifact_details/artifact_data_element.dart';
 
 class ArtifactDetailsScreen extends StatefulWidget {
-  final WonderType type;
   final String id;
-  const ArtifactDetailsScreen({Key? key, required this.type, required this.id}) : super(key: key);
+  const ArtifactDetailsScreen({Key? key, required this.id}) : super(key: key);
 
   @override
   State<ArtifactDetailsScreen> createState() => _ArtifactDetailsScreenState();
@@ -82,7 +81,7 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
           Padding(
             padding: EdgeInsets.only(top: context.insets.lg),
             child: Text(
-              widget.type.name.toUpperCase(),
+              _artifact?.culture.toUpperCase() ?? '---',
               style: context.textStyles.titleFont.copyWith(color: context.colors.accent1),
             ),
           ),

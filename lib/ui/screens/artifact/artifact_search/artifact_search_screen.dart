@@ -43,7 +43,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
 
   void onResultClick(ArtifactData artifact) {
     // User clicked image. Open Artifact Details view
-    context.push(ScreenPaths.artifact(artifact.objectId.toString(), widget.type));
+    context.push(ScreenPaths.artifact(artifact.objectId.toString()));
   }
 
   @override
