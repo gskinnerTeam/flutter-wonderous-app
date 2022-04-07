@@ -70,23 +70,24 @@ class CurvedTopClipper extends CustomClipper<Path> {
 
   @override
   Path getClip(Size size) {
-    double curvePt = size.height * .33;
+    double radius = size.width / 2;
     var path = Path();
     if (flip) {
-      path.lineTo(0, size.height - curvePt);
+      // path.addOval(Rect.fromCircle(center: Offset.zero, radius: 40));
+      path.lineTo(0, size.height - radius);
       path.arcToPoint(
-        Offset(size.width, size.height - curvePt),
-        radius: Radius.circular(curvePt / 2),
+        Offset(size.width, size.height - radius),
+        radius: Radius.circular(size.width / 2),
         clockwise: false,
       );
       path.lineTo(size.width, 0);
       path.lineTo(0, 0);
     } else {
       path.lineTo(0, 0);
-      path.lineTo(0, curvePt);
+      path.lineTo(0, radius);
       path.arcToPoint(
-        Offset(size.width, curvePt),
-        radius: Radius.circular(curvePt / 2),
+        Offset(size.width, radius),
+        radius: Radius.circular(radius / 2),
       );
       path.lineTo(size.width, size.height);
       path.lineTo(0, size.height);

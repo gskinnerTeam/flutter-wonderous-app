@@ -42,6 +42,8 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
 
   void _handleSettingsPressed() => context.push(ScreenPaths.settings);
 
+  void _handleDetailsScrolled(double scrollPos) => _detailsHasScrolled.value = scrollPos > 0;
+
   @override
   Widget build(BuildContext context) {
     final wonders = watchX((WondersLogic w) => w.all);
@@ -58,7 +60,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
             children: [
               WonderEditorialScreen(wonder, onScroll: _handleDetailsScrolled),
               ImageGallery(photoIds: wonder.imageIds),
-              // TODO: Need a better way to get the height of the tab bar here... options? MeasuredWidget, static height,
+              // TODO: Need a better way to get the height of the tab bar here... options? MeasuredWidget, static height, app.tabBarHeight?
               Padding(padding: EdgeInsets.only(bottom: 48), child: ArtifactSearchScreen(type: widget.type)),
               Padding(padding: EdgeInsets.only(bottom: 48), child: TimelineScreen(type: widget.type)),
             ],
@@ -79,6 +81,4 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
       ),
     );
   }
-
-  void _handleDetailsScrolled(double scrollPos) => _detailsHasScrolled.value = scrollPos > 0;
 }

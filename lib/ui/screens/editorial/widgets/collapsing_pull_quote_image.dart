@@ -1,7 +1,7 @@
 part of '../editorial_screen.dart';
 
-class CollapsingPullQuoteImage extends StatelessWidget {
-  const CollapsingPullQuoteImage({Key? key, required this.scrollPos, required this.data}) : super(key: key);
+class _CollapsingPullQuoteImage extends StatelessWidget {
+  const _CollapsingPullQuoteImage({Key? key, required this.scrollPos, required this.data}) : super(key: key);
   final ValueNotifier<double> scrollPos;
   final WonderData data;
 
@@ -16,7 +16,12 @@ class CollapsingPullQuoteImage extends StatelessWidget {
 
     /// A single piece of quote text, this widget has one on top, and one on bottom
     Widget buildText(String value, {required bool top}) {
-      final quoteStyle = context.textStyles.quote.copyWith(fontSize: 42, color: Color(0xFF888888).withOpacity(1));
+      final quoteStyle = context.textStyles.quote.copyWith(
+        fontSize: 42,
+        letterSpacing: -4,
+        height: 1,
+        color: Color(0xFF888888).withOpacity(1),
+      );
       return Transform.translate(
           offset: Offset(0, (imgHeight / 2 + outerPadding * .25) * (1 - collapseAmt) * (top ? -1 : 1)),
           child: BlendMask(
@@ -50,11 +55,9 @@ class CollapsingPullQuoteImage extends StatelessWidget {
                     child: Stack(
                       fit: StackFit.expand,
                       children: [
-                        GreyScale(
-                          child: ScalingListItem(
-                            scrollPos: scrollPos,
-                            child: Image.asset(data.type.photo2, fit: BoxFit.cover),
-                          ),
+                        ScalingListItem(
+                          scrollPos: scrollPos,
+                          child: Image.asset(data.type.photo2, fit: BoxFit.cover),
                         ),
                         Positioned.fill(child: ColoredBox(color: Colors.black.withOpacity(.3)))
                       ],
@@ -69,7 +72,6 @@ class CollapsingPullQuoteImage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     buildText(data.quote1, top: true),
-                    Gap(context.insets.sm),
                     buildText(data.quote2, top: false),
                   ],
                 ),

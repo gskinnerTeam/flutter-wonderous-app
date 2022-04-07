@@ -20,7 +20,7 @@ import 'package:wonders/ui/wonder_illustrations/wonder_illustration.dart';
 part 'widgets/app_bar.dart';
 part 'widgets/circular_title_bar.dart';
 part 'widgets/collapsing_pull_quote_image.dart';
-part 'widgets/featured_images.dart';
+part 'widgets/sliding_image_stack.dart';
 part 'widgets/scrolling_content.dart';
 part 'widgets/section_divider.dart';
 part 'widgets/title_text.dart';
