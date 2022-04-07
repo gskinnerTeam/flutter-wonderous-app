@@ -29,21 +29,23 @@ class ArtifactSearchResultsGrid extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(context.insets.xs),
                   child: CachedNetworkImage(
-                      imageUrl: data!.image,
-                      placeholder: (BuildContext context, String url) {
-                        return Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(context.corners.md)),
-                              border: Border.all(color: context.colors.accent2, width: 3)),
-                          child: AspectRatio(
-                            aspectRatio: 1,
-                            child: Center(
-                              heightFactor: 1,
-                              child: AppLoader(),
-                            ),
+                    imageUrl: data!.image,
+                    placeholder: (BuildContext context, String url) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(context.corners.md)),
+                          border: Border.all(color: context.colors.accent2, width: 3),
+                        ),
+                        child: AspectRatio(
+                          aspectRatio: 1,
+                          child: Center(
+                            heightFactor: 1,
+                            child: AppLoader(),
                           ),
-                        );
-                      }),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               );
             },

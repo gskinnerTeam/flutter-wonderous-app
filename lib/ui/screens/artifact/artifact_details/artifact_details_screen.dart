@@ -16,7 +16,7 @@ class ArtifactDetailsScreen extends StatefulWidget {
 
 class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
   ArtifactData? _artifact;
-  double _textHeight = 1.2;
+  final double _textHeight = 1.2;
 
   @override
   void initState() {
