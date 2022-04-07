@@ -1,11 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:wonders/ui/screens/artifact/artifact_highlights/artifact_blurred_bg.dart';
-import 'dart:math' as math;
-
 import 'package:wonders/ui/screens/artifact/artifact_highlights/artifact_image_page.dart';
 
 class ArtifactHighlightsScreen extends StatefulWidget {
@@ -58,11 +55,10 @@ class _ArtifactScreenState extends State<ArtifactHighlightsScreen> {
     });
   }
 
-  void onArtifactTap(int index) {
-    // TODO: Animate this!
+  void handleArtifactTap(int index) =>
+      context.push(ScreenPaths.artifact(_loadedArtifacts[index % _loadedArtifacts.length].objectId.toString()));
 
-    context.push(ScreenPaths.artifact(_loadedArtifacts[index % _loadedArtifacts.length].objectId.toString()));
-  }
+  void handleSearchButtonTap() => context.push(ScreenPaths.search(widget.type));
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +78,7 @@ class _ArtifactScreenState extends State<ArtifactHighlightsScreen> {
           index: index,
           currentPage: _currentPage,
           artifact: _loadedArtifacts[index % _loadedArtifacts.length],
-          onClick: onArtifactTap,
+          onClick: handleArtifactTap,
         );
       },
     );
@@ -93,8 +89,7 @@ class _ArtifactScreenState extends State<ArtifactHighlightsScreen> {
         fit: StackFit.expand,
         children: [
           // Background Image
-          Align(
-            alignment: Alignment.topCenter,
+          TopCenter(
             child: Column(
               children: [
                 Expanded(
@@ -123,14 +118,12 @@ class _ArtifactScreenState extends State<ArtifactHighlightsScreen> {
           ),
 
           // White space, covering bottom half.
-          Align(
-            alignment: Alignment.bottomCenter,
+          BottomCenter(
             child: Container(height: bottomHalfHeight, color: context.colors.bg),
           ),
 
           // Carousel images
-          Align(
-            alignment: Alignment.bottomCenter,
+          BottomCenter(
             heightFactor: 0.5,
             child: FutureBuilder(
               future: Future.value(true),
@@ -141,8 +134,7 @@ class _ArtifactScreenState extends State<ArtifactHighlightsScreen> {
           ),
 
           // Header
-          Align(
-            alignment: Alignment.topCenter,
+          TopCenter(
             child: Padding(
               padding: EdgeInsets.only(top: context.insets.md),
               child: Text(
@@ -153,88 +145,85 @@ class _ArtifactScreenState extends State<ArtifactHighlightsScreen> {
           ),
 
           // Text and Artifact Search button
-          Align(
-            alignment: Alignment.bottomCenter,
+          BottomCenter(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: context.insets.md),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Wonder Name
-                  Padding(
-                    padding: EdgeInsets.only(),
-                    child: Text(
-                      (_currentArtifact?.culture ?? '---').toUpperCase(),
-                      style: context.textStyles.titleFont
-                          .copyWith(color: context.colors.accent1, fontSize: 14, height: 1.2),
-                    ),
-                  ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Wonder Name
+                      Text(
+                        (_currentArtifact?.culture ?? '---').toUpperCase(),
+                        style: context.textStyles.titleFont
+                            .copyWith(color: context.colors.accent1, fontSize: 14, height: 1.2),
+                      ),
+                      Gap(context.insets.md),
 
-                  // Artifact Title
-                  Padding(
-                    padding: EdgeInsets.only(top: context.insets.md),
-                    child: Text(
-                      _currentArtifact?.title ?? '---',
-                      style: context.textStyles.h2.copyWith(color: context.colors.greyStrong),
-                    ),
-                  ),
+                      // Artifact Title
+                      Text(
+                        _currentArtifact?.title ?? '---',
+                        style: context.textStyles.h2.copyWith(color: context.colors.greyStrong),
+                      ),
+                      Gap(context.insets.xs),
 
-                  // Time frame
-                  Padding(
-                    padding: EdgeInsets.only(top: context.insets.xs),
-                    child: Text(
-                      _currentArtifact?.date ?? '---',
-                      style: context.textStyles.body.copyWith(color: context.colors.body),
-                    ),
-                  ),
+                      // Time frame
+                      Text(
+                        _currentArtifact?.date ?? '---',
+                        style: context.textStyles.body.copyWith(color: context.colors.body),
+                      ),
+                      Gap(context.insets.lg),
+                    ],
+                  ).gTweener.fade().withKey(ValueKey(_currentArtifact?.objectId)),
 
                   // Selection indicator
-                  Padding(
-                    padding: EdgeInsets.only(top: context.insets.lg),
-                    child: SmoothPageIndicator(
-                      controller: _controller,
-                      count: 6,
-                      onDotClicked: changeArtifactIndex,
-                      effect: ExpandingDotsEffect(
-                          dotWidth: 4,
-                          dotHeight: 4,
-                          paintStyle: PaintingStyle.fill,
-                          strokeWidth: 2,
-                          dotColor: context.colors.accent1,
-                          activeDotColor: context.colors.accent1,
-                          expansionFactor: 4),
-                    ),
+                  SmoothPageIndicator(
+                    controller: _controller,
+                    count: 6,
+                    onDotClicked: changeArtifactIndex,
+                    effect: ExpandingDotsEffect(
+                        dotWidth: 4,
+                        dotHeight: 4,
+                        paintStyle: PaintingStyle.fill,
+                        strokeWidth: 2,
+                        dotColor: context.colors.accent1,
+                        activeDotColor: context.colors.accent1,
+                        expansionFactor: 4),
                   ),
 
+                  Gap(context.insets.xl),
+
                   // Big ol' button
-                  Padding(
-                    padding: EdgeInsets.only(top: context.insets.xl, bottom: context.insets.xl),
-                    child: GestureDetector(
-                      onTap: () => context.push(ScreenPaths.search(widget.type)),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: context.colors.greyStrong,
-                          borderRadius: BorderRadius.all(Radius.circular(context.corners.md)),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: context.insets.sm),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text('BROWSE ALL ARTIFACTS',
-                                  style: context.textStyles.body
-                                      .copyWith(color: context.colors.bg, fontSize: 12, height: 1.2)),
-                              Padding(
-                                padding: EdgeInsets.only(left: context.insets.xs),
-                                child: Icon(Icons.search, color: context.colors.bg, size: 18),
-                              ),
-                            ],
-                          ),
+                  GestureDetector(
+                    onTap: handleSearchButtonTap,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: context.colors.greyStrong,
+                        borderRadius: BorderRadius.all(Radius.circular(context.corners.md)),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: context.insets.sm),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('BROWSE ALL ARTIFACTS',
+                                style: context.textStyles.body
+                                    .copyWith(color: context.colors.bg, fontSize: 12, height: 1.2)),
+                            Padding(
+                              padding: EdgeInsets.only(left: context.insets.xs),
+                              child: Icon(Icons.search, color: context.colors.bg, size: 18),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   ),
+
+                  Gap(context.insets.xl),
                 ],
               ),
             ),

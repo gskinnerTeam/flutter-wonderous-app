@@ -22,22 +22,20 @@ class ArtifactSearchHeader extends StatelessWidget {
               child: CloseButton(color: context.colors.bg),
             ),
 
+            Gap(context.insets.xs),
+
             // Window title
-            Padding(
-              padding: EdgeInsets.only(top: context.insets.xs),
-              child: Text(
-                title.toUpperCase(),
-                style: context.textStyles.body.copyWith(color: context.colors.bg),
-              ),
+            Text(
+              title.toUpperCase(),
+              style: context.textStyles.body.copyWith(color: context.colors.bg),
             ),
 
+            Gap(context.insets.xs),
+
             // Wonder name / culture
-            Padding(
-              padding: EdgeInsets.only(top: context.insets.xs),
-              child: Text(
-                type.name.toUpperCase(),
-                style: context.textStyles.titleFont.copyWith(color: context.colors.accent1),
-              ),
+            Text(
+              type.name.toUpperCase(),
+              style: context.textStyles.titleFont.copyWith(color: context.colors.accent1),
             ),
           ],
         ),

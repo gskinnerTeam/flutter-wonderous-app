@@ -59,10 +59,6 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
       resultsText = '${_searchResultsAll.length} results found';
     }
 
-    Color colorBody = context.colors.body;
-    Color colorSearchBox = context.colors.text;
-    Color colorCaption = context.colors.caption;
-
     /// Collect children for the various layers
     return Stack(
       children: [
@@ -88,14 +84,15 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
                         // Search box
                         ArtifactSearchTextField(onUpdate: searchForStuff),
 
+                        Gap(context.insets.sm),
+
                         // Results feedback
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: context.insets.sm),
-                          child: Text(
-                            resultsText,
-                            style: context.textStyles.body.copyWith(color: colorBody),
-                          ),
+                        Text(
+                          resultsText,
+                          style: context.textStyles.body.copyWith(color: context.colors.body),
                         ),
+
+                        Gap(context.insets.sm),
 
                         // Artifacts grid
                         Expanded(

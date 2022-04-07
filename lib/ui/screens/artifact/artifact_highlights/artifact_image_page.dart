@@ -83,7 +83,7 @@ class ArtifactImagePage extends StatelessWidget {
                 color: context.colors.bg,
                 width: 0.3,
               ),
-              borderRadius: BorderRadius.all(Radius.circular(50)),
+              borderRadius: BorderRadius.all(Radius.circular(elementWidth / 2)),
             ),
             child: Padding(
               // Padding for the border
@@ -95,13 +95,16 @@ class ArtifactImagePage extends StatelessWidget {
                 // Round the edges, but make a capsule rather than a circle by only setting to width.
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                  borderRadius: BorderRadius.all(Radius.circular(elementWidth / 2)),
 
                   // Display image
                   image: DecorationImage(
-                    image: imageProvider,
-                    fit: BoxFit.cover,
-                  ),
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                      colorFilter: ColorFilter.mode(
+                        Colors.black.withOpacity(math.min(1, offset.abs())), // 0 = Colored, 1 = Black & White
+                        BlendMode.saturation,
+                      )),
                 ),
               ),
             ),
