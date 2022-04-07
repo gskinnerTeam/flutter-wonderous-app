@@ -14,47 +14,52 @@ class ArtifactBlurredBg extends StatelessWidget {
       );
     }
 
-    return Container(
-      decoration: BoxDecoration(
-        // Image
-        image: DecorationImage(
-          image: NetworkImage(url),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Container(
-        decoration: BoxDecoration(
-          // Gradient Vertical
-          gradient: LinearGradient(
-            begin: FractionalOffset.topCenter,
-            end: FractionalOffset.bottomCenter,
-            colors: [context.colors.greyStrong, context.colors.greyStrong, Colors.white],
-            stops: const [0.0, 0.2, 1.0],
-          ),
-          backgroundBlendMode: BlendMode.multiply,
-        ),
+    return Column(children: [
+      Expanded(
         child: Container(
           decoration: BoxDecoration(
-            // Gradient Horizontal
-            gradient: LinearGradient(
-              begin: FractionalOffset.centerLeft,
-              end: FractionalOffset.centerRight,
-              colors: [context.colors.greyStrong, Colors.white, Colors.white, context.colors.greyStrong],
-              stops: const [0.0, 0.05, 0.95, 1.0],
+            // Image
+            image: DecorationImage(
+              image: NetworkImage(url),
+              fit: BoxFit.cover,
             ),
-            backgroundBlendMode: BlendMode.multiply,
           ),
-          child: BackdropFilter(
-            // Blur effect
-            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Container(
+            decoration: BoxDecoration(
+              // Gradient Vertical
+              gradient: LinearGradient(
+                begin: FractionalOffset.topCenter,
+                end: FractionalOffset.bottomCenter,
+                colors: [context.colors.greyStrong, context.colors.greyStrong, Colors.white],
+                stops: const [0.0, 0.2, 1.0],
+              ),
+              backgroundBlendMode: BlendMode.multiply,
+            ),
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.0),
+                // Gradient Horizontal
+                gradient: LinearGradient(
+                  begin: FractionalOffset.centerLeft,
+                  end: FractionalOffset.centerRight,
+                  colors: [context.colors.greyStrong, Colors.white, Colors.white, context.colors.greyStrong],
+                  stops: const [0.0, 0.05, 0.95, 1.0],
+                ),
+                backgroundBlendMode: BlendMode.multiply,
+              ),
+              child: BackdropFilter(
+                // Blur effect
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.0),
+                  ),
+                ),
               ),
             ),
           ),
         ),
       ),
-    );
+      Expanded(child: Container(color: context.colors.bg)),
+    ]);
   }
 }

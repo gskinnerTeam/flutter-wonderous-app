@@ -127,6 +127,7 @@ class SearchService {
         medium: content['medium'] ?? '',
         dimension: content['dimension'] ?? '',
         classification: content['classification'] ?? '',
+        culture: content['culture'] ?? '',
       );
     } catch (e) {
       dev.log('Error: Search response missing content.');

@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:wonders/ui/screens/artifact/artifact_highlights/artifact_blurred_bg.dart';
+import 'dart:math' as math;
 
 class ArtifactHighlightsScreen extends StatefulWidget {
   final WonderType type;
@@ -13,7 +15,7 @@ class ArtifactHighlightsScreen extends StatefulWidget {
 }
 
 class _ArtifactScreenState extends State<ArtifactHighlightsScreen> {
-  final _controller = PageController(viewportFraction: 0.8, keepPage: true);
+  final _controller = PageController(initialPage: 0, viewportFraction: 0.8, keepPage: true);
   final _highlightedArtifactIds = [
     '503940',
     '312595',
@@ -24,10 +26,18 @@ class _ArtifactScreenState extends State<ArtifactHighlightsScreen> {
   ];
   final _loadedArtifacts = [];
   ArtifactData? _currentArtifact;
+  double _currentPage = 0;
 
   @override
   void initState() {
+    _controller.addListener(() {
+      setState(() {
+        _currentPage = _controller.page ?? 0;
+      });
+    });
+
     super.initState();
+
     getHighlightedArtifacts();
   }
 
@@ -40,28 +50,87 @@ class _ArtifactScreenState extends State<ArtifactHighlightsScreen> {
   }
 
   void changeArtifactIndex(int index) {
+    //_controller.jumpToPage(index);
     setState(() {
-      _currentArtifact = _loadedArtifacts[index];
+      _currentArtifact = _loadedArtifacts[index % _highlightedArtifactIds.length];
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Needs rotating image carousel. Ref: https://www.figma.com/file/814LAO3wAzMNbB7YYPZpnZ/Wireframes?node-id=785%3A7621
-
-    // Show:
-    // - wonder name,
-    // - artifact name,
-    // - artifact date,
-    // - bar to indicate which of 6 preloaded artifacts are shown
-    // - Browse all button (links to ArtifactSearchScreen)
-    // - App navigator bar on bottom
-
-    final wonderData = wonders.getDataForType(widget.type);
-
     if (_currentArtifact == null) {
       return Center(child: AppLoader());
     }
+
+    final pageView = PageView.builder(
+      controller: _controller,
+      onPageChanged: changeArtifactIndex,
+      itemCount: _highlightedArtifactIds.length,
+      itemBuilder: (context, index) {
+        return FittedBox(
+          child: CachedNetworkImage(
+            // Show immediately; don't delay the appearance on the sides.
+            fadeOutDuration: const Duration(milliseconds: 0),
+            fadeInDuration: const Duration(milliseconds: 0),
+
+            // Image URL ref.
+            imageUrl: _loadedArtifacts[index % _loadedArtifacts.length].image,
+
+            // Build the image previewer.
+            imageBuilder: (context, imageProvider) {
+              // TWEAKABLE: Setup some repeated parameters so it's easy to edit.
+              // Scale of the elements, compared to max screen dimensions (maintains aspect ratio).
+              double elementScale = 0.5;
+              // Extra scale for the middle element.
+              double elementScaleMidAdd = 0.1;
+              // Height scale to make middle element like a capsule.
+              double mainElementHeightScale = 0.4;
+              // Vertical offset of the whole carousel.
+              double vertOffset = 20;
+
+              // Calculated variables.
+              double elementWidth = 50;
+              double offset = math.max(-2, math.min(2, _currentPage - double.parse(index.toString())));
+              double mainElementScaleUp =
+                  1 + (mainElementHeightScale - (math.min(1, offset.abs()) * mainElementHeightScale));
+
+              double xAngle = math.asin((offset) * math.pi / 4.0);
+              double yAngle = math.acos((offset.abs()) * math.pi / 4.0);
+
+              // Transform object to animate pages.
+              return Transform(
+                origin: Offset(elementWidth / 2, (elementWidth / 2) * mainElementScaleUp),
+
+                transform: Matrix4.identity()
+                  ..translate(
+                    xAngle * (elementWidth * 2.0 / 5.0),
+                    yAngle * (-elementWidth * 2.0 / 5.0) + vertOffset,
+                  )
+                  ..scale((elementScale + elementScaleMidAdd) - (offset.abs() * elementScaleMidAdd)),
+
+                // Inside the container, width and height determine aspect ratio
+                child: Container(
+                  width: elementWidth,
+                  height: elementWidth * mainElementScaleUp,
+
+                  // Round the edges, but make a capsule rather than a circle by only setting to width.
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.all(Radius.circular(50)),
+
+                    // Display image
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
 
     return Container(
       color: context.colors.bg,
@@ -76,18 +145,39 @@ class _ArtifactScreenState extends State<ArtifactHighlightsScreen> {
               duration: Duration(seconds: 1),
             ),
           ),
+          // Big circle - part of the background
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+              decoration: BoxDecoration(
+                color: context.colors.bg,
+                shape: BoxShape.circle,
+              ),
+            ),
+          ),
 
           // Header
           Align(
             alignment: Alignment.topCenter,
-            child: Text(
-              'Highlights',
-              style: context.textStyles.h3.copyWith(color: context.colors.bg),
+            child: Padding(
+              padding: EdgeInsets.only(top: context.insets.md),
+              child: Text(
+                'HIGHLIGHTS',
+                style: context.textStyles.h3.copyWith(color: context.colors.bg, fontSize: 14),
+              ),
             ),
           ),
 
           // Carousel
-          Placeholder(fallbackHeight: 400),
+          Align(
+            alignment: Alignment.center,
+            child: FutureBuilder(
+              future: Future.value(true),
+              builder: (BuildContext context, AsyncSnapshot<void> snap) {
+                return snap.hasData ? pageView : Container();
+              },
+            ),
+          ),
 
           // Text and Artifact Search button
           Align(
@@ -102,11 +192,12 @@ class _ArtifactScreenState extends State<ArtifactHighlightsScreen> {
                   Padding(
                     padding: EdgeInsets.only(),
                     child: Text(
-                      wonderData.title.toUpperCase(),
+                      (_currentArtifact?.culture ?? '---').toUpperCase(),
                       style: context.textStyles.titleFont
                           .copyWith(color: context.colors.accent1, fontSize: 14, height: 1.2),
                     ),
                   ),
+
                   // Artifact Title
                   Padding(
                     padding: EdgeInsets.only(top: context.insets.md),
@@ -115,30 +206,34 @@ class _ArtifactScreenState extends State<ArtifactHighlightsScreen> {
                       style: context.textStyles.h2.copyWith(color: context.colors.greyStrong),
                     ),
                   ),
+
                   // Time frame
                   Padding(
                     padding: EdgeInsets.only(top: context.insets.xs),
                     child: Text(
-                      _currentArtifact?.period ?? '---',
+                      _currentArtifact?.date ?? '---',
                       style: context.textStyles.body.copyWith(color: context.colors.body),
                     ),
                   ),
+
                   // Selection indicator
                   Padding(
                     padding: EdgeInsets.only(top: context.insets.lg),
                     child: SmoothPageIndicator(
                       controller: _controller,
                       count: 6,
+                      onDotClicked: changeArtifactIndex,
                       effect: ExpandingDotsEffect(
                           dotWidth: 4,
                           dotHeight: 4,
-                          paintStyle: PaintingStyle.stroke,
+                          paintStyle: PaintingStyle.fill,
                           strokeWidth: 2,
                           dotColor: context.colors.accent1,
                           activeDotColor: context.colors.accent1,
                           expansionFactor: 4),
                     ),
                   ),
+
                   // Big ol' button
                   Padding(
                     padding: EdgeInsets.only(top: context.insets.xl, bottom: context.insets.xl),

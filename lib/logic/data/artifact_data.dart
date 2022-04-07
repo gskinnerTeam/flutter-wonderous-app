@@ -16,6 +16,7 @@ class ArtifactData {
     required this.medium,
     required this.dimension,
     required this.classification,
+    required this.culture,
     required this.objectType,
   });
   final int objectId; // Artifact ID, used to identify through MET server calls.
@@ -31,6 +32,7 @@ class ArtifactData {
   final String medium; // Art medium
   final String dimension; // Width and height of physical artifact
   final String classification; // Type of artifact
+  final String culture; // Culture of artifact
 
   factory ArtifactData.fromJson(Map<String, dynamic> json) => _$ArtifactDataFromJson(json);
   Map<String, dynamic> toJson() => _$ArtifactDataToJson(this);

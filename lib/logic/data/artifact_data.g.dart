@@ -19,6 +19,7 @@ ArtifactData _$ArtifactDataFromJson(Map<String, dynamic> json) => ArtifactData(
       medium: json['medium'] as String,
       dimension: json['dimension'] as String,
       classification: json['classification'] as String,
+      culture: json['culture'] as String,
     );
 
 Map<String, dynamic> _$ArtifactDataToJson(ArtifactData instance) => <String, dynamic>{
@@ -34,4 +35,5 @@ Map<String, dynamic> _$ArtifactDataToJson(ArtifactData instance) => <String, dyn
       'medium': instance.medium,
       'dimension': instance.dimension,
       'classification': instance.classification,
+      'culture': instance.culture,
     };
