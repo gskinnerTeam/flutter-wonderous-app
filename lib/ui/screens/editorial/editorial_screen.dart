@@ -1,22 +1,30 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drop_cap_text/drop_cap_text.dart';
 import 'package:flutter_circular_text/circular_text.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
-import 'package:wonders/ui/common/arch_clipper.dart';
+import 'package:wonders/ui/common/blend_mask.dart';
+import 'package:wonders/ui/common/context_utils.dart';
 import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
+import 'package:wonders/ui/common/curved_clippers.dart';
+import 'package:wonders/ui/common/grey_scale.dart';
+import 'package:wonders/ui/common/placeholder_image.dart';
+import 'package:wonders/ui/common/scaling_list_item.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 import 'package:wonders/ui/wonder_illustrations/wonder_illustration.dart';
 
-part 'widgets/circular_title_bar.dart';
 part 'widgets/app_bar.dart';
+part 'widgets/circular_title_bar.dart';
+part 'widgets/collapsing_pull_quote_image.dart';
+part 'widgets/featured_images.dart';
 part 'widgets/scrolling_content.dart';
-part 'widgets/top_illustration.dart';
-part 'widgets/title_text.dart';
 part 'widgets/section_divider.dart';
+part 'widgets/title_text.dart';
+part 'widgets/top_illustration.dart';
 
 class WonderEditorialScreen extends StatefulWidget {
   const WonderEditorialScreen(this.data, {Key? key, required this.onScroll}) : super(key: key);
@@ -58,9 +66,21 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
       double _maxAppBarHeight = shortMode ? 400 : 500;
 
       return ColoredBox(
-        color: context.colors.wonderBg(widget.data.type),
+        color: context.colors.bg,
         child: Stack(
           children: [
+            /// Background
+            Positioned.fill(
+              child: ValueListenableBuilder(
+                valueListenable: _scrollPos,
+                builder: (_, value, __) {
+                  return Container(
+                    color: widget.data.type.bgColor.withOpacity(_scrollPos.value > 1000 ? 0 : 1),
+                  );
+                },
+              ),
+            ),
+
             /// Top Illustration - Sits underneath the scrolling content, fades out as it scrolls
             SizedBox(
               height: _illustrationHeight,
@@ -79,7 +99,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
             CustomScrollView(
               primary: false,
               controller: _scroller,
-              physics: ClampingScrollPhysics(),
+              physics: BouncingScrollPhysics(),
               slivers: [
                 /// Invisible padding at the top of the list, so the illustration shows through the btm
                 SliverToBoxAdapter(
@@ -123,10 +143,9 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                           return Opacity(opacity: Curves.easeIn.transform(opacity), child: child);
                         },
                         child: SizedBox.expand(
-                          //TODO: This needs to take the actual image, not an id
                           child: _AppBar(
                             widget.data.type,
-                            imageId: 'VPavA7BBxK0',
+                            scrollPos: _scrollPos,
                             sectionIndex: _sectionIndex,
                           ),
                         ),
@@ -137,12 +156,12 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
 
                 /// Editorial content (text and images)
                 SliverToBoxAdapter(
-                  child: _ScrollingContent(widget.data, scrollNotifier: _scrollPos, sectionNotifier: _sectionIndex),
+                  child: _ScrollingContent(widget.data, scrollPos: _scrollPos, sectionNotifier: _sectionIndex),
                 ),
 
                 /// Bottom padding
                 SliverToBoxAdapter(
-                  child: Container(height: 100, color: context.colors.bg),
+                  child: Container(height: 300, color: context.colors.bg),
                 ),
               ],
             ),

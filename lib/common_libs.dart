@@ -12,6 +12,7 @@ export 'package:gtween/gtween.dart';
 export 'package:provider/provider.dart';
 export 'package:simple_rich_text/simple_rich_text.dart';
 export 'package:sized_context/sized_context.dart';
+export 'package:wonders/assets.dart';
 export 'package:wonders/logic/app_logic.dart';
 export 'package:wonders/logic/data/wonder_type.dart';
 export 'package:wonders/logic/settings_logic.dart';

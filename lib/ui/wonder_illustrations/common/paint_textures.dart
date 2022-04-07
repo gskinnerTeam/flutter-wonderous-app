@@ -12,7 +12,7 @@ class PaintSpeckles extends StatelessWidget {
   Widget build(BuildContext context) => Transform.scale(
       scaleX: scale * (flipX ? -1 : 1),
       scaleY: scale * (flipY ? -1 : 1),
-      child: Image.asset('assets/images/speckles-white.png', fit: BoxFit.cover, color: color));
+      child: Image.asset(ImagePaths.speckles, fit: BoxFit.cover, color: color));
 }
 
 class RollerPaint1 extends StatelessWidget {
@@ -27,7 +27,7 @@ class RollerPaint1 extends StatelessWidget {
   Widget build(BuildContext context) => Transform.scale(
       scaleX: scale * (flipX ? -1 : 1),
       scaleY: scale * (flipY ? -1 : 1),
-      child: Image.asset('assets/images/roller-1-white.png', fit: BoxFit.cover, color: color));
+      child: Image.asset(ImagePaths.roller1, fit: BoxFit.cover, color: color));
 }
 
 class RollerPaint2 extends StatelessWidget {
@@ -41,6 +41,6 @@ class RollerPaint2 extends StatelessWidget {
   Widget build(BuildContext context) => Transform.scale(
         scaleX: scale * (flipX ? -1 : 1),
         scaleY: scale * (flipY ? -1 : 1),
-        child: Image.asset('assets/images/roller-2-white.png', fit: BoxFit.cover, color: color),
+        child: Image.asset(ImagePaths.roller2, fit: BoxFit.cover, color: color),
       );
 }

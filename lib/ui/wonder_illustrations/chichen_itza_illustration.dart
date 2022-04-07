@@ -10,6 +10,7 @@ class ChichenItzaIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String assetPath = WonderType.chichenItza.assetPath;
     return WonderIllustrationBuilder(
         config: config,
 
@@ -22,8 +23,7 @@ class ChichenItzaIllustration extends StatelessWidget {
                   translation: Offset(.7, 0),
                   child: WonderHero(config, 'chichen-sun',
                       child: FractionalTranslation(
-                          translation: Offset(0, -.2 * anim.value),
-                          child: Image.asset('assets/images/chichen_itza/sun.png'))),
+                          translation: Offset(0, -.2 * anim.value), child: Image.asset('$assetPath/sun.png'))),
                 ),
               ),
             ],
@@ -34,7 +34,7 @@ class ChichenItzaIllustration extends StatelessWidget {
                 child: WonderHero(config, 'chichen-mg',
                     child: Transform.scale(
                       scale: config.scale,
-                      child: Image.asset('assets/images/chichen_itza/pyramid.png'),
+                      child: Image.asset('$assetPath/pyramid.png'),
                     )),
               ),
             ],
@@ -51,7 +51,7 @@ class ChichenItzaIllustration extends StatelessWidget {
                   BottomLeft(
                     child: FractionalTranslation(
                       translation: Offset(-.3, -.3),
-                      child: Image.asset('assets/images/chichen_itza/agave-left.png'),
+                      child: Image.asset('$assetPath/agave-left.png'),
                     ),
                   ),
                   BottomRight(
@@ -59,7 +59,7 @@ class ChichenItzaIllustration extends StatelessWidget {
                       translation: Offset(.35, -.35),
                       child: Transform.scale(
                         scale: 1.1,
-                        child: Image.asset('assets/images/chichen_itza/agave-right.png'),
+                        child: Image.asset('$assetPath/agave-right.png'),
                       ),
                     ),
                   ),

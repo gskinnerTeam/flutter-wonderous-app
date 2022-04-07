@@ -3,7 +3,6 @@ import 'package:wonders/logic/wonders_logic.dart';
 import 'package:wonders/ui/common/controls/buttons.dart';
 import 'package:wonders/ui/common/controls/diagonal_page_indicator.dart';
 import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
-import 'package:wonders/ui/common/screen_scaffold.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 import 'package:wonders/ui/wonder_illustrations/wonder_illustration.dart';
@@ -17,7 +16,6 @@ class WondersHomeScreen extends StatefulWidget with GetItStatefulWidgetMixin {
   State<WondersHomeScreen> createState() => _WondersHomeScreenState();
 }
 
-//TODO @ AG - implement the remaining 6 home screens
 class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMixin {
   final _pageController = PageController(viewportFraction: 1);
   late int _wonderIndex = _pageController.initialPage;
@@ -82,7 +80,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
         /// Foreground gradient
         BottomCenter(
           // TODO: Gradient should get darker when pulling up...
-          child: _AnimatedGradient(context.colors.wonderBg(currentWonder.type)),
+          child: _AnimatedGradient(currentWonder.type.bgColor),
         ),
 
         /// Floating controls / UI
@@ -109,7 +107,6 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
 
                     /// Title
                     FractionallySizedBox(
-                      widthFactor: .8,
                       child: Text(
                         currentWonder.titleWithBreaks.toUpperCase(),
                         style: context.textStyles.h1.copyWith(height: 1),

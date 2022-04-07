@@ -1,6 +1,4 @@
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/common/cards/opening_card.dart';
 import 'package:wonders/ui/common/controls/buttons.dart';
 import 'package:wonders/ui/common/controls/circle_button.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';

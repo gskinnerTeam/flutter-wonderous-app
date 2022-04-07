@@ -65,7 +65,7 @@ class _UnsplashPhotoAttribution extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   splashFactory: NoSplash.splashFactory,
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap),
-              child: Text('${data.ownerUsername}', style: style.copyWith(fontWeight: FontWeight.bold)),
+              child: Text(data.ownerUsername, style: style.copyWith(fontWeight: FontWeight.bold)),
               onPressed: handleUserNamePressed),
           Text('on', style: style),
           TextButton(

@@ -42,7 +42,7 @@ dependencies:
   simple_rich_text: ^2.0.49
   sized_context: ^1.0.0+1
   shared_preferences: ^2.0.13
-  statsfl: ^2.0.1+1
+  statsfl: ^2.1.0
   widget_mask: ^1.0.0+0 # todo: remove if not used
   window_interface: ^0.3.1
   unsplash_client: ^2.1.0+3

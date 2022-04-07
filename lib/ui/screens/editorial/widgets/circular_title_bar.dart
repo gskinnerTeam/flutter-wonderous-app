@@ -69,7 +69,7 @@ class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with S
     // Spin 180 degrees each time index changes
     if (oldWidget.index != widget.index) {
       _prevIndex = oldWidget.index;
-      // If the animation is already in motion, we don't need to interrupt it.
+      // If the animation is already in motion, we don't need to interrupt it, just let the text change
       if (isAnimStopped) {
         _anim.forward(from: 0);
       }
@@ -108,51 +108,22 @@ class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with S
         ),
       ),
     );
-
-    // return Container(
-    //   decoration: BoxDecoration(shape: BoxShape.circle, color: context.colors.bg),
-    //   alignment: Alignment.center,
-    //   child: Padding(
-    //     padding: const EdgeInsets.all(24),
-    //     child: AnimatedSwitcher(
-    //       duration: context.times.fast,
-    //       child: CircularText(
-    //         children: [
-    //           TextItem(
-    //             text: Text(
-    //               widget.titles[widget.index].toUpperCase(),
-    //               style: context.textStyles.h1.copyWith(fontSize: 24, color: context.colors.accent1),
-    //             ),
-    //             space: 10,
-    //             startAngle: -90,
-    //             startAngleAlignment: StartAngleAlignment.center,
-    //             direction: CircularTextDirection.clockwise,
-    //           ),
-    //         ],
-    //         radius: 125,
-    //         position: CircularTextPosition.inside,
-    //       ).gTweener.rotate(from: -180).withDuration(context.times.med).withKey(ValueKey(widget.index)),
-    //     ),
-    //   ),
-    // );
   }
 
   CircularText _buildCircularText(String title) {
+    final textStyle = context.textStyles.h1.copyWith(fontSize: 24, color: context.colors.accent1);
     return CircularText(
+      radius: 125,
+      position: CircularTextPosition.inside,
       children: [
         TextItem(
-          text: Text(
-            title.toUpperCase(),
-            style: context.textStyles.h1.copyWith(fontSize: 24, color: context.colors.accent1),
-          ),
+          text: Text(title.toUpperCase(), style: textStyle),
           space: 10,
           startAngle: -90,
           startAngleAlignment: StartAngleAlignment.center,
           direction: CircularTextDirection.clockwise,
         ),
       ],
-      radius: 125,
-      position: CircularTextPosition.inside,
     );
   }
 }

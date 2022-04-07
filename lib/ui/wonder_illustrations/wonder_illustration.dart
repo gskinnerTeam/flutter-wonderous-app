@@ -17,6 +17,5 @@ class WonderIllustration extends StatelessWidget {
       case WonderType.tajMahal:
         return TajMahalIllustration(config: config);
     }
-    throw ('Unable to find illustration for $type');
   }
 }
