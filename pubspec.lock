@@ -940,7 +940,7 @@ packages:
       name: statsfl
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1+1"
+    version: "2.1.0"
   stream_channel:
     dependency: transitive
     description:

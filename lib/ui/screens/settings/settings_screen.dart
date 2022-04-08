@@ -8,9 +8,9 @@ class SettingsScreen extends StatelessWidget with GetItMixin {
   void _handleFpsToggle(v) => settings.enableFpsMeter.value = v;
   @override
   Widget build(BuildContext context) {
-    final enableBlur = watchX((SettingsController s) => s.enableMotionBlur);
-    final swipeThreshold = watchX((SettingsController s) => s.swipeThreshold);
-    final enableFpsMeter = watchX((SettingsController s) => s.enableFpsMeter);
+    final enableBlur = watchX((SettingsLogic s) => s.enableMotionBlur);
+    final swipeThreshold = watchX((SettingsLogic s) => s.swipeThreshold);
+    final enableFpsMeter = watchX((SettingsLogic s) => s.enableFpsMeter);
     return Scaffold(
       appBar: AppBar(
         title: Text('Settings', style: context.textStyles.h2),

@@ -4,7 +4,7 @@ import 'package:wonders/logic/data/department_data.dart';
 import 'package:wonders/logic/search_service.dart';
 import 'dart:math' as math;
 
-class SearchController {
+class SearchLogic {
   final departmentList = ValueNotifier(<DepartmentData>[]);
   final Map<String, ArtifactData> _artifactHash = {};
 

@@ -15,7 +15,7 @@ class _TitleText extends StatelessWidget {
               separatorBuilder: () => Gap(context.insets.sm),
               children: [
                 Expanded(
-                    child: Divider(color: context.colors.wonderFg(data.type))
+                    child: Divider(color: data.type.fgColor)
                         .gTweener //TODO: Add some shortcut widgets for GTWeener? FadeIn(delay), SlideIn(), ScaleIn(),
                         .scale(curve: Curves.easeOut)
                         .withDelay(.5.seconds)),
@@ -24,10 +24,10 @@ class _TitleText extends StatelessWidget {
                   style: context.textStyles.body,
                 ).gTweener.fade().withDelay(.1.seconds),
                 Expanded(
-                    child: Divider(color: context.colors.wonderFg(data.type))
-                        .gTweener
-                        .scale(curve: Curves.easeOut)
-                        .withDelay(.5.seconds)),
+                  child: Divider(
+                    color: data.type.fgColor,
+                  ).gTweener.scale(curve: Curves.easeOut).withDelay(.5.seconds),
+                ),
               ],
             ),
             Gap(context.insets.md),

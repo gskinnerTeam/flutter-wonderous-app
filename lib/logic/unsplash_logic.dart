@@ -2,7 +2,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/unsplash_photo_data.dart';
 import 'package:wonders/logic/unsplash_service.dart';
 
-class UnsplashController {
+class UnsplashLogic {
   final Map<String, UnsplashPhotoData> _imageInfoById = {};
 
   UnsplashService get service => GetIt.I.get<UnsplashService>();
