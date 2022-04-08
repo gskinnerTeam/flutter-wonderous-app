@@ -85,48 +85,49 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
 
         /// Floating controls / UI
         AnimatedSwitcher(
-          duration: context.style.times.fast,
+          duration: context.times.fast,
           child: RepaintBoundary(
             key: ValueKey(_wonderIndex),
             child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(width: double.infinity),
-              Gap(context.insets.lg * 3),
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(width: double.infinity),
+                Gap(context.insets.lg * 3),
 
-              /// Save Background Btn
-              // AppBtn(child: Text('Save Background'), onPressed: _handleSaveWallPaperPressed),
-              AppBtn(child: const Text('Settings'), onPressed: _handleSettingsPressed),
-              const Spacer(),
+                /// Save Background Btn
+                // AppBtn(child: Text('Save Background'), onPressed: _handleSaveWallPaperPressed),
+                AppBtn(child: const Text('Settings'), onPressed: _handleSettingsPressed),
+                const Spacer(),
 
-              IgnorePointer(
-                child: LightText(
-                  child: Column(children: [
-                    /// Page indicator
-                    DiagonalPageIndicator(current: _wonderIndex + 1, total: wonders.length),
-                    Gap(context.insets.md),
+                IgnorePointer(
+                  child: LightText(
+                    child: Column(children: [
+                      /// Page indicator
+                      DiagonalPageIndicator(current: _wonderIndex + 1, total: wonders.length),
+                      Gap(context.insets.md),
 
-                    /// Title
-                    FractionallySizedBox(
-                      child: Text(
-                        currentWonder.titleWithBreaks.toUpperCase(),
-                        style: context.textStyles.h1.copyWith(height: 1),
-                        textAlign: TextAlign.center,
+                      /// Title
+                      FractionallySizedBox(
+                        child: Text(
+                          currentWonder.titleWithBreaks.toUpperCase(),
+                          style: context.textStyles.h1.copyWith(height: 1),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
-                    ),
-                  ]),
+                    ]),
+                  ),
                 ),
-              ),
 
-              /// TODO: Add the page selector that expands upwards when you drag
-              /// Down arrow
-              AppBtn(
-                  child: Icon(Icons.arrow_downward, size: 64, color: Theme.of(context).primaryColor),
-                  onPressed: _showDetailsPage),
-              Gap(context.style.insets.md),
-            ],
+                /// TODO: Add the page selector that expands upwards when you drag
+                /// Down arrow
+                AppBtn(
+                    child: Icon(Icons.arrow_downward, size: 64, color: Theme.of(context).primaryColor),
+                    onPressed: _showDetailsPage),
+                Gap(context.insets.md),
+              ],
+            ),
           ),
-        ),),
+        ),
       ]),
     );
   }

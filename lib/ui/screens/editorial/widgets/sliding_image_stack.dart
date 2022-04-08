@@ -40,7 +40,7 @@ class _SlidingImageStack extends StatelessWidget {
               children: [
                 TopRight(
                   child: FractionalTranslation(
-                    translation: Offset(0, .1 * pctVisible),
+                    translation: Offset(0, -.1 + .2 * pctVisible),
                     child: _buildPhoto(
                       .73,
                       type.photo3,
@@ -49,11 +49,14 @@ class _SlidingImageStack extends StatelessWidget {
                   ),
                 ),
                 BottomLeft(
-                  child: _buildPhoto(
-                    .45,
-                    type.photo4,
-                    Alignment(0, .3 - .6 * pctVisible),
-                    top: false,
+                  child: FractionalTranslation(
+                    translation: Offset(0, -.4 * pctVisible),
+                    child: _buildPhoto(
+                      .45,
+                      type.photo4,
+                      Alignment(0, .3 - .6 * pctVisible),
+                      top: false,
+                    ),
                   ),
                 ),
               ],
