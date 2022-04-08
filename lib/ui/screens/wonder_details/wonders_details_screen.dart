@@ -21,7 +21,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
   late final _tabController = TabController(
     length: 4,
     vsync: this,
-    initialIndex: app.selectedWondersTab.value,
+    initialIndex: AppLogic.enablePersistentTabs ? app.selectedWondersTab.value : 0,
   )..addListener(_handleTabChanged);
   GTweenerController? _fade;
 

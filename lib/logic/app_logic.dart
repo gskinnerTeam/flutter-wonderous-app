@@ -16,6 +16,7 @@ class AppLogic {
   bool isBootstrapComplete = false;
 
   /// The currently selected tab on the WonderDetails screen
+  static const enablePersistentTabs = false;
   final selectedWondersTab = ValueNotifier(0);
 
   /// Initialize the app and all main actors.

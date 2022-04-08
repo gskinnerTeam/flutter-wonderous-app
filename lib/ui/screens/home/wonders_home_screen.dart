@@ -86,8 +86,9 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
         /// Floating controls / UI
         AnimatedSwitcher(
           duration: context.style.times.fast,
-          child: Column(
+          child: RepaintBoundary(
             key: ValueKey(_wonderIndex),
+            child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(width: double.infinity),
@@ -95,8 +96,8 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
 
               /// Save Background Btn
               // AppBtn(child: Text('Save Background'), onPressed: _handleSaveWallPaperPressed),
-              AppBtn(child: Text('Settings'), onPressed: _handleSettingsPressed),
-              Spacer(),
+              AppBtn(child: const Text('Settings'), onPressed: _handleSettingsPressed),
+              const Spacer(),
 
               IgnorePointer(
                 child: LightText(
@@ -125,7 +126,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
               Gap(context.style.insets.md),
             ],
           ),
-        )
+        ),),
       ]),
     );
   }
