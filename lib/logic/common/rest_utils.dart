@@ -1,4 +1,4 @@
-import 'package:wonders/logic/utils/string_utils.dart';
+import 'package:wonders/logic/common/string_utils.dart';
 
 class RestUtils {
   static String encodeParams(Map<String, String> params) {

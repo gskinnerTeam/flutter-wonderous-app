@@ -3,12 +3,11 @@ import 'dart:developer' as dev;
 import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
-import 'package:unsplash_client/unsplash_client.dart';
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/utils/platform_info.dart';
+import 'package:wonders/logic/common/platform_info.dart';
+import 'package:wonders/logic/common/http_client.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/logic/data/department_data.dart';
-import 'package:wonders/logic/utils/http_client.dart';
 
 class SearchService {
   static String baseMETUrl = 'https://collectionapi.metmuseum.org';

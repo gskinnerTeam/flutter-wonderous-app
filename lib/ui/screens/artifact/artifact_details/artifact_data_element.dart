@@ -1,5 +1,5 @@
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/utils/string_utils.dart';
+import 'package:wonders/logic/common/string_utils.dart';
 
 class ArtifactDataElement extends StatelessWidget {
   const ArtifactDataElement({Key? key, this.title, this.content}) : super(key: key);
