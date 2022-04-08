@@ -1,12 +1,7 @@
 import 'package:drop_cap_text/drop_cap_text.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:wonders/common_libs.dart';
-<<<<<<< HEAD
-import 'package:wonders/logic/utils/color_utils.dart';
-=======
 import 'package:wonders/logic/common/color_utils.dart';
-import 'package:wonders/logic/common/rnd.dart';
->>>>>>> ab1cca64131e3ff0b3bd026950680f4680cd6ae7
 
 class LoremPlaceholder extends StatelessWidget {
   const LoremPlaceholder({Key? key, this.dropCase = false, this.paragraphs = 1, this.words = 40}) : super(key: key);
