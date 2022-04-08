@@ -38,7 +38,20 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
   late final ScrollController _scroller = ScrollController()..addListener(_handleScrollChanged);
   final _scrollPos = ValueNotifier(0.0);
   final _sectionIndex = ValueNotifier(0);
+  final _showBottomListContent = ValueNotifier(false);
+  final _scrollToPopThreshold = 70;
   bool _isPointerDown = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Delay initialization of some scrolling content for a moment, to give the hero time to fly.
+    Future.delayed(.5.seconds).then((_) {
+      if (!mounted) return;
+      _showBottomListContent.value = true;
+    });
+  }
+
   @override
   void dispose() {
     _scroller.dispose();
@@ -50,19 +63,15 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
     _scrollPos.value = _scroller.position.pixels;
     widget.onScroll.call(_scrollPos.value);
     // If user pulls far down on the elastic list, pop back to
-    if (_scrollPos.value < -100) {
-      if (!_isPointerDown) {
-        return;
+    if (_scrollPos.value < -_scrollToPopThreshold) {
+      if (_isPointerDown) {
+        context.pop();
+        _scroller.removeListener(_handleScrollChanged);
       }
-      context.pop();
-      _scroller.removeListener(_handleScrollChanged);
     }
   }
 
-  /// Listen for up-swipe to go back to home
-  void _handleListTopSwipe(Offset dir) {
-    if (dir == Offset(0, 1)) context.pop();
-  }
+  bool _checkPointerIsDown(d) => _isPointerDown = d.dragDetails != null;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +82,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
       double _maxAppBarHeight = shortMode ? 400 : 500;
 
       return NotificationListener<ScrollUpdateNotification>(
-        onNotification: (d) => _isPointerDown = d.dragDetails != null,
+        onNotification: _checkPointerIsDown,
         child: ColoredBox(
           color: context.colors.bg,
           child: Stack(
@@ -108,6 +117,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
               CustomScrollView(
                 primary: false,
                 controller: _scroller,
+                cacheExtent: 100,
                 physics: BouncingScrollPhysics(),
                 slivers: [
                   /// Invisible padding at the top of the list, so the illustration shows through the btm
@@ -165,7 +175,12 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
 
                   /// Editorial content (text and images)
                   SliverToBoxAdapter(
-                    child: _ScrollingContent(widget.data, scrollPos: _scrollPos, sectionNotifier: _sectionIndex),
+                    child: ValueListenableBuilder<bool>(
+                      // Hide content based on _showBottomListContent, helping to lighten the initial page load.
+                      valueListenable: _showBottomListContent,
+                      builder: (_, value, child) => value ? child! : SizedBox(height: 1000),
+                      child: _ScrollingContent(widget.data, scrollPos: _scrollPos, sectionNotifier: _sectionIndex),
+                    ),
                   ),
 
                   /// Bottom padding
@@ -174,21 +189,6 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                   ),
                 ],
               ),
-
-              /// Invisible hit area that sits on top of the list when it is scrolled all the way to the top
-              /// Enables a swipe down gesture, to go back to the home page. Otherwise the scroll view will absorb any vertical swipes.
-              ValueListenableBuilder<double>(
-                valueListenable: _scrollPos,
-                builder: (_, value, child) => (value > 0) ? SizedBox.shrink() : child!,
-                child: SizedBox(
-                  height: _illustrationHeight,
-                  width: double.infinity,
-                  child: EightWaySwipeDetector(
-                    onSwipe: _handleListTopSwipe,
-                    child: ColoredBox(color: Colors.red.withOpacity(0)),
-                  ),
-                ),
-              )
             ],
           ),
         ),

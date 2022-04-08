@@ -3,9 +3,9 @@ import 'package:wonders/common_libs.dart';
 class SettingsScreen extends StatelessWidget with GetItMixin {
   SettingsScreen({Key? key}) : super(key: key);
 
-  void _handleMotionBlurToggle(v) => settings.enableMotionBlur.value = v;
-  void _handleSwipeThresholdChanged(v) => settings.swipeThreshold.value = v;
-  void _handleFpsToggle(v) => settings.enableFpsMeter.value = v;
+  void _handleMotionBlurToggle(v) => settingsLogic.enableMotionBlur.value = v;
+  void _handleSwipeThresholdChanged(v) => settingsLogic.swipeThreshold.value = v;
+  void _handleFpsToggle(v) => settingsLogic.enableFpsMeter.value = v;
   @override
   Widget build(BuildContext context) {
     final enableBlur = watchX((SettingsLogic s) => s.enableMotionBlur);

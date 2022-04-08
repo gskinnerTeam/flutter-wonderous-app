@@ -8,7 +8,7 @@ class ArtifactSearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final data = wonders.getDataForType(type);
+    final data = wondersLogic.getDataForType(type);
     return Scaffold(
       body: Stack(
         children: [

@@ -23,8 +23,8 @@ class AppLogic {
   /// Loads settings, sets up services etc.
   Future<void> bootstrap() async {
     FlutterError.onError = _handleFlutterError;
-    await settings.load();
-    settings.scheduleSave(); // test save calls on each boot
+    await settingsLogic.load();
+    settingsLogic.scheduleSave(); // test save calls on each boot
     isBootstrapComplete = true;
     appRouter.go(ScreenPaths.home);
   }

@@ -1,3 +1,11 @@
+# 0.0.6
+- Home View
+  - Improved performance of Hero transition when swiping down
+  - Added animating arrow
+  - Gradient darkens when arrow is pulled
+  - TODO: WonderIllustration 'zooms' in slightly when arrow is pulled
+  - TODO: White box expanded while dragging
+
 # 0.0.5
 - Home View
   - Swiping down will always bring you to editorial view (last viewed tab is forgotten)
