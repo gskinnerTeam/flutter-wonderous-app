@@ -20,7 +20,12 @@ class ChichenItzaIllustration extends StatelessWidget {
           return [
             FadeColorTransition(animation: anim, color: WonderType.chichenItza.fgColor),
             Positioned.fill(
-              child: IllustrationTexture(ImagePaths.roller2, color: Colors.white, opacity: anim, flipY: true),
+              child: IllustrationTexture(
+                ImagePaths.roller2,
+                color: Colors.white,
+                opacity: anim.drive(Tween(begin: 0, end: .3)),
+                flipY: true,
+              ),
             ),
             Center(
               child: FractionalTranslation(
@@ -30,7 +35,7 @@ class ChichenItzaIllustration extends StatelessWidget {
                   'chichen-sun',
                   child: FractionalTranslation(
                     translation: Offset(0, -.2 * anim.value),
-                    child: Image.asset('assets/images/chichen_itza/sun.png', opacity: anim),
+                    child: Image.asset('$assetPath/sun.png', opacity: anim),
                   ),
                 ),
               ),
