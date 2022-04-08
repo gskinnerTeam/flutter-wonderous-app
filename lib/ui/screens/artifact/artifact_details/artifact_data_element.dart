@@ -15,25 +15,27 @@ class ArtifactDataElement extends StatelessWidget {
     String t = StringUtils.isEmpty(title) ? '---' : title ?? '---';
     String c = StringUtils.isEmpty(content) ? '---' : content ?? '---';
 
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Expanded(
-          child: Text(
-            t.toUpperCase(),
-            style: context.textStyles.titleFont.copyWith(color: context.colors.accent2, height: textHeight),
+    return Padding(
+      padding: EdgeInsets.only(bottom: context.insets.md),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Text(
+              t.toUpperCase(),
+              style: context.textStyles.titleFont.copyWith(color: context.colors.accent2, height: textHeight),
+            ),
           ),
-        ),
-        Expanded(
-          child: Text(
-            c,
-            style: context.textStyles.body.copyWith(color: context.colors.bg, height: textHeight),
+          Expanded(
+            child: Text(
+              c,
+              style: context.textStyles.body.copyWith(color: context.colors.bg, height: textHeight),
+            ),
           ),
-        ),
-        Gap(context.insets.md),
-      ],
+        ],
+      ),
     );
   }
 }
