@@ -30,21 +30,10 @@ class AppStyle {
   /// eg, -10% on very small phones, or +25% on larger touch devices.
   late final double scale;
 
-  /// Takes the screen size, and calculates an appropriate text/insets scale value.
+  /// Scale text down a little on smaller devices, and up slightly on larger ones
   double _calculateScale(Size size) {
     final diagonalPx = (size.shortestSide + size.longestSide) / 2;
-    Map<int, double> breakPts = {
-      1100: 1.4,
-      800: 1.25,
-      600: 1,
-      400: .95,
-      300: .85,
-      0: .8,
-    };
-    for (var bp in breakPts.keys) {
-      if (bp <= diagonalPx) return breakPts[bp]!;
-    }
-    return 1;
+    return .85 + diagonalPx / 3000;
   }
 }
 

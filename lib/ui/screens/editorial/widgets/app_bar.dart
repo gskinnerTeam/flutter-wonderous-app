@@ -1,17 +1,16 @@
 part of '../editorial_screen.dart';
 
-// TODO: This needs to take the actual thumbnail for this widget
-class _EditorialAppBar extends StatelessWidget {
-  _EditorialAppBar(
-    this.wonderType, {
-    Key? key,
-    required this.imageId,
-    required this.sectionIndex,
-  }) : super(key: key);
-  final String imageId;
+class _AppBar extends StatelessWidget {
+  const _AppBar(this.wonderType, {Key? key, required this.sectionIndex, required this.scrollPos}) : super(key: key);
   final WonderType wonderType;
   final ValueNotifier<int> sectionIndex;
-  final _titleKey = UniqueKey();
+  final ValueNotifier<double> scrollPos;
+  final _titleValues = const [
+    'Facts and History',
+    'Construction',
+    'Location Info',
+  ];
+
   @override
   Widget build(BuildContext context) {
     ArchType? archType;
@@ -38,15 +37,16 @@ class _EditorialAppBar extends StatelessWidget {
               children: [
                 ClipPath(
                   // Switch arch type to Rect if we are showing the title bar
-                  clipper: ArchClipper(showOverlay ? ArchType.rect : archType!),
-                  // TODO: Make helpers for photo1 etc
-                  child:
-                      Image.asset('assets/images/${wonders.getAssetFolder(wonderType)}/photo-1.png', fit: BoxFit.cover),
+                  clipper: showOverlay ? null : ArchClipper(archType!),
+                  child: ScalingListItem(
+                    scrollPos: scrollPos,
+                    child: Image.asset(wonderType.photo1, fit: BoxFit.cover),
+                  ),
                 ),
                 if (showOverlay) ...[
                   /// Colored overlay
                   ClipRect(
-                    child: ColoredBox(color: context.colors.wonderBg(wonderType).withOpacity(.8))
+                    child: ColoredBox(color: wonderType.bgColor.withOpacity(.8))
                         .gTweener
                         .move(from: Offset(0, -200))
                         .withDelay(.0.seconds),
@@ -58,18 +58,15 @@ class _EditorialAppBar extends StatelessWidget {
 
           /// Titlebar
           BottomCenter(
-            key: _titleKey,
             child: ClipRect(
               child: ValueListenableBuilder<int>(
                 valueListenable: sectionIndex,
-                builder: (_, value, __) => _CircularTitleBar(
-                  index: sectionIndex.value,
-                  titles: const [
-                    'Facts and History',
-                    'Location Info',
-                    'Construction',
-                  ],
-                ),
+                builder: (_, value, __) {
+                  return _CircularTitleBar(
+                    index: value,
+                    titles: _titleValues,
+                  );
+                },
               ),
             ),
           ),

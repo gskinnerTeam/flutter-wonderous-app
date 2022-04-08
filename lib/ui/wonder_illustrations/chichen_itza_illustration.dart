@@ -1,4 +1,5 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/ui/common/fade_color_transition.dart';
 import 'package:wonders/ui/wonder_illustrations/common/paint_textures.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_hero.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_builder.dart';
@@ -10,20 +11,16 @@ class ChichenItzaIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String assetPath = WonderType.chichenItza.assetPath;
     return WonderIllustrationBuilder(
         config: config,
 
         /// BG
         bgBuilder: (_, anim) {
           return [
-            AnimatedBuilder(
-              animation: anim,
-              builder: (context, _) => Container(color: Color(0xfffbe7cc).withOpacity(anim.value)),
-            ),
-            AnimatedBuilder(
-              animation: anim,
-              builder: (context, _) =>
-                  Positioned.fill(child: RollerPaint1(Color(0xFFDC762A).withOpacity(anim.value), scale: 1)),
+            FadeColorTransition(animation: anim, color: WonderType.chichenItza.fgColor),
+            Positioned.fill(
+              child: IllustrationTexture(ImagePaths.roller2, color: Colors.white, opacity: anim, flipY: true),
             ),
             Center(
               child: FractionalTranslation(
@@ -33,10 +30,7 @@ class ChichenItzaIllustration extends StatelessWidget {
                   'chichen-sun',
                   child: FractionalTranslation(
                     translation: Offset(0, -.2 * anim.value),
-                    child: Image.asset(
-                      'assets/images/chichen_itza/sun.png',
-                      opacity: anim,
-                    ),
+                    child: Image.asset('assets/images/chichen_itza/sun.png', opacity: anim),
                   ),
                 ),
               ),
@@ -47,14 +41,11 @@ class ChichenItzaIllustration extends StatelessWidget {
         /// MG
         mgBuilder: (_, anim) => [
               Center(
-                child: WonderHero(
-                  config,
-                  'chichen-mg',
-                  child: Transform.scale(
-                    scale: config.scale,
-                    child: Image.asset('assets/images/chichen_itza/pyramid.png', opacity: anim),
-                  ),
-                ),
+                child: WonderHero(config, 'chichen-mg',
+                    child: Transform.scale(
+                      scale: config.scale,
+                      child: Image.asset('$assetPath/pyramid.png', opacity: anim),
+                    )),
               ),
             ],
 
@@ -63,25 +54,27 @@ class ChichenItzaIllustration extends StatelessWidget {
           final curvedAnim = Curves.easeOut.transform(anim.value);
           return [
             Transform.translate(
-              offset: Offset(0, 60 + (1 - curvedAnim) * 50),
-              child: Stack(children: [
-                BottomLeft(
-                  child: FractionalTranslation(
-                    translation: Offset(-.3, -.3),
-                    child: Image.asset('assets/images/chichen_itza/agave-left.png', opacity: anim),
-                  ),
-                ),
-                BottomRight(
-                  child: FractionalTranslation(
-                    translation: Offset(.35, -.35),
-                    child: Transform.scale(
-                      scale: 1.1,
-                      child: Image.asset('assets/images/chichen_itza/agave-right.png', opacity: anim),
+                offset: Offset(0, 60 + (1 - curvedAnim) * 50),
+                child: FadeTransition(
+                  opacity: anim,
+                  child: Stack(children: [
+                    BottomLeft(
+                      child: FractionalTranslation(
+                        translation: Offset(-.3, -.3),
+                        child: Image.asset('$assetPath/agave-left.png', opacity: anim),
+                      ),
                     ),
-                  ),
-                ),
-              ]),
-            )
+                    BottomRight(
+                      child: FractionalTranslation(
+                        translation: Offset(.35, -.35),
+                        child: Transform.scale(
+                          scale: 1.1,
+                          child: Image.asset('$assetPath/agave-right.png', opacity: anim),
+                        ),
+                      ),
+                    ),
+                  ]),
+                ))
           ];
         });
   }

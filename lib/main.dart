@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/unsplash_controller.dart';
+import 'package:wonders/logic/unsplash_logic.dart';
 import 'package:wonders/logic/unsplash_service.dart';
-import 'package:wonders/logic/wonders_controller.dart';
+import 'package:wonders/logic/wonders_logic.dart';
 
 void main() {
   registerSingletons(useMocks: true);
@@ -23,14 +23,14 @@ class WondersApp extends StatelessWidget {
 /// Create singletons (controllers and services) that can be shared across the app.
 void registerSingletons({required bool useMocks}) {
   // Top level app controller
-  GetIt.I.registerLazySingleton<AppController>(() => AppController());
+  GetIt.I.registerLazySingleton<AppLogic>(() => AppLogic());
   // Settings
-  GetIt.I.registerLazySingleton<SettingsController>(() => SettingsController());
+  GetIt.I.registerLazySingleton<SettingsLogic>(() => SettingsLogic());
   // Unsplash
-  GetIt.I.registerLazySingleton<UnsplashController>(() => UnsplashController());
+  GetIt.I.registerLazySingleton<UnsplashLogic>(() => UnsplashLogic());
   GetIt.I.registerLazySingleton<UnsplashService>(() => UnsplashService());
   // Wonders
-  GetIt.I.registerLazySingleton<WondersController>(() => WondersController());
+  GetIt.I.registerLazySingleton<WondersLogic>(() => WondersLogic());
   // Testing mocks
   if (useMocks) {
     //GetIt.I.pushNewScope();
@@ -39,7 +39,7 @@ void registerSingletons({required bool useMocks}) {
 
 /// Add syntax sugar for quickly accessing the main controllers in the app
 /// We deliberately do not create shortcuts for services, to discourage their use directly in the ui layer.
-AppController get app => GetIt.I.get<AppController>();
-WondersController get wonders => GetIt.I.get<WondersController>();
-SettingsController get settings => GetIt.I.get<SettingsController>();
-UnsplashController get unsplash => GetIt.I.get<UnsplashController>();
+AppLogic get app => GetIt.I.get<AppLogic>();
+WondersLogic get wonders => GetIt.I.get<WondersLogic>();
+SettingsLogic get settings => GetIt.I.get<SettingsLogic>();
+UnsplashLogic get unsplash => GetIt.I.get<UnsplashLogic>();

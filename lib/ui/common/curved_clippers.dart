@@ -1,10 +1,6 @@
 import 'package:wonders/common_libs.dart';
 
-enum ArchType {
-  spade,
-  pyramid,
-  rect,
-}
+enum ArchType { spade, pyramid }
 
 class ArchClipper extends CustomClipper<Path> {
   ArchClipper(this.type);
@@ -24,16 +20,7 @@ class ArchClipper extends CustomClipper<Path> {
   }
 
   @override
-  bool shouldReclip(covariant ArchClipper oldClipper) => oldClipper.type != type;
-
-  // List<ArchPoint> lerpPoints(List<ArchPoint> pts1, List<ArchPoint> pts2, double d) {
-  //   assert(pts1.length == pts2.length, 'pts1 and pts2 should have the same number of items.');
-  //   List<ArchPoint> result = [];
-  //   for (var i = 0; i < pts1.length; i++) {
-  //     result.add(ArchPoint.lerp(pts1[i], pts2[i], d));
-  //   }
-  //   return result;
-  // }
+  bool shouldReclip(covariant ArchClipper oldClipper) => true || oldClipper.type != type;
 }
 
 class ArchPoint {
@@ -51,6 +38,9 @@ class ArchPoint {
   }
 }
 
+/// TODO: Refactor this to just allow each type to work on path directly
+/// This make it easier to match the shapes we need, but won't really be tweenable from shape to shape
+/// Certain ones can still shared the same 5-point structure / draw method
 List<ArchPoint> _getArchPts(Size size, ArchType type) {
   double distanceFromTop = 100;
   switch (type) {
@@ -62,6 +52,7 @@ List<ArchPoint> _getArchPts(Size size, ArchType type) {
         ArchPoint(Offset(size.width, distanceFromTop)),
         ArchPoint(Offset(size.width, size.height)),
       ];
+
     case ArchType.spade:
       return [
         ArchPoint(Offset(0, size.height)),
@@ -70,13 +61,40 @@ List<ArchPoint> _getArchPts(Size size, ArchType type) {
         ArchPoint(Offset(size.width, distanceFromTop), Offset(size.width, distanceFromTop * .66)),
         ArchPoint(Offset(size.width, size.height)),
       ];
-    case ArchType.rect:
-      return [
-        ArchPoint(Offset(0, size.height)),
-        ArchPoint(Offset(0, 0)),
-        ArchPoint(Offset(size.width / 2, 0)),
-        ArchPoint(Offset(size.width, 0)),
-        ArchPoint(Offset(size.width, size.height)),
-      ];
   }
+}
+
+class CurvedTopClipper extends CustomClipper<Path> {
+  CurvedTopClipper({this.flip = false});
+  final bool flip;
+
+  @override
+  Path getClip(Size size) {
+    double radius = size.width / 2;
+    var path = Path();
+    if (flip) {
+      // path.addOval(Rect.fromCircle(center: Offset.zero, radius: 40));
+      path.lineTo(0, size.height - radius);
+      path.arcToPoint(
+        Offset(size.width, size.height - radius),
+        radius: Radius.circular(size.width / 2),
+        clockwise: false,
+      );
+      path.lineTo(size.width, 0);
+      path.lineTo(0, 0);
+    } else {
+      path.lineTo(0, 0);
+      path.lineTo(0, radius);
+      path.arcToPoint(
+        Offset(size.width, radius),
+        radius: Radius.circular(radius / 2),
+      );
+      path.lineTo(size.width, size.height);
+      path.lineTo(0, size.height);
+    }
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CurvedTopClipper oldClipper) => true || oldClipper.flip != flip;
 }

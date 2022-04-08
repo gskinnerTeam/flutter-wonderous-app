@@ -20,10 +20,14 @@ class WonderData extends Equatable {
     this.imageIds = const [],
     required this.unsplashCollectionId,
     required this.quote1,
+    required this.quote2,
     this.facts = const [],
-    required this.historyInfo,
-    required this.constructionInfo,
+    required this.historyInfo1,
+    required this.historyInfo2,
+    required this.constructionInfo1,
+    required this.constructionInfo2,
     required this.locationInfo,
+    required this.videoId,
   });
 
   @JsonKey(defaultValue: WonderType.chichenItza)
@@ -31,10 +35,13 @@ class WonderData extends Equatable {
   final String title;
   final String subTitle;
   final String regionTitle;
-  final String historyInfo;
-  final String constructionInfo;
+  final String historyInfo1;
+  final String historyInfo2;
+  final String constructionInfo1;
+  final String constructionInfo2;
   final String locationInfo;
   final String quote1;
+  final String quote2;
   final String unsplashCollectionId;
   final List<String> imageIds;
   final List<String> facts;
@@ -42,6 +49,7 @@ class WonderData extends Equatable {
   final int endYr;
   final double lat;
   final double lng;
+  final String videoId;
 
   String get titleWithBreaks {
     final words = title.split(' ');
@@ -55,5 +63,5 @@ class WonderData extends Equatable {
   Map<String, dynamic> toJson() => _$WonderDataToJson(this);
 
   @override
-  List<Object?> get props => [type, title, historyInfo, imageIds, facts];
+  List<Object?> get props => [type, title, historyInfo1, imageIds, facts];
 }
