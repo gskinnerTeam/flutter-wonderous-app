@@ -5,9 +5,9 @@ class ImagePaths {
   static String root = 'assets/images';
 
   static String cloud = '$root/cloud-white.png';
-  static String speckles = '$root/speckles-white.png';
-  static String roller1 = '$root/roller-1-white.png';
-  static String roller2 = '$root/roller-2-white.png';
+  static String speckles = '$root/texture/speckles-white.png';
+  static String roller1 = '$root/texture/roller-1-white.png';
+  static String roller2 = '$root/texture/roller-2-white.png';
 }
 
 /// Place Svg paths in their own class, to hint to the views to use an SvgPicture to render

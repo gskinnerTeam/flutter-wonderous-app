@@ -74,6 +74,7 @@ flutter:
     - assets/images/chichen_itza/
     - assets/images/colosseum/
     - assets/images/taj_mahal/
+    - assets/images/texture/
 
   fonts:
    - family: Tenor
