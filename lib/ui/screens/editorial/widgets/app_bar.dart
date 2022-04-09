@@ -57,19 +57,15 @@ class _AppBar extends StatelessWidget {
           ),
 
           /// Titlebar
-          BottomCenter(
-            child: ClipRect(
-              child: ValueListenableBuilder<int>(
-                valueListenable: sectionIndex,
-                builder: (_, value, __) {
-                  return _CircularTitleBar(
-                    index: value,
-                    titles: _titleValues,
-                  );
-                },
-              ),
-            ),
-          ),
+          BottomCenter(child: ValueListenableBuilder<int>(
+            valueListenable: sectionIndex,
+            builder: (_, value, __) {
+              return _CircularTitleBar(
+                index: value,
+                titles: _titleValues,
+              );
+            },
+          ),),
         ],
       );
     });
