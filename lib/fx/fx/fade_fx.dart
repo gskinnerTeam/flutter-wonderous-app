@@ -1,0 +1,22 @@
+import 'package:flutter/widgets.dart';
+
+import '../fx.dart';
+import 'abstract_fx.dart';
+
+@immutable
+class FadeFX extends AbstractFX<double> {
+  const FadeFX({delay, duration, curve, begin, end}) :
+    super(delay:delay, duration:duration, curve:curve, begin:begin ?? 0.0, end:end ?? 1.0);
+
+  @override
+  Widget build(BuildContext context, Widget child, AnimationController controller, FXEntry entry) {
+    return FadeTransition(
+      opacity: buildAnimation(controller, entry),
+      child: child,
+    );
+  }
+}
+extension FadeFXExtensions<T> on FXManager<T> {
+  T fade({Duration? delay, Duration? duration, Curve? curve, double? begin, double? end}) =>
+    addFX(FadeFX(delay: delay, duration: duration, curve: curve, begin:begin, end: end));
+}
