@@ -75,6 +75,7 @@ flutter:
     - assets/images/colosseum/
     - assets/images/taj_mahal/
     - assets/images/texture/
+    - assets/images/collectibles/
 
   fonts:
    - family: Tenor
