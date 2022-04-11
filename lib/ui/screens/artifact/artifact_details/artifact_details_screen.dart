@@ -5,6 +5,8 @@ import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:wonders/ui/screens/artifact/artifact_details/artifact_data_element.dart';
 
+/// View that shows parsed artifact data to the user, including image, title, culture, and many other things.
+/// View contains no links and must be closed ia close button to return the user to the rest of the app.
 class ArtifactDetailsScreen extends StatefulWidget {
   final String id;
   const ArtifactDetailsScreen({Key? key, required this.id}) : super(key: key);
@@ -47,7 +49,7 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
               : CachedNetworkImage(
                   imageUrl: _artifact!.image,
                   fit: BoxFit.fitHeight,
-                  placeholder: (BuildContext context, String url) => const CircularProgressIndicator()),
+                  placeholder: (BuildContext context, String url) => AppLoader()),
         ),
 
         // Close button

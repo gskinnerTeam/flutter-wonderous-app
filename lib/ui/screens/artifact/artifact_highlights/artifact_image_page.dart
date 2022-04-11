@@ -3,6 +3,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'dart:math' as math;
 
+/// Artifact Highlights Screen PageView carousel element.
 class ArtifactImagePage extends StatelessWidget {
   const ArtifactImagePage(
       {Key? key,

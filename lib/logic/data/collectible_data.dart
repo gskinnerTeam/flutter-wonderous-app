@@ -20,7 +20,7 @@ List<CollectibleData> collectibles = [
   CollectibleData(
     id: 'foo',
     artifact: ArtifactData(
-      objectId: -1,
+      objectId: '-1',
       title: 'Double Whistle',
       image: 'https://collectionapi.metmuseum.org/api/collection/v1/iiif/503940/1024225/main-image',
       classification: 'lorem ipsum',

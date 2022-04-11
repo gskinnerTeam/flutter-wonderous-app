@@ -1,9 +1,10 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 
+/// Autopopulating textfield used for searching for Artifacts by name.
 class ArtifactSearchTextField extends StatelessWidget {
-  ArtifactSearchTextField({Key? key, required this.onUpdate}) : super(key: key);
-  final void Function(String) onUpdate;
+  ArtifactSearchTextField({Key? key, required this.handleSearchSubmitted}) : super(key: key);
+  final void Function(String) handleSearchSubmitted;
 
   final TextEditingController _textController = TextEditingController();
 
@@ -64,7 +65,7 @@ class ArtifactSearchTextField extends StatelessWidget {
         return results;
       },
       displayStringForOption: (String data) => data,
-      onSelected: onUpdate,
+      onSelected: handleSearchSubmitted,
       /* TODO: Uncomment if we want to style the dropdown.
       optionsViewBuilder: (BuildContext context, AutocompleteOnSelected<String> onSelected, Iterable<String> results) {
         return ListView(
@@ -95,7 +96,7 @@ class ArtifactSearchTextField extends StatelessWidget {
               fillColor: colorSearchBox,
               iconColor: colorCaption,
               labelStyle: TextStyle(color: colorCaption),
-              hintStyle: TextStyle(color: colorCaption.withAlpha(125)),
+              hintStyle: TextStyle(color: colorCaption.withOpacity(0.5)),
               prefixStyle: TextStyle(color: colorCaption),
               focusColor: colorCaption,
               focusedBorder: OutlineInputBorder(

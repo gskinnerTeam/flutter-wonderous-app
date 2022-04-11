@@ -4,6 +4,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
 
+/// Staggered Masonry styled grid for displaying two columns of different aspect-ratio images.
 class ArtifactSearchResultsGrid extends StatelessWidget {
   const ArtifactSearchResultsGrid({Key? key, required this.searchResults, required this.onClick}) : super(key: key);
   final void Function(ArtifactData) onClick;

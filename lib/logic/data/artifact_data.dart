@@ -19,7 +19,7 @@ class ArtifactData {
     required this.culture,
     required this.objectType,
   });
-  final int objectId; // Artifact ID, used to identify through MET server calls.
+  final String objectId; // Artifact ID, used to identify through MET server calls.
   final String title; // Artifact title / name
   final String image; // Artifact primary image URL (can have multiple)
   final int year; // Base year number. If negative, it's B.C. If positive, it's A.D.

@@ -1,10 +1,11 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/string_utils.dart';
 
+/// Row containing data label and information, used multiple times in the Artifact Details Screen. Did this to save a ton of lines of code.
 class ArtifactDataElement extends StatelessWidget {
-  const ArtifactDataElement({Key? key, this.title, this.content}) : super(key: key);
-  final String? title;
-  final String? content;
+  const ArtifactDataElement({Key? key, required this.title, required this.content}) : super(key: key);
+  final String title;
+  final String content;
 
   final double textHeight = 1.2;
 
@@ -12,8 +13,8 @@ class ArtifactDataElement extends StatelessWidget {
   Widget build(BuildContext context) {
     // Note: Flutter's syntax correction does not believe StringUtils.isEmpty is a null check,
     // so this is to remove the error that a String? cannot be assigned to a String.
-    String t = StringUtils.isEmpty(title) ? '---' : title ?? '---';
-    String c = StringUtils.isEmpty(content) ? '---' : content ?? '---';
+    String t = StringUtils.isEmpty(title) ? '---' : title;
+    String c = StringUtils.isEmpty(content) ? '---' : content;
 
     return Padding(
       padding: EdgeInsets.only(bottom: context.insets.md),

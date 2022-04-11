@@ -5,6 +5,7 @@ import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:wonders/ui/screens/artifact/artifact_highlights/artifact_blurred_bg.dart';
 import 'package:wonders/ui/screens/artifact/artifact_highlights/artifact_image_page.dart';
 
+/// Artifact highlight preview screen. Uses a pre-baked list of artifact IDs to show a carousel list of sample artifacts before user can search for them manually.
 class ArtifactHighlightsScreen extends StatefulWidget {
   final WonderType type;
   const ArtifactHighlightsScreen({Key? key, required this.type}) : super(key: key);
@@ -56,7 +57,7 @@ class _ArtifactScreenState extends State<ArtifactHighlightsScreen> {
   }
 
   void _handleArtifactTap(int index) =>
-      context.push(ScreenPaths.artifact(_loadedArtifacts[index % _loadedArtifacts.length].objectId.toString()));
+      context.push(ScreenPaths.artifact(_loadedArtifacts[index % _loadedArtifacts.length].objectId));
 
   void _handleSearchButtonTap() => context.push(ScreenPaths.search(widget.type));
 

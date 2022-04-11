@@ -4,13 +4,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 
+/// Blurry image background for the Artifact Highlights view. Contains horizontal and vertical gradients that stack overtop the blended image.
 class ArtifactBlurredBg extends StatelessWidget {
   const ArtifactBlurredBg({Key? key, required this.url}) : super(key: key);
   final String url;
 
   @override
   Widget build(BuildContext context) {
-    Color gradientColor = context.colors.greyStrong.withAlpha(155);
+    Color gradientColor = context.colors.greyStrong.withOpacity(0.6);
 
     if (url.isEmpty) {
       return Container(

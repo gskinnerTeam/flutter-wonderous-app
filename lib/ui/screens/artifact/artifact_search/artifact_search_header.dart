@@ -1,5 +1,6 @@
 import 'package:wonders/common_libs.dart';
 
+/// Header container for the Artifact Search view (can be used on other views as they appear). Contains close button, current Wonder type, and screen title.
 class ArtifactSearchHeader extends StatelessWidget {
   const ArtifactSearchHeader(this.type, this.title, {Key? key}) : super(key: key);
   final WonderType type;

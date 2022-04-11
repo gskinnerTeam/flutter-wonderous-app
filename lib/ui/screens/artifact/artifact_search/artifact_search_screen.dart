@@ -5,8 +5,8 @@ import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_text
 import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_results_grid.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_header.dart';
 
-/// PageView sandwiched between Foreground and Background layers
-/// arranged in a parallax style
+/// User can use this screen to search the MET server for an artifact by name or timeline. Artifacts results will
+/// appear as images, which the user can click on to being up the details view for more information.
 class ArtifactSearchScreen extends StatefulWidget with GetItStatefulWidgetMixin {
   ArtifactSearchScreen({Key? key, required this.type}) : super(key: key);
   final WonderType type;
@@ -20,7 +20,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
   bool _isLoading = false;
   bool _isEmpty = false;
 
-  void searchForStuff(String query) async {
+  void _handleSearchSubmitted(String query) async {
     if (_isLoading) {
       return;
     }
@@ -43,7 +43,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
 
   void onResultClick(ArtifactData artifact) {
     // User clicked image. Open Artifact Details view
-    context.push(ScreenPaths.artifact(artifact.objectId.toString()));
+    context.push(ScreenPaths.artifact(artifact.objectId));
   }
 
   @override
@@ -82,7 +82,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // Search box
-                        ArtifactSearchTextField(onUpdate: searchForStuff),
+                        ArtifactSearchTextField(handleSearchSubmitted: _handleSearchSubmitted),
 
                         Gap(context.insets.sm),
 

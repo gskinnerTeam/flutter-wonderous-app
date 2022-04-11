@@ -7,7 +7,7 @@ part of 'artifact_data.dart';
 // **************************************************************************
 
 ArtifactData _$ArtifactDataFromJson(Map<String, dynamic> json) => ArtifactData(
-      objectId: json['objectId'] as int,
+      objectId: json['objectId'] as String,
       title: json['title'] as String,
       image: json['image'] as String,
       year: json['year'] as int,

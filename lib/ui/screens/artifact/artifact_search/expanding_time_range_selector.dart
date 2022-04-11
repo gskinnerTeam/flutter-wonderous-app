@@ -1,6 +1,7 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/cards/glass_card.dart';
 
+// Expandable timerange selector component that further refines Artifact Search based on date range.
 class ExpandingTimeRangeSelector extends StatefulWidget {
   const ExpandingTimeRangeSelector({
     Key? key,
