@@ -114,7 +114,7 @@ class SearchService {
 
       /// TODO: We should be able to use ArtifactData.fromJson here instead with some tweaks
       data = ArtifactData(
-        objectId: content['objectID'],
+        objectId: content['objectID'].toString(),
         title: content['title'] ?? '',
         image: content['primaryImage'] ?? '',
         year: year,
