@@ -59,7 +59,7 @@ class ChichenItzaIllustration extends StatelessWidget {
           final curvedAnim = Curves.easeOut.transform(anim.value);
           return [
             Transform.translate(
-                offset: Offset(0, 60 + (1 - curvedAnim) * 50),
+                offset: Offset(0, (1 - curvedAnim) * 100),
                 child: FadeTransition(
                   opacity: anim,
                   child: Stack(children: [

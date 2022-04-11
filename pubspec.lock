@@ -417,7 +417,7 @@ packages:
       name: go_router
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.6"
+    version: "3.0.7"
   graphs:
     dependency: transitive
     description:
@@ -1136,7 +1136,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.5.0"
+    version: "2.5.1"
   window_interface:
     dependency: "direct main"
     description:

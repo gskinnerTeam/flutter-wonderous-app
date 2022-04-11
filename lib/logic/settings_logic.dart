@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/persistent_logic.dart';
+import 'package:wonders/logic/common/prefs_file_mixin.dart';
 
-class SettingsLogic extends PersistentLogic {
+class SettingsLogic with SaveLoadMixin {
   @override
   String get fileName => 'settings.dat';
 

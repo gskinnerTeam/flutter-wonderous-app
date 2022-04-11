@@ -18,19 +18,11 @@ class _CircularTitleBar extends StatelessWidget {
           // Bg
           BottomCenter(child: Container(height: barSize - barTopPadding, color: context.colors.bg)),
 
-          /// Spinning Circle, centered on the bar, and clipped so the bottom is not visible
-          Center(
-            child: ClipRect(
-              child: UnconstrainedBox(
-                child: Transform.translate(
-                  offset: Offset(0, (circleSize - barSize) / 2),
-                  child: SizedBox(
-                    width: circleSize,
-                    height: circleSize,
-                    child: _AnimatedCircleWithText(titles: titles, index: index),
-                  ),
-                ),
-              ),
+          ClipRect(
+            child: OverflowBox(
+              alignment: Alignment.topCenter,
+              maxHeight: circleSize,
+              child: _AnimatedCircleWithText(titles: titles, index: index),
             ),
           ),
         ],

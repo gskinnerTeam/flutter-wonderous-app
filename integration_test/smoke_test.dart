@@ -9,7 +9,7 @@ void main() async {
   testWidgets('Smoke test', (WidgetTester tester) async {
     registerSingletons(useMocks: true);
     await tester.pumpWidget(WondersApp()); // Create main app
-    app.bootstrap();
+    appLogic.bootstrap();
     await tester.pump(Duration(seconds: 2)); // Render another frame in 2s
     await tester.pump(Duration(seconds: 2)); // Render another frame in 2s
     await tester.pump(Duration(seconds: 2)); // Render another frame in 2s

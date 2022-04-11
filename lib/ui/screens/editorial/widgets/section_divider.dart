@@ -76,7 +76,11 @@ class _SectionDividerState extends State<_SectionDivider> with SingleTickerProvi
                 duration: _tweenDuration,
                 curve: Curves.easeOutBack,
                 turns: value ? 0 : .5,
-                child: SizedBox(height: 32, width: 32, child: SvgPicture.asset(SvgPaths.compassFull)),
+                child: SizedBox(
+                  height: 32,
+                  width: 32,
+                  child: SvgPicture.asset(SvgPaths.compassFull),
+                ),
               ),
               Expanded(
                 child: CenterLeft(

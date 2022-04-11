@@ -24,7 +24,7 @@ class ScreenPaths {
 
 String? _handleRedirect(GoRouterState state) {
   // Prevent anyone from navigating away from `/` if app is starting up.
-  if (!app.isBootstrapComplete && state.location != ScreenPaths.splash) {
+  if (!appLogic.isBootstrapComplete && state.location != ScreenPaths.splash) {
     return ScreenPaths.splash;
   }
   debugPrint('Navigate to: ${state.location}');

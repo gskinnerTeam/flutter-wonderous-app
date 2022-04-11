@@ -1,7 +1,7 @@
 name: wonders
 description: Explore the famous wonders of the world.
 publish_to: 'none'
-version: 0.0.4+2
+version: 0.0.6
 
 environment:
   sdk: ">=2.16.1 <3.0.0"
@@ -80,6 +80,7 @@ flutter:
     - assets/images/colosseum/
     - assets/images/taj_mahal/
     - assets/images/texture/
+    - assets/images/collectibles/
 
   fonts:
    - family: Tenor

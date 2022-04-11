@@ -8,7 +8,7 @@ import 'package:wonders/logic/wonders_logic.dart';
 void main() {
   registerSingletons(useMocks: true);
   runApp(WondersApp());
-  app.bootstrap();
+  appLogic.bootstrap();
 }
 
 class WondersApp extends StatelessWidget {
@@ -44,9 +44,8 @@ void registerSingletons({required bool useMocks}) {
 
 /// Add syntax sugar for quickly accessing the main controllers in the app
 /// We deliberately do not create shortcuts for services, to discourage their use directly in the ui layer.
-
-AppLogic get app => GetIt.I.get<AppLogic>();
-WondersLogic get wonders => GetIt.I.get<WondersLogic>();
+AppLogic get appLogic => GetIt.I.get<AppLogic>();
+WondersLogic get wondersLogic => GetIt.I.get<WondersLogic>();
+SettingsLogic get settingsLogic => GetIt.I.get<SettingsLogic>();
+UnsplashLogic get unsplashLogic => GetIt.I.get<UnsplashLogic>();
 SearchLogic get search => GetIt.I.get<SearchLogic>();
-SettingsLogic get settings => GetIt.I.get<SettingsLogic>();
-UnsplashLogic get unsplash => GetIt.I.get<UnsplashLogic>();

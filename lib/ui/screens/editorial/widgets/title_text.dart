@@ -15,10 +15,10 @@ class _TitleText extends StatelessWidget {
               separatorBuilder: () => Gap(context.insets.sm),
               children: [
                 Expanded(
-                    child: Divider(color: data.type.fgColor)
-                        .gTweener //TODO: Add some shortcut widgets for GTWeener? FadeIn(delay), SlideIn(), ScaleIn(),
-                        .scale(curve: Curves.easeOut)
-                        .withDelay(.5.seconds)),
+                  child: Divider(
+                    color: data.type.fgColor,
+                  ).gTweener.scale(curve: Curves.easeOut).withDelay(.5.seconds),
+                ),
                 Text(
                   data.subTitle.toUpperCase(),
                   style: context.textStyles.body,
@@ -31,11 +31,14 @@ class _TitleText extends StatelessWidget {
               ],
             ),
             Gap(context.insets.md),
-            Text(
-              data.title.toUpperCase(),
-              style: context.textStyles.h1,
-              textAlign: TextAlign.center,
-            ).gTweener.fade().withDuration(context.times.slow).withDelay(.3.seconds),
+            Hero(
+              tag: '${data.type}-title',
+              child: Text(
+                data.titleWithBreaks.toUpperCase(),
+                style: context.textStyles.h1,
+                textAlign: TextAlign.center,
+              ),
+            ),
             Gap(30),
             Gap(context.insets.md),
           ],

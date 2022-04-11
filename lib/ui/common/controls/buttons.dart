@@ -17,18 +17,20 @@ class AppBtn extends StatelessWidget {
     );
   }
 
-  static Widget tight(BuildContext context, {required Widget child, required VoidCallback? onPressed}) =>
-      OutlinedButton(
-          style: OutlinedButton.styleFrom(
-            //backgroundColor: context.colors.bg,
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-          ),
-          onPressed: onPressed,
-          child: child);
+  static Widget tight(BuildContext context, {required Widget child, required VoidCallback? onPressed}) => TextButton(
+      style: TextButton.styleFrom(
+        //backgroundColor: context.style.colors.bg,
+        minimumSize: Size.zero,
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
+      onPressed: onPressed,
+      child: child);
 
   static Widget wide(BuildContext context, {required Widget child, required VoidCallback? onPressed}) => OutlinedButton(
-      style: OutlinedButton.styleFrom(
-        //backgroundColor: context.colors.bg,
+      style: TextButton.styleFrom(
+        //backgroundColor: context.style.colors.bg,
+
         padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 12),
       ),
       onPressed: onPressed,

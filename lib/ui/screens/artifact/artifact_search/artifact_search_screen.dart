@@ -48,7 +48,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
 
   @override
   Widget build(BuildContext context) {
-    final data = wonders.getDataForType(widget.type);
+    final data = wondersLogic.getDataForType(widget.type);
 
     String resultsText = '';
     if (_isLoading) {

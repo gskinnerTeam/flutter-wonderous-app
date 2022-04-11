@@ -2,6 +2,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/wonders_logic.dart';
 import 'package:wonders/ui/common/controls/buttons.dart';
+import 'package:wonders/ui/common/lazy_indexed_stack.dart';
 import 'package:wonders/ui/screens/artifact/artifact_highlights/artifact_highlights_screen.dart';
 import 'package:wonders/ui/screens/editorial/editorial_screen.dart';
 import 'package:wonders/ui/screens/image_gallery/image_gallery.dart';
@@ -21,7 +22,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
   late final _tabController = TabController(
     length: 4,
     vsync: this,
-    initialIndex: AppLogic.enablePersistentTabs ? app.selectedWondersTab.value : 0,
+    initialIndex: AppLogic.enablePersistentTabs ? appLogic.selectedWondersTab.value : 0,
   )..addListener(_handleTabChanged);
   GTweenerController? _fade;
 
@@ -36,7 +37,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
   void _handleTabChanged() {
     _fade?.forward(from: 0);
     // Hoist the selected tab up to the app controller, so it will be remembered when we return to this view.
-    app.selectedWondersTab.value = _tabController.index;
+    appLogic.selectedWondersTab.value = _tabController.index;
     setState(() {});
   }
 
@@ -55,7 +56,8 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
       color: Colors.black,
       child: Stack(
         children: [
-          IndexedStack(
+          /// Fullscreen tab views
+          LazyIndexedStack(
             index: _tabController.index,
             children: [
               WonderEditorialScreen(wonder, onScroll: _handleDetailsScrolled),
@@ -65,7 +67,15 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
               Padding(padding: EdgeInsets.only(bottom: 48), child: TimelineScreen(type: widget.type)),
             ],
           ).gTweener.fade().withInit((t) => _fade = t),
-          TopRight(child: AppBtn(child: Text('Settings'), onPressed: _handleSettingsPressed)),
+
+          /// Settings btn
+          SafeArea(
+            child: TopRight(
+              child: AppBtn(child: Text('Settings'), onPressed: _handleSettingsPressed),
+            ),
+          ),
+
+          /// Tab menu
           BottomCenter(
             child: ValueListenableBuilder<bool>(
               valueListenable: _detailsHasScrolled,

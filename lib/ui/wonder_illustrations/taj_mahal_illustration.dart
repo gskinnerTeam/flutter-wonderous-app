@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/fade_color_transition.dart';
 import 'package:wonders/ui/wonder_illustrations/common/paint_textures.dart';

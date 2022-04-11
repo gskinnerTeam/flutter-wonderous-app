@@ -115,7 +115,7 @@ class _ImageGalleryState extends State<ImageGallery> {
               // Detect swipes in order to change index
               child: EightWaySwipeDetector(
                 onSwipe: _handleSwipe,
-                threshold: 10 + 100 * settings.swipeThreshold.value,
+                threshold: 10 + 100 * settingsLogic.swipeThreshold.value,
                 child: TweenAnimationBuilder<Offset>(
                   tween: Tween(begin: gridOffset, end: gridOffset),
                   duration: offsetTweenDuration,
@@ -141,7 +141,7 @@ class _ImageGalleryState extends State<ImageGallery> {
                           // use a key to force motion blurs to re-run when index changes
                           animationKey: ValueKey(_index),
                           blurStrength: 15,
-                          enabled: settings.enableMotionBlur.value && (selected || wasSelected),
+                          enabled: settingsLogic.enableMotionBlur.value && (selected || wasSelected),
                           dir: _lastSwipeDir,
                           // Make each img tappable, so user can easily jump between them
                           child: GestureDetector(

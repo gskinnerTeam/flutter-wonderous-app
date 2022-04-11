@@ -20,7 +20,7 @@ class ArchClipper extends CustomClipper<Path> {
   }
 
   @override
-  bool shouldReclip(covariant ArchClipper oldClipper) => true || oldClipper.type != type;
+  bool shouldReclip(covariant ArchClipper oldClipper) => oldClipper.type != type;
 }
 
 class ArchPoint {
@@ -96,5 +96,5 @@ class CurvedTopClipper extends CustomClipper<Path> {
   }
 
   @override
-  bool shouldReclip(CurvedTopClipper oldClipper) => true || oldClipper.flip != flip;
+  bool shouldReclip(CurvedTopClipper oldClipper) => oldClipper.flip != flip;
 }
