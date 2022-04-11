@@ -2,6 +2,7 @@ class AppInsets {
   AppInsets(this.scale);
   final double scale;
 
+  late final double xxs = 4 * scale;
   late final double xs = 8 * scale;
   late final double sm = 16 * scale;
   late final double md = 24 * scale;

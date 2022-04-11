@@ -32,7 +32,7 @@ class ArtifactDataElement extends StatelessWidget {
           Expanded(
             child: Text(
               c,
-              style: context.textStyles.body.copyWith(color: context.colors.bg, height: textHeight),
+              style: context.textStyles.body1.copyWith(color: context.colors.bg, height: textHeight),
             ),
           ),
         ],

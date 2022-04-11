@@ -27,7 +27,7 @@ class ArtifactSearchHeader extends StatelessWidget {
             // Window title
             Text(
               title.toUpperCase(),
-              style: context.textStyles.body.copyWith(color: context.colors.bg),
+              style: context.textStyles.body1.copyWith(color: context.colors.bg),
             ),
 
             Gap(context.insets.xs),

@@ -175,7 +175,7 @@ class _ArtifactScreenState extends State<ArtifactHighlightsScreen> {
                       // Time frame
                       Text(
                         _currentArtifact?.date ?? '---',
-                        style: context.textStyles.body.copyWith(color: context.colors.body),
+                        style: context.textStyles.body1.copyWith(color: context.colors.body),
                       ),
                       Gap(context.insets.lg),
                     ],
@@ -212,7 +212,7 @@ class _ArtifactScreenState extends State<ArtifactHighlightsScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text('BROWSE ALL ARTIFACTS',
-                                style: context.textStyles.body
+                                style: context.textStyles.body1
                                     .copyWith(color: context.colors.bg, fontSize: 12, height: 1.2)),
                             Padding(
                               padding: EdgeInsets.only(left: context.insets.xs),

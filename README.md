@@ -47,7 +47,7 @@ backgroundColor: context.colors.bg,
 // Times
 duration: context.times.fast
 // TextStyles
-style: context.textStyles.body
+style: context.textStyles.body1
 // etc...
 ```
 

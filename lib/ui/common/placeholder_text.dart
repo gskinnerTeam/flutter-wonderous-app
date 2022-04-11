@@ -12,10 +12,10 @@ class LoremPlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final text = lorem(paragraphs: paragraphs, words: words);
-    if (!dropCase) return Text(text, style: context.textStyles.body);
+    if (!dropCase) return Text(text, style: context.textStyles.body1);
     return DropCapText(
       text,
-      style: context.textStyles.body,
+      style: context.textStyles.body1,
       dropCapPadding: EdgeInsets.only(right: context.insets.xs, top: 10),
       dropCapStyle: context.textStyles.dropCase.copyWith(color: context.colors.accent1),
     );

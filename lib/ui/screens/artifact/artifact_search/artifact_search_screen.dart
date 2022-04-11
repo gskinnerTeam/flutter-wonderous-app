@@ -1,6 +1,6 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
-import 'package:wonders/ui/screens/artifact/artifact_search/expanding_time_range_selector.dart';
+import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/expanding_time_range_selector.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_text_field.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_results_grid.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_header.dart';
@@ -89,7 +89,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
                         // Results feedback
                         Text(
                           resultsText,
-                          style: context.textStyles.body.copyWith(color: context.colors.body),
+                          style: context.textStyles.body1.copyWith(color: context.colors.body),
                         ),
 
                         Gap(context.insets.sm),
@@ -110,9 +110,10 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
         // Timeline bar
         BottomCenter(
           child: ExpandingTimeRangeSelector(
+            wonderType: widget.type,
             location: data.title,
             startYr: 200,
-            endYr: 1400,
+            endYr: 1800,
             onChanged: (start, end) {},
           ),
         ),
