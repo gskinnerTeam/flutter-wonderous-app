@@ -107,7 +107,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
               builder: (_, value, __) => _BottomGradient(
                 currentWonder.type.bgColor,
                 onSwipeOrPress: _showDetailsPage,
-                opacity: .3 + value * .7,
+                opacity: .6 + value * .4,
               ),
             ),
           ),
@@ -136,10 +136,13 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
                         Gap(context.insets.md),
 
                         /// Title
-                        Text(
-                          currentWonder.titleWithBreaks.toUpperCase(),
-                          style: context.textStyles.h1.copyWith(height: 1),
-                          textAlign: TextAlign.center,
+                        Hero(
+                          tag: '${currentWonder.type}-title',
+                          child: Text(
+                            currentWonder.titleWithBreaks.toUpperCase(),
+                            style: context.textStyles.h1.copyWith(height: 1),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                       ]),
                     ),
@@ -185,18 +188,20 @@ class _AnimatedArrow extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: AnimatedContainer(
-        duration: context.times.fast,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(99),
-          border: Border.all(color: context.colors.text),
-        ),
-        padding: EdgeInsets.symmetric(vertical: 28, horizontal: 6),
-        child: GTweener(
-          [GFade(), GMove(from: Offset(0, -10), to: Offset(0, 10))],
-          duration: 2.seconds,
-          onInit: (c) => c.animation.repeat(),
-          child: Icon(Icons.arrow_downward, size: 24, color: context.colors.text),
+      child: RepaintBoundary(
+        child: AnimatedContainer(
+          duration: context.times.fast,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(99),
+            border: Border.all(color: context.colors.text),
+          ),
+          padding: EdgeInsets.symmetric(vertical: 28, horizontal: 6),
+          child: GTweener(
+            [GFade(), GMove(from: Offset(0, -10), to: Offset(0, 10))],
+            duration: 2.seconds,
+            onInit: (c) => c.animation.repeat(),
+            child: Icon(Icons.arrow_downward, size: 24, color: context.colors.text),
+          ),
         ),
       ),
     );

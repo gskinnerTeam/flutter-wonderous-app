@@ -31,11 +31,14 @@ class _TitleText extends StatelessWidget {
               ],
             ),
             Gap(context.insets.md),
-            Text(
-              data.title.toUpperCase(),
-              style: context.textStyles.h1,
-              textAlign: TextAlign.center,
-            ).gTweener.fade().withDuration(context.times.slow).withDelay(.3.seconds),
+            Hero(
+              tag: '${data.type}-title',
+              child: Text(
+                data.titleWithBreaks.toUpperCase(),
+                style: context.textStyles.h1,
+                textAlign: TextAlign.center,
+              ),
+            ),
             Gap(30),
             Gap(context.insets.md),
           ],
