@@ -55,10 +55,10 @@ class _ArtifactScreenState extends State<ArtifactHighlightsScreen> {
     });
   }
 
-  void handleArtifactTap(int index) =>
+  void _handleArtifactTap(int index) =>
       context.push(ScreenPaths.artifact(_loadedArtifacts[index % _loadedArtifacts.length].objectId.toString()));
 
-  void handleSearchButtonTap() => context.push(ScreenPaths.search(widget.type));
+  void _handleSearchButtonTap() => context.push(ScreenPaths.search(widget.type));
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +78,7 @@ class _ArtifactScreenState extends State<ArtifactHighlightsScreen> {
           index: index,
           currentPage: _currentPage,
           artifact: _loadedArtifacts[index % _loadedArtifacts.length],
-          onClick: handleArtifactTap,
+          onClick: _handleArtifactTap,
         );
       },
     );
@@ -199,7 +199,7 @@ class _ArtifactScreenState extends State<ArtifactHighlightsScreen> {
 
                   // Big ol' button
                   GestureDetector(
-                    onTap: handleSearchButtonTap,
+                    onTap: _handleSearchButtonTap,
                     child: Container(
                       decoration: BoxDecoration(
                         color: context.colors.greyStrong,

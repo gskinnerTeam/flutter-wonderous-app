@@ -84,6 +84,7 @@ class ArtifactSearchTextField extends StatelessWidget {
       fieldViewBuilder: (context, textController, focusNode, onFieldSubmitted) {
         // Physical text field, for styling and looking good.
         return TextField(
+          autofocus: true,
           controller: textController,
           onSubmitted: (query) => onFieldSubmitted(),
           focusNode: focusNode,

@@ -17,8 +17,7 @@ class ArtifactSearchHeader extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Close button
-            Align(
-              alignment: Alignment.centerRight,
+            CenterRight(
               child: CloseButton(color: context.colors.bg),
             ),
 
