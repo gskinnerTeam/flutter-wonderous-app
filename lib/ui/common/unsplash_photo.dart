@@ -14,7 +14,7 @@ class UnsplashPhoto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<UnsplashPhotoData?>(
-        future: unsplash.getInfo(id),
+        future: unsplashLogic.getInfo(id),
         builder: (_, snapshot) {
           if (snapshot.hasData == false) return Container(); // Loading...
           UnsplashPhotoData? data = snapshot.data;
@@ -49,8 +49,8 @@ class _UnsplashPhotoAttribution extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void handleUserNamePressed() => app.showWebView(context, data.photographerUrl);
-    void handleUnsplashPressed() => app.showWebView(context, UnsplashPhotoData.unsplashUrl);
+    void handleUserNamePressed() => appLogic.showWebView(context, data.photographerUrl);
+    void handleUnsplashPressed() => appLogic.showWebView(context, UnsplashPhotoData.unsplashUrl);
 
     final style = context.text.caption.copyWith(color: context.colors.text, height: 1);
     return Container(
