@@ -3,9 +3,22 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_bg.dart';
-import 'package:wonders/ui/screens/artifact/artifact_highlights/artifact_image_page.dart';
+import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_image.dart';
 
-/// Artifact highlight preview screen. Uses a pre-baked list of artifact IDs to show a carousel list of sample artifacts before user can search for them manually.
+//TODO AG - This view has some issues with responsiveness. Both tall and shor screens have some issues.
+// http://screens.gskinner.com/shawn/wonders_hgihUSOtxe.png (images are sitting too high, text is wrapping oddly)
+// http://screens.gskinner.com/shawn/wonders_WY3pDK6Xj4.png (images are sitting too low, text is clipped)
+// http://screens.gskinner.com/shawn/wonders_sW90cDEIAV.png (everything gets really huge when screen is wide)
+// This is most easily tested with macos/windows, but you can try an iPad in portrait mode as well for a wider screen.
+// Some Tips:
+//  - This view will be much easier to make responsive, if you just cap the width of the white circle at 400px or so.
+//    Let it center itself on wider screens, with grey on either side. Should look nice?
+//  - Try and get the selected page view so it is always the same size, like 200px or so, instead of scaling directly with screen width
+//    This way your images will always be the same size, and not intrude on text or get huge
+//  - Might want to put it all in a bottom-aligned column, so "highlights" title can sit above the PageView wherever it ends up.
+//    Like: [ Title, PageView, TextContent, PageIndicator, MainButton ] all in a column, with the Circle in a Stack underneath.
+//    Otherwise, the title gets very far away from the image on tall screens, or too close too it, on short ones. Neither looks good.
+//    http://screens.gskinner.com/shawn/wonders_huw5lnsvtT.png, http://screens.gskinner.com/shawn/wonders_wzrMJa9SoG.png
 class ArtifactCarouselScreen extends StatefulWidget {
   final WonderType type;
   const ArtifactCarouselScreen({Key? key, required this.type}) : super(key: key);
@@ -38,18 +51,18 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
 
     super.initState();
 
-    getHighlightedArtifacts();
+    _getHighlightedArtifacts();
   }
 
-  void getHighlightedArtifacts() async {
+  void _getHighlightedArtifacts() async {
     for (var id in _highlightedArtifactIds) {
       _loadedArtifacts.add(await searchLogic.getArtifactByID(id));
     }
 
-    changeArtifactIndex(0);
+    _changeArtifactIndex(0);
   }
 
-  void changeArtifactIndex(int index) {
+  void _changeArtifactIndex(int index) {
     //_controller.jumpToPage(index);
     setState(() {
       _currentArtifact = _loadedArtifacts[index % _highlightedArtifactIds.length];
@@ -57,7 +70,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   }
 
   void _handleArtifactTap(int index) =>
-      context.push(ScreenPaths.artifact(_loadedArtifacts[index % _loadedArtifacts.length].objectId));
+      context.push(ScreenPaths.artifact(_loadedArtifacts[index % _loadedArtifacts.length].objectId.toString()));
 
   void _handleSearchButtonTap() => context.push(ScreenPaths.search(widget.type));
 
@@ -71,11 +84,11 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
 
     final pageViewArtifacts = PageView.builder(
       controller: _controller,
-      onPageChanged: changeArtifactIndex,
+      onPageChanged: _changeArtifactIndex,
       itemCount: _highlightedArtifactIds.length,
       clipBehavior: Clip.none,
       itemBuilder: (context, index) {
-        return ArtifactImagePage(
+        return ArtifactCarouselImage(
           index: index,
           currentPage: _currentPage,
           artifact: _loadedArtifacts[index % _loadedArtifacts.length],
@@ -90,18 +103,9 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
         fit: StackFit.expand,
         children: [
           // Background Image
-          TopCenter(
-            child: Column(
-              children: [
-                Expanded(
-                  child: AnimatedSwitcher(
-                    child: ArtifactCarouselBg(
-                        key: ValueKey(_currentArtifact?.objectId), url: _currentArtifact?.image ?? ''),
-                    duration: Duration(milliseconds: 300),
-                  ),
-                ),
-              ],
-            ),
+          AnimatedSwitcher(
+            child: ArtifactCarouselBg(key: ValueKey(_currentArtifact?.objectId), url: _currentArtifact?.image ?? ''),
+            duration: Duration(milliseconds: 300),
           ),
 
           // Big circle - part of the background
@@ -135,12 +139,14 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
           ),
 
           // Header
-          TopCenter(
-            child: Padding(
-              padding: EdgeInsets.only(top: context.insets.md),
-              child: Text(
-                'HIGHLIGHTS',
-                style: context.textStyles.h3.copyWith(color: context.colors.bg, fontSize: 14),
+          SafeArea(
+            child: TopCenter(
+              child: Padding(
+                padding: EdgeInsets.only(top: context.insets.xxl),
+                child: Text(
+                  'HIGHLIGHTS',
+                  style: context.textStyles.h3.copyWith(color: context.colors.bg, fontSize: 14),
+                ),
               ),
             ),
           ),
@@ -153,39 +159,41 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // Wonder Name
-                      Text(
-                        (_currentArtifact?.culture ?? '---').toUpperCase(),
-                        style: context.textStyles.titleFont
-                            .copyWith(color: context.colors.accent1, fontSize: 14, height: 1.2),
-                      ),
-                      Gap(context.insets.md),
+                  IgnorePointer(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Wonder Name
+                        Text(
+                          (_currentArtifact?.culture ?? '---').toUpperCase(),
+                          style: context.textStyles.titleFont
+                              .copyWith(color: context.colors.accent1, fontSize: 14, height: 1.2),
+                        ),
+                        Gap(context.insets.md),
 
-                      // Artifact Title
-                      Text(
-                        _currentArtifact?.title ?? '---',
-                        style: context.textStyles.h2.copyWith(color: context.colors.greyStrong),
-                      ),
-                      Gap(context.insets.xs),
+                        // Artifact Title
+                        Text(
+                          _currentArtifact?.title ?? '---',
+                          style: context.textStyles.h2.copyWith(color: context.colors.greyStrong),
+                        ),
+                        Gap(context.insets.xs),
 
-                      // Time frame
-                      Text(
-                        _currentArtifact?.date ?? '---',
-                        style: context.textStyles.body1.copyWith(color: context.colors.body),
-                      ),
-                      Gap(context.insets.lg),
-                    ],
-                  ).gTweener.fade().withKey(ValueKey(_currentArtifact?.objectId)),
+                        // Time frame
+                        Text(
+                          _currentArtifact?.date ?? '---',
+                          style: context.textStyles.body1.copyWith(color: context.colors.body),
+                        ),
+                        Gap(context.insets.lg),
+                      ],
+                    ).gTweener.fade().withKey(ValueKey(_currentArtifact?.objectId)),
+                  ),
 
                   // Selection indicator
                   SmoothPageIndicator(
                     controller: _controller,
                     count: 6,
-                    onDotClicked: changeArtifactIndex,
+                    onDotClicked: _changeArtifactIndex,
                     effect: ExpandingDotsEffect(
                         dotWidth: 4,
                         dotHeight: 4,
@@ -199,6 +207,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                   Gap(context.insets.xl),
 
                   // Big ol' button
+                  // TODO: Make primary btn
                   GestureDetector(
                     onTap: _handleSearchButtonTap,
                     child: Container(
