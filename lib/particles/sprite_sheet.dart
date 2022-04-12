@@ -8,6 +8,7 @@ class SpriteSheet {
   late double _frameWidth; // if 0, will use image width
   late double _frameHeight; // if 0, will use image height
   late int _length; // if 0, will be calculated from image size
+  double scale;
   int _cols = 0;
 
   SpriteSheet({
@@ -15,6 +16,7 @@ class SpriteSheet {
     int frameWidth = 0,
     int frameHeight = 0,
     int length = 0,
+    this.scale = 1.0,
   }) {
     _frameWidth = frameWidth + 0.0;
     _frameHeight = frameHeight + 0.0;
@@ -32,8 +34,9 @@ class SpriteSheet {
 
   // Given a frame index, return the rect that describes that frame in the image.
   Rect getFrame(int index) {
-    if (image == null || index < 0 || index >= _length) return Rect.zero;
+    if (image == null || index < 0) return Rect.zero;
 
+    index = index % length;
     int x = index % _cols;
     int y = (index / _cols).floor();
 

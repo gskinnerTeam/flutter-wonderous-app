@@ -31,6 +31,7 @@ class ParticleFieldPainter extends CustomPainter {
     Alignment alignment = Alignment.center;
     double xOffset = size.width / 2 * (alignment.x + 1);
     double yOffset = size.height / 2 * (alignment.y + 1);
+    double spriteScale = spriteSheet.scale;
 
     for (int i = 0; i < l; i++) {
       Particle o = particles[i];
@@ -40,7 +41,7 @@ class ParticleFieldPainter extends CustomPainter {
           translateX: o.x + xOffset,
           translateY: o.y + yOffset,
           rotation: o.rotation,
-          scale: o.scale,
+          scale: o.scale * spriteScale,
           anchorX: 0,
           anchorY: 0));
 
