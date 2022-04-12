@@ -5,7 +5,7 @@ import 'abstract_fx.dart';
 
 @immutable
 class SlideFX extends AbstractFX<Offset> {
-  const SlideFX({delay, duration, curve, begin, end}) :
+  const SlideFX({Duration? delay, Duration? duration, Curve? curve, Offset? begin, Offset? end}) :
     super(delay:delay, duration:duration, curve:curve, begin:begin ?? const Offset(0, -0.66), end:end ?? Offset.zero);
 
   @override

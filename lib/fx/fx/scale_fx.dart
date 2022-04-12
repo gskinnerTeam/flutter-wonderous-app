@@ -5,7 +5,7 @@ import 'abstract_fx.dart';
 
 @immutable
 class ScaleFX extends AbstractFX<double> {
-  const ScaleFX({delay, duration, curve, begin, end}) :
+  const ScaleFX({Duration? delay, Duration? duration, Curve? curve, double? begin, double? end}) :
     super(delay:delay, duration:duration, curve:curve, begin:begin ?? 0.0, end:end ?? 1.0);
 
   @override

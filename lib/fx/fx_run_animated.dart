@@ -16,7 +16,7 @@ part of 'fx.dart';
 //      )
 //    )
 class FXRunAnimated extends StatefulWidget {
-  final Function(BuildContext, bool) builder;
+  final Widget Function(BuildContext, bool) builder;
   final Duration delay;
 
   const FXRunAnimated(this.builder,

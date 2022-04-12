@@ -7,7 +7,7 @@ import 'abstract_fx.dart';
 class CallbackFX extends AbstractFX<void> {
   final Function() callback;
 
-  const CallbackFX(this.callback, {Duration? delay=Duration.zero}) :
+  const CallbackFX(this.callback, {Duration? delay}) :
     super(delay:delay, duration:Duration.zero, curve:null);
 
   @override

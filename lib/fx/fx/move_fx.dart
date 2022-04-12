@@ -5,7 +5,7 @@ import 'abstract_fx.dart';
 
 @immutable
 class MoveFX extends AbstractFX<Offset> {
-  const MoveFX({delay, duration, curve, begin, end})
+  const MoveFX({Duration? delay, Duration? duration, Curve? curve, Offset? begin, Offset? end})
       : super(
             delay: delay,
             duration: duration,

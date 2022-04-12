@@ -7,7 +7,7 @@ import 'abstract_fx.dart';
 class BuildFX extends AbstractFX<double> {
   final Widget Function(BuildContext, double, Widget) builder;
 
-  const BuildFX(this.builder, {delay, duration, curve, begin, end}) :
+  const BuildFX(this.builder, {Duration? delay, Duration? duration, Curve? curve, double? begin, double? end}) :
     super(delay:delay, duration:duration, curve:curve, begin:begin ?? 0.0, end:end ?? 1.0);
 
   @override

@@ -7,7 +7,7 @@ import 'abstract_fx.dart';
 
 @immutable
 class BlurFX extends AbstractFX<double> {
-  const BlurFX({delay, duration, curve, begin, end}) :
+  const BlurFX({Duration? delay, Duration? duration, Curve? curve, double? begin, double? end}) :
     super(delay:delay, duration:duration, curve:curve, begin:begin ?? 0.0, end:end ?? 4.0);
 
   @override
