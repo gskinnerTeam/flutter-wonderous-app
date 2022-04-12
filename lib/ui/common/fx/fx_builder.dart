@@ -1,4 +1,6 @@
-part of 'fx.dart';
+import 'package:flutter/widgets.dart';
+
+import 'fx.dart';
 
 // FXBuilder simplifies working with AnimatedBuilder, especially in
 // StatelessWidgets. It handles the creation and disposal of the controller,
@@ -46,7 +48,7 @@ class _FXBuilderState extends State<FXBuilder>
     _controller.forward();
     Duration begin = widget.delay, end = begin + widget.duration;
     Animation<double> animation =
-        _buildAnimation(_controller, begin, end, widget.curve);
+        buildSubAnimation(_controller, begin, end, widget.curve);
     return AnimatedBuilder(
       animation: animation,
       child: widget.child,

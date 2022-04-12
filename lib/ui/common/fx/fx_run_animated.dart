@@ -1,5 +1,4 @@
-part of 'fx.dart';
-
+import 'package:flutter/widgets.dart';
 
 // Lets you trigger the animation of an `Animated` widget
 // (ex. `AnimatedContainer`) immediately or after a delay. This is achieved via

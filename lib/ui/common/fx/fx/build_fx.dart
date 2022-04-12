@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 
 import '../fx.dart';
-import 'abstract_fx.dart';
 
 @immutable
 class BuildFX extends AbstractFX<double> {
@@ -20,7 +19,7 @@ class BuildFX extends AbstractFX<double> {
     );
   }
 }
-extension ListenFXExtensions<T> on FXManager<T> {
+extension BuildFXExtensions<T> on FXManager<T> {
   T build(builder, {Duration? delay, Duration? duration, Curve? curve, double? begin, double? end}) =>
     addFX(BuildFX(builder, delay: delay, duration: duration, curve: curve, begin:begin, end: end));
 }

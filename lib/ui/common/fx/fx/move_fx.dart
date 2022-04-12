@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 
 import '../fx.dart';
-import 'abstract_fx.dart';
 
 @immutable
 class MoveFX extends AbstractFX<Offset> {
