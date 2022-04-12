@@ -5,7 +5,7 @@ import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_bg.dart';
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_image.dart';
 
-//TODO AG - This view has some issues with responsiveness. Both tall and shor screens have some issues.
+//TODO @ AG - This view has some issues with responsiveness. Both tall and shor screens have some issues.
 // http://screens.gskinner.com/shawn/wonders_hgihUSOtxe.png (images are sitting too high, text is wrapping oddly)
 // http://screens.gskinner.com/shawn/wonders_WY3pDK6Xj4.png (images are sitting too low, text is clipped)
 // http://screens.gskinner.com/shawn/wonders_sW90cDEIAV.png (everything gets really huge when screen is wide)
