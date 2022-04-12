@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:wonders/particles/particle_field_painter.dart';
-import 'package:wonders/particles/sprite_sheet.dart';
 
+import 'particle_field_painter.dart';
+import 'sprite_sheet.dart';
 import 'particle.dart';
 
 

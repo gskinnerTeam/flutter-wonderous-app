@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wonders/particles/particle.dart';
 
+import 'particle.dart';
 import 'particle_field.dart';
 import 'sprite_sheet.dart';
 

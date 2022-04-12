@@ -3,12 +3,11 @@
 import 'dart:ui';
 
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/fx/fx.dart';
+import 'package:wonders/ui/common/fx/fx.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
-import 'package:wonders/particles/particle_field.dart';
-import 'package:wonders/particles/sprite_sheet.dart';
-
-import '../../../particles/particle.dart';
+import 'package:wonders/ui/common/particles/particle_field.dart';
+import 'package:wonders/ui/common/particles/sprite_sheet.dart';
+import 'package:wonders/ui/common/particles/particle.dart';
 
 class CollectibleFoundScreen extends StatelessWidget {
   final CollectibleData collectible;
