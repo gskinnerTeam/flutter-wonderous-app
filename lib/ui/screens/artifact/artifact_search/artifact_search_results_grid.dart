@@ -53,9 +53,7 @@ class _ImageItem extends StatelessWidget {
 }
 
 class _ImagePlaceholder extends StatelessWidget {
-  const _ImagePlaceholder({
-    Key? key,
-  }) : super(key: key);
+  const _ImagePlaceholder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
