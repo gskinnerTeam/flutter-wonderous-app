@@ -5,6 +5,9 @@
   - Gradient darkens when arrow is pulled
   - TODO: WonderIllustration 'zooms' in slightly when arrow is pulled
   - TODO: White box expanded while dragging
+- Artifacts
+  - Initial implementation of artifacts carousel (WIP)
+  - Initial implementation of search (WIP)
 
 # 0.0.5
 - Home View

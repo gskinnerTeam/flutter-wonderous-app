@@ -42,7 +42,7 @@ void registerSingletons({required bool useMocks}) {
   }
 }
 
-/// Add syntax sugar for quickly accessing the main controllers in the app
+/// Add syntax sugar for quickly accessing the main logical controllers in the app
 /// We deliberately do not create shortcuts for services, to discourage their use directly in the ui layer.
 AppLogic get appLogic => GetIt.I.get<AppLogic>();
 WondersLogic get wondersLogic => GetIt.I.get<WondersLogic>();
