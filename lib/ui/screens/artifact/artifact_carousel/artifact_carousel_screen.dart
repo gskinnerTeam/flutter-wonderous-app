@@ -6,20 +6,6 @@ import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_image.dart';
 import 'dart:math' as math;
 
-//TODO AG - This view has some issues with responsiveness. Both tall and shor screens have some issues.
-// http://screens.gskinner.com/shawn/wonders_hgihUSOtxe.png (images are sitting too high, text is wrapping oddly)
-// http://screens.gskinner.com/shawn/wonders_WY3pDK6Xj4.png (images are sitting too low, text is clipped)
-// http://screens.gskinner.com/shawn/wonders_sW90cDEIAV.png (everything gets really huge when screen is wide)
-// This is most easily tested with macos/windows, but you can try an iPad in portrait mode as well for a wider screen.
-// Some Tips:
-//  - This view will be much easier to make responsive, if you just cap the width of the white circle at 400px or so.
-//    Let it center itself on wider screens, with grey on either side. Should look nice?
-//  - Try and get the selected page view so it is always the same size, like 200px or so, instead of scaling directly with screen width
-//    This way your images will always be the same size, and not intrude on text or get huge
-//  - Might want to put it all in a bottom-aligned column, so "highlights" title can sit above the PageView wherever it ends up.
-//    Like: [ Title, PageView, TextContent, PageIndicator, MainButton ] all in a column, with the Circle in a Stack underneath.
-//    Otherwise, the title gets very far away from the image on tall screens, or too close too it, on short ones. Neither looks good.
-//    http://screens.gskinner.com/shawn/wonders_huw5lnsvtT.png, http://screens.gskinner.com/shawn/wonders_wzrMJa9SoG.png
 class ArtifactCarouselScreen extends StatefulWidget {
   final WonderType type;
   const ArtifactCarouselScreen({Key? key, required this.type}) : super(key: key);
@@ -79,8 +65,11 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Used to determine carousel element size.
     double maxElementWidth = 500;
-    double carouselImageWidth = math.min(maxElementWidth, context.widthPx);
+    double carouselImageWidth = math.min(maxElementWidth, context.widthPx / 1.25);
+
+    // Used to determine white background dimensions.
     double maxBottomHeight = 300;
     double bottomHalfHeight = math.min(maxBottomHeight, context.heightPx / 6);
     double maxBottomWidth = 650;

@@ -49,10 +49,10 @@ class _ImagePreview extends StatelessWidget {
   final String heroTag;
   @override
   Widget build(BuildContext context) {
-    // Scale of the elements, compared to max screen dimensions (maintains aspect ratio).
+    // Y scale of the size elements, compared to main.
     double sideElementYScale = 0.65;
-    double mainElementYScale = 0.35;
 
+    // Shrink factor of the side elements, compared to main.
     double sideElementScale = 0.65;
 
     // Scale of the X position offset.
@@ -67,17 +67,21 @@ class _ImagePreview extends StatelessWidget {
     // Calculated variables.
     const double elementWidth = 150;
     double offset = math.max(-2, math.min(2, offsetAmt));
-    double elementYScale = sideElementYScale + (mainElementYScale - (math.min(1, offset.abs()) * mainElementYScale));
+    double elementYScale =
+        sideElementYScale + ((1 - sideElementYScale) - (math.min(1, offset.abs()) * (1 - sideElementYScale)));
     double elementScale =
         sideElementScale + ((1 - sideElementScale) - (math.min(1, offset.abs()) * (1 - sideElementScale)));
 
+    // Calculate the offset positions of the side elements.
     double xOffset = math.asin(offset * math.pi / 4.0) * -offsetScrollXScale;
     double yOffset = (offset * offset) * offsetScrollYScale;
 
+    // Scale box for sizing. Uses both the element scale and the element Y scale.
     return FractionallySizedBox(
       alignment: Alignment.bottomCenter,
       widthFactor: elementScale,
       heightFactor: elementScale * elementYScale,
+      // Translation box for positioning.
       child: FractionalTranslation(
         translation: Offset(xOffset, yOffset),
         child: Container(
