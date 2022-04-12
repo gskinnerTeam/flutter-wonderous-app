@@ -2,19 +2,19 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
-import 'package:wonders/ui/screens/artifact/artifact_highlights/artifact_blurred_bg.dart';
+import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_bg.dart';
 import 'package:wonders/ui/screens/artifact/artifact_highlights/artifact_image_page.dart';
 
 /// Artifact highlight preview screen. Uses a pre-baked list of artifact IDs to show a carousel list of sample artifacts before user can search for them manually.
-class ArtifactHighlightsScreen extends StatefulWidget {
+class ArtifactCarouselScreen extends StatefulWidget {
   final WonderType type;
-  const ArtifactHighlightsScreen({Key? key, required this.type}) : super(key: key);
+  const ArtifactCarouselScreen({Key? key, required this.type}) : super(key: key);
 
   @override
-  State<ArtifactHighlightsScreen> createState() => _ArtifactScreenState();
+  State<ArtifactCarouselScreen> createState() => _ArtifactScreenState();
 }
 
-class _ArtifactScreenState extends State<ArtifactHighlightsScreen> {
+class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   final _controller = PageController(initialPage: 0, viewportFraction: 0.4, keepPage: true);
   final _highlightedArtifactIds = [
     '503940',
@@ -43,7 +43,7 @@ class _ArtifactScreenState extends State<ArtifactHighlightsScreen> {
 
   void getHighlightedArtifacts() async {
     for (var id in _highlightedArtifactIds) {
-      _loadedArtifacts.add(await search.getArtifactByID(id));
+      _loadedArtifacts.add(await searchLogic.getArtifactByID(id));
     }
 
     changeArtifactIndex(0);
@@ -95,7 +95,7 @@ class _ArtifactScreenState extends State<ArtifactHighlightsScreen> {
               children: [
                 Expanded(
                   child: AnimatedSwitcher(
-                    child: ArtifactBlurredBg(
+                    child: ArtifactCarouselBg(
                         key: ValueKey(_currentArtifact?.objectId), url: _currentArtifact?.image ?? ''),
                     duration: Duration(milliseconds: 300),
                   ),

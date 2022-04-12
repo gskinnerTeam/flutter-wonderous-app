@@ -1,15 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
-import 'package:wonders/ui/screens/artifact/artifact_details/artifact_data_element.dart';
+
+part 'artifact_data_row.dart';
 
 /// View that shows parsed artifact data to the user, including image, title, culture, and many other things.
 /// View contains no links and must be closed ia close button to return the user to the rest of the app.
 class ArtifactDetailsScreen extends StatefulWidget {
-  final String id;
-  const ArtifactDetailsScreen({Key? key, required this.id}) : super(key: key);
+  final String artifactId;
+  const ArtifactDetailsScreen({Key? key, required this.artifactId}) : super(key: key);
 
   @override
   State<ArtifactDetailsScreen> createState() => _ArtifactDetailsScreenState();
@@ -26,7 +28,7 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
   }
 
   void _getArtifact() async {
-    var newArtifact = await search.getArtifactByID(widget.id);
+    var newArtifact = await searchLogic.getArtifactByID(widget.artifactId);
     setState(() => _artifact = newArtifact);
   }
 
@@ -129,12 +131,12 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
 
           // Description
           Column(mainAxisSize: MainAxisSize.min, children: [
-            ArtifactDataElement(title: 'Date', content: _artifact?.date ?? '---'),
-            ArtifactDataElement(title: 'Period', content: _artifact?.period ?? '---'),
-            ArtifactDataElement(title: 'Geography', content: _artifact?.country ?? '---'),
-            ArtifactDataElement(title: 'Medium', content: _artifact?.medium ?? '---'),
-            ArtifactDataElement(title: 'Dimension', content: _artifact?.dimension ?? '---'),
-            ArtifactDataElement(title: 'Classification', content: _artifact?.classification ?? '---'),
+            ArtifactDataRow(title: 'Date', content: _artifact?.date ?? '---'),
+            ArtifactDataRow(title: 'Period', content: _artifact?.period ?? '---'),
+            ArtifactDataRow(title: 'Geography', content: _artifact?.country ?? '---'),
+            ArtifactDataRow(title: 'Medium', content: _artifact?.medium ?? '---'),
+            ArtifactDataRow(title: 'Dimension', content: _artifact?.dimension ?? '---'),
+            ArtifactDataRow(title: 'Classification', content: _artifact?.classification ?? '---'),
           ]),
         ],
       ),

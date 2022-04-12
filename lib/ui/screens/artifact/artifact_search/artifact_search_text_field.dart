@@ -6,8 +6,6 @@ class ArtifactSearchTextField extends StatelessWidget {
   ArtifactSearchTextField({Key? key, required this.handleSearchSubmitted}) : super(key: key);
   final void Function(String) handleSearchSubmitted;
 
-  final TextEditingController _textController = TextEditingController();
-
   // TODO: Get prebuilt list of common autocomplete terms. Might be artifact-specific.
   final List<String> _kOptions = [
     'hat',
@@ -44,7 +42,7 @@ class ArtifactSearchTextField extends StatelessWidget {
         }).toList();
 
         // Use titles of artifacts that have already been loaded.
-        List<ArtifactData> allArtifacts = search.allLoadedArtifacts;
+        List<ArtifactData> allArtifacts = searchLogic.allLoadedArtifacts;
         if (allArtifacts.isNotEmpty) {
           List<ArtifactData?> artifacts = allArtifacts.where((ArtifactData? data) {
             return data?.title.toLowerCase().contains(textEditingValue.text.toLowerCase()) ?? false;

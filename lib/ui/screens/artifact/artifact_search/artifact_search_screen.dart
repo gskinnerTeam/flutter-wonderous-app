@@ -32,7 +32,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
     });
 
     // Get all search results, with a limit.
-    _searchResultsAll = await search.searchForArtifacts(query, count: 1000);
+    _searchResultsAll = await searchLogic.searchForArtifacts(query, count: 1000);
 
     // Load complete. Show results.
     setState(() {
@@ -96,7 +96,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
 
                         // Artifacts grid
                         Expanded(
-                          child: ArtifactSearchResultsGrid(searchResults: _searchResultsAll, onClick: onResultClick),
+                          child: ArtifactSearchResultsGrid(searchResults: _searchResultsAll, onPressed: onResultClick),
                         ),
                       ],
                     ),

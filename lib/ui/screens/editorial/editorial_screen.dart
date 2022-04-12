@@ -9,6 +9,7 @@ import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/blend_mask.dart';
 import 'package:wonders/ui/common/collectible_item.dart';
+import 'package:wonders/ui/common/compass_divider.dart';
 import 'package:wonders/ui/common/context_utils.dart';
 import 'package:wonders/ui/common/curved_clippers.dart';
 import 'package:wonders/ui/common/placeholder_image.dart';

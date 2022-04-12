@@ -6,53 +6,62 @@ import 'package:wonders/ui/common/controls/app_loader.dart';
 
 /// Staggered Masonry styled grid for displaying two columns of different aspect-ratio images.
 class ArtifactSearchResultsGrid extends StatelessWidget {
-  const ArtifactSearchResultsGrid({Key? key, required this.searchResults, required this.onClick}) : super(key: key);
-  final void Function(ArtifactData) onClick;
+  const ArtifactSearchResultsGrid({Key? key, required this.searchResults, required this.onPressed}) : super(key: key);
+  final void Function(ArtifactData) onPressed;
   final List<ArtifactData?> searchResults;
 
   @override
+  Widget build(BuildContext context) => MasonryGridView.count(
+        shrinkWrap: true,
+        crossAxisCount: 2,
+        cacheExtent: 2000,
+        crossAxisSpacing: context.insets.sm,
+        mainAxisSpacing: context.insets.sm,
+        itemCount: searchResults.length,
+        clipBehavior: Clip.antiAlias,
+        itemBuilder: (BuildContext context, int index) {
+          var data = searchResults[index];
+          return _ImageItem(onPressed: onPressed, data: data!);
+        },
+      );
+}
+
+class _ImageItem extends StatelessWidget {
+  const _ImageItem({Key? key, required this.onPressed, required this.data}) : super(key: key);
+
+  final void Function(ArtifactData data) onPressed;
+  final ArtifactData data;
+
+  @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      cacheExtent: 2000,
-      slivers: [
-        SliverToBoxAdapter(
-          child: MasonryGridView.count(
-            shrinkWrap: true,
-            crossAxisCount: 2,
-            crossAxisSpacing: context.insets.sm,
-            mainAxisSpacing: context.insets.sm,
-            itemCount: searchResults.length,
-            clipBehavior: Clip.antiAlias,
-            itemBuilder: (BuildContext context, int index) {
-              var data = searchResults[index];
-              return GestureDetector(
-                onTap: () => onClick(data!),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(context.insets.xs),
-                  child: CachedNetworkImage(
-                    imageUrl: data!.image,
-                    placeholder: (BuildContext context, String url) {
-                      return Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(context.corners.md)),
-                          border: Border.all(color: context.colors.accent2, width: 3),
-                        ),
-                        child: AspectRatio(
-                          aspectRatio: 1,
-                          child: Center(
-                            heightFactor: 1,
-                            child: AppLoader(),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              );
-            },
+    return TextButton(
+      onPressed: () => onPressed(data),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(context.insets.xs),
+        child: Hero(
+          tag: data.image,
+          child: CachedNetworkImage(
+            imageUrl: data.image,
+            fit: BoxFit.cover,
+            memCacheWidth: context.widthPx ~/ 2,
+            placeholder: (_, __) => _ImagePlaceholder(),
           ),
-        )
-      ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ImagePlaceholder extends StatelessWidget {
+  const _ImagePlaceholder({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AspectRatio(
+      aspectRatio: 1,
+      child: Center(child: AppLoader()),
     );
   }
 }

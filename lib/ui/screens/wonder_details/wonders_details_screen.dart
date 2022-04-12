@@ -3,7 +3,7 @@ import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/wonders_logic.dart';
 import 'package:wonders/ui/common/controls/buttons.dart';
 import 'package:wonders/ui/common/lazy_indexed_stack.dart';
-import 'package:wonders/ui/screens/artifact/artifact_highlights/artifact_highlights_screen.dart';
+import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_screen.dart';
 import 'package:wonders/ui/screens/editorial/editorial_screen.dart';
 import 'package:wonders/ui/screens/image_gallery/image_gallery.dart';
 import 'package:wonders/ui/screens/timeline/timeline_screen.dart';
@@ -63,7 +63,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
               WonderEditorialScreen(wonder, onScroll: _handleDetailsScrolled),
               ImageGallery(photoIds: wonder.imageIds),
               // TODO: Need a better way to get the height of the tab bar here... options? MeasuredWidget, static height, app.tabBarHeight?
-              Padding(padding: EdgeInsets.only(bottom: 48), child: ArtifactHighlightsScreen(type: widget.type)),
+              Padding(padding: EdgeInsets.only(bottom: 48), child: ArtifactCarouselScreen(type: widget.type)),
               Padding(padding: EdgeInsets.only(bottom: 48), child: TimelineScreen(type: widget.type)),
             ],
           ).gTweener.fade().withInit((t) => _fade = t),

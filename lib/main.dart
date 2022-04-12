@@ -48,4 +48,4 @@ AppLogic get appLogic => GetIt.I.get<AppLogic>();
 WondersLogic get wondersLogic => GetIt.I.get<WondersLogic>();
 SettingsLogic get settingsLogic => GetIt.I.get<SettingsLogic>();
 UnsplashLogic get unsplashLogic => GetIt.I.get<UnsplashLogic>();
-SearchLogic get search => GetIt.I.get<SearchLogic>();
+SearchLogic get searchLogic => GetIt.I.get<SearchLogic>();

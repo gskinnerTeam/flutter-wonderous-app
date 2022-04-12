@@ -72,7 +72,7 @@ class _ImageGalleryState extends State<ImageGallery> {
     if (_index == index) {
       String? newId = await Navigator.push(
         context,
-        PageRoutes.fadeScale(FullScreenPhotoViewer(widget.photoIds[index], widget.photoIds)),
+        PageRoutes.fadeScale(FullScreenUnsplashPhotoViewer(widget.photoIds[index], widget.photoIds)),
       );
       if (newId != null) {
         _setIndex(widget.photoIds.indexOf(newId));

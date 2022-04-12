@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/app_scaffold.dart';
 import 'package:wonders/ui/screens/artifact/artifact_details/artifact_details_screen.dart';
-import 'package:wonders/ui/screens/artifact/artifact_highlights/artifact_highlights_screen.dart';
+import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_screen.dart';
 import 'package:wonders/ui/screens/home/wonders_home_screen.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_screen.dart';
 import 'package:wonders/ui/screens/settings/settings_screen.dart';
@@ -51,13 +51,13 @@ final appRouter = GoRouter(
       return FullscreenVideoPage(id: s.params['id']!);
     }),
     AppRoute('/highlights/:id', (s) {
-      return ArtifactHighlightsScreen(type: _parseWonderType(s.params['id']!));
+      return ArtifactCarouselScreen(type: _parseWonderType(s.params['id']!));
     }),
     AppRoute('/search/:id', (s) {
       return ArtifactSearchScreen(type: _parseWonderType(s.params['id']!));
     }),
     AppRoute('/artifact/:id', (s) {
-      return ArtifactDetailsScreen(id: s.params['id']!);
+      return ArtifactDetailsScreen(artifactId: s.params['id']!);
     })
   ],
 );
