@@ -79,8 +79,11 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double bottomHalfHeight = 300;
-    double maxImageWidth = math.min(400, context.widthPx / 1.5);
+    double maxElementWidth = 500;
+    double carouselImageWidth = math.min(maxElementWidth, context.widthPx);
+    double maxBottomHeight = 300;
+    double bottomHalfHeight = math.min(maxBottomHeight, context.heightPx / 6);
+    double maxBottomWidth = 650;
 
     if (_currentArtifact == null) {
       return Center(child: AppLoader());
@@ -113,23 +116,17 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
             duration: Duration(milliseconds: 300),
           ),
 
-          // Big circle - part of the background
-          Positioned(
-            bottom: bottomHalfHeight - (math.min(maxImageWidth, context.widthPx) / 2),
-            left: 0,
-            right: 0,
-            child: Container(
-              height: math.min(maxImageWidth, context.widthPx),
-              decoration: BoxDecoration(
-                color: context.colors.bg,
-                shape: BoxShape.circle,
-              ),
-            ),
-          ),
-
           // White space, covering bottom half.
           BottomCenter(
-            child: Container(height: bottomHalfHeight, color: context.colors.bg),
+            child: Container(
+              width: math.min(context.widthPx, maxBottomWidth),
+              height: bottomHalfHeight + maxBottomWidth / 2,
+              decoration: BoxDecoration(
+                color: context.colors.bg,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(maxBottomWidth / 2), topRight: Radius.circular(maxBottomWidth / 2)),
+              ),
+            ),
           ),
 
           // Content
@@ -153,13 +150,14 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                     future: Future.value(true),
                     builder: (BuildContext context, AsyncSnapshot<void> snap) {
                       return snap.hasData
-                          ? SizedBox(width: maxImageWidth, height: maxImageWidth * 0.75, child: pageViewArtifacts)
+                          ? SizedBox(
+                              width: carouselImageWidth, height: carouselImageWidth * 0.75, child: pageViewArtifacts)
                           : Container();
                     },
                   ),
 
                   // Text and stuff
-                  Gap(context.insets.xl),
+                  Gap(context.insets.md),
                   IgnorePointer(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -215,6 +213,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                   GestureDetector(
                     onTap: _handleSearchButtonTap,
                     child: Container(
+                      width: maxElementWidth - context.insets.md * 2,
                       decoration: BoxDecoration(
                         color: context.colors.greyStrong,
                         borderRadius: BorderRadius.all(Radius.circular(context.corners.md)),

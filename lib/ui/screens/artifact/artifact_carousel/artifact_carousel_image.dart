@@ -49,10 +49,16 @@ class _ImagePreview extends StatelessWidget {
   final String heroTag;
   @override
   Widget build(BuildContext context) {
-    const double offsetScrollDistance = 2;
     // Scale of the elements, compared to max screen dimensions (maintains aspect ratio).
+    double sideElementYScale = 0.65;
+    double mainElementYScale = 0.35;
+
     double sideElementScale = 0.65;
-    double mainElementScale = 0.35;
+
+    // Scale of the X position offset.
+    const double offsetScrollXScale = 0.3;
+    // Scale of the Y position offset.
+    const double offsetScrollYScale = 0.8;
 
     // Border variables
     const double borderPadding = 4.0;
@@ -60,16 +66,20 @@ class _ImagePreview extends StatelessWidget {
 
     // Calculated variables.
     const double elementWidth = 150;
-    double offset = math.max(-1, math.min(1, offsetAmt));
-    double elementScale = sideElementScale + (mainElementScale - (math.min(1, offset.abs()) * mainElementScale));
+    double offset = math.max(-2, math.min(2, offsetAmt));
+    double elementYScale = sideElementYScale + (mainElementYScale - (math.min(1, offset.abs()) * mainElementYScale));
+    double elementScale =
+        sideElementScale + ((1 - sideElementScale) - (math.min(1, offset.abs()) * (1 - sideElementScale)));
 
-    double yOffset = math.asin((offset.abs()) * math.pi / 8.0) * offsetScrollDistance;
+    double xOffset = math.asin(offset * math.pi / 4.0) * -offsetScrollXScale;
+    double yOffset = (offset * offset) * offsetScrollYScale;
 
     return FractionallySizedBox(
-      alignment: Alignment.topCenter,
-      heightFactor: elementScale,
+      alignment: Alignment.bottomCenter,
+      widthFactor: elementScale,
+      heightFactor: elementScale * elementYScale,
       child: FractionalTranslation(
-        translation: Offset(0, yOffset),
+        translation: Offset(xOffset, yOffset),
         child: Container(
           // Add an outer border with the rounded ends.
           decoration: BoxDecoration(
