@@ -107,7 +107,7 @@ class _RangeSelectorState extends State<RangeSelector> {
                     bottomLeft: Radius.circular(context.corners.md),
                   ),
                 ),
-                child: Icon(Icons.arrow_left, color: context.colors.bg),
+                child: Center(child: Icon(Icons.chevron_left, color: context.colors.bg, size: buttonWidth - 2)),
               ),
             ),
 
@@ -120,6 +120,8 @@ class _RangeSelectorState extends State<RangeSelector> {
                 onHorizontalDragEnd: (d) => _handleEndDrag(d, constraints.maxWidth),
                 child: Container(
                   decoration: BoxDecoration(
+                      color: context.colors.bg.withOpacity(0.2),
+                      backgroundBlendMode: BlendMode.screen,
                       border: Border.symmetric(horizontal: BorderSide(color: context.colors.greyStrong, width: 1))),
                 ),
               ),
@@ -142,7 +144,7 @@ class _RangeSelectorState extends State<RangeSelector> {
                     bottomRight: Radius.circular(context.corners.md),
                   ),
                 ),
-                child: Icon(Icons.arrow_right, color: context.colors.bg),
+                child: Center(child: Icon(Icons.chevron_right, color: context.colors.bg, size: buttonWidth - 2)),
               ),
             ),
 
