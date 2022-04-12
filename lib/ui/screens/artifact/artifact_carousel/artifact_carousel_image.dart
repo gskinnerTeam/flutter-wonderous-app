@@ -4,16 +4,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 
-// TODO @ AG: The top portion of the images is not clickable.
-//  This is because they exceed the bounds of their parent when using transform.scale + translate.
-// A better approach with flutter is to use a large parent view (page), that uses internal padding to shrink things down...
-//
 class ArtifactCarouselImage extends StatelessWidget {
   const ArtifactCarouselImage(
       {Key? key,
       required this.index,
       required this.currentPage,
       required this.artifact,
+      required this.viewportFraction,
       this.onClick,
       this.borderOnly = false})
       : super(key: key);
@@ -21,13 +18,13 @@ class ArtifactCarouselImage extends StatelessWidget {
   final ArtifactData artifact;
   final int index;
   final double currentPage;
+  final double viewportFraction;
   final bool borderOnly;
 
   @override
   Widget build(BuildContext context) => GestureDetector(
         onTap: () => onClick?.call(index),
-        child: FittedBox(
-            child: CachedNetworkImage(
+        child: CachedNetworkImage(
           // Show immediately; don't delay the appearance on the sides.
           fadeInDuration: context.times.fast,
           fadeOutDuration: context.times.fast,
@@ -35,84 +32,83 @@ class ArtifactCarouselImage extends StatelessWidget {
           imageBuilder: (context, imageProvider) => _ImagePreview(
             image: imageProvider,
             heroTag: artifact.image,
+            viewportFraction: viewportFraction,
             offsetAmt: currentPage - index.toDouble(),
           ),
-        )),
+        ),
       );
 }
 
 class _ImagePreview extends StatelessWidget {
-  const _ImagePreview({Key? key, required this.image, required this.offsetAmt, required this.heroTag})
+  const _ImagePreview(
+      {Key? key, required this.image, required this.offsetAmt, required this.heroTag, required this.viewportFraction})
       : super(key: key);
   final ImageProvider image;
   final double offsetAmt;
+  final double viewportFraction;
   final String heroTag;
   @override
   Widget build(BuildContext context) {
-    const double offsetScrollDistance = 2;
-    // Scale of the elements, compared to max screen dimensions (maintains aspect ratio).
-    const double mainElementScale = 0.8;
-    const double sideElementScale = 0.4;
-    const double extraMiddleSpace = 0.5;
-    // Horizontal offset of side elements
-    const double hzSpacing = 20;
-    // Vertical offset of side elements
-    const double vtSpacing = 20;
-    // Horizontal offset of whole carousel
-    const double hzOffset = 0;
-    // Vertical offset of the whole carousel.
-    const double vtOffset = 20;
-    // Translated spacing apart.
-    const double spacing = 3.0 / 5.0;
+    // Y scale of the size elements, compared to main.
+    double sideElementYScale = 0.65;
+
+    // Shrink factor of the side elements, compared to main.
+    double sideElementScale = 0.65;
+
+    // Scale of the X position offset.
+    const double offsetScrollXScale = 0.3;
+    // Scale of the Y position offset.
+    const double offsetScrollYScale = 0.8;
+
+    // Border variables
+    const double borderPadding = 4.0;
+    const double borderWidth = 1.0;
 
     // Calculated variables.
-    const double elementWidth = 50;
-    double offset = math.max(-offsetScrollDistance, math.min(offsetScrollDistance, offsetAmt));
-    double mainElementScaleUp =
-        1 + (sideElementScale - (math.min(offsetScrollDistance, offset.abs()) * sideElementScale));
+    const double elementWidth = 150;
+    double offset = math.max(-2, math.min(2, offsetAmt));
+    double elementYScale =
+        sideElementYScale + ((1 - sideElementYScale) - (math.min(1, offset.abs()) * (1 - sideElementYScale)));
+    double elementScale =
+        sideElementScale + ((1 - sideElementScale) - (math.min(1, offset.abs()) * (1 - sideElementScale)));
 
-    double xAngle = math.asin((offset) * math.pi / 6.0);
-    double yAngle = math.acos((offset.abs()) * math.pi / 6.0);
-    return Transform(
-      origin: Offset(elementWidth / 2, (elementWidth / 2) * mainElementScaleUp),
+    // Calculate the offset positions of the side elements.
+    double xOffset = math.asin(offset * math.pi / 4.0) * -offsetScrollXScale;
+    double yOffset = (offset * offset) * offsetScrollYScale;
 
-      transform: Matrix4.identity()
-        ..translate(
-          xAngle * (elementWidth * spacing) + (-hzSpacing * offset) + hzOffset,
-          yAngle * (-elementWidth * spacing) + (vtSpacing * offset.abs()) + vtOffset,
-        )
-        ..scale((mainElementScale + extraMiddleSpace) - (offset.abs() * extraMiddleSpace)),
+    // Scale box for sizing. Uses both the element scale and the element Y scale.
+    return FractionallySizedBox(
+      alignment: Alignment.bottomCenter,
+      widthFactor: elementScale,
+      heightFactor: elementScale * elementYScale,
+      // Translation box for positioning.
+      child: FractionalTranslation(
+        translation: Offset(xOffset, yOffset),
+        child: Container(
+          // Add an outer border with the rounded ends.
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            border: Border.all(color: context.colors.bg, width: borderWidth),
+            borderRadius: BorderRadius.all(Radius.circular(elementWidth)),
+          ),
 
-      // Inside the container, width and height determine aspect ratio
-      child: Container(
-        width: elementWidth,
-        height: elementWidth * mainElementScaleUp,
+          child: Padding(
+            padding: EdgeInsets.all(borderPadding),
+            child: Container(
+              // Round the edges, but make a capsule rather than a circle by only setting to width.
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.all(Radius.circular(elementWidth)),
 
-        // Add an outer border with the rounded ends.
-        decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-          border: Border.all(color: context.colors.bg, width: 0.3),
-          borderRadius: BorderRadius.all(Radius.circular(elementWidth / 2)),
-        ),
-        child: Padding(
-          padding: EdgeInsets.all(2),
-          child: Container(
-            width: elementWidth,
-            height: elementWidth * mainElementScaleUp,
-
-            // Round the edges, but make a capsule rather than a circle by only setting to width.
-            decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.all(Radius.circular(elementWidth / 2)),
-
-              // Display image
-              image: DecorationImage(
-                  image: image,
-                  fit: BoxFit.cover,
-                  colorFilter: ColorFilter.mode(
-                    Colors.black.withOpacity(math.min(1, offset.abs())), // 0 = Colored, 1 = Black & White
-                    BlendMode.saturation,
-                  )),
+                // Display image
+                image: DecorationImage(
+                    image: image,
+                    fit: BoxFit.cover,
+                    colorFilter: ColorFilter.mode(
+                      Colors.black.withOpacity(math.min(1, offset.abs())), // 0 = Colored, 1 = Black & White
+                      BlendMode.saturation,
+                    )),
+              ),
             ),
           ),
         ),

@@ -4,21 +4,8 @@ import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_bg.dart';
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_image.dart';
+import 'dart:math' as math;
 
-//TODO @ AG - This view has some issues with responsiveness. Both tall and shor screens have some issues.
-// http://screens.gskinner.com/shawn/wonders_hgihUSOtxe.png (images are sitting too high, text is wrapping oddly)
-// http://screens.gskinner.com/shawn/wonders_WY3pDK6Xj4.png (images are sitting too low, text is clipped)
-// http://screens.gskinner.com/shawn/wonders_sW90cDEIAV.png (everything gets really huge when screen is wide)
-// This is most easily tested with macos/windows, but you can try an iPad in portrait mode as well for a wider screen.
-// Some Tips:
-//  - This view will be much easier to make responsive, if you just cap the width of the white circle at 400px or so.
-//    Let it center itself on wider screens, with grey on either side. Should look nice?
-//  - Try and get the selected page view so it is always the same size, like 200px or so, instead of scaling directly with screen width
-//    This way your images will always be the same size, and not intrude on text or get huge
-//  - Might want to put it all in a bottom-aligned column, so "highlights" title can sit above the PageView wherever it ends up.
-//    Like: [ Title, PageView, TextContent, PageIndicator, MainButton ] all in a column, with the Circle in a Stack underneath.
-//    Otherwise, the title gets very far away from the image on tall screens, or too close too it, on short ones. Neither looks good.
-//    http://screens.gskinner.com/shawn/wonders_huw5lnsvtT.png, http://screens.gskinner.com/shawn/wonders_wzrMJa9SoG.png
 class ArtifactCarouselScreen extends StatefulWidget {
   final WonderType type;
   const ArtifactCarouselScreen({Key? key, required this.type}) : super(key: key);
@@ -28,7 +15,7 @@ class ArtifactCarouselScreen extends StatefulWidget {
 }
 
 class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
-  final _controller = PageController(initialPage: 0, viewportFraction: 0.4, keepPage: true);
+  final _pageViewportFraction = 0.5;
   final _highlightedArtifactIds = [
     '503940',
     '312595',
@@ -38,11 +25,13 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     '313256',
   ];
   final _loadedArtifacts = [];
+  late PageController _controller;
   ArtifactData? _currentArtifact;
   double _currentPage = 0;
 
   @override
   void initState() {
+    _controller = PageController(initialPage: 0, viewportFraction: _pageViewportFraction, keepPage: true);
     _controller.addListener(() {
       setState(() {
         _currentPage = _controller.page ?? 0.0;
@@ -76,7 +65,14 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double bottomHalfHeight = 300;
+    // Used to determine carousel element size.
+    double maxElementWidth = 500;
+    double carouselImageWidth = math.min(maxElementWidth, context.widthPx / 1.25);
+
+    // Used to determine white background dimensions.
+    double maxBottomHeight = 300;
+    double bottomHalfHeight = math.min(maxBottomHeight, context.heightPx / 6);
+    double maxBottomWidth = 650;
 
     if (_currentArtifact == null) {
       return Center(child: AppLoader());
@@ -92,6 +88,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
           index: index,
           currentPage: _currentPage,
           artifact: _loadedArtifacts[index % _loadedArtifacts.length],
+          viewportFraction: _pageViewportFraction,
           onClick: _handleArtifactTap,
         );
       },
@@ -108,50 +105,20 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
             duration: Duration(milliseconds: 300),
           ),
 
-          // Big circle - part of the background
-          Positioned(
-            bottom: bottomHalfHeight - (context.widthPx / 2),
-            left: 0,
-            right: 0,
-            child: Container(
-              height: context.widthPx,
-              decoration: BoxDecoration(
-                color: context.colors.bg,
-                shape: BoxShape.circle,
-              ),
-            ),
-          ),
-
           // White space, covering bottom half.
           BottomCenter(
-            child: Container(height: bottomHalfHeight, color: context.colors.bg),
-          ),
-
-          // Carousel images
-          BottomCenter(
-            heightFactor: 0.5,
-            child: FutureBuilder(
-              future: Future.value(true),
-              builder: (BuildContext context, AsyncSnapshot<void> snap) {
-                return snap.hasData ? pageViewArtifacts : Container();
-              },
-            ),
-          ),
-
-          // Header
-          SafeArea(
-            child: TopCenter(
-              child: Padding(
-                padding: EdgeInsets.only(top: context.insets.xxl),
-                child: Text(
-                  'HIGHLIGHTS',
-                  style: context.textStyles.h3.copyWith(color: context.colors.bg, fontSize: 14),
-                ),
+            child: Container(
+              width: math.min(context.widthPx, maxBottomWidth),
+              height: bottomHalfHeight + maxBottomWidth / 2,
+              decoration: BoxDecoration(
+                color: context.colors.bg,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(maxBottomWidth / 2), topRight: Radius.circular(maxBottomWidth / 2)),
               ),
             ),
           ),
 
-          // Text and Artifact Search button
+          // Content
           BottomCenter(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: context.insets.md),
@@ -159,6 +126,27 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  // Header
+                  Gap(context.insets.md),
+                  Text(
+                    'HIGHLIGHTS',
+                    style: context.textStyles.h3.copyWith(color: context.colors.bg, fontSize: 14),
+                  ),
+
+                  // Carousel images
+                  Gap(context.insets.md),
+                  FutureBuilder(
+                    future: Future.value(true),
+                    builder: (BuildContext context, AsyncSnapshot<void> snap) {
+                      return snap.hasData
+                          ? SizedBox(
+                              width: carouselImageWidth, height: carouselImageWidth * 0.75, child: pageViewArtifacts)
+                          : Container();
+                    },
+                  ),
+
+                  // Text and stuff
+                  Gap(context.insets.md),
                   IgnorePointer(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -169,6 +157,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                           (_currentArtifact?.culture ?? '---').toUpperCase(),
                           style: context.textStyles.titleFont
                               .copyWith(color: context.colors.accent1, fontSize: 14, height: 1.2),
+                          textAlign: TextAlign.center,
                         ),
                         Gap(context.insets.md),
 
@@ -176,6 +165,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                         Text(
                           _currentArtifact?.title ?? '---',
                           style: context.textStyles.h2.copyWith(color: context.colors.greyStrong),
+                          textAlign: TextAlign.center,
                         ),
                         Gap(context.insets.xs),
 
@@ -183,6 +173,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                         Text(
                           _currentArtifact?.date ?? '---',
                           style: context.textStyles.body1.copyWith(color: context.colors.body),
+                          textAlign: TextAlign.center,
                         ),
                         Gap(context.insets.lg),
                       ],
@@ -211,6 +202,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                   GestureDetector(
                     onTap: _handleSearchButtonTap,
                     child: Container(
+                      width: maxElementWidth - context.insets.md * 2,
                       decoration: BoxDecoration(
                         color: context.colors.greyStrong,
                         borderRadius: BorderRadius.all(Radius.circular(context.corners.md)),
@@ -233,7 +225,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                     ),
                   ),
 
-                  Gap(context.insets.xl),
+                  Gap(context.insets.md),
                 ],
               ),
             ),
