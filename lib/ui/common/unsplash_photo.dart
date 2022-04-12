@@ -52,7 +52,7 @@ class _UnsplashPhotoAttribution extends StatelessWidget {
     void handleUserNamePressed() => appLogic.showWebView(context, data.photographerUrl);
     void handleUnsplashPressed() => appLogic.showWebView(context, UnsplashPhotoData.unsplashUrl);
 
-    final style = context.textStyles.caption.copyWith(color: context.colors.text, height: 1);
+    final style = context.text.caption.copyWith(color: context.colors.text, height: 1);
     return Container(
       width: double.infinity,
       color: Colors.black.withOpacity(.5),

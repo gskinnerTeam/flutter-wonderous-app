@@ -1,4 +1,5 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/styles/corners.dart';
 import 'package:wonders/styles/insets.dart';
 import 'package:wonders/styles/text.dart';
 import 'package:wonders/styles/times.dart';
@@ -13,6 +14,9 @@ class AppStyle {
 
   /// The current theme colors for the app
   final AppColors colors = AppColors();
+
+  /// Rounded edge corner radii
+  late final AppCorners corners = AppCorners(scale);
 
   /// Padding and margin values
   late final AppInsets insets = AppInsets(scale);
@@ -43,4 +47,6 @@ extension StyleContextExtension on BuildContext {
   AppTextStyles get textStyles => style.text;
   AppColors get colors => style.colors;
   AppTimes get times => style.times;
+  AppTextStyles get text => style.text;
+  AppCorners get corners => style.corners;
 }

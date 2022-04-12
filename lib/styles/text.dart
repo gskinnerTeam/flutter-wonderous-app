@@ -1,20 +1,42 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 @immutable
 class AppTextStyles {
   AppTextStyles(this.scale);
+
   final double scale;
-  final TextStyle titleFont = TextStyle(fontFamily: 'Tenor', height: .9);
-  final TextStyle contentFont = TextStyle(fontFamily: 'Raleway', height: 1.7);
+  final TextStyle titleFont = TextStyle(fontFamily: 'Tenor');
+  final TextStyle contentFont = TextStyle(fontFamily: 'Raleway');
 
   //TODO: Change these to final when design system has stopped changing
-  TextStyle get caption =>
-      contentFont.copyWith(fontSize: 16 * scale, fontWeight: FontWeight.w500, fontStyle: FontStyle.italic);
-  TextStyle get body => contentFont.copyWith(fontSize: 16 * scale);
-  TextStyle get h1 => titleFont.copyWith(fontSize: 64 * scale);
-  TextStyle get h2 => titleFont.copyWith(fontSize: 32 * scale);
-  TextStyle get h3 => titleFont.copyWith(fontSize: 20 * scale);
-  TextStyle get dropCase => titleFont.copyWith(fontSize: 49 * scale);
-  TextStyle get quote => titleFont.copyWith(fontSize: 48 * scale);
+  TextStyle get dropCase => copy(titleFont, sizePx: 49);
+
+  TextStyle get h1 => copy(titleFont, sizePx: 64, heightPx: 62);
+  TextStyle get h2 => copy(titleFont, sizePx: 32, heightPx: 37.44);
+  TextStyle get h3 => copy(titleFont, sizePx: 14, heightPx: 16.44, spacingPc: 5, weight: FontWeight.w600);
+
+  TextStyle get title1 => copy(titleFont, sizePx: 15, heightPx: 17.55, spacingPc: 5);
+  TextStyle get title2 => copy(titleFont, sizePx: 14, heightPx: 16.38);
+  TextStyle get title3 => copy(contentFont, sizePx: 16, heightPx: 18.78, weight: FontWeight.w600);
+
+  TextStyle get body1 => copy(contentFont, sizePx: 16, heightPx: 26);
+  TextStyle get body2 => copy(contentFont, sizePx: 14, heightPx: 26, weight: FontWeight.w600);
+  TextStyle get body3 => copy(contentFont, sizePx: 24, heightPx: 26, weight: FontWeight.w600);
+  TextStyle get body4 => copy(contentFont, sizePx: 14, heightPx: 26);
+
+  TextStyle get quote => copy(titleFont, sizePx: 48, heightPx: 48, spacingPc: -10);
+  TextStyle get caption => copy(contentFont, sizePx: 12, weight: FontWeight.w500).copyWith(fontStyle: FontStyle.italic);
+  TextStyle get button => copy(contentFont, sizePx: 12, weight: FontWeight.w600);
+  TextStyle get tab => copy(contentFont, sizePx: 12, weight: FontWeight.w600);
+
+  TextStyle copy(TextStyle style, {required double sizePx, double? heightPx, double? spacingPc, FontWeight? weight}) {
+    return style.copyWith(
+        fontSize: sizePx * scale,
+        height: heightPx != null ? (heightPx / sizePx) * scale : style.height,
+        letterSpacing: spacingPc != null ? sizePx * scale * spacingPc * 0.01 : style.letterSpacing,
+        fontWeight: weight);
+  }
 }

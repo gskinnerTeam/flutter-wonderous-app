@@ -60,9 +60,10 @@ class AppLogic {
   }
 
   /// TODO: talk to design team about whether we should link out or use an inline view.
-  /// TODO: Switch from Cupertino to one of the AnimationPage routes?
   void showWebView(BuildContext context, String url) => Navigator.push(
         context,
+
+        /// TODO: Switch from Cupertino to one of the "Animation" Page routes?
         CupertinoPageRoute(builder: (_) => FullscreenWebView(url)),
       );
 }

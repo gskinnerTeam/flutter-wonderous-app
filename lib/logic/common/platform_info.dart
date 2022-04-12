@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class PlatformInfo {
   static const _desktopPlatforms = [TargetPlatform.macOS, TargetPlatform.windows, TargetPlatform.linux];
@@ -12,4 +15,7 @@ class PlatformInfo {
   static bool get isMacOS => defaultTargetPlatform == TargetPlatform.macOS;
   static bool get isAndroid => defaultTargetPlatform == TargetPlatform.android;
   static bool get isIOS => defaultTargetPlatform == TargetPlatform.iOS;
+
+  static Future<bool> get isConnected async => await InternetConnectionChecker().hasConnection;
+  static Future<bool> get isDisconnected async => (await isConnected) == false;
 }

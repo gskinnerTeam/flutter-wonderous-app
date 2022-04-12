@@ -1,12 +1,14 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=C:\_dev\sdks\flutter
-FLUTTER_APPLICATION_PATH=C:\_dev\gskinner\flutter-wonders-app
+FLUTTER_ROOT=/Users/alexgarneau/gSkinner/flutter/flutter
+FLUTTER_APPLICATION_PATH=/Users/alexgarneau/gSkinner/flutter/flutter-wonders-app
 COCOAPODS_PARALLEL_CODE_SIGN=true
+FLUTTER_TARGET=/Users/alexgarneau/gSkinner/flutter/flutter-wonders-app/lib/main.dart
 FLUTTER_BUILD_DIR=build
-FLUTTER_BUILD_NAME=0.0.3
-FLUTTER_BUILD_NUMBER=0.0.3
+FLUTTER_BUILD_NAME=0.0.6
+FLUTTER_BUILD_NUMBER=0.0.6
 EXCLUDED_ARCHS=arm64
+DART_DEFINES=RkxVVFRFUl9XRUJfQVVUT19ERVRFQ1Q9dHJ1ZQ==
 DART_OBFUSCATION=false
-TRACK_WIDGET_CREATION=false
+TRACK_WIDGET_CREATION=true
 TREE_SHAKE_ICONS=false
-PACKAGE_CONFIG=.packages
+PACKAGE_CONFIG=/Users/alexgarneau/gSkinner/flutter/flutter-wonders-app/.dart_tool/package_config.json

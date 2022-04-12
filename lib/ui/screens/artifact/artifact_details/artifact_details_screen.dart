@@ -1,0 +1,158 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/string_utils.dart';
+import 'package:wonders/logic/data/artifact_data.dart';
+import 'package:wonders/ui/common/controls/app_loader.dart';
+
+part 'artifact_data_row.dart';
+
+/// View that shows parsed artifact data to the user, including image, title, culture, and many other things.
+/// View contains no links and must be closed ia close button to return the user to the rest of the app.
+class ArtifactDetailsScreen extends StatefulWidget {
+  final String artifactId;
+  const ArtifactDetailsScreen({Key? key, required this.artifactId}) : super(key: key);
+
+  @override
+  State<ArtifactDetailsScreen> createState() => _ArtifactDetailsScreenState();
+}
+
+class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
+  ArtifactData? _artifact;
+  final double _textHeight = 1.2;
+
+  @override
+  void initState() {
+    super.initState();
+    _getArtifact();
+  }
+
+  void _getArtifact() async {
+    var newArtifact = await searchLogic.getArtifactByID(widget.artifactId);
+    setState(() => _artifact = newArtifact);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Create an image with a close button in the top right
+    var header = Stack(
+      children: [
+        // Image
+        Center(
+          child: (_artifact == null)
+              // Progress indicator
+              ? Padding(
+                  padding: EdgeInsets.all(context.insets.lg),
+                  child: Center(
+                    child: AppLoader(),
+                  ),
+                )
+              // Actual rendered image
+              : CachedNetworkImage(
+                  imageUrl: _artifact!.image,
+                  fit: BoxFit.fitHeight,
+                  placeholder: (BuildContext context, String url) => AppLoader()),
+        ),
+
+        // Close button
+        Positioned(
+          top: context.insets.xs,
+          right: context.insets.xs,
+          child: GestureDetector(
+            child: ClipOval(
+              child: Container(
+                color: context.colors.greyStrong,
+                child: Padding(
+                  padding: EdgeInsets.all(context.insets.xs),
+                  child: CloseButton(color: context.colors.bg),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+
+    // Create a grid of text fields, labels and content.
+    var textBox = Padding(
+      padding: EdgeInsets.symmetric(horizontal: context.insets.lg),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Gap(context.insets.lg),
+
+          // Wonder Type
+          Text(
+            _artifact?.culture.toUpperCase() ?? '---',
+            style: context.textStyles.titleFont.copyWith(color: context.colors.accent1),
+          ),
+
+          Gap(context.insets.sm),
+
+          // Title (or "loading" if artifact isn't loaded yet)
+          Text(
+            _artifact?.title ?? 'Loading...',
+            textAlign: TextAlign.center,
+            style: context.textStyles.h2.copyWith(color: context.colors.bg, height: _textHeight),
+          ),
+
+          Gap(context.insets.xxl),
+
+          // Compass rose line break
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                child: Container(
+                  decoration:
+                      BoxDecoration(border: Border(bottom: BorderSide(width: 1, color: context.colors.accent2))),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: context.insets.xs),
+                child: SvgPicture.asset(
+                  './assets/images/compass-full.svg',
+                  semanticsLabel: 'Line break',
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  decoration:
+                      BoxDecoration(border: Border(bottom: BorderSide(width: 1, color: context.colors.accent2))),
+                ),
+              ),
+            ],
+          ),
+
+          Gap(context.insets.xxl),
+
+          // Description
+          Column(mainAxisSize: MainAxisSize.min, children: [
+            ArtifactDataRow(title: 'Date', content: _artifact?.date ?? '---'),
+            ArtifactDataRow(title: 'Period', content: _artifact?.period ?? '---'),
+            ArtifactDataRow(title: 'Geography', content: _artifact?.country ?? '---'),
+            ArtifactDataRow(title: 'Medium', content: _artifact?.medium ?? '---'),
+            ArtifactDataRow(title: 'Dimension', content: _artifact?.dimension ?? '---'),
+            ArtifactDataRow(title: 'Classification', content: _artifact?.classification ?? '---'),
+          ]),
+        ],
+      ),
+    );
+
+    return Container(
+      color: context.colors.greyStrong,
+      child: CustomScrollView(
+        cacheExtent: 2000,
+        slivers: [
+          // Header
+          SliverToBoxAdapter(child: header),
+          // Content
+          SliverToBoxAdapter(child: textBox),
+        ],
+      ),
+    );
+  }
+}

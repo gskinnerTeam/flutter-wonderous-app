@@ -1,4 +1,6 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/search_logic.dart';
+import 'package:wonders/logic/search_service.dart';
 import 'package:wonders/logic/unsplash_logic.dart';
 import 'package:wonders/logic/unsplash_service.dart';
 import 'package:wonders/logic/wonders_logic.dart';
@@ -24,13 +26,16 @@ class WondersApp extends StatelessWidget {
 void registerSingletons({required bool useMocks}) {
   // Top level app controller
   GetIt.I.registerLazySingleton<AppLogic>(() => AppLogic());
+  // Wonders
+  GetIt.I.registerLazySingleton<WondersLogic>(() => WondersLogic());
+  // Search
+  GetIt.I.registerLazySingleton<SearchLogic>(() => SearchLogic());
+  GetIt.I.registerLazySingleton<SearchService>(() => SearchService());
   // Settings
   GetIt.I.registerLazySingleton<SettingsLogic>(() => SettingsLogic());
   // Unsplash
   GetIt.I.registerLazySingleton<UnsplashLogic>(() => UnsplashLogic());
   GetIt.I.registerLazySingleton<UnsplashService>(() => UnsplashService());
-  // Wonders
-  GetIt.I.registerLazySingleton<WondersLogic>(() => WondersLogic());
   // Testing mocks
   if (useMocks) {
     //GetIt.I.pushNewScope();
@@ -43,3 +48,4 @@ AppLogic get appLogic => GetIt.I.get<AppLogic>();
 WondersLogic get wondersLogic => GetIt.I.get<WondersLogic>();
 SettingsLogic get settingsLogic => GetIt.I.get<SettingsLogic>();
 UnsplashLogic get unsplashLogic => GetIt.I.get<UnsplashLogic>();
+SearchLogic get searchLogic => GetIt.I.get<SearchLogic>();

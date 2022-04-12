@@ -9,7 +9,7 @@ class AppBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       style: TextButton.styleFrom(
-        //backgroundColor: context.style.colors.bg,
+        //backgroundColor: context.colors.bg,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       ),
       child: child,
@@ -19,7 +19,7 @@ class AppBtn extends StatelessWidget {
 
   static Widget tight(BuildContext context, {required Widget child, required VoidCallback? onPressed}) => TextButton(
       style: TextButton.styleFrom(
-        //backgroundColor: context.style.colors.bg,
+        //backgroundColor: context.colors.bg,
         minimumSize: Size.zero,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -29,7 +29,8 @@ class AppBtn extends StatelessWidget {
 
   static Widget wide(BuildContext context, {required Widget child, required VoidCallback? onPressed}) => OutlinedButton(
       style: TextButton.styleFrom(
-        //backgroundColor: context.style.colors.bg,
+        //backgroundColor: context.colors.bg,
+
         padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 12),
       ),
       onPressed: onPressed,
