@@ -41,8 +41,7 @@ class _RangeSelectorState extends State<RangeSelector> {
   }
 
   void _handleLeftDrag(DragUpdateDetails d, double width) {
-    double newStart = math.max(0,
-        math.min(endVal - (buttonWidth * 2 / width), startAnchor + (d.localPosition.dx - (buttonWidth / 2)) / width));
+    double newStart = math.max(0, math.min(endVal, startAnchor + (d.localPosition.dx) / width));
     setState(() {
       startVal = newStart;
     });
@@ -59,8 +58,7 @@ class _RangeSelectorState extends State<RangeSelector> {
   }
 
   void _handleRightDrag(DragUpdateDetails d, double width) {
-    double newEnd = math.min(1,
-        math.max(startVal + (buttonWidth * 2 / width), endAnchor + (d.localPosition.dx - (buttonWidth / 2)) / width));
+    double newEnd = math.min(1, math.max(startVal, endAnchor + (d.localPosition.dx) / width));
     setState(() {
       endVal = newEnd;
     });
@@ -81,6 +79,7 @@ class _RangeSelectorState extends State<RangeSelector> {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (_, constraints) {
       return Container(
+        width: constraints.maxWidth - buttonWidth * 2,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(context.corners.md)),
         ),
@@ -89,7 +88,7 @@ class _RangeSelectorState extends State<RangeSelector> {
           mainAxisSize: MainAxisSize.max,
           children: [
             // Left-side Padding
-            Gap(constraints.maxWidth * startVal),
+            Gap((constraints.maxWidth - buttonWidth * 2) * startVal),
 
             // Left-side button
             GestureDetector(
@@ -98,7 +97,7 @@ class _RangeSelectorState extends State<RangeSelector> {
               onHorizontalDragUpdate: (d) => _handleLeftDrag(d, constraints.maxWidth),
               onHorizontalDragEnd: (d) => _handleEndDrag(d, constraints.maxWidth),
               child: Container(
-                alignment: Alignment.centerRight,
+                alignment: Alignment.centerLeft,
                 width: buttonWidth,
                 decoration: BoxDecoration(
                   color: context.colors.greyStrong,
@@ -133,7 +132,7 @@ class _RangeSelectorState extends State<RangeSelector> {
               onHorizontalDragUpdate: (d) => _handleRightDrag(d, constraints.maxWidth),
               onHorizontalDragEnd: (d) => _handleEndDrag(d, constraints.maxWidth),
               child: Container(
-                alignment: Alignment.centerLeft,
+                alignment: Alignment.centerRight,
                 width: buttonWidth,
                 decoration: BoxDecoration(
                   color: context.colors.greyStrong,
@@ -148,7 +147,7 @@ class _RangeSelectorState extends State<RangeSelector> {
             ),
 
             // Right-side Padding
-            Gap(constraints.maxWidth * (1 - endVal)),
+            Gap((constraints.maxWidth - buttonWidth * 2) * (1 - endVal)),
           ],
         ),
       );
