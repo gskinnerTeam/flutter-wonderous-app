@@ -3,7 +3,7 @@ import 'package:wonders/common_libs.dart';
 /// Consolidate common paths uses across the app
 class ImagePaths {
   static String root = 'assets/images';
-
+  static String collectibles = '$root/collectibles';
   static String cloud = '$root/cloud-white.png';
   static String speckles = '$root/texture/speckles-white.png';
   static String roller1 = '$root/texture/roller-1-white.png';
