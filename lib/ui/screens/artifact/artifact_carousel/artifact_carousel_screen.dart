@@ -16,6 +16,8 @@ class ArtifactCarouselScreen extends StatefulWidget {
 
 class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   final _pageViewportFraction = 0.5;
+
+  // TODO: Wire up to actual wonder data.
   final _highlightedArtifactIds = [
     '503940',
     '312595',
