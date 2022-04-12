@@ -1,8 +1,8 @@
-library fx;
-
 import 'package:flutter/widgets.dart';
 import '../fx.dart';
 
+// Abstract class that defines the required interface and a number of helper
+// methods for effect classes.
 @immutable
 abstract class AbstractFX<T> {
   final Duration? delay;

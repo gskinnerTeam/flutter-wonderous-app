@@ -3,12 +3,9 @@
 import 'dart:ui';
 
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/fx/fx.dart';
+import 'package:wonders/ui/common/fx/fx.dart';
+import 'package:wonders/ui/common/particles/particle_field.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
-import 'package:wonders/particles/particle_field.dart';
-import 'package:wonders/particles/sprite_sheet.dart';
-
-import '../../../particles/particle.dart';
 
 class CollectibleFoundScreen extends StatelessWidget {
   final CollectibleData collectible;
@@ -38,37 +35,7 @@ class CollectibleFoundScreen extends StatelessWidget {
             )
           ),
         ),
-        if (t > 0.6) Positioned.fill(child: ParticleField(
-          spriteSheet: SpriteSheet(
-            image: AssetImage('assets/images/collectibles/sparkle_21x23.png'),
-            frameWidth: 21
-          ),
-          onTick: (controller, elapsed, size) {
-            List<Particle> particles = controller.particles;
-            int addCount = min(5, 120 - particles.length);
-            double s = min(size.width, size.height) * rnd(0.3, 0.4);
-            double v = s * 0.08;
-            while (--addCount > 0) {
-              double angle = rnd.getRad();
-              particles.add(StarParticle(
-                x: cos(angle) * s,
-                y: sin(angle) * s,
-                vx: cos(angle) * v * rnd(0.3, 1),
-                vy: sin(angle) * v * rnd(0.3, 1),
-                life: rnd(0.1, 1),
-              ));
-            }
-            for (int i = particles.length-1; i >= 0; i--) {
-              StarParticle o = particles[i] as StarParticle;
-              o.life -= 0.015;
-              if (o.life <= 0) { particles.removeAt(i); continue; }
-              o.x += o.vx;
-              o.y += o.vy;
-              o.color = Colors.white.withOpacity(o.life * o.life);
-              o.frame = (o.frame + 1) % controller.spriteSheet.length;
-            }
-          }
-        ),),
+        if (t > 0.6) Positioned.fill(child: _buildParticleField()),
         Center(child: Hero(tag: 'collectible', child: _buildImage(128 + 128 * t))),
       ],)
     );
@@ -88,6 +55,41 @@ class CollectibleFoundScreen extends StatelessWidget {
         );
   }
 
+  Widget _buildParticleField() {
+    return ParticleField(
+      spriteSheet: SpriteSheet(
+        image: AssetImage('assets/images/collectibles/sparkle_21x23.png'),
+        frameWidth: 21,
+        scale: 0.5,
+      ),
+      onTick: (controller, elapsed, size) {
+        List<Particle> particles = controller.particles;
+        int addCount = min(20, 500 - particles.length);
+        double s = min(size.width, size.height) * rnd(0.25, 0.4);
+        double v = s * 0.03;
+        while (--addCount > 0) {
+          double angle = rnd.getRad();
+          particles.add(Particle(
+            x: cos(angle) * s,
+            y: sin(angle) * s,
+            vx: cos(angle) * v * rnd(0.3, 1),
+            vy: sin(angle) * v * rnd(0.3, 1),
+            lifespan: rnd(30, 60),
+          ));
+        }
+        for (int i = particles.length-1; i >= 0; i--) {
+          Particle o = particles[i];
+          if (o.age >= o.lifespan) { particles.removeAt(i); continue; }
+          o.update(
+            frame: o.age ~/ 3,
+            vy: o.vy + 0.1, // gravity
+            color: Colors.white.withOpacity(pow(1-o.age/o.lifespan, 2).toDouble()),
+          );
+        }
+      }
+    );
+  }
+
   Widget _buildImage([double size=64.0]) {
     return Image(
       image: collectible.sillhouette,
@@ -96,15 +98,3 @@ class CollectibleFoundScreen extends StatelessWidget {
     );
   }
 }
-
-class StarParticle extends Particle {
-  double vx;
-  double vy;
-  double life;
-
-  StarParticle({x, y, this.vx=0, this.vy=0, this.life=1}) {
-    this.x = x;
-    this.y = y;
-    scale = 0.66;
-  }
-} 

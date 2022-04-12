@@ -1,14 +1,13 @@
 import 'package:flutter/widgets.dart';
 
 import '../fx.dart';
-import 'abstract_fx.dart';
 
 @immutable
 class ListenFX extends AbstractFX<double> {
   final Function(double) callback;
   final bool clamp;
 
-  const ListenFX(this.callback, {delay, duration, curve, begin, end, this.clamp=true}) :
+  const ListenFX(this.callback, {Duration? delay, Duration? duration, Curve? curve, double? begin, double? end, this.clamp=true}) :
     super(delay:delay, duration:duration, curve:curve, begin:begin ?? 0.0, end:end ?? 1.0);
 
   @override

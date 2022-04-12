@@ -1,11 +1,10 @@
 import 'package:flutter/widgets.dart';
 
 import '../fx.dart';
-import 'abstract_fx.dart';
 
 @immutable
 class FadeFX extends AbstractFX<double> {
-  const FadeFX({delay, duration, curve, begin, end}) :
+  const FadeFX({Duration? delay, Duration? duration, Curve? curve, double? begin, double? end}) :
     super(delay:delay, duration:duration, curve:curve, begin:begin ?? 0.0, end:end ?? 1.0);
 
   @override
