@@ -105,9 +105,8 @@ class _ImageGalleryState extends State<ImageGallery> {
           swipeDir: _lastSwipeDir,
           duration: swipeDuration * .5,
           opacity: _scale == 1 ? .7 : .5,
-          // TODO: Check whether clipping the OverflowBox is actually a perf win?
-          // Clip the overflow box to prevent rendering outside of the viewport
           child: SafeArea(
+            /// Place content in overflow box, to allow it to flow outside the parent
             child: OverflowBox(
               maxWidth: _gridCount * imgSize.width + padding * (_gridCount - 1),
               maxHeight: _gridCount * imgSize.height + padding * (_gridCount - 1),
@@ -116,6 +115,7 @@ class _ImageGalleryState extends State<ImageGallery> {
               child: EightWaySwipeDetector(
                 onSwipe: _handleSwipe,
                 threshold: 10 + 100 * settingsLogic.swipeThreshold.value,
+                // A tween animation builder moves from image to image based on current offset
                 child: TweenAnimationBuilder<Offset>(
                   tween: Tween(begin: gridOffset, end: gridOffset),
                   duration: offsetTweenDuration,
@@ -130,37 +130,7 @@ class _ImageGalleryState extends State<ImageGallery> {
                     childAspectRatio: imgSize.aspectRatio,
                     mainAxisSpacing: padding,
                     crossAxisSpacing: padding,
-                    children: List.generate(_imgCount, (index) {
-                      bool selected = index == _index;
-                      bool wasSelected = index == _prevIndex;
-                      return ClipRRect(
-                        borderRadius: BorderRadius.circular(6),
-                        // Wrap a motion blur around the selected and previous items
-                        child: AnimatedMotionBlur(
-                          swipeDuration,
-                          // use a key to force motion blurs to re-run when index changes
-                          animationKey: ValueKey(_index),
-                          blurStrength: 15,
-                          enabled: settingsLogic.enableMotionBlur.value && (selected || wasSelected),
-                          dir: _lastSwipeDir,
-                          // Make each img tappable, so user can easily jump between them
-                          child: GestureDetector(
-                            onTap: () => _handleImageTapped(index),
-                            child: SizedBox(
-                              width: imgSize.width,
-                              height: imgSize.height,
-                              child: TweenAnimationBuilder<double>(
-                                duration: context.times.med,
-                                curve: Curves.easeOut,
-                                tween: Tween(begin: 1, end: selected ? 1.15 : 1),
-                                builder: (_, value, child) => Transform.scale(child: child, scale: value),
-                                child: UnsplashPhoto(widget.photoIds[index], fit: BoxFit.cover, targetSize: 600),
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    }),
+                    children: List.generate(_imgCount, (i) => _buildImage(i, swipeDuration, imgSize)),
                   ),
                 ),
               ),
@@ -177,6 +147,35 @@ class _ImageGalleryState extends State<ImageGallery> {
           ),
         )
       ],
+    );
+  }
+
+  Widget _buildImage(int index, Duration swipeDuration, Size imgSize) {
+    bool selected = index == _index;
+    bool wasSelected = index == _prevIndex;
+    return GestureDetector(
+      onTap: () => _handleImageTapped(index),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(6),
+        child: AnimatedMotionBlur(
+          swipeDuration,
+          animationKey: ValueKey(_index),
+          blurStrength: 15,
+          enabled: settingsLogic.enableMotionBlur.value && (selected || wasSelected),
+          dir: _lastSwipeDir,
+          child: SizedBox(
+            width: imgSize.width,
+            height: imgSize.height,
+            child: TweenAnimationBuilder<double>(
+              duration: context.times.med,
+              curve: Curves.easeOut,
+              tween: Tween(begin: 1, end: selected ? 1.15 : 1),
+              builder: (_, value, child) => Transform.scale(child: child, scale: value),
+              child: UnsplashPhoto(widget.photoIds[index], fit: BoxFit.cover, targetSize: 600),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

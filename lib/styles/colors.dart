@@ -3,14 +3,15 @@ import 'package:wonders/logic/common/color_utils.dart';
 
 class AppColors {
   /// Common
-  final Color bg = Color(0xFFEBE6E4);
   final Color accent1 = Color(0xFFE4935D);
   final Color accent2 = Color(0xFFBEABA1);
-  final Color body = const Color(0xFF514F4D);
+  final Color offWhite = Color(0xFFEBE6E4);
   final Color caption = const Color(0xFF7D7873);
+  final Color body = const Color(0xFF514F4D);
   final Color greyStrong = const Color(0xFF272625);
-  final Color text = Colors.white;
-  final Color textOnBg = Colors.black;
+  final Color greyMedium = const Color(0xFF9D9995);
+  final Color white = Colors.white;
+  final Color black = Colors.black;
 
   /// Wonders
   // final Color chichenBg = WonderType.chichenItza.bgColor;
@@ -44,7 +45,7 @@ class AppColors {
   ThemeData toThemeData() {
     /// Create a TextTheme and ColorScheme, that we can use to generate ThemeData
     TextTheme txtTheme = (isDark ? ThemeData.dark() : ThemeData.light()).textTheme;
-    Color txtColor = text;
+    Color txtColor = white;
     ColorScheme colorScheme = ColorScheme(
         // Decide how you want to apply your own custom them, to the MaterialApp
         brightness: isDark ? Brightness.dark : Brightness.light,
@@ -52,8 +53,8 @@ class AppColors {
         primaryContainer: accent1,
         secondary: accent1,
         secondaryContainer: accent1,
-        background: bg,
-        surface: bg,
+        background: offWhite,
+        surface: offWhite,
         onBackground: txtColor,
         onSurface: txtColor,
         onError: Colors.white,

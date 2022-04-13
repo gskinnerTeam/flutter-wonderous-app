@@ -88,7 +88,7 @@ class _ImagePreview extends StatelessWidget {
           // Add an outer border with the rounded ends.
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,
-            border: Border.all(color: context.colors.bg, width: borderWidth),
+            border: Border.all(color: context.colors.offWhite, width: borderWidth),
             borderRadius: BorderRadius.all(Radius.circular(elementWidth)),
           ),
 

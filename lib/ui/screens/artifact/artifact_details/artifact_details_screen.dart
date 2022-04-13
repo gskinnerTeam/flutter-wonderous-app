@@ -5,7 +5,6 @@ import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/ui/common/compass_divider.dart';
 import 'package:wonders/ui/common/controls/circle_button.dart';
 import 'package:wonders/ui/common/fullscreen_url_img_viewer.dart';
-import 'package:wonders/ui/common/fx/fx.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/page_routes.dart';
 
@@ -64,7 +63,7 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
             child: Padding(
               padding: EdgeInsets.all(context.insets.md),
               child: CircleButton(
-                child: Icon(Icons.close, color: context.colors.text),
+                child: Icon(Icons.close, color: context.colors.white),
                 bgColor: context.colors.greyStrong,
                 onPressed: _handleClosePressed,
               ),
@@ -152,7 +151,7 @@ class _BottomContent extends StatelessWidget {
           Text(
             data.title,
             textAlign: TextAlign.center,
-            style: context.textStyles.h2.copyWith(color: context.colors.bg, height: _textHeight),
+            style: context.textStyles.h2.copyWith(color: context.colors.offWhite, height: _textHeight),
           ).gTweener.fade().withDelay(animDelay * 1.05).withDuration(animDuration),
 
           Gap(context.insets.xxl),

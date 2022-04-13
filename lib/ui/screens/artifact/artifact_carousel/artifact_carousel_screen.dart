@@ -67,6 +67,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return Placeholder();
     // Used to determine carousel element size.
     double maxElementWidth = 500;
     double carouselImageWidth = math.min(maxElementWidth, context.widthPx / 1.25);
@@ -113,14 +114,43 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
               width: math.min(context.widthPx, maxBottomWidth),
               height: bottomHalfHeight + maxBottomWidth / 2,
               decoration: BoxDecoration(
-                color: context.colors.bg,
+                color: context.colors.offWhite,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(maxBottomWidth / 2), topRight: Radius.circular(maxBottomWidth / 2)),
               ),
             ),
           ),
 
-          // Content
+          // White space, covering bottom half.
+          BottomCenter(
+            child: Container(height: bottomHalfHeight, color: context.colors.offWhite),
+          ),
+
+          // Carousel images
+          BottomCenter(
+            heightFactor: 0.5,
+            child: FutureBuilder(
+              future: Future.value(true),
+              builder: (BuildContext context, AsyncSnapshot<void> snap) {
+                return snap.hasData ? pageViewArtifacts : Container();
+              },
+            ),
+          ),
+
+          // Header
+          SafeArea(
+            child: TopCenter(
+              child: Padding(
+                padding: EdgeInsets.only(top: context.insets.xxl),
+                child: Text(
+                  'HIGHLIGHTS',
+                  style: context.textStyles.h3.copyWith(color: context.colors.offWhite, fontSize: 14),
+                ),
+              ),
+            ),
+          ),
+
+          // Text and Artifact Search button
           BottomCenter(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: context.insets.md),
@@ -132,7 +162,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                   Gap(context.insets.md),
                   Text(
                     'HIGHLIGHTS',
-                    style: context.textStyles.h3.copyWith(color: context.colors.bg, fontSize: 14),
+                    style: context.textStyles.h3.copyWith(color: context.colors.offWhite, fontSize: 14),
                   ),
 
                   // Carousel images
@@ -216,10 +246,10 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                           children: [
                             Text('BROWSE ALL ARTIFACTS',
                                 style: context.textStyles.body1
-                                    .copyWith(color: context.colors.bg, fontSize: 12, height: 1.2)),
+                                    .copyWith(color: context.colors.offWhite, fontSize: 12, height: 1.2)),
                             Padding(
                               padding: EdgeInsets.only(left: context.insets.xs),
-                              child: Icon(Icons.search, color: context.colors.bg, size: 18),
+                              child: Icon(Icons.search, color: context.colors.offWhite, size: 18),
                             ),
                           ],
                         ),

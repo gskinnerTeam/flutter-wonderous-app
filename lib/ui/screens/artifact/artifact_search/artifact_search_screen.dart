@@ -75,7 +75,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
               // Content
               Expanded(
                 child: Container(
-                  color: context.colors.bg,
+                  color: context.colors.offWhite,
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: context.insets.md, vertical: context.insets.sm),
                     child: Column(

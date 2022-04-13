@@ -1,16 +1,16 @@
 import 'package:wonders/common_libs.dart';
 
 class AppBtn extends StatelessWidget {
-  const AppBtn({Key? key, required this.child, required this.onPressed}) : super(key: key);
+  const AppBtn({Key? key, required this.child, required this.onPressed, this.padding}) : super(key: key);
   final Widget child;
   final VoidCallback? onPressed;
-
+  final EdgeInsets? padding;
   @override
   Widget build(BuildContext context) {
     return TextButton(
       style: TextButton.styleFrom(
         //backgroundColor: context.colors.bg,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        padding: padding ?? const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       ),
       child: child,
       onPressed: onPressed,

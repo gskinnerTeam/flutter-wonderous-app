@@ -15,7 +15,7 @@ class WonderDetailsTabMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color tabIconColor = showBg ? context.colors.textOnBg : context.colors.text;
+    Color tabIconColor = showBg ? context.colors.black : context.colors.white;
     const double homeBtnSize = 70;
     const double buttonInset = 12;
     // Use SafeArea padding if its more than the default padding.
@@ -29,7 +29,7 @@ class WonderDetailsTabMenu extends StatelessWidget {
             opacity: showBg ? 1 : 0,
             child: Padding(
               padding: EdgeInsets.only(top: buttonInset),
-              child: ColoredBox(color: context.colors.bg),
+              child: ColoredBox(color: context.colors.offWhite),
             ),
           ),
         ),
@@ -98,7 +98,7 @@ class _WonderHomeBtn extends StatelessWidget {
     return CircleButton(
       onPressed: () => Navigator.of(context).pop(),
       bgColor: context.colors.accent1,
-      border: BorderSide(color: context.colors.bg, width: 6),
+      border: BorderSide(color: context.colors.offWhite, width: 6),
       child: SizedBox(
           width: size,
           height: size,
@@ -125,6 +125,7 @@ class _TabBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: AppBtn(
+        padding: EdgeInsets.symmetric(vertical: context.insets.md),
         child: Icon(
           icon,
           color: index == tabController.index ? context.colors.accent1 : iconColor,

@@ -18,7 +18,7 @@ class _ScrollingContent extends StatelessWidget {
         );
 
     return Container(
-      color: context.colors.bg,
+      color: context.colors.offWhite,
       padding: EdgeInsets.all(context.insets.md),
       child: SeparatedColumn(
         separatorBuilder: () => Gap(context.insets.md),

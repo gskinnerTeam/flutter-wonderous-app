@@ -38,9 +38,16 @@ class _AppBar extends StatelessWidget {
                 ClipPath(
                   // Switch arch type to Rect if we are showing the title bar
                   clipper: showOverlay ? null : ArchClipper(archType!),
-                  child: ScalingListItem(
-                    scrollPos: scrollPos,
-                    child: Image.asset(wonderType.photo1, fit: BoxFit.cover),
+                  child: ValueListenableBuilder<double>(
+                    valueListenable: scrollPos,
+                    builder: (_, value, child) {
+                      double opacity = (.4 + (value / 1500)).clamp(0, 1);
+                      return Opacity(opacity: opacity, child: child);
+                    },
+                    child: ScalingListItem(
+                      scrollPos: scrollPos,
+                      child: Image.asset(wonderType.photo1, fit: BoxFit.cover),
+                    ),
                   ),
                 ),
                 if (showOverlay) ...[
@@ -57,15 +64,17 @@ class _AppBar extends StatelessWidget {
           ),
 
           /// Titlebar
-          BottomCenter(child: ValueListenableBuilder<int>(
-            valueListenable: sectionIndex,
-            builder: (_, value, __) {
-              return _CircularTitleBar(
-                index: value,
-                titles: _titleValues,
-              );
-            },
-          ),),
+          BottomCenter(
+            child: ValueListenableBuilder<int>(
+              valueListenable: sectionIndex,
+              builder: (_, value, __) {
+                return _CircularTitleBar(
+                  index: value,
+                  titles: _titleValues,
+                );
+              },
+            ),
+          ),
         ],
       );
     });

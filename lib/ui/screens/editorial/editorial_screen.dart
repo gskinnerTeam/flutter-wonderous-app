@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drop_cap_text/drop_cap_text.dart';
 import 'package:flutter_circular_text/circular_text.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
@@ -15,6 +14,7 @@ import 'package:wonders/ui/common/curved_clippers.dart';
 import 'package:wonders/ui/common/placeholder_image.dart';
 import 'package:wonders/ui/common/scaling_list_item.dart';
 import 'package:wonders/ui/common/themed_text.dart';
+import 'package:wonders/ui/screens/home/animated_clouds.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 import 'package:wonders/ui/wonder_illustrations/wonder_illustration.dart';
 
@@ -86,7 +86,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
       return NotificationListener<ScrollUpdateNotification>(
         onNotification: _checkPointerIsDown,
         child: ColoredBox(
-          color: context.colors.bg,
+          color: context.colors.offWhite,
           child: Stack(
             children: [
               /// Background
@@ -108,7 +108,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                   valueListenable: _scrollPos,
                   builder: (_, value, child) {
                     // get some value between 0 and 1, based on the amt scrolled
-                    double opacity = (1 - value / 500).clamp(0, 1);
+                    double opacity = (1 - value / 700).clamp(0, 1);
                     return Opacity(opacity: opacity, child: child);
                   },
                   child: _TopIllustration(widget.data.type),
@@ -155,20 +155,11 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                         [GFade(), GMove(from: Offset(0, 100))],
                         duration: context.times.med,
                         // Fade the app bar in as we scroll up
-                        child: ValueListenableBuilder<double>(
-                          valueListenable: _scrollPos,
-                          builder: (_, value, child) {
-                            double opacity = (.4 + (value / 1000)).clamp(0, 1);
-                            // Curve the opacity so it comes in a little later. Typically you wouldn't curve a fade
-                            // but this is driven by the scroll position, so it works nicely.
-                            return Opacity(opacity: Curves.easeIn.transform(opacity), child: child);
-                          },
-                          child: SizedBox.expand(
-                            child: _AppBar(
-                              widget.data.type,
-                              scrollPos: _scrollPos,
-                              sectionIndex: _sectionIndex,
-                            ),
+                        child: SizedBox.expand(
+                          child: _AppBar(
+                            widget.data.type,
+                            scrollPos: _scrollPos,
+                            sectionIndex: _sectionIndex,
                           ),
                         ),
                       )
@@ -187,7 +178,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
 
                   /// Bottom padding
                   SliverToBoxAdapter(
-                    child: Container(height: 300, color: context.colors.bg),
+                    child: Container(height: 300, color: context.colors.offWhite),
                   ),
                 ],
               ),

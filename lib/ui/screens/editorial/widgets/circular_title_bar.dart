@@ -16,7 +16,7 @@ class _CircularTitleBar extends StatelessWidget {
       child: Stack(
         children: [
           // Bg
-          BottomCenter(child: Container(height: barSize - barTopPadding, color: context.colors.bg)),
+          BottomCenter(child: Container(height: barSize - barTopPadding, color: context.colors.offWhite)),
 
           ClipRect(
             child: OverflowBox(
@@ -78,7 +78,7 @@ class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with S
         child: child,
       ),
       child: Container(
-        decoration: BoxDecoration(shape: BoxShape.circle, color: context.colors.bg),
+        decoration: BoxDecoration(shape: BoxShape.circle, color: context.colors.offWhite),
         alignment: Alignment.center,
         child: Padding(
           padding: const EdgeInsets.all(24),

@@ -2,7 +2,6 @@ import 'package:flutter/scheduler.dart';
 import 'package:statsfl/statsfl.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/app_scroll_behavior.dart';
-import 'package:wonders/ui/common/fx/fx.dart';
 
 class WondersAppScaffold extends StatelessWidget with GetItMixin {
   WondersAppScaffold({Key? key, required this.child}) : super(key: key);

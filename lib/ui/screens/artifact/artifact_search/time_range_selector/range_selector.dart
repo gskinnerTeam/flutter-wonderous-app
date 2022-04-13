@@ -107,7 +107,7 @@ class _RangeSelectorState extends State<RangeSelector> {
                     bottomLeft: Radius.circular(context.corners.md),
                   ),
                 ),
-                child: Icon(Icons.arrow_left, color: context.colors.bg),
+                child: Icon(Icons.arrow_left, color: context.colors.offWhite),
               ),
             ),
 
@@ -142,7 +142,7 @@ class _RangeSelectorState extends State<RangeSelector> {
                     bottomRight: Radius.circular(context.corners.md),
                   ),
                 ),
-                child: Icon(Icons.arrow_right, color: context.colors.bg),
+                child: Icon(Icons.arrow_right, color: context.colors.offWhite),
               ),
             ),
 
