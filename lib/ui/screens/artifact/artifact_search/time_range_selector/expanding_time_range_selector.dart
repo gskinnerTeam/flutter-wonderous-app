@@ -86,7 +86,8 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
                 padding: EdgeInsets.all(padding),
                 child: SizedBox(
                   width: constraints.maxWidth - padding * 2,
-                  child: _OpenedTimeRange(this, _handleYearRangeChange),
+                  child: _OpenedTimeRange(
+                      this, _handleYearRangeChange, () => _handleCustomToggle(active: title == 'Custom')),
                 ),
               ),
             ),
@@ -99,9 +100,10 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
 
 /// Shows the opened timeline view
 class _OpenedTimeRange extends StatelessWidget {
-  const _OpenedTimeRange(this.state, this.handleRangeChange, {Key? key}) : super(key: key);
+  const _OpenedTimeRange(this.state, this.handleRangeChange, this.handleToggleTap, {Key? key}) : super(key: key);
   final _ExpandingTimeRangeSelectorState state;
   final void Function(double start, double end) handleRangeChange;
+  final void Function() handleToggleTap;
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -113,6 +115,7 @@ class _OpenedTimeRange extends StatelessWidget {
             Stack(children: [
               // Background cutout mask for the tile slider
               BlendMask(
+                key: ValueKey('sliderMask'),
                 blendModes: const [BlendMode.dstOut],
                 opacity: 0.8,
                 child: Container(
@@ -123,10 +126,9 @@ class _OpenedTimeRange extends StatelessWidget {
                 ),
               ),
               // Time slider
-              Container(
+              SizedBox(
                 width: double.infinity,
                 height: 86,
-                decoration: BoxDecoration(color: Colors.transparent),
                 child: RangeSelector(
                     start: (state.startYrSelected - state.widget.startYr) / (state.widget.endYr - state.widget.startYr),
                     end: (state.endYrSelected - state.widget.startYr) / (state.widget.endYr - state.widget.startYr),
@@ -150,17 +152,27 @@ class _OpenedTimeRange extends StatelessWidget {
                   style: context.textStyles.tab.copyWith(color: context.colors.caption)),
             ]),
             Gap(context.insets.xs),
-            BlendMask(
-              blendModes: const [BlendMode.dstOut],
-              opacity: 0.5,
-              child: Container(
-                width: 100,
-                height: 50,
-                decoration:
-                    BoxDecoration(color: context.colors.text, borderRadius: BorderRadius.all(Radius.circular(50))),
+
+            // Toggle switch
+            GestureDetector(
+              onTap: handleToggleTap,
+              child: Stack(
+                children: [
+                  BlendMask(
+                    key: ValueKey('toggleMask'),
+                    blendModes: const [BlendMode.dstOut],
+                    opacity: 0.8,
+                    child: Container(
+                      width: 100,
+                      height: 50,
+                      decoration: BoxDecoration(
+                          color: context.colors.text, borderRadius: BorderRadius.all(Radius.circular(50))),
+                    ),
+                  ),
+                  LabbeledToggle(width: 100, height: 50, optionOff: 'Left side', optionOn: 'Right side', isOn: false),
+                ],
               ),
             ),
-            LabbeledToggle(width: 100, height: 50, optionA: 'Left side', optionB: 'Right side'),
             Gap(context.insets.xs),
           ],
         ),
