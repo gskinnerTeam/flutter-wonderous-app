@@ -25,13 +25,13 @@ class CollectibleItem extends StatelessWidget {
           ),
         ));
       },
-      child: Hero(tag: 'collectible', child: _buildImage())
+      child: Hero(tag: 'collectible', child: _buildIcon())
     );
   }
 
-  Widget _buildImage() {
+  Widget _buildIcon() {
     return Image(
-      image: collectible.sillhouette,
+      image: collectible.icon,
       width: size, height: size,
       fit: BoxFit.contain,
     );
