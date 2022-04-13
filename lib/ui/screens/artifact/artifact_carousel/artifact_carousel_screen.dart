@@ -67,7 +67,6 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //return Placeholder();
     // Used to determine carousel element size.
     double maxElementWidth = 500;
     double carouselImageWidth = math.min(maxElementWidth, context.widthPx / 1.25);
