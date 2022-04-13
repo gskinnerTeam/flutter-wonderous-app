@@ -16,6 +16,7 @@ class ArtifactCarouselScreen extends StatefulWidget {
 
 class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   final _pageViewportFraction = 0.5;
+  final _pageViewKey = ValueKey('ArtifactPageView');
 
   // TODO: Wire up to actual wonder data.
   final _highlightedArtifactIds = [
@@ -30,6 +31,8 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   late PageController _controller;
   ArtifactData? _currentArtifact;
   double _currentPage = 0;
+  double _newPage = 0;
+  bool _isSwiping = false;
 
   @override
   void initState() {
@@ -60,8 +63,25 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     });
   }
 
-  void _handleArtifactTap(int index) =>
-      context.push(ScreenPaths.artifact(_loadedArtifacts[index % _loadedArtifacts.length].objectId.toString()));
+  void _handleSwipeStart(DragStartDetails d) {
+    _currentPage = (_controller.position.pixels);
+    _newPage = _currentPage;
+    setState(() => _isSwiping = true);
+  }
+
+  void _handleSwipeUpdate(DragUpdateDetails d) {
+    _newPage -= d.delta.dx;
+    _controller.jumpTo(_newPage);
+  }
+
+  void _handleSwipeEnd(DragEndDetails d) {
+    setState(() => _isSwiping = false);
+    _controller.jumpTo(_newPage);
+  }
+
+  void _handleArtifactTap() {
+    context.push(ScreenPaths.artifact(_currentArtifact?.objectId.toString() ?? ''));
+  }
 
   void _handleSearchButtonTap() => context.push(ScreenPaths.search(widget.type));
 
@@ -80,20 +100,22 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
       return Center(child: AppLoader());
     }
 
-    final pageViewArtifacts = PageView.builder(
-      controller: _controller,
-      onPageChanged: _changeArtifactIndex,
-      itemCount: _highlightedArtifactIds.length,
-      clipBehavior: Clip.none,
-      itemBuilder: (context, index) {
-        return ArtifactCarouselImage(
-          index: index,
-          currentPage: _currentPage,
-          artifact: _loadedArtifacts[index % _loadedArtifacts.length],
-          viewportFraction: _pageViewportFraction,
-          onClick: _handleArtifactTap,
-        );
-      },
+    final pageViewArtifacts = IgnorePointer(
+      child: PageView.builder(
+        pageSnapping: !_isSwiping,
+        controller: _controller,
+        onPageChanged: _changeArtifactIndex,
+        itemCount: _highlightedArtifactIds.length,
+        clipBehavior: Clip.none,
+        itemBuilder: (context, index) {
+          return ArtifactCarouselImage(
+            index: index,
+            currentPage: _currentPage,
+            artifact: _loadedArtifacts[index % _loadedArtifacts.length],
+            viewportFraction: _pageViewportFraction,
+          );
+        },
+      ),
     );
 
     return Container(
@@ -117,6 +139,17 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(maxBottomWidth / 2), topRight: Radius.circular(maxBottomWidth / 2)),
               ),
+            ),
+          ),
+
+          // Gesture detection.
+          Center(
+            child: GestureDetector(
+              onTap: _handleArtifactTap,
+              onHorizontalDragStart: _handleSwipeStart,
+              onHorizontalDragUpdate: _handleSwipeUpdate,
+              onHorizontalDragEnd: _handleSwipeEnd,
+              child: Container(width: double.infinity, height: 400, color: Colors.transparent),
             ),
           ),
 
