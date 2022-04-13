@@ -71,7 +71,10 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
           /// Settings btn
           SafeArea(
             child: TopRight(
-              child: AppBtn(child: Text('Settings'), onPressed: _handleSettingsPressed),
+              child: AppBtn(
+                child: Text('Settings'),
+                onPressed: _handleSettingsPressed,
+              ),
             ),
           ),
 
