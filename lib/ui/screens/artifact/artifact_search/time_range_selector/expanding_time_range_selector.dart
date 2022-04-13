@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/blend_mask.dart';
 import 'package:wonders/ui/common/cards/glass_card.dart';
-import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/labelled-toggle.dart';
+import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/labelled_toggle.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/range_selector.dart';
 
 // Expandable timerange selector component that further refines Artifact Search based on date range.
@@ -169,7 +169,7 @@ class _OpenedTimeRange extends StatelessWidget {
                           color: context.colors.text, borderRadius: BorderRadius.all(Radius.circular(50))),
                     ),
                   ),
-                  LabbeledToggle(width: 100, height: 50, optionOff: 'Left side', optionOn: 'Right side', isOn: false),
+                  LabelledToggle(width: 100, height: 50, optionOff: 'Left side', optionOn: 'Right side', isOn: false),
                 ],
               ),
             ),

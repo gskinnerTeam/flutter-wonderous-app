@@ -1,8 +1,8 @@
 import 'package:wonders/common_libs.dart';
 
 // Expandable timerange selector component that further refines Artifact Search based on date range.
-class LabbeledToggle extends StatelessWidget {
-  const LabbeledToggle(
+class LabelledToggle extends StatelessWidget {
+  const LabelledToggle(
       {Key? key, required optionOff, required optionOn, required this.width, required this.height, required this.isOn})
       : super(key: key);
 
