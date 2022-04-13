@@ -10,7 +10,7 @@ class AppTextStyles {
   final TextStyle contentFont = TextStyle(fontFamily: 'Raleway');
 
   //TODO: Change these to final when design system has stopped changing
-  TextStyle get dropCase => copy(titleFont, sizePx: 49);
+  TextStyle get dropCase => copy(titleFont, sizePx: 49, heightPx: 20);
 
   TextStyle get h1 => copy(titleFont, sizePx: 64, heightPx: 62);
   TextStyle get h2 => copy(titleFont, sizePx: 32, heightPx: 37.44);

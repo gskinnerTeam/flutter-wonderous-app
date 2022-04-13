@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/common/context_utils.dart';
+import 'package:wonders/ui/common/utils/context_utils.dart';
 
 // Shows a set of clouds that animated onto stage.
 // When value-key is changed, a new set of clouds will animate into place and the old ones will animate out.
@@ -94,6 +94,6 @@ class _Cloud extends StatelessWidget {
   Widget build(BuildContext context) => Transform.scale(
         scaleX: scale * (flipX ? -1 : 1),
         scaleY: scale * (flipY ? -1 : 1),
-        child: Image.asset(ImagePaths.cloud, opacity: const AlwaysStoppedAnimation(.8), cacheWidth: 300),
+        child: Image.asset(ImagePaths.cloud, opacity: const AlwaysStoppedAnimation(.4), cacheWidth: 300),
       );
 }

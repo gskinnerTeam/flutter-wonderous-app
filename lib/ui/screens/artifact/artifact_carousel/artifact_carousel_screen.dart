@@ -226,8 +226,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                       ),
                     ),
                   ),
-
-                  Gap(context.insets.xl),
+                  Gap(context.insets.md),
                 ],
               ),
             ),

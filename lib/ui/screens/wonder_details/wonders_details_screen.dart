@@ -52,6 +52,8 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
     wonder ??= wonders.first;
     int tabIndex = _tabController.index;
     bool showTabBarBg = tabIndex != 1;
+    // TODO: Need a better way to get the height of the tab bar here... options? MeasuredWidget, static height, app.tabBarHeight?
+    final double tabBarHeight = context.mq.padding.bottom + 90;
     return ColoredBox(
       color: Colors.black,
       child: Stack(
@@ -62,9 +64,8 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
             children: [
               WonderEditorialScreen(wonder, onScroll: _handleDetailsScrolled),
               ImageGallery(photoIds: wonder.imageIds),
-              // TODO: Need a better way to get the height of the tab bar here... options? MeasuredWidget, static height, app.tabBarHeight?
-              Padding(padding: EdgeInsets.only(bottom: 48), child: ArtifactCarouselScreen(type: widget.type)),
-              Padding(padding: EdgeInsets.only(bottom: 48), child: TimelineScreen(type: widget.type)),
+              Padding(padding: EdgeInsets.only(bottom: tabBarHeight), child: ArtifactCarouselScreen(type: wonder.type)),
+              Padding(padding: EdgeInsets.only(bottom: tabBarHeight), child: TimelineScreen(type: widget.type)),
             ],
           ).gTweener.fade().withInit((t) => _fade = t),
 
@@ -86,7 +87,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
                 tabController: _tabController,
                 wonderType: wonder!.type,
                 showBg: showTabBarBg,
-                showHomeBtn: value,
+                showHomeBtn: value || tabIndex != 0,
               ),
             ),
           ),

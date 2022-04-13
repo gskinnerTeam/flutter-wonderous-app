@@ -1,10 +1,17 @@
+# 0.0.7
+- Home View
+  - Added clouds (WIP)
+  - More polish on swipe down (WIP)
+- Editorial View
+  - Changed drop-cap treatment
+  - Switched to Raleway font for body text
+  - Initial look at hero animation for a discovered collectible (WIP)
+
 # 0.0.6
 - Home View
   - Improved performance of Hero transition when swiping down
   - Added animating arrow
   - Gradient darkens when arrow is pulled
-  - TODO: WonderIllustration 'zooms' in slightly when arrow is pulled
-  - TODO: White box expanded while dragging
 - Artifacts
   - Initial implementation of artifacts carousel (WIP)
   - Initial implementation of search (WIP)
