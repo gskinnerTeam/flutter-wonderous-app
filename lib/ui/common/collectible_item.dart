@@ -25,7 +25,7 @@ class CollectibleItem extends StatelessWidget {
           ),
         ));
       },
-      child: Hero(tag: 'collectible', child: _buildIcon())
+      child: Hero(tag: 'collectible_icon', child: _buildIcon())
     );
   }
 
