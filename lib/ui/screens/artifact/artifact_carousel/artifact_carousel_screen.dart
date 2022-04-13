@@ -67,7 +67,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Placeholder();
+    //return Placeholder();
     // Used to determine carousel element size.
     double maxElementWidth = 500;
     double carouselImageWidth = math.min(maxElementWidth, context.widthPx / 1.25);
@@ -117,35 +117,6 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                 color: context.colors.offWhite,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(maxBottomWidth / 2), topRight: Radius.circular(maxBottomWidth / 2)),
-              ),
-            ),
-          ),
-
-          // White space, covering bottom half.
-          BottomCenter(
-            child: Container(height: bottomHalfHeight, color: context.colors.offWhite),
-          ),
-
-          // Carousel images
-          BottomCenter(
-            heightFactor: 0.5,
-            child: FutureBuilder(
-              future: Future.value(true),
-              builder: (BuildContext context, AsyncSnapshot<void> snap) {
-                return snap.hasData ? pageViewArtifacts : Container();
-              },
-            ),
-          ),
-
-          // Header
-          SafeArea(
-            child: TopCenter(
-              child: Padding(
-                padding: EdgeInsets.only(top: context.insets.xxl),
-                child: Text(
-                  'HIGHLIGHTS',
-                  style: context.textStyles.h3.copyWith(color: context.colors.offWhite, fontSize: 14),
-                ),
               ),
             ),
           ),
@@ -257,7 +228,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                     ),
                   ),
 
-                  Gap(context.insets.md),
+                  Gap(context.insets.xl),
                 ],
               ),
             ),
