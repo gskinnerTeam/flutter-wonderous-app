@@ -92,7 +92,7 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
               child: _ClosedTimeRange(this, title),
             ),
             openBuilder: (_) => Container(
-              color: context.colors.text.withOpacity(0.75),
+              color: context.colors.white.withOpacity(0.75),
               child: Padding(
                 padding: EdgeInsets.all(padding),
                 child: SizedBox(
@@ -139,7 +139,7 @@ class _OpenedTimeRange extends StatelessWidget {
                   width: double.infinity,
                   height: 86,
                   decoration: BoxDecoration(
-                      color: context.colors.text, borderRadius: BorderRadius.all(Radius.circular(context.corners.md))),
+                      color: context.colors.white, borderRadius: BorderRadius.all(Radius.circular(context.corners.md))),
                 ),
               ),
               // Time slider
@@ -184,7 +184,7 @@ class _OpenedTimeRange extends StatelessWidget {
                       width: 100,
                       height: 50,
                       decoration: BoxDecoration(
-                          color: context.colors.text, borderRadius: BorderRadius.all(Radius.circular(50))),
+                          color: context.colors.white, borderRadius: BorderRadius.all(Radius.circular(50))),
                     ),
                   ),
                   LabelledToggle(

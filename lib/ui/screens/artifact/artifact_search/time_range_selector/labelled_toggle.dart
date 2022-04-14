@@ -40,13 +40,13 @@ class LabelledToggle extends StatelessWidget {
             CenterLeft(
               child: Text(
                 optionOff,
-                style: context.textStyles.tab.copyWith(color: isOn ? context.colors.body : context.colors.bg),
+                style: context.textStyles.tab.copyWith(color: isOn ? context.colors.body : context.colors.offWhite),
               ),
             ),
             CenterRight(
               child: Text(
                 optionOn,
-                style: context.textStyles.tab.copyWith(color: isOn ? context.colors.bg : context.colors.body),
+                style: context.textStyles.tab.copyWith(color: isOn ? context.colors.offWhite : context.colors.body),
               ),
             ),
           ],
