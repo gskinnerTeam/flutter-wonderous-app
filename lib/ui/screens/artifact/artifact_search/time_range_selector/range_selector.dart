@@ -1,5 +1,4 @@
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/common/cards/glass_card.dart';
 import 'dart:math' as math;
 
 // Expandable timerange selector component that further refines Artifact Search based on date range.
@@ -67,13 +66,6 @@ class _RangeSelectorState extends State<RangeSelector> {
   }
 
   void _handleEndDrag(DragEndDetails d, double width) {
-    // This looks a bit odd, but bear with me. Buttons are buttonWidth wide, and because they press against
-    // each other, the closest they'll get is buttonWidth px apart. We want that case to say that startVal and
-    // endVal are the same. So to do that, we'll take this width fraction and multiply it by how far the startVal and
-    // endVal are away from 0 and 1 respectively. This way, it'll press that offset in alightly and we'll end up
-    // getting the same values on either side if they are buttonWidth px apart.
-    //double widthFrac = buttonWidth * 2 / (width - buttonWidth * 2);
-    //widget.onChanged(startVal + (startVal * widthFrac), endVal - ((1 - endVal) * widthFrac));
     widget.onChanged(startVal, endVal);
   }
 
