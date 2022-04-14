@@ -1,3 +1,13 @@
+# 0.0.8
+- Artifacts
+  - Added proper buttons to ArtifactView
+  - More Work on ArtifactView
+- Image Gallery
+  - Loads higher resolution images for hi-DPI devices
+- Editorial View
+  - Fixed hanging text in CircleTitleBar (thx Jess!)
+  -
+
 # 0.0.7
 - Home View
   - Added clouds (WIP)
