@@ -9,11 +9,11 @@ import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/blend_mask.dart';
 import 'package:wonders/ui/common/collectible_item.dart';
 import 'package:wonders/ui/common/compass_divider.dart';
-import 'package:wonders/ui/common/context_utils.dart';
 import 'package:wonders/ui/common/curved_clippers.dart';
 import 'package:wonders/ui/common/placeholder_image.dart';
 import 'package:wonders/ui/common/scaling_list_item.dart';
 import 'package:wonders/ui/common/themed_text.dart';
+import 'package:wonders/ui/common/utils/context_utils.dart';
 import 'package:wonders/ui/screens/home/animated_clouds.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 import 'package:wonders/ui/wonder_illustrations/wonder_illustration.dart';
@@ -129,42 +129,41 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
 
                   /// Text content, animates itself to hide behind the app bar as it scrolls up
                   SliverToBoxAdapter(
-                      child: ValueListenableBuilder<double>(
-                          valueListenable: _scrollPos,
-                          builder: (_, value, child) {
-                            double offsetAmt = max(0, value * .3);
-                            double opacity = (1 - offsetAmt / 150).clamp(0, 1);
-
-                            return Transform.translate(
-                              offset: Offset(0, offsetAmt),
-                              child: Opacity(opacity: opacity, child: child),
-                            );
-                          },
-                          child: _TitleText(widget.data))),
+                    child: ValueListenableBuilder<double>(
+                      valueListenable: _scrollPos,
+                      builder: (_, value, child) {
+                        double offsetAmt = max(0, value * .3);
+                        double opacity = (1 - offsetAmt / 150).clamp(0, 1);
+                        return Transform.translate(
+                          offset: Offset(0, offsetAmt),
+                          child: Opacity(opacity: opacity, child: child),
+                        );
+                      },
+                      child: _TitleText(widget.data),
+                    ),
+                  ),
 
                   /// Collapsing App bar, pins to the top of the list
                   SliverAppBar(
-                      pinned: true,
-                      collapsedHeight: _minAppBarHeight,
-                      toolbarHeight: _minAppBarHeight,
-                      expandedHeight: _maxAppBarHeight,
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                      leading: SizedBox.shrink(),
-                      flexibleSpace: GTweener(
-                        [GFade(), GMove(from: Offset(0, 100))],
-                        duration: context.times.med,
-                        // Fade the app bar in as we scroll up
-                        child: SizedBox.expand(
-                          child: _AppBar(
-                            widget.data.type,
-                            scrollPos: _scrollPos,
-                            sectionIndex: _sectionIndex,
-                          ),
+                    pinned: true,
+                    collapsedHeight: _minAppBarHeight,
+                    toolbarHeight: _minAppBarHeight,
+                    expandedHeight: _maxAppBarHeight,
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    leading: SizedBox.shrink(),
+                    flexibleSpace: GTweener(
+                      [GFade(), GMove(from: Offset(0, 100))],
+                      duration: context.times.med,
+                      child: SizedBox.expand(
+                        child: _AppBar(
+                          widget.data.type,
+                          scrollPos: _scrollPos,
+                          sectionIndex: _sectionIndex,
                         ),
-                      )
-                      //ColoredBox(color: Colors.grey.shade200, child: Placeholder())
                       ),
+                    ),
+                  ),
 
                   /// Editorial content (text and images)
                   SliverToBoxAdapter(

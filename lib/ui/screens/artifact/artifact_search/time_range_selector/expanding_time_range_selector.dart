@@ -98,7 +98,7 @@ class _OpenedTimeRange extends StatelessWidget {
                 style: context.textStyles.title3.copyWith(fontSize: 16, color: context.colors.greyStrong)),
             Gap(context.insets.sm),
             Stack(children: [
-              Container(
+              SizedBox(
                   width: double.infinity,
                   height: 86,
                   //decoration: BoxDecoration(backgroundBlendMode: BlendMode.colorBurn, color: context.colors.bg),

@@ -36,7 +36,7 @@ class WondersAppScaffold extends StatelessWidget with GetItMixin {
 
         ///
         SafeArea(
-          child: StatsFl(height: 30, isEnabled: enableFpsMeter, align: Alignment.topCenter, child: SizedBox.expand()),
+          child: StatsFl(height: 30, isEnabled: enableFpsMeter, align: Alignment.topCenter),
         ),
       ],
     );

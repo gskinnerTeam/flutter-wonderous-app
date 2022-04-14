@@ -1,5 +1,5 @@
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/common/context_utils.dart';
+import 'package:wonders/ui/common/utils/context_utils.dart';
 
 /// Takes a scroll position notifier and a child.
 /// Scales its child as it scrolls onto screen for a nice effect.

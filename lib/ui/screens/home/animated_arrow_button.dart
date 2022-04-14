@@ -31,7 +31,7 @@ class _AnimatedArrowButton extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 12),
                     child: FractionallySizedBox(
                       heightFactor: value,
-                      child: Container(color: context.colors.white, width: 3, height: 10),
+                      child: Container(color: context.colors.white, width: 2, height: 10),
                     ),
                   ),
                 ),

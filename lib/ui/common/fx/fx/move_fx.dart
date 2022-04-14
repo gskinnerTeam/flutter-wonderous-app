@@ -9,7 +9,7 @@ class MoveFX extends AbstractFX<Offset> {
             delay: delay,
             duration: duration,
             curve: curve,
-            begin: begin ?? const Offset(0, -25),
+            begin: begin ?? const Offset(0, -16),
             end: end ?? Offset.zero);
 
   @override

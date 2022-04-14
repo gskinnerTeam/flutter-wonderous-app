@@ -6,7 +6,7 @@ import 'package:wonders/ui/common/compass_divider.dart';
 import 'package:wonders/ui/common/controls/circle_button.dart';
 import 'package:wonders/ui/common/fullscreen_url_img_viewer.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
-import 'package:wonders/ui/common/page_routes.dart';
+import 'package:wonders/ui/common/utils/page_routes.dart';
 
 part 'artifact_data_row.dart';
 
@@ -174,7 +174,7 @@ class _BottomContent extends StatelessWidget {
               ArtifactDataRow(title: 'Classification', content: data.classification),
               Gap(context.heightPx * .15),
             ]
-                .fx(interval: 70.milliseconds)
+                .fx(interval: 70.ms)
                 .fade(delay: animDelay * 1.55, duration: context.times.med)
                 .slide(begin: Offset(.2, 0), curve: Curves.easeOut),
           ),

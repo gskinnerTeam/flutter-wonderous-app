@@ -1,19 +1,19 @@
 import 'dart:async';
 
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/common/context_utils.dart';
+import 'package:wonders/ui/common/utils/context_utils.dart';
 
 // Shows a set of clouds that animated onto stage.
 // When value-key is changed, a new set of clouds will animate into place and the old ones will animate out.
-class AnimatedClouds extends StatefulWidget {
-  const AnimatedClouds({Key? key, this.enableAnimations = true, required this.wonderType}) : super(key: key);
+class AnimatedClouds extends StatefulWidget with GetItStatefulWidgetMixin {
+  AnimatedClouds({Key? key, this.enableAnimations = true, required this.wonderType}) : super(key: key);
   final WonderType wonderType;
   final bool enableAnimations;
   @override
   State<AnimatedClouds> createState() => _AnimatedCloudsState();
 }
 
-class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProviderStateMixin {
+class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProviderStateMixin, GetItStateMixin {
   late List<_Cloud> _clouds = [];
   List<_Cloud> _oldClouds = [];
 
@@ -60,11 +60,15 @@ class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProvid
             );
           },
         );
-    return OverflowBox(
-      child: Stack(clipBehavior: Clip.none, key: ValueKey(widget.wonderType), children: [
-        ..._oldClouds.map((c) => buildCloud(c, isOld: true, startOffset: 1000)),
-        ..._clouds.map((c) => buildCloud(c, isOld: false, startOffset: 1000)),
-      ]),
+    bool enableClouds = watchX((SettingsLogic s) => s.enableClouds);
+    if (!enableClouds) return SizedBox.shrink();
+    return ClipRect(
+      child: OverflowBox(
+        child: Stack(clipBehavior: Clip.hardEdge, key: ValueKey(widget.wonderType), children: [
+          ..._oldClouds.map((c) => buildCloud(c, isOld: true, startOffset: 1000)),
+          ..._clouds.map((c) => buildCloud(c, isOld: false, startOffset: 1000)),
+        ]),
+      ),
     );
   }
 
@@ -94,6 +98,6 @@ class _Cloud extends StatelessWidget {
   Widget build(BuildContext context) => Transform.scale(
         scaleX: scale * (flipX ? -1 : 1),
         scaleY: scale * (flipY ? -1 : 1),
-        child: Image.asset(ImagePaths.cloud, opacity: const AlwaysStoppedAnimation(.8), cacheWidth: 300),
+        child: Image.asset(ImagePaths.cloud, opacity: const AlwaysStoppedAnimation(.4), cacheWidth: 300),
       );
 }

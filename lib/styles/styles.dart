@@ -16,7 +16,7 @@ class AppStyle {
   final AppColors colors = AppColors();
 
   /// Rounded edge corner radii
-  late final AppCorners corners = AppCorners(scale);
+  late final AppCorners corners = AppCorners();
 
   /// Padding and margin values
   late final AppInsets insets = AppInsets(scale);

@@ -40,7 +40,7 @@ class _AnimatedMotionBlurState extends State<AnimatedMotionBlur> {
   Widget _buildBlur(Widget child, Animation<double> anim) {
     double amt = sin(anim.value * pi) * 5;
     if (widget.enabled == false) amt = 0;
-    final angle = atan2(widget.dir.dy, widget.dir.dx);
-    return DirectionalBlur(blurAmount: amt, angle: -angle, child: child);
+    final rads = atan2(widget.dir.dy, widget.dir.dx);
+    return DirectionalBlur(blurAmount: amt, rotation: -rads, child: child);
   }
 }
