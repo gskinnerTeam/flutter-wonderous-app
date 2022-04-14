@@ -10,8 +10,12 @@ final colosseumData = WonderData(
   videoId: 'GXoEpNjgKzg',
   startYr: 70,
   endYr: 80,
-  lng: 12.492222,
+  artifactStartYr: 1,
+  artifactEndYr: 500,
+  artifactCulture: 'Roman',
+  artifactGeolocation: 'Roman Empire',
   lat: 41.890278,
+  lng: 12.492222,
   imageIds: mockImageIds,
   unsplashCollectionId: 'VPdti8Kjq9o',
   quote1: '---',
@@ -34,14 +38,7 @@ The Colosseum is built of travertine limestone, tuff (volcanic rock), and brick-
       '''Following the Great Fire of Rome in 64 AD, Emperor Nero seized much of the destroyed area to build his grandiose Domus Aurea ("Golden House"). A severe embarrassment to Nero's successors, parts of this extravagant palace and grounds, encompassing 1 sq mile, were filled with earth and built over.
 On the site of the lake, in the middle of the palace grounds, Emperor Vespasian would build the Colosseum as part of a Roman resurgence. A public entertainment space replacing a symbol of imperial excess.
 ''',
-  highlightArtifacts: const [
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-  ],
+  highlightArtifacts: const [],
   hiddenArtifacts: const [
     '245376',
     '256570',

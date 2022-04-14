@@ -1,7 +1,10 @@
 enum WonderType {
   chichenItza,
-  tajMahal,
+  christRedeemer,
   colosseum,
+  greatWall,
   machuPicchu,
-  redeemer,
+  petra,
+  pyramidsGiza,
+  tajMahal,
 }

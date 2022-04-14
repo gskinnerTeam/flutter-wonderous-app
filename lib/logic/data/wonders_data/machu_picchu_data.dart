@@ -10,8 +10,12 @@ final colosseumData = WonderData(
   videoId: 'cnMa-Sm9H4k',
   startYr: 1450,
   endYr: 1572,
-  lng: -72.545556,
+  artifactStartYr: 1400,
+  artifactEndYr: 1600,
+  artifactCulture: 'Inca',
+  artifactGeolocation: 'South America',
   lat: -13.163333,
+  lng: -72.545556,
   imageIds: mockImageIds,
   unsplashCollectionId: 'wUhgZTyUnl8',
   quote1: '---',
@@ -34,17 +38,6 @@ The site itself may have been intentionally built on fault lines to afford bette
       '''Machu Picchu is situated above a bow of the Urubamba River, which surrounds the site on three sides, where cliffs drop vertically for 1,480 feet (450 m) to the river at their base. The location of the city was a military secret, and it's deep precipices and steep mountains provided natural defenses.
 The Inca Bridge, an Inca grass rope bridge, across the Urubamba River in the Pongo de Mainique, provided a secret entrance for the Inca army. Another Inca bridge was built to the west of Machu Picchu, the tree-trunk bridge, at a location where a gap occurs in the cliff that measures 20 feet (6 m).
 ''',
-  highlightArtifacts: const [
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-  ],
-  hiddenArtifacts: const [
-    '',
-    '',
-    '',
-  ],
+  highlightArtifacts: const [],
+  hiddenArtifacts: const [],
 );
