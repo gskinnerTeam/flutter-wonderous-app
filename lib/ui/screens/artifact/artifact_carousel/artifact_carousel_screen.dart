@@ -18,7 +18,6 @@ class ArtifactCarouselScreen extends StatefulWidget {
 
 class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   final _pageViewportFraction = 0.5;
-  final _pageViewKey = ValueKey('ArtifactPageView');
 
   // TODO: Wire up to actual wonder data.
   final _highlightedArtifactIds = [
@@ -78,9 +77,9 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
 
   void _handleSwipeEnd(DragEndDetails d) {
     scheduleMicrotask(() {
-      double seconds = 0.3;
-      _controller.animateTo(_newPage - (d.velocity.pixelsPerSecond.dx * seconds),
-          duration: Duration(milliseconds: (seconds * 1000).toInt()), curve: Curves.easeOut);
+      double timeAmt = 0.5;
+      _controller.animateTo(_newPage - (d.velocity.pixelsPerSecond.dx * timeAmt * .25),
+          duration: timeAmt.seconds, curve: Curves.easeOut);
       setState(() => _isSwiping = false);
     });
   }
@@ -148,6 +147,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
             ),
           ),
 
+          //TODO AG: I think we should remove this GestureDetector hack and make a full-screen page view, it doesn't quite feel right.
           // Gesture detection.
           Center(
             child: GestureDetector(
@@ -189,36 +189,39 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                   // Text and stuff
                   Gap(context.insets.md),
                   IgnorePointer(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // Wonder Name
-                        Text(
-                          (_currentArtifact?.culture ?? '---').toUpperCase(),
-                          style: context.textStyles.titleFont
-                              .copyWith(color: context.colors.accent1, fontSize: 14, height: 1.2),
-                          textAlign: TextAlign.center,
-                        ),
-                        Gap(context.insets.md),
+                    child: SizedBox(
+                      height: 200,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // Wonder Name
+                          Text(
+                            (_currentArtifact?.culture ?? '---').toUpperCase(),
+                            style: context.textStyles.titleFont
+                                .copyWith(color: context.colors.accent1, fontSize: 14, height: 1.2),
+                            textAlign: TextAlign.center,
+                          ),
+                          Gap(context.insets.md),
 
-                        // Artifact Title
-                        Text(
-                          _currentArtifact?.title ?? '---',
-                          style: context.textStyles.h2.copyWith(color: context.colors.greyStrong),
-                          textAlign: TextAlign.center,
-                        ),
-                        Gap(context.insets.xs),
-
-                        // Time frame
-                        Text(
-                          _currentArtifact?.date ?? '---',
-                          style: context.textStyles.body1.copyWith(color: context.colors.body),
-                          textAlign: TextAlign.center,
-                        ),
-                        Gap(context.insets.lg),
-                      ],
-                    ).gTweener.fade().withKey(ValueKey(_currentArtifact?.objectId)),
+                          // Artifact Title
+                          Text(
+                            _currentArtifact?.title ?? '---',
+                            maxLines: 2,
+                            style: context.textStyles.h2.copyWith(color: context.colors.greyStrong),
+                            textAlign: TextAlign.center,
+                          ),
+                          Gap(context.insets.xs),
+                          // Time frame
+                          Text(
+                            _currentArtifact?.date ?? '---',
+                            style: context.textStyles.body1.copyWith(color: context.colors.body),
+                            textAlign: TextAlign.center,
+                          ),
+                          Spacer(),
+                        ],
+                      ).gTweener.fade().withKey(ValueKey(_currentArtifact?.objectId)),
+                    ),
                   ),
 
                   // Selection indicator
