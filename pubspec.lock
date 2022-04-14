@@ -670,6 +670,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.11.1"
+  performance:
+    dependency: "direct main"
+    description:
+      name: performance
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0+1"
   petitparser:
     dependency: transitive
     description:

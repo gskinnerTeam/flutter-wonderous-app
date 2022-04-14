@@ -1,4 +1,5 @@
 # 0.0.8
+- Changed fps profiler
 - Artifacts
   - Added proper buttons to ArtifactView
   - More Work on ArtifactView

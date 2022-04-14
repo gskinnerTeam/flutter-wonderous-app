@@ -38,6 +38,7 @@ dependencies:
   memoize: ^3.0.0
   modal_bottom_sheet: ^2.0.0
   path_provider: ^2.0.9
+  performance: ^0.1.0+1
   provider: ^6.0.2
   reactives: ^0.2.0
   rnd: ^0.2.0

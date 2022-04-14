@@ -1,5 +1,4 @@
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/common/controls/buttons.dart';
 import 'package:wonders/ui/common/controls/circle_button.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 import 'package:wonders/ui/wonder_illustrations/wonder_illustration.dart';
@@ -125,12 +124,15 @@ class _TabBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: AppBtn(
+        bgColor: Colors.transparent,
         padding: EdgeInsets.symmetric(vertical: context.insets.md),
-        child: Icon(
-          icon,
-          color: index == tabController.index ? context.colors.accent1 : iconColor,
-          size: 32,
-        ),
+        children: [
+          Icon(
+            icon,
+            color: index == tabController.index ? context.colors.accent1 : iconColor,
+            size: 32,
+          )
+        ],
         onPressed: () => tabController.index = index,
       ),
     );

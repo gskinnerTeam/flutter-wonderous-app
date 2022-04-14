@@ -16,6 +16,7 @@ class AnimatedClouds extends StatefulWidget with GetItStatefulWidgetMixin {
 class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProviderStateMixin, GetItStateMixin {
   late List<_Cloud> _clouds = [];
   List<_Cloud> _oldClouds = [];
+  late final AnimationController _anim = AnimationController(vsync: this, duration: 1.5.seconds);
 
   int getCloudSeed(WonderType type) {
     switch (type) {
@@ -32,6 +33,7 @@ class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProvid
     scheduleMicrotask(() {
       setState(() => _clouds = _getClouds());
     });
+    _anim.forward();
   }
 
   @override
@@ -39,35 +41,38 @@ class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProvid
     if (oldWidget.wonderType != widget.wonderType) {
       _oldClouds = _clouds;
       _clouds = _getClouds();
+      _anim.forward(from: 0);
     }
     super.didUpdateWidget(oldWidget);
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget buildCloud(c, {required bool isOld, required int startOffset}) => FXRunAnimated(
-          (_, value) {
-            // Use a positive, or negative start offset, based on index
-            final stOffset = _clouds.indexOf(c) % 2 == 0 ? -startOffset : startOffset;
-            // If old, we will end at the stOffset and start at 0, if new, start at stOffset, and end at 0
-            final offset = (isOld ? (value ? 0 : stOffset) : (value ? stOffset : 0));
-            return AnimatedPositioned(
-              curve: isOld ? Curves.easeIn : Curves.easeOut,
-              duration: widget.enableAnimations ? context.times.slow : Duration.zero,
-              top: c.pos.dy,
-              left: c.pos.dx + offset,
-              child: c,
-            );
-          },
-        );
+    Widget buildCloud(c, {required bool isOld, required int startOffset}) {
+      // Use a positive, or negative start offset, based on index
+      final stOffset = _clouds.indexOf(c) % 2 == 0 ? -startOffset : startOffset;
+      // If old, we will end at the stOffset and start at 0, if new, start at stOffset, and end at 0
+      double curvedValue = Curves.easeOut.transform(_anim.value);
+      return Positioned(
+        top: c.pos.dy,
+        left: isOld ? c.pos.dx - stOffset * curvedValue : c.pos.dx + stOffset * (1 - curvedValue),
+        child: c,
+      );
+    }
+
     bool enableClouds = watchX((SettingsLogic s) => s.enableClouds);
     if (!enableClouds) return SizedBox.shrink();
     return ClipRect(
       child: OverflowBox(
-        child: Stack(clipBehavior: Clip.hardEdge, key: ValueKey(widget.wonderType), children: [
-          ..._oldClouds.map((c) => buildCloud(c, isOld: true, startOffset: 1000)),
-          ..._clouds.map((c) => buildCloud(c, isOld: false, startOffset: 1000)),
-        ]),
+        child: AnimatedBuilder(
+          animation: _anim,
+          builder: (_, __) => Stack(clipBehavior: Clip.hardEdge, key: ValueKey(widget.wonderType), children: [
+            if (_anim.value != 1) ...[
+              ..._oldClouds.map((c) => buildCloud(c, isOld: true, startOffset: 1000)),
+            ],
+            ..._clouds.map((c) => buildCloud(c, isOld: false, startOffset: 1000)),
+          ]),
+        ),
       ),
     );
   }

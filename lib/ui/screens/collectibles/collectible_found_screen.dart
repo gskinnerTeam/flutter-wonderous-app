@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/common/controls/buttons.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:wonders/ui/common/particles/particle_field.dart';
 
@@ -228,18 +227,17 @@ class CollectibleFoundScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            AppBtn(
-              onPressed: () => print('pressed'),
-              child: Text('View in my collection', textAlign: TextAlign.center, style: context.textStyles.body1),
+            AppTextBtn(
+              'View in my collection',
+              isSecondary: true,
+              expand: true,
+              onPressed: () => Navigator.pop(context),
             )
                 .fx
                 .fade(delay: (detailT + 0).ms, duration: detailT.ms, curve: Curves.easeOut)
                 .move(begin: Offset(0, -context.insets.sm)),
             Gap(context.insets.sm),
-            AppBtn(
-              onPressed: () => Navigator.pop(context),
-              child: Text('close', textAlign: TextAlign.center, style: context.textStyles.body1),
-            )
+            AppTextBtn('close', expand: true, onPressed: () => Navigator.pop(context))
                 .fx
                 .fade(delay: (detailT + 600).ms, duration: detailT.ms, curve: Curves.easeOut)
                 .move(begin: Offset(0, -context.insets.sm)),
