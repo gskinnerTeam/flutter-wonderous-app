@@ -14,13 +14,16 @@ class CollectibleItem extends StatelessWidget {
   Widget build(BuildContext context) {
     // todo: possibly move this into page_routes
 
-    handleTap() => Navigator.of(context).push(
-          PageRoutes.fadeThrough(
-            CollectibleFoundScreen(
-              collectible: collectible,
-            ),
+    handleTap() => Navigator.of(context).push(PageRouteBuilder(
+          fullscreenDialog: true,
+          barrierDismissible: true,
+          transitionDuration: Duration(milliseconds: 300),
+          reverseTransitionDuration: Duration(milliseconds: 1),
+          opaque: false,
+          pageBuilder: (_, __, ___) => CollectibleFoundScreen(
+            collectible: collectible,
           ),
-        );
+        ));
 
     return GestureDetector(onTap: handleTap, child: Hero(tag: 'collectible_icon', child: _buildIcon()));
   }
