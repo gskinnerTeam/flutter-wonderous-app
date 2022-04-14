@@ -8,10 +8,12 @@ class RangeSelector extends StatefulWidget {
     Key? key,
     required this.start,
     required this.end,
+    required this.onUpdated,
     required this.onChanged,
   }) : super(key: key);
   final double start;
   final double end;
+  final void Function(double start, double end) onUpdated;
   final void Function(double start, double end) onChanged;
 
   @override
@@ -42,26 +44,26 @@ class _RangeSelectorState extends State<RangeSelector> {
 
   void _handleLeftDrag(DragUpdateDetails d, double width) {
     double newStart = math.max(0, math.min(endVal, startAnchor + (d.localPosition.dx) / width));
-    setState(() {
-      startVal = newStart;
-    });
+    startVal = newStart;
+    setState(() {});
+    widget.onUpdated(startVal, endVal);
   }
 
   void _handleMidDrag(DragUpdateDetails d, double width) {
     double dist = (endAnchor - startAnchor);
     double newStart = math.max(0, math.min(1 - dist, startAnchor + (d.localPosition.dx / width) - dist / 2));
     double newEnd = startVal + dist;
-    setState(() {
-      startVal = newStart;
-      endVal = newEnd;
-    });
+    startVal = newStart;
+    endVal = newEnd;
+    setState(() {});
+    widget.onUpdated(startVal, endVal);
   }
 
   void _handleRightDrag(DragUpdateDetails d, double width) {
     double newEnd = math.min(1, math.max(startVal, endAnchor + (d.localPosition.dx) / width));
-    setState(() {
-      endVal = newEnd;
-    });
+    endVal = newEnd;
+    setState(() {});
+    widget.onUpdated(startVal, endVal);
   }
 
   void _handleEndDrag(DragEndDetails d, double width) {

@@ -41,13 +41,24 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
     _handleCustomToggle(active: false);
   }
 
-  void _handleYearRangeChange(double start, double end) {
+  void _handleYearRangeUpdate(double start, double end) {
     int yearDif = widget.endYr - widget.startYr;
+    startYrSelected = widget.startYr + (yearDif.toDouble() * start).toInt();
+    endYrSelected = widget.startYr + (yearDif.toDouble() * end).toInt();
     setState(() {
-      startYrSelected = widget.startYr + (yearDif.toDouble() * start).toInt();
-      endYrSelected = widget.startYr + (yearDif.toDouble() * end).toInt();
       title = 'Custom';
     });
+  }
+
+  void _handleYearRangeChange(double start, double end) {
+    int yearDif = widget.endYr - widget.startYr;
+    startYrSelected = widget.startYr + (yearDif.toDouble() * start).toInt();
+    endYrSelected = widget.startYr + (yearDif.toDouble() * end).toInt();
+    setState(() {
+      title = 'Custom';
+    });
+
+    widget.onChanged(startYrSelected, endYrSelected);
   }
 
   void _handleCustomToggle({bool active = true}) {
@@ -87,7 +98,11 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
                 child: SizedBox(
                   width: constraints.maxWidth - padding * 2,
                   child: _OpenedTimeRange(
-                      this, _handleYearRangeChange, () => _handleCustomToggle(active: title == 'Custom')),
+                    this,
+                    _handleYearRangeUpdate,
+                    _handleYearRangeChange,
+                    () => _handleCustomToggle(active: title == 'Custom'),
+                  ),
                 ),
               ),
             ),
@@ -100,8 +115,10 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
 
 /// Shows the opened timeline view
 class _OpenedTimeRange extends StatelessWidget {
-  const _OpenedTimeRange(this.state, this.handleRangeChange, this.handleToggleTap, {Key? key}) : super(key: key);
+  const _OpenedTimeRange(this.state, this.handleRangeUpdate, this.handleRangeChange, this.handleToggleTap, {Key? key})
+      : super(key: key);
   final _ExpandingTimeRangeSelectorState state;
+  final void Function(double start, double end) handleRangeUpdate;
   final void Function(double start, double end) handleRangeChange;
   final void Function() handleToggleTap;
 
@@ -132,6 +149,7 @@ class _OpenedTimeRange extends StatelessWidget {
                 child: RangeSelector(
                     start: (state.startYrSelected - state.widget.startYr) / (state.widget.endYr - state.widget.startYr),
                     end: (state.endYrSelected - state.widget.startYr) / (state.widget.endYr - state.widget.startYr),
+                    onUpdated: handleRangeUpdate,
                     onChanged: handleRangeChange),
               ),
             ]),
@@ -169,7 +187,13 @@ class _OpenedTimeRange extends StatelessWidget {
                           color: context.colors.text, borderRadius: BorderRadius.all(Radius.circular(50))),
                     ),
                   ),
-                  LabelledToggle(width: 100, height: 50, optionOff: 'Left side', optionOn: 'Right side', isOn: false),
+                  LabelledToggle(
+                      width: 100,
+                      height: 50,
+                      optionOff: 'Left side',
+                      optionOn: 'Right side',
+                      isOn: false,
+                      handleClick: handleToggleTap),
                 ],
               ),
             ),

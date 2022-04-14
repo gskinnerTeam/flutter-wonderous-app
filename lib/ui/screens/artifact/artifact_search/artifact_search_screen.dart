@@ -17,8 +17,19 @@ class ArtifactSearchScreen extends StatefulWidget with GetItStatefulWidgetMixin 
 
 class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItStateMixin {
   List<ArtifactData?> _searchResultsAll = [];
+  String _currentQuery = '';
   bool _isLoading = false;
   bool _isEmpty = false;
+  int _startYr = 0;
+  int _endYr = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    final data = wondersLogic.getDataForType(widget.type);
+    _startYr = data.startYr;
+    _endYr = data.endYr;
+  }
 
   void _handleSearchSubmitted(String query) async {
     if (_isLoading) {
@@ -26,19 +37,29 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
     }
 
     // Reset the view state; show that it's loading and prevent subsequent calls until complete.
+    _currentQuery = query;
     setState(() {
       _isEmpty = false;
       _isLoading = true;
     });
 
     // Get all search results, with a limit.
-    _searchResultsAll = await searchLogic.searchForArtifacts(query, count: 1000);
+    _searchResultsAll = await searchLogic.searchForArtifacts(query, count: 1000, startYear: _startYr, endYear: _endYr);
 
     // Load complete. Show results.
     setState(() {
       _isLoading = false;
       _isEmpty = _searchResultsAll.isEmpty;
     });
+  }
+
+  // Re-run the search query when user changes the timeline.
+  void _handleTimelineChanged(int start, int end) {
+    _startYr = start;
+    _endYr = end;
+    if (_currentQuery.isNotEmpty) {
+      _handleSearchSubmitted(_currentQuery);
+    }
   }
 
   void onResultClick(ArtifactData artifact) {
@@ -114,7 +135,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
             location: data.title,
             startYr: 200,
             endYr: 1800,
-            onChanged: (start, end) {},
+            onChanged: _handleTimelineChanged,
           ),
         ),
       ],
