@@ -1,15 +1,6 @@
 import 'package:wonders/common_libs.dart';
 
 class CollectibleData {
-  final String id;
-  final String artifactId;
-  final String title;
-  final String desc;
-  final String period;
-  final String imageUrl;
-  final ImageProvider icon;
-  bool collected; // todo: this should probably live somewhere else
-
   CollectibleData({
     required this.id,
     required this.artifactId,
@@ -20,6 +11,15 @@ class CollectibleData {
     required this.icon,
     this.collected = false,
   });
+
+  final String id;
+  final String artifactId;
+  final String title;
+  final String desc;
+  final String period;
+  final String imageUrl;
+  final ImageProvider icon;
+  bool collected; // todo: this should probably live somewhere else
 }
 
 List<CollectibleData> collectibles = [
