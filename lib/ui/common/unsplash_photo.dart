@@ -8,7 +8,7 @@ class UnsplashPhoto extends StatelessWidget {
       : super(key: key);
   final String id;
   final BoxFit fit;
-  final num? targetSize;
+  final int targetSize;
   final bool showCredits;
 
   @override
@@ -18,7 +18,8 @@ class UnsplashPhoto extends StatelessWidget {
         builder: (_, snapshot) {
           if (snapshot.hasData == false) return Container(); // Loading...
           UnsplashPhotoData? data = snapshot.data;
-          String? url = data?.getSizedUrl(targetSize?.round() ?? 600);
+          int imgSizePx = (context.mq.devicePixelRatio * targetSize).round();
+          String? url = data?.getSizedUrl(imgSizePx);
           if (data == null || url == null) return _LoadError();
           return Stack(
             fit: StackFit.expand,
