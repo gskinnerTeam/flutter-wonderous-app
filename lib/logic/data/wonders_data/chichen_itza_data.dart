@@ -34,4 +34,17 @@ Chichen Itza is one of the most visited archeological sites in Mexico with over 
       '''Chichen Itza is located in the eastern portion of Yucatán state in Mexico. The northern Yucatán Peninsula is karst, and the rivers in the interior all run underground. 
 There are four visible, natural sinkholes, called cenotes, that could have provided plentiful water year round at Chichen, making it attractive for settlement.
 ''',
+  highlightArtifacts: const [
+    '503940',
+    '312595',
+    '310551',
+    '316304',
+    '313151',
+    '313256',
+  ],
+  hiddenArtifacts: const [
+    '701645',
+    '310555',
+    '286467',
+  ],
 );

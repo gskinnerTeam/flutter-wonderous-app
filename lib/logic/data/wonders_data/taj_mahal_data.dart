@@ -22,4 +22,12 @@ final tajMahalData = WonderData(
   constructionInfo1: lorem(paragraphs: 1, words: 60),
   constructionInfo2: lorem(paragraphs: 1, words: 60),
   locationInfo: lorem(paragraphs: 1, words: 60),
+  highlightArtifacts: const [
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+  ],
 );

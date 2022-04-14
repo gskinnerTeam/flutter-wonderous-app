@@ -28,6 +28,8 @@ class WonderData extends Equatable {
     required this.constructionInfo2,
     required this.locationInfo,
     required this.videoId,
+    this.highlightArtifacts = const [],
+    this.hiddenArtifacts = const [],
   });
 
   @JsonKey(defaultValue: WonderType.chichenItza)
@@ -50,6 +52,8 @@ class WonderData extends Equatable {
   final double lat;
   final double lng;
   final String videoId;
+  final List<String> highlightArtifacts;
+  final List<String> hiddenArtifacts;
 
   String get titleWithBreaks {
     final words = title.split(' ');
