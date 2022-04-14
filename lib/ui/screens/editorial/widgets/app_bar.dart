@@ -23,11 +23,9 @@ class _AppBar extends StatelessWidget {
     }
     return LayoutBuilder(builder: (_, constraints) {
       bool showOverlay = constraints.biggest.height < 300;
-
       return Stack(
         fit: StackFit.expand,
         children: [
-          /// Masked image
           AnimatedSwitcher(
             duration: context.times.fast,
             switchInCurve: Curves.easeIn,
@@ -35,6 +33,7 @@ class _AppBar extends StatelessWidget {
               key: ValueKey(showOverlay),
               fit: StackFit.expand,
               children: [
+                /// Masked image
                 ClipPath(
                   // Switch arch type to Rect if we are showing the title bar
                   clipper: showOverlay ? null : ArchClipper(archType!),
@@ -50,8 +49,9 @@ class _AppBar extends StatelessWidget {
                     ),
                   ),
                 ),
+
+                /// Colored overlay
                 if (showOverlay) ...[
-                  /// Colored overlay
                   ClipRect(
                     child: ColoredBox(color: wonderType.bgColor.withOpacity(.8))
                         .gTweener
@@ -63,7 +63,7 @@ class _AppBar extends StatelessWidget {
             ),
           ),
 
-          /// Titlebar
+          /// Circular Titlebar
           BottomCenter(
             child: ValueListenableBuilder<int>(
               valueListenable: sectionIndex,
