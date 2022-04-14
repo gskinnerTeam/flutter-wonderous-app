@@ -87,12 +87,10 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
       clipBehavior: Clip.none,
       itemBuilder: (context, index) {
         return ArtifactCarouselImage(
-          index: index,
-          currentPage: _currentPage,
-          artifact: _loadedArtifacts[index % _loadedArtifacts.length],
-          viewportFraction: _pageViewportFraction,
-          onClick: _handleArtifactTap,
-        );
+            index: index,
+            currentPage: _currentPage,
+            artifact: _loadedArtifacts[index % _loadedArtifacts.length],
+            viewportFraction: _pageViewportFraction);
       },
     );
 
