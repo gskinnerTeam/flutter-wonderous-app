@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
@@ -75,8 +77,12 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   }
 
   void _handleSwipeEnd(DragEndDetails d) {
-    setState(() => _isSwiping = false);
-    _controller.jumpTo(_newPage);
+    scheduleMicrotask(() {
+      double seconds = 0.3;
+      _controller.animateTo(_newPage - (d.velocity.pixelsPerSecond.dx * seconds),
+          duration: Duration(milliseconds: (seconds * 1000).toInt()), curve: Curves.easeOut);
+      setState(() => _isSwiping = false);
+    });
   }
 
   void _handleArtifactTap() {
