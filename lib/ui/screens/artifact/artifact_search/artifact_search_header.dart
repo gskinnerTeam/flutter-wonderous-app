@@ -19,13 +19,13 @@ class ArtifactSearchHeader extends StatelessWidget {
           // Close button
           Align(
             alignment: Alignment.centerRight,
-            child: CloseButton(color: context.colors.bg),
+            child: CloseButton(color: context.colors.offWhite),
           ),
 
           // Window title
           Text(
             title.toUpperCase(),
-            style: context.textStyles.body1.copyWith(color: context.colors.bg),
+            style: context.textStyles.body1.copyWith(color: context.colors.offWhite),
           ),
 
           // Wonder name / culture

@@ -12,13 +12,14 @@ class _ScrollingContent extends StatelessWidget {
     Text buildText(String value) => Text(_fixNewlines(value), style: context.textStyles.body1);
     DropCapText buildDropCapText(String value) => DropCapText(
           _fixNewlines(value),
+          mode: DropCapMode.upwards,
           style: context.textStyles.body1,
           dropCapPadding: EdgeInsets.only(right: context.insets.xs, top: 10),
           dropCapStyle: context.textStyles.dropCase.copyWith(color: context.colors.accent1),
         );
 
     return Container(
-      color: context.colors.bg,
+      color: context.colors.offWhite,
       padding: EdgeInsets.all(context.insets.md),
       child: SeparatedColumn(
         separatorBuilder: () => Gap(context.insets.md),

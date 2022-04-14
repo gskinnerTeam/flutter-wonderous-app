@@ -3,11 +3,15 @@ import 'package:wonders/common_libs.dart';
 /// Consolidate common paths uses across the app
 class ImagePaths {
   static String root = 'assets/images';
-  static String collectibles = '$root/collectibles';
   static String cloud = '$root/cloud-white.png';
-  static String speckles = '$root/texture/speckles-white.png';
-  static String roller1 = '$root/texture/roller-1-white.png';
-  static String roller2 = '$root/texture/roller-2-white.png';
+
+  static String collectibles = '$root/collectibles';
+  static String sparkle = '$collectibles/sparkle_21x23.png';
+
+  static String textures = '$root/texture';
+  static String speckles = '$textures/speckles-white.png';
+  static String roller1 = '$textures/roller-1-white.png';
+  static String roller2 = '$textures/roller-2-white.png';
 }
 
 /// Place Svg paths in their own class, to hint to the views to use an SvgPicture to render

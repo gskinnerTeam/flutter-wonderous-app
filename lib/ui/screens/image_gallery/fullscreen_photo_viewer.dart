@@ -27,7 +27,7 @@ class _FullScreenUnsplashPhotoViewerState extends State<FullScreenUnsplashPhotoV
         children: [
           Expanded(
             child: InteractiveViewer(
-              child: UnsplashPhoto(_id, fit: BoxFit.cover, targetSize: context.diagonalPx.round()),
+              child: UnsplashPhoto(_id, fit: BoxFit.cover, targetSize: (context.diagonalPx * .5).round()),
             ),
           ),
           Row(

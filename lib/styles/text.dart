@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -11,8 +9,8 @@ class AppTextStyles {
   final TextStyle titleFont = TextStyle(fontFamily: 'Tenor');
   final TextStyle contentFont = TextStyle(fontFamily: 'Raleway');
 
-  //TODO: Change these to final when design system has stopped changing
-  TextStyle get dropCase => copy(titleFont, sizePx: 49);
+  //TODO: Change these from getters to final vars when design system has stopped changing
+  TextStyle get dropCase => copy(titleFont, sizePx: 49, heightPx: 20);
 
   TextStyle get h1 => copy(titleFont, sizePx: 64, heightPx: 62);
   TextStyle get h2 => copy(titleFont, sizePx: 32, heightPx: 37.44);
@@ -27,7 +25,7 @@ class AppTextStyles {
   TextStyle get body3 => copy(contentFont, sizePx: 24, heightPx: 26, weight: FontWeight.w600);
   TextStyle get body4 => copy(contentFont, sizePx: 14, heightPx: 26);
 
-  TextStyle get quote => copy(titleFont, sizePx: 48, heightPx: 48, spacingPc: -10);
+  TextStyle get quote => copy(titleFont, sizePx: 46, heightPx: 48, spacingPc: -10, weight: FontWeight.w500);
   TextStyle get caption => copy(contentFont, sizePx: 12, weight: FontWeight.w500).copyWith(fontStyle: FontStyle.italic);
   TextStyle get button => copy(contentFont, sizePx: 12, weight: FontWeight.w600);
   TextStyle get tab => copy(contentFont, sizePx: 12, weight: FontWeight.w600);

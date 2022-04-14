@@ -18,4 +18,6 @@ class FadeFX extends AbstractFX<double> {
 extension FadeFXExtensions<T> on FXManager<T> {
   T fade({Duration? delay, Duration? duration, Curve? curve, double? begin, double? end}) =>
     addFX(FadeFX(delay: delay, duration: duration, curve: curve, begin:begin, end: end));
+  T fadeOut({Duration? delay, Duration? duration, Curve? curve, double? begin, double? end}) =>
+    addFX(FadeFX(delay: delay, duration: duration, curve: curve, begin:begin ?? 1.0, end: end ?? 0.0));
 }

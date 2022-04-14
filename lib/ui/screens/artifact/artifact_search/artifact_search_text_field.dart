@@ -27,7 +27,7 @@ class ArtifactSearchTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color colorSearchBox = context.colors.text;
+    Color colorSearchBox = context.colors.white;
     Color colorCaption = context.colors.caption;
 
     return Autocomplete(

@@ -17,7 +17,6 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
     /// A single piece of quote text, this widget has one on top, and one on bottom
     Widget buildText(String value, {required bool top}) {
       final quoteStyle = context.textStyles.quote.copyWith(
-        fontSize: 42,
         letterSpacing: -4,
         height: 1,
         color: Color(0xFF888888).withOpacity(1),

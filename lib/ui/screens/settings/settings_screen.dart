@@ -6,11 +6,14 @@ class SettingsScreen extends StatelessWidget with GetItMixin {
   void _handleMotionBlurToggle(v) => settingsLogic.enableMotionBlur.value = v;
   void _handleSwipeThresholdChanged(v) => settingsLogic.swipeThreshold.value = v;
   void _handleFpsToggle(v) => settingsLogic.enableFpsMeter.value = v;
+  void _handleCloudsToggle(v) => settingsLogic.enableClouds.value = v;
+
   @override
   Widget build(BuildContext context) {
     final enableBlur = watchX((SettingsLogic s) => s.enableMotionBlur);
     final swipeThreshold = watchX((SettingsLogic s) => s.swipeThreshold);
     final enableFpsMeter = watchX((SettingsLogic s) => s.enableFpsMeter);
+    final enableClouds = watchX((SettingsLogic s) => s.enableClouds);
     return Scaffold(
       appBar: AppBar(
         title: Text('Settings', style: context.textStyles.h2),
@@ -32,6 +35,11 @@ class SettingsScreen extends StatelessWidget with GetItMixin {
               value: enableBlur,
               onChanged: _handleMotionBlurToggle,
               title: Text('Enable Motion Blur', style: context.textStyles.caption),
+            ),
+            SwitchListTile(
+              value: enableClouds,
+              onChanged: _handleCloudsToggle,
+              title: Text('Enable Clouds', style: context.textStyles.caption),
             ),
             Row(
               children: [

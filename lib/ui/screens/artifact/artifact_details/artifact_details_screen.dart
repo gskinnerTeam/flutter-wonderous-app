@@ -5,9 +5,8 @@ import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/ui/common/compass_divider.dart';
 import 'package:wonders/ui/common/controls/circle_button.dart';
 import 'package:wonders/ui/common/fullscreen_url_img_viewer.dart';
-import 'package:wonders/ui/common/fx/fx.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
-import 'package:wonders/ui/common/page_routes.dart';
+import 'package:wonders/ui/common/utils/page_routes.dart';
 
 part 'artifact_data_row.dart';
 
@@ -50,8 +49,8 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
               pinned: true,
               elevation: 0,
               leading: SizedBox.shrink(),
-              expandedHeight: context.heightPx * .6,
-              collapsedHeight: context.heightPx * .5,
+              expandedHeight: context.heightPx * .5,
+              collapsedHeight: context.heightPx * .35,
               flexibleSpace: _TopContent(data: _data!),
             ),
             SliverToBoxAdapter(child: _BottomContent(data: _data!)),
@@ -64,7 +63,7 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
             child: Padding(
               padding: EdgeInsets.all(context.insets.md),
               child: CircleButton(
-                child: Icon(Icons.close, color: context.colors.text),
+                child: Icon(Icons.close, color: context.colors.white),
                 bgColor: context.colors.greyStrong,
                 onPressed: _handleClosePressed,
               ),
@@ -152,7 +151,7 @@ class _BottomContent extends StatelessWidget {
           Text(
             data.title,
             textAlign: TextAlign.center,
-            style: context.textStyles.h2.copyWith(color: context.colors.bg, height: _textHeight),
+            style: context.textStyles.h2.copyWith(color: context.colors.offWhite, height: _textHeight),
           ).gTweener.fade().withDelay(animDelay * 1.05).withDuration(animDuration),
 
           Gap(context.insets.xxl),
@@ -175,7 +174,7 @@ class _BottomContent extends StatelessWidget {
               ArtifactDataRow(title: 'Classification', content: data.classification),
               Gap(context.heightPx * .15),
             ]
-                .fx(interval: 70.milliseconds)
+                .fx(interval: 70.ms)
                 .fade(delay: animDelay * 1.55, duration: context.times.med)
                 .slide(begin: Offset(.2, 0), curve: Curves.easeOut),
           ),

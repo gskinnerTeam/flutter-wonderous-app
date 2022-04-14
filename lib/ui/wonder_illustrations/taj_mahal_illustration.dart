@@ -46,7 +46,7 @@ class TajMahalIllustration extends StatelessWidget {
         mgBuilder: (_, anim) {
           return [
             FractionalTranslation(
-              translation: Offset(0, -.1),
+              translation: Offset(0, -.05),
               child: Transform.scale(
                 scale: .65,
                 child: Stack(
@@ -64,25 +64,28 @@ class TajMahalIllustration extends StatelessWidget {
                           child: BottomCenter(
                             child: FractionalTranslation(
                               translation: Offset(0, .2),
-                              child: UnconstrainedBox(
+                              child: OverflowBox(
+                                maxWidth: double.infinity,
                                 child: WonderHero(config, 'taj-wall',
                                     child: Image.asset('$assetPath/wall.png', fit: BoxFit.fitHeight, opacity: anim)),
                               ),
                             ),
                           ),
                         ),
-                        if (config.enableFg) ...[
-                          Positioned.fill(
-                            child: BottomCenter(
-                              child: UnconstrainedBox(
-                                child: FractionalTranslation(
-                                  translation: Offset(0, 1.13),
-                                  child: Image.asset('$assetPath/pool.png', fit: BoxFit.fitHeight, opacity: anim),
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
+                        // Positioned.fill(
+                        //   child: BottomCenter(
+                        //     child: OverflowBox(
+                        //       maxWidth: double.infinity,
+                        //       maxHeight: double.infinity,
+                        //       child: FractionalTranslation(
+                        //         translation: Offset(0, .8),
+                        //         child: SizedBox(
+                        //             height: 700,
+                        //             child: Image.asset('$assetPath/pool.png', fit: BoxFit.fitHeight, opacity: anim)),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // )
                       ],
                     )),
                   ],

@@ -9,6 +9,7 @@ class _TopIllustration extends StatelessWidget {
     return Stack(
       children: [
         WonderIllustration(type, config: WonderIllustrationConfig.bg(enableAnims: false)),
+        Positioned.fill(bottom: 100, child: AnimatedClouds(wonderType: type, enableAnimations: false)),
         Transform.translate(
           offset: Offset(0, 60),
           child: Transform.scale(

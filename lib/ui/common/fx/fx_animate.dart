@@ -31,6 +31,31 @@ class FXAnimate extends StatefulWidget with FXManager<FXAnimate> {
   static Duration defaultDuration = const Duration(milliseconds: 1000);
   static Curve defaultCurve = Curves.linear;
 
+  // Types to reparent, mapped to a method that handles that type.
+  static Map reparentTypes = <Type, Widget Function(Widget, Widget)>{
+    Flexible: (parent, child) {
+      Flexible o = parent as Flexible;
+      return Flexible(key: o.key, flex: o.flex, fit: o.fit, child: child);
+    },
+    Positioned: (parent, child) {
+      Positioned o = parent as Positioned;
+      return Positioned(
+          key: o.key,
+          left: o.left,
+          top: o.top,
+          right: o.right,
+          bottom: o.bottom,
+          width: o.width,
+          height: o.height,
+          child: child);
+    },
+    Expanded: (parent, child) {
+      Expanded o = parent as Expanded;
+      return Expanded(key: o.key, flex: o.flex, child: child);
+    }
+  };
+  
+
   final Widget child;
   late final List<FXEntry> _fx;
   Duration _offset = Duration.zero;
@@ -113,7 +138,10 @@ class _FXAnimateState extends State<FXAnimate>
 
   @override
   Widget build(BuildContext context) {
-    Widget child = widget.child;
+    Widget child = widget.child, parent = child;
+    Function? f = FXAnimate.reparentTypes[child.runtimeType];
+    if (f != null) child = (child as dynamic).child;
+
     _controller.duration = widget._duration;
     if (widget.onComplete != null) {
       _controller.addStatusListener((status) {
@@ -129,7 +157,7 @@ class _FXAnimateState extends State<FXAnimate>
     for (FXEntry entry in widget._fx) {
       child = entry.fx.build(context, child, _controller, entry);
     }
-    return child;
+    return f == null ? child : f(parent, child);
   }
 }
 
@@ -159,32 +187,9 @@ extension FXWidgetExtensions on Widget {
 class FXAnimateList<T extends Widget> extends ListBase<Widget>
     with FXManager<FXAnimateList> {
   static Duration defaultInterval = const Duration(milliseconds: 200);
+
   // Types to completely ignore in a list.
   static Set<Type> ignoreTypes = {Spacer};
-
-  // Types to reparent, mapped to a method that handles that type.
-  static Map reparentTypes = <Type, Widget Function(Widget, Widget)>{
-    Flexible: (parent, child) {
-      Flexible o = parent as Flexible;
-      return Flexible(key: o.key, flex: o.flex, fit: o.fit, child: child);
-    },
-    Positioned: (parent, child) {
-      Positioned o = parent as Positioned;
-      return Positioned(
-          key: o.key,
-          left: o.left,
-          top: o.top,
-          right: o.right,
-          bottom: o.bottom,
-          width: o.width,
-          height: o.height,
-          child: child);
-    },
-    Expanded: (parent, child) {
-      Expanded o = parent as Expanded;
-      return Expanded(key: o.key, flex: o.flex, child: child);
-    }
-  };
 
   final List<Widget> widgets = [];
   final List<FXAnimate> managers = [];
@@ -194,17 +199,8 @@ class FXAnimateList<T extends Widget> extends ListBase<Widget>
     for (Widget child in children) {
       Type type = child.runtimeType;
       if (!ignoreTypes.contains(type)) {
-        Function? f = reparentTypes[type];
-        final FXAnimate manager;
-        if (f != null) {
-          manager = FXAnimate(
-            child: (child as dynamic).child,
-          );
-          child = f(child, manager);
-        } else {
-          manager = child = FXAnimate(child: child);
-        }
-        managers.add(manager);
+        child = FXAnimate(child: child);
+        managers.add(child as FXAnimate);
       }
       widgets.add(child);
       if (fx != null) {

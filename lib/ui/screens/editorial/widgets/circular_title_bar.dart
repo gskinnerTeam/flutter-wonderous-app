@@ -11,21 +11,26 @@ class _CircularTitleBar extends StatelessWidget {
     double barTopPadding = 40; // negative space at the top of the bar
     double circleSize = 190; // circle is bigger than bar, and overhangs it
     assert(index >= 0 && index < titles.length, 'Can not find a title for index $index');
-    return SizedBox(
-      height: barSize,
-      child: Stack(
-        children: [
-          // Bg
-          BottomCenter(child: Container(height: barSize - barTopPadding, color: context.colors.bg)),
+    // note: this half pixel offset eliminates a subpixel line Flutter draws below the header
+    // todo: circle back to see if it can be fixed in a less hacky manner
+    return Transform.translate(
+      offset: Offset(0, 0.5),
+      child: SizedBox(
+        height: barSize,
+        child: Stack(
+          children: [
+            // Bg
+            BottomCenter(child: Container(height: barSize - barTopPadding, color: context.colors.offWhite)),
 
-          ClipRect(
-            child: OverflowBox(
-              alignment: Alignment.topCenter,
-              maxHeight: circleSize,
-              child: _AnimatedCircleWithText(titles: titles, index: index),
+            ClipRect(
+              child: OverflowBox(
+                alignment: Alignment.topCenter,
+                maxHeight: circleSize,
+                child: _AnimatedCircleWithText(titles: titles, index: index),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -73,29 +78,31 @@ class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with S
   Widget build(_) {
     return AnimatedBuilder(
       animation: _anim,
-      builder: (context, child) => Transform.rotate(
+      builder: (_, __) => Transform.rotate(
         angle: Curves.easeInOut.transform(_anim.value) * pi,
-        child: child,
-      ),
-      child: Container(
-        decoration: BoxDecoration(shape: BoxShape.circle, color: context.colors.bg),
-        alignment: Alignment.center,
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          // 2 circles that are counter rotated / opposite (one on top, one on bottom)
-          // Each time index is changed, the stack is rotated 180 degrees.
-          // When the animation completes, the rotation snaps back to 0 and the titles also swap position
-          // This creates the effect of a new title always rolling in, with the old rolling out
-          child: Stack(
-            children: [
-              Transform.rotate(
+        child: Container(
+          decoration: BoxDecoration(shape: BoxShape.circle, color: context.colors.offWhite),
+          alignment: Alignment.center,
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            // 2 circles that are counter rotated / opposite (one on top, one on bottom)
+            // Each time index is changed, the stack is rotated 180 degrees.
+            // When the animation completes, the rotation snaps back to 0 and the titles also swap position
+            // This creates the effect of a new title always rolling in, with the old rolling out
+            child: Stack(
+              children: [
+                Transform.rotate(
                   angle: _anim.isCompleted ? pi : 0,
-                  child: _buildCircularText(_anim.isCompleted ? newTitle : oldTitle)),
-              Transform.rotate(
-                angle: _anim.isCompleted ? 0 : pi,
-                child: _buildCircularText(_anim.isCompleted ? oldTitle : newTitle),
-              ),
-            ],
+                  child: _buildCircularText(_anim.isCompleted ? newTitle : oldTitle),
+                ),
+                if (!_anim.isCompleted) ...[
+                  Transform.rotate(
+                    angle: _anim.isCompleted ? 0 : pi,
+                    child: _buildCircularText(_anim.isCompleted ? oldTitle : newTitle),
+                  ),
+                ]
+              ],
+            ),
           ),
         ),
       ),
