@@ -24,6 +24,8 @@ class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProvid
         return 2;
       case WonderType.tajMahal:
         return 1;
+      default:
+        return -1;
     }
   }
 

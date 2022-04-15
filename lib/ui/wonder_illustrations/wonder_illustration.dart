@@ -16,6 +16,8 @@ class WonderIllustration extends StatelessWidget {
         return ChichenItzaIllustration(config: config);
       case WonderType.tajMahal:
         return TajMahalIllustration(config: config);
+      default:
+        return Text('Sorry, wonder illustration not found.');
     }
   }
 }

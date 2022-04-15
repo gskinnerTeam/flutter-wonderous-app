@@ -25,10 +25,22 @@ class SvgPaths {
 extension WonderAssetExtensions on WonderType {
   String get assetPath {
     switch (this) {
-      case WonderType.tajMahal:
-        return '${ImagePaths.root}/taj_mahal';
+      case WonderType.pyramidsGiza:
+        return '${ImagePaths.root}/pyramids_giza';
+      case WonderType.greatWall:
+        return '${ImagePaths.root}/great_wall';
+      case WonderType.petra:
+        return '${ImagePaths.root}/petra';
+      case WonderType.colosseum:
+        return '${ImagePaths.root}/colosseum';
       case WonderType.chichenItza:
         return '${ImagePaths.root}/chichen_itza';
+      case WonderType.machuPicchu:
+        return '${ImagePaths.root}/machu_picchu';
+      case WonderType.tajMahal:
+        return '${ImagePaths.root}/taj_mahal';
+      case WonderType.christRedeemer:
+        return '${ImagePaths.root}/christ_redeemer';
     }
   }
 

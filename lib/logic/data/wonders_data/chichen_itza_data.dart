@@ -10,8 +10,12 @@ final chichenItzaData = WonderData(
   videoId: 'Q6eBJjdca14',
   startYr: 550,
   endYr: 1550,
-  lng: 20.68346184201756,
+  artifactStartYr: -500,
+  artifactEndYr: 1600,
+  artifactCulture: 'Maya',
+  artifactGeolocation: 'North and Central America',
   lat: -88.56769676930931,
+  lng: 20.68346184201756,
   imageIds: mockImageIds,
   unsplashCollectionId: 'BIZuSm1fmiw',
   quote1: 'The Beauty Between',
@@ -34,4 +38,17 @@ Chichen Itza is one of the most visited archeological sites in Mexico with over 
       '''Chichen Itza is located in the eastern portion of Yucatán state in Mexico. The northern Yucatán Peninsula is karst, and the rivers in the interior all run underground. 
 There are four visible, natural sinkholes, called cenotes, that could have provided plentiful water year round at Chichen, making it attractive for settlement.
 ''',
+  highlightArtifacts: const [
+    '503940',
+    '312595',
+    '310551',
+    '316304',
+    '313151',
+    '313256',
+  ],
+  hiddenArtifacts: const [
+    '701645',
+    '310555',
+    '286467',
+  ],
 );

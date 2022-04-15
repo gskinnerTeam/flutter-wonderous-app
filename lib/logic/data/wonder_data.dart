@@ -15,6 +15,10 @@ class WonderData extends Equatable {
     required this.regionTitle,
     this.startYr = 0,
     this.endYr = 0,
+    this.artifactStartYr = 0,
+    this.artifactEndYr = 0,
+    this.artifactCulture = '',
+    this.artifactGeolocation = '',
     this.lat = 0,
     this.lng = 0,
     this.imageIds = const [],
@@ -28,6 +32,8 @@ class WonderData extends Equatable {
     required this.constructionInfo2,
     required this.locationInfo,
     required this.videoId,
+    this.highlightArtifacts = const [],
+    this.hiddenArtifacts = const [],
   });
 
   @JsonKey(defaultValue: WonderType.chichenItza)
@@ -43,13 +49,19 @@ class WonderData extends Equatable {
   final String quote1;
   final String quote2;
   final String unsplashCollectionId;
+  final String videoId;
   final List<String> imageIds;
   final List<String> facts;
   final int startYr;
   final int endYr;
+  final int artifactStartYr;
+  final int artifactEndYr;
+  final String artifactCulture;
+  final String artifactGeolocation;
   final double lat;
   final double lng;
-  final String videoId;
+  final List<String> highlightArtifacts;
+  final List<String> hiddenArtifacts;
 
   String get titleWithBreaks {
     final words = title.split(' ');

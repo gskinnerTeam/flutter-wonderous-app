@@ -1,5 +1,7 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/ui/common/blend_mask.dart';
 import 'package:wonders/ui/common/cards/glass_card.dart';
+import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/labelled_toggle.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/range_selector.dart';
 
 // Expandable timerange selector component that further refines Artifact Search based on date range.
@@ -34,16 +36,29 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
     super.initState();
     startYrSelected = widget.startYr;
     endYrSelected = widget.endYr;
+
+    final wonderData = wondersLogic.getDataForType(widget.wonderType);
     _handleCustomToggle(active: false);
+  }
+
+  void _handleYearRangeUpdate(double start, double end) {
+    int yearDif = widget.endYr - widget.startYr;
+    startYrSelected = widget.startYr + (yearDif.toDouble() * start).toInt();
+    endYrSelected = widget.startYr + (yearDif.toDouble() * end).toInt();
+    setState(() {
+      title = 'Custom';
+    });
   }
 
   void _handleYearRangeChange(double start, double end) {
     int yearDif = widget.endYr - widget.startYr;
+    startYrSelected = widget.startYr + (yearDif.toDouble() * start).toInt();
+    endYrSelected = widget.startYr + (yearDif.toDouble() * end).toInt();
     setState(() {
-      startYrSelected = widget.startYr + (yearDif.toDouble() * start).toInt();
-      endYrSelected = widget.startYr + (yearDif.toDouble() * end).toInt();
       title = 'Custom';
     });
+
+    widget.onChanged(startYrSelected, endYrSelected);
   }
 
   void _handleCustomToggle({bool active = true}) {
@@ -72,10 +87,25 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
           padding: _isPanelOpen ? EdgeInsets.zero : EdgeInsets.symmetric(vertical: context.insets.lg),
           child: OpeningGlassCard(
             isOpen: _isPanelOpen,
-            padding: EdgeInsets.all(padding),
-            closedBuilder: (_) => _ClosedTimeRange(this, title),
-            openBuilder: (_) => SizedBox(
-                width: constraints.maxWidth - padding * 2, child: _OpenedTimeRange(this, _handleYearRangeChange)),
+            closedBuilder: (_) => Padding(
+              padding: EdgeInsets.all(padding),
+              child: _ClosedTimeRange(this, title),
+            ),
+            openBuilder: (_) => Container(
+              color: context.colors.white.withOpacity(0.75),
+              child: Padding(
+                padding: EdgeInsets.all(padding),
+                child: SizedBox(
+                  width: constraints.maxWidth - padding * 2,
+                  child: _OpenedTimeRange(
+                    this,
+                    _handleYearRangeUpdate,
+                    _handleYearRangeChange,
+                    () => _handleCustomToggle(active: title == 'Custom'),
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
       );
@@ -85,28 +115,43 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
 
 /// Shows the opened timeline view
 class _OpenedTimeRange extends StatelessWidget {
-  const _OpenedTimeRange(this.state, this.handleRangeChange, {Key? key}) : super(key: key);
+  const _OpenedTimeRange(this.state, this.handleRangeUpdate, this.handleRangeChange, this.handleToggleTap, {Key? key})
+      : super(key: key);
   final _ExpandingTimeRangeSelectorState state;
+  final void Function(double start, double end) handleRangeUpdate;
   final void Function(double start, double end) handleRangeChange;
+  final void Function() handleToggleTap;
 
   @override
   Widget build(BuildContext context) => Padding(
         padding: EdgeInsets.symmetric(vertical: context.insets.xs),
         child: Column(
           children: [
-            Text('Choose a timeframe',
-                style: context.textStyles.title3.copyWith(fontSize: 16, color: context.colors.greyStrong)),
+            Text('Choose a timeframe', style: context.textStyles.title3.copyWith(color: context.colors.greyStrong)),
             Gap(context.insets.sm),
             Stack(children: [
-              SizedBox(
+              // Background cutout mask for the tile slider
+              BlendMask(
+                key: ValueKey('sliderMask'),
+                blendModes: const [BlendMode.dstOut],
+                opacity: 0.8,
+                child: Container(
                   width: double.infinity,
                   height: 86,
-                  //decoration: BoxDecoration(backgroundBlendMode: BlendMode.colorBurn, color: context.colors.bg),
-                  child: RangeSelector(
-                      start:
-                          (state.startYrSelected - state.widget.startYr) / (state.widget.endYr - state.widget.startYr),
-                      end: (state.endYrSelected - state.widget.startYr) / (state.widget.endYr - state.widget.startYr),
-                      onChanged: handleRangeChange)),
+                  decoration: BoxDecoration(
+                      color: context.colors.white, borderRadius: BorderRadius.all(Radius.circular(context.corners.md))),
+                ),
+              ),
+              // Time slider
+              SizedBox(
+                width: double.infinity,
+                height: 86,
+                child: RangeSelector(
+                    start: (state.startYrSelected - state.widget.startYr) / (state.widget.endYr - state.widget.startYr),
+                    end: (state.endYrSelected - state.widget.startYr) / (state.widget.endYr - state.widget.startYr),
+                    onUpdated: handleRangeUpdate,
+                    onChanged: handleRangeChange),
+              ),
             ]),
             Gap(context.insets.lg),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -125,6 +170,34 @@ class _OpenedTimeRange extends StatelessWidget {
                   style: context.textStyles.tab.copyWith(color: context.colors.caption)),
             ]),
             Gap(context.insets.xs),
+
+            // Toggle switch
+            GestureDetector(
+              onTap: handleToggleTap,
+              child: Stack(
+                children: [
+                  BlendMask(
+                    key: ValueKey('toggleMask'),
+                    blendModes: const [BlendMode.dstOut],
+                    opacity: 0.8,
+                    child: Container(
+                      width: 100,
+                      height: 50,
+                      decoration: BoxDecoration(
+                          color: context.colors.white, borderRadius: BorderRadius.all(Radius.circular(50))),
+                    ),
+                  ),
+                  LabelledToggle(
+                      width: 100,
+                      height: 50,
+                      optionOff: 'Left side',
+                      optionOn: 'Right side',
+                      isOn: false,
+                      handleClick: handleToggleTap),
+                ],
+              ),
+            ),
+            Gap(context.insets.xs),
           ],
         ),
       );
@@ -138,4 +211,30 @@ class _ClosedTimeRange extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       Text('${state.startYrSelected} - ${state.endYrSelected} AD - $title', style: context.textStyles.titleFont);
+}
+
+class CardHolePainter extends CustomPainter {
+  CardHolePainter(this.color, {Key? key});
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint();
+    paint.color = color;
+    canvas.drawPath(
+      Path.combine(
+        PathOperation.difference,
+        Path()..addRRect(RRect.fromLTRBR(100, 100, 300, 300, Radius.circular(10))),
+        Path()
+          ..addOval(Rect.fromCircle(center: Offset(200, 200), radius: 50))
+          ..close(),
+      ),
+      paint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return false;
+  }
 }
