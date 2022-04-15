@@ -138,7 +138,7 @@ class CollectibleFoundScreen extends StatelessWidget {
 
     return Positioned.fill(
         child: FractionallySizedBox(
-      widthFactor: 0.7,
+      widthFactor: 0.75,
       alignment: Alignment.topCenter,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -221,27 +221,33 @@ class CollectibleFoundScreen extends StatelessWidget {
     if (ratioIn <= 0) return Container();
     return Positioned.fill(
       child: FractionallySizedBox(
-        widthFactor: 0.6,
+        widthFactor: 0.75,
         heightFactor: 1,
         alignment: Alignment.bottomCenter,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             AppTextBtn(
-              'View in my collection',
+              'view in my collection',
               isSecondary: true,
               expand: true,
-              onPressed: () => Navigator.pop(context),
+              padding: EdgeInsets.symmetric(vertical: context.insets.xs),
+              onPressed: () => context.push(ScreenPaths.collection(collectible.id)),
             )
                 .fx
                 .fade(delay: (detailT + 0).ms, duration: detailT.ms, curve: Curves.easeOut)
                 .move(begin: Offset(0, -context.insets.sm)),
-            Gap(context.insets.sm),
-            AppTextBtn('close', expand: true, onPressed: () => Navigator.pop(context))
+            Gap(context.insets.xxs),
+            AppTextBtn(
+              'close',
+              expand: true,
+              padding: EdgeInsets.symmetric(vertical: context.insets.xs),
+              onPressed: () => Navigator.pop(context),
+            )
                 .fx
                 .fade(delay: (detailT + 600).ms, duration: detailT.ms, curve: Curves.easeOut)
                 .move(begin: Offset(0, -context.insets.sm)),
-            Gap(context.insets.lg),
+            Gap(context.insets.md),
           ],
         ),
       ),
