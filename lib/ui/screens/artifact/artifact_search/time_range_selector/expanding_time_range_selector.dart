@@ -37,7 +37,6 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
     startYrSelected = widget.startYr;
     endYrSelected = widget.endYr;
 
-    final wonderData = wondersLogic.getDataForType(widget.wonderType);
     _handleCustomToggle(active: false);
   }
 
@@ -75,7 +74,6 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
 
   @override
   Widget build(BuildContext context) {
-    final wonderData = wondersLogic.getDataForType(widget.wonderType);
     final padding = context.insets.md;
 
     return LayoutBuilder(builder: (_, constraints) {

@@ -31,7 +31,7 @@ class AppBtn extends StatelessWidget {
         style: TextButton.styleFrom(
           backgroundColor: bgColor ?? defaultColor,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(context.corners.md)),
-          padding: padding ?? EdgeInsets.symmetric(vertical: context.insets.sm, horizontal: context.insets.sm),
+          padding: padding ?? EdgeInsets.all(context.insets.sm),
         ),
         child: DefaultTextStyle(
           style: DefaultTextStyle.of(context).style.copyWith(color: textColor),

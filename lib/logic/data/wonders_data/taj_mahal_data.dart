@@ -1,4 +1,3 @@
-import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/data/wonders_data/mock_data.dart';

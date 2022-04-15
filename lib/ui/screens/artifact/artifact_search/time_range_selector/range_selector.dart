@@ -1,8 +1,5 @@
 import 'package:wonders/common_libs.dart';
 
-
-import 'package:wonders/common_libs.dart';
-
 // Expandable timerange selector component that further refines Artifact Search based on date range.
 class RangeSelector extends StatefulWidget {
   const RangeSelector({
@@ -44,7 +41,7 @@ class _RangeSelectorState extends State<RangeSelector> {
   }
 
   void _handleLeftDrag(DragUpdateDetails d, double width) {
-    double newStart = math.max(0, math.min(endVal, startAnchor + (d.localPosition.dx) / width));
+    double newStart = max(0, min(endVal, startAnchor + (d.localPosition.dx) / width));
     startVal = newStart;
     setState(() {});
     widget.onUpdated(startVal, endVal);
@@ -52,7 +49,7 @@ class _RangeSelectorState extends State<RangeSelector> {
 
   void _handleMidDrag(DragUpdateDetails d, double width) {
     double dist = (endAnchor - startAnchor);
-    double newStart = math.max(0, math.min(1 - dist, startAnchor + (d.localPosition.dx / width) - dist / 2));
+    double newStart = max(0, min(1 - dist, startAnchor + (d.localPosition.dx / width) - dist / 2));
     double newEnd = startVal + dist;
     startVal = newStart;
     endVal = newEnd;
@@ -61,7 +58,7 @@ class _RangeSelectorState extends State<RangeSelector> {
   }
 
   void _handleRightDrag(DragUpdateDetails d, double width) {
-    double newEnd = math.min(1, math.max(startVal, endAnchor + (d.localPosition.dx) / width));
+    double newEnd = min(1, max(startVal, endAnchor + (d.localPosition.dx) / width));
     endVal = newEnd;
     setState(() {});
     widget.onUpdated(startVal, endVal);

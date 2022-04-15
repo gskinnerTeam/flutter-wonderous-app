@@ -33,16 +33,12 @@ The designs considered for the "Statue of the Christ" included a representation 
 ''',
   constructionInfo2:
       '''A group of engineers and technicians studied Landowski's submissions and felt building the structure of reinforced concrete instead of steel was more suitable for the cross-shaped statue. The concrete making up the base was supplied from Limhamn, Sweden. The outer layers are soapstone, chosen for its enduring qualities and ease of use.
-Construction took nine years, from 1922 to 1931, and cost the equivalent of US$250,000 (equivalent to $3,600,000 in 2020) and the monument opened on October 12, 1931.
+Construction took nine years, from 1922 to 1931, and cost the equivalent of US\$250,000 (equivalent to \$3,600,000 in 2020) and the monument opened on October 12, 1931.
 ''',
   locationInfo:
       '''Corcovado, which means "hunchback" in Portuguese, is a mountain in central Rio de Janeiro, Brazil. It is a 2,329 foot (710 m) granite peak located in the Tijuca Forest, a national park.
 Corcovado hill lies just west of the city center but is wholly within the city limits and visible from great distances.
 ''',
-  highlightArtifacts: const [
-
-  ],
-  hiddenArtifacts: const [
-
-  ],
+  highlightArtifacts: const [],
+  hiddenArtifacts: const [],
 );

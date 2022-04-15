@@ -13,7 +13,7 @@ class SettingsLogic with SaveLoadMixin {
   @override
   void copyFromJson(Map<String, dynamic> value) {
     return;
-    //SB: Disabled loading of settings to allow us to more easily reset defaults values for QA testers.
+    //SB: Disabled loading of settings to allow us to more easily reset default values for QA testers, we should re-enable this at some pt. If we even have any actual settings.
     enableMotionBlur.value = value['enableMotionBlur'] ?? enableMotionBlur.value;
     swipeThreshold.value = value['swipeThreshold'] ?? swipeThreshold.value;
     enableFpsMeter.value = value['enableFpsMeter'] ?? enableFpsMeter.value;
