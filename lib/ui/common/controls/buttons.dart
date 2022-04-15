@@ -137,7 +137,7 @@ class AppTextBtn extends StatelessWidget {
       expand: expand,
       isSecondary: isSecondary,
       children: [
-        Text(text, style: context.textStyles.button),
+        Text(text.toUpperCase(), style: context.textStyles.button),
       ],
     );
   }
