@@ -43,7 +43,7 @@ class SearchLogic {
   /// - startYear: minimum year range. Set to negative value for B.C. Must include endYear.
   /// - endYear: maximum year range. Set to negative value for B.C. Must include startYear.
 
-  //TODO: Should make some sort of SearchConfig class here, so we don't need to pass a ton of params
+  //TODO AG: Should make some sort of SearchConfig class here, so we don't need to pass a ton of params
   Future<List<ArtifactData?>> searchForArtifacts(String query,
       {int count = 1000,
       int offset = 0,

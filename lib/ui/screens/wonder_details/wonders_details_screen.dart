@@ -1,7 +1,6 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/wonders_logic.dart';
-import 'package:wonders/ui/common/controls/buttons.dart';
 import 'package:wonders/ui/common/lazy_indexed_stack.dart';
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_screen.dart';
 import 'package:wonders/ui/screens/editorial/editorial_screen.dart';
@@ -72,10 +71,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
           /// Settings btn
           SafeArea(
             child: TopRight(
-              child: AppBtn(
-                child: Text('Settings'),
-                onPressed: _handleSettingsPressed,
-              ),
+              child: AppTextBtn('Settings', onPressed: _handleSettingsPressed),
             ),
           ),
 

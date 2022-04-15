@@ -7,7 +7,7 @@ class SettingsLogic with SaveLoadMixin {
 
   late final enableMotionBlur = ValueNotifier<bool>(false)..addListener(scheduleSave);
   late final swipeThreshold = ValueNotifier<double>(.25)..addListener(scheduleSave);
-  late final enableFpsMeter = ValueNotifier<bool>(true)..addListener(scheduleSave);
+  late final enableFpsMeter = ValueNotifier<bool>(false)..addListener(scheduleSave);
   late final enableClouds = ValueNotifier<bool>(true)..addListener(scheduleSave);
 
   @override

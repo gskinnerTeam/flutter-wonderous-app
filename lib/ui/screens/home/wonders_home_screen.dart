@@ -1,7 +1,6 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/wonders_logic.dart';
-import 'package:wonders/ui/common/controls/buttons.dart';
 import 'package:wonders/ui/common/controls/diagonal_page_indicator.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/themed_text.dart';
@@ -92,7 +91,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
                   Gap(context.insets.lg * 3),
 
                   /// Settings Btn
-                  AppBtn(child: const Text('Settings'), onPressed: _handleSettingsPressed),
+                  AppTextBtn('Settings', onPressed: _handleSettingsPressed),
                   const Spacer(),
 
                   /// Title Content

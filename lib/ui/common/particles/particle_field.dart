@@ -9,7 +9,6 @@ export 'particle_field_painter.dart';
 export 'particle.dart';
 export 'sprite_sheet.dart';
 
-
 class ParticleField extends StatefulWidget {
   final SpriteSheet spriteSheet;
   final ParticleFieldTick onTick;
@@ -18,12 +17,12 @@ class ParticleField extends StatefulWidget {
   final Alignment alignment;
 
   const ParticleField({
-   required this.spriteSheet,
-   required this.onTick,
-   this.onInit,
-   this.blendMode = BlendMode.dstIn,
-   this.alignment = Alignment.center,
-   Key? key,
+    required this.spriteSheet,
+    required this.onTick,
+    this.onInit,
+    this.blendMode = BlendMode.dstIn,
+    this.alignment = Alignment.center,
+    Key? key,
   }) : super(key: key);
 
   @override

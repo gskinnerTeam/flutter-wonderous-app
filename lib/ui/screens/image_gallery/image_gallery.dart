@@ -5,7 +5,7 @@ import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
 import 'package:wonders/ui/common/unsplash_photo.dart';
 import 'package:wonders/ui/common/utils/page_routes.dart';
 import 'package:wonders/ui/screens/image_gallery/animated_cutout_overlay.dart';
-import 'package:wonders/ui/screens/image_gallery/fullscreen_photo_viewer.dart';
+import 'package:wonders/ui/screens/image_gallery/fullscreen_unsplash_photo_viewer.dart';
 
 class ImageGallery extends StatefulWidget {
   ImageGallery({Key? key, this.gridCount = 5, this.imageSize, required this.photoIds}) : super(key: key) {
