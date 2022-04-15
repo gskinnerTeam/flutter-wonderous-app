@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
 
 /// Shared methods across button types
-_buildIcon(BuildContext context, IconData icon, {required bool isSecondary, required double? size}) =>
+Widget _buildIcon(BuildContext context, IconData icon, {required bool isSecondary, required double? size}) =>
     Icon(icon, color: isSecondary ? context.colors.black : context.colors.offWhite, size: size ?? 18);
 
 /// The core button that drives all other buttons.

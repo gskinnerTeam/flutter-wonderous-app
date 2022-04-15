@@ -1,7 +1,5 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
-import 'package:wonders/ui/common/utils/page_routes.dart';
-
 import 'package:wonders/ui/screens/collectibles/collectible_found_screen.dart';
 
 class CollectibleItem extends StatelessWidget {
@@ -14,7 +12,7 @@ class CollectibleItem extends StatelessWidget {
   Widget build(BuildContext context) {
     // todo: possibly move this into page_routes
 
-    handleTap() => Navigator.of(context).push(PageRouteBuilder(
+    void handleTap() => Navigator.of(context).push(PageRouteBuilder(
           fullscreenDialog: true,
           barrierDismissible: true,
           transitionDuration: Duration(milliseconds: 300),
