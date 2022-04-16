@@ -44,6 +44,36 @@ class AppBtn extends StatelessWidget {
   }
 }
 
+// todo: this has a margin around it for some reason.
+class CloseBtn extends StatelessWidget {
+  const CloseBtn({
+    Key? key,
+    required this.onPressed,
+    this.padding,
+    this.bgColor,
+    this.color,
+  }) : super(key: key);
+  final VoidCallback onPressed;
+  final double? padding;
+  final Color? bgColor;
+  final Color? color;
+
+  @override
+  Widget build(BuildContext context) {
+    Color defaultColor = context.colors.greyStrong;
+    Color iconColor = color ?? context.colors.offWhite;
+    return TextButton(
+        onPressed: onPressed,
+        style: TextButton.styleFrom(
+          backgroundColor: bgColor ?? defaultColor,
+          shape: CircleBorder(),
+          padding: EdgeInsets.all(padding ?? context.insets.xs * 1.5),
+        ),
+        child: Icon(Icons.close, size: 24, color: iconColor,),
+      );
+  }
+}
+
 /// //////////////////////////////////////////////////
 /// AppButton Derivatives
 /// //////////////////////////////////////////////////
