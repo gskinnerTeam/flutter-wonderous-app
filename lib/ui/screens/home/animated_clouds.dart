@@ -35,7 +35,17 @@ class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProvid
     scheduleMicrotask(() {
       setState(() => _clouds = _getClouds());
     });
-    _anim.forward();
+    _showClouds();
+  }
+
+  @override
+  void dispose() {
+    _anim.dispose();
+    super.dispose();
+  }
+
+  void _showClouds() {
+    widget.enableAnimations ? _anim.forward(from: 0) : _anim.value = 1;
   }
 
   @override
@@ -43,7 +53,7 @@ class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProvid
     if (oldWidget.wonderType != widget.wonderType) {
       _oldClouds = _clouds;
       _clouds = _getClouds();
-      _anim.forward(from: 0);
+      _showClouds();
     }
     super.didUpdateWidget(oldWidget);
   }
@@ -105,6 +115,8 @@ class _Cloud extends StatelessWidget {
   Widget build(BuildContext context) => Transform.scale(
         scaleX: scale * (flipX ? -1 : 1),
         scaleY: scale * (flipY ? -1 : 1),
-        child: Image.asset(ImagePaths.cloud, opacity: const AlwaysStoppedAnimation(.4), cacheWidth: 300),
+        child: SizedBox(
+            width: 300,
+            child: Image.asset(ImagePaths.cloud, opacity: const AlwaysStoppedAnimation(.4), cacheWidth: 300)),
       );
 }

@@ -1,4 +1,5 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/ui/common/fade_color_transition.dart';
 import 'package:wonders/ui/wonder_illustrations/common/paint_textures.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_hero.dart';
@@ -27,15 +28,16 @@ class ChichenItzaIllustration extends StatelessWidget {
                 flipY: true,
               ),
             ),
-            Center(
+            Align(
+              alignment: Alignment(0, config.shortMode ? 1 : 0),
               child: FractionalTranslation(
-                translation: Offset(.7, 0),
+                translation: Offset(.7, config.shortMode ? .1 : -.1),
                 child: WonderHero(
                   config,
                   'chichen-sun',
                   child: FractionalTranslation(
                     translation: Offset(0, -.2 * anim.value),
-                    child: Image.asset('$assetPath/sun.png', opacity: anim),
+                    child: Image.asset('$assetPath/sun.png', cacheWidth: context.widthPx.round() * 2, opacity: anim),
                   ),
                 ),
               ),
@@ -45,11 +47,16 @@ class ChichenItzaIllustration extends StatelessWidget {
 
         /// MG
         mgBuilder: (_, anim) => [
-              Center(
+              Align(
+                alignment: Alignment(0, config.shortMode ? 1 : 0),
                 child: WonderHero(config, 'chichen-mg',
                     child: Transform.scale(
-                      scale: config.scale,
-                      child: Image.asset('$assetPath/pyramid.png', opacity: anim),
+                      scale: config.zoom,
+                      child: Image.asset(
+                        '$assetPath/pyramid.png',
+                        opacity: anim,
+                        cacheWidth: context.widthPx.round() * 2,
+                      ),
                     )),
               ),
             ],
@@ -58,28 +65,33 @@ class ChichenItzaIllustration extends StatelessWidget {
         fgBuilder: (context, anim) {
           final curvedAnim = Curves.easeOut.transform(anim.value);
           return [
-            Transform.translate(
-                offset: Offset(0, (1 - curvedAnim) * 100),
-                child: FadeTransition(
-                  opacity: anim,
-                  child: Stack(children: [
-                    BottomLeft(
-                      child: FractionalTranslation(
-                        translation: Offset(-.3, -.3),
-                        child: Image.asset('$assetPath/agave-left.png', opacity: anim),
-                      ),
-                    ),
-                    BottomRight(
-                      child: FractionalTranslation(
-                        translation: Offset(.35, -.35),
-                        child: Transform.scale(
-                          scale: 1.1,
-                          child: Image.asset('$assetPath/agave-right.png', opacity: anim),
+            Transform.scale(
+              scale: 1 + (config.zoom - 1) / 3,
+              child: Transform.translate(
+                  offset: Offset(0, (1 - curvedAnim) * 100),
+                  child: FadeTransition(
+                    opacity: anim,
+                    child: Stack(children: [
+                      BottomLeft(
+                        child: FractionalTranslation(
+                          translation: Offset(-.3, -.3),
+                          child: Image.asset('$assetPath/agave-left.png',
+                              opacity: anim, cacheWidth: context.widthPx.round()),
                         ),
                       ),
-                    ),
-                  ]),
-                ))
+                      BottomRight(
+                        child: FractionalTranslation(
+                          translation: Offset(.35, -.35),
+                          child: Transform.scale(
+                            scale: 1.1,
+                            child: Image.asset('$assetPath/agave-right.png',
+                                opacity: anim, cacheWidth: context.widthPx.round()),
+                          ),
+                        ),
+                      ),
+                    ]),
+                  )),
+            )
           ];
         });
   }

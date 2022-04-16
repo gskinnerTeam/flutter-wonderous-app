@@ -1,12 +1,13 @@
 import 'package:unsplash_client/unsplash_client.dart';
+import 'package:wonders/keys.dart';
 import 'package:wonders/logic/data/unsplash_photo_data.dart';
 
 class UnsplashService {
   final client = UnsplashClient(
     settings: ClientSettings(
       credentials: AppCredentials(
-        accessKey: 'aKxS07Q2KzFqUqpgM49xun75fFhPzCvY0bPoRlwwarU',
-        secretKey: 'FRNh3y_J2Tu6Aa6ZZQcU3q6Fssm66GyZZxQx2ZbY7hk',
+        accessKey: unsplashAccessKey,
+        secretKey: unsplashSecretKey,
       ),
     ),
   );

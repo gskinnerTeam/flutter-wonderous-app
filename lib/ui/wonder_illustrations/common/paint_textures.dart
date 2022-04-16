@@ -18,7 +18,7 @@ class IllustrationTexture extends StatelessWidget {
           child: Transform.scale(
               scaleX: scale * (flipX ? -1 : 1),
               scaleY: scale * (flipY ? -1 : 1),
-              child: Image.asset(path, fit: BoxFit.cover, color: color, opacity: opacity)),
+              child: Image.asset(path, fit: BoxFit.cover, color: color, opacity: opacity, cacheWidth: 1024)),
         ),
       );
 }

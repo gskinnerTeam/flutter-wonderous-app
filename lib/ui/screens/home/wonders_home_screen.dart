@@ -36,13 +36,27 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
     }).toList();
 
     List<Widget> mgChildren = wonders.map((e) {
-      final config = WonderIllustrationConfig.mg(isShowing: isSelected(e.type));
-      return WonderIllustration(e.type, config: config);
+      return ValueListenableBuilder(
+          valueListenable: swipeController.swipeUpAmt,
+          builder: (_, value, child) {
+            final config = WonderIllustrationConfig.mg(
+              isShowing: isSelected(e.type),
+              zoom: 1.3 + .05 * swipeController.swipeUpAmt.value,
+            );
+            return WonderIllustration(e.type, config: config);
+          });
     }).toList();
 
     List<Widget> fgChildren = wonders.map((e) {
-      final config = WonderIllustrationConfig.fg(isShowing: isSelected(e.type));
-      return WonderIllustration(e.type, config: config);
+      return ValueListenableBuilder(
+          valueListenable: swipeController.swipeUpAmt,
+          builder: (_, value, child) {
+            final config = WonderIllustrationConfig.fg(
+              isShowing: isSelected(e.type),
+              zoom: 1.3 + .4 * swipeController.swipeUpAmt.value,
+            );
+            return WonderIllustration(e.type, config: config);
+          });
     }).toList();
 
     return GestureDetector(

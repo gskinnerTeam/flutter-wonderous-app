@@ -5,7 +5,7 @@ Widget _buildIcon(BuildContext context, IconData icon, {required bool isSecondar
     Icon(icon, color: isSecondary ? context.colors.black : context.colors.offWhite, size: size ?? 18);
 
 /// The core button that drives all other buttons.
-class AppBtn extends StatelessWidget {
+class AppBtn extends StatefulWidget {
   const AppBtn({
     Key? key,
     required this.children,
@@ -23,24 +23,39 @@ class AppBtn extends StatelessWidget {
   final Color? bgColor;
 
   @override
+  State<AppBtn> createState() => _AppBtnState();
+}
+
+class _AppBtnState extends State<AppBtn> {
+  bool _tapDown = false;
+  @override
   Widget build(BuildContext context) {
-    Color defaultColor = isSecondary ? context.colors.white : context.colors.greyStrong;
-    Color textColor = isSecondary ? context.colors.black : context.colors.white;
-    return TextButton(
-        onPressed: onPressed,
-        style: TextButton.styleFrom(
-          backgroundColor: bgColor ?? defaultColor,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(context.corners.md)),
-          padding: padding ?? EdgeInsets.all(context.insets.sm),
-        ),
-        child: DefaultTextStyle(
-          style: DefaultTextStyle.of(context).style.copyWith(color: textColor),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
-            children: children,
-          ),
-        ));
+    Color defaultColor = widget.isSecondary ? context.colors.white : context.colors.greyStrong;
+    Color textColor = widget.isSecondary ? context.colors.black : context.colors.white;
+    return GestureDetector(
+      onTapDown: (_) => setState(() => _tapDown = true),
+      onTapUp: (_) => setState(() => _tapDown = false),
+      onTapCancel: () => setState(() => _tapDown = false),
+      child: Opacity(
+        opacity: _tapDown ? .7 : 1,
+        child: TextButton(
+            onPressed: widget.onPressed,
+            style: TextButton.styleFrom(
+              splashFactory: NoSplash.splashFactory,
+              backgroundColor: widget.bgColor ?? defaultColor,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(context.corners.md)),
+              padding: widget.padding ?? EdgeInsets.all(context.insets.sm),
+            ),
+            child: DefaultTextStyle(
+              style: DefaultTextStyle.of(context).style.copyWith(color: textColor),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: widget.expand ? MainAxisSize.max : MainAxisSize.min,
+                children: widget.children,
+              ),
+            )),
+      ),
+    );
   }
 }
 

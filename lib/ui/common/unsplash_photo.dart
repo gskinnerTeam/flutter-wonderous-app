@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/logic/data/unsplash_photo_data.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
 
@@ -18,7 +19,7 @@ class UnsplashPhoto extends StatelessWidget {
         builder: (_, snapshot) {
           if (snapshot.hasData == false) return Container(); // Loading...
           UnsplashPhotoData? data = snapshot.data;
-          int imgSizePx = (context.mq.devicePixelRatio * targetSize).round();
+          int imgSizePx = (PlatformInfo.dpi * targetSize).round();
           String? url = data?.getSizedUrl(imgSizePx);
           if (data == null || url == null) return _LoadError();
           return Stack(

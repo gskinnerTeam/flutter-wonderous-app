@@ -79,7 +79,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (_, constraints) {
       bool shortMode = constraints.biggest.height < 700;
-      double _illustrationHeight = shortMode ? 250 : 330;
+      double _illustrationHeight = shortMode ? 250 : 280;
       double _minAppBarHeight = shortMode ? 40 : 120;
       double _maxAppBarHeight = shortMode ? 400 : 500;
 
