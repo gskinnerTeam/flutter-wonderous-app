@@ -5,22 +5,26 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:wonders/ui/common/particles/particle_field.dart';
 
-class CollectibleFoundScreen extends StatelessWidget {
-  CollectibleFoundScreen({required this.collectible, Key? key}) : super(key: key) {
-    imageProvider = CachedNetworkImageProvider(collectible.imageUrl);
-  }
+// todo: update collectible state
+/* Shawn: Make a final foundArtifactIds = ValueNotifier<String>([]) in WondersLogic, then you can bind to it using the GetItMixin class, see SettingsScreen for an example of reading/writing. */
+// todo: persist state
+/* Shawn: We can make WonderLogic persist some data, check out settings_logic for an example */
+// todo: ribbon
 
-  // timing cues as durations in ms:
+class CollectibleFoundScreen extends StatelessWidget {
+  // CollectibleItem passes in a (theoretically) pre-loaded imageProvider.
+  // we could check for load completion, and hold after introT, but that shouldn't be necessary in any real-world scenario.
+  const CollectibleFoundScreen({required this.collectible, required this.imageProvider, Key? key}) : super(key: key);
+
+  // major timing cues as durations in ms:
   static const double introT = 600; // initial build
   static const double introPauseT = 600; // visual pause between states
+  static const double introTotalT = introT + introPauseT;
   static const double detailT = 1800; // detail state build
   static const double totalT = introT + introPauseT + detailT;
 
-  // todo: remove:
-  static const double detailStartT = 0;
-
   final CollectibleData collectible;
-  late final CachedNetworkImageProvider imageProvider;
+  final CachedNetworkImageProvider imageProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +40,13 @@ class CollectibleFoundScreen extends StatelessWidget {
 
   // returns a new ratio (0-1) normalized within the time period specified by start and duration
   double _subRatio(double ratio, double start, [double? duration]) {
-    double end = duration == null ? totalT : start + duration;
+    final double end = duration == null ? totalT : start + duration;
     return max(0, min(1, (ratio * totalT - start) / (end - start)));
   }
 
   List<Widget> _buildIntro(BuildContext context, double ratio) {
-    double introRatio = _subRatio(ratio, 0, introT + introPauseT);
-    double introPauseRatio = _subRatio(ratio, introT, introPauseT);
+    final double introRatio = _subRatio(ratio, 0, introTotalT);
+    final double introPauseRatio = _subRatio(ratio, introT, introPauseT);
     if (introRatio == 1) return [];
     return [
       // build radial gradient over initial intro:
@@ -53,16 +57,14 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   List<Widget> _buildDetail(BuildContext context, double ratio) {
-    double startT = introT + introPauseT;
-    double detailRatio = _subRatio(ratio, startT);
+    final double detailRatio = _subRatio(ratio, introTotalT);
     if (detailRatio == 0) return [];
     return [
       // background blur:
       _buildBlur(context, detailRatio),
       // radial gradient to solid fill in first 300ms:
-      _buildGradient(context, 1, _subRatio(ratio, startT, 300)),
-      // persist the particle field:
-      _buildParticleField(context, ratio),
+      _buildGradient(context, 1, _subRatio(ratio, introTotalT, 300)),
+      _buildParticleField(context, detailRatio),
       // add the detail UI in a column to facilitate better responsiveness:
       SafeArea(
         child: Column(children: [
@@ -84,10 +86,10 @@ class CollectibleFoundScreen extends StatelessWidget {
 
   Widget _buildGradient(BuildContext context, double ratioIn, double ratioOut) {
     ratioIn = Curves.easeOutQuint.transform(ratioIn);
-    double opacity = 0.77;
-    Color color = context.colors.black;
+    const double opacity = 0.77;
+    final Color color = context.colors.black;
 
-    // our final state is a solid fill, so we can optimize for that:
+    // final state is a solid fill, so optimize for that:
     if (ratioOut == 1) return Container(color: color.withOpacity(opacity));
     return Container(
       decoration: BoxDecoration(
@@ -105,11 +107,10 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   Widget _buildParticleField(BuildContext context, double ratio) {
-    double startT = introT; // start the particles after the intro
-    double ratioIn = _subRatio(ratio, startT);
-    if (ratioIn <= 0 || ratioIn >= 1) return Container();
+    // remove after animation ends.
+    if (ratio >= 1) return Container();
 
-    Color color = context.colors.accent1;
+    final Color color = context.colors.accent1;
     int particleCount = 800;
     return Positioned.fill(
       child: ParticleField(
@@ -120,6 +121,7 @@ class CollectibleFoundScreen extends StatelessWidget {
         ),
         onTick: (controller, elapsed, size) {
           List<Particle> particles = controller.particles;
+          // add new particles:
           int addCount = particleCount ~/ 40;
           particleCount -= addCount;
           double d = min(size.width, size.height) * rnd(0.25, 0.3);
@@ -129,19 +131,20 @@ class CollectibleFoundScreen extends StatelessWidget {
             particles.add(Particle(
               x: cos(angle) * d,
               y: sin(angle) * d,
-              vx: cos(angle) * v * rnd(0.5, 1),
-              vy: sin(angle) * v * rnd(0.5, 1),
-              color: color.withOpacity(rnd(0.6, 1)),
+              vx: cos(angle) * v * rnd(0.5, 1.5), // random variation makes it less of a starfield effect.
+              vy: sin(angle) * v * rnd(0.5, 1.5),
+              color: color.withOpacity(rnd(0.5, 1)),
             ));
           }
+          // update existing particles & remove old ones:
           for (int i = particles.length - 1; i >= 0; i--) {
             Particle o = particles[i];
             o.update(frame: o.age ~/ 3);
-            if (o.age > 50) particles.removeAt(i);
+            if (o.age > 40) particles.removeAt(i);
           }
         },
       ),
-    ).fx.fadeOut(duration: (totalT - startT).ms, curve: Curves.easeIn);
+    ).fx.fadeOut(duration: detailT.ms, curve: Curves.easeIn);
   }
 
   Widget _buildIcon(BuildContext context, double ratio) {
@@ -154,14 +157,14 @@ class CollectibleFoundScreen extends StatelessWidget {
           child: Image(
             image: collectible.icon,
             fit: BoxFit.contain,
-          ).fx.scale(begin: 1, end: 2, curve: Curves.easeInExpo, duration: (introT + introPauseT).ms),
+          ).fx.scale(begin: 1, end: 2, curve: Curves.easeInExpo, duration: introTotalT.ms),
         ),
       ),
     );
   }
 
   Widget _buildBlur(BuildContext context, double ratio) {
-    double blur = ratio * 8;
+    final double blur = ratio * 8;
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
       child: Container(),
@@ -183,9 +186,9 @@ class CollectibleFoundScreen extends StatelessWidget {
           blurRadius: context.insets.sm,
         ),
       ]),
-      // TODO: might want to swap this for ImageFade, since I'm not sure if this will be smart with the preloading.
-      child: CachedNetworkImage(
-        imageUrl: collectible.imageUrl,
+      child: Hero(
+        tag: 'collectible_image',
+        child: CachedNetworkImage(imageUrl: collectible.imageUrl),
       ),
     ).fx.scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo).fade();
   }
@@ -227,7 +230,7 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   Widget _buildButton(BuildContext context, double ratio) {
-    double pad = context.insets.lg;
+    final double pad = context.insets.lg;
     return Container(
       padding: EdgeInsets.only(left: pad, right: pad, bottom: pad),
       child: AppTextBtn(
@@ -241,11 +244,16 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   Widget _buildCloseButton(BuildContext context, double ratio) {
-    return Positioned(right: 0, child: SafeArea(
-      child: Container(
-        padding: EdgeInsets.only(right: context.insets.xs, top: context.insets.sm),
-        child: CloseBtn(onPressed: ()=> Navigator.pop(context))
-      )
-    )).fx.fade(delay: 1200.ms, duration: 900.ms);
+    return Positioned(
+      right: 0,
+      child: SafeArea(
+        child: Container(
+          padding: EdgeInsets.only(right: context.insets.xs, top: context.insets.sm),
+          child: CloseBtn(
+            onPressed: () => Navigator.pop(context),
+          ),
+        ),
+      ),
+    ).fx.fade(delay: 1200.ms, duration: 900.ms);
   }
 }

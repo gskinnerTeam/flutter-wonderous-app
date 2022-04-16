@@ -4,6 +4,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
 
+// todo: everything. :)
+
 class CollectionScreen extends StatelessWidget {
   CollectionScreen({String? fromId, Key? key}) : super(key:key) {
     // todo: remove this (and in router) if we don't use it.

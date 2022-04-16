@@ -1,5 +1,7 @@
 import 'package:wonders/common_libs.dart';
 
+// todo: update to use ArtifactData again, or maybe just use ArtifactData period, and look up state separately.
+
 class CollectibleData {
   CollectibleData({
     required this.id,
