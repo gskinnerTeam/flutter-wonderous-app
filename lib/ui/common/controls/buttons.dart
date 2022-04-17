@@ -60,15 +60,17 @@ class _AppBtnState extends State<AppBtn> {
 }
 
 // todo: this has a margin around it for some reason.
-class CloseBtn extends StatelessWidget {
-  const CloseBtn({
+class CircleIconBtn extends StatelessWidget {
+  const CircleIconBtn({
     Key? key,
     required this.onPressed,
+    required this.icon,
     this.padding,
     this.bgColor,
     this.color,
   }) : super(key: key);
   final VoidCallback onPressed;
+  final IconData icon;
   final double? padding;
   final Color? bgColor;
   final Color? color;
@@ -78,14 +80,14 @@ class CloseBtn extends StatelessWidget {
     Color defaultColor = context.colors.greyStrong;
     Color iconColor = color ?? context.colors.offWhite;
     return TextButton(
-        onPressed: onPressed,
-        style: TextButton.styleFrom(
-          backgroundColor: bgColor ?? defaultColor,
-          shape: CircleBorder(),
-          padding: EdgeInsets.all(padding ?? context.insets.xs * 1.5),
-        ),
-        child: Icon(Icons.close, size: 24, color: iconColor,),
-      );
+      onPressed: onPressed,
+      style: TextButton.styleFrom(
+        backgroundColor: bgColor ?? defaultColor,
+        shape: CircleBorder(),
+        padding: EdgeInsets.all(padding ?? context.insets.xs * 1.5),
+      ),
+      child: Icon(icon, size: 24, color: iconColor),
+    );
   }
 }
 
