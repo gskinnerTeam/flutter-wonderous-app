@@ -118,9 +118,46 @@ class CollectionScreen extends StatelessWidget {
   }
 
   Widget _buildCollectible(BuildContext context, CollectibleData collectible, double height) {
+    // todo: temporary:
+    int state = rnd.getBool(0.67) ? 2 : 0;
+    if (collectible.id == '701645') state = 1;
     // todo: add logic to look up collectible state (hidden, found, explored)
+    Widget content = state == CollectedState.hidden
+        ? _buildHiddenCollectible(context, collectible)
+        : _buildFoundCollectible(context, collectible, state);
+
+    return Flexible(child: SizedBox(height: height, child: content));
+  }
+
+  Widget _buildHiddenCollectible(BuildContext context, CollectibleData collectible) {
+    final Color fadedGrey = context.colors.greyMedium.withOpacity(0.33);
+    return Container(
+      decoration: BoxDecoration(
+        color: context.colors.black,
+        border: Border.all(color: fadedGrey),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [context.colors.greyStrong, context.colors.black],
+          stops: const [0, 1],
+        ),
+      ),
+      child: Center(
+        child: FractionallySizedBox(
+          widthFactor: 0.6,
+          heightFactor: 0.6,
+          child: Image(
+            image: collectible.icon,
+            color: fadedGrey,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFoundCollectible(BuildContext context, CollectibleData collectible, int state) {
     // todo: add tap interaction.
-    bool isNew = collectible.id == '286467';
+    final bool isNew = state == CollectedState.found;
     Widget content = Container(
       decoration: BoxDecoration(
         color: context.colors.black,
@@ -130,15 +167,12 @@ class CollectionScreen extends StatelessWidget {
       ),
       child: CachedNetworkImage(
         alignment: Alignment.center,
-        height: height - (isNew ? 6 : 0),
         imageUrl: collectible.imageUrl,
         fit: BoxFit.cover,
       ),
     );
-
     if (collectible == fromCollectible) content = Hero(tag: 'collectible_image', child: content);
-
-    return Flexible(child: content);
+    return content;
   }
 
   Widget _buildFooter(BuildContext context) {

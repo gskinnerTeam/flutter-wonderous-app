@@ -8,31 +8,31 @@
         </style>
     </head>
     <body>
-        This tool builds the CollectibleData list. Wonders should have a blank line between them.
+        This tool builds the CollectibleData list. Wonders should have a blank line between them. Icon names: camera, jewelry, scroll, vase
         <br>
-        <textarea id="input" rows="15" cols="80">
-chichenItza, Mayan
-'701645',
-'310555',
-'286467',
+<textarea id="input" rows="15" cols="80">
+chichenItza
+701645, camera, optional note after second comma
+310555, jewelry
+286467, scroll
 
-christRedeemer, UNKNOWN
+christRedeemer
 
-colosseum, Roman
-'245376',
-'256570',
-'286136',
+colosseum
+245376, vase
+256570, camera
+286136, jewelry
 
-greatWall, Chinese
+greatWall
 
-machuPicchu, Inca
+machuPicchu
 
-petra, Nabataean
+petra
 
-pyramidsGiza, Egyptian
+pyramidsGiza
 
-tajMahal, Mughal
-        </textarea>
+tajMahal
+</textarea>
         <br>
         <input type="button" onclick="run();" value="RUN">
         <br>
@@ -56,14 +56,14 @@ function parseInfo(str, o) {
     if (str.trim().length < 1) { return; }
     let values = str.split(",");
     o.type = values[0].trim();
-    o.culture = values[1].trim();
 }
 
 function parseArtifacts(strs, o) {
     let artifacts = [];
     for (let i=0; i<strs.length; i++) {
-        let str = strs[i].replace(/[^\d]/g, '');
-        if (str) { artifacts.push(str); }
+        let values = strs[i].split(",");
+        console.log(values);
+        if (values[1]) { artifacts.push({id: values[0].trim(), icon: values[1].trim()}); }
     }
     o.artifacts = artifacts;
 }
@@ -77,7 +77,7 @@ function loadNext() {
         return loadNext();
     }
     output.value = `Loading data for ${wonder.type} artifact #${artifactIndex}`;
-    let id = artifacts[artifactIndex];
+    let id = artifacts[artifactIndex].id;
     fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`)
         .then(response => validateResponse(response));
 }
@@ -88,30 +88,28 @@ function validateResponse(response) {
 
 function parseArtifactData(data) {
     let wonder = wonders[wonderIndex], o = wonder.artifacts[artifactIndex];
-    wonder.artifacts[artifactIndex] = data;
-    //console.log(data);
+    wonder.artifacts[artifactIndex].data = data;
+    console.log(data);
     artifactIndex++;
     loadNext();
 }
 
 let icons = ['silhouette', 'foo'];
 function out() {
-    // other possibly useful props: objectDate, culture, primaryImageSmall
+    // other possibly useful props: objectDate, culture, primaryImage, primaryImageSmall
     let str = '', iconIndex = 0;
     for (let i=0; i<wonders.length; i++) {
         let wonder = wonders[i], artifacts = wonder.artifacts;
         str += `// ${wonder.type}\n`;
         for (let j=0; j<artifacts.length; j++) {
             let o = artifacts[j];
-            let icon = icons[(iconIndex++) % icons.length];
             str += 
 `CollectibleData(
-  title: '${o.title}',
-  subtitle: '${wonder.culture}',
+  title: '${o.data.title}',
   wonder: WonderType.${wonder.type},
-  artifactId: '${o.objectID}',
-  imageUrl: '${o.primaryImage}',
-  icon: AssetImage('\${ImagePaths.collectibles}/${icon}.png'),
+  artifactId: '${o.data.objectID}',
+  imageUrl: '${o.data.primaryImageSmall}',
+  iconName: '${o.icon}',
 ),\n`;
         }
         str += "\n";

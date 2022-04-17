@@ -1,90 +1,94 @@
 import 'package:wonders/common_libs.dart';
 
+class CollectedState {
+  static const int hidden = 0;
+  static const int found = 1;
+  static const int explored = 2;
+}
+
 class CollectibleData {
   CollectibleData({
     required this.title,
-    required this.subtitle,
     required this.imageUrl,
-    required this.icon,
+    required this.iconName,
     required this.artifactId,
     required this.wonder,
-  });
+  }) {
+    icon = AssetImage('${ImagePaths.collectibleIcons}/$iconName.png');
+  }
 
-  String get id => artifactId;
   final String title;
-  final String subtitle; // this should come from WonderData.artifactCulture
   final String imageUrl;
-  final ImageProvider icon;
+  final String iconName;
+
+  late final ImageProvider icon;
 
   final String artifactId;
   final WonderType wonder;
+
+  String get id => artifactId;
+  String get subtitle => wondersLogic.getDataForType(wonder).artifactCulture;
 }
 
 // todo: check which image size we should be using.
 List<CollectibleData> collectibles = [
-  // chichenItza
-  CollectibleData(
-    title: 'La Prison, à Chichen-Itza',
-    subtitle: 'Mayan',
-    wonder: WonderType.chichenItza,
-    artifactId: '286467',
-    imageUrl: 'https://images.metmuseum.org/CRDImages/ph/original/DP132063.jpg',
-    icon: AssetImage('${ImagePaths.collectibles}/silhouette.png'),
-  ),
+// chichenItza
   CollectibleData(
     title: 'Pendant',
-    subtitle: 'Mayan',
     wonder: WonderType.chichenItza,
     artifactId: '701645',
-    imageUrl: 'https://images.metmuseum.org/CRDImages/ao/original/DP701440.jpg',
-    icon: AssetImage('${ImagePaths.collectibles}/silhouette.png'),
+    imageUrl: 'https://images.metmuseum.org/CRDImages/ao/web-large/DP701440.jpg',
+    iconName: 'camera',
   ),
   CollectibleData(
     title: 'Bird Ornament',
-    subtitle: 'Mayan',
     wonder: WonderType.chichenItza,
     artifactId: '310555',
-    imageUrl: 'https://images.metmuseum.org/CRDImages/ao/original/DP-23474-001.jpg',
-    icon: AssetImage('${ImagePaths.collectibles}/foo.png'),
+    imageUrl: 'https://images.metmuseum.org/CRDImages/ao/web-large/DP-23474-001.jpg',
+    iconName: 'jewelry',
+  ),
+  CollectibleData(
+    title: 'La Prison, à Chichen-Itza',
+    wonder: WonderType.chichenItza,
+    artifactId: '286467',
+    imageUrl: 'https://images.metmuseum.org/CRDImages/ph/web-large/DP132063.jpg',
+    iconName: 'scroll',
   ),
 
-  // christRedeemer
+// christRedeemer
 
-  // colosseum
+// colosseum
   CollectibleData(
     title: 'Glass hexagonal amphoriskos',
-    subtitle: 'Roman',
     wonder: WonderType.colosseum,
     artifactId: '245376',
-    imageUrl: 'https://images.metmuseum.org/CRDImages/gr/original/DP124005.jpg',
-    icon: AssetImage('${ImagePaths.collectibles}/foo.png'),
+    imageUrl: 'https://images.metmuseum.org/CRDImages/gr/web-large/DP124005.jpg',
+    iconName: 'vase',
   ),
   CollectibleData(
     title: 'Bronze plaque of Mithras slaying the bull',
-    subtitle: 'Roman',
     wonder: WonderType.colosseum,
     artifactId: '256570',
-    imageUrl: 'https://images.metmuseum.org/CRDImages/gr/original/DP119236.jpg',
-    icon: AssetImage('${ImagePaths.collectibles}/silhouette.png'),
+    imageUrl: 'https://images.metmuseum.org/CRDImages/gr/web-large/DP119236.jpg',
+    iconName: 'camera',
   ),
   CollectibleData(
     title: 'Interno del Colosseo',
-    subtitle: 'Roman',
     wonder: WonderType.colosseum,
     artifactId: '286136',
-    imageUrl: 'https://images.metmuseum.org/CRDImages/ph/original/DP138036.jpg',
-    icon: AssetImage('${ImagePaths.collectibles}/foo.png'),
+    imageUrl: 'https://images.metmuseum.org/CRDImages/ph/web-large/DP138036.jpg',
+    iconName: 'jewelry',
   ),
 
-  // greatWall
+// greatWall
 
-  // machuPicchu
+// machuPicchu
 
-  // petra
+// petra
 
-  // pyramidsGiza
+// pyramidsGiza
 
-  // tajMahal
+// tajMahal
 ];
 
 // Note: look up a human readable page with:

@@ -81,6 +81,7 @@ flutter:
     - assets/images/taj_mahal/
     - assets/images/texture/
     - assets/images/collectibles/
+    - assets/images/collectibles/icons/
 
   fonts:
    - family: Tenor
