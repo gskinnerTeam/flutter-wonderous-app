@@ -4,12 +4,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:wonders/ui/common/particles/particle_field.dart';
+import 'package:wonders/ui/screens/collectibles/widgets/animated_ribbon.dart';
 
 // todo: update collectible state
 /* Shawn: Make a final foundArtifactIds = ValueNotifier<String>([]) in WondersLogic, then you can bind to it using the GetItMixin class, see SettingsScreen for an example of reading/writing. */
 // todo: persist state
 /* Shawn: We can make WonderLogic persist some data, check out settings_logic for an example */
-// todo: ribbon
+// todo: maybe: title text size (2 line max): https://pub.dev/packages/auto_size_text
 
 class CollectibleFoundScreen extends StatelessWidget {
   // CollectibleItem passes in a (theoretically) pre-loaded imageProvider.
@@ -77,7 +78,7 @@ class CollectibleFoundScreen extends StatelessWidget {
           Spacer(flex: 1),
           _buildSubTitle(context, detailRatio),
           Spacer(flex: 3),
-          _buildButton(context, detailRatio),
+          _buildCollectionButton(context, detailRatio),
         ]),
       ),
       _buildCloseButton(context, detailRatio),
@@ -194,17 +195,10 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   Widget _buildRibbon(BuildContext context, double ratio) {
-    return Container(
-      decoration: BoxDecoration(
-        color: context.colors.accent1,
-      ),
-      padding: EdgeInsets.symmetric(vertical: context.insets.xs * 1.5, horizontal: context.insets.sm),
-      child: Text(
-        'Artifact Discovered'.toUpperCase(),
-        textAlign: TextAlign.center,
-        style: context.textStyles.title1,
-      ),
-    ).fx.scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo).fade();
+    return AnimatedRibbon('Artifact Discovered'.toUpperCase())
+        .fx
+        .scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo)
+        .fade();
   }
 
   Widget _buildTitle(BuildContext context, double ratio) {
@@ -229,7 +223,7 @@ class CollectibleFoundScreen extends StatelessWidget {
     ).fx.fade(delay: 600.ms, duration: 600.ms);
   }
 
-  Widget _buildButton(BuildContext context, double ratio) {
+  Widget _buildCollectionButton(BuildContext context, double ratio) {
     final double pad = context.insets.lg;
     return Container(
       padding: EdgeInsets.only(left: pad, right: pad, bottom: pad),
