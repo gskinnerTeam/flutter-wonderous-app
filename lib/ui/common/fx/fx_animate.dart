@@ -150,10 +150,10 @@ class _FXAnimateState extends State<FXAnimate>
         }
       });
     }
+    _controller.forward();
     if (widget.onInit != null) {
       widget.onInit!(_controller);
     }
-    _controller.forward();
     for (FXEntry entry in widget._fx) {
       child = entry.fx.build(context, child, _controller, entry);
     }
