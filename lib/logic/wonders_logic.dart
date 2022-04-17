@@ -1,10 +1,11 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/data/wonders_data/chichen_itza_data.dart';
+import 'package:wonders/logic/data/wonders_data/machu_picchu_data.dart';
 import 'package:wonders/logic/data/wonders_data/taj_mahal_data.dart';
 
 class WondersLogic {
-  ValueNotifier<List<WonderData>> all = ValueNotifier([chichenItzaData, tajMahalData]);
+  ValueNotifier<List<WonderData>> all = ValueNotifier([chichenItzaData, tajMahalData, colosseumData]);
 
   WonderData getDataForType(WonderType value) {
     WonderData? result = all.value.firstWhereOrNull((w) => w.type == value);
