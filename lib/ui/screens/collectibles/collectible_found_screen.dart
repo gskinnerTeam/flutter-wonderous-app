@@ -11,6 +11,7 @@ import 'package:wonders/ui/screens/collectibles/widgets/animated_ribbon.dart';
 // todo: persist state
 /* Shawn: We can make WonderLogic persist some data, check out settings_logic for an example */
 // todo: maybe: title text size (2 line max): https://pub.dev/packages/auto_size_text
+// todo: maybe: fade out on close
 
 class CollectibleFoundScreen extends StatelessWidget {
   // CollectibleItem passes in a (theoretically) pre-loaded imageProvider.
@@ -173,22 +174,22 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   Widget _buildImage(BuildContext context, double ratio) {
-    return Container(
-      padding: EdgeInsets.all(context.insets.xxs),
-      margin: EdgeInsets.symmetric(horizontal: context.insets.xl),
-      decoration: BoxDecoration(color: context.colors.offWhite, boxShadow: [
-        BoxShadow(
-          color: context.colors.accent1.withOpacity(ratio * 0.75),
-          blurRadius: context.insets.xl * 2,
-        ),
-        BoxShadow(
-          color: context.colors.black.withOpacity(ratio * 0.75),
-          offset: Offset(0, context.insets.xxs),
-          blurRadius: context.insets.sm,
-        ),
-      ]),
-      child: Hero(
-        tag: 'collectible_image',
+    return Hero(
+      tag: 'collectible_image',
+      child: Container(
+        padding: EdgeInsets.all(context.insets.xxs),
+        margin: EdgeInsets.symmetric(horizontal: context.insets.xl),
+        decoration: BoxDecoration(color: context.colors.offWhite, boxShadow: [
+          BoxShadow(
+            color: context.colors.accent1.withOpacity(ratio * 0.75),
+            blurRadius: context.insets.xl * 2,
+          ),
+          BoxShadow(
+            color: context.colors.black.withOpacity(ratio * 0.75),
+            offset: Offset(0, context.insets.xxs),
+            blurRadius: context.insets.sm,
+          ),
+        ]),
         child: CachedNetworkImage(imageUrl: collectible.imageUrl),
       ),
     ).fx.scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo).fade();
@@ -227,13 +228,11 @@ class CollectibleFoundScreen extends StatelessWidget {
     final double pad = context.insets.lg;
     return Container(
       padding: EdgeInsets.only(left: pad, right: pad, bottom: pad),
-      child: AppTextBtn(
-        'view in my collection',
-        isSecondary: true,
-        expand: true,
-        padding: EdgeInsets.all(context.insets.sm),
-        onPressed: () => context.push(ScreenPaths.collection(collectible.id)),
-      ),
+      child: AppTextBtn('view in my collection',
+          isSecondary: true,
+          expand: true,
+          padding: EdgeInsets.all(context.insets.sm),
+          onPressed: () => context.push(ScreenPaths.collection(collectible.id))),
     ).fx.fade(delay: 1200.ms, duration: 900.ms, curve: Curves.easeOut).move(begin: Offset(0, context.insets.xs));
   }
 

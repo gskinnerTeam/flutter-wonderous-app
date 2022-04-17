@@ -20,6 +20,7 @@ class CollectibleData {
   final WonderType wonder;
 }
 
+// todo: check which image size we should be using.
 List<CollectibleData> collectibles = [
   // chichenItza
   CollectibleData(
