@@ -425,15 +425,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  gtween:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "4377cff67b196e1afbebf0f2d6ea730b9a4c0fbf"
-      url: "https://github.com/gskinnerTeam/flutter-gtween.git"
-    source: git
-    version: "0.0.1"
   http:
     dependency: transitive
     description:

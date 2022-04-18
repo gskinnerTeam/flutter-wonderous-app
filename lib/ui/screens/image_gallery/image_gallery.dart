@@ -20,13 +20,13 @@ class ImageGallery extends StatefulWidget {
 
 class _ImageGalleryState extends State<ImageGallery> {
   static const int _gridCount = 5;
-  // Index starts in the middle of the grid (25 items, index will start at 13)
+  // Index starts in the middle of the grid (eg, 25 items, index will start at 13)
   int _index = ((_gridCount * _gridCount) / 2).round();
   late int _prevIndex = _index;
   Offset _lastSwipeDir = Offset.zero;
   double _scale = 1;
-  double _targetImgSize = 500;
   bool _skipNextOffsetTween = false;
+  late Duration swipeDuration = context.times.med * .6;
 
   final _photoIds = ValueNotifier<List<String>>([]);
   int get _imgCount => pow(_gridCount, 2).round();
@@ -119,7 +119,6 @@ class _ImageGalleryState extends State<ImageGallery> {
             return Center(child: AppLoader());
           }
 
-          Duration swipeDuration = context.times.med * .55;
           Size imgSize = (widget.imageSize ?? Size(context.widthPx * .7, context.heightPx * .6)) * _scale;
           // Get transform offset for the current _index
           final padding = context.insets.sm;

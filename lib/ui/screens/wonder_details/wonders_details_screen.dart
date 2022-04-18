@@ -23,7 +23,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
     vsync: this,
     initialIndex: AppLogic.enablePersistentTabs ? appLogic.selectedWondersTab.value : 0,
   )..addListener(_handleTabChanged);
-  GTweenerController? _fade;
+  AnimationController? _fade;
 
   final _detailsHasScrolled = ValueNotifier(false);
 
@@ -66,7 +66,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
               Padding(padding: EdgeInsets.only(bottom: tabBarHeight), child: ArtifactCarouselScreen(type: wonder.type)),
               Padding(padding: EdgeInsets.only(bottom: tabBarHeight), child: TimelineScreen(type: widget.type)),
             ],
-          ).gTweener.fade().withInit((t) => _fade = t),
+          ),
 
           /// Settings btn
           SafeArea(

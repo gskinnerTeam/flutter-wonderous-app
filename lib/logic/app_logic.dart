@@ -46,7 +46,7 @@ class AppLogic {
           if (PlatformInfo.isMobile) {
             await ImageGallerySaver.saveImage(image, quality: 95, name: name);
           } else {
-            await Future.delayed(.5.seconds);
+            await Future.delayed(500.ms);
           }
           Navigator.pop(context);
           showModal(context, child: OkModal(title: 'Save complete!'));

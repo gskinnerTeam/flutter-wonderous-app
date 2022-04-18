@@ -17,15 +17,12 @@ class ArtifactCarouselScreen extends StatefulWidget {
 class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   final _pageViewportFraction = 0.5;
 
-  // TODO: Wire up to actual wonder data.
-  final _highlightedArtifactIds = [
-    '503940',
-    '312595',
-    '310551',
-    '316304',
-    '313151',
-    '313256',
-  ];
+  late final _highlightedArtifactIds = wondersLogic.getDataForType(widget.type).highlightArtifacts;
+  // Used to determine carousel element size.
+  static const double _maxElementWidth = 500;
+  // Used to determine white background dimensions.
+  static const double _maxBottomHeight = 300;
+  static const double _maxBottomWidth = 650;
   final _loadedArtifacts = [];
   late PageController _controller;
   ArtifactData? _currentArtifact;
@@ -67,14 +64,8 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Used to determine carousel element size.
-    double maxElementWidth = 500;
-    double carouselImageWidth = math.min(maxElementWidth, context.widthPx / 1.25);
-
-    // Used to determine white background dimensions.
-    double maxBottomHeight = 300;
-    double bottomHalfHeight = math.min(maxBottomHeight, context.heightPx / 6);
-    double maxBottomWidth = 650;
+    double carouselImageWidth = math.min(_maxElementWidth, context.widthPx / 1.25);
+    double bottomHalfHeight = math.min(_maxBottomHeight, context.heightPx / 6);
 
     if (_currentArtifact == null) {
       return Center(child: AppLoader());
@@ -91,6 +82,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
           currentPage: _currentPage,
           artifact: _loadedArtifacts[index % _loadedArtifacts.length],
           viewportFraction: _pageViewportFraction,
+          onPressed: () => _handleArtifactTap(index),
         );
       },
     );
@@ -109,12 +101,12 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
           // White space, covering bottom half.
           BottomCenter(
             child: Container(
-              width: math.min(context.widthPx, maxBottomWidth),
-              height: bottomHalfHeight + maxBottomWidth / 2,
+              width: math.min(context.widthPx, _maxBottomWidth),
+              height: bottomHalfHeight + _maxBottomWidth / 2,
               decoration: BoxDecoration(
                 color: context.colors.offWhite,
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(maxBottomWidth / 2), topRight: Radius.circular(maxBottomWidth / 2)),
+                    topLeft: Radius.circular(_maxBottomWidth / 2), topRight: Radius.circular(_maxBottomWidth / 2)),
               ),
             ),
           ),
@@ -166,27 +158,35 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                         ),
                         Gap(context.insets.md),
 
-                        // Artifact Title
-                        Text(
-                          _currentArtifact?.title ?? '---',
-                          style: context.textStyles.h2.copyWith(color: context.colors.greyStrong),
-                          textAlign: TextAlign.center,
-                        ),
-                        Gap(context.insets.xs),
+                        FXAnimate(
+                          fx: const [FadeFX()],
+                          key: ValueKey(_currentArtifact?.objectId),
+                          child: Column(
+                            children: [
+                              // Artifact Title
+                              Text(
+                                _currentArtifact?.title ?? '---',
+                                style: context.textStyles.h2.copyWith(color: context.colors.greyStrong),
+                                textAlign: TextAlign.center,
+                                maxLines: 1,
+                              ),
+                              Gap(context.insets.xs),
 
-                        // Time frame
-                        Text(
-                          _currentArtifact?.date ?? '---',
-                          style: context.textStyles.body1.copyWith(color: context.colors.body),
-                          textAlign: TextAlign.center,
+                              // Time frame
+                              Text(
+                                _currentArtifact?.date ?? '---',
+                                style: context.textStyles.body1.copyWith(color: context.colors.body),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
                         ),
                         Gap(context.insets.lg),
+                        // Selection indicator
+                        _buildPageIndicator(context),
                       ],
-                    ).gTweener.fade().withKey(ValueKey(_currentArtifact?.objectId)),
+                    ),
                   ),
-
-                  // Selection indicator
-                  _buildPageIndicator(context),
 
                   Gap(context.insets.xl),
 

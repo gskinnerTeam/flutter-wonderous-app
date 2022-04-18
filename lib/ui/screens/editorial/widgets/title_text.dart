@@ -17,16 +17,16 @@ class _TitleText extends StatelessWidget {
                 Expanded(
                   child: Divider(
                     color: data.type.fgColor,
-                  ).gTweener.scale(curve: Curves.easeOut).withDelay(.5.seconds),
+                  ).fx.scale(curve: Curves.easeOut, delay: 500.ms),
                 ),
                 Text(
                   data.subTitle.toUpperCase(),
                   style: context.textStyles.body1,
-                ).gTweener.fade().withDelay(.1.seconds),
+                ).fx.fade(delay: 100.ms),
                 Expanded(
                   child: Divider(
                     color: data.type.fgColor,
-                  ).gTweener.scale(curve: Curves.easeOut).withDelay(.5.seconds),
+                  ).fx.scale(curve: Curves.easeOut, delay: 500.ms),
                 ),
               ],
             ),
