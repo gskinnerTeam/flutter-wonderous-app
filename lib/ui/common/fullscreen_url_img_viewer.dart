@@ -25,7 +25,7 @@ class FullscreenUrlImgViewer extends StatelessWidget {
             child: SafeArea(
               child: Padding(
                 padding: EdgeInsets.all(context.insets.sm),
-                child: CircleButton(
+                child: CircleBtn(
                   bgColor: context.colors.greyStrong,
                   onPressed: () => Navigator.of(context).pop(),
                   child: Icon(Icons.close, color: context.colors.white),

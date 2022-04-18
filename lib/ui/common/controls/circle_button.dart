@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
 
-class CircleButton extends StatelessWidget {
-  const CircleButton({
+class CircleBtn extends StatelessWidget {
+  const CircleBtn({
     Key? key,
     required this.child,
     required this.onPressed,

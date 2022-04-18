@@ -175,7 +175,7 @@ class _ImageGalleryState extends State<ImageGallery> {
                 child: BottomCenter(
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 80),
-                    child: CircleButton(
+                    child: CircleBtn(
                         child: Icon(_scale == 1 ? Icons.zoom_out : Icons.zoom_in), onPressed: _handleZoomToggled),
                   ),
                 ),

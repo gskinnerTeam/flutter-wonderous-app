@@ -62,7 +62,7 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
           child: SafeArea(
             child: Padding(
               padding: EdgeInsets.all(context.insets.md),
-              child: CircleButton(
+              child: CircleBtn(
                 child: Icon(Icons.close, color: context.colors.white),
                 bgColor: context.colors.greyStrong,
                 onPressed: _handleClosePressed,

@@ -94,7 +94,7 @@ class _WonderHomeBtn extends StatelessWidget {
   final WonderType wonderType;
   @override
   Widget build(BuildContext context) {
-    return CircleButton(
+    return CircleBtn(
       onPressed: () => Navigator.of(context).pop(),
       bgColor: context.colors.accent1,
       border: BorderSide(color: context.colors.offWhite, width: 6),
