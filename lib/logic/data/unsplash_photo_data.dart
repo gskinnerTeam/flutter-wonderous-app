@@ -1,3 +1,7 @@
+import 'package:wonders/logic/common/platform_info.dart';
+
+enum UnsplashPhotoSize { small, med, large, xl }
+
 class UnsplashPhotoData {
   static const String unsplashUrl = 'https://unsplash.com/?utm_source=wonders&utm_medium=referral';
   UnsplashPhotoData({
@@ -18,5 +22,26 @@ class UnsplashPhotoData {
 
   late final String photographerUrl = 'https://unsplash.com/@$ownerUsername?utm_source=wonders&utm_medium=referral';
 
-  String? getSizedUrl(int? targetSize) => '$url?q=85&fm=jpg${targetSize != null ? '&w=$targetSize' : ''}&fit=max';
+  String getSizedUrl(UnsplashPhotoSize targetSize) {
+    late int size;
+    switch (targetSize) {
+      case UnsplashPhotoSize.small:
+        size = 200;
+        break;
+      case UnsplashPhotoSize.med:
+        size = 400;
+        break;
+      case UnsplashPhotoSize.large:
+        size = 600;
+        break;
+      case UnsplashPhotoSize.xl:
+        size = 1000;
+        break;
+    }
+    if (PlatformInfo.dpi > 2) {
+      size *= 2;
+    }
+
+    return '$url?q=85&fm=jpg&w=$size&fit=max';
+  }
 }

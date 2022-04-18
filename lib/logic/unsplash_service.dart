@@ -12,6 +12,13 @@ class UnsplashService {
     ),
   );
 
+  Future<List<String>?> loadCollectionPhotos(String id) async {
+    final photo = await client.collections.photos(id, page: 1, perPage: 25).go();
+    final data = photo.data;
+    if (data == null) return null;
+    return data.map((e) => e.id).toList();
+  }
+
   Future<UnsplashPhotoData?> loadInfo(String id) async {
     final photo = await client.photos.get(id).go();
     final data = photo.data;

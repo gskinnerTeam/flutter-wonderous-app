@@ -33,7 +33,8 @@ class TajMahalIllustration extends StatelessWidget {
               ),
             ),
             // Sun
-            TopLeft(
+            Align(
+              alignment: config.shortMode ? Alignment.topLeft : Alignment(-.8, -.8),
               child: FractionalTranslation(
                 translation: Offset(-.2 + curvedAnim * .2, .4 - curvedAnim * .2),
                 child: WonderHero(config, 'taj-sun', child: Image.asset('$assetPath/sun.png', opacity: anim)),

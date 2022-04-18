@@ -24,20 +24,37 @@ class AnimatedCutoutOverlay extends StatelessWidget {
     return Stack(
       children: [
         child,
-        GTweener(
-          [GCustom(builder: _buildAnimatedCutout)],
+        FXAnimate(
+          fx: [BuildFX(_buildAnimatedCutout, curve: Curves.easeOut, duration: duration)],
           key: animationKey,
-          curve: Curves.easeOut,
-          duration: duration,
-          onInit: (t) => t.animation.forward().then((_) => t.animation.reverse()),
+          //onComplete: (c) => c.reverse(),
           child: IgnorePointer(child: Container(color: Colors.black.withOpacity(opacity))),
-        )
+        ),
+
+        // GTweener(
+        //   [GCustom(builder: _buildAnimatedCutoutOld)],
+        //   key: animationKey,
+        //   curve: Curves.easeOut,
+        //   duration: duration,
+        //   onInit: (t) => t.animation.forward().then((_) => t.animation.reverse()),
+        //   child: IgnorePointer(child: Container(color: Colors.black.withOpacity(opacity))),
+        // )
       ],
     );
   }
 
   /// Scales from 1 --> (1 - scaleAmt) --> 1
-  Widget _buildAnimatedCutout(Widget child, Animation<double> anim) {
+  Widget _buildAnimatedCutout(BuildContext context, double anim, Widget child) {
+    // controls how much the center cutout will shrink when changing images
+    const scaleAmt = .25;
+    final size = Size(
+      cutoutSize.width * (1 - scaleAmt * anim * swipeDir.dx.abs()),
+      cutoutSize.height * (1 - scaleAmt * anim * swipeDir.dy.abs()),
+    );
+    return ClipPath(clipper: _CutoutClipper(size), child: child);
+  }
+
+  Widget _buildAnimatedCutoutOld(Widget child, Animation<double> anim) {
     // controls how much the center cutout will shrink when changing images
     const scaleAmt = .25;
     final size = Size(

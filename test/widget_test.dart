@@ -9,7 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:wonders/common_libs.dart';
 
 void main() {
-  registerSingletons(useMocks: true);
+  registerSingletons();
   testWidgets('App test', (WidgetTester tester) async {
     await tester.pumpWidget(WondersApp());
   });

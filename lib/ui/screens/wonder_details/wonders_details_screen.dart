@@ -62,7 +62,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
             index: _tabController.index,
             children: [
               WonderEditorialScreen(wonder, onScroll: _handleDetailsScrolled),
-              ImageGallery(photoIds: wonder.imageIds),
+              ImageGallery(collectionId: wonder.unsplashCollectionId),
               Padding(padding: EdgeInsets.only(bottom: tabBarHeight), child: ArtifactCarouselScreen(type: wonder.type)),
               Padding(padding: EdgeInsets.only(bottom: tabBarHeight), child: TimelineScreen(type: widget.type)),
             ],

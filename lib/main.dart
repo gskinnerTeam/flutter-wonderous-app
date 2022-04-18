@@ -6,7 +6,7 @@ import 'package:wonders/logic/unsplash_service.dart';
 import 'package:wonders/logic/wonders_logic.dart';
 
 void main() {
-  registerSingletons(useMocks: true);
+  registerSingletons();
   runApp(WondersApp());
   appLogic.bootstrap();
 }
@@ -23,7 +23,7 @@ class WondersApp extends StatelessWidget {
 }
 
 /// Create singletons (controllers and services) that can be shared across the app.
-void registerSingletons({required bool useMocks}) {
+void registerSingletons() {
   // Top level app controller
   GetIt.I.registerLazySingleton<AppLogic>(() => AppLogic());
   // Wonders
@@ -36,10 +36,6 @@ void registerSingletons({required bool useMocks}) {
   // Unsplash
   GetIt.I.registerLazySingleton<UnsplashLogic>(() => UnsplashLogic());
   GetIt.I.registerLazySingleton<UnsplashService>(() => UnsplashService());
-  // Testing mocks
-  if (useMocks) {
-    //GetIt.I.pushNewScope();
-  }
 }
 
 /// Add syntax sugar for quickly accessing the main logical controllers in the app

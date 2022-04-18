@@ -1,4 +1,5 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/data/unsplash_photo_data.dart';
 import 'package:wonders/ui/common/unsplash_photo.dart';
 
 class FullScreenUnsplashPhotoViewer extends StatefulWidget {
@@ -26,7 +27,12 @@ class _FullScreenUnsplashPhotoViewerState extends State<FullScreenUnsplashPhotoV
         children: [
           Expanded(
             child: InteractiveViewer(
-              child: UnsplashPhoto(_id, fit: BoxFit.cover, targetSize: (context.diagonalPx * .5).round()),
+              child: UnsplashPhoto(
+                _id,
+                fit: BoxFit.fitHeight,
+                size: UnsplashPhotoSize.xl,
+                showCredits: true,
+              ),
             ),
           ),
           ColoredBox(
