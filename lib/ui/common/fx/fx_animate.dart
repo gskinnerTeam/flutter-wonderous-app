@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 
 import 'fx.dart';
 
+typedef ReparentChildBuilder = Widget Function(Widget parent, Widget child);
 
 // FXAnimate makes adding beautiful animated effects (FX) to your widgets
 // simple. It supports both a declarative and chained API. The latter is exposed
@@ -32,7 +33,7 @@ class FXAnimate extends StatefulWidget with FXManager<FXAnimate> {
   static Curve defaultCurve = Curves.linear;
 
   // Types to reparent, mapped to a method that handles that type.
-  static Map reparentTypes = <Type, Widget Function(Widget, Widget)>{
+  static Map reparentTypes = <Type, ReparentChildBuilder>{
     Flexible: (parent, child) {
       Flexible o = parent as Flexible;
       return Flexible(key: o.key, flex: o.flex, fit: o.fit, child: child);
@@ -54,7 +55,6 @@ class FXAnimate extends StatefulWidget with FXManager<FXAnimate> {
       return Expanded(key: o.key, flex: o.flex, child: child);
     }
   };
-  
 
   final Widget child;
   late final List<FXEntry> _fx;
@@ -64,23 +64,24 @@ class FXAnimate extends StatefulWidget with FXManager<FXAnimate> {
   FXAnimateCallback? onComplete;
   FXAnimateCallback? onInit; // todo: FXController
 
-  FXAnimate(
-      {Key? key,
-      required this.child,
-      List<AbstractFX>? fx,
-      this.onComplete,
-      this.onInit})
-      : super(key: key) {
+  FXAnimate({
+    Key? key,
+    required this.child,
+    List<AbstractFX>? fx,
+    this.onComplete,
+    this.onInit,
+  }) : super(key: key) {
     _fx = [];
     if (fx != null) {
       addFXList(fx);
     }
   }
 
-  FXAnimate call(
-      {List<AbstractFX>? fx,
-      FXAnimateCallback? onComplete,
-      FXAnimateCallback? onInit}) {
+  FXAnimate call({
+    List<AbstractFX>? fx,
+    FXAnimateCallback? onComplete,
+    FXAnimateCallback? onInit,
+  }) {
     if (_fx.isNotEmpty) {
       // throw error?
       return this;
@@ -100,13 +101,11 @@ class FXAnimate extends StatefulWidget with FXManager<FXAnimate> {
 
   @override
   FXAnimate addFX(AbstractFX fx) {
-    Duration begin =
-        _offset + (fx.delay ?? _lastEntry?.fx.delay ?? Duration.zero);
+    Duration begin = _offset + (fx.delay ?? _lastEntry?.fx.delay ?? Duration.zero);
     FXEntry entry = FXEntry(
       fx: fx,
       begin: begin,
-      end: begin +
-          (fx.duration ?? _lastEntry?.fx.duration ?? FXAnimate.defaultDuration),
+      end: begin + (fx.duration ?? _lastEntry?.fx.duration ?? FXAnimate.defaultDuration),
       curve: fx.curve ?? _lastEntry?.curve ?? FXAnimate.defaultCurve,
     );
     _fx.add(entry);
@@ -126,9 +125,16 @@ class FXAnimate extends StatefulWidget with FXManager<FXAnimate> {
   }
 }
 
-class _FXAnimateState extends State<FXAnimate>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller = AnimationController(vsync: this);
+class _FXAnimateState extends State<FXAnimate> with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(vsync: this)..duration = widget._duration;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addStatusListener(_handleAnimationStatus);
+    _controller.forward(); // TODO: Maybe add widget.autoPlay?
+    widget.onInit?.call(_controller);
+  }
 
   @override
   void dispose() {
@@ -137,34 +143,34 @@ class _FXAnimateState extends State<FXAnimate>
   }
 
   @override
+  void didUpdateWidget(covariant FXAnimate oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget._duration != widget._duration) {
+      _controller.duration = widget._duration;
+    }
+  }
+
+  void _handleAnimationStatus(status) {
+    if (status == AnimationStatus.completed) {
+      widget.onComplete?.call(_controller);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     Widget child = widget.child, parent = child;
-    Function? f = FXAnimate.reparentTypes[child.runtimeType];
-    if (f != null) child = (child as dynamic).child;
-
-    _controller.duration = widget._duration;
-    if (widget.onComplete != null) {
-      _controller.addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          widget.onComplete!(_controller);
-        }
-      });
-    }
-    _controller.forward();
-    if (widget.onInit != null) {
-      widget.onInit!(_controller);
-    }
+    ReparentChildBuilder? reparent = FXAnimate.reparentTypes[child.runtimeType];
+    if (reparent != null) child = (child as dynamic).child;
     for (FXEntry entry in widget._fx) {
       child = entry.fx.build(context, child, _controller, entry);
     }
-    return f == null ? child : f(parent, child);
+    return reparent?.call(parent, child) ?? child;
   }
 }
 
 extension FXWidgetExtensions on Widget {
   FXAnimate get fx => FXAnimate(child: this);
 }
-
 
 // Applies animated effects to a list of widgets. It does this by wrapping each
 // widget in FXAnimate, and then proxying addFX calls to all instances. It can
@@ -184,8 +190,7 @@ extension FXWidgetExtensions on Widget {
 //        children:[foo, bar, baz],
 //      )
 //    )
-class FXAnimateList<T extends Widget> extends ListBase<Widget>
-    with FXManager<FXAnimateList> {
+class FXAnimateList<T extends Widget> extends ListBase<Widget> with FXManager<FXAnimateList> {
   static Duration defaultInterval = const Duration(milliseconds: 200);
 
   // Types to completely ignore in a list.
@@ -225,8 +230,7 @@ class FXAnimateList<T extends Widget> extends ListBase<Widget>
     return this;
   }
 
-  FXAnimateList call(
-      {Duration? interval, Function()? onComplete, List<AbstractFX>? fx}) {
+  FXAnimateList call({Duration? interval, Function()? onComplete, List<AbstractFX>? fx}) {
     if (managers.isEmpty || managers.first._fx.isNotEmpty) {
       // throw error?
       return this;
@@ -262,13 +266,13 @@ class FXAnimateList<T extends Widget> extends ListBase<Widget>
     widgets[index] = value;
   }
 }
+
 extension FXListExtensions on List<Widget> {
   FXAnimateList get fx => FXAnimateList(children: this);
 }
 
-
-// Because effects classes (AbstractFX) are immutable and may be reused between 
-// multiple FXAnimate instances, an FXEntry is created to store values that may 
+// Because effects classes (AbstractFX) are immutable and may be reused between
+// multiple FXAnimate instances, an FXEntry is created to store values that may
 // be different between instances. For example, due to `interval` offsets, or
 // from inheriting values from prior FX in the chain.
 @immutable
@@ -278,25 +282,23 @@ class FXEntry {
   final Curve curve;
   final AbstractFX fx;
 
-  const FXEntry(
-      {required this.fx,
-      required this.begin,
-      required this.end,
-      required this.curve});
+  const FXEntry({
+    required this.fx,
+    required this.begin,
+    required this.end,
+    required this.curve,
+  });
 
-  Animation<double> buildAnimation(AnimationController controller,
-      {Curve? curve}) {
+  Animation<double> buildAnimation(AnimationController controller, {Curve? curve}) {
     return buildSubAnimation(controller, begin, end, curve ?? this.curve);
   }
 }
 
-
 // Builds a sub-animation to the provided controller that runs from start to
-// end, with the provided curve. For example, it could create an animation that 
+// end, with the provided curve. For example, it could create an animation that
 // runs from 300ms to 800ms with an easeOut, within a controller that has a
 // total duration of 1000ms.
-Animation<double> buildSubAnimation(
-    AnimationController controller, Duration begin, Duration end, Curve curve) {
+Animation<double> buildSubAnimation(AnimationController controller, Duration begin, Duration end, Curve curve) {
   int ttlT = controller.duration?.inMicroseconds ?? 0;
   int beginT = begin.inMicroseconds, endT = end.inMicroseconds;
   return CurvedAnimation(
@@ -305,12 +307,10 @@ Animation<double> buildSubAnimation(
   );
 }
 
-
 // Function for Animate callbacks.
 typedef FXAnimateCallback = void Function(
   AnimationController controller,
 );
-
 
 // FXManager provides a common interface for FXAnimate and FXAnimateList for attaching FX extensions to.
 mixin FXManager<T> {
