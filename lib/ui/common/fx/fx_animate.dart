@@ -157,12 +157,12 @@ class _FXAnimateState extends State<FXAnimate> with SingleTickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     Widget child = widget.child, parent = child;
-    Function? f = FXAnimate.reparentTypes[child.runtimeType];
-    if (f != null) child = (child as dynamic).child;
+    Widget Function(Widget parent, Widget child)? reparent = FXAnimate.reparentTypes[child.runtimeType];
+    if (reparent != null) child = (child as dynamic).child;
     for (FXEntry entry in widget._fx) {
       child = entry.fx.build(context, child, _controller, entry);
     }
-    return f == null ? child : f(parent, child);
+    return reparent?.call(parent, child) ?? child;
   }
 }
 
