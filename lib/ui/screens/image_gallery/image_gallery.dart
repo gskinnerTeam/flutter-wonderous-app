@@ -173,9 +173,11 @@ class _ImageGalleryState extends State<ImageGallery> {
               Positioned.fill(
                 child: BottomCenter(
                   child: Padding(
-                    padding: const EdgeInsets.only(bottom: 80),
-                    child: CircleBtn(
-                        child: Icon(_scale == 1 ? Icons.zoom_out : Icons.zoom_in), onPressed: _handleZoomToggled),
+                    padding: EdgeInsets.only(bottom: context.insets.offset),
+                    child: CircleIconBtn(
+                      icon: _scale == 1 ? Icons.zoom_out : Icons.zoom_in,
+                      onPressed: _handleZoomToggled,
+                    ),
                   ),
                 ),
               )
