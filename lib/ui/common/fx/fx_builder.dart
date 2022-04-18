@@ -11,7 +11,7 @@ class FXBuilder extends StatefulWidget {
   final Duration duration;
   final Curve curve;
   final Widget? child;
-  final Widget Function(BuildContext, double, Widget?) builder;
+  final FXBuilderBuilder builder;
 
   const FXBuilder(
       {required this.builder,
@@ -56,3 +56,6 @@ class _FXBuilderState extends State<FXBuilder>
     );
   }
 }
+
+// yes, this name is silly.
+typedef FXBuilderBuilder = Widget Function(BuildContext context, double ratio, Widget? child);
