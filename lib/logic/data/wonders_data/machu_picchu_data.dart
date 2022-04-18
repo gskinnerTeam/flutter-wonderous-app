@@ -3,7 +3,7 @@ import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/data/wonders_data/mock_data.dart';
 
 final machuPicchuData = WonderData(
-  type: WonderType.colosseum,
+  type: WonderType.machuPicchu,
   title: 'Machu Picchu',
   subTitle: 'Lost City of the Incas',
   regionTitle: 'Cusco Region, Peru',
