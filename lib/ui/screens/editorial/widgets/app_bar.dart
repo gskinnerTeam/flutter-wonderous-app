@@ -53,10 +53,9 @@ class _AppBar extends StatelessWidget {
                 /// Colored overlay
                 if (showOverlay) ...[
                   ClipRect(
-                    child: ColoredBox(color: wonderType.bgColor.withOpacity(.8))
-                        .gTweener
-                        .move(from: Offset(0, -200))
-                        .withDelay(.0.seconds),
+                    child: ColoredBox(
+                      color: wonderType.bgColor.withOpacity(.8),
+                    ).fx.move(begin: Offset(0, 200)),
                   ),
                 ],
               ],

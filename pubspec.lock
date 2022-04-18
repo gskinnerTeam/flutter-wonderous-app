@@ -280,7 +280,7 @@ packages:
     source: hosted
     version: "0.6.4"
   flutter_cache_manager:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_cache_manager
       url: "https://pub.dartlang.org"
@@ -425,15 +425,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  gtween:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "4377cff67b196e1afbebf0f2d6ea730b9a4c0fbf"
-      url: "https://github.com/gskinnerTeam/flutter-gtween.git"
-    source: git
-    version: "0.0.1"
   http:
     dependency: transitive
     description:
@@ -670,6 +661,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.11.1"
+  performance:
+    dependency: "direct main"
+    description:
+      name: performance
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0+1"
   petitparser:
     dependency: transitive
     description:
@@ -934,13 +932,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.10.0"
-  statsfl:
-    dependency: "direct main"
-    description:
-      name: statsfl
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.3.0"
   stream_channel:
     dependency: transitive
     description:

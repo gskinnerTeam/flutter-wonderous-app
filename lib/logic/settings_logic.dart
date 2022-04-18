@@ -7,13 +7,13 @@ class SettingsLogic with SaveLoadMixin {
 
   late final enableMotionBlur = ValueNotifier<bool>(false)..addListener(scheduleSave);
   late final swipeThreshold = ValueNotifier<double>(.25)..addListener(scheduleSave);
-  late final enableFpsMeter = ValueNotifier<bool>(true)..addListener(scheduleSave);
+  late final enableFpsMeter = ValueNotifier<bool>(false)..addListener(scheduleSave);
   late final enableClouds = ValueNotifier<bool>(true)..addListener(scheduleSave);
 
   @override
   void copyFromJson(Map<String, dynamic> value) {
     return;
-    //SB: Disabled loading of settings to allow us to more easily reset defaults values for QA testers.
+    //SB: Disabled loading of settings to allow us to more easily reset default values for QA testers, we should re-enable this at some pt. If we even have any actual settings.
     enableMotionBlur.value = value['enableMotionBlur'] ?? enableMotionBlur.value;
     swipeThreshold.value = value['swipeThreshold'] ?? swipeThreshold.value;
     enableFpsMeter.value = value['enableFpsMeter'] ?? enableFpsMeter.value;

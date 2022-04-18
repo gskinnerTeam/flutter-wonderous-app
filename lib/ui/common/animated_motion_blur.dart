@@ -1,3 +1,4 @@
+import 'package:flutter/scheduler.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/directional_blur.dart';
 
@@ -16,29 +17,28 @@ class AnimatedMotionBlur extends StatefulWidget {
 }
 
 class _AnimatedMotionBlurState extends State<AnimatedMotionBlur> {
-  GTweenerController? _blur;
+  AnimationController? _blur;
 
   @override
   void didUpdateWidget(covariant AnimatedMotionBlur oldWidget) {
     if (oldWidget.animationKey != widget.animationKey) {
-      _blur?.animation.forward(from: 0);
+      _blur?.forward(from: 0);
     }
     super.didUpdateWidget(oldWidget);
   }
 
   @override
   Widget build(BuildContext context) {
-    return GTweener(
-      [GCustom(builder: _buildBlur)],
+    timeDilation = 1;
+    return FXAnimate(
+      fx: [BuildFX(_buildBlur, duration: widget.duration, curve: Curves.easeOut)],
       onInit: (t) => _blur = t,
-      duration: widget.duration,
-      curve: Curves.easeOut,
       child: widget.child,
     );
   }
 
-  Widget _buildBlur(Widget child, Animation<double> anim) {
-    double amt = sin(anim.value * pi) * 5;
+  Widget _buildBlur(BuildContext context, double anim, Widget child) {
+    double amt = sin(anim * pi) * 5;
     if (widget.enabled == false) amt = 0;
     final rads = atan2(widget.dir.dy, widget.dir.dx);
     return DirectionalBlur(blurAmount: amt, rotation: -rads, child: child);

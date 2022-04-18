@@ -11,25 +11,30 @@ class ArtifactCarouselImage extends StatelessWidget {
       required this.currentPage,
       required this.artifact,
       required this.viewportFraction,
-      this.borderOnly = false})
+      this.borderOnly = false,
+      required this.onPressed})
       : super(key: key);
   final ArtifactData artifact;
   final int index;
   final double currentPage;
   final double viewportFraction;
   final bool borderOnly;
+  final VoidCallback onPressed;
 
   @override
-  Widget build(BuildContext context) => CachedNetworkImage(
-        // Show immediately; don't delay the appearance on the sides.
-        fadeInDuration: context.times.fast,
-        fadeOutDuration: context.times.fast,
-        imageUrl: artifact.image,
-        imageBuilder: (context, imageProvider) => _ImagePreview(
-          image: imageProvider,
-          heroTag: artifact.image,
-          viewportFraction: viewportFraction,
-          offsetAmt: currentPage - index.toDouble(),
+  Widget build(BuildContext context) => GestureDetector(
+        onTap: onPressed,
+        child: CachedNetworkImage(
+          // Show immediately; don't delay the appearance on the sides.
+          fadeInDuration: context.times.fast,
+          fadeOutDuration: context.times.fast,
+          imageUrl: artifact.image,
+          imageBuilder: (context, imageProvider) => _ImagePreview(
+            image: imageProvider,
+            heroTag: artifact.image,
+            viewportFraction: viewportFraction,
+            offsetAmt: currentPage - index.toDouble(),
+          ),
         ),
       );
 }

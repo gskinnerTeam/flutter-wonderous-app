@@ -33,7 +33,8 @@ class TajMahalIllustration extends StatelessWidget {
               ),
             ),
             // Sun
-            TopLeft(
+            Align(
+              alignment: config.shortMode ? Alignment.topLeft : Alignment(-.8, -.8),
               child: FractionalTranslation(
                 translation: Offset(-.2 + curvedAnim * .2, .4 - curvedAnim * .2),
                 child: WonderHero(config, 'taj-sun', child: Image.asset('$assetPath/sun.png', opacity: anim)),
@@ -46,49 +47,48 @@ class TajMahalIllustration extends StatelessWidget {
         mgBuilder: (_, anim) {
           return [
             FractionalTranslation(
-              translation: Offset(0, -.05),
+              translation: Offset(0, -.03),
               child: Transform.scale(
-                scale: .65,
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Center(
-                        child: Stack(
-                      children: [
-                        WonderHero(
-                          config,
-                          'taj',
-                          child: Image.asset('$assetPath/taj-mahal.png', fit: BoxFit.fitHeight, opacity: anim),
-                        ),
-                        Positioned.fill(
-                          child: BottomCenter(
-                            child: FractionalTranslation(
-                              translation: Offset(0, .2),
-                              child: OverflowBox(
-                                maxWidth: double.infinity,
-                                child: WonderHero(config, 'taj-wall',
-                                    child: Image.asset('$assetPath/wall.png', fit: BoxFit.fitHeight, opacity: anim)),
-                              ),
+                scale: 1 + (config.zoom - 1) / 2,
+                child: Transform.scale(
+                  scale: config.shortMode ? .75 : .6,
+                  child: Center(
+                      child: Stack(
+                    children: [
+                      WonderHero(
+                        config,
+                        'taj',
+                        child: Image.asset('$assetPath/taj-mahal.png', fit: BoxFit.fitHeight, opacity: anim),
+                      ),
+                      Positioned.fill(
+                        child: BottomCenter(
+                          child: FractionalTranslation(
+                            translation: Offset(0, .2),
+                            child: OverflowBox(
+                              maxWidth: double.infinity,
+                              child: WonderHero(config, 'taj-wall',
+                                  child: Image.asset('$assetPath/wall.png', fit: BoxFit.fitHeight, opacity: anim)),
                             ),
                           ),
                         ),
-                        // Positioned.fill(
-                        //   child: BottomCenter(
-                        //     child: OverflowBox(
-                        //       maxWidth: double.infinity,
-                        //       maxHeight: double.infinity,
-                        //       child: FractionalTranslation(
-                        //         translation: Offset(0, .8),
-                        //         child: SizedBox(
-                        //             height: 700,
-                        //             child: Image.asset('$assetPath/pool.png', fit: BoxFit.fitHeight, opacity: anim)),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // )
-                      ],
-                    )),
-                  ],
+                      ),
+                      if (!config.shortMode)
+                        Positioned.fill(
+                          child: BottomCenter(
+                            child: OverflowBox(
+                              maxWidth: double.infinity,
+                              maxHeight: double.infinity,
+                              child: FractionalTranslation(
+                                translation: Offset(0, .8),
+                                child: SizedBox(
+                                    height: 700,
+                                    child: Image.asset('$assetPath/pool.png', fit: BoxFit.fitHeight, opacity: anim)),
+                              ),
+                            ),
+                          ),
+                        )
+                    ],
+                  )),
                 ),
               ),
             ),
@@ -99,30 +99,35 @@ class TajMahalIllustration extends StatelessWidget {
         fgBuilder: (context, anim) {
           final curvedAnim = Curves.easeOut.transform(anim.value);
           return [
-            Stack(children: [
-              BottomLeft(
-                child: FractionalTranslation(
-                  translation: Offset(-.3 * (1 - curvedAnim), 0),
-                  child: Transform.rotate(
-                    angle: pi * -.1 * (1 - curvedAnim),
-                    child: FractionalTranslation(
-                        translation: Offset(-.4, -.2), child: Image.asset('$assetPath/mangos-left.png', opacity: anim)),
-                  ),
-                ),
-              ),
-              BottomRight(
-                child: FractionalTranslation(
-                  translation: Offset(.3 * (1 - curvedAnim), 0),
-                  child: Transform.rotate(
-                    angle: pi * .1 * (1 - curvedAnim),
-                    child: FractionalTranslation(
-                      translation: Offset(.5, -.15),
-                      child: Image.asset('$assetPath/mangos-right.png', opacity: anim),
+            Transform.scale(
+              scale: .8 + (config.zoom - 1) / 2,
+              child: Stack(children: [
+                BottomLeft(
+                  child: FractionalTranslation(
+                    translation: Offset(-.3 * (1 - curvedAnim), 0),
+                    child: Transform.rotate(
+                      angle: pi * -.1 * (1 - curvedAnim),
+                      child: FractionalTranslation(
+                        translation: Offset(-.4, -.2),
+                        child: Image.asset('$assetPath/mangos-left.png', opacity: anim),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ])
+                BottomRight(
+                  child: FractionalTranslation(
+                    translation: Offset(.3 * (1 - curvedAnim), 0),
+                    child: Transform.rotate(
+                      angle: pi * .1 * (1 - curvedAnim),
+                      child: FractionalTranslation(
+                        translation: Offset(.5, -.15),
+                        child: Image.asset('$assetPath/mangos-right.png', opacity: anim),
+                      ),
+                    ),
+                  ),
+                ),
+              ]),
+            )
           ];
         });
   }

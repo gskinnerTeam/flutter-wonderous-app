@@ -48,7 +48,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
   void initState() {
     super.initState();
     // Delay initialization of some scrolling content for a moment, to give the hero time to fly.
-    Future.delayed(.5.seconds).then((_) {
+    Future.delayed(500.ms).then((_) {
       if (!mounted) return;
       _showBottomListContent.value = true;
     });
@@ -79,7 +79,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (_, constraints) {
       bool shortMode = constraints.biggest.height < 700;
-      double _illustrationHeight = shortMode ? 250 : 330;
+      double _illustrationHeight = shortMode ? 250 : 280;
       double _minAppBarHeight = shortMode ? 40 : 120;
       double _maxAppBarHeight = shortMode ? 400 : 500;
 
@@ -152,16 +152,15 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                     backgroundColor: Colors.transparent,
                     elevation: 0,
                     leading: SizedBox.shrink(),
-                    flexibleSpace: GTweener(
-                      [GFade(), GMove(from: Offset(0, 100))],
-                      duration: context.times.med,
-                      child: SizedBox.expand(
-                        child: _AppBar(
-                          widget.data.type,
-                          scrollPos: _scrollPos,
-                          sectionIndex: _sectionIndex,
-                        ),
-                      ),
+                    flexibleSpace: SizedBox.expand(
+                      child: _AppBar(
+                        widget.data.type,
+                        scrollPos: _scrollPos,
+                        sectionIndex: _sectionIndex,
+                      ).fx.fade(duration: context.times.med).move(
+                            curve: Curves.easeOut,
+                            begin: Offset(0, 100),
+                          ),
                     ),
                   ),
 

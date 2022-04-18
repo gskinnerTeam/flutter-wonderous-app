@@ -18,7 +18,7 @@ class DirectionalBlur extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Optimization: If there's no blur to apply, then just return the original child
-    if (blurAmount == 0) return child;
+    //if (blurAmount == 0) return child; //SB: removed this optimization for now, as it caused descendants to lose state
     // TODO: This could be optimized to not rotate at all when angle is vertical (90, 270) or horizontal (0, 180)
     return Transform.rotate(
       angle: -rotation,

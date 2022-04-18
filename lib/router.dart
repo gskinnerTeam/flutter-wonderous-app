@@ -2,6 +2,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/app_scaffold.dart';
 import 'package:wonders/ui/screens/artifact/artifact_details/artifact_details_screen.dart';
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_screen.dart';
+import 'package:wonders/ui/screens/collectibles/collection_screen.dart';
 import 'package:wonders/ui/screens/home/wonders_home_screen.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_screen.dart';
 import 'package:wonders/ui/screens/settings/settings_screen.dart';
@@ -20,6 +21,7 @@ class ScreenPaths {
   static String highlights(WonderType type) => '/highlights/${type.name}';
   static String search(WonderType type) => '/search/${type.name}';
   static String artifact(String id) => '/artifact/$id';
+  static String collection(String id) => '/collection/$id';
 }
 
 String? _handleRedirect(GoRouterState state) {
@@ -58,7 +60,10 @@ final appRouter = GoRouter(
     }),
     AppRoute('/artifact/:id', (s) {
       return ArtifactDetailsScreen(artifactId: s.params['id']!);
-    })
+    }),
+    AppRoute('/collection/:id', (s) {
+      return CollectionScreen(fromId: s.params['id']);
+    }),
   ],
 );
 

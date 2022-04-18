@@ -7,7 +7,7 @@ void main() async {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   WidgetsFlutterBinding.ensureInitialized();
   testWidgets('Smoke test', (WidgetTester tester) async {
-    registerSingletons(useMocks: true);
+    registerSingletons();
     await tester.pumpWidget(WondersApp()); // Create main app
     appLogic.bootstrap();
     await tester.pump(Duration(seconds: 2)); // Render another frame in 2s

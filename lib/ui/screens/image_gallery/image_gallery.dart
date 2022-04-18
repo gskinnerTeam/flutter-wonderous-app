@@ -1,35 +1,63 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/data/unsplash_photo_data.dart';
 import 'package:wonders/ui/common/animated_motion_blur.dart';
+import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:wonders/ui/common/controls/circle_button.dart';
 import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
 import 'package:wonders/ui/common/unsplash_photo.dart';
 import 'package:wonders/ui/common/utils/page_routes.dart';
 import 'package:wonders/ui/screens/image_gallery/animated_cutout_overlay.dart';
-import 'package:wonders/ui/screens/image_gallery/fullscreen_photo_viewer.dart';
+import 'package:wonders/ui/screens/image_gallery/fullscreen_unsplash_photo_viewer.dart';
 
 class ImageGallery extends StatefulWidget {
-  ImageGallery({Key? key, this.gridCount = 5, this.imageSize, required this.photoIds}) : super(key: key) {
-    assert(gridCount % 2 == 1 && gridCount > 2, 'Grid count must be an odd number equal to 3 or more');
-    assert(gridCount * gridCount <= photoIds.length, 'Images should be a list with length equal to gridCount^2');
-  }
+  const ImageGallery({Key? key, this.imageSize, required this.collectionId}) : super(key: key);
   final Size? imageSize;
-  final int gridCount;
-  final List<String> photoIds;
+  final String collectionId;
 
   @override
   State<ImageGallery> createState() => _ImageGalleryState();
 }
 
 class _ImageGalleryState extends State<ImageGallery> {
-  late int _index = ((widget.gridCount * widget.gridCount) / 2).round();
+  static const int _gridCount = 5;
+  // Index starts in the middle of the grid (eg, 25 items, index will start at 13)
+  int _index = ((_gridCount * _gridCount) / 2).round();
   late int _prevIndex = _index;
   Offset _lastSwipeDir = Offset.zero;
-
-  int get _gridCount => widget.gridCount;
-  int get _imgCount => pow(_gridCount, 2).round();
-
   double _scale = 1;
   bool _skipNextOffsetTween = false;
+  late Duration swipeDuration = context.times.med * .6;
+
+  final _photoIds = ValueNotifier<List<String>>([]);
+  int get _imgCount => pow(_gridCount, 2).round();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCollections();
+  }
+
+  void _loadCollections() async {
+    var ids = (await unsplashLogic.getCollectionPhotos(widget.collectionId));
+    if (!mounted) return;
+    if (ids != null && ids.isNotEmpty) {
+      // Ensure we have enough images to fill the grid, repeat if necessary
+      while (ids.length < _imgCount) {
+        ids.addAll(List.from(ids));
+        if (ids.length > _imgCount) ids.length = _imgCount;
+      }
+      // Preload the initial image
+      await unsplashLogic.preload(context, ids[_index], size: UnsplashPhotoSize.med);
+      // Start loading the other 8 visible images, but don't await them, just give them a head-start.
+      final indexes = [_index + 1, _index - 1, _index - _gridCount, _index + _gridCount];
+      for (var i in indexes) {
+        unsplashLogic.preload(context, ids[i], size: UnsplashPhotoSize.med);
+      }
+      await Future.delayed(1.seconds);
+      _photoIds.value = ids;
+    }
+  }
+
   void _handleZoomToggled() => setState(() {
         _skipNextOffsetTween = true;
         _scale = _scale == 1 ? .65 : 1;
@@ -72,10 +100,10 @@ class _ImageGalleryState extends State<ImageGallery> {
     if (_index == index) {
       String? newId = await Navigator.push(
         context,
-        PageRoutes.fadeScale(FullScreenUnsplashPhotoViewer(widget.photoIds[index], widget.photoIds)),
+        PageRoutes.fadeScale(FullScreenUnsplashPhotoViewer(_photoIds.value[index], _photoIds.value)),
       );
       if (newId != null) {
-        _setIndex(widget.photoIds.indexOf(newId));
+        _setIndex(_photoIds.value.indexOf(newId));
       }
     } else {
       _setIndex(index);
@@ -84,70 +112,77 @@ class _ImageGalleryState extends State<ImageGallery> {
 
   @override
   Widget build(BuildContext context) {
-    Duration swipeDuration = context.times.med * .55;
-    Size imgSize = (widget.imageSize ?? Size(context.widthPx * .7, context.heightPx * .6)) * _scale;
-    // Get transform offset for the current _index
-    final padding = context.insets.sm;
-    var gridOffset = _calculateCurrentOffset(padding, imgSize);
-    // For some reason we need to add in half of the top-padding when this view does not use a safeArea.
-    // TODO: Try and figure out why we need to incorporate top padding here, it's counter-intuitive. Maybe GridView or another of the material components is doing something we don't want?
-    gridOffset += Offset(0, -context.mq.padding.top / 2);
-    final offsetTweenDuration = _skipNextOffsetTween ? Duration.zero : swipeDuration;
-    _skipNextOffsetTween = false;
+    return ValueListenableBuilder<List<String>>(
+        valueListenable: _photoIds,
+        builder: (_, value, __) {
+          if (value.isEmpty) {
+            return Center(child: AppLoader());
+          }
 
-    // Layout
-    return Stack(
-      children: [
-        // A overlay with a transparent middle sits on top of everything, animating itself each time index changes
-        AnimatedCutoutOverlay(
-          animationKey: ValueKey(_index),
-          cutoutSize: imgSize,
-          swipeDir: _lastSwipeDir,
-          duration: swipeDuration * .5,
-          opacity: _scale == 1 ? .7 : .5,
-          child: SafeArea(
-            /// Place content in overflow box, to allow it to flow outside the parent
-            child: OverflowBox(
-              maxWidth: _gridCount * imgSize.width + padding * (_gridCount - 1),
-              maxHeight: _gridCount * imgSize.height + padding * (_gridCount - 1),
-              alignment: Alignment.center,
-              // Detect swipes in order to change index
-              child: EightWaySwipeDetector(
-                onSwipe: _handleSwipe,
-                threshold: 10 + 100 * settingsLogic.swipeThreshold.value,
-                // A tween animation builder moves from image to image based on current offset
-                child: TweenAnimationBuilder<Offset>(
-                  tween: Tween(begin: gridOffset, end: gridOffset),
-                  duration: offsetTweenDuration,
-                  curve: Curves.easeOut,
-                  builder: (_, value, child) => Transform.translate(
-                    offset: value,
-                    child: child,
-                  ),
-                  child: GridView.count(
-                    physics: NeverScrollableScrollPhysics(),
-                    crossAxisCount: widget.gridCount,
-                    childAspectRatio: imgSize.aspectRatio,
-                    mainAxisSpacing: padding,
-                    crossAxisSpacing: padding,
-                    children: List.generate(_imgCount, (i) => _buildImage(i, swipeDuration, imgSize)),
+          Size imgSize = (widget.imageSize ?? Size(context.widthPx * .7, context.heightPx * .6)) * _scale;
+          // Get transform offset for the current _index
+          final padding = context.insets.sm;
+          var gridOffset = _calculateCurrentOffset(padding, imgSize);
+          // For some reason we need to add in half of the top-padding when this view does not use a safeArea.
+          // TODO: Try and figure out why we need to incorporate top padding here, it's counter-intuitive. Maybe GridView or another of the material components is doing something we don't want?
+          gridOffset += Offset(0, -context.mq.padding.top / 2);
+          final offsetTweenDuration = _skipNextOffsetTween ? Duration.zero : swipeDuration;
+          _skipNextOffsetTween = false;
+
+          // Layout
+          return Stack(
+            children: [
+              // A overlay with a transparent middle sits on top of everything, animating itself each time index changes
+              AnimatedCutoutOverlay(
+                animationKey: ValueKey(_index),
+                cutoutSize: imgSize,
+                swipeDir: _lastSwipeDir,
+                duration: swipeDuration * .5,
+                opacity: _scale == 1 ? .7 : .5,
+                child: SafeArea(
+                  /// Place content in overflow box, to allow it to flow outside the parent
+                  child: OverflowBox(
+                    maxWidth: _gridCount * imgSize.width + padding * (_gridCount - 1),
+                    maxHeight: _gridCount * imgSize.height + padding * (_gridCount - 1),
+                    alignment: Alignment.center,
+                    // Detect swipes in order to change index
+                    child: EightWaySwipeDetector(
+                      onSwipe: _handleSwipe,
+                      threshold: 10 + 100 * settingsLogic.swipeThreshold.value,
+                      // A tween animation builder moves from image to image based on current offset
+                      child: TweenAnimationBuilder<Offset>(
+                        tween: Tween(begin: gridOffset, end: gridOffset),
+                        duration: offsetTweenDuration,
+                        curve: Curves.easeOut,
+                        builder: (_, value, child) => Transform.translate(
+                          offset: value,
+                          child: child,
+                        ),
+                        child: GridView.count(
+                          physics: NeverScrollableScrollPhysics(),
+                          crossAxisCount: _gridCount,
+                          childAspectRatio: imgSize.aspectRatio,
+                          mainAxisSpacing: padding,
+                          crossAxisSpacing: padding,
+                          children: List.generate(_imgCount, (i) => _buildImage(i, swipeDuration, imgSize)),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
-        ),
-        Positioned.fill(
-          child: BottomCenter(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 80),
-              child: CircleButton(
-                  child: Icon(_scale == 1 ? Icons.zoom_out : Icons.zoom_in), onPressed: _handleZoomToggled),
-            ),
-          ),
-        )
-      ],
-    );
+              Positioned.fill(
+                child: BottomCenter(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 80),
+                    child: CircleButton(
+                        child: Icon(_scale == 1 ? Icons.zoom_out : Icons.zoom_in), onPressed: _handleZoomToggled),
+                  ),
+                ),
+              )
+            ],
+          );
+        });
   }
 
   Widget _buildImage(int index, Duration swipeDuration, Size imgSize) {
@@ -171,7 +206,11 @@ class _ImageGalleryState extends State<ImageGallery> {
               curve: Curves.easeOut,
               tween: Tween(begin: 1, end: selected ? 1.15 : 1),
               builder: (_, value, child) => Transform.scale(child: child, scale: value),
-              child: UnsplashPhoto(widget.photoIds[index], fit: BoxFit.cover, targetSize: 600),
+              child: UnsplashPhoto(
+                _photoIds.value[index],
+                fit: BoxFit.cover,
+                size: UnsplashPhotoSize.med,
+              ),
             ),
           ),
         ),

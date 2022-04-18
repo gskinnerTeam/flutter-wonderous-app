@@ -1,7 +1,6 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/wonders_logic.dart';
-import 'package:wonders/ui/common/controls/buttons.dart';
 import 'package:wonders/ui/common/lazy_indexed_stack.dart';
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_screen.dart';
 import 'package:wonders/ui/screens/editorial/editorial_screen.dart';
@@ -24,7 +23,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
     vsync: this,
     initialIndex: AppLogic.enablePersistentTabs ? appLogic.selectedWondersTab.value : 0,
   )..addListener(_handleTabChanged);
-  GTweenerController? _fade;
+  AnimationController? _fade;
 
   final _detailsHasScrolled = ValueNotifier(false);
 
@@ -63,19 +62,16 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
             index: _tabController.index,
             children: [
               WonderEditorialScreen(wonder, onScroll: _handleDetailsScrolled),
-              ImageGallery(photoIds: wonder.imageIds),
+              ImageGallery(collectionId: wonder.unsplashCollectionId),
               Padding(padding: EdgeInsets.only(bottom: tabBarHeight), child: ArtifactCarouselScreen(type: wonder.type)),
               Padding(padding: EdgeInsets.only(bottom: tabBarHeight), child: TimelineScreen(type: widget.type)),
             ],
-          ).gTweener.fade().withInit((t) => _fade = t),
+          ),
 
           /// Settings btn
           SafeArea(
             child: TopRight(
-              child: AppBtn(
-                child: Text('Settings'),
-                onPressed: _handleSettingsPressed,
-              ),
+              child: AppTextBtn('Settings', onPressed: _handleSettingsPressed),
             ),
           ),
 

@@ -1,7 +1,5 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
-import 'package:wonders/ui/common/cards/glass_card.dart';
-import 'dart:math' as math;
 
 // Expandable timerange selector component that further refines Artifact Search based on date range.
 class TimelineVisual extends StatelessWidget {

@@ -1,0 +1,47 @@
+import 'package:wonders/common_libs.dart';
+
+class AnimatedRibbon extends StatelessWidget {
+  const AnimatedRibbon(this.text, {Key? key}) : super(key: key);
+
+  final String text;
+  static const double height = 48;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Positioned.fill(
+            child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildEnd(context, false),
+            Spacer(),
+            _buildEnd(context, true),
+          ],
+        )),
+        _buildFront(context),
+      ],
+    );
+  }
+
+  Widget _buildFront(BuildContext context) {
+    return Container(
+      height: height,
+      color: context.colors.accent1,
+      padding: EdgeInsets.symmetric(horizontal: context.insets.sm),
+      margin: EdgeInsets.only(bottom: 10),
+      // this aligns the text vertically, without expanding the container:
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [Text(text, textAlign: TextAlign.center, style: context.textStyles.title1)],
+      ),
+    );
+  }
+
+  Widget _buildEnd(BuildContext context, bool flip) {
+    Widget end = Image.asset('${ImagePaths.collectibles}/ribbon_end.png', height: height);
+    if (flip) end = Transform.scale(scaleX: -1, child: end);
+    double m = flip ? 1 : -1;
+    return end.fx.move(begin: Offset(m * 8, 2), end: Offset(m * 32, 10), duration: 400.ms, curve: Curves.easeOut);
+  }
+}

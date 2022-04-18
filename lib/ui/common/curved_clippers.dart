@@ -38,9 +38,6 @@ class ArchPoint {
   }
 }
 
-/// TODO: Refactor this to just allow each type to work on path directly
-/// This make it easier to match the shapes we need, but won't really be tweenable from shape to shape
-/// Certain ones can still shared the same 5-point structure / draw method
 List<ArchPoint> _getArchPts(Size size, ArchType type) {
   double distanceFromTop = 100;
   switch (type) {

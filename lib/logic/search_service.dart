@@ -52,8 +52,6 @@ class SearchService {
     if (dateBegin != null) urlParams['dateBegin'] = dateBegin;
     if (dateEnd != null) urlParams['dateEnd'] = dateEnd;
 
-    // TODO: run a check for images with odd sizes. To do this:
-    // - check the artifact's dimensions for multiple artifacts; see how often it relates to the image dimensions (should be at least a bit related)
     HttpResponse response = await _request('public/collection/v1/search', method: MethodType.get, urlParams: urlParams);
     return ServiceResult(response, _parseObjectIds);
   }
