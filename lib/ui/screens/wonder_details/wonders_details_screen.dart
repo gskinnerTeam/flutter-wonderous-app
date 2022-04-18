@@ -79,7 +79,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
               valueListenable: _detailsHasScrolled,
               builder: (_, value, ___) => WonderDetailsTabMenu(
                 tabController: _tabController,
-                wonderType: wonder!.type,
+                wonderType: wonder.type,
                 showBg: showTabBarBg,
                 showHomeBtn: value || tabIndex != 0,
               ),

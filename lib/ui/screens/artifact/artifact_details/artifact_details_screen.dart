@@ -2,7 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
+import 'package:wonders/ui/common/app_loading_error.dart';
 import 'package:wonders/ui/common/compass_divider.dart';
+import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:wonders/ui/common/controls/circle_button.dart';
 import 'package:wonders/ui/common/fullscreen_url_img_viewer.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
@@ -19,58 +21,52 @@ class ArtifactDetailsScreen extends StatefulWidget {
 }
 
 class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
-  ArtifactData? _data;
-
-  @override
-  void initState() {
-    super.initState();
-    _getArtifact();
-  }
-
-  /// Todo: Maybe use a futureBuilder here?
-  void _getArtifact() async {
-    var newArtifact = await searchLogic.getArtifactByID(widget.artifactId);
-    _data = newArtifact;
-    setState(() {});
-  }
+  late final _future = searchLogic.getArtifactByID(widget.artifactId);
 
   @override
   Widget build(BuildContext context) {
     void _handleClosePressed() => Navigator.pop(context);
-    if (_data == null) return Center(child: Text('Error loading artifact.'));
-    return ColoredBox(
-      color: context.colors.greyStrong,
-      child: Stack(children: [
-        /// Content
-        CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              backgroundColor: Colors.transparent,
-              pinned: true,
-              elevation: 0,
-              leading: SizedBox.shrink(),
-              expandedHeight: context.heightPx * .5,
-              collapsedHeight: context.heightPx * .35,
-              flexibleSpace: _TopContent(data: _data!),
+    return FutureBuilder<ArtifactData?>(
+      future: _future,
+      builder: (_, snapshot) {
+        if (snapshot.hasError) return Center(child: AppLoadError());
+        if (snapshot.hasData == false || snapshot.data == null) return Center(child: AppLoader());
+        final data = snapshot.data;
+        return ColoredBox(
+          color: context.colors.greyStrong,
+          child: Stack(children: [
+            /// Content
+            CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  backgroundColor: Colors.transparent,
+                  pinned: true,
+                  elevation: 0,
+                  leading: SizedBox.shrink(),
+                  expandedHeight: context.heightPx * .5,
+                  collapsedHeight: context.heightPx * .35,
+                  flexibleSpace: _TopContent(data: data!),
+                ),
+                SliverToBoxAdapter(child: _BottomContent(data: data)),
+              ],
             ),
-            SliverToBoxAdapter(child: _BottomContent(data: _data!)),
-          ],
-        ),
 
-        /// Back btn
-        TopRight(
-          child: SafeArea(
-            child: Padding(
-              padding: EdgeInsets.all(context.insets.md),
-              child: CircleBtn(
-                child: Icon(Icons.close, color: context.colors.white),
-                bgColor: context.colors.greyStrong,
-                onPressed: _handleClosePressed,
+            /// Back btn
+            TopRight(
+              child: SafeArea(
+                child: Padding(
+                  padding: EdgeInsets.all(context.insets.md),
+                  child: CircleBtn(
+                    child: Icon(Icons.close, color: context.colors.white),
+                    bgColor: context.colors.greyStrong,
+                    onPressed: _handleClosePressed,
+                  ),
+                ),
               ),
-            ),
-          ),
-        )
-      ]),
+            )
+          ]),
+        );
+      },
     );
 
     // Create an image with a close button in the top right

@@ -46,8 +46,11 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     for (var id in _highlightedArtifactIds) {
       _loadedArtifacts.add(await searchLogic.getArtifactByID(id));
     }
-
-    _changeArtifactIndex(0);
+    if (_highlightedArtifactIds.isNotEmpty) {
+      _changeArtifactIndex(0);
+    } else {
+      debugPrint('ERROR: No artifacts found for ${widget.type}');
+    }
   }
 
   void _changeArtifactIndex(int index) {
