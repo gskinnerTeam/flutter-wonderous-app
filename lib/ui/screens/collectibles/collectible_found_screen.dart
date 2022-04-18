@@ -237,14 +237,6 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   Widget _buildCloseButton(BuildContext context, double ratio) {
-    return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.only(left: context.insets.xs, top: context.insets.sm),
-        child: CircleIconBtn(
-          icon: Icons.close,
-          onPressed: () => Navigator.pop(context),
-        ).fx.fade(delay: 1200.ms, duration: 900.ms),
-      ),
-    );
+    return PositionedBackBtn(useCloseIcon: true).fx.fade(delay: 1200.ms, duration: 900.ms);
   }
 }

@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/common/controls/circle_button.dart';
 
 class FullscreenUrlImgViewer extends StatelessWidget {
   const FullscreenUrlImgViewer({Key? key, required this.url}) : super(key: key);
