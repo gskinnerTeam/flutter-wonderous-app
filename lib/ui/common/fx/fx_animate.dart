@@ -10,7 +10,7 @@ typedef ReparentChildBuilder = Widget Function(Widget parent, Widget child);
 // via the `Widget.fx` extension, which simply wraps the widget in FXAnimate.
 //
 //    FXAnimate(child: foo, fx: [FadeFX(), ScaleFX()])
-//    foo.fx.fade().scale() // equivalent to above
+//    foo.fx().fade().scale() // equivalent to above
 //
 // All effects classes are immutable, and can be shared between FXAnimate
 // instances, which lets you create libraries of effects to reuse throughout
@@ -26,7 +26,7 @@ typedef ReparentChildBuilder = Widget Function(Widget parent, Widget child);
 // Effects inherit some of their properties (delay, duration, curve) from
 // previous effects if unspecified. So in the examples above, the scale will use
 // the same duration as the fade that precedes it. All effects also have
-// reasonable defaults, so they can be used simply: `foo.fx.fade()`
+// reasonable defaults, so they can be used simply: `foo.fx().fade()`
 // ignore: must_be_immutable
 class FXAnimate extends StatefulWidget with FXManager<FXAnimate> {
   static Duration defaultDuration = const Duration(milliseconds: 1000);
@@ -56,43 +56,25 @@ class FXAnimate extends StatefulWidget with FXManager<FXAnimate> {
     }
   };
 
-  final Widget child;
-  late final List<FXEntry> _fx;
-  Duration _offset = Duration.zero;
-  Duration _duration = Duration.zero;
-  FXEntry? _lastEntry;
-  FXAnimateCallback? onComplete;
-  FXAnimateCallback? onInit; // todo: FXController
-
   FXAnimate({
     Key? key,
     required this.child,
     List<AbstractFX>? fx,
     this.onComplete,
     this.onInit,
+    this.delay = Duration.zero,
   }) : super(key: key) {
     _fx = [];
-    if (fx != null) {
-      addFXList(fx);
-    }
+    if (fx != null) addFXList(fx);
   }
 
-  FXAnimate call({
-    List<AbstractFX>? fx,
-    FXAnimateCallback? onComplete,
-    FXAnimateCallback? onInit,
-  }) {
-    if (_fx.isNotEmpty) {
-      // throw error?
-      return this;
-    }
-    this.onComplete = onComplete;
-    this.onInit = onInit;
-    if (fx != null) {
-      addFXList(fx);
-    }
-    return this;
-  }
+  final Widget child;
+  final Duration delay;
+  final FXAnimateCallback? onComplete;
+  final FXAnimateCallback? onInit; // todo: FXController
+  late final List<FXEntry> _fx;
+  Duration _duration = Duration.zero;
+  FXEntry? _lastEntry;
 
   Duration get duration => _duration;
 
@@ -101,7 +83,7 @@ class FXAnimate extends StatefulWidget with FXManager<FXAnimate> {
 
   @override
   FXAnimate addFX(AbstractFX fx) {
-    Duration begin = _offset + (fx.delay ?? _lastEntry?.fx.delay ?? Duration.zero);
+    Duration begin = delay + (fx.delay ?? _lastEntry?.fx.delay ?? Duration.zero);
     FXEntry entry = FXEntry(
       fx: fx,
       begin: begin,
@@ -169,7 +151,13 @@ class _FXAnimateState extends State<FXAnimate> with SingleTickerProviderStateMix
 }
 
 extension FXWidgetExtensions on Widget {
-  FXAnimate get fx => FXAnimate(child: this);
+  FXAnimate fx({
+    Key? key,
+    List<AbstractFX>? fx,
+    FXAnimateCallback? onComplete,
+    FXAnimateCallback? onInit,
+  }) =>
+      FXAnimate(key: key, child: this, fx: fx, onComplete: onComplete, onInit: onInit);
 }
 
 // Applies animated effects to a list of widgets. It does this by wrapping each
@@ -196,23 +184,29 @@ class FXAnimateList<T extends Widget> extends ListBase<Widget> with FXManager<FX
   // Types to completely ignore in a list.
   static Set<Type> ignoreTypes = {Spacer};
 
-  final List<Widget> widgets = [];
-  final List<FXAnimate> managers = [];
-
-  FXAnimateList({required List<Widget> children, List<AbstractFX>? fx}) {
+  FXAnimateList({
+    required List<Widget> children,
+    List<AbstractFX>? fx,
+    Duration? interval,
+    VoidCallback? onComplete,
+  }) {
     // build new list, wrapping items in FXCore
-    for (Widget child in children) {
+    for (int i = 0; i < children.length; i++) {
+      Widget child = children[i];
       Type type = child.runtimeType;
+      // add onComplete to last child, stripping the controller param:
+      FXAnimateCallback? f = i == children.length - 1 && onComplete != null ? (_) => onComplete() : null;
       if (!ignoreTypes.contains(type)) {
-        child = FXAnimate(child: child);
+        child = FXAnimate(child: child, delay: (interval ?? Duration.zero) * i, onComplete: f);
         managers.add(child as FXAnimate);
       }
       widgets.add(child);
-      if (fx != null) {
-        addFXList(fx);
-      }
     }
+    if (fx != null) addFXList(fx);
   }
+
+  final List<Widget> widgets = [];
+  final List<FXAnimate> managers = [];
 
   @override
   FXAnimateList addFX(AbstractFX fx) {
@@ -226,27 +220,6 @@ class FXAnimateList<T extends Widget> extends ListBase<Widget> with FXManager<FX
   FXAnimateList addFXList(List<AbstractFX> fx) {
     for (FXAnimate manager in managers) {
       manager.addFXList(fx);
-    }
-    return this;
-  }
-
-  FXAnimateList call({Duration? interval, Function()? onComplete, List<AbstractFX>? fx}) {
-    if (managers.isEmpty || managers.first._fx.isNotEmpty) {
-      // throw error?
-      return this;
-    }
-    if (interval != null) {
-      int i = 0;
-      for (FXAnimate core in managers) {
-        core._offset = (interval * ++i);
-      }
-    }
-    if (onComplete != null) {
-      // strip the controller:
-      managers.last(onComplete: (_) => onComplete());
-    }
-    if (fx != null) {
-      addFXList(fx);
     }
     return this;
   }
@@ -268,7 +241,8 @@ class FXAnimateList<T extends Widget> extends ListBase<Widget> with FXManager<FX
 }
 
 extension FXListExtensions on List<Widget> {
-  FXAnimateList get fx => FXAnimateList(children: this);
+  FXAnimateList fx({List<AbstractFX>? fx, Duration? interval, VoidCallback? onComplete}) =>
+      FXAnimateList(children: this, fx: fx, interval: interval, onComplete: onComplete);
 }
 
 // Because effects classes (AbstractFX) are immutable and may be reused between

@@ -125,7 +125,7 @@ class _BottomContent extends StatelessWidget {
           Text(
             data.culture.toUpperCase(),
             style: context.textStyles.titleFont.copyWith(color: context.colors.accent1),
-          ).fx.fade(delay: animDelay, duration: animDuration),
+          ).fx().fade(delay: animDelay, duration: animDuration),
 
           Gap(context.insets.sm),
 
@@ -133,7 +133,7 @@ class _BottomContent extends StatelessWidget {
             data.title,
             textAlign: TextAlign.center,
             style: context.textStyles.h2.copyWith(color: context.colors.offWhite, height: _textHeight),
-          ).fx.fade(delay: animDelay * 1.05, duration: animDuration),
+          ).fx().fade(delay: animDelay * 1.05, duration: animDuration),
 
           Gap(context.insets.xxl),
 

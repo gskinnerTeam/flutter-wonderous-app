@@ -55,7 +55,7 @@ class _AppBar extends StatelessWidget {
                   ClipRect(
                     child: ColoredBox(
                       color: wonderType.bgColor.withOpacity(.8),
-                    ).fx.move(begin: Offset(0, 200)),
+                    ).fx().move(begin: Offset(0, 200)),
                   ),
                 ],
               ],

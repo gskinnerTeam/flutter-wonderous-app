@@ -146,7 +146,7 @@ class CollectibleFoundScreen extends StatelessWidget {
           }
         },
       ),
-    ).fx.fadeOut(duration: detailT.ms, curve: Curves.easeIn);
+    ).fx().fadeOut(duration: detailT.ms, curve: Curves.easeIn);
   }
 
   Widget _buildIcon(BuildContext context, double ratio) {
@@ -159,7 +159,7 @@ class CollectibleFoundScreen extends StatelessWidget {
           child: Image(
             image: collectible.icon,
             fit: BoxFit.contain,
-          ).fx.scale(begin: 1, end: 2, curve: Curves.easeInExpo, duration: introTotalT.ms),
+          ).fx().scale(begin: 1, end: 2, curve: Curves.easeInExpo, duration: introTotalT.ms),
         ),
       ),
     );
@@ -192,12 +192,12 @@ class CollectibleFoundScreen extends StatelessWidget {
         ]),
         child: CachedNetworkImage(imageUrl: collectible.imageUrl),
       ),
-    ).fx.scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo).fade();
+    ).fx().scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo).fade();
   }
 
   Widget _buildRibbon(BuildContext context, double ratio) {
     return AnimatedRibbon('Artifact Discovered'.toUpperCase())
-        .fx
+        .fx()
         .scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo)
         .fade();
   }
@@ -210,7 +210,7 @@ class CollectibleFoundScreen extends StatelessWidget {
         textAlign: TextAlign.center,
         style: context.textStyles.h2,
       ),
-    ).fx.fade(delay: 450.ms, duration: 600.ms);
+    ).fx().fade(delay: 450.ms, duration: 600.ms);
   }
 
   Widget _buildSubTitle(BuildContext context, double ratio) {
@@ -221,7 +221,7 @@ class CollectibleFoundScreen extends StatelessWidget {
         textAlign: TextAlign.center,
         style: context.textStyles.title2.copyWith(color: context.colors.accent1),
       ),
-    ).fx.fade(delay: 600.ms, duration: 600.ms);
+    ).fx().fade(delay: 600.ms, duration: 600.ms);
   }
 
   Widget _buildCollectionButton(BuildContext context, double ratio) {
@@ -233,10 +233,10 @@ class CollectibleFoundScreen extends StatelessWidget {
           expand: true,
           padding: EdgeInsets.all(context.insets.sm),
           onPressed: () => context.push(ScreenPaths.collection(collectible.id))),
-    ).fx.fade(delay: 1200.ms, duration: 900.ms, curve: Curves.easeOut).move(begin: Offset(0, context.insets.xs));
+    ).fx().fade(delay: 1200.ms, duration: 900.ms, curve: Curves.easeOut).move(begin: Offset(0, context.insets.xs));
   }
 
   Widget _buildCloseButton(BuildContext context, double ratio) {
-    return PositionedBackBtn(useCloseIcon: true).fx.fade(delay: 1200.ms, duration: 900.ms);
+    return PositionedBackBtn(useCloseIcon: true).fx().fade(delay: 1200.ms, duration: 900.ms);
   }
 }
