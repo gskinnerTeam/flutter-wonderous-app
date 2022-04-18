@@ -173,7 +173,10 @@ class CollectionScreen extends StatelessWidget {
       ),
     );
     if (collectible == fromCollectible) content = Hero(tag: 'collectible_image', child: content);
-    return content;
+    return GestureDetector(
+      onTap: () => context.push(ScreenPaths.artifact(collectible.artifactId)),
+      child: content,
+    );
   }
 
   Widget _buildFooter(BuildContext context) {
