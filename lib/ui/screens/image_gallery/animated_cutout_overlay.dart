@@ -44,16 +44,6 @@ class AnimatedCutoutOverlay extends StatelessWidget {
     );
     return ClipPath(clipper: _CutoutClipper(size), child: child);
   }
-
-  Widget _buildAnimatedCutoutOld(Widget child, Animation<double> anim) {
-    // controls how much the center cutout will shrink when changing images
-    const scaleAmt = .25;
-    final size = Size(
-      cutoutSize.width * (1 - scaleAmt * anim.value * swipeDir.dx.abs()),
-      cutoutSize.height * (1 - scaleAmt * anim.value * swipeDir.dy.abs()),
-    );
-    return ClipPath(clipper: _CutoutClipper(size), child: child);
-  }
 }
 
 /// Creates an overlay with a hole in the middle of a certain size.

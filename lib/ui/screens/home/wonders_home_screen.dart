@@ -1,6 +1,5 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
-import 'package:wonders/logic/wonders_logic.dart';
 import 'package:wonders/ui/common/controls/diagonal_page_indicator.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/themed_text.dart';
@@ -12,7 +11,7 @@ part 'animated_arrow_button.dart';
 
 /// PageView sandwiched between Foreground and Background layers
 /// arranged in a parallax style
-class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMixin, SingleTickerProviderStateMixin {
+class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTickerProviderStateMixin {
   final _pageController = PageController(viewportFraction: 1);
   late int _wonderIndex = _pageController.initialPage;
   late final _SwipeController swipeController = _SwipeController(this, _showDetailsPage);
@@ -21,11 +20,11 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with GetItStateMi
 
   void _handleSettingsPressed() => context.push(ScreenPaths.settings);
 
-  void _showDetailsPage() => context.push(ScreenPaths.wonderDetails(wondersLogic.all.value[_wonderIndex].type));
+  void _showDetailsPage() => context.push(ScreenPaths.wonderDetails(wondersLogic.enabled[_wonderIndex].type));
 
   @override
   Widget build(BuildContext context) {
-    final wonders = watchX((WondersLogic w) => w.all);
+    final wonders = wondersLogic.enabled;
     final currentWonder = wonders[_wonderIndex];
     bool isSelected(WonderType t) => t == wonders[_wonderIndex].type;
 

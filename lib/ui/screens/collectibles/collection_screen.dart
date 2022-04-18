@@ -75,7 +75,7 @@ class CollectionScreen extends StatelessWidget {
     List<WonderType> types = [WonderType.chichenItza, WonderType.colosseum, WonderType.tajMahal];
     List<Widget> children = [];
     for (int i = 0; i < types.length; i++) {
-      WonderData data = wondersLogic.getDataForType(types[i]);
+      WonderData data = wondersLogic.getData(types[i]);
       children.add(_buildCategoryTitle(context, data));
       children.add(Gap(context.insets.md));
       children.add(_buildCollectibleRow(context, data.type));

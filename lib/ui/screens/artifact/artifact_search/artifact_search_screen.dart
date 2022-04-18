@@ -26,7 +26,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
   @override
   void initState() {
     super.initState();
-    final data = wondersLogic.getDataForType(widget.type);
+    final data = wondersLogic.getData(widget.type);
     _startYr = data.startYr;
     _endYr = data.endYr;
   }
@@ -69,7 +69,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
 
   @override
   Widget build(BuildContext context) {
-    final data = wondersLogic.getDataForType(widget.type);
+    final data = wondersLogic.getData(widget.type);
 
     String resultsText = '';
     if (_isLoading) {

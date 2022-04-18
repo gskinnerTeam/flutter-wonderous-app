@@ -17,7 +17,7 @@ class ArtifactCarouselScreen extends StatefulWidget {
 class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   final _pageViewportFraction = 0.5;
 
-  late final _highlightedArtifactIds = wondersLogic.getDataForType(widget.type).highlightArtifacts;
+  late final _highlightedArtifactIds = wondersLogic.getData(widget.type).highlightArtifacts;
   // Used to determine carousel element size.
   static const double _maxElementWidth = 500;
   // Used to determine white background dimensions.

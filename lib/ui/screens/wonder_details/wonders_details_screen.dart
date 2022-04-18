@@ -46,9 +46,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
 
   @override
   Widget build(BuildContext context) {
-    final wonders = watchX((WondersLogic w) => w.all);
-    WonderData? wonder = wonders.firstWhereOrNull((w) => w.type == widget.type);
-    wonder ??= wonders.first;
+    final wonder = wondersLogic.getData(widget.type);
     int tabIndex = _tabController.index;
     bool showTabBarBg = tabIndex != 1;
     // TODO: Need a better way to get the height of the tab bar here... options? MeasuredWidget, static height, app.tabBarHeight?

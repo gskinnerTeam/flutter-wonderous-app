@@ -10,7 +10,7 @@ import 'package:wonders/logic/data/wonders_data/pyramids_giza_data.dart';
 import 'package:wonders/logic/data/wonders_data/taj_mahal_data.dart';
 
 class WondersLogic {
-  ValueNotifier<List<WonderData>> all = ValueNotifier([
+  List<WonderData> all = [
     chichenItzaData,
     christRedeemerData,
     colosseumData,
@@ -18,11 +18,20 @@ class WondersLogic {
     machuPicchuData,
     petraData,
     pyramidsGizaData,
-    tajMahalData,
-  ]);
+    tajMahalData
+  ];
 
-  WonderData getDataForType(WonderType value) {
-    WonderData? result = all.value.firstWhereOrNull((w) => w.type == value);
+  ///SB: Used to determine which wonders actually get shown on HomeView, TODO: For debug / testing only, remove once all wonders are working
+  List<WonderData> enabled = [
+    chichenItzaData,
+    tajMahalData,
+  ];
+
+  //TODO: @Grant, can put collectibleIds here, and bind the collectibles view to this
+  final foundCollectibleIds = ValueNotifier<List<String>>([]);
+
+  WonderData getData(WonderType value) {
+    WonderData? result = all.firstWhereOrNull((w) => w.type == value);
     if (result == null) throw ('Could not find data for wonder type $value');
     return result;
   }

@@ -61,7 +61,7 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
   }
 
   void _handleCustomToggle({bool active = true}) {
-    final wonderData = wondersLogic.getDataForType(widget.wonderType);
+    final wonderData = wondersLogic.getData(widget.wonderType);
     if (!active) {
       startYrSelected = wonderData.startYr;
       endYrSelected = wonderData.endYr;

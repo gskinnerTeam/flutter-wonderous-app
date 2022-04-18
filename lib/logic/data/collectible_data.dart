@@ -27,7 +27,7 @@ class CollectibleData {
   final WonderType wonder;
 
   String get id => artifactId;
-  String get subtitle => wondersLogic.getDataForType(wonder).artifactCulture;
+  String get subtitle => wondersLogic.getData(wonder).artifactCulture;
 }
 
 // todo: check which image size we should be using.
