@@ -3,6 +3,8 @@ import 'package:flutter/widgets.dart';
 
 import 'fx.dart';
 
+typedef ReparentChildBuilder = Widget Function(Widget parent, Widget child);
+
 // FXAnimate makes adding beautiful animated effects (FX) to your widgets
 // simple. It supports both a declarative and chained API. The latter is exposed
 // via the `Widget.fx` extension, which simply wraps the widget in FXAnimate.
@@ -31,7 +33,7 @@ class FXAnimate extends StatefulWidget with FXManager<FXAnimate> {
   static Curve defaultCurve = Curves.linear;
 
   // Types to reparent, mapped to a method that handles that type.
-  static Map reparentTypes = <Type, Widget Function(Widget, Widget)>{
+  static Map reparentTypes = <Type, ReparentChildBuilder>{
     Flexible: (parent, child) {
       Flexible o = parent as Flexible;
       return Flexible(key: o.key, flex: o.flex, fit: o.fit, child: child);
@@ -157,7 +159,7 @@ class _FXAnimateState extends State<FXAnimate> with SingleTickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     Widget child = widget.child, parent = child;
-    Widget Function(Widget parent, Widget child)? reparent = FXAnimate.reparentTypes[child.runtimeType];
+    ReparentChildBuilder? reparent = FXAnimate.reparentTypes[child.runtimeType];
     if (reparent != null) child = (child as dynamic).child;
     for (FXEntry entry in widget._fx) {
       child = entry.fx.build(context, child, _controller, entry);
