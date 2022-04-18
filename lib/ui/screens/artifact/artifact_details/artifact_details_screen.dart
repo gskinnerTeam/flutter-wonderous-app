@@ -24,7 +24,6 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    void _handleClosePressed() => Navigator.pop(context);
     return FutureBuilder<ArtifactData?>(
       future: _future,
       builder: (_, snapshot) {
@@ -49,20 +48,7 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
                 SliverToBoxAdapter(child: _BottomContent(data: data)),
               ],
             ),
-
-            /// Back btn
-            TopRight(
-              child: SafeArea(
-                child: Padding(
-                  padding: EdgeInsets.all(context.insets.md),
-                  child: CircleBtn(
-                    child: Icon(Icons.close, color: context.colors.white),
-                    bgColor: context.colors.greyStrong,
-                    onPressed: _handleClosePressed,
-                  ),
-                ),
-              ),
-            )
+            PositionedBackBtn(),
           ]),
         );
       },
