@@ -15,7 +15,7 @@ import 'package:wonders/ui/screens/collectibles/widgets/animated_ribbon.dart';
 
 class CollectibleFoundScreen extends StatelessWidget {
   // CollectibleItem passes in a (theoretically) pre-loaded imageProvider.
-  // we could check for load completion, and hold after introT, but that shouldn't be necessary in any real-world scenario.
+  // we could check for load completion, and hold after introT, but that shouldn't be necessary in a real-world scenario.
   const CollectibleFoundScreen({required this.collectible, required this.imageProvider, Key? key}) : super(key: key);
 
   // major timing cues as durations in ms:
@@ -87,24 +87,26 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   Widget _buildGradient(BuildContext context, double ratioIn, double ratioOut) {
-    ratioIn = Curves.easeOutQuint.transform(ratioIn);
     const double opacity = 0.77;
     final Color color = context.colors.black;
 
     // final state is a solid fill, so optimize for that:
     if (ratioOut == 1) return Container(color: color.withOpacity(opacity));
+
+    ratioIn = Curves.easeOutQuint.transform(ratioIn);
     return Container(
       decoration: BoxDecoration(
-          gradient: RadialGradient(
-        colors: [
-          color.withOpacity(opacity * ratioOut),
-          color.withOpacity(opacity * (ratioIn * 0.8 + ratioOut * 0.2)),
-        ],
-        stops: [
-          0.2,
-          0.3 + ratioIn * 0.5 + ratioOut * 0.2,
-        ],
-      )),
+        gradient: RadialGradient(
+          colors: [
+            color.withOpacity(opacity * ratioOut),
+            color.withOpacity(opacity * (ratioIn * 0.8 + ratioOut * 0.2)),
+          ],
+          stops: [
+            0.2,
+            0.3 + ratioIn * 0.5 + ratioOut * 0.2,
+          ],
+        ),
+      ),
     );
   }
 
@@ -123,17 +125,19 @@ class CollectibleFoundScreen extends StatelessWidget {
         ),
         onTick: (controller, elapsed, size) {
           List<Particle> particles = controller.particles;
-          // add new particles:
+          // calculate base distance from center & velocity:
+          final double d = min(size.width, size.height) * 0.3;
+          final double v = d * 0.08;
+          // add new particles, reducing the number added each tick:
           int addCount = particleCount ~/ 40;
           particleCount -= addCount;
-          double d = min(size.width, size.height) * rnd(0.25, 0.3);
-          double v = d * 0.08;
           while (--addCount > 0) {
             double angle = rnd.getRad();
             particles.add(Particle(
-              x: cos(angle) * d,
-              y: sin(angle) * d,
-              vx: cos(angle) * v * rnd(0.5, 1.5), // random variation makes it less of a starfield effect.
+              // adding random variation makes it more visually interesting:
+              x: cos(angle) * d * rnd(0.8, 1),
+              y: sin(angle) * d * rnd(0.8, 1),
+              vx: cos(angle) * v * rnd(0.5, 1.5),
               vy: sin(angle) * v * rnd(0.5, 1.5),
               color: color.withOpacity(rnd(0.5, 1)),
             ));

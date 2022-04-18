@@ -12,26 +12,44 @@
         <br>
 <textarea id="input" rows="15" cols="80">
 chichenItza
-701645, camera, optional note after second comma
+701645, jewelry
 310555, jewelry
-286467, scroll
+286467, picture
 
 christRedeemer
+501302, statue
+157985, jewelry
+227759, textile
 
 colosseum
 245376, vase
-256570, camera
-286136, jewelry
+256570, statue
+286136, picture
 
 greatWall
+39918, scroll
+39666, vase
+39735, textile
 
 machuPicchu
+308120, textile
+309960, statue
+313341, vase
 
 petra
+322592, statue
+325918, vase
+326243, vase
 
 pyramidsGiza
+546510, scroll
+543896, statue
+545728, jewelry
 
 tajMahal
+24907, jewelry
+453183, picture
+453983, scroll
 </textarea>
         <br>
         <input type="button" onclick="run();" value="RUN">
@@ -62,7 +80,6 @@ function parseArtifacts(strs, o) {
     let artifacts = [];
     for (let i=0; i<strs.length; i++) {
         let values = strs[i].split(",");
-        console.log(values);
         if (values[1]) { artifacts.push({id: values[0].trim(), icon: values[1].trim()}); }
     }
     o.artifacts = artifacts;
@@ -105,7 +122,7 @@ function out() {
             let o = artifacts[j];
             str += 
 `CollectibleData(
-  title: '${o.data.title}',
+  title: '${escape(o.data.title)}',
   wonder: WonderType.${wonder.type},
   artifactId: '${o.data.objectID}',
   imageUrl: '${o.data.primaryImageSmall}',
@@ -115,6 +132,10 @@ function out() {
         str += "\n";
     }
     output.value = str;
+}
+
+function escape(str) {
+    return str.replace(/'/g, '\\\'');
 }
         </script>
     </body>
