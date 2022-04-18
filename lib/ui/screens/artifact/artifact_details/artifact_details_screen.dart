@@ -24,15 +24,17 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<ArtifactData?>(
-      future: _future,
-      builder: (_, snapshot) {
-        if (snapshot.hasError) return Center(child: AppLoadError());
-        if (snapshot.hasData == false || snapshot.data == null) return Center(child: AppLoader());
-        final data = snapshot.data;
-        return ColoredBox(
-          color: context.colors.greyStrong,
-          child: Stack(children: [
+    return ColoredBox(
+      color: context.colors.greyStrong,
+      child: FutureBuilder<ArtifactData?>(
+        future: _future,
+        builder: (_, snapshot) {
+          if (snapshot.hasData == false) return Center(child: AppLoader());
+          final data = snapshot.data;
+          if (data == null) {
+            return AppLoadError(label: 'Unable to find info for artifact ${widget.artifactId} ');
+          }
+          return Stack(children: [
             /// Content
             CustomScrollView(
               slivers: [
@@ -43,15 +45,15 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
                   leading: SizedBox.shrink(),
                   expandedHeight: context.heightPx * .5,
                   collapsedHeight: context.heightPx * .35,
-                  flexibleSpace: _TopContent(data: data!),
+                  flexibleSpace: _TopContent(data: data),
                 ),
                 SliverToBoxAdapter(child: _BottomContent(data: data)),
               ],
             ),
             PositionedBackBtn(),
-          ]),
-        );
-      },
+          ]);
+        },
+      ),
     );
 
     // Create an image with a close button in the top right
