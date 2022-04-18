@@ -5,7 +5,8 @@ import 'package:wonders/logic/data/wonder_data.dart';
 
 class CollectionScreen extends StatelessWidget {
   CollectionScreen({String? fromId, Key? key}) : super(key: key) {
-    // todo: remove this (and in router) if we don't use it.
+    // todo: scroll to the fromCollectible if possible
+    // https://stackoverflow.com/questions/49153087/flutter-scrolling-to-a-widget-in-listview
     fromCollectible = collectibles[0];
   }
 
@@ -72,10 +73,10 @@ class CollectionScreen extends StatelessWidget {
   }
 
   Widget _buildList(BuildContext context) {
-    List<WonderType> types = [WonderType.chichenItza, WonderType.colosseum, WonderType.tajMahal];
+    List<WonderData> wonders = wondersLogic.all;
     List<Widget> children = [];
-    for (int i = 0; i < types.length; i++) {
-      WonderData data = wondersLogic.getData(types[i]);
+    for (int i = 0; i < wonders.length; i++) {
+      WonderData data = wonders[i];
       children.add(_buildCategoryTitle(context, data));
       children.add(Gap(context.insets.md));
       children.add(_buildCollectibleRow(context, data.type));
