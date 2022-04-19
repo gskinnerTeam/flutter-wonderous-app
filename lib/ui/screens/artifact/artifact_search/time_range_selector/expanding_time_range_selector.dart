@@ -1,7 +1,6 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/blend_mask.dart';
 import 'package:wonders/ui/common/cards/glass_card.dart';
-import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/labelled_toggle.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/range_selector.dart';
 
 // Expandable timerange selector component that further refines Artifact Search based on date range.
@@ -90,7 +89,7 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
               child: _ClosedTimeRange(this, title),
             ),
             openBuilder: (_) => Container(
-              color: context.colors.white.withOpacity(0.75),
+              color: context.colors.offWhite.withOpacity(0.75),
               child: Padding(
                 padding: EdgeInsets.all(padding),
                 child: SizedBox(
@@ -121,55 +120,80 @@ class _OpenedTimeRange extends StatelessWidget {
   final void Function() handleToggleTap;
 
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: EdgeInsets.symmetric(vertical: context.insets.xs),
-        child: Column(
-          children: [
-            Text('Choose a timeframe', style: context.textStyles.title3.copyWith(color: context.colors.greyStrong)),
-            Gap(context.insets.sm),
-            Stack(children: [
-              // Background cutout mask for the tile slider
-              BlendMask(
-                key: ValueKey('sliderMask'),
-                blendModes: const [BlendMode.dstOut],
-                opacity: 0.8,
-                child: Container(
-                  width: double.infinity,
-                  height: 86,
-                  decoration: BoxDecoration(
-                      color: context.colors.white, borderRadius: BorderRadius.all(Radius.circular(context.corners.md))),
-                ),
-              ),
-              // Time slider
-              SizedBox(
+  Widget build(BuildContext context) {
+    List<Widget> _timelineGrid = [];
+    for (var i = 0; i < 5; i++) {
+      _timelineGrid.add(Container(width: 1, color: context.colors.body.withOpacity(0.15)));
+    }
+
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: context.insets.xs),
+      child: Column(
+        children: [
+          Text('Choose a timeframe', style: context.textStyles.title3.copyWith(color: context.colors.greyStrong)),
+          Gap(context.insets.sm),
+          Stack(children: [
+            // Background cutout mask for the tile slider
+            BlendMask(
+              key: ValueKey('sliderMask'),
+              blendModes: const [BlendMode.dstOut],
+              opacity: 0.8,
+              child: Container(
                 width: double.infinity,
                 height: 86,
-                child: RangeSelector(
-                    start: (state.startYrSelected - state.widget.startYr) / (state.widget.endYr - state.widget.startYr),
-                    end: (state.endYrSelected - state.widget.startYr) / (state.widget.endYr - state.widget.startYr),
-                    onUpdated: handleRangeUpdate,
-                    onChanged: handleRangeChange),
+                decoration: BoxDecoration(
+                    color: context.colors.white, borderRadius: BorderRadius.all(Radius.circular(context.corners.md))),
               ),
-            ]),
-            Gap(context.insets.lg),
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Text(state.startYrSelected.toString(),
-                  style: context.textStyles.body3.copyWith(color: context.colors.greyStrong)),
-              Gap(context.insets.xxs),
-              Text(state.startYrSelected >= 0 ? 'AD' : 'BC',
-                  style: context.textStyles.tab.copyWith(color: context.colors.caption)),
-              Gap(context.insets.xs),
-              Text('-', style: context.textStyles.tab.copyWith(color: context.colors.caption)),
-              Gap(context.insets.xs),
-              Text(state.endYrSelected.toString(),
-                  style: context.textStyles.body3.copyWith(color: context.colors.greyStrong)),
-              Gap(context.insets.xxs),
-              Text(state.endYrSelected >= 0 ? 'AD' : 'BC',
-                  style: context.textStyles.tab.copyWith(color: context.colors.caption)),
-            ]),
-            Gap(context.insets.xs),
+            ),
+            // Time slider
+            Container(
+              width: double.infinity,
+              height: 86,
+              decoration: BoxDecoration(
+                  color: context.colors.offWhite, borderRadius: BorderRadius.all(Radius.circular(context.corners.md))),
+            ),
+            // Grid container
+            Container(
+              width: double.infinity,
+              height: 86,
+              decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(context.corners.md))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: _timelineGrid,
+              ),
+            ),
+            // Time slider
+            SizedBox(
+              width: double.infinity,
+              height: 86,
+              child: RangeSelector(
+                  start: (state.startYrSelected - state.widget.startYr) / (state.widget.endYr - state.widget.startYr),
+                  end: (state.endYrSelected - state.widget.startYr) / (state.widget.endYr - state.widget.startYr),
+                  onUpdated: handleRangeUpdate,
+                  onChanged: handleRangeChange),
+            ),
+          ]),
 
-            // Toggle switch
+          // Year range text.
+          Gap(context.insets.lg),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Text(state.startYrSelected.toString(),
+                style: context.textStyles.body3.copyWith(color: context.colors.greyStrong)),
+            Gap(context.insets.xxs),
+            Text(state.startYrSelected >= 0 ? 'AD' : 'BC',
+                style: context.textStyles.tab.copyWith(color: context.colors.caption)),
+            Gap(context.insets.xs),
+            Text('-', style: context.textStyles.tab.copyWith(color: context.colors.caption)),
+            Gap(context.insets.xs),
+            Text(state.endYrSelected.toString(),
+                style: context.textStyles.body3.copyWith(color: context.colors.greyStrong)),
+            Gap(context.insets.xxs),
+            Text(state.endYrSelected >= 0 ? 'AD' : 'BC',
+                style: context.textStyles.tab.copyWith(color: context.colors.caption)),
+          ]),
+
+          // Toggle switch - TODO: Build it!
+          /*
             GestureDetector(
               onTap: handleToggleTap,
               child: Stack(
@@ -196,9 +220,11 @@ class _OpenedTimeRange extends StatelessWidget {
               ),
             ),
             Gap(context.insets.xs),
-          ],
-        ),
-      );
+            */
+        ],
+      ),
+    );
+  }
 }
 
 class _ClosedTimeRange extends StatelessWidget {

@@ -1,16 +1,15 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:wonders/logic/common/http_client.dart';
 import 'package:wonders/logic/common/platform_info.dart';
+import 'package:wonders/logic/common/http_client.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/logic/data/department_data.dart';
 
 class SearchService {
-  static String baseMETUrl = 'https://collectionapi.metmuseum.org';
+  static String baseMETUrl = 'https://collectionapi.metmuseum.org/public/collection/v1';
 
   Future<ServiceResult<List<String>?>> getObjectIDList({DateTime? date, String? departmentIds}) async {
-    HttpResponse response = await _request('public/collection/v1/objects', urlParams: {
+    HttpResponse response = await _request('objects', urlParams: {
       'metadataDate': date, // in the format YYYY-MM-DD
       'departmentIds': departmentIds // use | as delimiter
     });
@@ -18,12 +17,12 @@ class SearchService {
   }
 
   Future<ServiceResult<List<DepartmentData>?>> getDepartmentList() async {
-    HttpResponse? response = await _request('public/collection/v1/departments');
+    HttpResponse? response = await _request('departments');
     return ServiceResult(response, _parseDepartmentData);
   }
 
   Future<ServiceResult<ArtifactData?>> getObjectByID(String id) async {
-    HttpResponse? response = await _request('public/collection/v1/objects/$id');
+    HttpResponse? response = await _request('objects/$id');
     return ServiceResult(response, _parseArtifactData);
   }
 
@@ -40,11 +39,10 @@ class SearchService {
       int? dateEnd}) async {
     Map<String, dynamic> urlParams = {};
 
-    urlParams['q'] = query;
     urlParams['hasImages'] = true; // Must have images. That's a given.
 
     if (isHighlight != null) urlParams['isHighlight'] = isHighlight;
-    if (isTitle != null) urlParams['title'] = isTitle;
+    if (isTitle != null) urlParams['title'] = isTitle.toString();
     if (isKeywordTag != null) urlParams['tags'] = isKeywordTag;
     if (departmentId != null) urlParams['departmentId'] = departmentId;
     if (geoLocation != null) urlParams['geoLocation'] = geoLocation;
@@ -53,7 +51,12 @@ class SearchService {
     if (dateBegin != null) urlParams['dateBegin'] = dateBegin;
     if (dateEnd != null) urlParams['dateEnd'] = dateEnd;
 
-    HttpResponse response = await _request('public/collection/v1/search', method: MethodType.get, urlParams: urlParams);
+    // Query needs to be at the end of the argument list. Don't ask why.
+    urlParams['q'] = query;
+
+    // TODO: run a check for images with odd sizes. To do this:
+    // - check the artifact's dimensions for multiple artifacts; see how often it relates to the image dimensions (should be at least a bit related)
+    HttpResponse response = await _request('search', method: MethodType.get, urlParams: urlParams);
     return ServiceResult(response, _parseObjectIds);
   }
 
