@@ -8,7 +8,7 @@ class CollectionScreen extends StatelessWidget with GetItMixin {
   CollectionScreen({String? fromId, Key? key}) : super(key: key) {
     // todo: scroll to the fromCollectible if possible
     // https://stackoverflow.com/questions/49153087/flutter-scrolling-to-a-widget-in-listview
-    fromCollectible = collectibles[0];
+    fromCollectible = collectibles.firstWhere((o) => o.id == fromId);
   }
 
   late final CollectibleData? fromCollectible;
@@ -181,7 +181,7 @@ class CollectionScreen extends StatelessWidget with GetItMixin {
         fit: BoxFit.cover,
       ),
     );
-    if (collectible == fromCollectible) content = Hero(tag: 'collectible_image', child: content);
+    if (collectible == fromCollectible) content = Hero(tag: 'collectible_image_${collectible.id}', child: content);
     return GestureDetector(
       onTap: () => _showDetails(context, collectible),
       child: content,

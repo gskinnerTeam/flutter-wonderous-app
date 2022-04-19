@@ -7,7 +7,6 @@ import 'package:wonders/ui/common/particles/particle_field.dart';
 import 'package:wonders/ui/screens/collectibles/widgets/animated_ribbon.dart';
 
 // todo: maybe: title text size (2 line max): https://pub.dev/packages/auto_size_text
-// todo: maybe: fade out on close
 
 class CollectibleFoundScreen extends StatelessWidget {
   // CollectibleItem passes in a (theoretically) pre-loaded imageProvider.
@@ -175,7 +174,7 @@ class CollectibleFoundScreen extends StatelessWidget {
 
   Widget _buildImage(BuildContext context, double ratio) {
     return Hero(
-      tag: 'collectible_image',
+      tag: 'collectible_image_${collectible.id}',
       child: Container(
         padding: EdgeInsets.all(context.insets.xxs),
         margin: EdgeInsets.symmetric(horizontal: context.insets.xl),
