@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -62,6 +63,17 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     });
   }
 
+  void _animatePageJump(int to) async {
+    scheduleMicrotask(() {
+      int ms = 300;
+      _controller.animateToPage(to, duration: Duration(milliseconds: ms), curve: Curves.easeOut);
+    });
+  }
+
+  void _handlePageJump(int jumpBy) {
+    _animatePageJump(_controller.page!.round() + jumpBy);
+  }
+
   void _handleArtifactTap(int index) =>
       context.push(ScreenPaths.artifact(_loadedArtifacts[index % _loadedArtifacts.length].objectId.toString()));
 
@@ -78,9 +90,9 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
 
     final pageViewArtifacts = PageView.builder(
       controller: _controller,
-      onPageChanged: _changeArtifactIndex,
       itemCount: _highlightedArtifactIds.length * 10000,
       clipBehavior: Clip.none,
+      onPageChanged: _changeArtifactIndex,
       itemBuilder: (context, index) {
         return ArtifactCarouselImage(
           index: index,
@@ -116,6 +128,22 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
             ),
           ),
 
+          // Prev tap button
+          CenterLeft(
+            child: GestureDetector(
+              onTap: () => _handlePageJump(-1),
+              child: Container(width: 100, height: 400, color: Colors.transparent),
+            ),
+          ),
+
+          // Next tap button
+          CenterRight(
+            child: GestureDetector(
+              onTap: () => _handlePageJump(1),
+              child: Container(width: 100, height: 400, color: Colors.transparent),
+            ),
+          ),
+
           // Text Content
           BottomCenter(
             child: Padding(
@@ -133,16 +161,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
 
                   // Carousel images
                   Gap(context.insets.md),
-                  //TODO: Use of a FutureBuilder here seems weird, remove/replace?
-                  FutureBuilder(
-                    future: Future.value(true),
-                    builder: (BuildContext context, AsyncSnapshot<void> snap) {
-                      return snap.hasData
-                          ? SizedBox(
-                              width: carouselImageWidth, height: carouselImageWidth * 0.75, child: pageViewArtifacts)
-                          : Container();
-                    },
-                  ),
+                  SizedBox(width: carouselImageWidth, height: carouselImageWidth * 0.75, child: pageViewArtifacts),
 
                   // Title and Desc
                   Gap(context.insets.md),
@@ -193,9 +212,8 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                     ),
                   ),
 
-                  Gap(context.insets.xl),
-
                   // Big ol' button
+                  Gap(context.insets.xl),
                   AppTextIconBtn(
                     'BROWSE ALL ARTIFACTS',
                     Icons.search,
