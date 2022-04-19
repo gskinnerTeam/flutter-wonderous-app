@@ -29,15 +29,12 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
     Duration duration = 300.ms;
     Navigator.of(context).push(
       PageRouteBuilder(
-        fullscreenDialog: true,
-        barrierDismissible: true,
+        pageBuilder: (_, __, ___) => CollectibleFoundScreen(collectible: collectible, imageProvider: imageProvider),
+        transitionsBuilder: (_, animation, __, child) => FadeTransition(opacity: animation, child: child),
         transitionDuration: duration,
-        reverseTransitionDuration: 1.ms,
+        reverseTransitionDuration: duration,
         opaque: false,
-        pageBuilder: (_, __, ___) => CollectibleFoundScreen(
-          collectible: collectible,
-          imageProvider: imageProvider,
-        ),
+        fullscreenDialog: true,
       ),
     );
     // wait to update the state, to ensure the hero works properly:
