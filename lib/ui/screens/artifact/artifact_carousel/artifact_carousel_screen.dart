@@ -31,7 +31,8 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
 
   @override
   void initState() {
-    _controller = PageController(initialPage: 0, viewportFraction: _pageViewportFraction, keepPage: true);
+    _controller = PageController(
+        initialPage: _highlightedArtifactIds.length * 5000, viewportFraction: _pageViewportFraction, keepPage: true);
     _controller.addListener(() {
       setState(() {
         _currentPage = _controller.page ?? 0.0;
@@ -78,7 +79,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     final pageViewArtifacts = PageView.builder(
       controller: _controller,
       onPageChanged: _changeArtifactIndex,
-      itemCount: _highlightedArtifactIds.length,
+      itemCount: _highlightedArtifactIds.length * 10000,
       clipBehavior: Clip.none,
       itemBuilder: (context, index) {
         return ArtifactCarouselImage(
