@@ -194,28 +194,30 @@ class CollectionScreen extends StatelessWidget with GetItMixin {
   }
 
   Widget _buildFooter(BuildContext context, int count, int total) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: context.insets.md, vertical: context.insets.sm),
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [
-          context.colors.greyStrong.withOpacity(0),
-          context.colors.greyStrong,
-        ],
-        stops: const [0, 0.5],
-      )),
-      child: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Gap(context.insets.xl),
-            _buildProgressRow(context, count, total),
-            Gap(context.insets.sm),
-            _buildProgressBar(context, count, total),
-            Gap(context.insets.sm),
+    return IgnorePointer(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: context.insets.md, vertical: context.insets.sm),
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            context.colors.greyStrong.withOpacity(0),
+            context.colors.greyStrong,
           ],
+          stops: const [0, 0.5],
+        )),
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Gap(context.insets.xl),
+              _buildProgressRow(context, count, total),
+              Gap(context.insets.sm),
+              _buildProgressBar(context, count, total),
+              Gap(context.insets.sm),
+            ],
+          ),
         ),
       ),
     );
