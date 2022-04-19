@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
 
 class AppLoadError extends StatelessWidget {
-  AppLoadError({Key? key, this.label}) : super(key: key);
+  const AppLoadError({Key? key, this.label}) : super(key: key);
   final String? label;
   @override
   Widget build(BuildContext context) => Center(

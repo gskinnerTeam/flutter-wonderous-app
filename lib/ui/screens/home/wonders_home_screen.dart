@@ -58,6 +58,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
           });
     }).toList();
 
+    // TODO SB: Feels like the swipe controller should add this GT?  Q: shouldn't it just be a stateful widget at that pt? A: Probably not, because then you need to deal with keys + state, all we actually want is a build method.
     return GestureDetector(
       onTapDown: (_) => swipeController.handleTapDown(),
       onTapUp: (_) => swipeController.handleTapCancelled(),
@@ -92,7 +93,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
             child: _SwipeableGradient(currentWonder.type.bgColor, swipeController: swipeController),
           ),
 
-          /// Floating controls / UI
+          /// Floatiang controls / UI
           AnimatedSwitcher(
             duration: context.times.fast,
             child: RepaintBoundary(
@@ -250,7 +251,7 @@ class _SwipeableGradient extends StatelessWidget {
                   end: Alignment.bottomCenter,
                   colors: [
                     fgColor.withOpacity(0),
-                    fgColor.withOpacity(.5 + (isPointerDown ? .1 : 0) + swipeAmt * .4),
+                    fgColor.withOpacity(.75 + (isPointerDown ? .05 : 0) + swipeAmt * .20),
                   ],
                   stops: const [0, 1],
                 ),

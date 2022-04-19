@@ -4,7 +4,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/unsplash_photo_data.dart';
 import 'package:wonders/ui/common/app_loading_error.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
-import 'package:wonders/ui/unsplash_photo_credits_row.dart';
+import 'package:wonders/ui/common/unsplash_photo_credits_row.dart';
 
 class UnsplashPhoto extends StatelessWidget {
   const UnsplashPhoto(this.id, {Key? key, this.fit = BoxFit.cover, required this.size, this.showCredits = false})

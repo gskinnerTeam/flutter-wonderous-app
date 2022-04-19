@@ -5,6 +5,7 @@ import 'package:wonders/ui/common/utils/context_utils.dart';
 
 // Shows a set of clouds that animated onto stage.
 // When value-key is changed, a new set of clouds will animate into place and the old ones will animate out.
+// Uses a random seed system, to make sure we get the same set of clouds for each wonder.
 class AnimatedClouds extends StatefulWidget with GetItStatefulWidgetMixin {
   AnimatedClouds({Key? key, this.enableAnimations = true, required this.wonderType}) : super(key: key);
   final WonderType wonderType;
@@ -18,7 +19,32 @@ class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProvid
   List<_Cloud> _oldClouds = [];
   late final AnimationController _anim = AnimationController(vsync: this, duration: 1500.ms);
 
-  int getCloudSeed(WonderType type) {
+  @override
+  void initState() {
+    super.initState();
+    scheduleMicrotask(() {
+      setState(() => _clouds = _getClouds());
+    });
+    _showClouds();
+  }
+
+  @override
+  void dispose() {
+    _anim.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(covariant AnimatedClouds oldWidget) {
+    if (oldWidget.wonderType != widget.wonderType) {
+      _oldClouds = _clouds;
+      _clouds = _getClouds();
+      _showClouds();
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  int _getCloudSeed(WonderType type) {
     switch (type) {
       case WonderType.chichenItza:
         return 2;
@@ -39,37 +65,14 @@ class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProvid
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    scheduleMicrotask(() {
-      setState(() => _clouds = _getClouds());
-    });
-    _showClouds();
-  }
-
-  @override
-  void dispose() {
-    _anim.dispose();
-    super.dispose();
-  }
-
+  /// Starts playing the clouds animation, or jumps right to the end, based on [AnimatedClouds.enableAnimations]
   void _showClouds() {
     widget.enableAnimations ? _anim.forward(from: 0) : _anim.value = 1;
   }
 
   @override
-  void didUpdateWidget(covariant AnimatedClouds oldWidget) {
-    if (oldWidget.wonderType != widget.wonderType) {
-      _oldClouds = _clouds;
-      _clouds = _getClouds();
-      _showClouds();
-    }
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
   Widget build(BuildContext context) {
+    // Old clouds animate from 0 to startOffset, new clouds do the opposite.
     Widget buildCloud(c, {required bool isOld, required int startOffset}) {
       // Use a positive, or negative start offset, based on index
       final stOffset = _clouds.indexOf(c) % 2 == 0 ? -startOffset : startOffset;
@@ -82,18 +85,29 @@ class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProvid
       );
     }
 
+    // Respect the settings to enable/disable clouds
     bool enableClouds = watchX((SettingsLogic s) => s.enableClouds);
     if (!enableClouds) return SizedBox.shrink();
-    return ClipRect(
-      child: OverflowBox(
-        child: AnimatedBuilder(
-          animation: _anim,
-          builder: (_, __) => Stack(clipBehavior: Clip.hardEdge, key: ValueKey(widget.wonderType), children: [
-            if (_anim.value != 1) ...[
-              ..._oldClouds.map((c) => buildCloud(c, isOld: true, startOffset: 1000)),
-            ],
-            ..._clouds.map((c) => buildCloud(c, isOld: false, startOffset: 1000)),
-          ]),
+    //
+    return RepaintBoundary(
+      child: ClipRect(
+        child: OverflowBox(
+          child: AnimatedBuilder(
+            animation: _anim,
+            builder: (_, __) {
+              // A stack with 2 sets of clouds, one set is moving out of view while the other moves in.
+              return Stack(
+                clipBehavior: Clip.hardEdge,
+                key: ValueKey(widget.wonderType),
+                children: [
+                  if (_anim.value != 1) ...[
+                    ..._oldClouds.map((c) => buildCloud(c, isOld: true, startOffset: 1000)),
+                  ],
+                  ..._clouds.map((c) => buildCloud(c, isOld: false, startOffset: 1000)),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );
@@ -101,7 +115,7 @@ class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProvid
 
   List<_Cloud> _getClouds() {
     Size size = ContextUtils.getSize(context) ?? Size(context.widthPx, 400);
-    rndSeed = getCloudSeed(widget.wonderType);
+    rndSeed = _getCloudSeed(widget.wonderType);
     return List<_Cloud>.generate(4, (index) {
       return _Cloud(
         Offset(rnd.getDouble(-200, size.width - 100), rnd.getDouble(50, size.height - 50)),

@@ -9,41 +9,56 @@ class _AnimatedArrowButton extends StatelessWidget {
   Widget build(BuildContext context) {
     const double height = 60;
     const double width = 25;
+
+    final duration = context.times.slow;
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(99),
-          border: Border.all(color: context.colors.white),
-        ),
-        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 6),
-        child: TweenAnimationBuilder<double>(
-          duration: context.times.med,
-          curve: Curves.easeOut,
-          tween: Tween(begin: 0, end: 1),
-          builder: (_, value, __) {
-            return SizedBox(
-              width: width,
-              height: height,
-              child: Stack(children: [
-                TopCenter(
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: FractionallySizedBox(
-                      heightFactor: value,
-                      child: Container(color: context.colors.white, width: 2, height: 10),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment(0, -1 + value * 2),
-                  child: Icon(Icons.arrow_downward, color: context.colors.white, size: 20),
-                ),
-              ]),
-            );
-          },
+      behavior: HitTestBehavior.translucent,
+      child: _FadingDownArrow(duration: duration),
+    );
+  }
+}
+
+/// FadingArrow - Fades In, Out, and back In
+class _FadingDownArrow extends StatelessWidget {
+  _FadingDownArrow({Key? key, required this.duration}) : super(key: key);
+  final Duration duration;
+
+  final _fadeOutIn = TweenSequence<double>([
+    TweenSequenceItem(tween: Tween(begin: 1, end: 0), weight: .5),
+    TweenSequenceItem(tween: Tween(begin: 0, end: 1), weight: .5),
+  ]);
+
+  final _slideDown = TweenSequence<double>([
+    TweenSequenceItem(tween: Tween(begin: 1, end: 1), weight: .5),
+    TweenSequenceItem(tween: Tween(begin: -1, end: 1), weight: .5)
+  ]);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 80,
+      width: 50,
+      child: FXAnimate(
+        fx: [
+          BuildFX(_buildOpacityTween, duration: duration, curve: Curves.easeOut),
+          BuildFX(_buildSlideTween, duration: duration, curve: Curves.easeOut),
+        ],
+        child: Transform.rotate(
+          angle: pi * .5,
+          child: Icon(Icons.chevron_right, size: 42, color: context.colors.white),
         ),
       ),
     );
+  }
+
+  Widget _buildOpacityTween(BuildContext _, double value, Widget child) {
+    final opacity = _fadeOutIn.evaluate(AlwaysStoppedAnimation(value));
+    return Opacity(opacity: opacity, child: child);
+  }
+
+  Widget _buildSlideTween(BuildContext _, double value, Widget child) {
+    double yOffset = _slideDown.evaluate(AlwaysStoppedAnimation(value));
+    return Align(alignment: Alignment(0, -1 + yOffset * 2), child: child);
   }
 }
