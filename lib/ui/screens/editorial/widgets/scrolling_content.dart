@@ -24,7 +24,12 @@ class _ScrollingContent extends StatelessWidget {
       child: SeparatedColumn(
         separatorBuilder: () => Gap(context.insets.md),
         children: [
-          CollectibleItem(collectibles[0]),
+          // todo: temporary:
+          Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children:[
+            CollectibleItem(collectibles[0]),
+            CollectibleItem(collectibles[1]),
+            CollectibleItem(collectibles[2]),
+          ]),
           buildDropCapText(data.historyInfo1),
           _CollapsingPullQuoteImage(data: data, scrollPos: scrollPos),
           buildText(data.historyInfo2),
