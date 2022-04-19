@@ -45,9 +45,10 @@ class _ImageGalleryState extends State<ImageGallery> {
         ids.addAll(List.from(ids));
         if (ids.length > _imgCount) ids.length = _imgCount;
       }
+      //TODO: SB: Is this actually working? Sometimes it seems to, othertimes not.
       // Preload the initial image
       await unsplashLogic.preload(context, ids[_index], size: UnsplashPhotoSize.med);
-      // Start loading the other 8 visible images, but don't await them, just give them a head-start.
+      // Start loading the other visible images, but don't await them, just give them a head-start.
       final indexes = [_index + 1, _index - 1, _index - _gridCount, _index + _gridCount];
       for (var i in indexes) {
         unsplashLogic.preload(context, ids[i], size: UnsplashPhotoSize.med);

@@ -8,6 +8,7 @@ class DiagonalPageIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textShadows = [Shadow(color: Colors.black.withOpacity(.6), offset: Offset(2, 2), blurRadius: 2)];
     final textStyle = context.textStyles.titleFont.copyWith(fontSize: _fontSize, height: 1);
     const size = _fontSize * 1.5;
     return Padding(
@@ -18,17 +19,19 @@ class DiagonalPageIndicator extends StatelessWidget {
           child: Transform.translate(
             offset: Offset(-_fontSize * .7, 0),
             child: SizedBox(
-                width: size, height: size, child: Text('0$current', style: textStyle, textAlign: TextAlign.right)),
+                width: size,
+                height: size,
+                child: Text('0$current', style: textStyle.copyWith(shadows: textShadows), textAlign: TextAlign.right)),
           ),
         ),
         ClipPath(
           clipper: _DiagonalClipper(leftSide: false),
           child: Transform.translate(
             offset: Offset(_fontSize * .45, _fontSize * .6),
-            child: Opacity(
-              opacity: .5,
-              child: SizedBox(width: size, height: size, child: Text('0$total', style: textStyle)),
-            ),
+            child: SizedBox(
+                width: size,
+                height: size,
+                child: Text('0$total', style: textStyle.copyWith(color: Color(0xffcbcbcb), shadows: textShadows))),
           ),
         ),
         Positioned.fill(

@@ -140,6 +140,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
   }
 
   Column _buildTitleAndPageIndicator(List<WonderData> wonders, WonderData currentWonder) {
+    final textShadows = [Shadow(color: Colors.black.withOpacity(.6), offset: Offset(2, 2), blurRadius: 2)];
     return Column(children: [
       /// Page indicator
       DiagonalPageIndicator(current: _wonderIndex + 1, total: wonders.length),
@@ -159,7 +160,8 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
       /// Region
       Text(
         currentWonder.regionTitle.toUpperCase(),
-        style: context.textStyles.h3.copyWith(height: 1, fontWeight: FontWeight.w400, fontSize: 16),
+        style:
+            context.textStyles.h3.copyWith(height: 1, fontWeight: FontWeight.w400, fontSize: 16, shadows: textShadows),
         textAlign: TextAlign.center,
       )
     ]);

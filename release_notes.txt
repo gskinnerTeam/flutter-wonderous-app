@@ -1,3 +1,7 @@
+# 0.0.10
+- Home screen
+  - Added drop shadow to page indicator
+
 # 0.0.9
 - Enable bounce scrolling for all platforms and lists
 - Collectibles
