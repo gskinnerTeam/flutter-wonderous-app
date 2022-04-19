@@ -4,11 +4,17 @@ import 'package:wonders/logic/data/department_data.dart';
 import 'package:wonders/logic/search_service.dart';
 import 'dart:math' as math;
 
+import 'package:wonders/ui/common/utils/debug_utils.dart';
+
 class SearchLogic {
   final departmentList = ValueNotifier(<DepartmentData>[]);
   final Map<String, ArtifactData> _artifactHash = {};
 
   SearchService get service => GetIt.I.get<SearchService>();
+  String _lastSearchQuery = '';
+  List<String> _lastSearchResults = [];
+
+  int get lastSearchResultCount => _lastSearchResults.length;
 
   /// Return list of departments with titles and IDs.
   Future<void> getAllDepartments() async {
@@ -52,10 +58,18 @@ class SearchLogic {
       String? location,
       int? startYear,
       int? endYear}) async {
-    final result = await service.searchForArtifacts(query,
-        isTitle: isTitle, isKeywordTag: isKeyword, geoLocation: location, dateBegin: startYear, dateEnd: endYear);
+    List<String> ids;
 
-    final ids = result.content ?? [];
+    if (query == _lastSearchQuery) {
+      ids = _lastSearchResults;
+    } else {
+      final result = await service.searchForArtifacts(query,
+          isTitle: isTitle, isKeywordTag: isKeyword, geoLocation: location, dateBegin: startYear, dateEnd: endYear);
+
+      _lastSearchQuery = query;
+      ids = result.content ?? [];
+      _lastSearchResults = ids;
+    }
 
     var futures = <Future<ArtifactData?>>[];
     int i = offset;
