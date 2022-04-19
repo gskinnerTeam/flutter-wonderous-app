@@ -25,6 +25,7 @@ class AppLogic {
     FlutterError.onError = _handleFlutterError;
     await settingsLogic.load();
     settingsLogic.scheduleSave(); // test save calls on each boot
+    await collectiblesLogic.load();
     isBootstrapComplete = true;
     appRouter.go(ScreenPaths.home);
   }

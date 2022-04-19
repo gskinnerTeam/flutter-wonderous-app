@@ -1,4 +1,5 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/collectibles_logic.dart';
 import 'package:wonders/logic/search_logic.dart';
 import 'package:wonders/logic/search_service.dart';
 import 'package:wonders/logic/unsplash_logic.dart';
@@ -36,6 +37,8 @@ void registerSingletons() {
   // Unsplash
   GetIt.I.registerLazySingleton<UnsplashLogic>(() => UnsplashLogic());
   GetIt.I.registerLazySingleton<UnsplashService>(() => UnsplashService());
+  // Collectibles
+  GetIt.I.registerLazySingleton<CollectiblesLogic>(() => CollectiblesLogic());
 }
 
 /// Add syntax sugar for quickly accessing the main logical controllers in the app
@@ -45,3 +48,4 @@ WondersLogic get wondersLogic => GetIt.I.get<WondersLogic>();
 SettingsLogic get settingsLogic => GetIt.I.get<SettingsLogic>();
 UnsplashLogic get unsplashLogic => GetIt.I.get<UnsplashLogic>();
 SearchLogic get searchLogic => GetIt.I.get<SearchLogic>();
+CollectiblesLogic get collectiblesLogic => GetIt.I.get<CollectiblesLogic>();

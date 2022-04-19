@@ -1,8 +1,8 @@
 import 'package:wonders/common_libs.dart';
 
-class CollectedState {
-  static const int hidden = 0;
-  static const int found = 1;
+class CollectibleState {
+  static const int lost = 0;
+  static const int discovered = 1;
   static const int explored = 2;
 }
 
@@ -31,6 +31,10 @@ class CollectibleData {
 }
 
 // todo: check which image size we should be using.
+
+// Note: look up a human readable page with:
+// https://www.metmuseum.org/art/collection/search/503940
+// where 503940 is the ID.
 List<CollectibleData> collectibles = [
   // chichenItza
   CollectibleData(
@@ -217,6 +221,3 @@ List<CollectibleData> collectibles = [
   ),
 ];
 
-// Note: look up a human readable page with:
-// https://www.metmuseum.org/art/collection/search/503940
-// where 503940 is the ID.

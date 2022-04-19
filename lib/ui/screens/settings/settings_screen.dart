@@ -29,6 +29,16 @@ class SettingsScreen extends StatelessWidget with GetItMixin {
               onChanged: _handleFpsToggle,
               title: Text('Enable Fps Meter', style: context.textStyles.caption),
             ),
+            _buildRow(
+              context,
+              'Reset collection',
+              AppTextBtn(
+                'RESET',
+                isSecondary: true,
+                padding: EdgeInsets.all(0),
+                onPressed: () => collectiblesLogic.reset(),
+              ),
+            ),
             Divider(),
             Text('Image Grid', style: context.textStyles.h3),
             SwitchListTile(
@@ -41,24 +51,25 @@ class SettingsScreen extends StatelessWidget with GetItMixin {
               onChanged: _handleCloudsToggle,
               title: Text('Enable Clouds', style: context.textStyles.caption),
             ),
-            Row(
-              children: [
-                Gap(context.insets.sm),
-                Text('Swipe Threshold (${(swipeThreshold * 100).round()})', style: context.textStyles.caption),
-                Expanded(
-                  child: Slider(
-                    value: swipeThreshold,
-                    onChanged: _handleSwipeThresholdChanged,
-                    min: 0,
-                    max: 1,
-                    label: '',
-                  ),
-                ),
-              ],
+            _buildRow(
+              context,
+              'Swipe Threshold (${(swipeThreshold * 100).round()})',
+              Slider(value: swipeThreshold, onChanged: _handleSwipeThresholdChanged, min: 0, max: 1, label: ''),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildRow(BuildContext context, String label, Widget child) {
+    return Row(
+      children: [
+        Gap(context.insets.sm),
+        SizedBox(width: 128, child: Text(label, style: context.textStyles.caption)),
+        Gap(context.insets.sm),
+        Expanded(child: child),
+      ],
     );
   }
 }

@@ -27,9 +27,6 @@ class WondersLogic {
     tajMahalData,
   ];
 
-  //TODO: @Grant, can put collectibleIds here, and bind the collectibles view to this
-  final foundCollectibleIds = ValueNotifier<List<String>>([]);
-
   WonderData getData(WonderType value) {
     WonderData? result = all.firstWhereOrNull((w) => w.type == value);
     if (result == null) throw ('Could not find data for wonder type $value');

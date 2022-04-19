@@ -1,9 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/collectibles_logic.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 
-class CollectionScreen extends StatelessWidget {
+class CollectionScreen extends StatelessWidget with GetItMixin {
   CollectionScreen({String? fromId, Key? key}) : super(key: key) {
     // todo: scroll to the fromCollectible if possible
     // https://stackoverflow.com/questions/49153087/flutter-scrolling-to-a-widget-in-listview
@@ -14,6 +15,12 @@ class CollectionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final states = watchX((CollectiblesLogic o) => o.states);
+    int discovered = 0, explored = 0, total = collectibles.length;
+    states.forEach((_, state) {
+      if (state == CollectibleState.discovered) discovered++;
+      if (state == CollectibleState.explored) explored++;
+    });
     return ColoredBox(
       color: context.colors.greyStrong,
       child: Stack(children: [
@@ -21,8 +28,8 @@ class CollectionScreen extends StatelessWidget {
           child: SafeArea(
             child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
               _buildTitleRow(context),
-              _buildNewItemsRow(context),
-              _buildList(context),
+              _buildNewItemsRow(context, discovered),
+              _buildList(context, states),
             ]),
           ),
         ),
@@ -30,7 +37,7 @@ class CollectionScreen extends StatelessWidget {
           left: 0,
           right: 0,
           bottom: 0,
-          child: _buildFooter(context),
+          child: _buildFooter(context, discovered + explored, total),
         )
       ]),
     );
@@ -59,12 +66,13 @@ class CollectionScreen extends StatelessWidget {
     ]);
   }
 
-  Widget _buildNewItemsRow(BuildContext context) {
+  Widget _buildNewItemsRow(BuildContext context, int count) {
+    if (count == 0) return Container(color: context.colors.black, height: 1);
     return Container(
       color: context.colors.black,
       padding: EdgeInsets.symmetric(vertical: context.insets.xs),
       child: Text(
-        '1 new item to explore',
+        '$count new item${count == 0 ? '' : 's'} to explore',
         textAlign: TextAlign.center,
         textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
         style: context.textStyles.body2.copyWith(color: context.colors.accent1),
@@ -72,14 +80,14 @@ class CollectionScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildList(BuildContext context) {
+  Widget _buildList(BuildContext context, Map<String, int> states) {
     List<WonderData> wonders = wondersLogic.all;
     List<Widget> children = [];
     for (int i = 0; i < wonders.length; i++) {
       WonderData data = wonders[i];
       children.add(_buildCategoryTitle(context, data));
       children.add(Gap(context.insets.md));
-      children.add(_buildCollectibleRow(context, data.type));
+      children.add(_buildCollectibleRow(context, data.type, states));
       children.add(Gap(context.insets.xl));
     }
     children.add(Gap(context.insets.offset));
@@ -104,7 +112,7 @@ class CollectionScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCollectibleRow(BuildContext context, WonderType wonder) {
+  Widget _buildCollectibleRow(BuildContext context, WonderType wonder, Map<String, int> states) {
     final double height = context.insets.lg * 6;
     List<CollectibleData> list = collectibles.where((o) => o.wonder == wonder).toList(growable: false);
     if (list.isEmpty) return Container(height: height, color: context.colors.black);
@@ -112,18 +120,20 @@ class CollectionScreen extends StatelessWidget {
     List<Widget> children = [];
     for (int i = 0; i < list.length; i++) {
       if (i > 0) children.add(Gap(context.insets.md));
-      children.add(_buildCollectible(context, list[i], height));
+      int state = states[list[i].id] ?? CollectibleState.lost;
+      children.add(_buildCollectible(context, list[i], height, state));
     }
 
     return Row(children: children);
   }
 
-  Widget _buildCollectible(BuildContext context, CollectibleData collectible, double height) {
-    // todo: temporary:
-    int state = rnd.getBool(0.67) ? 2 : 0;
+  Widget _buildCollectible(BuildContext context, CollectibleData collectible, double height, int state) {
+    // todo: use this if you need visuals for the video quickly:
+    /*
+    state = rnd.getBool(0.67) ? 2 : 0;
     if (collectible.id == '701645') state = 1;
-    // todo: add logic to look up collectible state (hidden, found, explored)
-    Widget content = state == CollectedState.hidden
+    */
+    Widget content = state == CollectibleState.lost
         ? _buildHiddenCollectible(context, collectible)
         : _buildFoundCollectible(context, collectible, state);
 
@@ -157,8 +167,7 @@ class CollectionScreen extends StatelessWidget {
   }
 
   Widget _buildFoundCollectible(BuildContext context, CollectibleData collectible, int state) {
-    // todo: add tap interaction.
-    final bool isNew = state == CollectedState.found;
+    final bool isNew = state == CollectibleState.discovered;
     Widget content = Container(
       decoration: BoxDecoration(
         color: context.colors.black,
@@ -174,12 +183,17 @@ class CollectionScreen extends StatelessWidget {
     );
     if (collectible == fromCollectible) content = Hero(tag: 'collectible_image', child: content);
     return GestureDetector(
-      onTap: () => context.push(ScreenPaths.artifact(collectible.artifactId)),
+      onTap: () => _showDetails(context, collectible),
       child: content,
     );
   }
 
-  Widget _buildFooter(BuildContext context) {
+  void _showDetails(BuildContext context, CollectibleData collectible) {
+    context.push(ScreenPaths.artifact(collectible.artifactId));
+    Future.delayed(300.ms).then((_) => collectiblesLogic.updateState(collectible.id, CollectibleState.explored));
+  }
+
+  Widget _buildFooter(BuildContext context, int count, int total) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: context.insets.md, vertical: context.insets.sm),
       decoration: BoxDecoration(
@@ -197,9 +211,9 @@ class CollectionScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Gap(context.insets.xl),
-            _buildProgressRow(context, 16, 24),
+            _buildProgressRow(context, count, total),
             Gap(context.insets.sm),
-            _buildProgressBar(context, 16, 24),
+            _buildProgressBar(context, count, total),
             Gap(context.insets.sm),
           ],
         ),
@@ -207,21 +221,21 @@ class CollectionScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProgressRow(BuildContext context, int found, int total) {
+  Widget _buildProgressRow(BuildContext context, int count, int total) {
     return Row(children: [
       Text(
-        '${(found / total * 100).round()}% Discovered',
+        '${(count / total * 100).round()}% discovered',
         style: context.textStyles.body1.copyWith(color: context.colors.accent1),
       ),
       Spacer(),
       Text(
-        '$found of $total',
+        '$count of $total',
         style: context.textStyles.body1.copyWith(color: context.colors.offWhite),
       )
     ]);
   }
 
-  Widget _buildProgressBar(BuildContext context, int found, int total) {
+  Widget _buildProgressBar(BuildContext context, int count, int total) {
     return Container(
       height: context.insets.xs,
       decoration: BoxDecoration(
@@ -234,7 +248,7 @@ class CollectionScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(1000),
         ),
       ).fx().fade(duration: 1500.ms, curve: Curves.easeOutExpo).build((_, m, child) =>
-          FractionallySizedBox(alignment: Alignment.centerLeft, widthFactor: m * found / total, child: child)),
+          FractionallySizedBox(alignment: Alignment.centerLeft, widthFactor: m * count / total, child: child)),
     );
   }
 }

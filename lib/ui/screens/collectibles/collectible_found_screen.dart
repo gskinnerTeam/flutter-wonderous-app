@@ -6,10 +6,6 @@ import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:wonders/ui/common/particles/particle_field.dart';
 import 'package:wonders/ui/screens/collectibles/widgets/animated_ribbon.dart';
 
-// todo: update collectible state
-/* Shawn: Make a final foundArtifactIds = ValueNotifier<String>([]) in WondersLogic, then you can bind to it using the GetItMixin class, see SettingsScreen for an example of reading/writing. */
-// todo: persist state
-/* Shawn: We can make WonderLogic persist some data, check out settings_logic for an example */
 // todo: maybe: title text size (2 line max): https://pub.dev/packages/auto_size_text
 // todo: maybe: fade out on close
 
