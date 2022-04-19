@@ -21,7 +21,7 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
     if (states[collectible.id] != CollectibleState.lost) return SizedBox(width: size, height: size);
     return GestureDetector(
       onTap: () => _handleTap(context),
-      child: Hero(tag: 'collectible_icon', child: _buildIcon()),
+      child: Hero(tag: 'collectible_icon_${collectible.id}', child: _buildIcon()),
     );
   }
 

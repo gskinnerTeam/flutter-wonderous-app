@@ -155,7 +155,7 @@ class CollectibleFoundScreen extends StatelessWidget {
         widthFactor: 0.33,
         heightFactor: 0.33,
         child: Hero(
-          tag: 'collectible_icon',
+          tag: 'collectible_icon_${collectible.id}',
           child: Image(
             image: collectible.icon,
             fit: BoxFit.contain,
