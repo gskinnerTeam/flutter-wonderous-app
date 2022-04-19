@@ -1,5 +1,5 @@
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/common/prefs_file_mixin.dart';
+import 'package:wonders/logic/common/save_load_mixin.dart';
 
 class SettingsLogic with SaveLoadMixin {
   @override
