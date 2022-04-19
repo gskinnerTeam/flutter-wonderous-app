@@ -1,3 +1,19 @@
+# 0.0.9
+- Enable bounce scrolling for all platforms and lists
+- Collectibles
+  - Added example collectibles in editorial view
+  - Ready for QA: The whole flow of finding a collectible
+    - Keep an eye on performance when particles are running
+- Home
+  - New animating arrow
+  - Increased gradient strength
+  - Added Zoom effect swipe down
+  - Performance improvements
+  - Added toggle to disable clouds
+- Image Gallery
+  - Now loading proper images
+  - Now preloads the first visible image and then rest the others pop in
+
 # 0.0.8
 - Changed fps profiler
 - Artifacts
@@ -7,7 +23,7 @@
   - Loads higher resolution images for hi-DPI devices
 - Editorial View
   - Fixed hanging text in CircleTitleBar (thx Jess!)
-  -
+
 
 # 0.0.7
 - Home View

@@ -8,18 +8,8 @@ class CollectiblesLogic with SaveLoadMixin {
 
   final states = ValueNotifier<Map<String, int>>({});
 
-  @override
-  void copyFromJson(Map<String, dynamic> value) {
-    Map<String, int> states = {};
-    for (int i = 0; i < collectibles.length; i++) {
-      String id = collectibles[i].id;
-      states[id] = value[id] ?? CollectibleState.lost;
-    }
-    this.states.value = states;
-  }
-
   void updateState(String id, int state) {
-    Map<String, int> states = Map.from(this.states.value);
+    Map<String, int> states = Map.of(this.states.value);
     states[id] = state;
     this.states.value = states;
     scheduleSave();
@@ -33,6 +23,16 @@ class CollectiblesLogic with SaveLoadMixin {
     this.states.value = states;
     debugPrint('collection reset');
     scheduleSave();
+  }
+
+  @override
+  void copyFromJson(Map<String, dynamic> value) {
+    Map<String, int> states = {};
+    for (int i = 0; i < collectibles.length; i++) {
+      String id = collectibles[i].id;
+      states[id] = value[id] ?? CollectibleState.lost;
+    }
+    this.states.value = states;
   }
 
   @override

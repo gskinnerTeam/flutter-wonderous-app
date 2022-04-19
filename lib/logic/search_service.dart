@@ -1,7 +1,8 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/logic/common/http_client.dart';
+import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/logic/data/department_data.dart';
 

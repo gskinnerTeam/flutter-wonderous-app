@@ -81,16 +81,20 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
           PageView(
             controller: _pageController,
             children: mgChildren,
-            physics: BouncingScrollPhysics(),
             onPageChanged: _handlePageViewChanged,
+          ),
+
+          /// Foreground gradient-bottom, gets darker when swiping up
+          BottomCenter(
+            child: _SwipeableGradient(currentWonder.type.bgColor, swipeController: swipeController),
           ),
 
           /// Foreground decorators
           ...fgChildren.map((e) => IgnorePointer(child: e)),
 
-          /// Foreground gradient, gets darker when swiping up
+          /// Foreground gradient-top, gets darker when swiping up
           BottomCenter(
-            child: _SwipeableGradient(currentWonder.type.bgColor, swipeController: swipeController),
+            child: _SwipeableGradient(currentWonder.type.bgColor.withOpacity(.2), swipeController: swipeController),
           ),
 
           /// Floatiang controls / UI
@@ -139,7 +143,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
     return Column(children: [
       /// Page indicator
       DiagonalPageIndicator(current: _wonderIndex + 1, total: wonders.length),
-      Gap(context.insets.md),
+      Gap(context.insets.sm),
 
       /// Title
       Hero(
@@ -150,6 +154,14 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
           textAlign: TextAlign.center,
         ),
       ),
+      Gap(context.insets.sm),
+
+      /// Region
+      Text(
+        currentWonder.regionTitle.toUpperCase(),
+        style: context.textStyles.h3.copyWith(height: 1, fontWeight: FontWeight.w400, fontSize: 16),
+        textAlign: TextAlign.center,
+      )
     ]);
   }
 }
@@ -251,7 +263,7 @@ class _SwipeableGradient extends StatelessWidget {
                   end: Alignment.bottomCenter,
                   colors: [
                     fgColor.withOpacity(0),
-                    fgColor.withOpacity(.75 + (isPointerDown ? .05 : 0) + swipeAmt * .20),
+                    fgColor.withOpacity(fgColor.opacity * .75 + (isPointerDown ? .05 : 0) + swipeAmt * .20),
                   ],
                   stops: const [0, 1],
                 ),

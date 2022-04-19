@@ -1,6 +1,6 @@
 import 'package:wonders/common_libs.dart';
 
-/// Consolidate common paths uses across the app
+/// Consolidate common paths used across the app
 class ImagePaths {
   static String root = 'assets/images';
   static String cloud = '$root/cloud-white.png';
@@ -16,7 +16,6 @@ class ImagePaths {
 }
 
 /// Place Svg paths in their own class, to hint to the views to use an SvgPicture to render
-/// Access with `AssetPaths.svg.foo`
 class SvgPaths {
   static String compassFull = '${ImagePaths.root}/compass-full.svg';
   static String compassSimple = '${ImagePaths.root}/compass-simple.svg';

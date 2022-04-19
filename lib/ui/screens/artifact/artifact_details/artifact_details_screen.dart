@@ -93,9 +93,9 @@ class _TopContent extends StatelessWidget {
               tag: data.image,
               child: CachedNetworkImage(
                 imageUrl: data.image,
-                fit: BoxFit.contain,
+                fit: BoxFit.cover,
                 alignment: Alignment.topCenter,
-                placeholder: (BuildContext context, String url) => const CircularProgressIndicator(),
+                placeholder: (BuildContext context, String url) => const AppLoader(),
               ),
             ),
           ),

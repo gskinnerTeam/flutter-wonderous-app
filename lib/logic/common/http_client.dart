@@ -1,9 +1,9 @@
 import 'dart:convert';
+import 'dart:developer' as dev;
 
 import 'package:http/http.dart' as http;
 import 'package:wonders/logic/common/rest_utils.dart';
 import 'package:wonders/logic/common/string_utils.dart';
-import 'dart:developer' as dev;
 
 enum NetErrorType {
   none,
