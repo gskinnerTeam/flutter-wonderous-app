@@ -1,9 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/data/collectible_data.dart';
+part of '../collection_screen.dart';
 
-class CollectionTile extends StatelessWidget {
-  const CollectionTile({
+class _CollectionTile extends StatelessWidget {
+  const _CollectionTile({
     Key? key,
     required this.collectible,
     required this.state,

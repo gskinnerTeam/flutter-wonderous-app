@@ -1,7 +1,7 @@
-import 'package:wonders/common_libs.dart';
+part of '../collection_screen.dart';
 
-class CollectionProgressBar extends StatelessWidget {
-  const CollectionProgressBar(this.count, this.total, {Key? key}) : super(key: key);
+class _ProgressBar extends StatelessWidget {
+  const _ProgressBar(this.count, this.total, {Key? key}) : super(key: key);
 
   final int count;
   final int total;

@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/collectibles_logic.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
-import 'package:wonders/ui/screens/collectibles/widgets/collection_progress_bar.dart';
-import 'package:wonders/ui/screens/collectibles/widgets/collection_tile.dart';
+
+part 'widgets/_progress_bar.dart';
+part 'widgets/_collection_tile.dart';
 
 class CollectionScreen extends StatelessWidget with GetItMixin {
   CollectionScreen({String? fromId, Key? key}) : super(key: key) {
@@ -124,7 +126,7 @@ class CollectionScreen extends StatelessWidget with GetItMixin {
       CollectibleData collectible = list[i];
       int state = states[collectible.id] ?? CollectibleState.lost;
       children.add(Flexible(
-        child: CollectionTile(
+        child: _CollectionTile(
           collectible: collectible,
           state: state,
           onPressed: (o) => _showDetails(context, o),
@@ -164,7 +166,7 @@ class CollectionScreen extends StatelessWidget with GetItMixin {
             children: [
               _buildProgressRow(context, count, total),
               Gap(context.insets.sm),
-              CollectionProgressBar(count, total),
+              _ProgressBar(count, total),
               Gap(context.insets.sm),
             ],
           ),

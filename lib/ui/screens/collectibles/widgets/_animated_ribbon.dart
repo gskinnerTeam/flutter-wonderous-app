@@ -1,7 +1,7 @@
-import 'package:wonders/common_libs.dart';
+part of '../collectible_found_screen.dart';
 
-class AnimatedRibbon extends StatelessWidget {
-  const AnimatedRibbon(this.text, {Key? key}) : super(key: key);
+class _AnimatedRibbon extends StatelessWidget {
+  const _AnimatedRibbon(this.text, {Key? key}) : super(key: key);
 
   final String text;
   static const double height = 48;

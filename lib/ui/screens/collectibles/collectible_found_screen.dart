@@ -4,7 +4,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:wonders/ui/common/particles/particle_field.dart';
-import 'package:wonders/ui/screens/collectibles/widgets/animated_ribbon.dart';
+
+part 'widgets/_animated_ribbon.dart';
+part 'widgets/_celebration_particles.dart';
 
 // todo: maybe: title text size (2 line max): https://pub.dev/packages/auto_size_text
 
@@ -25,7 +27,8 @@ class CollectibleFoundScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepaintBoundary( // todo: does this have an impact? Does Flutter already wrap full screen dialogs in one?
+    return RepaintBoundary(
+      // todo: does this have an impact? Does Flutter already wrap full screen dialogs in one?
       child: FXBuilder(
         duration: totalT.ms,
         builder: (ctx, ratio, _) => Stack(children: [
@@ -62,7 +65,8 @@ class CollectibleFoundScreen extends StatelessWidget {
       _buildBlur(context, detailRatio),
       // radial gradient to solid fill in first 300ms:
       _buildGradient(context, 1, _subRatio(ratio, introTotalT, 300)),
-      _buildParticleField(context, detailRatio),
+      // fade out and then remove particles completely at the end:
+      _CelebrationParticles(),
       // add the detail UI in a column to facilitate better responsiveness:
       SafeArea(
         child: Column(children: [
@@ -104,49 +108,6 @@ class CollectibleFoundScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Widget _buildParticleField(BuildContext context, double ratio) {
-    // remove after animation ends.
-    if (ratio >= 1) return Container();
-
-    final Color color = context.colors.accent1;
-    int particleCount = 800;
-    return Positioned.fill(
-      child: ParticleField(
-        spriteSheet: SpriteSheet(
-          image: AssetImage(ImagePaths.sparkle),
-          frameWidth: 21,
-          scale: 0.75,
-        ),
-        onTick: (controller, elapsed, size) {
-          List<Particle> particles = controller.particles;
-          // calculate base distance from center & velocity:
-          final double d = min(size.width, size.height) * 0.3;
-          final double v = d * 0.08;
-          // add new particles, reducing the number added each tick:
-          int addCount = particleCount ~/ 40;
-          particleCount -= addCount;
-          while (--addCount > 0) {
-            double angle = rnd.getRad();
-            particles.add(Particle(
-              // adding random variation makes it more visually interesting:
-              x: cos(angle) * d * rnd(0.8, 1),
-              y: sin(angle) * d * rnd(0.8, 1),
-              vx: cos(angle) * v * rnd(0.5, 1.5),
-              vy: sin(angle) * v * rnd(0.5, 1.5),
-              color: color.withOpacity(rnd(0.5, 1)),
-            ));
-          }
-          // update existing particles & remove old ones:
-          for (int i = particles.length - 1; i >= 0; i--) {
-            Particle o = particles[i];
-            o.update(frame: o.age ~/ 3);
-            if (o.age > 40) particles.removeAt(i);
-          }
-        },
-      ),
-    ).fx().fadeOut(duration: detailT.ms, curve: Curves.easeIn);
   }
 
   Widget _buildIcon(BuildContext context, double ratio) {
@@ -198,7 +159,7 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   Widget _buildRibbon(BuildContext context, double ratio) {
-    return AnimatedRibbon('Artifact Discovered'.toUpperCase())
+    return _AnimatedRibbon('Artifact Discovered'.toUpperCase())
         .fx()
         .scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo)
         .fade();
