@@ -9,7 +9,6 @@ class CollectionScreen extends StatelessWidget with GetItMixin {
   CollectionScreen({String? fromId, Key? key}) : super(key: key) {
     // todo: scroll to the fromCollectible if possible
     // https://stackoverflow.com/questions/49153087/flutter-scrolling-to-a-widget-in-listview
-    // todo: fix issue with bottom gradient blocking scroll
     fromCollectible = collectibles.firstWhere((o) => o.id == fromId);
   }
 
@@ -137,31 +136,41 @@ class CollectionScreen extends StatelessWidget with GetItMixin {
   }
 
   Widget _buildFooter(BuildContext context, int count, int total) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: context.insets.md, vertical: context.insets.sm),
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [
-          context.colors.greyStrong.withOpacity(0),
-          context.colors.greyStrong,
-        ],
-        stops: const [0, 0.5],
-      )),
-      child: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Gap(context.insets.xl),
-            _buildProgressRow(context, count, total),
-            Gap(context.insets.sm),
-            CollectionProgressBar(count, total),
-            Gap(context.insets.sm),
-          ],
+    // This is broken into two, so that the gradient isn't clickable:
+    return Column(children: [
+      IgnorePointer(
+        child: Container(
+          height: context.insets.xl,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                context.colors.greyStrong.withOpacity(0),
+                context.colors.greyStrong,
+              ],
+              stops: const [0, 1],
+            ),
+          ),
         ),
       ),
-    );
+      Container(
+        padding: EdgeInsets.symmetric(horizontal: context.insets.md, vertical: context.insets.sm),
+        color: context.colors.greyStrong,
+        child: SafeArea(
+          top: false,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _buildProgressRow(context, count, total),
+              Gap(context.insets.sm),
+              CollectionProgressBar(count, total),
+              Gap(context.insets.sm),
+            ],
+          ),
+        ),
+      )
+    ]);
   }
 
   Widget _buildProgressRow(BuildContext context, int count, int total) {
