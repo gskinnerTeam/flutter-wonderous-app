@@ -35,6 +35,29 @@ class SearchLogic {
     return results;
   }
 
+  /// Returns multiple artifact data by ID list.*/
+  Future<List<ArtifactData?>> getArtifactsByID(List<String> ids) async {
+    List<ArtifactData?> results = [];
+    ArtifactData? result;
+
+    for (var id in ids) {
+      if (!_artifactHash.containsKey(id)) {
+        // No data for artifact. Populate it for now and next time.
+        result = (await service.getObjectByID(id)).content;
+        if (result != null) {
+          _artifactHash[id] = result;
+        }
+      } else {
+        // Data is already stored. Use the reference instead of a server call.
+        result = _artifactHash[id];
+      }
+      if (result != null) {
+        results.add(result);
+      }
+    }
+    return results;
+  }
+
   /// Returns list of artifact IDs by search query.
   /// - count; number of results to return
   /// - offset: offset the returned list of elements (used for multiple chunks of results)
