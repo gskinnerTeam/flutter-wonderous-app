@@ -10,9 +10,7 @@ import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_confi
 import 'package:wonders/ui/wonder_illustrations/wonder_illustration.dart';
 
 part 'widgets/animated_arrow_button.dart';
-part 'widgets/vertical_swipe_controller.dart';
-part 'widgets/swipeable_gradient.dart';
-part 'widgets/expanding_button_bg.dart';
+part 'vertical_swipe_controller.dart';
 part 'widgets/text_content.dart';
 
 class WondersHomeScreen extends StatefulWidget with GetItStatefulWidgetMixin {
@@ -26,12 +24,12 @@ class WondersHomeScreen extends StatefulWidget with GetItStatefulWidgetMixin {
 /// arranged in a parallax style.
 class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTickerProviderStateMixin {
   final _pageController = PageController(viewportFraction: 1);
-  final wonders = wondersLogic.enabled;
+  final _wonders = wondersLogic.enabled;
   late int _wonderIndex = _pageController.initialPage;
 
-  late final _VerticalSwipeController swipeController = _VerticalSwipeController(this, _showDetailsPage);
+  late final _VerticalSwipeController _swipeController = _VerticalSwipeController(this, _showDetailsPage);
 
-  bool isSelected(WonderType t) => t == wonders[_wonderIndex].type;
+  bool _isSelected(WonderType t) => t == _wonders[_wonderIndex].type;
 
   void _handlePageViewChanged(v) => setState(() => _wonderIndex = v);
 
@@ -41,18 +39,14 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
 
   @override
   Widget build(BuildContext context) {
-    final currentWonder = wonders[_wonderIndex];
-
-    /// Build children for the various parallax layers
-    List<Widget> bgChildren = _buildBgChildren();
-    List<Widget> mgChildren = _buildMgChildren();
-    List<Widget> fgChildren = _buildFgChildren();
-
-    return swipeController.wrapGestureDetector(
+    final currentWonder = _wonders[_wonderIndex];
+    return _swipeController.wrapGestureDetector(
       Stack(
         children: [
-          /// Sun / Clouds
-          ...bgChildren,
+          /// Background
+          ..._buildBgChildren(),
+
+          /// Clouds
           FractionallySizedBox(
             widthFactor: 1,
             heightFactor: .5,
@@ -62,24 +56,24 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
           /// Wonders Illustrations
           PageView(
             controller: _pageController,
-            children: mgChildren,
             onPageChanged: _handlePageViewChanged,
+            children: _buildMgChildren(),
           ),
 
           /// Foreground gradient-bottom, gets darker when swiping up
           BottomCenter(
-            child: _SwipeableGradient(currentWonder.type.bgColor, swipeController: swipeController),
+            child: _buildSwipableBgGradient(currentWonder.type.bgColor),
           ),
 
           /// Foreground decorators
-          ...fgChildren.map((e) => IgnorePointer(child: e)),
+          ..._buildFgChildren(),
 
           /// Foreground gradient-top, gets darker when swiping up
           BottomCenter(
-            child: _SwipeableGradient(currentWonder.type.bgColor.withOpacity(.2), swipeController: swipeController),
+            child: _buildSwipableBgGradient(currentWonder.type.bgColor.withOpacity(.2)),
           ),
 
-          /// Floatiang controls / UI
+          /// Floating controls / UI
           AnimatedSwitcher(
             duration: context.times.fast,
             child: RepaintBoundary(
@@ -98,7 +92,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
                   /// Title Content
                   IgnorePointer(
                     child: LightText(
-                      child: _TextContent(wonderIndex: _wonderIndex, wonders: wonders),
+                      child: _TextContent(wonderIndex: _wonderIndex, wonders: _wonders),
                     ),
                   ),
                   Gap(context.insets.sm),
@@ -107,7 +101,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
                     children: [
                       /// Expanding rounded rect that grows in height as user swipes up
                       Positioned.fill(
-                        child: _ExpandingButtonBg(swipeController: swipeController),
+                        child: _buildSwipableButtonBg(),
                       ),
 
                       /// Arrow Btn that fades in and out
@@ -124,38 +118,72 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
     );
   }
 
-  List<ValueListenableBuilder<double>> _buildFgChildren() {
-    return wonders.map((e) {
-      return ValueListenableBuilder(
-          valueListenable: swipeController.swipeAmt,
-          builder: (_, value, child) {
-            final config = WonderIllustrationConfig.fg(
-              isShowing: isSelected(e.type),
-              zoom: 1.3 + .4 * swipeController.swipeAmt.value,
-            );
-            return WonderIllustration(e.type, config: config);
-          });
+  Widget _buildSwipableButtonBg() {
+    return _swipeController.buildListener(
+      builder: (swipeAmt, _, child) {
+        double heightFactor = .5 + .5 * (1 + swipeAmt * 4);
+        return FractionallySizedBox(
+          alignment: Alignment.bottomCenter,
+          heightFactor: heightFactor,
+          child: Opacity(opacity: swipeAmt * .5, child: child),
+        );
+      },
+      child: VtGradient(
+        [context.colors.white.withOpacity(0), context.colors.white.withOpacity(1)],
+        const [.3, 1],
+        borderRadius: BorderRadius.circular(99),
+      ),
+    );
+  }
+
+  Widget _buildSwipableBgGradient(Color fgColor) {
+    return _swipeController.buildListener(builder: (swipeAmt, isPointerDown, _) {
+      return IgnorePointer(
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                fgColor.withOpacity(0),
+                fgColor.withOpacity(fgColor.opacity * .75 + (isPointerDown ? .05 : 0) + swipeAmt * .20),
+              ],
+              stops: const [0, 1],
+            ),
+          ),
+        ),
+      );
+    });
+  }
+
+  List<Widget> _buildFgChildren() {
+    return _wonders.map((e) {
+      return _swipeController.buildListener(builder: (swipeAmt, _, child) {
+        final config = WonderIllustrationConfig.fg(
+          isShowing: _isSelected(e.type),
+          zoom: 1.3 + .4 * swipeAmt,
+        );
+        return IgnorePointer(child: WonderIllustration(e.type, config: config));
+      });
     }).toList();
   }
 
-  List<WonderIllustration> _buildBgChildren() {
-    return wonders.map((e) {
-      final config = WonderIllustrationConfig.bg(isShowing: isSelected(e.type));
+  List<Widget> _buildBgChildren() {
+    return _wonders.map((e) {
+      final config = WonderIllustrationConfig.bg(isShowing: _isSelected(e.type));
       return WonderIllustration(e.type, config: config);
     }).toList();
   }
 
-  List<ValueListenableBuilder<double>> _buildMgChildren() {
-    return wonders.map((e) {
-      return ValueListenableBuilder(
-          valueListenable: swipeController.swipeAmt,
-          builder: (_, value, child) {
-            final config = WonderIllustrationConfig.mg(
-              isShowing: isSelected(e.type),
-              zoom: 1.3 + .05 * swipeController.swipeAmt.value,
-            );
-            return WonderIllustration(e.type, config: config);
-          });
+  List<Widget> _buildMgChildren() {
+    return _wonders.map((e) {
+      return _swipeController.buildListener(builder: (swipeAmt, _, child) {
+        final config = WonderIllustrationConfig.mg(
+          isShowing: _isSelected(e.type),
+          zoom: 1.3 + .05 * swipeAmt,
+        );
+        return WonderIllustration(e.type, config: config);
+      });
     }).toList();
   }
 }

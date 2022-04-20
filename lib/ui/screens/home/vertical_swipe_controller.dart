@@ -1,4 +1,4 @@
-part of '../wonders_home_screen.dart';
+part of 'wonders_home_screen.dart';
 
 class _VerticalSwipeController {
   _VerticalSwipeController(this.ticker, this.onSwipeComplete);
@@ -52,6 +52,7 @@ class _VerticalSwipeController {
     );
   }
 
+  /// Utility method to wrap a gesture detector and wire up the required handlers.
   Widget wrapGestureDetector(Widget child, {Key? key}) => GestureDetector(
       key: key,
       onTapDown: (_) => handleTapDown(),
