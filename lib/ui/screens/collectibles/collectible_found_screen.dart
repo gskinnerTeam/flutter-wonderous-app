@@ -61,8 +61,6 @@ class CollectibleFoundScreen extends StatelessWidget {
     final double detailRatio = _subRatio(ratio, introTotalT);
     if (detailRatio == 0) return [];
     return [
-      // background blur:
-      _buildBlur(context, detailRatio),
       // radial gradient to solid fill in first 300ms:
       _buildGradient(context, 1, _subRatio(ratio, introTotalT, 300)),
       // fade out and then remove particles completely at the end:
@@ -75,9 +73,9 @@ class CollectibleFoundScreen extends StatelessWidget {
           Spacer(flex: 2),
           _buildRibbon(context, detailRatio),
           Spacer(flex: 1),
-          _buildTitle(context, detailRatio),
+          _buildTitle(context, collectible.title, context.textStyles.h2, context.colors.offWhite, 450),
           Spacer(flex: 1),
-          _buildSubTitle(context, detailRatio),
+          _buildTitle(context, collectible.subtitle.toUpperCase(), context.textStyles.title2, context.colors.accent1, 600),
           Spacer(flex: 3),
           _buildCollectionButton(context, detailRatio),
         ]),
@@ -87,7 +85,7 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   Widget _buildGradient(BuildContext context, double ratioIn, double ratioOut) {
-    const double opacity = 0.77;
+    const double opacity = 0.85;
     final Color color = context.colors.black;
 
     // final state is a solid fill, so optimize for that:
@@ -126,14 +124,6 @@ class CollectibleFoundScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBlur(BuildContext context, double ratio) {
-    final double blur = ratio * 8;
-    return BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
-      child: Container(),
-    );
-  }
-
   Widget _buildImage(BuildContext context, double ratio) {
     return Center(
       child: Hero(
@@ -155,36 +145,25 @@ class CollectibleFoundScreen extends StatelessWidget {
           child: CachedNetworkImage(imageUrl: collectible.imageUrl),
         ),
       ),
-    ).fx().scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo).fade();
+    ).fx().scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo);
   }
 
   Widget _buildRibbon(BuildContext context, double ratio) {
     return _AnimatedRibbon('Artifact Discovered'.toUpperCase())
         .fx()
-        .scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo)
-        .fade();
+        .scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo);
   }
 
-  Widget _buildTitle(BuildContext context, double ratio) {
+  Widget _buildTitle(BuildContext context, String text, TextStyle style, Color color, double delay) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: context.insets.lg),
-      child: Text(
-        collectible.title,
-        textAlign: TextAlign.center,
-        style: context.textStyles.h2,
+      child: FXBuilder(
+        delay: delay.ms,
+        duration: 600.ms,
+        builder: (_, m, __) =>
+            Text(text, textAlign: TextAlign.center, style: style.copyWith(color: color.withOpacity(m))),
       ),
-    ).fx().fade(delay: 450.ms, duration: 600.ms);
-  }
-
-  Widget _buildSubTitle(BuildContext context, double ratio) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: context.insets.lg),
-      child: Text(
-        collectible.subtitle.toUpperCase(),
-        textAlign: TextAlign.center,
-        style: context.textStyles.title2.copyWith(color: context.colors.accent1),
-      ),
-    ).fx().fade(delay: 600.ms, duration: 600.ms);
+    );
   }
 
   Widget _buildCollectionButton(BuildContext context, double ratio) {
@@ -198,7 +177,7 @@ class CollectibleFoundScreen extends StatelessWidget {
         padding: EdgeInsets.all(context.insets.sm),
         onPressed: () => context.push(ScreenPaths.collection(collectible.id)),
       ),
-    ).fx().fade(delay: 1200.ms, duration: 900.ms, curve: Curves.easeOut).move(begin: Offset(0, context.insets.xs));
+    ).fx().show(delay: 1200.ms).move(begin: Offset(0, context.insets.md), duration: 900.ms, curve: Curves.easeOutExpo);
   }
 
   Widget _buildCloseButton(BuildContext context, double ratio) {
