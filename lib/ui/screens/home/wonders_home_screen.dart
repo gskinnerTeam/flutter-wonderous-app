@@ -1,20 +1,37 @@
+import 'dart:async';
+
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/controls/diagonal_page_indicator.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/themed_text.dart';
-import 'package:wonders/ui/screens/home/animated_clouds.dart';
+import 'package:wonders/ui/wonder_illustrations/common/animated_clouds.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 import 'package:wonders/ui/wonder_illustrations/wonder_illustration.dart';
 
-part 'animated_arrow_button.dart';
+part 'widgets/animated_arrow_button.dart';
+part 'widgets/vertical_swipe_controller.dart';
+part 'widgets/swipeable_gradient.dart';
+part 'widgets/expanding_button_bg.dart';
+part 'widgets/text_content.dart';
 
-/// PageView sandwiched between Foreground and Background layers
-/// arranged in a parallax style
+class WondersHomeScreen extends StatefulWidget with GetItStatefulWidgetMixin {
+  WondersHomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<WondersHomeScreen> createState() => _WondersHomeScreenState();
+}
+
+/// Shows a horizontally scrollable list PageView sandwiched between Foreground and Background layers
+/// arranged in a parallax style.
 class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTickerProviderStateMixin {
   final _pageController = PageController(viewportFraction: 1);
+  final wonders = wondersLogic.enabled;
   late int _wonderIndex = _pageController.initialPage;
-  late final _SwipeController swipeController = _SwipeController(this, _showDetailsPage);
+
+  late final _VerticalSwipeController swipeController = _VerticalSwipeController(this, _showDetailsPage);
+
+  bool isSelected(WonderType t) => t == wonders[_wonderIndex].type;
 
   void _handlePageViewChanged(v) => setState(() => _wonderIndex = v);
 
@@ -24,53 +41,18 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
 
   @override
   Widget build(BuildContext context) {
-    final wonders = wondersLogic.enabled;
     final currentWonder = wonders[_wonderIndex];
-    bool isSelected(WonderType t) => t == wonders[_wonderIndex].type;
 
-    /// Collect children for the various layers
-    List<Widget> bgChildren = wonders.map((e) {
-      final config = WonderIllustrationConfig.bg(isShowing: isSelected(e.type));
-      return WonderIllustration(e.type, config: config);
-    }).toList();
+    /// Build children for the various parallax layers
+    List<Widget> bgChildren = _buildBgChildren();
+    List<Widget> mgChildren = _buildMgChildren();
+    List<Widget> fgChildren = _buildFgChildren();
 
-    List<Widget> mgChildren = wonders.map((e) {
-      return ValueListenableBuilder(
-          valueListenable: swipeController.swipeUpAmt,
-          builder: (_, value, child) {
-            final config = WonderIllustrationConfig.mg(
-              isShowing: isSelected(e.type),
-              zoom: 1.3 + .05 * swipeController.swipeUpAmt.value,
-            );
-            return WonderIllustration(e.type, config: config);
-          });
-    }).toList();
-
-    List<Widget> fgChildren = wonders.map((e) {
-      return ValueListenableBuilder(
-          valueListenable: swipeController.swipeUpAmt,
-          builder: (_, value, child) {
-            final config = WonderIllustrationConfig.fg(
-              isShowing: isSelected(e.type),
-              zoom: 1.3 + .4 * swipeController.swipeUpAmt.value,
-            );
-            return WonderIllustration(e.type, config: config);
-          });
-    }).toList();
-
-    // TODO SB: Feels like the swipe controller should add this GT?  Q: shouldn't it just be a stateful widget at that pt? A: Probably not, because then you need to deal with keys + state, all we actually want is a build method.
-    return GestureDetector(
-      onTapDown: (_) => swipeController.handleTapDown(),
-      onTapUp: (_) => swipeController.handleTapCancelled(),
-      onVerticalDragUpdate: swipeController.handleVerticalSwipeUpdate,
-      onVerticalDragEnd: (_) => swipeController.handleVerticalSwipeCancelled(),
-      onVerticalDragCancel: swipeController.handleVerticalSwipeCancelled,
-      behavior: HitTestBehavior.translucent,
-      child: Stack(
+    return swipeController.wrapGestureDetector(
+      Stack(
         children: [
           /// Sun / Clouds
           ...bgChildren,
-
           FractionallySizedBox(
             widthFactor: 1,
             heightFactor: .5,
@@ -101,6 +83,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
           AnimatedSwitcher(
             duration: context.times.fast,
             child: RepaintBoundary(
+              // Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
               key: ValueKey(_wonderIndex),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -115,17 +98,19 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
                   /// Title Content
                   IgnorePointer(
                     child: LightText(
-                      child: _buildTitleAndPageIndicator(wonders, currentWonder),
+                      child: _TextContent(wonderIndex: _wonderIndex, wonders: wonders),
                     ),
                   ),
                   Gap(context.insets.sm),
 
-                  /// Arrow Btn w/ expanding background
                   Stack(
                     children: [
+                      /// Expanding rounded rect that grows in height as user swipes up
                       Positioned.fill(
-                        child: _SwipeableButtonBg(swipeController: swipeController),
+                        child: _ExpandingButtonBg(swipeController: swipeController),
                       ),
+
+                      /// Arrow Btn that fades in and out
                       _AnimatedArrowButton(onTap: _showDetailsPage),
                     ],
                   ),
@@ -139,141 +124,38 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
     );
   }
 
-  Column _buildTitleAndPageIndicator(List<WonderData> wonders, WonderData currentWonder) {
-    final textShadows = [Shadow(color: Colors.black.withOpacity(.6), offset: Offset(2, 2), blurRadius: 2)];
-    return Column(children: [
-      /// Page indicator
-      DiagonalPageIndicator(current: _wonderIndex + 1, total: wonders.length),
-      Gap(context.insets.sm),
-
-      /// Title
-      Hero(
-        tag: '${currentWonder.type}-title',
-        child: Text(
-          currentWonder.titleWithBreaks.toUpperCase(),
-          style: context.textStyles.h1.copyWith(height: 1),
-          textAlign: TextAlign.center,
-        ),
-      ),
-      Gap(context.insets.sm),
-
-      /// Region
-      Text(
-        currentWonder.regionTitle.toUpperCase(),
-        style:
-            context.textStyles.h3.copyWith(height: 1, fontWeight: FontWeight.w400, fontSize: 16, shadows: textShadows),
-        textAlign: TextAlign.center,
-      )
-    ]);
-  }
-}
-
-/// Holds various handlers for GestureDetector and tracks a vertical swipe gesture.
-/// It translates the amount of swipe to a normalized [swipeUpAmt] value of 0-1, when 1 is reached it
-/// dispatches a [onSwipeComplete] callback.
-///
-/// If a swipe is released early, an animation is run, resetting it back to 0.
-class WondersHomeScreen extends StatefulWidget with GetItStatefulWidgetMixin {
-  WondersHomeScreen({Key? key}) : super(key: key);
-
-  @override
-  State<WondersHomeScreen> createState() => _WondersHomeScreenState();
-}
-
-class _SwipeController {
-  _SwipeController(this.ticker, this.onSwipeComplete);
-  final TickerProvider ticker;
-  final swipeUpAmt = ValueNotifier<double>(0);
-  final isPointerDown = ValueNotifier<bool>(false);
-  late final swipeReleaseAnim = AnimationController(vsync: ticker)..addListener(handleSwipeReleaseAnimTick);
-  final double _pullToViewDetailsThreshold = 100;
-  final VoidCallback onSwipeComplete;
-
-  /// When the _swipeReleaseAnim plays, sync its value to _swipeUpAmt
-  void handleSwipeReleaseAnimTick() => swipeUpAmt.value = swipeReleaseAnim.value;
-  void handleTapDown() => isPointerDown.value = true;
-  void handleTapCancelled() => isPointerDown.value = false;
-
-  void handleVerticalSwipeCancelled() {
-    swipeReleaseAnim.duration = swipeUpAmt.value.seconds * .5;
-    swipeReleaseAnim.reverse(from: swipeUpAmt.value);
-    isPointerDown.value = false;
+  List<ValueListenableBuilder<double>> _buildFgChildren() {
+    return wonders.map((e) {
+      return ValueListenableBuilder(
+          valueListenable: swipeController.swipeAmt,
+          builder: (_, value, child) {
+            final config = WonderIllustrationConfig.fg(
+              isShowing: isSelected(e.type),
+              zoom: 1.3 + .4 * swipeController.swipeAmt.value,
+            );
+            return WonderIllustration(e.type, config: config);
+          });
+    }).toList();
   }
 
-  void handleVerticalSwipeUpdate(DragUpdateDetails details) {
-    if (swipeReleaseAnim.isAnimating) swipeReleaseAnim.stop();
-    if (details.delta.dy > 0) {
-      swipeUpAmt.value = 0;
-    } else {
-      isPointerDown.value = true;
-      double value = (swipeUpAmt.value - details.delta.dy / _pullToViewDetailsThreshold).clamp(0, 1);
-      if (value != swipeUpAmt.value) {
-        swipeUpAmt.value = value;
-        if (swipeUpAmt.value == 1) {
-          onSwipeComplete();
-        }
-      }
-    }
-    //print(_swipeUpAmt.value);
+  List<WonderIllustration> _buildBgChildren() {
+    return wonders.map((e) {
+      final config = WonderIllustrationConfig.bg(isShowing: isSelected(e.type));
+      return WonderIllustration(e.type, config: config);
+    }).toList();
   }
-}
 
-/// A rounded container that scales outside of it's parent bounds. Lives underneath the arrow button
-/// and is tied into the [swipeUpAmt] value, increasing in size and opacity as the value approaches 1.
-class _SwipeableButtonBg extends StatelessWidget {
-  const _SwipeableButtonBg({Key? key, required this.swipeController}) : super(key: key);
-
-  final _SwipeController swipeController;
-  @override
-  Widget build(BuildContext context) {
-    return ValueListenableBuilder<double>(
-      valueListenable: swipeController.swipeUpAmt,
-      builder: (_, amount, child) {
-        double heightFactor = .5 + .5 * (1 + swipeController.swipeUpAmt.value * 4);
-        return FractionallySizedBox(
-          alignment: Alignment.bottomCenter,
-          heightFactor: heightFactor,
-          child: Opacity(opacity: amount * .5, child: child),
-        );
-      },
-      child: VtGradient(
-        [context.colors.white.withOpacity(0), context.colors.white.withOpacity(1)],
-        const [.3, 1],
-        borderRadius: BorderRadius.circular(99),
-      ),
-    );
-  }
-}
-
-/// A simple gradient with adjustable opacity,
-class _SwipeableGradient extends StatelessWidget {
-  const _SwipeableGradient(this.fgColor, {Key? key, required this.swipeController}) : super(key: key);
-  final Color fgColor;
-  final _SwipeController swipeController;
-  @override
-  Widget build(BuildContext context) {
-    return ValueListenableBuilder<double>(
-      valueListenable: swipeController.swipeUpAmt,
-      builder: (_, swipeAmt, __) => ValueListenableBuilder<bool>(
-        valueListenable: swipeController.isPointerDown,
-        builder: (_, isPointerDown, __) {
-          return IgnorePointer(
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    fgColor.withOpacity(0),
-                    fgColor.withOpacity(fgColor.opacity * .75 + (isPointerDown ? .05 : 0) + swipeAmt * .20),
-                  ],
-                  stops: const [0, 1],
-                ),
-              ),
-            ),
-          );
-        },
-      ),
-    );
+  List<ValueListenableBuilder<double>> _buildMgChildren() {
+    return wonders.map((e) {
+      return ValueListenableBuilder(
+          valueListenable: swipeController.swipeAmt,
+          builder: (_, value, child) {
+            final config = WonderIllustrationConfig.mg(
+              isShowing: isSelected(e.type),
+              zoom: 1.3 + .05 * swipeController.swipeAmt.value,
+            );
+            return WonderIllustration(e.type, config: config);
+          });
+    }).toList();
   }
 }

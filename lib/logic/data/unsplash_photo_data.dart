@@ -29,18 +29,16 @@ class UnsplashPhotoData {
         size = 200;
         break;
       case UnsplashPhotoSize.med:
-        size = 400;
-        break;
-      case UnsplashPhotoSize.large:
         size = 600;
         break;
+      case UnsplashPhotoSize.large:
+        size = 800;
+        break;
       case UnsplashPhotoSize.xl:
-        size = 1000;
+        size = 1200;
         break;
     }
-    if (PlatformInfo.dpi > 2) {
-      size *= 2;
-    }
+    size = (size * PlatformInfo.dpi.clamp(1, 2)).round();
 
     return '$url?q=85&fm=jpg&w=$size&fit=max';
   }
