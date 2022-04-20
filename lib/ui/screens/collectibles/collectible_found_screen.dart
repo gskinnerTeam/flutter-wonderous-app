@@ -7,7 +7,6 @@ import 'package:wonders/ui/common/particles/particle_field.dart';
 import 'package:wonders/ui/screens/collectibles/widgets/animated_ribbon.dart';
 
 // todo: maybe: title text size (2 line max): https://pub.dev/packages/auto_size_text
-// todo: should this whole thing be wrapped in a RepaintBoundary?
 
 class CollectibleFoundScreen extends StatelessWidget {
   // CollectibleItem passes in a (theoretically) pre-loaded imageProvider.
@@ -26,12 +25,14 @@ class CollectibleFoundScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FXBuilder(
-      duration: totalT.ms,
-      builder: (ctx, ratio, _) => Stack(children: [
-        ..._buildIntro(context, ratio),
-        ..._buildDetail(context, ratio),
-      ]),
+    return RepaintBoundary( // todo: does this have an impact? Does Flutter already wrap full screen dialogs in one?
+      child: FXBuilder(
+        duration: totalT.ms,
+        builder: (ctx, ratio, _) => Stack(children: [
+          ..._buildIntro(context, ratio),
+          ..._buildDetail(context, ratio),
+        ]),
+      ),
     );
   }
 
