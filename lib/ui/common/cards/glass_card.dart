@@ -4,9 +4,10 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/cards/opening_card.dart';
 
 class GlassCard extends StatelessWidget {
-  const GlassCard({Key? key, this.child, this.padding}) : super(key: key);
+  const GlassCard({Key? key, this.child, this.padding, this.color}) : super(key: key);
   final Widget? child;
   final EdgeInsets? padding;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class GlassCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(6),
       child: Stack(
         children: [
-          Positioned.fill(child: Container(color: Colors.grey.shade600.withOpacity(.3))),
+          Positioned.fill(child: Container(color: color ?? Colors.grey.shade600.withOpacity(.3))),
           BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: Padding(
