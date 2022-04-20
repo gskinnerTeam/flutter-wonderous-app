@@ -83,23 +83,32 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
           duration: context.times.fast,
           curve: Curves.easeOut,
           padding: _isPanelOpen ? EdgeInsets.zero : EdgeInsets.symmetric(vertical: context.insets.lg),
-          child: OpeningGlassCard(
-            isOpen: _isPanelOpen,
-            closedBuilder: (_) => Padding(
-              padding: EdgeInsets.all(padding),
-              child: _ClosedTimeRange(this, title),
-            ),
-            openBuilder: (_) => Container(
+          child: Container(
+            decoration: BoxDecoration(
               color: context.colors.white.withOpacity(0.75),
-              child: Padding(
+              borderRadius: BorderRadius.all(Radius.circular(context.corners.md)),
+              boxShadow: [
+                BoxShadow(color: context.colors.black.withOpacity(0.25), offset: Offset(0, 4), blurRadius: 4)
+              ],
+            ),
+            child: OpeningGlassCard(
+              isOpen: _isPanelOpen,
+              closedBuilder: (_) => Padding(
                 padding: EdgeInsets.all(padding),
-                child: SizedBox(
-                  width: constraints.maxWidth - padding * 2,
-                  child: _OpenedTimeRange(
-                    this,
-                    _handleYearRangeUpdate,
-                    _handleYearRangeChange,
-                    () => _handleCustomToggle(active: title == 'Custom'),
+                child: _ClosedTimeRange(this, title),
+              ),
+              openBuilder: (_) => Container(
+                color: context.colors.white.withOpacity(0.75),
+                child: Padding(
+                  padding: EdgeInsets.all(padding),
+                  child: SizedBox(
+                    width: constraints.maxWidth - padding * 2,
+                    child: _OpenedTimeRange(
+                      this,
+                      _handleYearRangeUpdate,
+                      _handleYearRangeChange,
+                      () => _handleCustomToggle(active: title == 'Custom'),
+                    ),
                   ),
                 ),
               ),
@@ -179,14 +188,14 @@ class _OpenedTimeRange extends StatelessWidget {
                     blendModes: const [BlendMode.dstOut],
                     opacity: 0.8,
                     child: Container(
-                      width: 100,
+                      width: 150,
                       height: 50,
                       decoration: BoxDecoration(
                           color: context.colors.white, borderRadius: BorderRadius.all(Radius.circular(50))),
                     ),
                   ),
                   LabelledToggle(
-                      width: 100,
+                      width: 150,
                       height: 50,
                       optionOff: 'Left side',
                       optionOn: 'Right side',

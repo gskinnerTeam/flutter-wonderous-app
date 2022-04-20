@@ -31,12 +31,15 @@ class LabelledToggle extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            AnimatedContainer(
-                transformAlignment: isOn ? Alignment.centerRight : Alignment.centerLeft,
-                width: width / 2,
-                duration: context.times.fast,
-                decoration: BoxDecoration(
-                    color: context.colors.greyStrong, borderRadius: BorderRadius.all(Radius.circular(height)))),
+            Padding(
+              padding: EdgeInsets.all(context.insets.xxs),
+              child: AnimatedContainer(
+                  transformAlignment: isOn ? Alignment.centerRight : Alignment.centerLeft,
+                  width: width / 2,
+                  duration: context.times.fast,
+                  decoration: BoxDecoration(
+                      color: context.colors.greyStrong, borderRadius: BorderRadius.all(Radius.circular(height)))),
+            ),
             CenterLeft(
               child: Text(
                 optionOff,
