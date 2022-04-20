@@ -1,8 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/collectibles_logic.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
+import 'package:wonders/ui/screens/collectibles/widgets/collection_progress_bar.dart';
+import 'package:wonders/ui/screens/collectibles/widgets/collection_tile.dart';
 
 class CollectionScreen extends StatelessWidget with GetItMixin {
   CollectionScreen({String? fromId, Key? key}) : super(key: key) {
@@ -38,7 +39,7 @@ class CollectionScreen extends StatelessWidget with GetItMixin {
           right: 0,
           bottom: 0,
           child: _buildFooter(context, discovered + explored, total),
-        )
+        ),
       ]),
     );
   }
@@ -57,7 +58,7 @@ class CollectionScreen extends StatelessWidget with GetItMixin {
       Flexible(
         fit: FlexFit.tight,
         child: Text(
-          'COLLECTION',
+          'Collection'.toUpperCase(),
           textAlign: TextAlign.center,
           style: context.textStyles.h3.copyWith(color: context.colors.offWhite),
         ),
@@ -67,7 +68,7 @@ class CollectionScreen extends StatelessWidget with GetItMixin {
   }
 
   Widget _buildNewItemsRow(BuildContext context, int count) {
-    if (count == 0) return Container(color: context.colors.black, height: 1);
+    if (count == 0) return SizedBox.shrink();
     return Container(
       color: context.colors.black,
       padding: EdgeInsets.symmetric(vertical: context.insets.xs),
@@ -120,107 +121,56 @@ class CollectionScreen extends StatelessWidget with GetItMixin {
     List<Widget> children = [];
     for (int i = 0; i < list.length; i++) {
       if (i > 0) children.add(Gap(context.insets.md));
-      int state = states[list[i].id] ?? CollectibleState.lost;
-      children.add(_buildCollectible(context, list[i], height, state));
+      CollectibleData collectible = list[i];
+      int state = states[collectible.id] ?? CollectibleState.lost;
+      children.add(Flexible(
+        child: CollectionTile(
+          collectible: collectible,
+          state: state,
+          onPressed: (o) => _showDetails(context, o),
+          heroTag: collectible == fromCollectible ? 'collectible_image_${collectible.id}' : null,
+        ),
+      ));
     }
-
-    return Row(children: children);
-  }
-
-  Widget _buildCollectible(BuildContext context, CollectibleData collectible, double height, int state) {
-    // todo: use this if you need visuals for the video quickly:
-    /*
-    state = rnd.getBool(0.67) ? 2 : 0;
-    if (collectible.id == '701645') state = 1;
-    */
-    Widget content = state == CollectibleState.lost
-        ? _buildHiddenCollectible(context, collectible)
-        : _buildFoundCollectible(context, collectible, state);
-
-    return Flexible(child: SizedBox(height: height, child: content));
-  }
-
-  Widget _buildHiddenCollectible(BuildContext context, CollectibleData collectible) {
-    final Color fadedGrey = context.colors.greyMedium.withOpacity(0.33);
-    return Container(
-      decoration: BoxDecoration(
-        color: context.colors.black,
-        border: Border.all(color: fadedGrey),
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [context.colors.greyStrong, context.colors.black],
-          stops: const [0, 1],
-        ),
-      ),
-      child: Center(
-        child: FractionallySizedBox(
-          widthFactor: 0.6,
-          heightFactor: 0.6,
-          child: Image(
-            image: collectible.icon,
-            color: fadedGrey,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildFoundCollectible(BuildContext context, CollectibleData collectible, int state) {
-    final bool isNew = state == CollectibleState.discovered;
-    Widget content = Container(
-      decoration: BoxDecoration(
-        color: context.colors.black,
-        border: isNew ? Border.all(color: context.colors.accent1, width: 3) : null,
-        boxShadow:
-            !isNew ? null : [BoxShadow(color: context.colors.accent1.withOpacity(0.6), blurRadius: context.insets.sm)],
-      ),
-      child: CachedNetworkImage(
-        alignment: Alignment.center,
-        imageUrl: collectible.imageUrl,
-        fit: BoxFit.cover,
-      ),
-    );
-    if (collectible == fromCollectible) content = Hero(tag: 'collectible_image_${collectible.id}', child: content);
-    return GestureDetector(
-      onTap: () => _showDetails(context, collectible),
-      child: content,
-    );
-  }
-
-  void _showDetails(BuildContext context, CollectibleData collectible) {
-    context.push(ScreenPaths.artifact(collectible.artifactId));
-    Future.delayed(300.ms).then((_) => collectiblesLogic.updateState(collectible.id, CollectibleState.explored));
+    return SizedBox(height: height, child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: children));
   }
 
   Widget _buildFooter(BuildContext context, int count, int total) {
-    return IgnorePointer(
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: context.insets.md, vertical: context.insets.sm),
-        decoration: BoxDecoration(
+    // This is broken into two, so that the gradient isn't clickable:
+    return Column(children: [
+      IgnorePointer(
+        child: Container(
+          height: context.insets.xl,
+          decoration: BoxDecoration(
             gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            context.colors.greyStrong.withOpacity(0),
-            context.colors.greyStrong,
-          ],
-          stops: const [0, 0.5],
-        )),
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                context.colors.greyStrong.withOpacity(0),
+                context.colors.greyStrong,
+              ],
+              stops: const [0, 1],
+            ),
+          ),
+        ),
+      ),
+      Container(
+        padding: EdgeInsets.symmetric(horizontal: context.insets.md, vertical: context.insets.sm),
+        color: context.colors.greyStrong,
         child: SafeArea(
+          top: false,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Gap(context.insets.xl),
               _buildProgressRow(context, count, total),
               Gap(context.insets.sm),
-              _buildProgressBar(context, count, total),
+              CollectionProgressBar(count, total),
               Gap(context.insets.sm),
             ],
           ),
         ),
-      ),
-    );
+      )
+    ]);
   }
 
   Widget _buildProgressRow(BuildContext context, int count, int total) {
@@ -237,20 +187,8 @@ class CollectionScreen extends StatelessWidget with GetItMixin {
     ]);
   }
 
-  Widget _buildProgressBar(BuildContext context, int count, int total) {
-    return Container(
-      height: context.insets.xs,
-      decoration: BoxDecoration(
-        color: context.colors.white.withOpacity(0.25),
-        borderRadius: BorderRadius.circular(1000),
-      ),
-      child: Container(
-        decoration: BoxDecoration(
-          color: context.colors.accent1,
-          borderRadius: BorderRadius.circular(1000),
-        ),
-      ).fx().fade(duration: 1500.ms, curve: Curves.easeOutExpo).build((_, m, child) =>
-          FractionallySizedBox(alignment: Alignment.centerLeft, widthFactor: m * count / total, child: child)),
-    );
+  void _showDetails(BuildContext context, CollectibleData collectible) {
+    context.push(ScreenPaths.artifact(collectible.artifactId));
+    Future.delayed(300.ms).then((_) => collectiblesLogic.updateState(collectible.id, CollectibleState.explored));
   }
 }

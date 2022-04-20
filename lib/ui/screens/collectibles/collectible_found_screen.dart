@@ -25,13 +25,14 @@ class CollectibleFoundScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // todo: should this whole thing be wrapped in a RepaintBoundary?
-    return FXBuilder(
-      duration: totalT.ms,
-      builder: (ctx, ratio, _) => Stack(children: [
-        ..._buildIntro(context, ratio),
-        ..._buildDetail(context, ratio),
-      ]),
+    return RepaintBoundary( // todo: does this have an impact? Does Flutter already wrap full screen dialogs in one?
+      child: FXBuilder(
+        duration: totalT.ms,
+        builder: (ctx, ratio, _) => Stack(children: [
+          ..._buildIntro(context, ratio),
+          ..._buildDetail(context, ratio),
+        ]),
+      ),
     );
   }
 
@@ -66,7 +67,7 @@ class CollectibleFoundScreen extends StatelessWidget {
       SafeArea(
         child: Column(children: [
           Spacer(flex: 5),
-          Flexible(flex: 18, child: Center(child: _buildImage(context, detailRatio))),
+          Flexible(flex: 18, child: _buildImage(context, detailRatio)),
           Spacer(flex: 2),
           _buildRibbon(context, detailRatio),
           Spacer(flex: 1),
@@ -173,23 +174,25 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   Widget _buildImage(BuildContext context, double ratio) {
-    return Hero(
-      tag: 'collectible_image_${collectible.id}',
-      child: Container(
-        padding: EdgeInsets.all(context.insets.xxs),
-        margin: EdgeInsets.symmetric(horizontal: context.insets.xl),
-        decoration: BoxDecoration(color: context.colors.offWhite, boxShadow: [
-          BoxShadow(
-            color: context.colors.accent1.withOpacity(ratio * 0.75),
-            blurRadius: context.insets.xl * 2,
-          ),
-          BoxShadow(
-            color: context.colors.black.withOpacity(ratio * 0.75),
-            offset: Offset(0, context.insets.xxs),
-            blurRadius: context.insets.sm,
-          ),
-        ]),
-        child: CachedNetworkImage(imageUrl: collectible.imageUrl),
+    return Center(
+      child: Hero(
+        tag: 'collectible_image_${collectible.id}',
+        child: Container(
+          padding: EdgeInsets.all(context.insets.xxs),
+          margin: EdgeInsets.symmetric(horizontal: context.insets.xl),
+          decoration: BoxDecoration(color: context.colors.offWhite, boxShadow: [
+            BoxShadow(
+              color: context.colors.accent1.withOpacity(ratio * 0.75),
+              blurRadius: context.insets.xl * 2,
+            ),
+            BoxShadow(
+              color: context.colors.black.withOpacity(ratio * 0.75),
+              offset: Offset(0, context.insets.xxs),
+              blurRadius: context.insets.sm,
+            ),
+          ]),
+          child: CachedNetworkImage(imageUrl: collectible.imageUrl),
+        ),
       ),
     ).fx().scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo).fade();
   }
@@ -227,11 +230,13 @@ class CollectibleFoundScreen extends StatelessWidget {
     final double pad = context.insets.lg;
     return Container(
       padding: EdgeInsets.only(left: pad, right: pad, bottom: pad),
-      child: AppTextBtn('view in my collection',
-          isSecondary: true,
-          expand: true,
-          padding: EdgeInsets.all(context.insets.sm),
-          onPressed: () => context.push(ScreenPaths.collection(collectible.id))),
+      child: AppTextBtn(
+        'view in my collection',
+        isSecondary: true,
+        expand: true,
+        padding: EdgeInsets.all(context.insets.sm),
+        onPressed: () => context.push(ScreenPaths.collection(collectible.id)),
+      ),
     ).fx().fade(delay: 1200.ms, duration: 900.ms, curve: Curves.easeOut).move(begin: Offset(0, context.insets.xs));
   }
 
