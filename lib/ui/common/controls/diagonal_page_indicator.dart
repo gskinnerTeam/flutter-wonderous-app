@@ -8,7 +8,7 @@ class DiagonalPageIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textShadows = [Shadow(color: Colors.black.withOpacity(.6), offset: Offset(2, 2), blurRadius: 2)];
+    final textShadows = [Shadow(color: Colors.black.withOpacity(.5), offset: Offset(0, 4), blurRadius: 6)];
     final textStyle = context.textStyles.titleFont.copyWith(fontSize: _fontSize, height: 1);
     const size = _fontSize * 1.5;
     return Padding(
@@ -31,7 +31,7 @@ class DiagonalPageIndicator extends StatelessWidget {
             child: SizedBox(
                 width: size,
                 height: size,
-                child: Text('0$total', style: textStyle.copyWith(color: Color(0xffcbcbcb), shadows: textShadows))),
+                child: Opacity(opacity: .5, child: Text('0$total', style: textStyle.copyWith(shadows: textShadows)))),
           ),
         ),
         Positioned.fill(

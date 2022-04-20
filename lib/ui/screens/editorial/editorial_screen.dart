@@ -14,7 +14,7 @@ import 'package:wonders/ui/common/placeholder_image.dart';
 import 'package:wonders/ui/common/scaling_list_item.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/utils/context_utils.dart';
-import 'package:wonders/ui/screens/home/animated_clouds.dart';
+import 'package:wonders/ui/wonder_illustrations/common/animated_clouds.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 import 'package:wonders/ui/wonder_illustrations/wonder_illustration.dart';
 
