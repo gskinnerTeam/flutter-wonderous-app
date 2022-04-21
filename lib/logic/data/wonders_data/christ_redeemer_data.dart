@@ -41,4 +41,5 @@ Corcovado hill lies just west of the city center but is wholly within the city l
 ''',
   highlightArtifacts: const [],
   hiddenArtifacts: const [],
+  events: const {},
 );

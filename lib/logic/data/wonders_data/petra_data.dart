@@ -43,4 +43,5 @@ The Nabataeans were nomadic Arabs who invested in Petra's proximity to the incen
 ''',
   highlightArtifacts: const [],
   hiddenArtifacts: const [],
+  events: const {},
 );

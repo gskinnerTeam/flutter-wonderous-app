@@ -51,4 +51,12 @@ There are four visible, natural sinkholes, called cenotes, that could have provi
     '310555',
     '286467',
   ],
+  events: const {
+    600: 'Chichen Itza rises to regional prominence toward the end of the Early Classic period',
+    832: 'The earliest hieroglyphic date discovered at Chichen Itza',
+    998: 'Last known date recorded in the Osario temple',
+    1100: 'Chichen Itza declines as a regional center',
+    1527: 'Invaded by Spanish Conquistador Francisco de Montejo',
+    1535: 'All Spanish are driven from the Yucatán Peninsula'
+  },
 );
