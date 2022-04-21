@@ -51,9 +51,11 @@ class LabelledToggle extends StatelessWidget {
               // Switch BG
               Padding(
                 padding: EdgeInsets.all(context.insets.xxs),
-                child: Align(
+                child: AnimatedAlign(
+                  duration: context.times.fast,
                   alignment: isOn ? Alignment.centerRight : Alignment.centerLeft,
-                  child: Container(
+                  child: AnimatedContainer(
+                    duration: context.times.fast,
                     width: isOn
                         ? onWidth + context.insets.sm * 3 + context.insets.xs
                         : offWidth + context.insets.sm * 3 + context.insets.xs,
