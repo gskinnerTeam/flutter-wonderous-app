@@ -1,17 +1,15 @@
-import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/data/unsplash_photo_data.dart';
-import 'package:wonders/ui/common/unsplash_photo.dart';
+part of '../image_gallery.dart';
 
-class FullScreenUnsplashPhotoViewer extends StatefulWidget {
-  const FullScreenUnsplashPhotoViewer(this.initialId, this.idList, {Key? key}) : super(key: key);
+class _FullScreenUnsplashPhotoViewer extends StatefulWidget {
+  const _FullScreenUnsplashPhotoViewer(this.initialId, this.idList, {Key? key}) : super(key: key);
   final String initialId;
   final List<String> idList;
 
   @override
-  State<FullScreenUnsplashPhotoViewer> createState() => _FullScreenUnsplashPhotoViewerState();
+  State<_FullScreenUnsplashPhotoViewer> createState() => _FullScreenUnsplashPhotoViewerState();
 }
 
-class _FullScreenUnsplashPhotoViewerState extends State<FullScreenUnsplashPhotoViewer> {
+class _FullScreenUnsplashPhotoViewerState extends State<_FullScreenUnsplashPhotoViewer> {
   late String _id = widget.initialId;
 
   void incrementId(int amt) {

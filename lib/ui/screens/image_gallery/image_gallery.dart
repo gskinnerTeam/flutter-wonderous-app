@@ -5,8 +5,9 @@ import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
 import 'package:wonders/ui/common/unsplash_photo.dart';
 import 'package:wonders/ui/common/utils/page_routes.dart';
-import 'package:wonders/ui/screens/image_gallery/animated_cutout_overlay.dart';
-import 'package:wonders/ui/screens/image_gallery/fullscreen_unsplash_photo_viewer.dart';
+
+part 'widgets/_animated_cutout_overlay.dart';
+part 'widgets/_fullscreen_unsplash_photo_viewer.dart';
 
 class ImageGallery extends StatefulWidget {
   const ImageGallery({Key? key, this.imageSize, required this.collectionId}) : super(key: key);
@@ -100,7 +101,7 @@ class _ImageGalleryState extends State<ImageGallery> {
     if (_index == index) {
       String? newId = await Navigator.push(
         context,
-        PageRoutes.fadeScale(FullScreenUnsplashPhotoViewer(_photoIds.value[index], _photoIds.value)),
+        PageRoutes.fadeScale(_FullScreenUnsplashPhotoViewer(_photoIds.value[index], _photoIds.value)),
       );
       if (newId != null) {
         _setIndex(_photoIds.value.indexOf(newId));
@@ -133,7 +134,7 @@ class _ImageGalleryState extends State<ImageGallery> {
           return Stack(
             children: [
               // A overlay with a transparent middle sits on top of everything, animating itself each time index changes
-              AnimatedCutoutOverlay(
+              _AnimatedCutoutOverlay(
                 animationKey: ValueKey(_index),
                 cutoutSize: imgSize,
                 swipeDir: _lastSwipeDir,

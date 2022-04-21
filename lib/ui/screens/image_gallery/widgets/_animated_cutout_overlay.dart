@@ -1,10 +1,10 @@
-import 'package:wonders/common_libs.dart';
+part of '../image_gallery.dart';
 
 /// An overlay with a animated cutout in the middle.
-/// When index changes, the box animates its size for a nice effect.
+/// When animationKey changes, the box animates its size, shrinking then returning to its original size.
 /// Uses[_CutoutClipper] to create the cutout.
-class AnimatedCutoutOverlay extends StatelessWidget {
-  const AnimatedCutoutOverlay(
+class _AnimatedCutoutOverlay extends StatelessWidget {
+  const _AnimatedCutoutOverlay(
       {Key? key,
       required this.child,
       required this.cutoutSize,

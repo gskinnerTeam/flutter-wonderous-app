@@ -50,6 +50,7 @@ class _ViewportState extends State<_Viewport> {
   late final ScrollController _controller = ScrollController();
 
   double _zoom = .5;
+  double _pinchReferenceZoom = 0;
 
   ScrollController get controller => widget.controller ?? ScrollController();
 
@@ -78,8 +79,13 @@ class _ViewportState extends State<_Viewport> {
   //   }
   // }
 
+  void _handlePinchZoomStart(ScaleStartDetails _) {
+    _pinchReferenceZoom = _zoom;
+  }
+
   void _handlePinchZoom(ScaleUpdateDetails details) {
-    _changeScale(details.scale);
+    _changeScale(details.scale * _pinchReferenceZoom);
+    //debugPrint('scale = ${details.scale}');
   }
 
   @override
@@ -88,37 +94,18 @@ class _ViewportState extends State<_Viewport> {
       double size = lerpDouble(widget.minSize, widget.maxSize, _zoom) ?? widget.maxSize;
       return GestureDetector(
         onScaleUpdate: _handlePinchZoom,
+        onScaleStart: _handlePinchZoomStart,
+        behavior: HitTestBehavior.opaque,
         child: Stack(
           children: [
             SingleChildScrollView(
               controller: controller,
-              physics: ClampingScrollPhysics(),
               child: Placeholder(fallbackHeight: size),
             ),
-
-            /// SB: Add a debug slider, so we can play with zoom easier on desktop
-            _buildDebugScroller(context),
           ],
         ),
       );
     });
-  }
-
-  Center _buildDebugScroller(BuildContext context) {
-    void handleZoomSliderChanged(double value) => setState(() {
-          _zoom = value;
-          // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
-          controller.notifyListeners();
-        });
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.all(context.insets.lg * 2),
-        child: SizedBox(
-          height: max(60, context.heightPct(.1)),
-          child: Slider(onChanged: handleZoomSliderChanged, value: _zoom, min: 0, max: 1),
-        ),
-      ),
-    );
   }
 }
 
@@ -131,6 +118,7 @@ class _Scrubber extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void _handleScrubberPan(DragUpdateDetails details) {
+      if (!scroller.hasClients) return;
       // TODO: This drag multiplier is close... but not exactly right.
       double dragMultiplier = (scroller.position.maxScrollExtent + timelineSize) / context.widthPx;
       double newPos = scroller.position.pixels + details.delta.dx * dragMultiplier;

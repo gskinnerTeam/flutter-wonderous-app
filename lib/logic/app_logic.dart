@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:system_info/system_info.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/ui/modals/app_modals.dart';
@@ -22,10 +24,17 @@ class AppLogic {
   /// Initialize the app and all main actors.
   /// Loads settings, sets up services etc.
   Future<void> bootstrap() async {
+    // Default error handler
     FlutterError.onError = _handleFlutterError;
+
+    // Settings load
     await settingsLogic.load();
     settingsLogic.scheduleSave(); // test save calls on each boot
+
+    // Collectibles
     await collectiblesLogic.load();
+
+    // Load initial view and flag bootStrap as complete
     isBootstrapComplete = true;
     appRouter.go(ScreenPaths.home);
   }
