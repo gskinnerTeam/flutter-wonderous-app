@@ -40,4 +40,5 @@ Apart from defense, other purposes of the Great Wall have included border contro
 ''',
   highlightArtifacts: const [],
   hiddenArtifacts: const [],
+  events: const {},
 );
