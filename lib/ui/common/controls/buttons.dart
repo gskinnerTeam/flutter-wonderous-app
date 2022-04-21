@@ -17,7 +17,7 @@ class AppBtn extends StatefulWidget {
       this.semanticLabel = ''})
       : super(key: key);
   final List<Widget> children;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final EdgeInsets? padding;
   final bool expand;
   final bool isSecondary;
@@ -76,7 +76,7 @@ class BasicBtn extends StatelessWidget {
   const BasicBtn({Key? key, required this.child, required this.label, required this.onPressed}) : super(key: key);
   final Widget child;
   final String label;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
