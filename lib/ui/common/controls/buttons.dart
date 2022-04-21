@@ -6,21 +6,23 @@ Widget _buildIcon(BuildContext context, IconData icon, {required bool isSecondar
 
 /// The core button that drives all other buttons.
 class AppBtn extends StatefulWidget {
-  const AppBtn({
-    Key? key,
-    required this.children,
-    required this.onPressed,
-    this.padding,
-    this.expand = false,
-    this.isSecondary = false,
-    this.bgColor,
-  }) : super(key: key);
+  const AppBtn(
+      {Key? key,
+      required this.children,
+      required this.onPressed,
+      this.padding,
+      this.expand = false,
+      this.isSecondary = false,
+      this.bgColor,
+      this.semanticLabel = ''})
+      : super(key: key);
   final List<Widget> children;
   final VoidCallback onPressed;
   final EdgeInsets? padding;
   final bool expand;
   final bool isSecondary;
   final Color? bgColor;
+  final String semanticLabel;
 
   @override
   State<AppBtn> createState() => _AppBtnState();
@@ -32,28 +34,35 @@ class _AppBtnState extends State<AppBtn> {
   Widget build(BuildContext context) {
     Color defaultColor = widget.isSecondary ? context.colors.white : context.colors.greyStrong;
     Color textColor = widget.isSecondary ? context.colors.black : context.colors.white;
-    return GestureDetector(
-      onTapDown: (_) => setState(() => _tapDown = true),
-      onTapUp: (_) => setState(() => _tapDown = false),
-      onTapCancel: () => setState(() => _tapDown = false),
-      child: Opacity(
-        opacity: _tapDown ? .7 : 1,
-        child: TextButton(
-            onPressed: widget.onPressed,
-            style: TextButton.styleFrom(
-              splashFactory: NoSplash.splashFactory,
-              backgroundColor: widget.bgColor ?? defaultColor,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(context.corners.md)),
-              padding: widget.padding ?? EdgeInsets.all(context.insets.sm),
-            ),
-            child: DefaultTextStyle(
-              style: DefaultTextStyle.of(context).style.copyWith(color: textColor),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: widget.expand ? MainAxisSize.max : MainAxisSize.min,
-                children: widget.children,
+    return Semantics(
+      label: widget.semanticLabel,
+      button: true,
+      container: true,
+      child: GestureDetector(
+        onTapDown: (_) => setState(() => _tapDown = true),
+        onTapUp: (_) => setState(() => _tapDown = false),
+        onTapCancel: () => setState(() => _tapDown = false),
+        child: Opacity(
+          opacity: _tapDown ? .7 : 1,
+          child: TextButton(
+              onPressed: widget.onPressed,
+              style: TextButton.styleFrom(
+                minimumSize: Size.zero,
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                splashFactory: NoSplash.splashFactory,
+                backgroundColor: widget.bgColor ?? defaultColor,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(context.corners.md)),
+                padding: widget.padding ?? EdgeInsets.all(context.insets.sm),
               ),
-            )),
+              child: DefaultTextStyle(
+                style: DefaultTextStyle.of(context).style.copyWith(color: textColor),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: widget.expand ? MainAxisSize.max : MainAxisSize.min,
+                  children: widget.children,
+                ),
+              )),
+        ),
       ),
     );
   }
@@ -62,6 +71,24 @@ class _AppBtnState extends State<AppBtn> {
 /// //////////////////////////////////////////////////
 /// AppButton Derivatives
 /// //////////////////////////////////////////////////
+
+class BasicBtn extends StatelessWidget {
+  const BasicBtn({Key? key, required this.child, required this.label, required this.onPressed}) : super(key: key);
+  final Widget child;
+  final String label;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBtn(
+      children: [child],
+      onPressed: onPressed,
+      semanticLabel: label,
+      padding: EdgeInsets.zero,
+      bgColor: Colors.transparent,
+    );
+  }
+}
 
 class AppIconBtn extends StatelessWidget {
   const AppIconBtn(
