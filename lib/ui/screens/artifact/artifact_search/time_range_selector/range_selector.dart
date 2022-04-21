@@ -19,60 +19,60 @@ class RangeSelector extends StatefulWidget {
 }
 
 class _RangeSelectorState extends State<RangeSelector> {
-  double startVal = 0.0;
-  double endVal = 1.0;
+  final _buttonWidth = 20.0;
 
-  double startAnchor = 0.0;
-  double endAnchor = 1.0;
+  double _startVal = 0.0;
+  double _endVal = 1.0;
 
-  double buttonWidth = 20;
+  double _startAnchor = 0.0;
+  double _endAnchor = 1.0;
 
   @override
   void initState() {
     super.initState();
 
-    startVal = widget.start;
-    endVal = widget.end;
+    _startVal = widget.start;
+    _endVal = widget.end;
   }
 
   void _handleStartDrag(DragStartDetails d) {
-    startAnchor = startVal;
-    endAnchor = endVal;
+    _startAnchor = _startVal;
+    _endAnchor = _endVal;
   }
 
   void _handleLeftDrag(DragUpdateDetails d, double width) {
-    double newStart = max(0, min(endVal, startAnchor + (d.localPosition.dx) / width));
-    startVal = newStart;
+    double newStart = max(0, min(_endVal, _startAnchor + (d.localPosition.dx) / width));
+    _startVal = newStart;
     setState(() {});
-    widget.onUpdated(startVal, endVal);
+    widget.onUpdated(_startVal, _endVal);
   }
 
   void _handleMidDrag(DragUpdateDetails d, double width) {
-    double dist = (endAnchor - startAnchor);
-    double newStart = max(0, min(1 - dist, startAnchor + (d.localPosition.dx / width) - dist / 2));
-    double newEnd = startVal + dist;
-    startVal = newStart;
-    endVal = newEnd;
+    double dist = (_endAnchor - _startAnchor);
+    double newStart = max(0, min(1 - dist, _startAnchor + (d.localPosition.dx / width) - dist / 2));
+    double newEnd = _startVal + dist;
+    _startVal = newStart;
+    _endVal = newEnd;
     setState(() {});
-    widget.onUpdated(startVal, endVal);
+    widget.onUpdated(_startVal, _endVal);
   }
 
   void _handleRightDrag(DragUpdateDetails d, double width) {
-    double newEnd = min(1, max(startVal, endAnchor + (d.localPosition.dx) / width));
-    endVal = newEnd;
+    double newEnd = min(1, max(_startVal, _endAnchor + (d.localPosition.dx) / width));
+    _endVal = newEnd;
     setState(() {});
-    widget.onUpdated(startVal, endVal);
+    widget.onUpdated(_startVal, _endVal);
   }
 
   void _handleEndDrag(DragEndDetails d, double width) {
-    widget.onChanged(startVal, endVal);
+    widget.onChanged(_startVal, _endVal);
   }
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (_, constraints) {
       return Container(
-        width: constraints.maxWidth - buttonWidth * 2,
+        width: constraints.maxWidth - _buttonWidth * 2,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(context.corners.md)),
         ),
@@ -81,7 +81,7 @@ class _RangeSelectorState extends State<RangeSelector> {
           mainAxisSize: MainAxisSize.max,
           children: [
             // Left-side Padding
-            Gap((constraints.maxWidth - buttonWidth * 2) * startVal),
+            Gap((constraints.maxWidth - _buttonWidth * 2) * _startVal),
 
             // Left-side button
             GestureDetector(
@@ -91,7 +91,7 @@ class _RangeSelectorState extends State<RangeSelector> {
               onHorizontalDragEnd: (d) => _handleEndDrag(d, constraints.maxWidth),
               child: Container(
                 alignment: Alignment.centerLeft,
-                width: buttonWidth,
+                width: _buttonWidth,
                 decoration: BoxDecoration(
                   color: context.colors.greyStrong,
                   border: Border.all(color: context.colors.greyStrong, width: 1),
@@ -100,7 +100,7 @@ class _RangeSelectorState extends State<RangeSelector> {
                     bottomLeft: Radius.circular(context.corners.md),
                   ),
                 ),
-                child: Center(child: Icon(Icons.chevron_left, color: context.colors.offWhite, size: buttonWidth - 2)),
+                child: Center(child: Icon(Icons.chevron_left, color: context.colors.offWhite, size: _buttonWidth - 2)),
               ),
             ),
 
@@ -128,7 +128,7 @@ class _RangeSelectorState extends State<RangeSelector> {
               onHorizontalDragEnd: (d) => _handleEndDrag(d, constraints.maxWidth),
               child: Container(
                 alignment: Alignment.centerRight,
-                width: buttonWidth,
+                width: _buttonWidth,
                 decoration: BoxDecoration(
                   color: context.colors.greyStrong,
                   border: Border.all(color: context.colors.greyStrong, width: 1),
@@ -137,12 +137,12 @@ class _RangeSelectorState extends State<RangeSelector> {
                     bottomRight: Radius.circular(context.corners.md),
                   ),
                 ),
-                child: Center(child: Icon(Icons.chevron_right, color: context.colors.offWhite, size: buttonWidth - 2)),
+                child: Center(child: Icon(Icons.chevron_right, color: context.colors.offWhite, size: _buttonWidth - 2)),
               ),
             ),
 
             // Right-side Padding
-            Gap((constraints.maxWidth - buttonWidth * 2) * (1 - endVal)),
+            Gap((constraints.maxWidth - _buttonWidth * 2) * (1 - _endVal)),
           ],
         ),
       );
