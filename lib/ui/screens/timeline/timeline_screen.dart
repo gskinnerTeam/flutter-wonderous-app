@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:wonders/common_libs.dart';
@@ -23,7 +24,9 @@ class _TimelineScreenState extends State<TimelineScreen> {
   double _zoomOverride = 1;
 
   void _handleScroll() {
-    //print(_scroller.position.pixels);
+    /// Viewport = 430
+    /// max = 3000
+    // print(_scroller.position.pixels);
   }
 
   @override
@@ -40,8 +43,8 @@ class _TimelineScreenState extends State<TimelineScreen> {
             Expanded(
               child: Stack(
                 children: [
-                  /// Event popups that appear when you scroll
-                  _EventsOverlay(),
+                  /// Center divider to indicates the current yr
+                  Center(child: _DashedDividerWithYear()),
 
                   /// The timeline content itself
                   _ScalingViewport(

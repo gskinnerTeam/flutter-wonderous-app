@@ -1,17 +1,12 @@
 part of '../timeline_screen.dart';
 
-class _EventsOverlay extends StatelessWidget {
+class _DashedDividerWithYear extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      child: SizedBox(
+  Widget build(BuildContext context) => SizedBox(
         height: 2,
         width: double.infinity,
         child: CustomPaint(painter: _DashedLinePainter()),
-      ),
-    );
-  }
+      );
 }
 
 class _DashedLinePainter extends CustomPainter {
