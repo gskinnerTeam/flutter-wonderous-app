@@ -85,7 +85,7 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   Widget _buildGradient(BuildContext context, double ratioIn, double ratioOut) {
-    const double opacity = 0.85;
+    const double opacity = 0.9;
     final Color color = context.colors.black;
 
     // final state is a solid fill, so optimize for that:
