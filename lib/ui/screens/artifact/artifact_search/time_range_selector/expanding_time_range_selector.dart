@@ -3,6 +3,7 @@ import 'package:wonders/ui/common/blend_mask.dart';
 import 'package:wonders/ui/common/cards/glass_card.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/labelled_toggle.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/range_selector.dart';
+import 'dart:math' as math;
 
 // Expandable timerange selector component that further refines Artifact Search based on date range.
 class ExpandingTimeRangeSelector extends StatefulWidget {
@@ -27,38 +28,56 @@ class ExpandingTimeRangeSelector extends StatefulWidget {
 class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector> {
   bool _isPanelOpen = false;
 
+  // Determines either if in custom year select mode or locked on artifact start/end year mode.
   bool isWonderTimeframe = false;
-  int startYrSelected = 0;
-  int endYrSelected = 0;
+
+  // The start and end year range on the selector.
+  int startYrRange = 0;
+  int endYrRange = 0;
+
+  // The currently set start and end year.
+  int startYrCustom = 0;
+  int endYrCustom = 0;
 
   @override
   void initState() {
     super.initState();
-    startYrSelected = widget.startYr;
-    endYrSelected = widget.endYr;
+    final wonderData = wondersLogic.getData(widget.wonderType);
+
+    // Artifact dates can span beyond the range selector. Move the range if needed.
+    startYrRange = math.min(wonderData.artifactStartYr, widget.startYr);
+    endYrRange = math.max(wonderData.artifactEndYr, widget.endYr);
+
+    // Initialize the custom start/end year with the max/min.
+    startYrCustom = startYrRange;
+    endYrCustom = endYrRange;
 
     _handleCustomToggle(isWonderTime: true);
   }
 
   void _handleYearRangeUpdate(double start, double end) {
-    int yearDif = widget.endYr - widget.startYr;
-    startYrSelected = widget.startYr + (yearDif.toDouble() * start).toInt();
-    endYrSelected = widget.startYr + (yearDif.toDouble() * end).toInt();
+    // User currently sliding the range slider. Update the custom year and ensure it's in custom mode, but don't dispatch change call yet.
+    int yearDif = endYrRange - startYrRange;
+    startYrCustom = startYrRange + (yearDif.toDouble() * start).toInt();
+    endYrCustom = startYrRange + (yearDif.toDouble() * end).toInt();
     setState(() {
       isWonderTimeframe = false;
     });
   }
 
   void _handleYearRangeChange(double start, double end) {
+    // User changed year and released the slider. Dispatch event to search.
     _handleYearRangeUpdate(start, end);
-    widget.onChanged(startYrSelected, endYrSelected);
+    widget.onChanged(startYrCustom, endYrCustom);
   }
 
   void _handleCustomToggle({bool isWonderTime = true}) {
-    final wonderData = wondersLogic.getData(widget.wonderType);
+    // User toggled the custom switch. Switch between modes and trigger change in search.
     if (isWonderTime) {
-      startYrSelected = wonderData.startYr;
-      endYrSelected = wonderData.endYr;
+      final wonderData = wondersLogic.getData(widget.wonderType);
+      widget.onChanged(wonderData.artifactStartYr, wonderData.artifactEndYr);
+    } else {
+      widget.onChanged(startYrCustom, endYrCustom);
     }
 
     setState(() {
@@ -128,8 +147,12 @@ class _OpenedTimeRange extends StatelessWidget {
     final wonderData = wondersLogic.getData(state.widget.wonderType);
     List<Widget> _timelineGrid =
         List.generate(5, (_) => Container(width: 1, color: context.colors.body.withOpacity(0.15)));
-    double startRange = (state.startYrSelected - state.widget.startYr) / (state.widget.endYr - state.widget.startYr);
-    double endRange = (state.endYrSelected - state.widget.startYr) / (state.widget.endYr - state.widget.startYr);
+
+    int startYr = state.isWonderTimeframe ? wonderData.artifactStartYr : state.startYrCustom;
+    int endYr = state.isWonderTimeframe ? wonderData.artifactEndYr : state.endYrCustom;
+
+    double startSliderRange = (startYr - wonderData.artifactStartYr) / (state.endYrRange - state.startYrRange);
+    double endSliderRange = (endYr - wonderData.artifactStartYr) / (state.endYrRange - state.startYrRange);
 
     return Padding(
       padding: EdgeInsets.symmetric(vertical: context.insets.xs),
@@ -137,6 +160,8 @@ class _OpenedTimeRange extends StatelessWidget {
         children: [
           Text('Choose a timeframe', style: context.textStyles.title3.copyWith(color: context.colors.greyStrong)),
           Gap(context.insets.sm),
+
+          // Timeframe slider
           Stack(children: [
             // Background cutout mask for the tile slider
             BlendMask(
@@ -149,14 +174,14 @@ class _OpenedTimeRange extends StatelessWidget {
                     color: context.colors.white, borderRadius: BorderRadius.all(Radius.circular(context.corners.md))),
               ),
             ),
-            // Time slider
+            // Time slider background
             Container(
               width: double.infinity,
               height: 86,
               decoration: BoxDecoration(
                   color: context.colors.offWhite, borderRadius: BorderRadius.all(Radius.circular(context.corners.md))),
             ),
-            // Grid container
+            // Grid lines container
             Container(
               width: double.infinity,
               height: 86,
@@ -166,13 +191,14 @@ class _OpenedTimeRange extends StatelessWidget {
                 children: _timelineGrid,
               ),
             ),
-            // Time slider
+            // Time slider itself
             SizedBox(
               width: double.infinity,
               height: 86,
               child: RangeSelector(
-                start: startRange,
-                end: endRange,
+                key: ValueKey(Random().getDouble(-double.maxFinite, double.maxFinite)),
+                start: startSliderRange,
+                end: endSliderRange,
                 onUpdated: onRangeUpdate,
                 onChanged: onRangeChange,
               ),
@@ -182,19 +208,15 @@ class _OpenedTimeRange extends StatelessWidget {
           // Year range text.
           Gap(context.insets.lg),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Text(state.startYrSelected.toString(),
-                style: context.textStyles.body3.copyWith(color: context.colors.greyStrong)),
+            Text(startYr.abs().toString(), style: context.textStyles.body3.copyWith(color: context.colors.greyStrong)),
             Gap(context.insets.xxs),
-            Text(state.startYrSelected >= 0 ? 'AD' : 'BC',
-                style: context.textStyles.tab.copyWith(color: context.colors.caption)),
+            Text(startYr >= 0 ? 'AD' : 'BC', style: context.textStyles.tab.copyWith(color: context.colors.caption)),
             Gap(context.insets.xs),
             Text('-', style: context.textStyles.tab.copyWith(color: context.colors.caption)),
             Gap(context.insets.xs),
-            Text(state.endYrSelected.toString(),
-                style: context.textStyles.body3.copyWith(color: context.colors.greyStrong)),
+            Text(endYr.abs().toString(), style: context.textStyles.body3.copyWith(color: context.colors.greyStrong)),
             Gap(context.insets.xxs),
-            Text(state.endYrSelected >= 0 ? 'AD' : 'BC',
-                style: context.textStyles.tab.copyWith(color: context.colors.caption)),
+            Text(endYr >= 0 ? 'AD' : 'BC', style: context.textStyles.tab.copyWith(color: context.colors.caption)),
           ]),
 
           Gap(context.insets.md),
@@ -214,7 +236,7 @@ class _ClosedTimeRange extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final wonderData = wondersLogic.getData(state.widget.wonderType);
-    String text = 'Timeframe:: ${state.startYrSelected} - ${state.endYrSelected} AD';
+    String text = 'Timeframe:: ${state.startYrCustom} - ${state.endYrCustom} AD';
     if (state.isWonderTimeframe) {
       text = 'Timeframe: ' + wonderData.title;
     }

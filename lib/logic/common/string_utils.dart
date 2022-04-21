@@ -27,7 +27,7 @@ class StringUtils {
     return textPainter.size;
   }
 
-  static double measureLongest(List<String> items, TextStyle style, [maxItems = null]) {
+  static double measureLongest(List<String> items, TextStyle style, [maxItems]) {
     double l = 0;
     if (maxItems != null && maxItems < items.length) {
       items.length = maxItems;
@@ -41,6 +41,6 @@ class StringUtils {
 
   /// Gracefully handles null values, and skips the suffix when null
   static String safeGet(String value, [String? suffix]) {
-    return value + (!StringUtils.isEmpty(value) ? suffix ?? "" : "");
+    return value + (!StringUtils.isEmpty(value) ? suffix ?? '' : '');
   }
 }

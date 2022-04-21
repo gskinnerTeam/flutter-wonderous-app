@@ -43,9 +43,15 @@ class LabelledToggle extends StatelessWidget {
                 child: Container(
                   width: constraints.maxWidth,
                   height: constraints.maxHeight,
-                  decoration:
-                      BoxDecoration(color: context.colors.white, borderRadius: BorderRadius.all(Radius.circular(50))),
+                  decoration: BoxDecoration(
+                      color: context.colors.white, borderRadius: BorderRadius.all(Radius.circular(maxHeight))),
                 ),
+              ),
+              Container(
+                width: double.infinity,
+                height: constraints.maxHeight,
+                decoration: BoxDecoration(
+                    color: context.colors.offWhite, borderRadius: BorderRadius.all(Radius.circular(maxHeight))),
               ),
 
               // Switch BG
@@ -53,9 +59,11 @@ class LabelledToggle extends StatelessWidget {
                 padding: EdgeInsets.all(context.insets.xxs),
                 child: AnimatedAlign(
                   duration: context.times.fast,
+                  curve: Curves.easeInOut,
                   alignment: isOn ? Alignment.centerRight : Alignment.centerLeft,
                   child: AnimatedContainer(
                     duration: context.times.fast,
+                    curve: Curves.easeInOut,
                     width: isOn
                         ? onWidth + context.insets.sm * 3 + context.insets.xs
                         : offWidth + context.insets.sm * 3 + context.insets.xs,
