@@ -8,7 +8,7 @@ class GreatWallIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String assetPath = WonderType.greatWall.assetPath;
+    //String assetPath = WonderType.greatWall.assetPath;
     return WonderIllustrationBuilder(
       config: config,
       bgBuilder: (_, __) => [FlutterLogo()],

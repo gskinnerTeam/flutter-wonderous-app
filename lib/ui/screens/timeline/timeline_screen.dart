@@ -23,7 +23,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
   double _zoomOverride = 1;
 
   void _handleScroll() {
-    print(_scroller.position.pixels);
+    //print(_scroller.position.pixels);
   }
 
   @override

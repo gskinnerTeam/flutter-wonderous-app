@@ -8,7 +8,7 @@ class ColosseumIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String assetPath = WonderType.colosseum.assetPath;
+    //String assetPath = WonderType.colosseum.assetPath;
     return WonderIllustrationBuilder(
       config: config,
       bgBuilder: (_, __) => [FlutterLogo()],
