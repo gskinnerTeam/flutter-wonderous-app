@@ -196,7 +196,7 @@ class _OpenedTimeRange extends StatelessWidget {
               width: double.infinity,
               height: 86,
               child: RangeSelector(
-                key: ValueKey(Random().getDouble(-double.maxFinite, double.maxFinite)),
+                key: ValueKey('RangeSelectorIsWonderTime' + state.isWonderTimeframe.toString()),
                 start: startSliderRange,
                 end: endSliderRange,
                 onUpdated: onRangeUpdate,
