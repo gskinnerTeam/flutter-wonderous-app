@@ -44,4 +44,5 @@ On the site of the lake, in the middle of the palace grounds, Emperor Vespasian 
     '256570',
     '286136',
   ],
+  events: const {},
 );

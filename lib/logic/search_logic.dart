@@ -2,14 +2,21 @@ import 'dart:math' as math;
 
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
+import 'package:wonders/logic/data/artifact_search_options.dart';
 import 'package:wonders/logic/data/department_data.dart';
 import 'package:wonders/logic/search_service.dart';
 
 class SearchLogic {
   final departmentList = ValueNotifier(<DepartmentData>[]);
-  final Map<String, ArtifactData> _artifactHash = {};
-
   SearchService get service => GetIt.I.get<SearchService>();
+
+  final Map<String, ArtifactData> _artifactHash = {};
+  String _lastSearchQuery = '';
+  List<String> _lastSearchResults = [];
+
+  /// Return a full count of the prior search results
+  /// Note: this is separate from the hash, which collects across multiple searches.
+  int get lastSearchResultCount => _lastSearchResults.length;
 
   /// Return list of departments with titles and IDs.
   Future<void> getAllDepartments() async {
@@ -68,22 +75,22 @@ class SearchLogic {
   /// - endYear: maximum year range. Set to negative value for B.C. Must include startYear.
 
   //TODO AG: Should make some sort of SearchConfig class here, so we don't need to pass a ton of params
-  Future<List<ArtifactData?>> searchForArtifacts(String query,
-      {int count = 1000,
-      int offset = 0,
-      bool? isTitle,
-      bool? isKeyword,
-      String? location,
-      int? startYear,
-      int? endYear}) async {
-    final result = await service.searchForArtifacts(query,
-        isTitle: isTitle, isKeywordTag: isKeyword, geoLocation: location, dateBegin: startYear, dateEnd: endYear);
+  Future<List<ArtifactData?>> searchForArtifacts(ArtifactSearchOptions options) async {
+    List<String> ids;
 
-    final ids = result.content ?? [];
+    if (options.query == _lastSearchQuery) {
+      ids = _lastSearchResults;
+    } else {
+      final result = await service.searchForArtifacts(options);
+
+      _lastSearchQuery = options.query;
+      ids = result.content ?? [];
+      _lastSearchResults = ids;
+    }
 
     var futures = <Future<ArtifactData?>>[];
-    int i = offset;
-    int l = math.min(ids.length, offset + count);
+    int i = options.offset;
+    int l = math.min(ids.length, options.offset + options.count);
 
     for (i; i < l; i++) {
       futures.add(getArtifactByID(ids[i]));

@@ -7,13 +7,27 @@ part of 'wonder_data.dart';
 // **************************************************************************
 
 abstract class _$WonderDataCWProxy {
+  WonderData artifactCulture(String artifactCulture);
+
+  WonderData artifactEndYr(int artifactEndYr);
+
+  WonderData artifactGeolocation(String artifactGeolocation);
+
+  WonderData artifactStartYr(int artifactStartYr);
+
   WonderData constructionInfo1(String constructionInfo1);
 
   WonderData constructionInfo2(String constructionInfo2);
 
   WonderData endYr(int endYr);
 
+  WonderData events(Map<int, String> events);
+
   WonderData facts(List<String> facts);
+
+  WonderData hiddenArtifacts(List<String> hiddenArtifacts);
+
+  WonderData highlightArtifacts(List<String> highlightArtifacts);
 
   WonderData historyInfo1(String historyInfo1);
 
@@ -52,10 +66,17 @@ abstract class _$WonderDataCWProxy {
   /// WonderData(...).copyWith(id: 12, name: "My name")
   /// ````
   WonderData call({
+    String? artifactCulture,
+    int? artifactEndYr,
+    String? artifactGeolocation,
+    int? artifactStartYr,
     String? constructionInfo1,
     String? constructionInfo2,
     int? endYr,
+    Map<int, String>? events,
     List<String>? facts,
+    List<String>? hiddenArtifacts,
+    List<String>? highlightArtifacts,
     String? historyInfo1,
     String? historyInfo2,
     List<String>? imageIds,
@@ -81,6 +102,22 @@ class _$WonderDataCWProxyImpl implements _$WonderDataCWProxy {
   const _$WonderDataCWProxyImpl(this._value);
 
   @override
+  WonderData artifactCulture(String artifactCulture) =>
+      this(artifactCulture: artifactCulture);
+
+  @override
+  WonderData artifactEndYr(int artifactEndYr) =>
+      this(artifactEndYr: artifactEndYr);
+
+  @override
+  WonderData artifactGeolocation(String artifactGeolocation) =>
+      this(artifactGeolocation: artifactGeolocation);
+
+  @override
+  WonderData artifactStartYr(int artifactStartYr) =>
+      this(artifactStartYr: artifactStartYr);
+
+  @override
   WonderData constructionInfo1(String constructionInfo1) =>
       this(constructionInfo1: constructionInfo1);
 
@@ -92,7 +129,18 @@ class _$WonderDataCWProxyImpl implements _$WonderDataCWProxy {
   WonderData endYr(int endYr) => this(endYr: endYr);
 
   @override
+  WonderData events(Map<int, String> events) => this(events: events);
+
+  @override
   WonderData facts(List<String> facts) => this(facts: facts);
+
+  @override
+  WonderData hiddenArtifacts(List<String> hiddenArtifacts) =>
+      this(hiddenArtifacts: hiddenArtifacts);
+
+  @override
+  WonderData highlightArtifacts(List<String> highlightArtifacts) =>
+      this(highlightArtifacts: highlightArtifacts);
 
   @override
   WonderData historyInfo1(String historyInfo1) =>
@@ -152,10 +200,17 @@ class _$WonderDataCWProxyImpl implements _$WonderDataCWProxy {
   /// WonderData(...).copyWith(id: 12, name: "My name")
   /// ````
   WonderData call({
+    Object? artifactCulture = const $CopyWithPlaceholder(),
+    Object? artifactEndYr = const $CopyWithPlaceholder(),
+    Object? artifactGeolocation = const $CopyWithPlaceholder(),
+    Object? artifactStartYr = const $CopyWithPlaceholder(),
     Object? constructionInfo1 = const $CopyWithPlaceholder(),
     Object? constructionInfo2 = const $CopyWithPlaceholder(),
     Object? endYr = const $CopyWithPlaceholder(),
+    Object? events = const $CopyWithPlaceholder(),
     Object? facts = const $CopyWithPlaceholder(),
+    Object? hiddenArtifacts = const $CopyWithPlaceholder(),
+    Object? highlightArtifacts = const $CopyWithPlaceholder(),
     Object? historyInfo1 = const $CopyWithPlaceholder(),
     Object? historyInfo2 = const $CopyWithPlaceholder(),
     Object? imageIds = const $CopyWithPlaceholder(),
@@ -173,6 +228,27 @@ class _$WonderDataCWProxyImpl implements _$WonderDataCWProxy {
     Object? videoId = const $CopyWithPlaceholder(),
   }) {
     return WonderData(
+      artifactCulture: artifactCulture == const $CopyWithPlaceholder() ||
+              artifactCulture == null
+          ? _value.artifactCulture
+          // ignore: cast_nullable_to_non_nullable
+          : artifactCulture as String,
+      artifactEndYr:
+          artifactEndYr == const $CopyWithPlaceholder() || artifactEndYr == null
+              ? _value.artifactEndYr
+              // ignore: cast_nullable_to_non_nullable
+              : artifactEndYr as int,
+      artifactGeolocation:
+          artifactGeolocation == const $CopyWithPlaceholder() ||
+                  artifactGeolocation == null
+              ? _value.artifactGeolocation
+              // ignore: cast_nullable_to_non_nullable
+              : artifactGeolocation as String,
+      artifactStartYr: artifactStartYr == const $CopyWithPlaceholder() ||
+              artifactStartYr == null
+          ? _value.artifactStartYr
+          // ignore: cast_nullable_to_non_nullable
+          : artifactStartYr as int,
       constructionInfo1: constructionInfo1 == const $CopyWithPlaceholder() ||
               constructionInfo1 == null
           ? _value.constructionInfo1
@@ -187,10 +263,24 @@ class _$WonderDataCWProxyImpl implements _$WonderDataCWProxy {
           ? _value.endYr
           // ignore: cast_nullable_to_non_nullable
           : endYr as int,
+      events: events == const $CopyWithPlaceholder() || events == null
+          ? _value.events
+          // ignore: cast_nullable_to_non_nullable
+          : events as Map<int, String>,
       facts: facts == const $CopyWithPlaceholder() || facts == null
           ? _value.facts
           // ignore: cast_nullable_to_non_nullable
           : facts as List<String>,
+      hiddenArtifacts: hiddenArtifacts == const $CopyWithPlaceholder() ||
+              hiddenArtifacts == null
+          ? _value.hiddenArtifacts
+          // ignore: cast_nullable_to_non_nullable
+          : hiddenArtifacts as List<String>,
+      highlightArtifacts: highlightArtifacts == const $CopyWithPlaceholder() ||
+              highlightArtifacts == null
+          ? _value.highlightArtifacts
+          // ignore: cast_nullable_to_non_nullable
+          : highlightArtifacts as List<String>,
       historyInfo1:
           historyInfo1 == const $CopyWithPlaceholder() || historyInfo1 == null
               ? _value.historyInfo1
@@ -278,6 +368,10 @@ WonderData _$WonderDataFromJson(Map<String, dynamic> json) => WonderData(
       regionTitle: json['regionTitle'] as String,
       startYr: json['startYr'] as int? ?? 0,
       endYr: json['endYr'] as int? ?? 0,
+      artifactStartYr: json['artifactStartYr'] as int? ?? 0,
+      artifactEndYr: json['artifactEndYr'] as int? ?? 0,
+      artifactCulture: json['artifactCulture'] as String? ?? '',
+      artifactGeolocation: json['artifactGeolocation'] as String? ?? '',
       lat: (json['lat'] as num?)?.toDouble() ?? 0,
       lng: (json['lng'] as num?)?.toDouble() ?? 0,
       imageIds: (json['imageIds'] as List<dynamic>?)
@@ -296,6 +390,17 @@ WonderData _$WonderDataFromJson(Map<String, dynamic> json) => WonderData(
       constructionInfo2: json['constructionInfo2'] as String,
       locationInfo: json['locationInfo'] as String,
       videoId: json['videoId'] as String,
+      events: (json['events'] as Map<String, dynamic>).map(
+        (k, e) => MapEntry(int.parse(k), e as String),
+      ),
+      highlightArtifacts: (json['highlightArtifacts'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      hiddenArtifacts: (json['hiddenArtifacts'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$WonderDataToJson(WonderData instance) =>
@@ -312,16 +417,29 @@ Map<String, dynamic> _$WonderDataToJson(WonderData instance) =>
       'quote1': instance.quote1,
       'quote2': instance.quote2,
       'unsplashCollectionId': instance.unsplashCollectionId,
+      'videoId': instance.videoId,
       'imageIds': instance.imageIds,
       'facts': instance.facts,
       'startYr': instance.startYr,
       'endYr': instance.endYr,
+      'artifactStartYr': instance.artifactStartYr,
+      'artifactEndYr': instance.artifactEndYr,
+      'artifactCulture': instance.artifactCulture,
+      'artifactGeolocation': instance.artifactGeolocation,
       'lat': instance.lat,
       'lng': instance.lng,
-      'videoId': instance.videoId,
+      'highlightArtifacts': instance.highlightArtifacts,
+      'hiddenArtifacts': instance.hiddenArtifacts,
+      'events': instance.events.map((k, e) => MapEntry(k.toString(), e)),
     };
 
 const _$WonderTypeEnumMap = {
   WonderType.chichenItza: 'chichenItza',
+  WonderType.christRedeemer: 'christRedeemer',
+  WonderType.colosseum: 'colosseum',
+  WonderType.greatWall: 'greatWall',
+  WonderType.machuPicchu: 'machuPicchu',
+  WonderType.petra: 'petra',
+  WonderType.pyramidsGiza: 'pyramidsGiza',
   WonderType.tajMahal: 'tajMahal',
 };

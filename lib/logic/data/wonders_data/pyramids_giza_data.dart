@@ -40,4 +40,5 @@ To ensure that the pyramid remained symmetrical, the exterior casing stones all 
 ''',
   highlightArtifacts: const [],
   hiddenArtifacts: const [],
+  events: const {},
 );

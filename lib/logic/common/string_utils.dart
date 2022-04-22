@@ -43,4 +43,11 @@ class StringUtils {
   static String safeGet(String value, [String? suffix]) {
     return value + (!StringUtils.isEmpty(value) ? suffix ?? '' : '');
   }
+
+  static String formatYr(int yr) {
+    if (yr == 0) yr = 1;
+    return '$yr ${getYrSuffix(yr)}';
+  }
+
+  static String getYrSuffix(int yr) => yr < 0 ? 'BCE' : 'CE';
 }

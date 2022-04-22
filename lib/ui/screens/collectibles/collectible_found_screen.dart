@@ -1,10 +1,10 @@
-import 'dart:ui';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:wonders/ui/common/particles/particle_field.dart';
-import 'package:wonders/ui/screens/collectibles/widgets/animated_ribbon.dart';
+
+part 'widgets/_animated_ribbon.dart';
+part 'widgets/_celebration_particles.dart';
 
 // todo: maybe: title text size (2 line max): https://pub.dev/packages/auto_size_text
 
@@ -25,7 +25,8 @@ class CollectibleFoundScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepaintBoundary( // todo: does this have an impact? Does Flutter already wrap full screen dialogs in one?
+    return RepaintBoundary(
+      // todo: does this have an impact? Does Flutter already wrap full screen dialogs in one?
       child: FXBuilder(
         duration: totalT.ms,
         builder: (ctx, ratio, _) => Stack(children: [
@@ -58,11 +59,10 @@ class CollectibleFoundScreen extends StatelessWidget {
     final double detailRatio = _subRatio(ratio, introTotalT);
     if (detailRatio == 0) return [];
     return [
-      // background blur:
-      _buildBlur(context, detailRatio),
       // radial gradient to solid fill in first 300ms:
       _buildGradient(context, 1, _subRatio(ratio, introTotalT, 300)),
-      _buildParticleField(context, detailRatio),
+      // fade out and then remove particles completely at the end:
+      _CelebrationParticles(),
       // add the detail UI in a column to facilitate better responsiveness:
       SafeArea(
         child: Column(children: [
@@ -71,9 +71,10 @@ class CollectibleFoundScreen extends StatelessWidget {
           Spacer(flex: 2),
           _buildRibbon(context, detailRatio),
           Spacer(flex: 1),
-          _buildTitle(context, detailRatio),
+          _buildTitle(context, collectible.title, context.textStyles.h2, context.colors.offWhite, 450),
           Spacer(flex: 1),
-          _buildSubTitle(context, detailRatio),
+          _buildTitle(
+              context, collectible.subtitle.toUpperCase(), context.textStyles.title2, context.colors.accent1, 600),
           Spacer(flex: 3),
           _buildCollectionButton(context, detailRatio),
         ]),
@@ -83,70 +84,28 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   Widget _buildGradient(BuildContext context, double ratioIn, double ratioOut) {
-    const double opacity = 0.77;
-    final Color color = context.colors.black;
+    final double opacity = 0.9 * (Curves.easeOutExpo.transform(ratioIn) * 0.8 + ratioOut * 0.2);
+    final Color light = context.colors.offWhite;
+    final Color dark = context.colors.black;
 
     // final state is a solid fill, so optimize for that:
-    if (ratioOut == 1) return Container(color: color.withOpacity(opacity));
+    if (ratioOut == 1) return Container(color: dark.withOpacity(opacity));
 
     ratioIn = Curves.easeOutQuint.transform(ratioIn);
     return Container(
       decoration: BoxDecoration(
         gradient: RadialGradient(
           colors: [
-            color.withOpacity(opacity * ratioOut),
-            color.withOpacity(opacity * (ratioIn * 0.8 + ratioOut * 0.2)),
+            Color.lerp(light, dark, ratioOut)!.withOpacity(opacity),
+            dark.withOpacity(opacity),
           ],
           stops: [
             0.2,
-            0.3 + ratioIn * 0.5 + ratioOut * 0.2,
+            min(1, 0.25 + ratioIn * 0.5 + ratioOut * 0.5),
           ],
         ),
       ),
     );
-  }
-
-  Widget _buildParticleField(BuildContext context, double ratio) {
-    // remove after animation ends.
-    if (ratio >= 1) return Container();
-
-    final Color color = context.colors.accent1;
-    int particleCount = 800;
-    return Positioned.fill(
-      child: ParticleField(
-        spriteSheet: SpriteSheet(
-          image: AssetImage(ImagePaths.sparkle),
-          frameWidth: 21,
-          scale: 0.75,
-        ),
-        onTick: (controller, elapsed, size) {
-          List<Particle> particles = controller.particles;
-          // calculate base distance from center & velocity:
-          final double d = min(size.width, size.height) * 0.3;
-          final double v = d * 0.08;
-          // add new particles, reducing the number added each tick:
-          int addCount = particleCount ~/ 40;
-          particleCount -= addCount;
-          while (--addCount > 0) {
-            double angle = rnd.getRad();
-            particles.add(Particle(
-              // adding random variation makes it more visually interesting:
-              x: cos(angle) * d * rnd(0.8, 1),
-              y: sin(angle) * d * rnd(0.8, 1),
-              vx: cos(angle) * v * rnd(0.5, 1.5),
-              vy: sin(angle) * v * rnd(0.5, 1.5),
-              color: color.withOpacity(rnd(0.5, 1)),
-            ));
-          }
-          // update existing particles & remove old ones:
-          for (int i = particles.length - 1; i >= 0; i--) {
-            Particle o = particles[i];
-            o.update(frame: o.age ~/ 3);
-            if (o.age > 40) particles.removeAt(i);
-          }
-        },
-      ),
-    ).fx().fadeOut(duration: detailT.ms, curve: Curves.easeIn);
   }
 
   Widget _buildIcon(BuildContext context, double ratio) {
@@ -162,14 +121,6 @@ class CollectibleFoundScreen extends StatelessWidget {
           ).fx().scale(begin: 1, end: 2, curve: Curves.easeInExpo, duration: introTotalT.ms),
         ),
       ),
-    );
-  }
-
-  Widget _buildBlur(BuildContext context, double ratio) {
-    final double blur = ratio * 8;
-    return BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
-      child: Container(),
     );
   }
 
@@ -194,36 +145,25 @@ class CollectibleFoundScreen extends StatelessWidget {
           child: CachedNetworkImage(imageUrl: collectible.imageUrl),
         ),
       ),
-    ).fx().scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo).fade();
+    ).fx().scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo, alignment: Alignment(0, 0.7));
   }
 
   Widget _buildRibbon(BuildContext context, double ratio) {
-    return AnimatedRibbon('Artifact Discovered'.toUpperCase())
+    return _AnimatedRibbon('Artifact Discovered'.toUpperCase())
         .fx()
-        .scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo)
-        .fade();
+        .scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo, alignment: Alignment(0, -1));
   }
 
-  Widget _buildTitle(BuildContext context, double ratio) {
+  Widget _buildTitle(BuildContext context, String text, TextStyle style, Color color, double delay) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: context.insets.lg),
-      child: Text(
-        collectible.title,
-        textAlign: TextAlign.center,
-        style: context.textStyles.h2,
+      child: FXBuilder(
+        delay: delay.ms,
+        duration: 600.ms,
+        builder: (_, m, __) =>
+            Text(text, textAlign: TextAlign.center, style: style.copyWith(color: color.withOpacity(m))),
       ),
-    ).fx().fade(delay: 450.ms, duration: 600.ms);
-  }
-
-  Widget _buildSubTitle(BuildContext context, double ratio) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: context.insets.lg),
-      child: Text(
-        collectible.subtitle.toUpperCase(),
-        textAlign: TextAlign.center,
-        style: context.textStyles.title2.copyWith(color: context.colors.accent1),
-      ),
-    ).fx().fade(delay: 600.ms, duration: 600.ms);
+    );
   }
 
   Widget _buildCollectionButton(BuildContext context, double ratio) {
@@ -237,7 +177,7 @@ class CollectibleFoundScreen extends StatelessWidget {
         padding: EdgeInsets.all(context.insets.sm),
         onPressed: () => context.push(ScreenPaths.collection(collectible.id)),
       ),
-    ).fx().fade(delay: 1200.ms, duration: 900.ms, curve: Curves.easeOut).move(begin: Offset(0, context.insets.xs));
+    ).fx().show(delay: 1200.ms).move(begin: Offset(0, context.insets.md), duration: 900.ms, curve: Curves.easeOutExpo);
   }
 
   Widget _buildCloseButton(BuildContext context, double ratio) {

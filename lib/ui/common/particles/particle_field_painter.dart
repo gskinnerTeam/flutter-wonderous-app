@@ -31,6 +31,8 @@ class ParticleFieldPainter extends CustomPainter {
     double yOffset = size.height / 2 * (alignment.y + 1);
     double spriteScale = spriteSheet.scale;
 
+    double opacity = controller.opacity;
+
     for (int i = 0; i < l; i++) {
       Particle o = particles[i];
 
@@ -47,7 +49,7 @@ class ParticleFieldPainter extends CustomPainter {
       rects.add(spriteSheet.getFrame(o.frame));
 
       // Add a color entry, which is composited with the frame via the blend mode.
-      colors.add(o.color);
+      colors.add(o.color.withOpacity(o.color.opacity * opacity));
     }
 
     // Draw all of the particles based on the data entries.
@@ -63,5 +65,5 @@ class ParticleFieldPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_) => true;
+  bool shouldRepaint(oldDelegate) => true;
 }

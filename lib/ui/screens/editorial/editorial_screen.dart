@@ -18,14 +18,14 @@ import 'package:wonders/ui/wonder_illustrations/common/animated_clouds.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 import 'package:wonders/ui/wonder_illustrations/wonder_illustration.dart';
 
-part 'widgets/app_bar.dart';
-part 'widgets/circular_title_bar.dart';
-part 'widgets/collapsing_pull_quote_image.dart';
-part 'widgets/scrolling_content.dart';
-part 'widgets/section_divider.dart';
-part 'widgets/sliding_image_stack.dart';
-part 'widgets/title_text.dart';
-part 'widgets/top_illustration.dart';
+part 'widgets/_app_bar.dart';
+part 'widgets/_circular_title_bar.dart';
+part 'widgets/_collapsing_pull_quote_image.dart';
+part 'widgets/_scrolling_content.dart';
+part 'widgets/_section_divider.dart';
+part 'widgets/_sliding_image_stack.dart';
+part 'widgets/_title_text.dart';
+part 'widgets/_top_illustration.dart';
 
 class WonderEditorialScreen extends StatefulWidget {
   const WonderEditorialScreen(this.data, {Key? key, required this.onScroll}) : super(key: key);

@@ -8,7 +8,7 @@ class MachuPicchuIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String assetPath = WonderType.machuPicchu.assetPath;
+    //String assetPath = WonderType.machuPicchu.assetPath;
     return WonderIllustrationBuilder(
       config: config,
       bgBuilder: (_, __) => [FlutterLogo()],

@@ -1,9 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/data/collectible_data.dart';
+part of '../collection_screen.dart';
 
-class CollectionTile extends StatelessWidget {
-  const CollectionTile({
+class _CollectionTile extends StatelessWidget {
+  const _CollectionTile({
     Key? key,
     required this.collectible,
     required this.state,
@@ -18,9 +16,11 @@ class CollectionTile extends StatelessWidget {
     state = rnd.getBool(0.67) ? 2 : 0;
     if (collectible.id == '701645') state = 1;
     */
-    return state == CollectibleState.lost
-        ? _buildHidden(context, collectible)
-        : _buildFound(context, collectible, state);
+    return RepaintBoundary(
+      child: state == CollectibleState.lost
+          ? _buildHidden(context, collectible)
+          : _buildFound(context, collectible, state),
+    );
   }
 
   final CollectibleData collectible;
@@ -29,7 +29,7 @@ class CollectionTile extends StatelessWidget {
   final String? heroTag;
 
   Widget _buildHidden(BuildContext context, CollectibleData collectible) {
-    final Color fadedGrey = context.colors.greyMedium.withOpacity(0.33);
+    final Color fadedGrey = context.colors.greyMedium.withOpacity(0.25);
     return Container(
       decoration: BoxDecoration(
         color: context.colors.black,

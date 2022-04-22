@@ -27,6 +27,9 @@ class WondersLogic {
     tajMahalData,
   ];
 
+  final int startYear = -3000;
+  final int endYear = 2000;
+
   WonderData getData(WonderType value) {
     WonderData? result = all.firstWhereOrNull((w) => w.type == value);
     if (result == null) throw ('Could not find data for wonder type $value');

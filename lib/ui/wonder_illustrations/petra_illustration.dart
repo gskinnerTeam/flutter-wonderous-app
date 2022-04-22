@@ -8,7 +8,7 @@ class PetraIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String assetPath = WonderType.petra.assetPath;
+    //String assetPath = WonderType.petra.assetPath;
     return WonderIllustrationBuilder(
       config: config,
       bgBuilder: (_, __) => [FlutterLogo()],

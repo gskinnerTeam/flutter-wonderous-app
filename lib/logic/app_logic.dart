@@ -22,10 +22,17 @@ class AppLogic {
   /// Initialize the app and all main actors.
   /// Loads settings, sets up services etc.
   Future<void> bootstrap() async {
+    // Default error handler
     FlutterError.onError = _handleFlutterError;
+
+    // Settings load
     await settingsLogic.load();
     settingsLogic.scheduleSave(); // test save calls on each boot
+
+    // Collectibles
     await collectiblesLogic.load();
+
+    // Load initial view and flag bootStrap as complete
     isBootstrapComplete = true;
     appRouter.go(ScreenPaths.home);
   }

@@ -32,6 +32,7 @@ class WonderData extends Equatable {
     required this.constructionInfo2,
     required this.locationInfo,
     required this.videoId,
+    required this.events,
     this.highlightArtifacts = const [],
     this.hiddenArtifacts = const [],
   });
@@ -62,6 +63,7 @@ class WonderData extends Equatable {
   final double lng;
   final List<String> highlightArtifacts;
   final List<String> hiddenArtifacts;
+  final Map<int, String> events;
 
   String get titleWithBreaks {
     final words = title.split(' ');

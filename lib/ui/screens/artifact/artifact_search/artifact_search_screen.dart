@@ -1,5 +1,6 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
+import 'package:wonders/logic/data/artifact_search_options.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_header.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_results_grid.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_text_field.dart';
@@ -16,8 +17,13 @@ class ArtifactSearchScreen extends StatefulWidget with GetItStatefulWidgetMixin 
 }
 
 class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItStateMixin {
+  late ScrollController _gridScrollController;
+
+  final _resultCountPerSearch = 10;
+
   List<ArtifactData?> _searchResultsAll = [];
   String _currentQuery = '';
+  int _resultsCount = 0;
   bool _isLoading = false;
   bool _isEmpty = false;
   bool _isHighlights = true;
@@ -28,6 +34,9 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
   void initState() {
     super.initState();
     final data = wondersLogic.getData(widget.type);
+
+    _gridScrollController = ScrollController();
+    _gridScrollController.addListener(_handleScroll);
     _startYr = data.artifactStartYr;
     _endYr = data.artifactEndYr;
 
@@ -48,6 +57,8 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
 
     // Reset the view state; show that it's loading and prevent subsequent calls until complete.
     _currentQuery = query;
+    _searchResultsAll = [];
+
     setState(() {
       _isEmpty = false;
       _isLoading = true;
@@ -55,13 +66,38 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
     });
 
     // Get all search results, with a limit.
-    _searchResultsAll = await searchLogic.searchForArtifacts(query, count: 1000, startYear: _startYr, endYear: _endYr);
+    await _callArtifactSearch(query);
 
-    // Load complete. Show results.
+    // First load complete. Show results.
     setState(() {
+      _resultsCount = searchLogic.lastSearchResultCount;
       _isLoading = false;
       _isEmpty = _searchResultsAll.isEmpty;
     });
+  }
+
+  void _handleScroll() async {
+    if (_isLoading) return;
+    const loadThreshold = 500;
+    ScrollPosition pos = _gridScrollController.position;
+    final distanceFromEnd = (pos.maxScrollExtent - pos.pixels);
+    if (distanceFromEnd < loadThreshold) {
+      setState(() => _isLoading = true);
+      await _callArtifactSearch(_currentQuery);
+      setState(() => _isLoading = false);
+    }
+  }
+
+  Future<void> _callArtifactSearch(String query) async {
+    // Make a new search with the offset in place.
+    List<ArtifactData?> data = await searchLogic.searchForArtifacts(ArtifactSearchOptions(
+      query: query,
+      count: _resultCountPerSearch,
+      offset: _searchResultsAll.length,
+      startYear: _startYr,
+      endYear: _endYr,
+    ));
+    _searchResultsAll.addAll(data);
   }
 
   // Re-run the search query when user changes the timeline.
@@ -85,10 +121,10 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
     String resultsText = '';
     if (_isLoading) {
       resultsText = 'Loading, one sec...';
+    } else if (_searchResultsAll.isNotEmpty) {
+      resultsText = '$_resultsCount results found for: $_currentQuery';
     } else if (_isEmpty) {
       resultsText = 'Sorry, no results found';
-    } else if (_searchResultsAll.isNotEmpty) {
-      resultsText = '${_searchResultsAll.length} results found';
     }
 
     /// Collect children for the various layers
@@ -129,7 +165,10 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
 
                         // Artifacts grid
                         Expanded(
-                          child: ArtifactSearchResultsGrid(searchResults: _searchResultsAll, onPressed: onResultClick),
+                          child: ArtifactSearchResultsGrid(
+                              searchResults: _searchResultsAll,
+                              scrollController: _gridScrollController,
+                              onPressed: onResultClick),
                         ),
                       ],
                     ),
