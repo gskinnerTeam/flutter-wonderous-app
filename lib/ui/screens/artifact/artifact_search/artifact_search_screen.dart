@@ -1,5 +1,6 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
+import 'package:wonders/logic/data/artifact_search_options.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/expanding_time_range_selector.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_text_field.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_results_grid.dart';
@@ -77,13 +78,13 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
 
   Future<void> _callArtifactSearch(String query) async {
     // Make a new search with the offset in place.
-    List<ArtifactData?> data = await searchLogic.searchForArtifacts(
-      query,
+    List<ArtifactData?> data = await searchLogic.searchForArtifacts(ArtifactSearchOptions(
+      query: query,
       count: _resultCountPerSearch,
       offset: _searchResultsAll.length,
       startYear: _startYr,
       endYear: _endYr,
-    );
+    ));
     _searchResultsAll.addAll(data);
   }
 

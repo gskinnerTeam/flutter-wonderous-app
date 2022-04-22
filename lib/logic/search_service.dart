@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/logic/common/http_client.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
+import 'package:wonders/logic/data/artifact_search_options.dart';
 import 'package:wonders/logic/data/department_data.dart';
 
 class SearchService {
@@ -26,31 +27,22 @@ class SearchService {
     return ServiceResult(response, _parseArtifactData);
   }
 
-  Future<ServiceResult<List<String>?>> searchForArtifacts(String query,
-      {int count = 10,
-      int offset = 0,
-      bool? isHighlight,
-      bool? isTitle,
-      bool? isKeywordTag,
-      int? departmentId,
-      bool? isOnView,
-      String? geoLocation,
-      int? dateBegin,
-      int? dateEnd}) async {
+  Future<ServiceResult<List<String>?>> searchForArtifacts(ArtifactSearchOptions options) async {
     Map<String, dynamic> urlParams = {};
 
-    urlParams['q'] = query;
+    urlParams['q'] = options.query;
     urlParams['hasImages'] = true; // Must have images. That's a given.
 
-    if (isHighlight != null) urlParams['isHighlight'] = isHighlight;
-    if (isTitle != null) urlParams['title'] = isTitle;
-    if (isKeywordTag != null) urlParams['tags'] = isKeywordTag;
-    if (departmentId != null) urlParams['departmentId'] = departmentId;
-    if (geoLocation != null) urlParams['geoLocation'] = geoLocation;
+    // Note; URL params are specificly named; ArtifactSearchOptions are simply labelled this way for better clarity.
+    if (options.isHighlight != null) urlParams['isHighlight'] = options.isHighlight;
+    if (options.isTitle != null) urlParams['title'] = options.isTitle;
+    if (options.isKeyword != null) urlParams['tags'] = options.isKeyword;
+    if (options.departmentId != null) urlParams['departmentId'] = options.departmentId;
+    if (options.location != null) urlParams['geoLocation'] = options.location;
 
     // Years only as ints. Both dates must be used, if at all. Use negative numbers for B.C. and positive for A.D.
-    if (dateBegin != null) urlParams['dateBegin'] = dateBegin;
-    if (dateEnd != null) urlParams['dateEnd'] = dateEnd;
+    if (options.startYear != null) urlParams['dateBegin'] = options.startYear;
+    if (options.endYear != null) urlParams['dateEnd'] = options.endYear;
 
     HttpResponse response = await _request('public/collection/v1/search', method: MethodType.get, urlParams: urlParams);
     return ServiceResult(response, _parseObjectIds);
