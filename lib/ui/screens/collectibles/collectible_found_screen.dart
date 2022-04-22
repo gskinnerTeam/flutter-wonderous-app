@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
@@ -75,7 +73,8 @@ class CollectibleFoundScreen extends StatelessWidget {
           Spacer(flex: 1),
           _buildTitle(context, collectible.title, context.textStyles.h2, context.colors.offWhite, 450),
           Spacer(flex: 1),
-          _buildTitle(context, collectible.subtitle.toUpperCase(), context.textStyles.title2, context.colors.accent1, 600),
+          _buildTitle(
+              context, collectible.subtitle.toUpperCase(), context.textStyles.title2, context.colors.accent1, 600),
           Spacer(flex: 3),
           _buildCollectionButton(context, detailRatio),
         ]),
@@ -85,23 +84,24 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   Widget _buildGradient(BuildContext context, double ratioIn, double ratioOut) {
-    const double opacity = 0.9;
-    final Color color = context.colors.black;
+    final double opacity = 0.9 * (Curves.easeOutExpo.transform(ratioIn) * 0.8 + ratioOut * 0.2);
+    final Color light = context.colors.offWhite;
+    final Color dark = context.colors.black;
 
     // final state is a solid fill, so optimize for that:
-    if (ratioOut == 1) return Container(color: color.withOpacity(opacity));
+    if (ratioOut == 1) return Container(color: dark.withOpacity(opacity));
 
     ratioIn = Curves.easeOutQuint.transform(ratioIn);
     return Container(
       decoration: BoxDecoration(
         gradient: RadialGradient(
           colors: [
-            color.withOpacity(opacity * ratioOut),
-            color.withOpacity(opacity * (ratioIn * 0.8 + ratioOut * 0.2)),
+            Color.lerp(light, dark, ratioOut)!.withOpacity(opacity),
+            dark.withOpacity(opacity),
           ],
           stops: [
             0.2,
-            0.3 + ratioIn * 0.5 + ratioOut * 0.2,
+            min(1, 0.25 + ratioIn * 0.5 + ratioOut * 0.5),
           ],
         ),
       ),
@@ -145,13 +145,13 @@ class CollectibleFoundScreen extends StatelessWidget {
           child: CachedNetworkImage(imageUrl: collectible.imageUrl),
         ),
       ),
-    ).fx().scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo);
+    ).fx().scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo, alignment: Alignment(0, 0.7));
   }
 
   Widget _buildRibbon(BuildContext context, double ratio) {
     return _AnimatedRibbon('Artifact Discovered'.toUpperCase())
         .fx()
-        .scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo);
+        .scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo, alignment: Alignment(0, -1));
   }
 
   Widget _buildTitle(BuildContext context, String text, TextStyle style, Color color, double delay) {
