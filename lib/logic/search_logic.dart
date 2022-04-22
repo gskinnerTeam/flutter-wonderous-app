@@ -7,12 +7,14 @@ import 'dart:math' as math;
 
 class SearchLogic {
   final departmentList = ValueNotifier(<DepartmentData>[]);
-  final Map<String, ArtifactData> _artifactHash = {};
-
   SearchService get service => GetIt.I.get<SearchService>();
+
+  final Map<String, ArtifactData> _artifactHash = {};
   String _lastSearchQuery = '';
   List<String> _lastSearchResults = [];
 
+  /// Return a full count of the prior search results
+  /// Note: this is separate from the hash, which collects across multiple searches.
   int get lastSearchResultCount => _lastSearchResults.length;
 
   /// Return list of departments with titles and IDs.
