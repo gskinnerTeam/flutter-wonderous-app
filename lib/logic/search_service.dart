@@ -7,7 +7,7 @@ import 'package:wonders/logic/data/artifact_search_options.dart';
 import 'package:wonders/logic/data/department_data.dart';
 
 class SearchService {
-  static String baseMETUrl = 'https://collectionapi.metmuseum.org';
+  final String _baseMETUrl = 'https://collectionapi.metmuseum.org';
 
   Future<ServiceResult<List<String>?>> getObjectIDList({DateTime? date, String? departmentIds}) async {
     HttpResponse response = await _request('public/collection/v1/objects', urlParams: {
@@ -58,7 +58,7 @@ class SearchService {
     Map<String, dynamic>? body,
     Encoding? encoding,
   }) async {
-    url = '$baseMETUrl/$url';
+    url = '$_baseMETUrl/$url';
     urlParams ??= {};
     headers ??= {};
 
