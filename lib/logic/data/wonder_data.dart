@@ -32,7 +32,7 @@ class WonderData extends Equatable {
     required this.constructionInfo2,
     required this.locationInfo,
     required this.videoId,
-    this.events,
+    required this.events,
     this.highlightArtifacts = const [],
     this.hiddenArtifacts = const [],
   });
