@@ -6,13 +6,17 @@ import 'package:wonders/ui/common/controls/app_loader.dart';
 
 /// Staggered Masonry styled grid for displaying two columns of different aspect-ratio images.
 class ArtifactSearchResultsGrid extends StatelessWidget {
-  const ArtifactSearchResultsGrid({Key? key, required this.searchResults, required this.onPressed}) : super(key: key);
+  const ArtifactSearchResultsGrid(
+      {Key? key, required this.scrollController, required this.searchResults, required this.onPressed})
+      : super(key: key);
   final void Function(ArtifactData) onPressed;
+  final ScrollController scrollController;
   final List<ArtifactData?> searchResults;
 
   @override
   Widget build(BuildContext context) => MasonryGridView.count(
         shrinkWrap: true,
+        controller: scrollController,
         crossAxisCount: 2,
         cacheExtent: 2000,
         crossAxisSpacing: context.insets.sm,
