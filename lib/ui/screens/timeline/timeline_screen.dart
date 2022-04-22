@@ -1,11 +1,12 @@
-import 'dart:async';
 import 'dart:ui';
 
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/string_utils.dart';
+import 'package:wonders/ui/common/wonders_timeline_builder.dart';
 
 part 'widgets/_bottom_scrubber.dart';
 part 'widgets/_scaling_viewport.dart';
-part 'widgets/_events_overlay.dart';
+part 'widgets/_dashed_divider_with_year.dart';
 part 'widgets/_year_markers.dart';
 
 class TimelineScreen extends StatefulWidget {
@@ -33,7 +34,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (_, constraints) {
       // Determine min and max size of the timeline based on the size available to this widget
-      const scrubberSize = 150.0;
+      const scrubberSize = 120.0;
       final double minSize = constraints.biggest.height - scrubberSize;
       const double maxSize = 3000;
       return SafeArea(
@@ -43,17 +44,14 @@ class _TimelineScreenState extends State<TimelineScreen> {
             Expanded(
               child: Stack(
                 children: [
-                  /// Center divider to indicates the current yr
-                  Center(child: _DashedDividerWithYear()),
-
                   /// The timeline content itself
                   _ScalingViewport(
                     key: _viewportKey,
                     controller: _scroller,
                     minSize: minSize,
                     maxSize: maxSize,
-                    startYr: -500,
-                    endYr: 2000,
+                    startYr: wondersLogic.startYear,
+                    endYr: wondersLogic.endYear,
                   ),
                 ],
               ),

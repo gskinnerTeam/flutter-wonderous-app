@@ -38,29 +38,40 @@ class ScalingViewportState extends State<_ScalingViewport> {
   /// Allows ancestors to set zoom directly
   void setZoom(double d) {
     setState(() {
-      /// Determine current yr, based on scroll position
-      int totalYrs = widget.endYr - widget.startYr;
-      double currentPx = currentController.position.pixels;
-      double scrollAmt = currentPx / calculateContentHeight();
-      double yr = widget.startYr + scrollAmt * totalYrs;
+      // Determine current yr, based on scroll position
+      int currentYr = calculateYearFromScrollPos();
 
-      /// Change zoom, which will scale our content, and change our scroll position
+      // Change zoom, which will scale our content, and change our scroll position
       _zoom = d;
       _zoom = _zoom.clamp(0, 1.0);
 
-      jumpToYear(yr);
+      // Jump to whatever yr we were on before changing the zoom
+      jumpToYear(currentYr);
     });
   }
 
-  void jumpToYear(double yr) {
+  void jumpToYear(int yr) {
     double yrRatio = (yr - widget.startYr) / (widget.endYr - widget.startYr);
     double newMaxScroll = calculateContentHeight();
     currentController.jumpTo(newMaxScroll * yrRatio);
   }
 
+  // Calculates current content height, taking zoom into account.
+  // Also caps min size to some reasonable value.
   double calculateContentHeight() {
+    double minSize = 300;
     double vtPadding = _constraints.maxHeight / 2;
-    return lerpDouble(max(widget.minSize - vtPadding, 300), widget.maxSize, _zoom) ?? widget.maxSize;
+    return lerpDouble(max(widget.minSize - vtPadding, minSize), widget.maxSize, _zoom) ?? widget.maxSize;
+  }
+
+  /// Derive current yr based on the scroll position and the current content height.
+  int calculateYearFromScrollPos() {
+    if (currentController.hasClients == false) return widget.startYr;
+    int totalYrs = widget.endYr - widget.startYr;
+    double currentPx = currentController.position.pixels;
+    double scrollAmt = currentPx / calculateContentHeight();
+    int result = (widget.startYr + scrollAmt * totalYrs).round();
+    return result.clamp(widget.startYr, widget.endYr);
   }
 
   /// Since the onScale gesture always starts from 1, we need to hold onto the zoom
@@ -86,6 +97,10 @@ class ScalingViewportState extends State<_ScalingViewport> {
         child: Stack(
           fit: StackFit.expand,
           children: [
+            AnimatedBuilder(
+              animation: currentController,
+              builder: (_, __) => _DashedDividerWithYear(calculateYearFromScrollPos()),
+            ),
             SingleChildScrollView(
               controller: currentController,
               padding: EdgeInsets.symmetric(vertical: vtPadding),
@@ -94,6 +109,11 @@ class ScalingViewportState extends State<_ScalingViewport> {
                 child: Stack(
                   children: [
                     _YearMarkers(startYr: widget.startYr, endYr: widget.endYr),
+                    WondersTimelineBuilder(
+                        axis: Axis.vertical,
+                        timelineBuilder: (_, data) {
+                          return Placeholder();
+                        })
                   ],
                 ),
               ),

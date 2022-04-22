@@ -20,6 +20,8 @@ class StringUtils {
 
   static String formatYr(int yr) {
     if (yr == 0) yr = 1;
-    return '$yr ${yr < 0 ? 'BCE' : 'CE'}';
+    return '$yr ${getYrSuffix(yr)}';
   }
+
+  static String getYrSuffix(int yr) => yr < 0 ? 'BCE' : 'CE';
 }
