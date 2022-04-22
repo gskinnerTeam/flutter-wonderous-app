@@ -1,10 +1,10 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/logic/data/artifact_search_options.dart';
-import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/expanding_time_range_selector.dart';
-import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_text_field.dart';
-import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_results_grid.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_header.dart';
+import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_results_grid.dart';
+import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_text_field.dart';
+import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/expanding_time_range_selector.dart';
 
 /// User can use this screen to search the MET server for an artifact by name or timeline. Artifacts results will
 /// appear as images, which the user can click on to being up the details view for more information.

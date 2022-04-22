@@ -7,10 +7,10 @@ import 'package:wonders/logic/data/artifact_search_options.dart';
 import 'package:wonders/logic/data/department_data.dart';
 
 class SearchService {
-  final String _baseMETUrl = 'https://collectionapi.metmuseum.org';
+  final String _baseMETUrl = 'https://collectionapi.metmuseum.org/public/collection/v1';
 
   Future<ServiceResult<List<String>?>> getObjectIDList({DateTime? date, String? departmentIds}) async {
-    HttpResponse response = await _request('public/collection/v1/objects', urlParams: {
+    HttpResponse response = await _request('objects', urlParams: {
       'metadataDate': date, // in the format YYYY-MM-DD
       'departmentIds': departmentIds // use | as delimiter
     });
@@ -18,20 +18,20 @@ class SearchService {
   }
 
   Future<ServiceResult<List<DepartmentData>?>> getDepartmentList() async {
-    HttpResponse? response = await _request('public/collection/v1/departments');
+    HttpResponse? response = await _request('departments');
     return ServiceResult(response, _parseDepartmentData);
   }
 
   Future<ServiceResult<ArtifactData?>> getObjectByID(String id) async {
-    HttpResponse? response = await _request('public/collection/v1/objects/$id');
+    HttpResponse? response = await _request('objects/$id');
     return ServiceResult(response, _parseArtifactData);
   }
 
   Future<ServiceResult<List<String>?>> searchForArtifacts(ArtifactSearchOptions options) async {
     Map<String, dynamic> urlParams = {};
 
-    urlParams['q'] = options.query;
-    urlParams['hasImages'] = true; // Must have images. That's a given.
+    // Must have images. That's a given.
+    urlParams['hasImages'] = true;
 
     // Note; URL params are specificly named; ArtifactSearchOptions are simply labelled this way for better clarity.
     if (options.isHighlight != null) urlParams['isHighlight'] = options.isHighlight;
@@ -44,7 +44,12 @@ class SearchService {
     if (options.startYear != null) urlParams['dateBegin'] = options.startYear;
     if (options.endYear != null) urlParams['dateEnd'] = options.endYear;
 
-    HttpResponse response = await _request('public/collection/v1/search', method: MethodType.get, urlParams: urlParams);
+    // Query needs to be at the end of the argument list. Don't ask why.
+    urlParams['q'] = options.query;
+
+    // TODO: run a check for images with odd sizes. To do this:
+    // - check the artifact's dimensions for multiple artifacts; see how often it relates to the image dimensions (should be at least a bit related)
+    HttpResponse response = await _request('search', method: MethodType.get, urlParams: urlParams);
     return ServiceResult(response, _parseObjectIds);
   }
 

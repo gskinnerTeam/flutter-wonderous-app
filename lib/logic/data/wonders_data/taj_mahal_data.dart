@@ -41,4 +41,5 @@ The plinth and tomb took roughly 12 years to complete. The remaining parts of th
 ''',
   highlightArtifacts: const [],
   hiddenArtifacts: const [],
+  events: const {},
 );

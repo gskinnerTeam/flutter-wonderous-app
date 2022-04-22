@@ -25,7 +25,7 @@ class _ScrollingContent extends StatelessWidget {
         separatorBuilder: () => Gap(context.insets.md),
         children: [
           // todo: temporary:
-          Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children:[
+          Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
             CollectibleItem(collectibles[0]),
             CollectibleItem(collectibles[1]),
             CollectibleItem(collectibles[2]),

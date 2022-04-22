@@ -41,14 +41,15 @@ class FXAnimate extends StatefulWidget with FXManager<FXAnimate> {
     Positioned: (parent, child) {
       Positioned o = parent as Positioned;
       return Positioned(
-          key: o.key,
-          left: o.left,
-          top: o.top,
-          right: o.right,
-          bottom: o.bottom,
-          width: o.width,
-          height: o.height,
-          child: child);
+        key: o.key,
+        left: o.left,
+        top: o.top,
+        right: o.right,
+        bottom: o.bottom,
+        width: o.width,
+        height: o.height,
+        child: child,
+      );
     },
     Expanded: (parent, child) {
       Expanded o = parent as Expanded;
@@ -64,7 +65,7 @@ class FXAnimate extends StatefulWidget with FXManager<FXAnimate> {
     this.onInit,
     this.delay = Duration.zero,
   }) : super(key: key) {
-    _fx = [];
+    _entries = [];
     if (fx != null) addFXList(fx);
   }
 
@@ -72,7 +73,7 @@ class FXAnimate extends StatefulWidget with FXManager<FXAnimate> {
   final Duration delay;
   final FXAnimateCallback? onComplete;
   final FXAnimateCallback? onInit; // todo: FXController
-  late final List<FXEntry> _fx;
+  late final List<FXEntry> _entries;
   Duration _duration = Duration.zero;
   FXEntry? _lastEntry;
 
@@ -90,18 +91,10 @@ class FXAnimate extends StatefulWidget with FXManager<FXAnimate> {
       end: begin + (fx.duration ?? _lastEntry?.fx.duration ?? FXAnimate.defaultDuration),
       curve: fx.curve ?? _lastEntry?.curve ?? FXAnimate.defaultCurve,
     );
-    _fx.add(entry);
+    _entries.add(entry);
     _lastEntry = entry;
     if (entry.end > _duration) {
       _duration = entry.end;
-    }
-    return this;
-  }
-
-  @override
-  FXAnimate addFXList(List<AbstractFX> fx) {
-    for (AbstractFX o in fx) {
-      addFX(o);
     }
     return this;
   }
@@ -143,21 +136,23 @@ class _FXAnimateState extends State<FXAnimate> with SingleTickerProviderStateMix
     Widget child = widget.child, parent = child;
     ReparentChildBuilder? reparent = FXAnimate.reparentTypes[child.runtimeType];
     if (reparent != null) child = (child as dynamic).child;
-    for (FXEntry entry in widget._fx) {
+    for (FXEntry entry in widget._entries) {
       child = entry.fx.build(context, child, _controller, entry);
     }
     return reparent?.call(parent, child) ?? child;
   }
 }
 
+// todo: add delay
 extension FXWidgetExtensions on Widget {
   FXAnimate fx({
     Key? key,
     List<AbstractFX>? fx,
     FXAnimateCallback? onComplete,
     FXAnimateCallback? onInit,
+    Duration delay = Duration.zero,
   }) =>
-      FXAnimate(key: key, child: this, fx: fx, onComplete: onComplete, onInit: onInit);
+      FXAnimate(key: key, child: this, fx: fx, onComplete: onComplete, onInit: onInit, delay: delay);
 }
 
 // Applies animated effects to a list of widgets. It does this by wrapping each
@@ -289,5 +284,10 @@ typedef FXAnimateCallback = void Function(
 // FXManager provides a common interface for FXAnimate and FXAnimateList for attaching FX extensions to.
 mixin FXManager<T> {
   T addFX(AbstractFX fx) => throw (UnimplementedError());
-  T addFXList(List<AbstractFX> fx) => throw (UnimplementedError());
+  T addFXList(List<AbstractFX> fx) {
+    for (AbstractFX o in fx) {
+      addFX(o);
+    }
+    return this as T;
+  }
 }

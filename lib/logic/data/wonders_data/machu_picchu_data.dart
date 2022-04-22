@@ -40,4 +40,5 @@ The Inca Bridge, an Inca grass rope bridge, across the Urubamba River in the Pon
 ''',
   highlightArtifacts: const [],
   hiddenArtifacts: const [],
+  events: const {},
 );

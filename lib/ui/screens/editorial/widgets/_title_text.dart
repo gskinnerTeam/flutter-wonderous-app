@@ -21,7 +21,7 @@ class _TitleText extends StatelessWidget {
                 ),
                 Text(
                   data.subTitle.toUpperCase(),
-                  style: context.textStyles.body1,
+                  style: context.textStyles.h3,
                 ).fx().fade(delay: 100.ms),
                 Expanded(
                   child: Divider(

@@ -1,9 +1,10 @@
+import 'dart:math' as math;
+
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/logic/data/artifact_search_options.dart';
 import 'package:wonders/logic/data/department_data.dart';
 import 'package:wonders/logic/search_service.dart';
-import 'dart:math' as math;
 
 class SearchLogic {
   final departmentList = ValueNotifier(<DepartmentData>[]);

@@ -68,6 +68,7 @@ class ParticleController with ChangeNotifier {
   BlendMode blendMode;
   List<Particle> particles = [];
   Alignment alignment;
+  double opacity = 1.0;
   Duration _lastElapsed = Duration.zero;
 
   ParticleController({

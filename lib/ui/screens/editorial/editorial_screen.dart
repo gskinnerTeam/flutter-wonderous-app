@@ -14,18 +14,18 @@ import 'package:wonders/ui/common/placeholder_image.dart';
 import 'package:wonders/ui/common/scaling_list_item.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/utils/context_utils.dart';
-import 'package:wonders/ui/screens/home/animated_clouds.dart';
+import 'package:wonders/ui/wonder_illustrations/common/animated_clouds.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 import 'package:wonders/ui/wonder_illustrations/wonder_illustration.dart';
 
-part 'widgets/app_bar.dart';
-part 'widgets/circular_title_bar.dart';
-part 'widgets/collapsing_pull_quote_image.dart';
-part 'widgets/sliding_image_stack.dart';
-part 'widgets/scrolling_content.dart';
-part 'widgets/section_divider.dart';
-part 'widgets/title_text.dart';
-part 'widgets/top_illustration.dart';
+part 'widgets/_app_bar.dart';
+part 'widgets/_circular_title_bar.dart';
+part 'widgets/_collapsing_pull_quote_image.dart';
+part 'widgets/_scrolling_content.dart';
+part 'widgets/_section_divider.dart';
+part 'widgets/_sliding_image_stack.dart';
+part 'widgets/_title_text.dart';
+part 'widgets/_top_illustration.dart';
 
 class WonderEditorialScreen extends StatefulWidget {
   const WonderEditorialScreen(this.data, {Key? key, required this.onScroll}) : super(key: key);
@@ -120,7 +120,6 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                 primary: false,
                 controller: _scroller,
                 cacheExtent: 100,
-                physics: BouncingScrollPhysics(),
                 slivers: [
                   /// Invisible padding at the top of the list, so the illustration shows through the btm
                   SliverToBoxAdapter(
