@@ -29,7 +29,7 @@ class _CollectionTile extends StatelessWidget {
   final String? heroTag;
 
   Widget _buildHidden(BuildContext context, CollectibleData collectible) {
-    final Color fadedGrey = context.colors.greyMedium.withOpacity(0.33);
+    final Color fadedGrey = context.colors.greyMedium.withOpacity(0.25);
     return Container(
       decoration: BoxDecoration(
         color: context.colors.black,

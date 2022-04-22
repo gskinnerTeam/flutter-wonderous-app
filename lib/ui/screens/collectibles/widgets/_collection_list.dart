@@ -21,12 +21,12 @@ class _CollectionList extends StatelessWidget {
     }
     children.add(Gap(context.insets.offset));
 
-    return RepaintBoundary(
-      child: Flexible(
-        child: Padding(
-          padding: EdgeInsets.all(context.insets.md),
-          child: Scrollbar(
-            child: SingleChildScrollView(
+    return Flexible(
+      child: RepaintBoundary(
+        child: Scrollbar(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(context.insets.md),
               child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: children),
             ),
           ),
