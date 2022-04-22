@@ -16,9 +16,11 @@ class _CollectionTile extends StatelessWidget {
     state = rnd.getBool(0.67) ? 2 : 0;
     if (collectible.id == '701645') state = 1;
     */
-    return state == CollectibleState.lost
-        ? _buildHidden(context, collectible)
-        : _buildFound(context, collectible, state);
+    return RepaintBoundary(
+      child: state == CollectibleState.lost
+          ? _buildHidden(context, collectible)
+          : _buildFound(context, collectible, state),
+    );
   }
 
   final CollectibleData collectible;
