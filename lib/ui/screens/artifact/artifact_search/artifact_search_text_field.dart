@@ -77,6 +77,8 @@ class ArtifactSearchTextField extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (ctx, constraints) => Autocomplete(
+        displayStringForOption: (String data) => data,
+        onSelected: handleSearchSubmitted,
         optionsBuilder: (TextEditingValue textEditingValue) {
           if (textEditingValue.text == '') {
             return const Iterable<String>.empty();
@@ -113,8 +115,6 @@ class ArtifactSearchTextField extends StatelessWidget {
           // Return the autocomplete results.
           return results;
         },
-        displayStringForOption: (String data) => data,
-        onSelected: handleSearchSubmitted,
         optionsViewBuilder:
             (BuildContext context, AutocompleteOnSelected<String> onSelected, Iterable<String> results) {
           return TopLeft(
@@ -171,10 +171,9 @@ class ArtifactSearchTextField extends StatelessWidget {
         fieldViewBuilder: (context, textController, focusNode, onFieldSubmitted) {
           // Physical text field, for styling and looking good.
           return TextField(
-            onEditingComplete: onFieldSubmitted,
+            onSubmitted: handleSearchSubmitted,
             autofocus: true,
             controller: textController,
-            onSubmitted: (query) => onFieldSubmitted(),
             focusNode: focusNode,
             style: TextStyle(color: colorCaption),
             decoration: InputDecoration(

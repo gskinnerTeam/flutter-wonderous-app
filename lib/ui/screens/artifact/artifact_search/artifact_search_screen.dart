@@ -26,6 +26,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
   int _resultsCount = 0;
   bool _isLoading = false;
   bool _isEmpty = false;
+  bool _isHighlights = true;
   int _startYr = 0;
   int _endYr = 0;
 
@@ -33,10 +34,20 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
   void initState() {
     super.initState();
     final data = wondersLogic.getData(widget.type);
+
     _gridScrollController = ScrollController();
     _gridScrollController.addListener(_handleScroll);
-    _startYr = data.startYr;
-    _endYr = data.endYr;
+    _startYr = data.artifactStartYr;
+    _endYr = data.artifactEndYr;
+
+    _preloadHighlights(data.highlightArtifacts);
+  }
+
+  void _preloadHighlights(List<String> data) async {
+    // Preloaded highlight data.
+    setState(() => _isLoading = true);
+    _searchResultsAll = await searchLogic.getArtifactsByID(data);
+    setState(() => _isLoading = false);
   }
 
   void _handleSearchSubmitted(String query) async {
@@ -51,6 +62,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
     setState(() {
       _isEmpty = false;
       _isLoading = true;
+      _isHighlights = false;
     });
 
     // Get all search results, with a limit.
@@ -143,12 +155,13 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
                         Gap(context.insets.sm),
 
                         // Results feedback
-                        Text(
-                          resultsText,
-                          style: context.textStyles.body1.copyWith(color: context.colors.body),
-                        ),
-
-                        Gap(context.insets.sm),
+                        if (!_isHighlights) ...[
+                          Text(
+                            resultsText,
+                            style: context.textStyles.body1.copyWith(color: context.colors.body),
+                          ),
+                          Gap(context.insets.sm),
+                        ],
 
                         // Artifacts grid
                         Expanded(
