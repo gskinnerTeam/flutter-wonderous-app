@@ -1,7 +1,7 @@
-part of 'artifact_details_screen.dart';
+part of '../artifact_details_screen.dart';
 
-class ArtifactDataRow extends StatelessWidget {
-  const ArtifactDataRow({Key? key, required this.title, required this.content}) : super(key: key);
+class _ArtifactDataRow extends StatelessWidget {
+  const _ArtifactDataRow({Key? key, required this.title, required this.content}) : super(key: key);
   final String title;
   final String content;
 

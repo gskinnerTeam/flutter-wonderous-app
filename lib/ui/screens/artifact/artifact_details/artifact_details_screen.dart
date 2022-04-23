@@ -9,7 +9,9 @@ import 'package:wonders/ui/common/fullscreen_url_img_viewer.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/utils/page_routes.dart';
 
-part 'artifact_data_row.dart';
+part 'widgets/_header.dart';
+part 'widgets/_content.dart';
+part 'widgets/_artifact_data_row.dart';
 
 class ArtifactDetailsScreen extends StatefulWidget {
   final String artifactId;
@@ -45,123 +47,14 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
                   leading: SizedBox.shrink(),
                   expandedHeight: context.heightPx * .5,
                   collapsedHeight: context.heightPx * .35,
-                  flexibleSpace: _TopContent(data: data),
+                  flexibleSpace: _Header(data: data),
                 ),
-                SliverToBoxAdapter(child: _BottomContent(data: data)),
+                SliverToBoxAdapter(child: _Content(data: data)),
               ],
             ),
             PositionedBackBtn(),
           ]);
         },
-      ),
-    );
-
-    // Create an image with a close button in the top right
-  }
-}
-
-class _TopContent extends StatelessWidget {
-  const _TopContent({Key? key, required this.data}) : super(key: key);
-  final ArtifactData data;
-
-  @override
-  Widget build(BuildContext context) {
-    void _handleImagePressed() async {
-      await Navigator.push(
-        context,
-        PageRoutes.fadeThrough(FullscreenUrlImgViewer(url: data.image)),
-      );
-    }
-
-    return Stack(
-      children: [
-        BottomCenter(
-          child: FractionalTranslation(
-            translation: Offset(0, 1),
-            child: SizedBox(
-              height: 30,
-              child: VtGradient([context.colors.greyStrong, context.colors.greyStrong.withOpacity(0)], const [.2, 1]),
-            ),
-          ),
-        ),
-        Container(
-          color: context.colors.greyStrong,
-          alignment: Alignment.center,
-          child: TextButton(
-            onPressed: _handleImagePressed,
-            child: Hero(
-              tag: data.image,
-              child: CachedNetworkImage(
-                imageUrl: data.image,
-                fit: BoxFit.cover,
-                alignment: Alignment.topCenter,
-                placeholder: (BuildContext context, String url) => const AppLoader(),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _BottomContent extends StatelessWidget {
-  const _BottomContent({Key? key, required this.data}) : super(key: key);
-  final ArtifactData data;
-
-  @override
-  Widget build(BuildContext context) {
-    const double _textHeight = 1.2;
-    final animDelay = 250.ms;
-    final animDuration = context.times.slow * .5;
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: context.insets.lg),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Gap(context.insets.lg),
-
-          // Wonder Type
-          Text(
-            data.culture.toUpperCase(),
-            style: context.textStyles.titleFont.copyWith(color: context.colors.accent1),
-          ).fx().fade(delay: animDelay, duration: animDuration),
-
-          Gap(context.insets.sm),
-
-          Text(
-            data.title,
-            textAlign: TextAlign.center,
-            style: context.textStyles.h2.copyWith(color: context.colors.offWhite, height: _textHeight),
-          ).fx().fade(delay: animDelay * 1.05, duration: animDuration),
-
-          Gap(context.insets.xxl),
-
-          FXRunAnimated((_, value) {
-            return CompassDivider(isExpanded: !value, duration: context.times.med);
-          }, delay: animDelay * 1.5),
-
-          Gap(context.insets.xxl),
-
-          // Description
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ArtifactDataRow(title: 'Date', content: data.date),
-              ArtifactDataRow(title: 'Period', content: data.period),
-              ArtifactDataRow(title: 'Geography', content: data.country),
-              ArtifactDataRow(title: 'Medium', content: data.medium),
-              ArtifactDataRow(title: 'Dimension', content: data.dimension),
-              ArtifactDataRow(title: 'Classification', content: data.classification),
-              Gap(context.heightPx * .15),
-            ]
-                .fx(interval: 70.ms)
-                .fade(delay: animDelay * 1.55, duration: context.times.med)
-                .slide(begin: Offset(.2, 0), curve: Curves.easeOut),
-          ),
-        ],
       ),
     );
   }
