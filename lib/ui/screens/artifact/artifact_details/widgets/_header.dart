@@ -16,8 +16,8 @@ class _Header extends StatelessWidget {
     return Stack(
       children: [
         BottomCenter(
-          child: FractionalTranslation(
-            translation: Offset(0, 0.99),
+          child: Transform.translate(
+            offset: Offset(0, context.insets.lg-1),
             child: VtGradient(
               [context.colors.greyStrong, context.colors.greyStrong.withOpacity(0)],
               const [.2, 1],
