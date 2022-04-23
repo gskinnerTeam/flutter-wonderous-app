@@ -15,8 +15,8 @@ class _ResultsGrid extends StatelessWidget {
         controller: scrollController,
         crossAxisCount: 2,
         cacheExtent: 2000,
-        crossAxisSpacing: context.insets.sm,
         mainAxisSpacing: context.insets.sm,
+        crossAxisSpacing: context.insets.sm,
         itemCount: searchResults.length,
         clipBehavior: Clip.antiAlias,
         itemBuilder: (BuildContext context, int index) {
@@ -34,9 +34,10 @@ class _ImageItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
+    return BasicBtn(
+      label: data.title,
       onPressed: () => onPressed(data),
-      child: ClipRRect(
+      child: Expanded(child: ClipRRect(
         borderRadius: BorderRadius.circular(context.insets.xs),
         child: Hero(
           tag: data.image,
@@ -47,7 +48,7 @@ class _ImageItem extends StatelessWidget {
             placeholder: (_, __) => _ImagePlaceholder(),
           ),
         ),
-      ),
+      ),),
     );
   }
 }
