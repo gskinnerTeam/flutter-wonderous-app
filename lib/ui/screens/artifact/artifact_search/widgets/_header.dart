@@ -1,7 +1,7 @@
-import 'package:wonders/common_libs.dart';
+part of '../artifact_search_screen.dart';
 
-class ArtifactSearchHeader extends StatelessWidget {
-  const ArtifactSearchHeader(this.type, this.title, {Key? key}) : super(key: key);
+class _Header extends StatelessWidget {
+  const _Header(this.type, this.title, {Key? key}) : super(key: key);
   final WonderType type;
   final String title;
 

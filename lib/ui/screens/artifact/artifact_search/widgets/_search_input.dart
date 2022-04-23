@@ -1,11 +1,8 @@
-import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/common/string_utils.dart';
-import 'package:wonders/logic/data/artifact_data.dart';
-import 'package:wonders/ui/common/cards/glass_card.dart';
+part of '../artifact_search_screen.dart';
 
 /// Autopopulating textfield used for searching for Artifacts by name.
-class ArtifactSearchTextField extends StatelessWidget {
-  ArtifactSearchTextField({Key? key, required this.handleSearchSubmitted}) : super(key: key);
+class _SearchInput extends StatelessWidget {
+  _SearchInput({Key? key, required this.handleSearchSubmitted}) : super(key: key);
   final void Function(String) handleSearchSubmitted;
 
   // TODO: Get prebuilt list of common autocomplete terms. Might be artifact-specific.

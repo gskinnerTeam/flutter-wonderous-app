@@ -1,12 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/data/artifact_data.dart';
-import 'package:wonders/ui/common/controls/app_loader.dart';
+part of '../artifact_search_screen.dart';
 
 /// Staggered Masonry styled grid for displaying two columns of different aspect-ratio images.
-class ArtifactSearchResultsGrid extends StatelessWidget {
-  const ArtifactSearchResultsGrid(
+class _ResultsGrid extends StatelessWidget {
+  const _ResultsGrid(
       {Key? key, required this.scrollController, required this.searchResults, required this.onPressed})
       : super(key: key);
   final void Function(ArtifactData) onPressed;
