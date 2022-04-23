@@ -69,130 +69,136 @@ class _SearchInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color colorSearchBox = context.colors.white;
-    Color colorCaption = context.colors.caption;
-
     return LayoutBuilder(
       builder: (ctx, constraints) => Autocomplete(
         displayStringForOption: (String data) => data,
         onSelected: handleSearchSubmitted,
-        optionsBuilder: (TextEditingValue textEditingValue) {
-          if (textEditingValue.text == '') {
-            return const Iterable<String>.empty();
+        optionsBuilder: _getSuggestions,
+        optionsViewBuilder: (context, onSelected, Iterable<String> results) =>
+            _buildSuggestionsView(context, onSelected, results, constraints),
+        fieldViewBuilder: _buildInput,
+      ),
+    );
+  }
+
+  Iterable<String> _getSuggestions(TextEditingValue textEditingValue) {
+    if (textEditingValue.text == '') {
+      return const Iterable<String>.empty();
+    }
+
+    // Start with a list of results from a prebaked list of strings. TODO: Make this more thorough, like a JSON based on Wonder type.
+    List<String> results = _materialFilteringTerms.where((String option) {
+      return option.toLowerCase().startsWith(textEditingValue.text.toLowerCase());
+    }).toList();
+
+    // Use titles of artifacts that have already been loaded.
+    List<ArtifactData> allArtifacts = searchLogic.allLoadedArtifacts;
+    if (allArtifacts.isNotEmpty) {
+      // Get all artifacts that follow the same search convention.
+      List<ArtifactData?> artifacts = allArtifacts.where((ArtifactData? data) {
+        return data?.title.toLowerCase().startsWith(textEditingValue.text.toLowerCase()) ?? false;
+      }).toList();
+
+      // Only use titles if there are less than 10 results.
+      if (artifacts.length <= 10) {
+        for (var artifact in artifacts) {
+          if (artifact != null) {
+            results.add(artifact.title);
           }
+        }
+      }
+    }
 
-          // Start with a list of results from a prebaked list of strings. TODO: Make this more thorough, like a JSON based on Wonder type.
-          List<String> results = _materialFilteringTerms.where((String option) {
-            return option.toLowerCase().startsWith(textEditingValue.text.toLowerCase());
-          }).toList();
+    // Sort everything in alphabetical order.
+    results.sort((a, b) {
+      return a.toLowerCase().compareTo(b.toLowerCase());
+    });
 
-          // Use titles of artifacts that have already been loaded.
-          List<ArtifactData> allArtifacts = searchLogic.allLoadedArtifacts;
-          if (allArtifacts.isNotEmpty) {
-            // Get all artifacts that follow the same search convention.
-            List<ArtifactData?> artifacts = allArtifacts.where((ArtifactData? data) {
-              return data?.title.toLowerCase().startsWith(textEditingValue.text.toLowerCase()) ?? false;
-            }).toList();
+    // Return the autocomplete results.
+    return results;
+  }
 
-            // Only use titles if there are less than 10 results.
-            if (artifacts.length <= 10) {
-              for (var artifact in artifacts) {
-                if (artifact != null) {
-                  results.add(artifact.title);
-                }
-              }
-            }
-          }
-
-          // Sort everything in alphabetical order.
-          results.sort((a, b) {
-            return a.toLowerCase().compareTo(b.toLowerCase());
-          });
-
-          // Return the autocomplete results.
-          return results;
-        },
-        optionsViewBuilder:
-            (BuildContext context, AutocompleteOnSelected<String> onSelected, Iterable<String> results) {
-          return TopLeft(
-            child: Padding(
-              padding: EdgeInsets.only(top: context.insets.xs),
-              child: Container(
-                width: constraints.maxWidth,
-                height: 200,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                        color: context.colors.black.withOpacity(0.25),
-                        spreadRadius: 0,
-                        blurRadius: 4,
-                        offset: Offset(0, 4)),
-                  ],
-                ),
-                child: GlassCard(
-                  padding: EdgeInsets.all(context.insets.sm),
-                  color: context.colors.white.withOpacity(0.75),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Search Suggestions',
-                          style: context.textStyles.tab.copyWith(color: context.colors.greyStrong)),
-                      Gap(context.insets.sm),
-                      Expanded(
-                        child: SizedBox(
-                          width: constraints.biggest.width - context.insets.sm * 2,
-                          height: constraints.maxHeight / 2,
-                          child: ListView(
-                            children: results.map((String result) {
-                              return GestureDetector(
-                                onTap: () {
-                                  onSelected(result);
-                                },
-                                child: Text(
-                                  StringUtils.truncateWithEllipsis(43, result),
-                                  style: context.textStyles.body4.copyWith(color: context.colors.greyStrong),
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+  Widget _buildSuggestionsView(BuildContext context, onSelected, Iterable<String> results, BoxConstraints constraints) {
+    List<String> test = results.toList() + results.toList();
+    return TopLeft(
+      child: Container(
+        margin: EdgeInsets.only(top: context.insets.xs),
+        width: constraints.maxWidth,
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: context.colors.black.withOpacity(0.25),
+              spreadRadius: 0,
+              blurRadius: 4,
+              offset: Offset(0, 4),
             ),
-          );
-        },
-        fieldViewBuilder: (context, textController, focusNode, onFieldSubmitted) {
-          // Physical text field, for styling and looking good.
-          return TextField(
+          ],
+        ),
+        child: GlassCard(
+          padding: EdgeInsets.symmetric(horizontal: context.insets.sm, vertical: context.insets.xs),
+          color: context.colors.white.withOpacity(0.75),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: 120),
+            child: ListView(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              children: test.map((String result) {
+                return BasicBtn(
+                  label: result,
+                  onPressed: () => onSelected(result),
+                  child: Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: context.insets.xxs),
+                      child: Text(
+                        result,
+                        overflow: TextOverflow.ellipsis,
+                        textWidthBasis: TextWidthBasis.parent,
+                        textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+                        style: context.textStyles.body4.copyWith(color: context.colors.greyStrong),
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInput(BuildContext context, TextEditingController textController, FocusNode focusNode, _) {
+    Color captionColor = context.colors.caption;
+    return Container(
+      height: context.insets.xl,
+      decoration: BoxDecoration(
+        color: context.colors.white,
+        borderRadius: BorderRadius.circular(context.insets.xs),
+      ),
+      child: Row(children: [
+        Gap(context.insets.xs * 1.5),
+        Icon(Icons.search, color: context.colors.caption),
+        Expanded(
+          child: TextField(
             onSubmitted: handleSearchSubmitted,
             autofocus: true,
             controller: textController,
             focusNode: focusNode,
-            style: TextStyle(color: colorCaption),
+            style: TextStyle(color: captionColor),
+            textAlignVertical: TextAlignVertical.bottom,
             decoration: InputDecoration(
-                icon: Icon(Icons.search, color: colorCaption),
-                filled: true,
-                fillColor: colorSearchBox,
-                iconColor: colorCaption,
-                labelStyle: TextStyle(color: colorCaption),
-                hintStyle: TextStyle(color: colorCaption.withOpacity(0.5)),
-                prefixStyle: TextStyle(color: colorCaption),
-                focusColor: colorCaption,
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: colorSearchBox),
-                    borderRadius: BorderRadius.circular(context.corners.md)),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: colorSearchBox),
-                  borderRadius: BorderRadius.circular(context.corners.md),
-                ),
-                hintText: 'Search type or material'),
-          );
-        },
-      ),
+              isDense: true,
+              contentPadding: EdgeInsets.all(context.insets.xs),
+              labelStyle: TextStyle(color: captionColor),
+              hintStyle: TextStyle(color: captionColor.withOpacity(0.5)),
+              prefixStyle: TextStyle(color: captionColor),
+              focusedBorder: OutlineInputBorder(borderSide: BorderSide.none),
+              enabledBorder: UnderlineInputBorder(borderSide: BorderSide.none),
+              hintText: 'Search type or material',
+            ),
+          ),
+        ),
+      ]),
     );
   }
 }

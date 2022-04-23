@@ -7,33 +7,37 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
       color: context.colors.greyStrong,
-      padding: EdgeInsets.all(context.insets.md),
-      child: SeparatedColumn(
-        separatorBuilder: () => Gap(context.insets.xs),
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // Close button
-          Align(
+      child: SafeArea(
+        child: Row(children: [
+          Container(
+            width: 64,
+            height: 80,
             alignment: Alignment.centerRight,
-            child: CloseButton(color: context.colors.offWhite),
+            child: CircleIconBtn(
+              icon: Icons.arrow_back,
+              onPressed: () => context.pop(),
+            ),
           ),
-
-          // Window title
-          Text(
-            title.toUpperCase(),
-            style: context.textStyles.body1.copyWith(color: context.colors.offWhite),
+          Flexible(
+            fit: FlexFit.tight,
+            child: Column(
+              children: [
+                Text(
+                  title.toUpperCase(),
+                  style: context.textStyles.h3.copyWith(color: context.colors.offWhite),
+                ),
+                Gap(context.insets.xxs),
+                Text(
+                  type.name.toUpperCase(),
+                  style: context.textStyles.title1.copyWith(color: context.colors.accent1),
+                ),
+              ],
+            ),
           ),
-
-          // Wonder name / culture
-          Text(
-            type.name.toUpperCase(),
-            style: context.textStyles.titleFont.copyWith(color: context.colors.accent1),
-          ),
-        ],
+          Gap(64),
+        ]),
       ),
     );
   }

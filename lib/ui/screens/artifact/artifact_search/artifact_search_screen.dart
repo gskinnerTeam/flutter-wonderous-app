@@ -142,9 +142,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
             direction: Axis.vertical,
             children: [
               // Header
-              SafeArea(
-                child: _Header(widget.type, 'Browse Artifacts'),
-              ),
+              _Header(widget.type, 'Browse Artifacts'),
 
               // Content
               Expanded(
