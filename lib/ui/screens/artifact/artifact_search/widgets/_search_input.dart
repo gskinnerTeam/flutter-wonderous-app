@@ -69,14 +69,17 @@ class _SearchInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (ctx, constraints) => Autocomplete(
-        displayStringForOption: (String data) => data,
-        onSelected: handleSearchSubmitted,
-        optionsBuilder: _getSuggestions,
-        optionsViewBuilder: (context, onSelected, Iterable<String> results) =>
-            _buildSuggestionsView(context, onSelected, results, constraints),
-        fieldViewBuilder: _buildInput,
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: context.insets.sm),
+      child: LayoutBuilder(
+        builder: (ctx, constraints) => Autocomplete(
+          displayStringForOption: (String data) => data,
+          onSelected: handleSearchSubmitted,
+          optionsBuilder: _getSuggestions,
+          optionsViewBuilder: (context, onSelected, Iterable<String> results) =>
+              _buildSuggestionsView(context, onSelected, results, constraints),
+          fieldViewBuilder: _buildInput,
+        ),
       ),
     );
   }
@@ -119,7 +122,6 @@ class _SearchInput extends StatelessWidget {
   }
 
   Widget _buildSuggestionsView(BuildContext context, onSelected, Iterable<String> results, BoxConstraints constraints) {
-    List<String> test = results.toList() + results.toList();
     return TopLeft(
       child: Container(
         margin: EdgeInsets.only(top: context.insets.xs),
@@ -135,32 +137,33 @@ class _SearchInput extends StatelessWidget {
           ],
         ),
         child: GlassCard(
-          padding: EdgeInsets.symmetric(horizontal: context.insets.sm, vertical: context.insets.xs),
+          padding: EdgeInsets.all(context.insets.xxs),
           color: context.colors.white.withOpacity(0.75),
           child: ConstrainedBox(
             constraints: BoxConstraints(maxHeight: 120),
             child: ListView(
               padding: EdgeInsets.zero,
               shrinkWrap: true,
-              children: test.map((String result) {
-                return BasicBtn(
-                  label: result,
-                  onPressed: () => onSelected(result),
-                  child: Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: context.insets.xxs),
-                      child: Text(
-                        result,
-                        overflow: TextOverflow.ellipsis,
-                        textWidthBasis: TextWidthBasis.parent,
-                        textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
-                        style: context.textStyles.body4.copyWith(color: context.colors.greyStrong),
-                      ),
-                    ),
-                  ),
-                );
-              }).toList(),
+              children: results.map((str) => _buildSuggestion(context, str, () => onSelected(str))).toList(),
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSuggestion(BuildContext context, String suggestion, VoidCallback onPressed) {
+    return BasicBtn(
+      label: suggestion,
+      onPressed: onPressed,
+      child: Expanded(
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: context.insets.xxs, horizontal: context.insets.xs),
+          child: Text(
+            suggestion,
+            overflow: TextOverflow.ellipsis,
+            textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+            style: context.textStyles.body4.copyWith(color: context.colors.greyStrong),
           ),
         ),
       ),

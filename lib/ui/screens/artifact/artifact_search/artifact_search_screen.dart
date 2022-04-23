@@ -10,6 +10,7 @@ import 'package:wonders/ui/common/cards/glass_card.dart';
 
 part 'widgets/_header.dart';
 part 'widgets/_results_grid.dart';
+part 'widgets/_result_tile.dart';
 part 'widgets/_search_input.dart';
 
 /// User can use this screen to search the MET server for an artifact by name or timeline. Artifacts results will
@@ -126,7 +127,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
 
     String resultsText = '';
     if (_isLoading) {
-      resultsText = 'Loading, one sec...';
+      resultsText = 'Loading...';
     } else if (_searchResultsAll.isNotEmpty) {
       resultsText = '$_resultsCount results found for: $_currentQuery';
     } else if (_isEmpty) {
@@ -148,34 +149,33 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
               Expanded(
                 child: Container(
                   color: context.colors.offWhite,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: context.insets.md, vertical: context.insets.sm),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Search box
-                        _SearchInput(handleSearchSubmitted: _handleSearchSubmitted),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Gap(context.insets.sm),
+                      _SearchInput(handleSearchSubmitted: _handleSearchSubmitted),
+                      Gap(context.insets.xs),
 
-                        Gap(context.insets.sm),
-
-                        // Results feedback
-                        if (!_isHighlights) ...[
-                          Text(
+                      // Results feedback
+                      if (!_isHighlights) ...[
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: context.insets.sm),
+                          child: Text(
                             resultsText,
                             style: context.textStyles.body1.copyWith(color: context.colors.body),
                           ),
-                          Gap(context.insets.sm),
-                        ],
-
-                        // Artifacts grid
-                        Expanded(
-                          child: _ResultsGrid(
-                              searchResults: _searchResultsAll,
-                              scrollController: _gridScrollController,
-                              onPressed: onResultClick),
                         ),
+                        Gap(context.insets.xs),
                       ],
-                    ),
+
+                      // Artifacts grid
+                      Expanded(
+                        child: _ResultsGrid(
+                            searchResults: _searchResultsAll,
+                            scrollController: _gridScrollController,
+                            onPressed: onResultClick),
+                      ),
+                    ],
                   ),
                 ),
               ),
