@@ -1,30 +1,22 @@
 part of '../collection_screen.dart';
 
 @immutable
-class _CollectionFooter extends StatelessWidget {
-  const _CollectionFooter({Key? key, required this.count, required this.total}) : super(key: key);
+class _Footer extends StatelessWidget {
+  const _Footer({Key? key, required this.count, required this.total}) : super(key: key);
 
   final int count;
   final int total;
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
+    return Stack(children: [
       // ensure the gradient doesn't block interactions with the list layered below it:
-      IgnorePointer(
-        child: Container(
+      Transform.translate(
+        offset: Offset(0, -context.insets.xl),
+        child: VtGradient(
+          [context.colors.greyStrong.withOpacity(0), context.colors.greyStrong],
+          const [0, 1],
           height: context.insets.xl,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                context.colors.greyStrong.withOpacity(0),
-                context.colors.greyStrong,
-              ],
-              stops: const [0, 1],
-            ),
-          ),
         ),
       ),
       Container(

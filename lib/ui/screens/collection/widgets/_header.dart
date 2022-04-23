@@ -1,8 +1,8 @@
 part of '../collection_screen.dart';
 
 @immutable
-class _CollectionHeader extends StatelessWidget {
-  const _CollectionHeader({Key? key, required this.newCount}) : super(key: key);
+class _Header extends StatelessWidget {
+  const _Header({Key? key, required this.newCount}) : super(key: key);
 
   final int newCount;
 

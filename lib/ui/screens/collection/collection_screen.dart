@@ -3,11 +3,12 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/collectibles_logic.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
+import 'package:wonders/ui/common/gradient_container.dart';
 
 part 'widgets/_collection_tile.dart';
-part 'widgets/_collection_header.dart';
+part 'widgets/_header.dart';
 part 'widgets/_collection_list.dart';
-part 'widgets/_collection_footer.dart';
+part 'widgets/_footer.dart';
 
 // todo: scroll to the fromCollectible if possible
 // https://stackoverflow.com/questions/49153087/flutter-scrolling-to-a-widget-in-listview
@@ -29,7 +30,7 @@ class CollectionScreen extends StatelessWidget with GetItMixin {
       child: Stack(children: [
         Positioned.fill(
           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            _CollectionHeader(newCount: discovered),
+            _Header(newCount: discovered),
             _CollectionList(states: states, fromId: fromId, onPressed: (o) => _showDetails(context, o)),
           ]),
         ),
@@ -37,7 +38,7 @@ class CollectionScreen extends StatelessWidget with GetItMixin {
           left: 0,
           right: 0,
           bottom: 0,
-          child: _CollectionFooter(count: discovered + explored, total: total),
+          child: _Footer(count: discovered + explored, total: total),
         ),
       ]),
     );
