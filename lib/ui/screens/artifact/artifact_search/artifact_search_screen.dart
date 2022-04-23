@@ -155,13 +155,13 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
                         Gap(context.insets.sm),
 
                         // Results feedback
-                        if (!_isHighlights) ...{
+                        if (!_isHighlights) ...[
                           Text(
                             resultsText,
                             style: context.textStyles.body1.copyWith(color: context.colors.body),
                           ),
                           Gap(context.insets.sm),
-                        },
+                        ],
 
                         // Artifacts grid
                         Expanded(

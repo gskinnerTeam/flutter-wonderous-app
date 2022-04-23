@@ -15,6 +15,7 @@ class LabelledToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // The relative widths of the text itself.
     double offWidth = StringUtils.measure(optionOff, context.textStyles.tab).width;
     double onWidth = StringUtils.measure(optionOn, context.textStyles.tab).width;
 
@@ -24,15 +25,21 @@ class LabelledToggle extends StatelessWidget {
     // Manual height.
     double maxHeight = context.insets.xl;
 
+    // Colors and styles for the labels.
+    TextStyle textOffColor =
+        context.textStyles.tab.copyWith(color: isOn ? context.colors.body : context.colors.offWhite);
+    TextStyle textOnColor =
+        context.textStyles.tab.copyWith(color: isOn ? context.colors.offWhite : context.colors.body);
+
+    BoxDecoration circleDec = BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(maxHeight)));
+
     return GestureDetector(
       onTap: onClick,
       child: LayoutBuilder(
         builder: (context, constraints) => Container(
           width: maxWidth,
           height: maxHeight,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(maxHeight)),
-          ),
+          decoration: circleDec,
           child: Stack(
             fit: StackFit.loose,
             children: [
@@ -43,15 +50,13 @@ class LabelledToggle extends StatelessWidget {
                 child: Container(
                   width: constraints.maxWidth,
                   height: constraints.maxHeight,
-                  decoration: BoxDecoration(
-                      color: context.colors.white, borderRadius: BorderRadius.all(Radius.circular(maxHeight))),
+                  decoration: circleDec.copyWith(color: context.colors.white),
                 ),
               ),
               Container(
                 width: double.infinity,
                 height: constraints.maxHeight,
-                decoration: BoxDecoration(
-                    color: context.colors.offWhite, borderRadius: BorderRadius.all(Radius.circular(maxHeight))),
+                decoration: circleDec.copyWith(color: context.colors.offWhite),
               ),
 
               // Switch BG
@@ -67,12 +72,7 @@ class LabelledToggle extends StatelessWidget {
                     width: isOn
                         ? onWidth + context.insets.sm * 3 + context.insets.xs
                         : offWidth + context.insets.sm * 3 + context.insets.xs,
-                    decoration: BoxDecoration(
-                      color: context.colors.greyStrong,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(maxHeight),
-                      ),
-                    ),
+                    decoration: circleDec.copyWith(color: context.colors.greyStrong),
                   ),
                 ),
               ),
@@ -89,16 +89,14 @@ class LabelledToggle extends StatelessWidget {
                       Flexible(
                         child: Text(
                           optionOff,
-                          style: context.textStyles.tab
-                              .copyWith(color: isOn ? context.colors.body : context.colors.offWhite),
+                          style: textOffColor,
                         ),
                       ),
                       Gap(context.insets.xl),
                       Flexible(
                         child: Text(
                           optionOn,
-                          style: context.textStyles.tab
-                              .copyWith(color: isOn ? context.colors.offWhite : context.colors.body),
+                          style: textOnColor,
                         ),
                       ),
                       Gap(context.insets.sm),

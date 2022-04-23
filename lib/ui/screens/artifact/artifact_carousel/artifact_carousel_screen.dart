@@ -45,6 +45,13 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     _getHighlightedArtifacts();
   }
 
+  @override
+  void dispose() {
+    // Ensure the contorller is disposed of properly.
+    _controller.dispose();
+    super.dispose();
+  }
+
   void _getHighlightedArtifacts() async {
     for (var id in _highlightedArtifactIds) {
       _loadedArtifacts.add(await searchLogic.getArtifactByID(id));
@@ -130,17 +137,19 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
 
           // Prev tap button
           CenterLeft(
-            child: GestureDetector(
-              onTap: () => _handlePageJump(-1),
-              child: Container(width: 100, height: 400, color: Colors.transparent),
+            child: BasicBtn(
+              label: '',
+              onPressed: () => _handlePageJump(-1),
+              child: Container(width: 100, height: 500, color: Colors.transparent),
             ),
           ),
 
           // Next tap button
           CenterRight(
-            child: GestureDetector(
-              onTap: () => _handlePageJump(1),
-              child: Container(width: 100, height: 400, color: Colors.transparent),
+            child: BasicBtn(
+              label: '',
+              onPressed: () => _handlePageJump(1),
+              child: Container(width: 100, height: 500, color: Colors.transparent),
             ),
           ),
 
