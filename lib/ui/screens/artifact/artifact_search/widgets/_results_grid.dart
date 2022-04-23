@@ -12,6 +12,7 @@ class _ResultsGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScrollDecorator.shadow(
       controller: scrollController,
+      opacity: 0.25,
       builder: (controller) => MasonryGridView.count(
         shrinkWrap: true,
         padding: EdgeInsets.symmetric(vertical: context.insets.xxs, horizontal: context.insets.sm),
