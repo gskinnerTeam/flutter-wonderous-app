@@ -24,10 +24,13 @@ class _CollectionList extends StatelessWidget {
     return Flexible(
       child: RepaintBoundary(
         child: Scrollbar(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(context.insets.md),
-              child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: children),
+          child: ScrollDecorator.shadow(
+            builder: (controller) => SingleChildScrollView(
+              controller: controller,
+              child: Padding(
+                padding: EdgeInsets.all(context.insets.md),
+                child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: children),
+              ),
             ),
           ),
         ),
