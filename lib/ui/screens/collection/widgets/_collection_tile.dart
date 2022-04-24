@@ -1,6 +1,6 @@
 part of '../collection_screen.dart';
 
-// TODO: GDS: use an appropriate maxWidthDiskCache
+// TODO: Semantics
 
 class _CollectionTile extends StatelessWidget {
   const _CollectionTile({

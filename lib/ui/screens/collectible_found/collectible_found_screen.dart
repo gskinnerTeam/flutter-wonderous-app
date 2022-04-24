@@ -141,7 +141,7 @@ class CollectibleFoundScreen extends StatelessWidget {
               blurRadius: context.insets.sm,
             ),
           ]),
-          child: CachedNetworkImage(imageUrl: collectible.imageUrl),
+          child: Image(image: imageProvider),
         ),
       ),
     ).fx().scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo, alignment: Alignment(0, 0.7));
