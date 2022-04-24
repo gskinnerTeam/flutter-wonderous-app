@@ -87,7 +87,7 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
 
   @override
   Widget build(BuildContext context) {
-    final padding = context.insets.md;
+    final padding = context.insets.sm;
 
     return LayoutBuilder(builder: (_, constraints) {
       return GestureDetector(
@@ -95,10 +95,10 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
         child: AnimatedPadding(
           duration: context.times.fast,
           curve: Curves.easeOut,
-          padding: _isPanelOpen ? EdgeInsets.zero : EdgeInsets.symmetric(vertical: context.insets.lg),
+          padding: _isPanelOpen ? EdgeInsets.zero : EdgeInsets.symmetric(vertical: context.insets.md),
           child: Container(
             decoration: BoxDecoration(
-              color: context.colors.white.withOpacity(0.75),
+              color: context.colors.white.withOpacity(0.9),
               borderRadius: BorderRadius.all(Radius.circular(context.corners.md)),
               boxShadow: [
                 BoxShadow(color: context.colors.black.withOpacity(0.25), offset: Offset(0, 4), blurRadius: 4)
@@ -240,7 +240,13 @@ class _ClosedTimeRange extends StatelessWidget {
     if (state.isWonderTimeframe) {
       text = 'Timeframe: ' + wonderData.title;
     }
-    return Text(text, style: context.textStyles.titleFont);
+    return Row(
+      children: [
+        Text(text, style: context.textStyles.titleFont),
+        Gap(context.insets.xs),
+        Icon(Icons.edit_outlined, color: context.colors.greyStrong, size: 14.0),
+      ],
+    );
   }
 }
 

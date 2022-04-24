@@ -5,7 +5,6 @@ import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
-import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/ui/common/cards/glass_card.dart';
 
 part 'widgets/_header.dart';
