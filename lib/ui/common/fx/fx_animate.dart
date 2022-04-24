@@ -5,6 +5,8 @@ import 'fx.dart';
 
 typedef ReparentChildBuilder = Widget Function(Widget parent, Widget child);
 
+// TODO: GDS: possibly add FXController
+
 // FXAnimate makes adding beautiful animated effects (FX) to your widgets
 // simple. It supports both a declarative and chained API. The latter is exposed
 // via the `Widget.fx` extension, which simply wraps the widget in FXAnimate.
@@ -72,7 +74,7 @@ class FXAnimate extends StatefulWidget with FXManager<FXAnimate> {
   final Widget child;
   final Duration delay;
   final FXAnimateCallback? onComplete;
-  final FXAnimateCallback? onInit; // todo: FXController
+  final FXAnimateCallback? onInit;
   late final List<FXEntry> _entries;
   Duration _duration = Duration.zero;
   FXEntry? _lastEntry;
@@ -143,7 +145,6 @@ class _FXAnimateState extends State<FXAnimate> with SingleTickerProviderStateMix
   }
 }
 
-// todo: add delay
 extension FXWidgetExtensions on Widget {
   FXAnimate fx({
     Key? key,

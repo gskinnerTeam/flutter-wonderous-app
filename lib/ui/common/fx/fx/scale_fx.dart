@@ -2,8 +2,6 @@ import 'package:flutter/widgets.dart';
 
 import '../fx.dart';
 
-// todo: add align
-
 @immutable
 class ScaleFX extends AbstractFX<double> {
   const ScaleFX({Duration? delay, Duration? duration, Curve? curve, double? begin, double? end, this.alignment})

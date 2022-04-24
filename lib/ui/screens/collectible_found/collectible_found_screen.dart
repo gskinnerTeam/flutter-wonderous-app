@@ -6,7 +6,7 @@ import 'package:wonders/ui/common/particles/particle_field.dart';
 part 'widgets/_animated_ribbon.dart';
 part 'widgets/_celebration_particles.dart';
 
-// todo: maybe: title text size (2 line max): https://pub.dev/packages/auto_size_text
+// TODO: GDS: maybe: title text size (2 line max): https://pub.dev/packages/auto_size_text
 
 class CollectibleFoundScreen extends StatelessWidget {
   // CollectibleItem passes in a (theoretically) pre-loaded imageProvider.
@@ -26,7 +26,6 @@ class CollectibleFoundScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RepaintBoundary(
-      // todo: does this have an impact? Does Flutter already wrap full screen dialogs in one?
       child: FXBuilder(
         duration: totalT.ms,
         builder: (ctx, ratio, _) => Stack(children: [

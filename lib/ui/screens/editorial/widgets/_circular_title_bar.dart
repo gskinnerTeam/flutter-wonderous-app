@@ -11,10 +11,9 @@ class _CircularTitleBar extends StatelessWidget {
     double barTopPadding = 40; // negative space at the top of the bar
     double circleSize = 190; // circle is bigger than bar, and overhangs it
     assert(index >= 0 && index < titles.length, 'Can not find a title for index $index');
-    // note: this half pixel offset eliminates a subpixel line Flutter draws below the header
-    // todo: circle back to see if it can be fixed in a less hacky manner
+    // note: this offset eliminates a subpixel line Flutter draws below the header
     return Transform.translate(
-      offset: Offset(0, 0.5),
+      offset: Offset(0, 1),
       child: SizedBox(
         height: barSize,
         child: Stack(

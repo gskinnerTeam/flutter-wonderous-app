@@ -1,5 +1,7 @@
 part of '../collection_screen.dart';
 
+// TODO: GDS: use an appropriate maxWidthDiskCache
+
 class _CollectionTile extends StatelessWidget {
   const _CollectionTile({
     Key? key,
@@ -11,7 +13,7 @@ class _CollectionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // todo: use this if you need visuals for the video quickly:
+    // TODO: remove for production. Useful for videos / screenshots:
     /*
     state = rnd.getBool(0.67) ? 2 : 0;
     if (collectible.id == '701645') state = 1;

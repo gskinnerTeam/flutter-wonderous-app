@@ -10,7 +10,7 @@ part 'widgets/_header.dart';
 part 'widgets/_collection_list.dart';
 part 'widgets/_footer.dart';
 
-// todo: scroll to the fromCollectible if possible
+// TODO: GDS: scroll to the fromCollectible if possible
 // https://stackoverflow.com/questions/49153087/flutter-scrolling-to-a-widget-in-listview
 class CollectionScreen extends StatelessWidget with GetItMixin {
   CollectionScreen({this.fromId, Key? key}) : super(key: key);

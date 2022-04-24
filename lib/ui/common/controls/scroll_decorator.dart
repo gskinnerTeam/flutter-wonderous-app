@@ -1,7 +1,8 @@
 import 'package:wonders/common_libs.dart';
 
-// todo: clean up, doc, and package
+// TODO: GDS: clean up, doc, and package
 class ScrollDecorator extends StatefulWidget {
+  // ignore: prefer_const_constructors_in_immutables
   ScrollDecorator({Key? key, required this.builder, this.foregroundBuilder, this.backgroundBuilder, this.controller})
       : super(key: key);
 
@@ -15,30 +16,31 @@ class ScrollDecorator extends StatefulWidget {
     Axis direction = Axis.vertical,
     Duration duration = const Duration(milliseconds: 150),
   }) : super(key: key) {
-    // ignore: prefer_function_declarations_over_variables
-    ScrollBuilder builder = (controller) => Flex(
-          direction: direction,
-          children: [
-            if (begin != null)
-              AnimatedOpacity(
-                duration: duration,
-                opacity: controller.hasClients && controller.position.extentBefore > 3 ? 1 : 0,
-                child: begin,
-              ),
-            Spacer(),
-            if (end != null)
-              AnimatedOpacity(
-                duration: duration,
-                opacity: controller.hasClients && controller.position.extentAfter > 3 ? 1 : 0,
-                child: end,
-              ),
-          ],
-        );
+    Flex builder(controller) {
+      return Flex(
+        direction: direction,
+        children: [
+          if (begin != null)
+            AnimatedOpacity(
+              duration: duration,
+              opacity: controller.hasClients && controller.position.extentBefore > 3 ? 1 : 0,
+              child: begin,
+            ),
+          Spacer(),
+          if (end != null)
+            AnimatedOpacity(
+              duration: duration,
+              opacity: controller.hasClients && controller.position.extentAfter > 3 ? 1 : 0,
+              child: end,
+            ),
+        ],
+      );
+    }
+
     backgroundBuilder = background ? builder : null;
     foregroundBuilder = !background ? builder : null;
   }
 
-  
   ScrollDecorator.shadow({Key? key, required this.builder, this.controller, double opacity = 0.5}) : super(key: key) {
     backgroundBuilder = null;
     foregroundBuilder = (controller) {

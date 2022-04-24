@@ -2,14 +2,13 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
 // Simple sprite sheet helper.
-// todo: update to make length optional and precalculate some values.
 class SpriteSheet {
-  ui.Image? image; // null until the ImageProvide finishes loading.
+  ui.Image? _image; // null until the ImageProvide finishes loading.
   late double _frameWidth; // if 0, will use image width
   late double _frameHeight; // if 0, will use image height
   late int _length; // if 0, will be calculated from image size
+  late int _cols; // precalculated
   double scale;
-  int _cols = 0;
 
   SpriteSheet({
     required ImageProvider image,
@@ -31,10 +30,11 @@ class SpriteSheet {
   }
 
   int get length => _length;
+  ui.Image? get image => _image;
 
   // Given a frame index, return the rect that describes that frame in the image.
   Rect getFrame(int index) {
-    if (image == null || index < 0) return Rect.zero;
+    if (_image == null || index < 0) return Rect.zero;
 
     index = index % length;
     int x = index % _cols;
@@ -45,7 +45,7 @@ class SpriteSheet {
   }
 
   void _onImageLoaded(ui.Image img) {
-    image = img;
+    _image = img;
     // pre-calculate frame info:
     if (_frameWidth == 0) _frameWidth = img.width + 0.0;
     if (_frameHeight == 0) _frameHeight = img.height + 0.0;

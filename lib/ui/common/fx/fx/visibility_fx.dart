@@ -2,13 +2,19 @@ import 'package:flutter/widgets.dart';
 
 import '../fx.dart';
 
-// todo: possibly add other properties of visibility as params?
-// todo: also maybe a `maintain` param that shortcuts all of them
+// TODO: GDS: possibly add other properties of visibility as params?
 
 @immutable
 class VisibilityFX extends AbstractFX<bool> {
-  const VisibilityFX({Duration? delay, bool end = true})
-      : super(delay: delay, duration: Duration.zero, begin: !end, end: end,);
+  const VisibilityFX({Duration? delay, bool end = true, this.maintain = true})
+      : super(
+          delay: delay,
+          duration: Duration.zero,
+          begin: !end,
+          end: end,
+        );
+
+  final bool maintain;
 
   @override
   Widget build(BuildContext context, Widget child, AnimationController controller, FXEntry entry) {
@@ -18,14 +24,15 @@ class VisibilityFX extends AbstractFX<bool> {
     return Visibility(
       child: child,
       visible: visible,
-      maintainSize: true,
-      maintainAnimation: true,
-      maintainState: true,
+      maintainSize: maintain,
+      maintainAnimation: maintain,
+      maintainState: maintain,
+      maintainSemantics: maintain,
     );
   }
 }
 
 extension CallbackFXExtensions<T> on FXManager<T> {
-  T show({Duration? delay}) => addFX(VisibilityFX(delay: delay, end: true));
-  T hide({Duration? delay}) => addFX(VisibilityFX(delay: delay, end: false));
+  T show({Duration? delay, bool maintain = true}) => addFX(VisibilityFX(delay: delay, end: true, maintain: maintain));
+  T hide({Duration? delay, bool maintain = true}) => addFX(VisibilityFX(delay: delay, end: false, maintain: maintain));
 }

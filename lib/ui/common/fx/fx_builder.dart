@@ -6,7 +6,7 @@ import 'fx.dart';
 // StatelessWidgets. It handles the creation and disposal of the controller,
 // and passes the current animation value through to the builder function.
 class FXBuilder extends StatefulWidget {
-  // todo: add begin/end and typed builders?
+  // TODO: GDS: add begin/end and typed builders?
   final Duration delay;
   final Duration duration;
   final Curve curve;

@@ -30,8 +30,6 @@ class CollectibleData {
   String get subtitle => wondersLogic.getData(wonder).artifactCulture;
 }
 
-// todo: check which image size we should be using.
-
 // Note: look up a human readable page with:
 // https://www.metmuseum.org/art/collection/search/503940
 // where 503940 is the ID.

@@ -21,7 +21,7 @@ class TimelineScreen extends StatefulWidget {
 class _TimelineScreenState extends State<TimelineScreen> {
   late final ScrollController _scroller = ScrollController()..addListener(_handleScroll);
   final _viewportKey = GlobalKey<ScalingViewportState>();
-  // todo: this + the slider that uses it, is just for testing, remove once timeline is completed
+  // TODO: this + the slider that uses it, is just for testing, remove once timeline is completed
   double _zoomOverride = 1;
 
   void _handleScroll() {
