@@ -40,9 +40,11 @@ The Colosseum is built of travertine limestone, tuff (volcanic rock), and brick-
 On the site of the lake, in the middle of the palace grounds, Emperor Vespasian would build the Colosseum as part of a Roman resurgence. A public entertainment space replacing a symbol of imperial excess.
 ''',
   highlightArtifacts: const [
+    '251350',
     '255960',
     '247993',
     '250464',
+    '251476',
     '255960',
   ],
   hiddenArtifacts: const [

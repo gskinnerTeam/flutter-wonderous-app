@@ -30,9 +30,6 @@ class SearchService {
   Future<ServiceResult<List<String>?>> searchForArtifacts(ArtifactSearchOptions options) async {
     Map<String, dynamic> urlParams = {};
 
-    // Must have images. That's a given.
-    urlParams['hasImages'] = true;
-
     // Note; URL params are specificly named; ArtifactSearchOptions are simply labelled this way for better clarity.
     if (options.isHighlight != null) urlParams['isHighlight'] = options.isHighlight;
     if (options.isTitle != null) urlParams['title'] = options.isTitle;
@@ -46,6 +43,9 @@ class SearchService {
 
     // Query needs to be at the end of the argument list. Don't ask why.
     urlParams['q'] = options.query;
+
+    // Must have images. That's a given. This also needs to be after query.
+    urlParams['hasImages'] = true;
 
     // TODO: run a check for images with odd sizes. To do this:
     // - check the artifact's dimensions for multiple artifacts; see how often it relates to the image dimensions (should be at least a bit related)
@@ -118,6 +118,8 @@ class SearchService {
         dimension: content['dimension'] ?? '',
         classification: content['classification'] ?? '',
         culture: content['culture'] ?? '',
+        objectBeginYear: content['objectBeginDate'],
+        objectEndYear: content['objectEndDate'],
       );
     } catch (e) {
       debugPrint('Error: Search response missing content.');

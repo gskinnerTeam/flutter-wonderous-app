@@ -5,7 +5,7 @@ import 'package:wonders/logic/data/wonders_data/mock_data.dart';
 final greatWallData = WonderData(
   type: WonderType.greatWall,
   title: 'The Great Wall of China',
-  subTitle: 'The longest man-made structure on Earth',
+  subTitle: 'The longest building on Earth',
   regionTitle: 'China',
   videoId: 'do1Go22Wu8o',
   startYr: -700,
@@ -18,8 +18,8 @@ final greatWallData = WonderData(
   lng: 117.23,
   imageIds: mockImageIds,
   unsplashCollectionId: 'Kg_h04xvZEo',
-  quote1: 'Time is the test of greatness',
-  quote2: 'The First Emperor built the Great Wall',
+  quote1: 'One of the most impressive',
+  quote2: 'architectural feats in history',
   quoteAuthor: '',
   historyInfo1:
       '''The Great Wall of China is a series of fortifications that were built across the historical northern borders of ancient Chinese states and Imperial China as protection against various nomadic groups from the Eurasian Steppe. The total length of all sections ever built is over 13,000 miles.
