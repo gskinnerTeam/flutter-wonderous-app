@@ -97,7 +97,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     double bottomHalfHeight = math.min(_maxBottomHeight, context.heightPx / 6);
 
     final pageViewArtifacts = _loadedArtifacts.isEmpty
-        ? AppLoader()
+        ? Container()
         : PageView.builder(
             controller: _controller,
             itemCount: _highlightedArtifactIds.length * 10000,
@@ -193,7 +193,8 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                       children: [
                         // Wonder Name
                         Text(
-                          (_currentArtifact?.culture ?? 'Just a moment...').toUpperCase(),
+                          (_loadedArtifacts.isEmpty ? 'Just a moment...' : _currentArtifact?.culture ?? '')
+                              .toUpperCase(),
                           style: context.textStyles.titleFont.copyWith(
                             color: context.colors.accent1,
                             fontSize: 14,
@@ -203,29 +204,32 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                         ),
                         Gap(context.insets.md),
 
-                        FXAnimate(
-                          fx: const [FadeFX()],
-                          key: ValueKey(_currentArtifact?.objectId),
-                          child: Column(
-                            children: [
-                              // Artifact Title
-                              Text(
-                                _currentArtifact?.title ?? '',
-                                style: context.textStyles.h2.copyWith(color: context.colors.greyStrong),
-                                textAlign: TextAlign.center,
-                                maxLines: 1,
-                              ),
-                              Gap(context.insets.xs),
+                        _loadedArtifacts.isEmpty
+                            ? AppLoader()
+                            : FXAnimate(
+                                fx: const [FadeFX()],
+                                key: ValueKey(_currentArtifact?.objectId),
+                                child: Column(
+                                  children: [
+                                    // Artifact Title
+                                    Text(
+                                      _currentArtifact?.title ?? '',
+                                      style: context.textStyles.h2.copyWith(color: context.colors.greyStrong),
+                                      textAlign: TextAlign.center,
+                                      maxLines: 1,
+                                    ),
+                                    Gap(context.insets.xs),
 
-                              // Time frame
-                              Text(
-                                _currentArtifact?.date ?? '',
-                                style: context.textStyles.body1.copyWith(color: context.colors.body),
-                                textAlign: TextAlign.center,
+                                    // Time frame
+                                    Text(
+                                      _currentArtifact?.date ?? '',
+                                      style: context.textStyles.body1.copyWith(color: context.colors.body),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ],
-                          ),
-                        ),
+
                         Gap(context.insets.lg),
                         // Selection indicator
                         _buildPageIndicator(context),
