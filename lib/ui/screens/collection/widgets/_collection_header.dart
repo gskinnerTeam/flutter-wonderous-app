@@ -1,8 +1,8 @@
 part of '../collection_screen.dart';
 
 @immutable
-class _Header extends StatelessWidget {
-  const _Header({Key? key, required this.newCount}) : super(key: key);
+class _CollectionHeader extends StatelessWidget {
+  const _CollectionHeader({Key? key, required this.newCount}) : super(key: key);
 
   final int newCount;
 
@@ -19,8 +19,8 @@ class _Header extends StatelessWidget {
   Widget _buildTitleRow(BuildContext context) {
     return Row(children: [
       Container(
-        width: 64,
-        height: 80,
+        width: context.insets.lg * 2,
+        height: context.insets.offset,
         alignment: Alignment.centerRight,
         child: CircleIconBtn(
           icon: Icons.arrow_back,
@@ -35,7 +35,7 @@ class _Header extends StatelessWidget {
           style: context.textStyles.h3.copyWith(color: context.colors.offWhite),
         ),
       ),
-      Container(width: 64),
+      Gap(context.insets.lg * 2),
     ]);
   }
 

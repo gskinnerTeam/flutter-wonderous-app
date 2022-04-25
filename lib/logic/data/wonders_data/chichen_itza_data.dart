@@ -19,7 +19,7 @@ final chichenItzaData = WonderData(
   imageIds: mockImageIds,
   unsplashCollectionId: 'SUK0tuMnLLw',
   quote1: 'The Beauty Between',
-  quote2: 'the Heaven\nand the\nUnderworld',
+  quote2: 'the Heavens\nand the\nUnderworld',
   quoteAuthor: '',
   historyInfo1:
       '''Chichén Itzá is a large Mayan city famous for a large, pyramid temple built by the Maya civilization. It was likely to have been one of the mythical great cities, or Tollans, referred to in later Mesoamerican literature.

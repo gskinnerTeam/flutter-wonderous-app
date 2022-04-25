@@ -2,12 +2,15 @@ import 'dart:ui';
 
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/string_utils.dart';
+import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/wonders_timeline_builder.dart';
 
 part 'widgets/_bottom_scrubber.dart';
 part 'widgets/_scaling_viewport.dart';
+part 'widgets/_scaling_viewport_controller.dart';
 part 'widgets/_dashed_divider_with_year.dart';
 part 'widgets/_year_markers.dart';
+part 'widgets/_timeline_section.dart';
 
 class TimelineScreen extends StatefulWidget {
   final WonderType type;
@@ -19,23 +22,25 @@ class TimelineScreen extends StatefulWidget {
 }
 
 class _TimelineScreenState extends State<TimelineScreen> {
-  late final ScrollController _scroller = ScrollController()..addListener(_handleScroll);
-  final _viewportKey = GlobalKey<ScalingViewportState>();
   // TODO: this + the slider that uses it, is just for testing, remove once timeline is completed
   double _zoomOverride = 1;
 
-  void _handleScroll() {
-    /// Viewport = 430
-    /// max = 3000
-    // print(_scroller.position.pixels);
+  /// Create a scroll controller that the top and bottom timelines can share
+  final ScrollController _scroller = ScrollController();
+  _ScalingViewportController? _viewport;
+
+  @override
+  void dispose() {
+    _scroller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (_, constraints) {
       // Determine min and max size of the timeline based on the size available to this widget
-      const scrubberSize = 120.0;
-      final double minSize = constraints.biggest.height - scrubberSize;
+      const double scrubberSize = 80;
+      final double minSize = max(500, constraints.biggest.height - scrubberSize);
       const double maxSize = 3000;
       return SafeArea(
         child: Column(
@@ -46,8 +51,8 @@ class _TimelineScreenState extends State<TimelineScreen> {
                 children: [
                   /// The timeline content itself
                   _ScalingViewport(
-                    key: _viewportKey,
-                    controller: _scroller,
+                    onInit: (v) => _viewport = v,
+                    scroller: _scroller,
                     minSize: minSize,
                     maxSize: maxSize,
                     startYr: wondersLogic.startYear,
@@ -57,20 +62,16 @@ class _TimelineScreenState extends State<TimelineScreen> {
               ),
             ),
 
-            /// Mini Horizontal timeline, reacts to the state of the timeline,
-            /// and drives it's scroll position on Hz drag
+            /// Mini Horizontal timeline, reacts to the state of the larger scrolling timeline,
+            /// and changes the timelines scroll position on Hz drag
             _BottomScrubber(_scroller, size: scrubberSize, timelineMinSize: minSize),
 
             // TODO: remove this slider when Timeline is complete
             Slider(
               value: _zoomOverride,
-              //TODO: Somehow this needs to rebuild BottomScrubber on zoom, scrollerController doesn't dispatch changes when child content changes
-              // We want to pass something more than a scrollController here... maybe the ViewportState itself? Or a data construct that represents ViewportState?
-              // Or, we could make a top-down controller, and make Viewport dumb, and pass the controller to both scrubber and viewport.
-              // We could also just KISS and pass in the current zoom value as a key to bottom scrubber??
               onChanged: (double value) {
                 _zoomOverride = value;
-                _viewportKey.currentState?.setZoom(_zoomOverride);
+                _viewport?.setZoom(_zoomOverride);
                 setState(() {});
               },
             ),

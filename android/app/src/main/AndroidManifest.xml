@@ -3,6 +3,10 @@
    <application
         android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/launcher_icon">
+
+       <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyDectGpXKc04T6U5MyccC7L5DVl0xbUFY4"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

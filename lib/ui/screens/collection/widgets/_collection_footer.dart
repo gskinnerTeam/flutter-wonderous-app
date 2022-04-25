@@ -1,8 +1,8 @@
 part of '../collection_screen.dart';
 
 @immutable
-class _Footer extends StatelessWidget {
-  const _Footer({Key? key, required this.count, required this.total}) : super(key: key);
+class _CollectionFooter extends StatelessWidget {
+  const _CollectionFooter({Key? key, required this.count, required this.total}) : super(key: key);
 
   final int count;
   final int total;
