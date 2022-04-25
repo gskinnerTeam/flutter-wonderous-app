@@ -159,34 +159,33 @@ class _OpenedTimeRange extends StatelessWidget {
         Gap(context.insets.sm),
 
         // Timeframe slider
-        Stack(children: [
-          // Grid lines container
-          Container(
-            width: double.infinity,
-            height: 86,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(context.corners.md),
-              color: context.colors.black.withOpacity(0.1),
+        SizedBox(
+          height: 86,
+          child: Stack(children: [
+            // Grid lines container
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(context.corners.md),
+                color: context.colors.black.withOpacity(0.1),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: _timelineGrid,
+              ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: _timelineGrid,
+
+            // Time slider itself
+            Positioned.fill(
+              child: RangeSelector(
+                key: ValueKey('RangeSelectorIsWonderTime' + state.isWonderTimeframe.toString()),
+                start: startSliderRange,
+                end: endSliderRange,
+                onUpdated: onRangeUpdate,
+                onChanged: onRangeChange,
+              ),
             ),
-          ),
-          
-          // Time slider itself
-          SizedBox(
-            width: double.infinity,
-            height: 86,
-            child: RangeSelector(
-              key: ValueKey('RangeSelectorIsWonderTime' + state.isWonderTimeframe.toString()),
-              start: startSliderRange,
-              end: endSliderRange,
-              onUpdated: onRangeUpdate,
-              onChanged: onRangeChange,
-            ),
-          ),
-        ]),
+          ]),
+        ),
 
         // Year range text.
         Gap(context.insets.lg),
