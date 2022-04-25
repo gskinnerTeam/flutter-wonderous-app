@@ -1,4 +1,5 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/ui/common/cards/glass_card.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/labelled_toggle.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/range_selector.dart';
@@ -189,17 +190,18 @@ class _OpenedTimeRange extends StatelessWidget {
         ),
 
         // Year range text.
+        // Note: Cannot use StringUtils.formatYr here because the year number and BCE/CE are different styles.
         Gap(context.insets.lg),
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           Text(startYr.abs().toString(), style: context.textStyles.body3.copyWith(color: context.colors.greyStrong)),
           Gap(context.insets.xxs),
-          Text(startYr >= 0 ? 'AD' : 'BC', style: context.textStyles.tab.copyWith(color: context.colors.caption)),
+          Text(startYr >= 0 ? 'CE' : 'BCE', style: context.textStyles.tab.copyWith(color: context.colors.caption)),
           Gap(context.insets.xs),
           Text('-', style: context.textStyles.tab.copyWith(color: context.colors.caption)),
           Gap(context.insets.xs),
           Text(endYr.abs().toString(), style: context.textStyles.body3.copyWith(color: context.colors.greyStrong)),
           Gap(context.insets.xxs),
-          Text(endYr >= 0 ? 'AD' : 'BC', style: context.textStyles.tab.copyWith(color: context.colors.caption)),
+          Text(endYr >= 0 ? 'CE' : 'BCE', style: context.textStyles.tab.copyWith(color: context.colors.caption)),
         ]),
 
         Gap(context.insets.md),
@@ -227,7 +229,7 @@ class _ClosedTimeRange extends StatelessWidget {
       text = 'Timeframe: ' + wonderData.title;
     } else {
       // Show the year range if in custom mode.
-      text = 'Timeframe:: ${startYr.abs()} ${startYr >= 0 ? 'AD' : 'BC'} - ${endYr.abs()} ${endYr >= 0 ? 'AD' : 'BC'}';
+      text = 'Timeframe:: ${StringUtils.formatYr(startYr)} - ${StringUtils.formatYr(endYr)}';
     }
 
     return Row(
