@@ -218,10 +218,18 @@ class _ClosedTimeRange extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final wonderData = wondersLogic.getData(state.widget.wonderType);
-    String text = 'Timeframe:: ${state.startYrCustom} - ${state.endYrCustom} AD';
+    int startYr = state.startYrCustom;
+    int endYr = state.endYrCustom;
+
+    String text;
     if (state.isWonderTimeframe) {
+      // Show the wonder title here if in non-custom mode.
       text = 'Timeframe: ' + wonderData.title;
+    } else {
+      // Show the year range if in custom mode.
+      text = 'Timeframe:: ${startYr.abs()} ${startYr >= 0 ? 'AD' : 'BC'} - ${endYr.abs()} ${endYr >= 0 ? 'AD' : 'BC'}';
     }
+
     return Row(
       children: [
         Text(text, style: context.textStyles.titleFont),
