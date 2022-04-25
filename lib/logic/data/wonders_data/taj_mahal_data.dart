@@ -40,7 +40,28 @@ The plinth and tomb took roughly 12 years to complete. The remaining parts of th
   locationInfo:
       '''India's most famed building, it is situated in the eastern part of the city on the southern bank of the Yamuna River, nearly 1 mile east of the Agra Fort, also on the right bank of the Yamuna. The Taj Mahal is built on a parcel of land to the south of the walled city of Agra. Shah Jahan presented Maharaja Jai Singh with a large palace in the center of Agra in exchange for the land.
 ''',
-  highlightArtifacts: const [],
-  hiddenArtifacts: const [],
-  events: const {},
+  highlightArtifacts: const [
+    '453341',
+    '453243',
+    '24907s',
+    '24932',
+    '56230',
+    '35633',
+  ],
+  hiddenArtifacts: const [
+    '24907',
+    '453183',
+    '453983',
+  ],
+  events: const {
+    1631: 'Built by Mughal Emperor Shah Jahān to immortalize his deceased wife.',
+    1647: 'Construction completed. The project involved over 20,000 workers and spanned 42 acres.',
+    1658:
+        'There were plans for a second mausoleum for his own remains, but Shah Jahān was imprisoned by his son for the rest of his life in Agra Fort, and this never came to pass.',
+    1901:
+        'Lord Curzon and the British Viceroy of India carried out a major restoration to the monument after over 350 years of decay and corrosion due to factory pollution and exhaust. ',
+    1984:
+        'To protect the structure from Sikh militants and some Hindu nationalist groups, night viewing was banned to tourists. This ban would last 20 years.',
+    1998: 'Restoration and research program put into action to help preserve the monument.',
+  },
 );
