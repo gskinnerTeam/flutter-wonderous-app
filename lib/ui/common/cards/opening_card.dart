@@ -1,8 +1,8 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/measurable_widget.dart';
 
-class OpeningBox extends StatefulWidget {
-  const OpeningBox(
+class OpeningCard extends StatefulWidget {
+  const OpeningCard(
       {Key? key,
       required this.closedBuilder,
       required this.openBuilder,
@@ -18,10 +18,10 @@ class OpeningBox extends StatefulWidget {
   final EdgeInsets? padding;
 
   @override
-  State<OpeningBox> createState() => _OpeningBoxState();
+  State<OpeningCard> createState() => _OpeningCardState();
 }
 
-class _OpeningBoxState extends State<OpeningBox> {
+class _OpeningCardState extends State<OpeningCard> {
   Size _size = Size.zero;
   @override
   Widget build(BuildContext context) {
