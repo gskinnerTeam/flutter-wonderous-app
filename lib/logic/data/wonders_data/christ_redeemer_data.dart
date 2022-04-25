@@ -14,8 +14,8 @@ final christRedeemerData = WonderData(
   artifactEndYr: 1900,
   artifactCulture: '',
   artifactGeolocation: 'Brazil',
-  lat: 0,
-  lng: 0,
+  lat: -22.951944,
+  lng: -43.210556,
   imageIds: mockImageIds,
   unsplashCollectionId: 'dPgX5iK8Ufo',
   quote1: 'The perfect union between',
@@ -41,7 +41,6 @@ Construction took nine years, from 1922 to 1931, and cost the equivalent of US\$
 Corcovado hill lies just west of the city center but is wholly within the city limits and visible from great distances.
 ''',
   highlightArtifacts: const [
-    '501302',
     '764815',
     '502019',
     '764814',

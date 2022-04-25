@@ -40,11 +40,11 @@ The site itself may have been intentionally built on fault lines to afford bette
 The Inca Bridge, an Inca grass rope bridge, across the Urubamba River in the Pongo de Mainique, provided a secret entrance for the Inca army. Another Inca bridge was built to the west of Machu Picchu, the tree-trunk bridge, at a location where a gap occurs in the cliff that measures 20 feet (6 m).
 ''',
   highlightArtifacts: const [
-    '314823',
+    '313295',
     '316926',
-    '319319',
-    '502538',
-    '316822',
+    '309944',
+    '309436',
+    '309960',
     '316873',
   ],
   hiddenArtifacts: const [

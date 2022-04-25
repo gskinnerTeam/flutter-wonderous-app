@@ -5,7 +5,7 @@ import 'package:wonders/logic/data/wonders_data/mock_data.dart';
 final tajMahalData = WonderData(
   type: WonderType.tajMahal,
   title: 'Taj Mahal',
-  subTitle: 'A Symbol of Love',
+  subTitle: 'Heaven on Earth',
   regionTitle: 'Agra, India',
   videoId: 'EWkDzLrhpXI',
   startYr: 1632,
@@ -43,7 +43,7 @@ The plinth and tomb took roughly 12 years to complete. The remaining parts of th
   highlightArtifacts: const [
     '453341',
     '453243',
-    '24907',
+    '73309',
     '24932',
     '56230',
     '35633',
