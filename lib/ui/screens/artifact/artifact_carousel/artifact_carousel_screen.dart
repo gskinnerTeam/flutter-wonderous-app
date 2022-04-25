@@ -5,6 +5,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
+import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_bg.dart';
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_image.dart';
 
@@ -139,6 +140,15 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
             ),
           ),
 
+          BottomCenter(
+            child: VtGradient(
+              [Colors.transparent, context.colors.black.withOpacity(0.1)],
+              const [0, 1],
+              alignment: Alignment.topCenter,
+              height: context.insets.md,
+            ),
+          ),
+
           // Prev tap button
           CenterLeft(
             child: BasicBtn(
@@ -231,9 +241,10 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                     'BROWSE ALL ARTIFACTS',
                     Icons.search,
                     expand: true,
+                    padding: EdgeInsets.symmetric(vertical: context.insets.md),
                     onPressed: _handleSearchButtonTap,
                   ),
-                  Gap(context.insets.md),
+                  Gap(context.insets.lg),
                 ],
               ),
             ),
