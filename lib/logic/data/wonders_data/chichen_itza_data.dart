@@ -20,6 +20,7 @@ final chichenItzaData = WonderData(
   unsplashCollectionId: 'SUK0tuMnLLw',
   quote1: 'The Beauty Between',
   quote2: 'the Heaven\nand the\nUnderworld',
+  quoteAuthor: '',
   historyInfo1:
       '''Chichén Itzá is a large Mayan city famous for a large, pyramid temple built by the Maya civilization. It was likely to have been one of the mythical great cities, or Tollans, referred to in later Mesoamerican literature.
 The earliest hieroglyphic date discovered at Chichen Itza is equivalent to 832 AD, while the last known date was recorded in the Osario temple in 998.

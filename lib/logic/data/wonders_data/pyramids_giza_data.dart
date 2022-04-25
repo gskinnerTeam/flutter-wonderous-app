@@ -5,7 +5,7 @@ import 'package:wonders/logic/data/wonders_data/mock_data.dart';
 final pyramidsGizaData = WonderData(
   type: WonderType.pyramidsGiza,
   title: 'Pyramids of Giza',
-  subTitle: '---',
+  subTitle: 'Last of the ancient wonders',
   regionTitle: 'Cairo, Egypt',
   videoId: '',
   startYr: -2600,
@@ -18,8 +18,9 @@ final pyramidsGizaData = WonderData(
   lng: 31.132778,
   imageIds: mockImageIds,
   unsplashCollectionId: 'CSEvB5Tza9E',
-  quote1: '---',
-  quote2: '---',
+  quote1: 'astronomically oriented to the',
+  quote2: 'north–south and east–west',
+  quoteAuthor: '',
   historyInfo1:
       '''The Giza pyramid complex, also called the Giza necropolis, is the site on the Giza Plateau in Greater Cairo, Egypt that includes the Great Pyramid of Giza, the Pyramid of Khafre, and the Pyramid of Menkaure, along with their associated pyramid complexes and the Great Sphinx of Giza. All were built during the Fourth Dynasty of the Old Kingdom of Ancient Egypt, between 2600 and 2500 BC.
 ''',
@@ -38,7 +39,29 @@ To ensure that the pyramid remained symmetrical, the exterior casing stones all 
   locationInfo:
       '''The site is at the edges of the Western Desert, approximately 5.6 miles (9 km) west of the Nile River in the city of Giza, and about 8 miles (13 km) southwest of the city center of Cairo.
 ''',
-  highlightArtifacts: const [],
-  hiddenArtifacts: const [],
-  events: const {},
+  highlightArtifacts: const [
+    '543864',
+    '546488',
+    '557137',
+    '543900',
+    '543935',
+    '544782',
+  ],
+  hiddenArtifacts: const [
+    '546510',
+    '543896',
+    '545728',
+  ],
+  events: const {
+    -2575: 'Construction of the 3 pyramids began for three kings of the 4th dynasty; Khufu, Khafre, and Menkaure.',
+    -2465:
+        'Construction began on the smaller surrounding structures called Mastabas for royalty of the 5th and 6th dynasties.',
+    -443:
+        'Greek Author Herodotus speculated that the pyramids were built in the span of 20 years with over 100,000 slave labourers. This assumption would last for over 1500 years',
+    1925:
+        'Tomb of Queen Hetepheres was discovered, containing furniture and jewelry. One of the last remaining treasure-filled tombs after many years of looting and plundering.',
+    1979: 'Designated a UNESCO World Heritage Site to prevent any more unauthorized plundering and vandalism.',
+    1990:
+        'Discovery of labouror\'s districts suggest that the workers building the pyramids were not slaves, and an ingenious building method proved a relatively small work-force was required to build such immense structures.',
+  },
 );

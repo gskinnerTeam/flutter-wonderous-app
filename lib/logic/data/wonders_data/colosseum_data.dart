@@ -5,7 +5,7 @@ import 'package:wonders/logic/data/wonders_data/mock_data.dart';
 final colosseumData = WonderData(
   type: WonderType.colosseum,
   title: 'Colosseum',
-  subTitle: '---',
+  subTitle: 'The icon of Rome',
   regionTitle: 'Rome, Italy',
   videoId: 'GXoEpNjgKzg',
   startYr: 70,
@@ -18,8 +18,9 @@ final colosseumData = WonderData(
   lng: 12.492222,
   imageIds: mockImageIds,
   unsplashCollectionId: 'VPdti8Kjq9o',
-  quote1: '---',
-  quote2: '---',
+  quote1: 'The largest standing amphitheater',
+  quote2: 'in the world today',
+  quoteAuthor: '',
   historyInfo1:
       '''The Colosseum is an oval amphitheater in the center of the city of Rome, Italy. Unlike Roman theaters that were built into hillsides, the Colosseum is an entirely free-standing structure.
 It was used for gladiatorial contests and public spectacles including animal hunts, executions, reenactments of famous battles, and dramas based on Roman mythology, and mock sea battles.
@@ -38,11 +39,27 @@ The Colosseum is built of travertine limestone, tuff (volcanic rock), and brick-
       '''Following the Great Fire of Rome in 64 AD, Emperor Nero seized much of the destroyed area to build his grandiose Domus Aurea ("Golden House"). A severe embarrassment to Nero's successors, parts of this extravagant palace and grounds, encompassing 1 sq mile, were filled with earth and built over.
 On the site of the lake, in the middle of the palace grounds, Emperor Vespasian would build the Colosseum as part of a Roman resurgence. A public entertainment space replacing a symbol of imperial excess.
 ''',
-  highlightArtifacts: const [],
+  highlightArtifacts: const [
+    '255960',
+    '247993',
+    '250464',
+    '255960',
+  ],
   hiddenArtifacts: const [
     '245376',
     '256570',
     '286136',
   ],
-  events: const {},
+  events: const {
+    70: 'Colosseum construction was started during the Vespasian reign overtop what used to be a private lake for the previous four emperors. This was done in an attempt to revitalize Rome from their tyrannical reign.',
+    82: 'The uppermost floor was built, and the structure was officially completed by Domitian.',
+    1140:
+        'The arena was repurposed as a fortress for the Frangipane and Annibaldi families. It was also at one point used as a church.',
+    1490:
+        'Pope Alexander VI permitted the site to be used as a quarry, for both storing and salvaging building materials.',
+    1829:
+        'Preservation of the colosseum officially began, after more than a millennia of dilapidation and vandalism. Pope Pius VIII was notably devoted to this project.',
+    1990:
+        'A restoration project was undertaken to ensure the colosseum remained a major tourist attraction for Rome. It currently stands as one of the greatest sources of tourism revenue in Italy.',
+  },
 );

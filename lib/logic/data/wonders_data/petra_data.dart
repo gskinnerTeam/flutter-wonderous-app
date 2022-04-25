@@ -18,8 +18,9 @@ final petraData = WonderData(
   lng: 35.441944,
   imageIds: mockImageIds,
   unsplashCollectionId: 'qWQJbDvCMW8',
-  quote1: 'The Beauty Between',
-  quote2: 'the Heaven\nand the\nUnderworld',
+  quote1: 'A rose-red city',
+  quote2: 'half as old as Time',
+  quoteAuthor: 'John William Burgon',
   historyInfo1:
       '''The area around Petra has been inhabited from as early as 7000 BC, and the Nabataeans might have settled in what would become the capital city of their kingdom as early as the 4th century BC
 The trading business gained the Nabataeans considerable revenue and Petra became the focus of their wealth. They were particularly skillful in harvesting rainwater, agriculture and stone carving. 
@@ -41,7 +42,26 @@ Near the bottom of the Treasury we see twin Greek Gods: Pollux, Castor, and Dios
       '''Petra is located in southern Jordan. It is adjacent to the mountain of Jabal Al-Madbah, in a basin surrounded by mountains forming the eastern flank of the Arabah valley running from the Dead Sea to the Gulf of Aqaba.
 The Nabataeans were nomadic Arabs who invested in Petra's proximity to the incense trade routes by establishing it as a major regional trading hub. Petra controlled the commercial caravan trade routes which passed through it to Gaza in the west, to Bosra and Damascus in the north, to Aqaba and Leuce Come on the Red Sea, and across the desert to the Persian Gulf.
 ''',
-  highlightArtifacts: const [],
-  hiddenArtifacts: const [],
-  events: const {},
+  highlightArtifacts: const [
+    '325900',
+    '325902',
+    '325919',
+    '325884',
+    '325887',
+    '325891',
+  ],
+  hiddenArtifacts: const [
+    '322592',
+    '325918',
+    '326243',
+  ],
+  events: const {
+    -1200: 'First Edomites occupied the area and established a foothold.',
+    -106: 'Became part of the Roman province Arabia',
+    551: 'After being damaged by earthquakes, habitation of the city all but ceased.',
+    1812: 'Rediscovered by the Swiss traveler Johann Ludwig Burckhardt.',
+    1958:
+        'Excavations led on the site by the British School of Archaeology and the American Center of Oriental Research.',
+    1989: 'Appeared in the film Indiana Jones and The Last Crusade.',
+  },
 );
