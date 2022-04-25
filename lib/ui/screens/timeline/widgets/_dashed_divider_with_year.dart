@@ -6,7 +6,7 @@ class _DashedDividerWithYear extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int yrGap = 1;
+    int yrGap = 10;
     final roundedYr = (year / yrGap).round() * yrGap;
     return Stack(
       children: [

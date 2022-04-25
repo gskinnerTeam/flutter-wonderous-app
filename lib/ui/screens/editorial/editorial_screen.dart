@@ -79,9 +79,9 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (_, constraints) {
       bool shortMode = constraints.biggest.height < 700;
-      double _illustrationHeight = shortMode ? 250 : 280;
-      double _minAppBarHeight = shortMode ? 40 : 120;
-      double _maxAppBarHeight = shortMode ? 400 : 500;
+      double illustrationHeight = shortMode ? 250 : 280;
+      double minAppBarHeight = shortMode ? 40 : 120;
+      double maxAppBarHeight = shortMode ? 400 : 500;
 
       return NotificationListener<ScrollUpdateNotification>(
         onNotification: _checkPointerIsDown,
@@ -103,7 +103,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
 
               /// Top Illustration - Sits underneath the scrolling content, fades out as it scrolls
               SizedBox(
-                height: _illustrationHeight,
+                height: illustrationHeight,
                 child: ValueListenableBuilder<double>(
                   valueListenable: _scrollPos,
                   builder: (_, value, child) {
@@ -123,7 +123,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                 slivers: [
                   /// Invisible padding at the top of the list, so the illustration shows through the btm
                   SliverToBoxAdapter(
-                    child: SizedBox(height: _illustrationHeight + context.insets.md),
+                    child: SizedBox(height: illustrationHeight + context.insets.md),
                   ),
 
                   /// Text content, animates itself to hide behind the app bar as it scrolls up
@@ -145,9 +145,9 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                   /// Collapsing App bar, pins to the top of the list
                   SliverAppBar(
                     pinned: true,
-                    collapsedHeight: _minAppBarHeight,
-                    toolbarHeight: _minAppBarHeight,
-                    expandedHeight: _maxAppBarHeight,
+                    collapsedHeight: minAppBarHeight,
+                    toolbarHeight: minAppBarHeight,
+                    expandedHeight: maxAppBarHeight,
                     backgroundColor: Colors.transparent,
                     elevation: 0,
                     leading: SizedBox.shrink(),

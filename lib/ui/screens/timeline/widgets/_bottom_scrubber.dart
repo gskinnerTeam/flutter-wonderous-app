@@ -2,7 +2,7 @@ part of '../timeline_screen.dart';
 
 class _BottomScrubber extends StatelessWidget {
   const _BottomScrubber(this.scroller, {Key? key, required this.timelineMinSize, required this.size}) : super(key: key);
-  final ScrollController scroller;
+  final ScrollController? scroller;
   final double timelineMinSize;
   final double size;
 
@@ -20,6 +20,10 @@ class _BottomScrubber extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scroller = this.scroller;
+
+    /// It might take a frame until we receive a valid scroller
+    if (scroller == null) return SizedBox.shrink();
     void _handleScrubberPan(DragUpdateDetails details) {
       if (!scroller.hasClients) return;
       // TODO: This drag multiplier is close... but not exactly right.
@@ -32,17 +36,25 @@ class _BottomScrubber extends StatelessWidget {
       height: size,
       child: Stack(
         children: [
-          WondersTimelineBuilder(
-            crossAxisGap: 0,
-            timelineBuilder: (_, data) {
-              return Container(color: Colors.blue, child: Text(data.title));
-            },
+          Padding(
+            padding: EdgeInsets.all(context.insets.sm),
+            child: WondersTimelineBuilder(
+              crossAxisGap: 8,
+              timelineBuilder: (_, data) {
+                return Container(
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(99),
+                    border: Border.all(color: context.colors.greyMedium),
+                  ),
+                );
+              },
+            ),
           ),
           AnimatedBuilder(
             animation: scroller,
             builder: (_, __) {
               ScrollPosition? pos;
-              // SB: Need to add this checks because Flutter throws an error out if you ask it for scroll position when hasClients=false, // TODO: Can we abstract this so that the views don't need to care about this?... all we want is a couple of doubles, this is too cludgy
               if (scroller.hasClients) pos = scroller.position;
               // Get current scroll offset and move the viewport to match
               double scrollFraction = _calculateScrollFraction(pos);
