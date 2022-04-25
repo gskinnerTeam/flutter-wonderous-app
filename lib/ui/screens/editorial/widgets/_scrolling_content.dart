@@ -35,7 +35,7 @@ class _ScrollingContent extends StatelessWidget {
           buildText(data.historyInfo2),
           _SectionDivider(scrollPos, sectionNotifier, index: 1),
           buildDropCapText(data.constructionInfo1),
-          SizedBox(child: AspectRatio(aspectRatio: 1.5, child: _YouTubeThumbnail(id: data.videoId))),
+          _YouTubeThumbnail(id: data.videoId),
           buildText(data.constructionInfo2),
           _SlidingImageStack(scrollPos: scrollPos, type: data.type),
           _SectionDivider(scrollPos, sectionNotifier, index: 2),
@@ -67,9 +67,14 @@ class _YouTubeThumbnail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void handleVideoPressed() => context.push(ScreenPaths.video(id));
-    return GestureDetector(
-      onTap: handleVideoPressed,
-      child: CachedNetworkImage(imageUrl: imageUrl, fit: BoxFit.cover),
+    return SizedBox(
+      child: AspectRatio(
+        aspectRatio: 1.5,
+        child: GestureDetector(
+          onTap: handleVideoPressed,
+          child: CachedNetworkImage(imageUrl: imageUrl, fit: BoxFit.cover),
+        ),
+      ),
     );
   }
 }

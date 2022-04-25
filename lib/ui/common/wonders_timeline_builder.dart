@@ -17,7 +17,8 @@ class WondersTimelineBuilder extends StatelessWidget {
 
   double _calculateTimelineSize(WonderData data) {
     final totalYrs = wondersLogic.endYear - wondersLogic.startYear;
-    return max(.04, (data.endYr - data.startYr) / totalYrs);
+    // TODO: Min size needs to be a pixel based number (not fraction), injected from outside. Probably need to get the constraints of this builder to do that (Layout Builder)
+    return max(.01, (data.endYr - data.startYr) / totalYrs);
   }
 
   Alignment _calculateTimelinePos(WonderData data) {
@@ -25,39 +26,71 @@ class WondersTimelineBuilder extends StatelessWidget {
     final fraction = -1 + ((data.startYr - wondersLogic.startYear) / totalYrs) * 2;
     final double x = isHz ? fraction : 0;
     final double y = isHz ? 0 : fraction;
+    print('align: $y');
     return Alignment(x, y);
   }
 
-  /// TODO: Different wonders need to go in different lanes
   @override
   Widget build(BuildContext context) {
-    Widget buildTimeline(WonderData data) {
-      // Depending on axis, we set either width, or height to a number < 1.
-      double width = isHz ? _calculateTimelineSize(data) : 1;
-      double height = isHz ? 1 : _calculateTimelineSize(data);
-      return Expanded(
-        child: SizedBox.expand(
-          child: Align(
-            alignment: _calculateTimelinePos(data),
+    final gap = crossAxisGap ?? context.insets.xs;
+    // Depending on axis, we put all the wonders in a hz row, or vt column
+    Widget wrapFlex(List<Widget> c) {
+      c = c.map<Widget>((w) => Expanded(child: w)).toList();
+      return isHz
+          ? SeparatedColumn(verticalDirection: VerticalDirection.up, separatorBuilder: () => Gap(gap), children: c)
+          : SeparatedRow(separatorBuilder: () => Gap(gap), children: c);
+    }
+
+    return Stack(children: [
+      /// We always have 3 "lanes" which we strategically distribute wonders that
+      /// should not overlap
+      wrapFlex([
+        // Slot 1
+        // _buildTimelineStack(
+        //   context,
+        //   [
+        //     WonderType.greatWall,
+        //   ],
+        // ),
+        // Slot 2
+        _buildTimelineStack(
+          context,
+          [
+            //WonderType.chichenItza,
+            //WonderType.machuPicchu,
+            WonderType.petra,
+          ],
+        ),
+        // Slot 3
+        // _buildTimelineStack(
+        //   context,
+        //   [
+        //     WonderType.tajMahal,
+        //     WonderType.christRedeemer,
+        //     WonderType.colosseum,
+        //   ],
+        // ),
+      ])
+    ]);
+  }
+
+  Widget _buildTimelineStack(BuildContext context, List<WonderType> types) {
+    return Stack(
+      children: types.map(
+        (t) {
+          final data = wondersLogic.getData(t);
+          // Depending on axis, we set either width, or height to a number < 1.
+          double width = isHz ? _calculateTimelineSize(data) : 1;
+          double height = isHz ? 1 : _calculateTimelineSize(data);
+          return SizedBox.expand(
             child: FractionallySizedBox(
               widthFactor: width,
               heightFactor: height,
               child: timelineBuilder.call(context, data),
             ),
-          ),
-        ),
-      );
-    }
-
-    final wonders = wondersLogic.all;
-    final gap = crossAxisGap ?? context.insets.xs;
-    // Depending on axis, we put all the wonders in a hz row, or a vertical column
-    Widget wrapFlex(List<Widget> c) => isHz
-        ? SeparatedColumn(separatorBuilder: () => Gap(gap), children: c)
-        : SeparatedRow(separatorBuilder: () => Gap(gap), children: c);
-
-    return Stack(children: [
-      wrapFlex([...wonders.map(buildTimeline)])
-    ]);
+          );
+        },
+      ).toList(),
+    );
   }
 }
