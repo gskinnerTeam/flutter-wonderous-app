@@ -147,8 +147,8 @@ class _OpenedTimeRange extends StatelessWidget {
     int startYr = state.isWonderTimeframe ? wonderData.artifactStartYr : state.startYrCustom;
     int endYr = state.isWonderTimeframe ? wonderData.artifactEndYr : state.endYrCustom;
 
-    double startSliderRange = (startYr - wonderData.artifactStartYr) / (state.endYrRange - state.startYrRange);
-    double endSliderRange = (endYr - wonderData.artifactStartYr) / (state.endYrRange - state.startYrRange);
+    double startSliderRange = (startYr - state.startYrRange) / (state.endYrRange - state.startYrRange);
+    double endSliderRange = (endYr - state.startYrRange) / (state.endYrRange - state.startYrRange);
 
     return Column(
       children: [
