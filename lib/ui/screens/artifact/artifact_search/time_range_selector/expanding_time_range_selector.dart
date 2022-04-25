@@ -1,5 +1,4 @@
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/common/blend_mask.dart';
 import 'package:wonders/ui/common/cards/glass_card.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/labelled_toggle.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/range_selector.dart';
@@ -87,7 +86,7 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
 
   @override
   Widget build(BuildContext context) {
-    final padding = context.insets.sm;
+    final double pad = context.insets.sm;
 
     return LayoutBuilder(builder: (_, constraints) {
       return GestureDetector(
@@ -98,31 +97,27 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
           padding: _isPanelOpen ? EdgeInsets.zero : EdgeInsets.symmetric(vertical: context.insets.md),
           child: Container(
             decoration: BoxDecoration(
-              color: context.colors.white.withOpacity(0.9),
+              color: context.colors.white.withOpacity(0.85),
               borderRadius: BorderRadius.all(Radius.circular(context.corners.md)),
               boxShadow: [
-                BoxShadow(color: context.colors.black.withOpacity(0.25), offset: Offset(0, 4), blurRadius: 4)
+                BoxShadow(
+                  color: context.colors.black.withOpacity(0.25),
+                  offset: Offset(0, 4),
+                  blurRadius: 4,
+                ),
               ],
             ),
             child: OpeningGlassCard(
               isOpen: _isPanelOpen,
-              closedBuilder: (_) => Padding(
-                padding: EdgeInsets.all(padding),
-                child: _ClosedTimeRange(this),
-              ),
-              openBuilder: (_) => Container(
-                color: context.colors.offWhite.withOpacity(0.75),
-                child: Padding(
-                  padding: EdgeInsets.all(padding),
-                  child: SizedBox(
-                    width: constraints.maxWidth - padding * 2,
-                    child: _OpenedTimeRange(
-                      this,
-                      _handleYearRangeUpdate,
-                      _handleYearRangeChange,
-                      () => _handleCustomToggle(isWonderTime: !isWonderTimeframe),
-                    ),
-                  ),
+              padding: EdgeInsets.all(pad),
+              closedBuilder: (_) => _ClosedTimeRange(this),
+              openBuilder: (_) => SizedBox(
+                width: constraints.maxWidth - pad * 2,
+                child: _OpenedTimeRange(
+                  this,
+                  _handleYearRangeUpdate,
+                  _handleYearRangeChange,
+                  () => _handleCustomToggle(isWonderTime: !isWonderTimeframe),
                 ),
               ),
             ),
@@ -146,7 +141,7 @@ class _OpenedTimeRange extends StatelessWidget {
   Widget build(BuildContext context) {
     final wonderData = wondersLogic.getData(state.widget.wonderType);
     List<Widget> _timelineGrid =
-        List.generate(5, (_) => Container(width: 1, color: context.colors.body.withOpacity(0.15)));
+        List.generate(5, (_) => Container(width: 1, color: context.colors.black.withOpacity(0.1)));
 
     int startYr = state.isWonderTimeframe ? wonderData.artifactStartYr : state.startYrCustom;
     int endYr = state.isWonderTimeframe ? wonderData.artifactEndYr : state.endYrCustom;
@@ -154,47 +149,33 @@ class _OpenedTimeRange extends StatelessWidget {
     double startSliderRange = (startYr - wonderData.artifactStartYr) / (state.endYrRange - state.startYrRange);
     double endSliderRange = (endYr - wonderData.artifactStartYr) / (state.endYrRange - state.startYrRange);
 
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: context.insets.xs),
-      child: Column(
-        children: [
-          Text('Choose a timeframe', style: context.textStyles.title3.copyWith(color: context.colors.greyStrong)),
-          Gap(context.insets.sm),
+    return Column(
+      children: [
+        Text(
+          'Choose a timeframe',
+          style: context.textStyles.title3.copyWith(color: context.colors.greyStrong),
+          textAlign: TextAlign.center,
+        ),
+        Gap(context.insets.sm),
 
-          // Timeframe slider
-          Stack(children: [
-            // Background cutout mask for the tile slider
-            BlendMask(
-              blendModes: const [BlendMode.dstOut],
-              opacity: 0.8,
-              child: Container(
-                width: double.infinity,
-                height: 86,
-                decoration: BoxDecoration(
-                    color: context.colors.white, borderRadius: BorderRadius.all(Radius.circular(context.corners.md))),
-              ),
-            ),
-            // Time slider background
-            Container(
-              width: double.infinity,
-              height: 86,
-              decoration: BoxDecoration(
-                  color: context.colors.offWhite, borderRadius: BorderRadius.all(Radius.circular(context.corners.md))),
-            ),
+        // Timeframe slider
+        SizedBox(
+          height: 86,
+          child: Stack(children: [
             // Grid lines container
             Container(
-              width: double.infinity,
-              height: 86,
-              decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(context.corners.md))),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(context.corners.md),
+                color: context.colors.black.withOpacity(0.1),
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: _timelineGrid,
               ),
             ),
+
             // Time slider itself
-            SizedBox(
-              width: double.infinity,
-              height: 86,
+            Positioned.fill(
               child: RangeSelector(
                 key: ValueKey('RangeSelectorIsWonderTime' + state.isWonderTimeframe.toString()),
                 start: startSliderRange,
@@ -205,27 +186,27 @@ class _OpenedTimeRange extends StatelessWidget {
               ),
             ),
           ]),
+        ),
 
-          // Year range text.
-          Gap(context.insets.lg),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Text(startYr.abs().toString(), style: context.textStyles.body3.copyWith(color: context.colors.greyStrong)),
-            Gap(context.insets.xxs),
-            Text(startYr >= 0 ? 'AD' : 'BC', style: context.textStyles.tab.copyWith(color: context.colors.caption)),
-            Gap(context.insets.xs),
-            Text('-', style: context.textStyles.tab.copyWith(color: context.colors.caption)),
-            Gap(context.insets.xs),
-            Text(endYr.abs().toString(), style: context.textStyles.body3.copyWith(color: context.colors.greyStrong)),
-            Gap(context.insets.xxs),
-            Text(endYr >= 0 ? 'AD' : 'BC', style: context.textStyles.tab.copyWith(color: context.colors.caption)),
-          ]),
-
-          Gap(context.insets.md),
-          LabelledToggle(
-              optionOff: 'Custom', optionOn: wonderData.title, isOn: state.isWonderTimeframe, onClick: onToggleTap),
+        // Year range text.
+        Gap(context.insets.lg),
+        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Text(startYr.abs().toString(), style: context.textStyles.body3.copyWith(color: context.colors.greyStrong)),
+          Gap(context.insets.xxs),
+          Text(startYr >= 0 ? 'AD' : 'BC', style: context.textStyles.tab.copyWith(color: context.colors.caption)),
           Gap(context.insets.xs),
-        ],
-      ),
+          Text('-', style: context.textStyles.tab.copyWith(color: context.colors.caption)),
+          Gap(context.insets.xs),
+          Text(endYr.abs().toString(), style: context.textStyles.body3.copyWith(color: context.colors.greyStrong)),
+          Gap(context.insets.xxs),
+          Text(endYr >= 0 ? 'AD' : 'BC', style: context.textStyles.tab.copyWith(color: context.colors.caption)),
+        ]),
+
+        Gap(context.insets.md),
+        LabelledToggle(
+            optionOff: 'Custom', optionOn: wonderData.title, isOn: state.isWonderTimeframe, onClick: onToggleTap),
+        Gap(context.insets.xs),
+      ],
     );
   }
 }
@@ -248,31 +229,5 @@ class _ClosedTimeRange extends StatelessWidget {
         Icon(Icons.edit_outlined, color: context.colors.greyStrong, size: 14.0),
       ],
     );
-  }
-}
-
-class CardHolePainter extends CustomPainter {
-  CardHolePainter(this.color, {Key? key});
-  final Color color;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint();
-    paint.color = color;
-    canvas.drawPath(
-      Path.combine(
-        PathOperation.difference,
-        Path()..addRRect(RRect.fromLTRBR(100, 100, 300, 300, Radius.circular(10))),
-        Path()
-          ..addOval(Rect.fromCircle(center: Offset(200, 200), radius: 50))
-          ..close(),
-      ),
-      paint,
-    );
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return false;
   }
 }

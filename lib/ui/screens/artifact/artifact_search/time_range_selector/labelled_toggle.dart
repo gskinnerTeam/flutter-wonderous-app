@@ -43,20 +43,13 @@ class LabelledToggle extends StatelessWidget {
           child: Stack(
             fit: StackFit.loose,
             children: [
-              // Mask for background blending
-              BlendMask(
-                blendModes: const [BlendMode.dstOut],
-                opacity: 0.8,
-                child: Container(
-                  width: constraints.maxWidth,
-                  height: constraints.maxHeight,
-                  decoration: circleDec.copyWith(color: context.colors.white),
-                ),
-              ),
               Container(
                 width: double.infinity,
                 height: constraints.maxHeight,
-                decoration: circleDec.copyWith(color: context.colors.offWhite),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(1000),
+                  color: context.colors.black.withOpacity(0.1),
+                ),
               ),
 
               // Switch BG

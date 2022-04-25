@@ -1,8 +1,8 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/measurable_widget.dart';
 
-class OpeningBox extends StatefulWidget {
-  const OpeningBox(
+class OpeningCard extends StatefulWidget {
+  const OpeningCard(
       {Key? key,
       required this.closedBuilder,
       required this.openBuilder,
@@ -18,10 +18,10 @@ class OpeningBox extends StatefulWidget {
   final EdgeInsets? padding;
 
   @override
-  State<OpeningBox> createState() => _OpeningBoxState();
+  State<OpeningCard> createState() => _OpeningCardState();
 }
 
-class _OpeningBoxState extends State<OpeningBox> {
+class _OpeningCardState extends State<OpeningCard> {
   Size _size = Size.zero;
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,11 @@ class _OpeningBoxState extends State<OpeningBox> {
         duration: context.times.fast,
         child: ClipRect(
           key: ValueKey(widget.isOpen),
-          child: UnconstrainedBox(
+          child: OverflowBox(
+            minWidth: 0.0,
+            maxWidth: double.infinity,
+            minHeight: 0.0,
+            maxHeight: double.infinity,
             child: MeasurableWidget(
               onChange: (size) {
                 setState(() => _size = size);
@@ -56,8 +60,7 @@ class _OpeningBoxState extends State<OpeningBox> {
               child: widget.isOpen ? widget.openBuilder(context) : widget.closedBuilder(context),
             ),
           ),
-        ),
-      ),
+        ),),
     );
   }
 }
