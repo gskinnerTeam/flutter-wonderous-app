@@ -180,6 +180,7 @@ class _OpenedTimeRange extends StatelessWidget {
                 key: ValueKey('RangeSelectorIsWonderTime' + state.isWonderTimeframe.toString()),
                 start: startSliderRange,
                 end: endSliderRange,
+                isLocked: state.isWonderTimeframe,
                 onUpdated: onRangeUpdate,
                 onChanged: onRangeChange,
               ),

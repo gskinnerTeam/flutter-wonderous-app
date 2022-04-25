@@ -5,6 +5,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
+import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_bg.dart';
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_image.dart';
 
@@ -34,8 +35,9 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   void initState() {
     super.initState();
 
-    _controller = PageController(
-        initialPage: _highlightedArtifactIds.length * 5000, viewportFraction: _pageViewportFraction, keepPage: true);
+    _currentPage = _highlightedArtifactIds.length * 5000;
+    _controller =
+        PageController(initialPage: _currentPage.toInt(), viewportFraction: _pageViewportFraction, keepPage: true);
     _controller.addListener(() {
       setState(() {
         _currentPage = _controller.page ?? 0.0;
@@ -61,6 +63,9 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     } else {
       debugPrint('ERROR: No artifacts found for ${widget.type}');
     }
+
+    // Update the screen.
+    setState(() {});
   }
 
   void _changeArtifactIndex(int index) {
@@ -91,25 +96,23 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     double carouselImageWidth = math.min(_maxElementWidth, context.widthPx / 1.25);
     double bottomHalfHeight = math.min(_maxBottomHeight, context.heightPx / 6);
 
-    if (_currentArtifact == null) {
-      return Center(child: AppLoader());
-    }
-
-    final pageViewArtifacts = PageView.builder(
-      controller: _controller,
-      itemCount: _highlightedArtifactIds.length * 10000,
-      clipBehavior: Clip.none,
-      onPageChanged: _changeArtifactIndex,
-      itemBuilder: (context, index) {
-        return ArtifactCarouselImage(
-          index: index,
-          currentPage: _currentPage,
-          artifact: _loadedArtifacts[index % _loadedArtifacts.length],
-          viewportFraction: _pageViewportFraction,
-          onPressed: () => _handleArtifactTap(index),
-        );
-      },
-    );
+    final pageViewArtifacts = _loadedArtifacts.isEmpty
+        ? Container()
+        : PageView.builder(
+            controller: _controller,
+            itemCount: _highlightedArtifactIds.length * 10000,
+            clipBehavior: Clip.none,
+            onPageChanged: _changeArtifactIndex,
+            itemBuilder: (context, index) {
+              return ArtifactCarouselImage(
+                index: index,
+                currentPage: _currentPage,
+                artifact: _loadedArtifacts[index % _loadedArtifacts.length],
+                viewportFraction: _pageViewportFraction,
+                onPressed: () => _handleArtifactTap(index),
+              );
+            },
+          );
 
     return Container(
       color: context.colors.greyStrong,
@@ -132,6 +135,15 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(_maxBottomWidth / 2), topRight: Radius.circular(_maxBottomWidth / 2)),
               ),
+            ),
+          ),
+
+          BottomCenter(
+            child: VtGradient(
+              [Colors.transparent, context.colors.black.withOpacity(0.1)],
+              const [0, 1],
+              alignment: Alignment.topCenter,
+              height: context.insets.md,
             ),
           ),
 
@@ -181,7 +193,8 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                       children: [
                         // Wonder Name
                         Text(
-                          (_currentArtifact?.culture ?? '---').toUpperCase(),
+                          (_loadedArtifacts.isEmpty ? 'Just a moment...' : _currentArtifact?.culture ?? '')
+                              .toUpperCase(),
                           style: context.textStyles.titleFont.copyWith(
                             color: context.colors.accent1,
                             fontSize: 14,
@@ -191,29 +204,32 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                         ),
                         Gap(context.insets.md),
 
-                        FXAnimate(
-                          fx: const [FadeFX()],
-                          key: ValueKey(_currentArtifact?.objectId),
-                          child: Column(
-                            children: [
-                              // Artifact Title
-                              Text(
-                                _currentArtifact?.title ?? '---',
-                                style: context.textStyles.h2.copyWith(color: context.colors.greyStrong),
-                                textAlign: TextAlign.center,
-                                maxLines: 1,
-                              ),
-                              Gap(context.insets.xs),
+                        _loadedArtifacts.isEmpty
+                            ? AppLoader()
+                            : FXAnimate(
+                                fx: const [FadeFX()],
+                                key: ValueKey(_currentArtifact?.objectId),
+                                child: Column(
+                                  children: [
+                                    // Artifact Title
+                                    Text(
+                                      _currentArtifact?.title ?? '',
+                                      style: context.textStyles.h2.copyWith(color: context.colors.greyStrong),
+                                      textAlign: TextAlign.center,
+                                      maxLines: 1,
+                                    ),
+                                    Gap(context.insets.xs),
 
-                              // Time frame
-                              Text(
-                                _currentArtifact?.date ?? '---',
-                                style: context.textStyles.body1.copyWith(color: context.colors.body),
-                                textAlign: TextAlign.center,
+                                    // Time frame
+                                    Text(
+                                      _currentArtifact?.date ?? '',
+                                      style: context.textStyles.body1.copyWith(color: context.colors.body),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ],
-                          ),
-                        ),
+
                         Gap(context.insets.lg),
                         // Selection indicator
                         _buildPageIndicator(context),
@@ -227,9 +243,10 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                     'BROWSE ALL ARTIFACTS',
                     Icons.search,
                     expand: true,
+                    padding: EdgeInsets.symmetric(vertical: context.insets.md),
                     onPressed: _handleSearchButtonTap,
                   ),
-                  Gap(context.insets.md),
+                  Gap(context.insets.lg),
                 ],
               ),
             ),

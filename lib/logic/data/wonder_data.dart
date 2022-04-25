@@ -25,6 +25,7 @@ class WonderData extends Equatable {
     required this.unsplashCollectionId,
     required this.quote1,
     required this.quote2,
+    required this.quoteAuthor,
     this.facts = const [],
     required this.historyInfo1,
     required this.historyInfo2,
@@ -49,6 +50,7 @@ class WonderData extends Equatable {
   final String locationInfo;
   final String quote1;
   final String quote2;
+  final String quoteAuthor;
   final String unsplashCollectionId;
   final String videoId;
   final List<String> imageIds;

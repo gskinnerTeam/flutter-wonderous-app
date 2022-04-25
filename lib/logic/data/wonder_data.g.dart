@@ -45,6 +45,8 @@ abstract class _$WonderDataCWProxy {
 
   WonderData quote2(String quote2);
 
+  WonderData quoteAuthor(String quoteAuthor);
+
   WonderData regionTitle(String regionTitle);
 
   WonderData startYr(int startYr);
@@ -85,6 +87,7 @@ abstract class _$WonderDataCWProxy {
     String? locationInfo,
     String? quote1,
     String? quote2,
+    String? quoteAuthor,
     String? regionTitle,
     int? startYr,
     String? subTitle,
@@ -102,28 +105,22 @@ class _$WonderDataCWProxyImpl implements _$WonderDataCWProxy {
   const _$WonderDataCWProxyImpl(this._value);
 
   @override
-  WonderData artifactCulture(String artifactCulture) =>
-      this(artifactCulture: artifactCulture);
+  WonderData artifactCulture(String artifactCulture) => this(artifactCulture: artifactCulture);
 
   @override
-  WonderData artifactEndYr(int artifactEndYr) =>
-      this(artifactEndYr: artifactEndYr);
+  WonderData artifactEndYr(int artifactEndYr) => this(artifactEndYr: artifactEndYr);
 
   @override
-  WonderData artifactGeolocation(String artifactGeolocation) =>
-      this(artifactGeolocation: artifactGeolocation);
+  WonderData artifactGeolocation(String artifactGeolocation) => this(artifactGeolocation: artifactGeolocation);
 
   @override
-  WonderData artifactStartYr(int artifactStartYr) =>
-      this(artifactStartYr: artifactStartYr);
+  WonderData artifactStartYr(int artifactStartYr) => this(artifactStartYr: artifactStartYr);
 
   @override
-  WonderData constructionInfo1(String constructionInfo1) =>
-      this(constructionInfo1: constructionInfo1);
+  WonderData constructionInfo1(String constructionInfo1) => this(constructionInfo1: constructionInfo1);
 
   @override
-  WonderData constructionInfo2(String constructionInfo2) =>
-      this(constructionInfo2: constructionInfo2);
+  WonderData constructionInfo2(String constructionInfo2) => this(constructionInfo2: constructionInfo2);
 
   @override
   WonderData endYr(int endYr) => this(endYr: endYr);
@@ -135,20 +132,16 @@ class _$WonderDataCWProxyImpl implements _$WonderDataCWProxy {
   WonderData facts(List<String> facts) => this(facts: facts);
 
   @override
-  WonderData hiddenArtifacts(List<String> hiddenArtifacts) =>
-      this(hiddenArtifacts: hiddenArtifacts);
+  WonderData hiddenArtifacts(List<String> hiddenArtifacts) => this(hiddenArtifacts: hiddenArtifacts);
 
   @override
-  WonderData highlightArtifacts(List<String> highlightArtifacts) =>
-      this(highlightArtifacts: highlightArtifacts);
+  WonderData highlightArtifacts(List<String> highlightArtifacts) => this(highlightArtifacts: highlightArtifacts);
 
   @override
-  WonderData historyInfo1(String historyInfo1) =>
-      this(historyInfo1: historyInfo1);
+  WonderData historyInfo1(String historyInfo1) => this(historyInfo1: historyInfo1);
 
   @override
-  WonderData historyInfo2(String historyInfo2) =>
-      this(historyInfo2: historyInfo2);
+  WonderData historyInfo2(String historyInfo2) => this(historyInfo2: historyInfo2);
 
   @override
   WonderData imageIds(List<String> imageIds) => this(imageIds: imageIds);
@@ -160,14 +153,16 @@ class _$WonderDataCWProxyImpl implements _$WonderDataCWProxy {
   WonderData lng(double lng) => this(lng: lng);
 
   @override
-  WonderData locationInfo(String locationInfo) =>
-      this(locationInfo: locationInfo);
+  WonderData locationInfo(String locationInfo) => this(locationInfo: locationInfo);
 
   @override
   WonderData quote1(String quote1) => this(quote1: quote1);
 
   @override
   WonderData quote2(String quote2) => this(quote2: quote2);
+
+  @override
+  WonderData quoteAuthor(String quoteAuthor) => this(quoteAuthor: quoteAuthor);
 
   @override
   WonderData regionTitle(String regionTitle) => this(regionTitle: regionTitle);
@@ -185,8 +180,7 @@ class _$WonderDataCWProxyImpl implements _$WonderDataCWProxy {
   WonderData type(WonderType type) => this(type: type);
 
   @override
-  WonderData unsplashCollectionId(String unsplashCollectionId) =>
-      this(unsplashCollectionId: unsplashCollectionId);
+  WonderData unsplashCollectionId(String unsplashCollectionId) => this(unsplashCollectionId: unsplashCollectionId);
 
   @override
   WonderData videoId(String videoId) => this(videoId: videoId);
@@ -219,6 +213,7 @@ class _$WonderDataCWProxyImpl implements _$WonderDataCWProxy {
     Object? locationInfo = const $CopyWithPlaceholder(),
     Object? quote1 = const $CopyWithPlaceholder(),
     Object? quote2 = const $CopyWithPlaceholder(),
+    Object? quoteAuthor = const $CopyWithPlaceholder(),
     Object? regionTitle = const $CopyWithPlaceholder(),
     Object? startYr = const $CopyWithPlaceholder(),
     Object? subTitle = const $CopyWithPlaceholder(),
@@ -228,34 +223,27 @@ class _$WonderDataCWProxyImpl implements _$WonderDataCWProxy {
     Object? videoId = const $CopyWithPlaceholder(),
   }) {
     return WonderData(
-      artifactCulture: artifactCulture == const $CopyWithPlaceholder() ||
-              artifactCulture == null
+      artifactCulture: artifactCulture == const $CopyWithPlaceholder() || artifactCulture == null
           ? _value.artifactCulture
           // ignore: cast_nullable_to_non_nullable
           : artifactCulture as String,
-      artifactEndYr:
-          artifactEndYr == const $CopyWithPlaceholder() || artifactEndYr == null
-              ? _value.artifactEndYr
-              // ignore: cast_nullable_to_non_nullable
-              : artifactEndYr as int,
-      artifactGeolocation:
-          artifactGeolocation == const $CopyWithPlaceholder() ||
-                  artifactGeolocation == null
-              ? _value.artifactGeolocation
-              // ignore: cast_nullable_to_non_nullable
-              : artifactGeolocation as String,
-      artifactStartYr: artifactStartYr == const $CopyWithPlaceholder() ||
-              artifactStartYr == null
+      artifactEndYr: artifactEndYr == const $CopyWithPlaceholder() || artifactEndYr == null
+          ? _value.artifactEndYr
+          // ignore: cast_nullable_to_non_nullable
+          : artifactEndYr as int,
+      artifactGeolocation: artifactGeolocation == const $CopyWithPlaceholder() || artifactGeolocation == null
+          ? _value.artifactGeolocation
+          // ignore: cast_nullable_to_non_nullable
+          : artifactGeolocation as String,
+      artifactStartYr: artifactStartYr == const $CopyWithPlaceholder() || artifactStartYr == null
           ? _value.artifactStartYr
           // ignore: cast_nullable_to_non_nullable
           : artifactStartYr as int,
-      constructionInfo1: constructionInfo1 == const $CopyWithPlaceholder() ||
-              constructionInfo1 == null
+      constructionInfo1: constructionInfo1 == const $CopyWithPlaceholder() || constructionInfo1 == null
           ? _value.constructionInfo1
           // ignore: cast_nullable_to_non_nullable
           : constructionInfo1 as String,
-      constructionInfo2: constructionInfo2 == const $CopyWithPlaceholder() ||
-              constructionInfo2 == null
+      constructionInfo2: constructionInfo2 == const $CopyWithPlaceholder() || constructionInfo2 == null
           ? _value.constructionInfo2
           // ignore: cast_nullable_to_non_nullable
           : constructionInfo2 as String,
@@ -271,26 +259,22 @@ class _$WonderDataCWProxyImpl implements _$WonderDataCWProxy {
           ? _value.facts
           // ignore: cast_nullable_to_non_nullable
           : facts as List<String>,
-      hiddenArtifacts: hiddenArtifacts == const $CopyWithPlaceholder() ||
-              hiddenArtifacts == null
+      hiddenArtifacts: hiddenArtifacts == const $CopyWithPlaceholder() || hiddenArtifacts == null
           ? _value.hiddenArtifacts
           // ignore: cast_nullable_to_non_nullable
           : hiddenArtifacts as List<String>,
-      highlightArtifacts: highlightArtifacts == const $CopyWithPlaceholder() ||
-              highlightArtifacts == null
+      highlightArtifacts: highlightArtifacts == const $CopyWithPlaceholder() || highlightArtifacts == null
           ? _value.highlightArtifacts
           // ignore: cast_nullable_to_non_nullable
           : highlightArtifacts as List<String>,
-      historyInfo1:
-          historyInfo1 == const $CopyWithPlaceholder() || historyInfo1 == null
-              ? _value.historyInfo1
-              // ignore: cast_nullable_to_non_nullable
-              : historyInfo1 as String,
-      historyInfo2:
-          historyInfo2 == const $CopyWithPlaceholder() || historyInfo2 == null
-              ? _value.historyInfo2
-              // ignore: cast_nullable_to_non_nullable
-              : historyInfo2 as String,
+      historyInfo1: historyInfo1 == const $CopyWithPlaceholder() || historyInfo1 == null
+          ? _value.historyInfo1
+          // ignore: cast_nullable_to_non_nullable
+          : historyInfo1 as String,
+      historyInfo2: historyInfo2 == const $CopyWithPlaceholder() || historyInfo2 == null
+          ? _value.historyInfo2
+          // ignore: cast_nullable_to_non_nullable
+          : historyInfo2 as String,
       imageIds: imageIds == const $CopyWithPlaceholder() || imageIds == null
           ? _value.imageIds
           // ignore: cast_nullable_to_non_nullable
@@ -303,11 +287,10 @@ class _$WonderDataCWProxyImpl implements _$WonderDataCWProxy {
           ? _value.lng
           // ignore: cast_nullable_to_non_nullable
           : lng as double,
-      locationInfo:
-          locationInfo == const $CopyWithPlaceholder() || locationInfo == null
-              ? _value.locationInfo
-              // ignore: cast_nullable_to_non_nullable
-              : locationInfo as String,
+      locationInfo: locationInfo == const $CopyWithPlaceholder() || locationInfo == null
+          ? _value.locationInfo
+          // ignore: cast_nullable_to_non_nullable
+          : locationInfo as String,
       quote1: quote1 == const $CopyWithPlaceholder() || quote1 == null
           ? _value.quote1
           // ignore: cast_nullable_to_non_nullable
@@ -316,11 +299,14 @@ class _$WonderDataCWProxyImpl implements _$WonderDataCWProxy {
           ? _value.quote2
           // ignore: cast_nullable_to_non_nullable
           : quote2 as String,
-      regionTitle:
-          regionTitle == const $CopyWithPlaceholder() || regionTitle == null
-              ? _value.regionTitle
-              // ignore: cast_nullable_to_non_nullable
-              : regionTitle as String,
+      quoteAuthor: quoteAuthor == const $CopyWithPlaceholder() || quoteAuthor == null
+          ? _value.quoteAuthor
+          // ignore: cast_nullable_to_non_nullable
+          : quoteAuthor as String,
+      regionTitle: regionTitle == const $CopyWithPlaceholder() || regionTitle == null
+          ? _value.regionTitle
+          // ignore: cast_nullable_to_non_nullable
+          : regionTitle as String,
       startYr: startYr == const $CopyWithPlaceholder() || startYr == null
           ? _value.startYr
           // ignore: cast_nullable_to_non_nullable
@@ -337,12 +323,10 @@ class _$WonderDataCWProxyImpl implements _$WonderDataCWProxy {
           ? _value.type
           // ignore: cast_nullable_to_non_nullable
           : type as WonderType,
-      unsplashCollectionId:
-          unsplashCollectionId == const $CopyWithPlaceholder() ||
-                  unsplashCollectionId == null
-              ? _value.unsplashCollectionId
-              // ignore: cast_nullable_to_non_nullable
-              : unsplashCollectionId as String,
+      unsplashCollectionId: unsplashCollectionId == const $CopyWithPlaceholder() || unsplashCollectionId == null
+          ? _value.unsplashCollectionId
+          // ignore: cast_nullable_to_non_nullable
+          : unsplashCollectionId as String,
       videoId: videoId == const $CopyWithPlaceholder() || videoId == null
           ? _value.videoId
           // ignore: cast_nullable_to_non_nullable
@@ -361,8 +345,7 @@ extension $WonderDataCopyWith on WonderData {
 // **************************************************************************
 
 WonderData _$WonderDataFromJson(Map<String, dynamic> json) => WonderData(
-      type: $enumDecodeNullable(_$WonderTypeEnumMap, json['type']) ??
-          WonderType.chichenItza,
+      type: $enumDecodeNullable(_$WonderTypeEnumMap, json['type']) ?? WonderType.chichenItza,
       title: json['title'] as String,
       subTitle: json['subTitle'] as String,
       regionTitle: json['regionTitle'] as String,
@@ -374,16 +357,12 @@ WonderData _$WonderDataFromJson(Map<String, dynamic> json) => WonderData(
       artifactGeolocation: json['artifactGeolocation'] as String? ?? '',
       lat: (json['lat'] as num?)?.toDouble() ?? 0,
       lng: (json['lng'] as num?)?.toDouble() ?? 0,
-      imageIds: (json['imageIds'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const [],
+      imageIds: (json['imageIds'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const [],
       unsplashCollectionId: json['unsplashCollectionId'] as String,
       quote1: json['quote1'] as String,
       quote2: json['quote2'] as String,
-      facts:
-          (json['facts'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-              const [],
+      quoteAuthor: json['quoteAuthor'] as String,
+      facts: (json['facts'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const [],
       historyInfo1: json['historyInfo1'] as String,
       historyInfo2: json['historyInfo2'] as String,
       constructionInfo1: json['constructionInfo1'] as String,
@@ -393,18 +372,11 @@ WonderData _$WonderDataFromJson(Map<String, dynamic> json) => WonderData(
       events: (json['events'] as Map<String, dynamic>).map(
         (k, e) => MapEntry(int.parse(k), e as String),
       ),
-      highlightArtifacts: (json['highlightArtifacts'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const [],
-      hiddenArtifacts: (json['hiddenArtifacts'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const [],
+      highlightArtifacts: (json['highlightArtifacts'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const [],
+      hiddenArtifacts: (json['hiddenArtifacts'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const [],
     );
 
-Map<String, dynamic> _$WonderDataToJson(WonderData instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$WonderDataToJson(WonderData instance) => <String, dynamic>{
       'type': _$WonderTypeEnumMap[instance.type],
       'title': instance.title,
       'subTitle': instance.subTitle,
@@ -416,6 +388,7 @@ Map<String, dynamic> _$WonderDataToJson(WonderData instance) =>
       'locationInfo': instance.locationInfo,
       'quote1': instance.quote1,
       'quote2': instance.quote2,
+      'quoteAuthor': instance.quoteAuthor,
       'unsplashCollectionId': instance.unsplashCollectionId,
       'videoId': instance.videoId,
       'imageIds': instance.imageIds,

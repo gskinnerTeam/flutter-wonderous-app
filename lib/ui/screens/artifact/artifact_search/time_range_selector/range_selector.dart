@@ -6,11 +6,13 @@ class RangeSelector extends StatefulWidget {
     Key? key,
     required this.start,
     required this.end,
+    required this.isLocked,
     required this.onUpdated,
     required this.onChanged,
   }) : super(key: key);
   final double start;
   final double end;
+  final bool isLocked;
   final void Function(double start, double end) onUpdated;
   final void Function(double start, double end) onChanged;
 
@@ -36,11 +38,13 @@ class _RangeSelectorState extends State<RangeSelector> {
   }
 
   void _handleStartDrag(DragStartDetails d) {
+    if (widget.isLocked) return;
     _startAnchor = _startVal;
     _endAnchor = _endVal;
   }
 
   void _handleLeftDrag(DragUpdateDetails d, double width) {
+    if (widget.isLocked) return;
     double newStart = max(0, min(_endVal, _startAnchor + (d.localPosition.dx) / width));
     _startVal = newStart;
     setState(() {});
@@ -48,6 +52,7 @@ class _RangeSelectorState extends State<RangeSelector> {
   }
 
   void _handleMidDrag(DragUpdateDetails d, double width) {
+    if (widget.isLocked) return;
     double dist = (_endAnchor - _startAnchor);
     double newStart = max(0, min(1 - dist, _startAnchor + (d.localPosition.dx / width) - dist / 2));
     double newEnd = _startVal + dist;
@@ -58,6 +63,7 @@ class _RangeSelectorState extends State<RangeSelector> {
   }
 
   void _handleRightDrag(DragUpdateDetails d, double width) {
+    if (widget.isLocked) return;
     double newEnd = min(1, max(_startVal, _endAnchor + (d.localPosition.dx) / width));
     _endVal = newEnd;
     setState(() {});
@@ -65,11 +71,14 @@ class _RangeSelectorState extends State<RangeSelector> {
   }
 
   void _handleEndDrag(DragEndDetails d, double width) {
+    if (widget.isLocked) return;
     widget.onChanged(_startVal, _endVal);
   }
 
   @override
   Widget build(BuildContext context) {
+    var buttonColor = widget.isLocked ? context.colors.greyMedium : context.colors.greyStrong;
+
     return LayoutBuilder(builder: (_, constraints) {
       return Container(
         width: constraints.maxWidth - _buttonWidth * 2,
@@ -93,8 +102,8 @@ class _RangeSelectorState extends State<RangeSelector> {
                 alignment: Alignment.centerLeft,
                 width: _buttonWidth,
                 decoration: BoxDecoration(
-                  color: context.colors.greyStrong,
-                  border: Border.all(color: context.colors.greyStrong, width: 1),
+                  color: buttonColor,
+                  border: Border.all(color: buttonColor, width: 1),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(context.corners.md),
                     bottomLeft: Radius.circular(context.corners.md),
@@ -130,8 +139,8 @@ class _RangeSelectorState extends State<RangeSelector> {
                 alignment: Alignment.centerRight,
                 width: _buttonWidth,
                 decoration: BoxDecoration(
-                  color: context.colors.greyStrong,
-                  border: Border.all(color: context.colors.greyStrong, width: 1),
+                  color: buttonColor,
+                  border: Border.all(color: buttonColor, width: 1),
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(context.corners.md),
                     bottomRight: Radius.circular(context.corners.md),
