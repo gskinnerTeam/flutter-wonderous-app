@@ -1,7 +1,7 @@
 part of '../artifact_search_screen.dart';
 
-class _Header extends StatelessWidget {
-  const _Header(this.type, this.title, {Key? key}) : super(key: key);
+class _SearchHeader extends StatelessWidget {
+  const _SearchHeader(this.type, this.title, {Key? key}) : super(key: key);
   final WonderType type;
   final String title;
 
