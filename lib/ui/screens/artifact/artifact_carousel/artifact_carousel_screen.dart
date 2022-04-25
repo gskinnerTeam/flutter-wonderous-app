@@ -96,25 +96,23 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     double carouselImageWidth = math.min(_maxElementWidth, context.widthPx / 1.25);
     double bottomHalfHeight = math.min(_maxBottomHeight, context.heightPx / 6);
 
-    if (_currentArtifact == null) {
-      return Center(child: AppLoader());
-    }
-
-    final pageViewArtifacts = PageView.builder(
-      controller: _controller,
-      itemCount: _highlightedArtifactIds.length * 10000,
-      clipBehavior: Clip.none,
-      onPageChanged: _changeArtifactIndex,
-      itemBuilder: (context, index) {
-        return ArtifactCarouselImage(
-          index: index,
-          currentPage: _currentPage,
-          artifact: _loadedArtifacts[index % _loadedArtifacts.length],
-          viewportFraction: _pageViewportFraction,
-          onPressed: () => _handleArtifactTap(index),
-        );
-      },
-    );
+    final pageViewArtifacts = _loadedArtifacts.isEmpty
+        ? AppLoader()
+        : PageView.builder(
+            controller: _controller,
+            itemCount: _highlightedArtifactIds.length * 10000,
+            clipBehavior: Clip.none,
+            onPageChanged: _changeArtifactIndex,
+            itemBuilder: (context, index) {
+              return ArtifactCarouselImage(
+                index: index,
+                currentPage: _currentPage,
+                artifact: _loadedArtifacts[index % _loadedArtifacts.length],
+                viewportFraction: _pageViewportFraction,
+                onPressed: () => _handleArtifactTap(index),
+              );
+            },
+          );
 
     return Container(
       color: context.colors.greyStrong,
@@ -195,7 +193,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                       children: [
                         // Wonder Name
                         Text(
-                          (_currentArtifact?.culture ?? '---').toUpperCase(),
+                          (_currentArtifact?.culture ?? 'Just a moment...').toUpperCase(),
                           style: context.textStyles.titleFont.copyWith(
                             color: context.colors.accent1,
                             fontSize: 14,
@@ -212,7 +210,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                             children: [
                               // Artifact Title
                               Text(
-                                _currentArtifact?.title ?? '---',
+                                _currentArtifact?.title ?? '',
                                 style: context.textStyles.h2.copyWith(color: context.colors.greyStrong),
                                 textAlign: TextAlign.center,
                                 maxLines: 1,
@@ -221,7 +219,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
 
                               // Time frame
                               Text(
-                                _currentArtifact?.date ?? '---',
+                                _currentArtifact?.date ?? '',
                                 style: context.textStyles.body1.copyWith(color: context.colors.body),
                                 textAlign: TextAlign.center,
                               ),
