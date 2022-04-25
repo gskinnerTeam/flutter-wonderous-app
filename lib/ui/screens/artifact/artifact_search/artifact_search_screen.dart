@@ -14,6 +14,11 @@ part 'widgets/_search_input.dart';
 
 /// User can use this screen to search the MET server for an artifact by name or timeline. Artifacts results will
 /// appear as images, which the user can click on to being up the details view for more information.
+
+
+// TODO: GDS: refactor to match other views.
+// TODO: GDS: create a shared header widget with collection
+
 class ArtifactSearchScreen extends StatefulWidget with GetItStatefulWidgetMixin {
   ArtifactSearchScreen({Key? key, required this.type}) : super(key: key);
   final WonderType type;
