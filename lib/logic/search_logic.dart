@@ -11,7 +11,7 @@ class SearchLogic {
   SearchService get service => GetIt.I.get<SearchService>();
 
   final Map<String, ArtifactData> _artifactHash = {};
-  String _lastSearchQuery = '';
+  ArtifactSearchOptions? _lastSearch;
   List<String> _lastSearchResults = [];
 
   /// Return a full count of the prior search results
@@ -65,25 +65,28 @@ class SearchLogic {
     return results;
   }
 
-  /// Returns list of artifact IDs by search query.
+  /// Returns list of artifact IDs by search query. ArtifactSearchOptions contains:
+  /// - query; text query provided by the user
   /// - count; number of results to return
   /// - offset: offset the returned list of elements (used for multiple chunks of results)
   /// - isTitle: true if query is part of a title
   /// - isKeyword: true if query is part of a subject keyword
+  /// - isHighlight: true if results should be labelled as MET highlights
+  /// - departmentId: returns results from a specific department by ID
   /// - location: string of location names (cities, countries, etc). Multiple entries are separated by | operator.
   /// - startYear: minimum year range. Set to negative value for B.C. Must include endYear.
   /// - endYear: maximum year range. Set to negative value for B.C. Must include startYear.
-
-  //TODO AG: Should make some sort of SearchConfig class here, so we don't need to pass a ton of params
   Future<List<ArtifactData?>> searchForArtifacts(ArtifactSearchOptions options) async {
     List<String> ids;
 
-    if (options.query == _lastSearchQuery) {
+    if (options.query == _lastSearch?.query &&
+        options.startYear == _lastSearch?.startYear &&
+        options.endYear == _lastSearch?.endYear) {
       ids = _lastSearchResults;
     } else {
       final result = await service.searchForArtifacts(options);
 
-      _lastSearchQuery = options.query;
+      _lastSearch = options;
       ids = result.content ?? [];
       _lastSearchResults = ids;
     }
