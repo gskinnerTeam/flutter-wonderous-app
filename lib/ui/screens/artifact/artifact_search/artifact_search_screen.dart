@@ -51,6 +51,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
 
   void _preloadHighlights(List<String> data) async {
     // Preloaded highlight data.
+    _isHighlights = true;
     setState(() => _isLoading = true);
     _searchResultsAll = await searchLogic.getArtifactsByID(data);
     setState(() => _isLoading = false);
@@ -65,6 +66,13 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
     _currentQuery = query;
     _searchResultsAll = [];
 
+    if (query.isEmpty) {
+      // Empty query. Show the highlights.
+      _preloadHighlights(wondersLogic.getData(widget.type).highlightArtifacts);
+      return;
+    }
+
+    // Not an empty query. Time to load!
     setState(() {
       _isEmpty = false;
       _isLoading = true;
@@ -96,10 +104,13 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
 
   Future<void> _callArtifactSearch(String query) async {
     // Make a new search with the offset in place.
+    final wonderData = wondersLogic.getData(widget.type);
+
     List<ArtifactData?> data = await searchLogic.searchForArtifacts(ArtifactSearchOptions(
       query: query,
       count: _resultCountPerSearch,
       offset: _searchResultsAll.length,
+      location: wonderData.artifactGeolocation,
       startYear: _startYr,
       endYear: _endYr,
     ));

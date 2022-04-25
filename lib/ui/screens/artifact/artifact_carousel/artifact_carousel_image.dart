@@ -73,7 +73,7 @@ class _ImagePreview extends StatelessWidget {
         sideElementScale + ((1 - sideElementScale) - (math.min(1, offset.abs()) * (1 - sideElementScale)));
 
     // Calculate the offset positions of the side elements.
-    double xOffset = math.asin(offset * math.pi / 4.0) * -offsetScrollXScale;
+    double xOffset = math.sin(offset * math.pi / 4.0) * -offsetScrollXScale;
     double yOffset = (offset * offset) * offsetScrollYScale;
 
     // Scale box for sizing. Uses both the element scale and the element Y scale.
