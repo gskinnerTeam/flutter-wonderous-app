@@ -54,6 +54,18 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
     _isHighlights = true;
     setState(() => _isLoading = true);
     _searchResultsAll = await searchLogic.getArtifactsByID(data);
+    ArtifactData? result;
+
+    // This isn't an actual search, meaning we need to take the start/end years into account manually.
+    for (var i = _searchResultsAll.length - 1; i >= 0; i--) {
+      result = _searchResultsAll[i];
+      if (result == null) continue;
+      if ((result.objectBeginYear < _startYr || result.objectBeginYear > _endYr) &&
+          (result.objectEndYear < _startYr || result.objectEndYear > _endYr)) {
+        _searchResultsAll.remove(result);
+      }
+    }
+
     setState(() => _isLoading = false);
   }
 
@@ -121,9 +133,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
   void _handleTimelineChanged(int start, int end) {
     _startYr = start;
     _endYr = end;
-    if (_currentQuery.isNotEmpty) {
-      _handleSearchSubmitted(_currentQuery);
-    }
+    _handleSearchSubmitted(_currentQuery);
   }
 
   void onResultClick(ArtifactData artifact) {

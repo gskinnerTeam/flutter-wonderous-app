@@ -118,6 +118,8 @@ class SearchService {
         dimension: content['dimension'] ?? '',
         classification: content['classification'] ?? '',
         culture: content['culture'] ?? '',
+        objectBeginYear: content['objectBeginDate'],
+        objectEndYear: content['objectEndDate'],
       );
     } catch (e) {
       debugPrint('Error: Search response missing content.');
