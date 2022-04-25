@@ -46,7 +46,7 @@ class StringUtils {
 
   static String formatYr(int yr) {
     if (yr == 0) yr = 1;
-    return '$yr ${getYrSuffix(yr)}';
+    return '${yr.abs()} ${getYrSuffix(yr)}';
   }
 
   static String getYrSuffix(int yr) => yr < 0 ? 'BCE' : 'CE';
