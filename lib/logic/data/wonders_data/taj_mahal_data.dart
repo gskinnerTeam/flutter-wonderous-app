@@ -43,7 +43,7 @@ The plinth and tomb took roughly 12 years to complete. The remaining parts of th
   highlightArtifacts: const [
     '453341',
     '453243',
-    '24907s',
+    '24907',
     '24932',
     '56230',
     '35633',
