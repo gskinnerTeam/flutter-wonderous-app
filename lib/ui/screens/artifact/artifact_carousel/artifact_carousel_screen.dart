@@ -34,8 +34,9 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   void initState() {
     super.initState();
 
-    _controller = PageController(
-        initialPage: _highlightedArtifactIds.length * 5000, viewportFraction: _pageViewportFraction, keepPage: true);
+    _currentPage = _highlightedArtifactIds.length * 5000;
+    _controller =
+        PageController(initialPage: _currentPage.toInt(), viewportFraction: _pageViewportFraction, keepPage: true);
     _controller.addListener(() {
       setState(() {
         _currentPage = _controller.page ?? 0.0;
@@ -61,6 +62,9 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     } else {
       debugPrint('ERROR: No artifacts found for ${widget.type}');
     }
+
+    // Update the screen.
+    setState(() {});
   }
 
   void _changeArtifactIndex(int index) {
