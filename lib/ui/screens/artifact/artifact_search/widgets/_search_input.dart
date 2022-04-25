@@ -188,7 +188,7 @@ class _SearchInput extends StatelessWidget {
             controller: textController,
             focusNode: focusNode,
             style: TextStyle(color: captionColor),
-            textAlignVertical: TextAlignVertical.bottom,
+            textAlignVertical: TextAlignVertical.top,
             decoration: InputDecoration(
               isDense: true,
               contentPadding: EdgeInsets.all(context.insets.xs),
