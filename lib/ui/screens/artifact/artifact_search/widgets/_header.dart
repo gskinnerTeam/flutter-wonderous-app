@@ -12,8 +12,8 @@ class _Header extends StatelessWidget {
       child: SafeArea(
         child: Row(children: [
           Container(
-            width: 64,
-            height: 80,
+            width: context.insets.lg * 2,
+            height: context.insets.offset,
             alignment: Alignment.centerRight,
             child: CircleIconBtn(
               icon: Icons.arrow_back,
@@ -36,7 +36,7 @@ class _Header extends StatelessWidget {
               ],
             ),
           ),
-          Gap(64),
+          Gap(context.insets.lg * 2),
         ]),
       ),
     );
