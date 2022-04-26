@@ -22,22 +22,21 @@ final chichenItzaData = WonderData(
   quote2: 'the Heavens\nand the\nUnderworld',
   quoteAuthor: '',
   historyInfo1:
-      '''Chichén Itzá is a large Mayan city famous for a large, pyramid temple built by the Maya civilization. It was likely to have been one of the mythical great cities, or Tollans, referred to in later Mesoamerican literature.
-The earliest hieroglyphic date discovered at Chichen Itza is equivalent to 832 AD, while the last known date was recorded in the Osario temple in 998.
+      '''Chichen Itza was a powerful regional capital controlling north and central Yucatán. The earliest hieroglyphic date discovered at Chichen Itza is equivalent to 832 CE, while the last known date was recorded in the Osario temple in 998 CE.
+Dominating the North Platform of Chichen Itza is the famous Temple of Kukulcán. The temple was identified by the first Spaniards to see it, as El Castillo ("the castle"), and it regularly is referred to as such.
 ''',
   historyInfo2:
-      '''The site exhibits a multitude of architectural styles, reminiscent of styles seen in central Mexico and of the Puuc and Chenes styles of the Northern Maya lowlands.
-Chichen Itza is one of the most visited archeological sites in Mexico with over 2.6 million tourists in 2017.
+      '''The site exhibits a multitude of architectural styles, reminiscent of styles seen in central Mexico and of the Puuc and Chenes styles of the Northern Maya lowlands. The city was thought to have the most diverse population in the Maya world, a factor that could have contributed to this architectural variety.
 ''',
   constructionInfo1:
-      '''Chichen Itza was built upon broken terrain, which was artificially leveled in order to build the major architectural groups, with the greatest effort being expended in the leveling of the areas for the Castillo pyramid, and the Las Monjas, Osario and Main Southwest groups.
+      '''The structures of Chichen Itza were built from precisely chiseled limestone blocks that fit together perfectly without the mortar. Many of these stone buildings were originally painted in red, green, blue and purple colors depending on the availability of the pigments.
+The stepped pyramid El Castillo stands about 98 feet (30 m) high and consists of a series of nine square terraces, each approximately 8.4 feet (2.57 m) high, with a 20 foot (6 m) high temple upon the summit.
 ''',
   constructionInfo2:
-      '''Dominating the North Platform of Chichen Itza is the Temple of Kukulcán. The temple was identified by the first Spaniards to see it, as El Castillo ("the castle"), and it regularly is referred to as such. This step pyramid stands about 30 meters (98 ft) high and consists of a series of nine square terraces, each approximately 2.57 meters (8.4 ft) high, with a 6-meter (20 ft) high temple upon the summit.
-''',
+      '''The city comprised an area of at least 1.9 sq miles (5 sq km) of densely clustered architecture. It was built upon broken terrain, which was artificially leveled to support structures such as the Castillo pyramid. Important buildings within the center were connected by a dense network of paved roads called sacbeob.''',
   locationInfo:
-      '''Chichen Itza is located in the eastern portion of Yucatán state in Mexico. The northern Yucatán Peninsula is karst, and the rivers in the interior all run underground. 
-There are four visible, natural sinkholes, called cenotes, that could have provided plentiful water year round at Chichen, making it attractive for settlement.
+      '''Chichen Itza is located in the eastern portion of Yucatán state in Mexico. Nearby, four large sinkholes, called cenotes, could have provided plentiful water year round at Chichen, making it attractive for settlement.
+Of these cenotes, the "Cenote Sagrado" or Sacred Cenote, was used for the ​​sacrifice of precious objects and human beings as a form of worship to the Maya rain god Chaac.
 ''',
   highlightArtifacts: const [
     '503940',

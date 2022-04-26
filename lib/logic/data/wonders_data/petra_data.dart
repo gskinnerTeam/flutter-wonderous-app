@@ -5,7 +5,7 @@ import 'package:wonders/logic/data/wonders_data/mock_data.dart';
 final petraData = WonderData(
   type: WonderType.petra,
   title: 'Petra',
-  subTitle: 'The Red Rose City',
+  subTitle: 'The Lost City',
   regionTitle: 'Ma’an, Jordan',
   videoId: 'ezDiSkOU0wc',
   startYr: -312,
@@ -22,11 +22,11 @@ final petraData = WonderData(
   quote2: 'half as old as Time',
   quoteAuthor: 'John William Burgon',
   historyInfo1:
-      '''The area around Petra has been inhabited from as early as 7000 BC, and the Nabataeans might have settled in what would become the capital city of their kingdom as early as the 4th century BC
+      '''The area around Petra has been inhabited from as early as 7000  BCE, and the Nabataeans might have settled in what would become the capital city of their kingdom as early as the 4th century  BCE
 The trading business gained the Nabataeans considerable revenue and Petra became the focus of their wealth. They were particularly skillful in harvesting rainwater, agriculture and stone carving. 
 ''',
   historyInfo2:
-      '''Petra flourished in the 1st century AD, when its famous Al-Khazneh structure – believed to be the mausoleum of Nabataean king Aretas IV – was constructed, and its population peaked at an estimated 20,000 inhabitants.
+      '''Petra flourished in the 1st century CE, when its famous Al-Khazneh structure – believed to be the mausoleum of Nabataean king Aretas IV – was constructed, and its population peaked at an estimated 20,000 inhabitants.
 Access to the city is through a 3⁄4 mile-long (1.2 km) gorge called the Siq, which leads directly to the Khazneh.
 ''',
   constructionInfo1:
@@ -35,8 +35,8 @@ Another thing Petra is known for is its Hellenistic (“Greek”) architecture. 
 Perhaps a more prominent resemblance to Hellenistic style in Petra comes with its Treasury, which is 7.8 feet (24 m) wide and 121.3 feet (37 m tall and gives reference to the architecture of Alexandria.
 ''',
   constructionInfo2:
-      '''The facade of the Treasury features a broken pediment with a central tholos (“dome”) inside, and two obelisks appear to form into the rock of Petra at the top. 
-Near the bottom of the Treasury we see twin Greek Gods: Pollux, Castor, and Dioscuri, who protect travelers on their journeys. Near the top of the Treasury, two victories are seen standing on each side of a female figure on the tholos. This female figure is believed to be the Isis-Tyche, Isis being the Egyptian Goddess and Tyche being the Greek Goddess of good fortune.
+      '''The facade of the Treasury features a broken pediment with a central tholos (“dome”) inside, and two obelisks appear to form into the rock of Petra at the top. Near the bottom of the Treasury we see twin Greek Gods: Pollux, Castor, and Dioscuri, who protect travelers on their journeys. 
+Near the top of the Treasury, two victories are seen standing on each side of a female figure on the tholos. This female figure is believed to be the Isis-Tyche, Isis being the Egyptian Goddess and Tyche being the Greek Goddess of good fortune.
 ''',
   locationInfo:
       '''Petra is located in southern Jordan. It is adjacent to the mountain of Jabal Al-Madbah, in a basin surrounded by mountains forming the eastern flank of the Arabah valley running from the Dead Sea to the Gulf of Aqaba.

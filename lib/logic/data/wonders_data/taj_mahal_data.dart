@@ -20,9 +20,9 @@ final tajMahalData = WonderData(
   unsplashCollectionId: '684IRta86_c',
   quote1: 'Not just a monument,',
   quote2: 'but a symbol of love.',
-  quoteAuthor: '–Suman Pokhrel',
+  quoteAuthor: 'Suman Pokhrel',
   historyInfo1:
-      '''The Taj Mahal is an ivory-white marble mausoleum on the right bank of the river Yamuna in the Indian city of Agra. It was commissioned in 1632 by the Mughal emperor Shah Jahan (r. 1628–1658) to house the tomb of his favorite wife, Mumtaz Mahal; it also houses the tomb of Shah Jahan himself.
+      '''The Taj Mahal is an ivory-white marble mausoleum on the right bank of the river Yamuna in the Indian city of Agra. It was commissioned in 1632 CE by the Mughal emperor Shah Jahan (r. 1628–1658) to house the tomb of his favorite wife, Mumtaz Mahal; it also houses the tomb of Shah Jahan himself.
 ''',
   historyInfo2:
       '''The Taj Mahal is distinguished as the finest example of Mughal architecture, a blend of Indian, Persian, and Islamic styles.

@@ -5,9 +5,9 @@ import 'package:wonders/logic/data/wonders_data/mock_data.dart';
 final pyramidsGizaData = WonderData(
   type: WonderType.pyramidsGiza,
   title: 'Pyramids of Giza',
-  subTitle: 'Last of the ancient wonders',
+  subTitle: 'The ancient wonder',
   regionTitle: 'Cairo, Egypt',
-  videoId: '',
+  videoId: 'lJKX3Y7Vqvs',
   startYr: -2600,
   endYr: -2500,
   artifactStartYr: -2600,
@@ -18,11 +18,11 @@ final pyramidsGizaData = WonderData(
   lng: 31.132778,
   imageIds: mockImageIds,
   unsplashCollectionId: 'CSEvB5Tza9E',
-  quote1: 'astronomically oriented to the',
-  quote2: 'north–south and east–west',
+  quote1: 'The tallest structures on earth',
+  quote2: 'until the advent of modern skyscrapers',
   quoteAuthor: '',
   historyInfo1:
-      '''The Giza pyramid complex, also called the Giza necropolis, is the site on the Giza Plateau in Greater Cairo, Egypt that includes the Great Pyramid of Giza, the Pyramid of Khafre, and the Pyramid of Menkaure, along with their associated pyramid complexes and the Great Sphinx of Giza. All were built during the Fourth Dynasty of the Old Kingdom of Ancient Egypt, between 2600 and 2500 BC.
+      '''The Giza pyramid complex, also called the Giza necropolis, is the site on the Giza Plateau in Greater Cairo, Egypt that includes the Great Pyramid of Giza, the Pyramid of Khafre, and the Pyramid of Menkaure, along with their associated pyramid complexes and the Great Sphinx of Giza. All were built during the Fourth Dynasty of the Old Kingdom of Ancient Egypt, between 2600 and 2500 BCE.
 ''',
   historyInfo2:
       '''The pyramids of Giza and others are thought to have been constructed to house the remains of the deceased pharaohs who ruled over Ancient Egypt. A portion of the pharaoh's spirit called his ka was believed to remain with his corpse. Proper care of the remains was necessary in order for the former Pharaoh to perform his new duties as king of the dead.

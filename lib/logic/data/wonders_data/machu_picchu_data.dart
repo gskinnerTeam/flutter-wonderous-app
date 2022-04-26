@@ -5,7 +5,7 @@ import 'package:wonders/logic/data/wonders_data/mock_data.dart';
 final machuPicchuData = WonderData(
   type: WonderType.machuPicchu,
   title: 'Machu Picchu',
-  subTitle: 'Lost City of the Incas',
+  subTitle: 'Citadel of the Inca',
   regionTitle: 'Cusco Region, Peru',
   videoId: 'cnMa-Sm9H4k',
   startYr: 1450,
@@ -20,9 +20,9 @@ final machuPicchuData = WonderData(
   unsplashCollectionId: 'wUhgZTyUnl8',
   quote1: 'Few romances can ever surpass',
   quote2: 'that of the granite citadel',
-  quoteAuthor: '',
+  quoteAuthor: 'Hiram Bingham',
   historyInfo1:
-      '''Construction appears to date from two great Inca rulers, Pachacutec Inca Yupanqui (1438–1471) and Túpac Inca Yupanqui (1472–1493).
+      '''Construction appears to date from two great Inca rulers, Pachacutec Inca Yupanqui (1438–1471 CE) and Túpac Inca Yupanqui (1472–1493 CE).
 ''',
   historyInfo2:
       '''There is a consensus among archeologists that Pachacutec ordered the construction of the royal estate for his use as a retreat, most likely after a successful military campaign.
@@ -36,7 +36,7 @@ The site itself may have been intentionally built on fault lines to afford bette
       '''Inca walls have many stabilizing features: doors and windows are trapezoidal, narrowing from bottom to top; corners usually are rounded; inside corners often incline slightly into the rooms, and outside corners were often tied together by "L"-shaped blocks.
 ''',
   locationInfo:
-      '''Machu Picchu is situated above a bow of the Urubamba River, which surrounds the site on three sides, where cliffs drop vertically for 1,480 feet (450 m) to the river at their base. The location of the city was a military secret, and it's deep precipices and steep mountains provided natural defenses.
+      '''Machu Picchu is situated above a bow of the Urubamba River, which surrounds the site on three sides, where cliffs drop vertically for 1,480 feet (450 m) to the river at their base. The location of the city was a military secret, and its deep precipices and steep mountains provided natural defenses.
 The Inca Bridge, an Inca grass rope bridge, across the Urubamba River in the Pongo de Mainique, provided a secret entrance for the Inca army. Another Inca bridge was built to the west of Machu Picchu, the tree-trunk bridge, at a location where a gap occurs in the cliff that measures 20 feet (6 m).
 ''',
   highlightArtifacts: const [
