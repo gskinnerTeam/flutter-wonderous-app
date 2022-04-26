@@ -13,6 +13,8 @@ part 'widgets/_header.dart';
 part 'widgets/_content.dart';
 part 'widgets/_artifact_data_row.dart';
 
+// TODO: GDS: add list shadow
+
 class ArtifactDetailsScreen extends StatefulWidget {
   final String artifactId;
   const ArtifactDetailsScreen({Key? key, required this.artifactId}) : super(key: key);

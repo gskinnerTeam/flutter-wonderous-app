@@ -29,6 +29,8 @@ part 'widgets/_sliding_image_stack.dart';
 part 'widgets/_title_text.dart';
 part 'widgets/_top_illustration.dart';
 
+// TODO: GDS: add list shadow
+
 class WonderEditorialScreen extends StatefulWidget {
   const WonderEditorialScreen(this.data, {Key? key, required this.onScroll}) : super(key: key);
   final WonderData data;
