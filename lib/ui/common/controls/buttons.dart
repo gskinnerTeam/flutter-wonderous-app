@@ -14,7 +14,7 @@ class AppBtn extends StatefulWidget {
       this.expand = false,
       this.isSecondary = false,
       this.bgColor,
-      this.semanticLabel = ''})
+      required this.semanticLabel})
       : super(key: key);
   final List<Widget> children;
   final VoidCallback? onPressed;
@@ -97,6 +97,7 @@ class AppIconBtn extends StatelessWidget {
     this.icon, {
     Key? key,
     required this.onPressed,
+    required this.semanticLabel,
     this.padding,
     this.expand = false,
     this.isSecondary = false,
@@ -105,6 +106,7 @@ class AppIconBtn extends StatelessWidget {
   final IconData icon;
   final double? size;
   final VoidCallback onPressed;
+  final String semanticLabel;
   final EdgeInsets? padding;
   final bool expand;
   final bool isSecondary;
@@ -113,6 +115,7 @@ class AppIconBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBtn(
       onPressed: onPressed,
+      semanticLabel: semanticLabel,
       padding: padding,
       expand: expand,
       isSecondary: isSecondary,

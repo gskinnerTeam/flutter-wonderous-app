@@ -50,10 +50,14 @@ class WonderDetailsTabMenu extends StatelessWidget {
                         duration: context.times.fast,
                         width: showHomeBtn ? homeBtnSize : 0,
                         height: 0),
-                    _TabBtn(0, tabController, icon: Icons.info_outline, iconColor: tabIconColor),
-                    _TabBtn(1, tabController, icon: Icons.image_outlined, iconColor: tabIconColor),
-                    _TabBtn(2, tabController, icon: Icons.search, iconColor: tabIconColor),
-                    _TabBtn(3, tabController, icon: Icons.timelapse, iconColor: tabIconColor),
+                    _TabBtn(0, tabController,
+                        icon: Icons.info_outline, semanticLabel: 'information', iconColor: tabIconColor),
+                    _TabBtn(1, tabController,
+                        icon: Icons.image_outlined, semanticLabel: 'images', iconColor: tabIconColor),
+                    _TabBtn(2, tabController,
+                        icon: Icons.search, semanticLabel: 'artifact search', iconColor: tabIconColor),
+                    _TabBtn(3, tabController,
+                        icon: Icons.timelapse, semanticLabel: 'timeline', iconColor: tabIconColor),
                   ],
                 ),
               ),
@@ -113,12 +117,19 @@ class _WonderHomeBtn extends StatelessWidget {
 }
 
 class _TabBtn extends StatelessWidget {
-  const _TabBtn(this.index, this.tabController, {Key? key, required this.icon, required this.iconColor})
-      : super(key: key);
+  const _TabBtn(
+    this.index,
+    this.tabController, {
+    Key? key,
+    required this.icon,
+    required this.semanticLabel,
+    required this.iconColor,
+  }) : super(key: key);
   final int index;
   final TabController tabController;
   final IconData icon;
   final Color iconColor;
+  final String semanticLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -134,6 +145,7 @@ class _TabBtn extends StatelessWidget {
           )
         ],
         onPressed: () => tabController.index = index,
+        semanticLabel: semanticLabel,
       ),
     );
   }
