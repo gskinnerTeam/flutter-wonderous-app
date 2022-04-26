@@ -15,6 +15,27 @@ class _AppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     ArchType? archType;
     switch (wonderType) {
+      case WonderType.chichenItza:
+        archType = ArchType.flatPyramid;
+        break;
+      case WonderType.christRedeemer:
+        archType = ArchType.wideArch;
+        break;
+      case WonderType.colosseum:
+        archType = ArchType.arch;
+        break;
+      case WonderType.greatWall:
+        archType = ArchType.arch;
+        break;
+      case WonderType.machuPicchu:
+        archType = ArchType.pyramid;
+        break;
+      case WonderType.petra:
+        archType = ArchType.wideArch;
+        break;
+      case WonderType.pyramidsGiza:
+        archType = ArchType.pyramid;
+        break;
       case WonderType.tajMahal:
         archType = ArchType.spade;
         break;

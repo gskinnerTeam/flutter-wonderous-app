@@ -1,6 +1,6 @@
 import 'package:wonders/common_libs.dart';
 
-enum ArchType { spade, pyramid }
+enum ArchType { spade, pyramid, arch, wideArch, flatPyramid }
 
 class ArchClipper extends CustomClipper<Path> {
   ArchClipper(this.type);
@@ -39,7 +39,7 @@ class ArchPoint {
 }
 
 List<ArchPoint> _getArchPts(Size size, ArchType type) {
-  double distanceFromTop = 100;
+  double distanceFromTop = 200;
   switch (type) {
     case ArchType.pyramid:
       return [
@@ -49,13 +49,39 @@ List<ArchPoint> _getArchPts(Size size, ArchType type) {
         ArchPoint(Offset(size.width, distanceFromTop)),
         ArchPoint(Offset(size.width, size.height)),
       ];
-
     case ArchType.spade:
       return [
         ArchPoint(Offset(0, size.height)),
         ArchPoint(Offset(0, distanceFromTop)),
         ArchPoint(Offset(size.width / 2, 0), Offset(0, distanceFromTop * .66)),
         ArchPoint(Offset(size.width, distanceFromTop), Offset(size.width, distanceFromTop * .66)),
+        ArchPoint(Offset(size.width, size.height)),
+      ];
+    case ArchType.arch:
+      return [
+        ArchPoint(Offset(0, size.height)),
+        ArchPoint(Offset(0, distanceFromTop)),
+        ArchPoint(Offset(size.width / 2, 0), Offset(0, 0)),
+        ArchPoint(Offset(size.width, distanceFromTop), Offset(size.width, 0)),
+        ArchPoint(Offset(size.width, size.height)),
+      ];
+    case ArchType.wideArch:
+      return [
+        ArchPoint(Offset(0, size.height)),
+        ArchPoint(Offset(0, distanceFromTop)),
+        ArchPoint(Offset(0, distanceFromTop / 2)),
+        ArchPoint(Offset(size.width / 2, 0), Offset(0, 0)),
+        ArchPoint(Offset(size.width, distanceFromTop / 2), Offset(size.width, 0)),
+        ArchPoint(Offset(size.width, distanceFromTop)),
+        ArchPoint(Offset(size.width, size.height)),
+      ];
+    case ArchType.flatPyramid:
+      return [
+        ArchPoint(Offset(0, size.height)),
+        ArchPoint(Offset(0, distanceFromTop)),
+        ArchPoint(Offset(size.width * 0.8 / 2, 0)),
+        ArchPoint(Offset(size.width * 1.2 / 2, 0)),
+        ArchPoint(Offset(size.width, distanceFromTop)),
         ArchPoint(Offset(size.width, size.height)),
       ];
   }
