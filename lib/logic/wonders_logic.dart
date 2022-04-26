@@ -24,6 +24,12 @@ class WondersLogic {
   ///SB: Used to determine which wonders actually get shown on HomeView, TODO: For debug / testing only, remove once all wonders are working
   final List<WonderData> enabled = [
     chichenItzaData,
+    christRedeemerData,
+    colosseumData,
+    greatWallData,
+    machuPicchuData,
+    petraData,
+    pyramidsGizaData,
     tajMahalData,
   ];
 
