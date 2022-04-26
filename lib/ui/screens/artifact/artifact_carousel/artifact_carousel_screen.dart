@@ -3,7 +3,7 @@ import 'dart:math' as math;
 
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/data/artifact_data.dart';
+import 'package:wonders/logic/data/highlights_data.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_bg.dart';
@@ -31,7 +31,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   static const double _maxBottomWidth = 650;
   final _loadedArtifacts = [];
   late PageController _controller;
-  ArtifactData? _currentArtifact;
+  HighlightsData? _currentArtifact;
   double _currentPage = 0;
 
   @override
@@ -47,20 +47,9 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
       });
     });
 
-    _getHighlightedArtifacts();
-  }
+    _loadedArtifacts.clear();
+    _loadedArtifacts.addAll(HighlightsData.forWonder(widget.type));
 
-  @override
-  void dispose() {
-    // Ensure the contorller is disposed of properly.
-    _controller.dispose();
-    super.dispose();
-  }
-
-  void _getHighlightedArtifacts() async {
-    for (var id in _highlightedArtifactIds) {
-      _loadedArtifacts.add(await searchLogic.getArtifactByID(id));
-    }
     if (_highlightedArtifactIds.isNotEmpty) {
       _changeArtifactIndex(0);
     } else {
@@ -69,6 +58,13 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
 
     // Update the screen.
     setState(() {});
+  }
+
+  @override
+  void dispose() {
+    // Ensure the contorller is disposed of properly.
+    _controller.dispose();
+    super.dispose();
   }
 
   void _changeArtifactIndex(int index) {
@@ -90,7 +86,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   }
 
   void _handleArtifactTap(int index) =>
-      context.push(ScreenPaths.artifact(_loadedArtifacts[index % _loadedArtifacts.length].objectId.toString()));
+      context.push(ScreenPaths.artifact(_loadedArtifacts[index % _loadedArtifacts.length].artifactId.toString()));
 
   void _handleSearchButtonTap() => context.push(ScreenPaths.search(widget.type));
 
@@ -124,7 +120,8 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
         children: [
           // Background Image
           AnimatedSwitcher(
-            child: ArtifactCarouselBg(key: ValueKey(_currentArtifact?.objectId), url: _currentArtifact?.image ?? ''),
+            child:
+                ArtifactCarouselBg(key: ValueKey(_currentArtifact?.artifactId), url: _currentArtifact?.imageUrl ?? ''),
             duration: Duration(milliseconds: 300),
           ),
 
@@ -211,7 +208,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                             ? AppLoader()
                             : FXAnimate(
                                 fx: const [FadeFX()],
-                                key: ValueKey(_currentArtifact?.objectId),
+                                key: ValueKey(_currentArtifact?.artifactId),
                                 child: Column(
                                   children: [
                                     // Artifact Title
