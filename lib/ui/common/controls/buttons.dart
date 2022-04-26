@@ -13,16 +13,22 @@ class AppBtn extends StatefulWidget {
       this.padding,
       this.expand = false,
       this.isSecondary = false,
+      this.circular = false,
+      this.minimumSize,
       this.bgColor,
+      this.border,
       required this.semanticLabel})
       : super(key: key);
   final List<Widget> children;
-  final VoidCallback? onPressed;
+  final VoidCallback onPressed;
+  final String semanticLabel;
   final EdgeInsets? padding;
   final bool expand;
   final bool isSecondary;
+  final BorderSide? border;
   final Color? bgColor;
-  final String semanticLabel;
+  final bool circular;
+  final Size? minimumSize;
 
   @override
   State<AppBtn> createState() => _AppBtnState();
@@ -34,37 +40,40 @@ class _AppBtnState extends State<AppBtn> {
   Widget build(BuildContext context) {
     Color defaultColor = widget.isSecondary ? context.colors.white : context.colors.greyStrong;
     Color textColor = widget.isSecondary ? context.colors.black : context.colors.white;
-    return Semantics(
-      label: widget.semanticLabel,
-      button: true,
-      container: true,
-      child: GestureDetector(
-        onTapDown: (_) => setState(() => _tapDown = true),
-        onTapUp: (_) => setState(() => _tapDown = false),
-        onTapCancel: () => setState(() => _tapDown = false),
-        child: Opacity(
-          opacity: _tapDown ? .7 : 1,
-          child: TextButton(
-              onPressed: widget.onPressed,
-              style: TextButton.styleFrom(
-                minimumSize: Size.zero,
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                splashFactory: NoSplash.splashFactory,
-                backgroundColor: widget.bgColor ?? defaultColor,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(context.corners.md)),
-                padding: widget.padding ?? EdgeInsets.all(context.insets.sm),
-              ),
-              child: DefaultTextStyle(
-                style: DefaultTextStyle.of(context).style.copyWith(color: textColor),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: widget.expand ? MainAxisSize.max : MainAxisSize.min,
-                  children: widget.children,
-                ),
-              )),
+    BorderSide border = widget.border ?? BorderSide.none;
+
+    Widget button = GestureDetector(
+      onTapDown: (_) => setState(() => _tapDown = true),
+      onTapUp: (_) => setState(() => _tapDown = false),
+      onTapCancel: () => setState(() => _tapDown = false),
+      child: Opacity(
+        opacity: _tapDown ? .7 : 1,
+        child: TextButton(
+          onPressed: widget.onPressed,
+          style: TextButton.styleFrom(
+            minimumSize: widget.minimumSize ?? Size.zero,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            splashFactory: NoSplash.splashFactory,
+            backgroundColor: widget.bgColor ?? defaultColor,
+            shape: widget.circular
+              ? CircleBorder(side: border)
+              : RoundedRectangleBorder(side: border, borderRadius: BorderRadius.circular(context.corners.md)),
+            padding: widget.padding ?? EdgeInsets.all(context.insets.sm),
+          ),
+          child: DefaultTextStyle(
+            style: DefaultTextStyle.of(context).style.copyWith(color: textColor),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: widget.expand ? MainAxisSize.max : MainAxisSize.min,
+              children: widget.children,
+            ),
+          ),
         ),
       ),
     );
+    if (widget.circular) button = ClipRRect(borderRadius: BorderRadius.circular(99), child: button);
+    button = Semantics(label: widget.semanticLabel, button: true, container: true, child: button);
+    return button;
   }
 }
 
@@ -73,10 +82,12 @@ class _AppBtnState extends State<AppBtn> {
 /// //////////////////////////////////////////////////
 
 class BasicBtn extends StatelessWidget {
-  const BasicBtn({Key? key, required this.child, required this.semanticLabel, required this.onPressed, this.expand = false}) : super(key: key);
+  const BasicBtn(
+      {Key? key, required this.child, required this.semanticLabel, required this.onPressed, this.expand = false})
+      : super(key: key);
   final Widget child;
   final String semanticLabel;
-  final VoidCallback? onPressed;
+  final VoidCallback onPressed;
   final bool expand;
 
   @override

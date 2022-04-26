@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:wonders/common_libs.dart';
 
-// TODO: GDS: implement semantic labels
 class CircleBtn extends StatelessWidget {
   const CircleBtn({
     Key? key,
@@ -12,7 +9,7 @@ class CircleBtn extends StatelessWidget {
     this.bgColor,
     required this.semanticLabel,
   }) : super(key: key);
-  final VoidCallback? onPressed;
+  final VoidCallback onPressed;
   final Color? bgColor;
   final BorderSide? border;
   final Widget child;
@@ -20,15 +17,15 @@ class CircleBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
+    return AppBtn(
       onPressed: onPressed,
-      child: ClipRRect(borderRadius: BorderRadius.circular(99), child: child),
-      style: TextButton.styleFrom(
-          padding: EdgeInsets.zero,
-          backgroundColor: bgColor,
-          shape: CircleBorder(side: border ?? BorderSide.none),
-          minimumSize: Size(48, 48),
-          primary: bgColor),
+      semanticLabel: semanticLabel,
+      minimumSize: Size(48, 48),
+      padding: EdgeInsets.zero,
+      children: [child],
+      circular: true,
+      bgColor: bgColor,
+      border: border,
     );
   }
 }
