@@ -10,8 +10,6 @@ part 'widgets/_collection_header.dart';
 part 'widgets/_collection_list.dart';
 part 'widgets/_collection_footer.dart';
 
-// TODO: GDS: scroll to the fromCollectible if possible
-// https://stackoverflow.com/questions/49153087/flutter-scrolling-to-a-widget-in-listview
 class CollectionScreen extends StatelessWidget with GetItMixin {
   CollectionScreen({this.fromId, Key? key}) : super(key: key);
 
@@ -20,7 +18,7 @@ class CollectionScreen extends StatelessWidget with GetItMixin {
   @override
   Widget build(BuildContext context) {
     final states = watchX((CollectiblesLogic o) => o.states);
-    int discovered = 0, explored = 0, total = collectibles.length;
+    int discovered = 0, explored = 0, total = CollectibleData.all.length;
     states.forEach((_, state) {
       if (state == CollectibleState.discovered) discovered++;
       if (state == CollectibleState.explored) explored++;

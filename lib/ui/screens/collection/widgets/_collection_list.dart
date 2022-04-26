@@ -1,7 +1,7 @@
 part of '../collection_screen.dart';
 
 @immutable
-class _CollectionList extends StatelessWidget {
+class _CollectionList extends StatefulWidget {
   const _CollectionList({Key? key, required this.states, required this.onPressed, this.fromId}) : super(key: key);
 
   final Map<String, int> states;
@@ -9,14 +9,34 @@ class _CollectionList extends StatelessWidget {
   final String? fromId;
 
   @override
+  State<_CollectionList> createState() => _CollectionListState();
+}
+
+class _CollectionListState extends State<_CollectionList> {
+  late final GlobalKey scrollKey = GlobalKey();
+  late final WonderType? fromWonder;
+
+  @override
+  void initState() {
+    fromWonder = CollectibleData.fromId(widget.fromId)?.wonder;
+    if (fromWonder != null) {
+      WidgetsBinding.instance?.addPostFrameCallback((_) => Scrollable.ensureVisible(
+            scrollKey.currentContext!,
+            alignment: 0.15,
+          ));
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     List<WonderData> wonders = wondersLogic.all;
     List<Widget> children = [];
     for (int i = 0; i < wonders.length; i++) {
       WonderData data = wonders[i];
-      children.add(_buildCategoryTitle(context, data));
+      children.add(_buildCategoryTitle(context, data, data.type == fromWonder ? scrollKey : null));
       children.add(Gap(context.insets.md));
-      children.add(_buildCollectibleRow(context, data.type, states));
+      children.add(_buildCollectibleRow(context, data.type, widget.states));
       children.add(Gap(context.insets.xl));
     }
     children.add(Gap(context.insets.offset));
@@ -38,17 +58,18 @@ class _CollectionList extends StatelessWidget {
     );
   }
 
-  Widget _buildCategoryTitle(BuildContext context, WonderData data) {
+  Widget _buildCategoryTitle(BuildContext context, WonderData data, Key? key) {
     return Text(
       data.title.toUpperCase(),
       textAlign: TextAlign.left,
+      key: key,
       style: context.textStyles.title1.copyWith(color: context.colors.offWhite),
     );
   }
 
   Widget _buildCollectibleRow(BuildContext context, WonderType wonder, Map<String, int> states) {
     final double height = context.insets.lg * 6;
-    List<CollectibleData> list = collectibles.where((o) => o.wonder == wonder).toList(growable: false);
+    List<CollectibleData> list = CollectibleData.all.where((o) => o.wonder == wonder).toList(growable: false);
     if (list.isEmpty) return Container(height: height, color: context.colors.black);
 
     List<Widget> children = [];
@@ -60,8 +81,8 @@ class _CollectionList extends StatelessWidget {
         child: _CollectionTile(
           collectible: collectible,
           state: state,
-          onPressed: onPressed,
-          heroTag: collectible.id == fromId ? 'collectible_image_$fromId' : null,
+          onPressed: widget.onPressed,
+          heroTag: collectible.id == widget.fromId ? 'collectible_image_${widget.fromId}' : null,
         ),
       ));
     }
