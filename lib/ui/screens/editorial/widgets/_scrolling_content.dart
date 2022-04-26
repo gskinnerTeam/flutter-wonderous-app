@@ -71,7 +71,7 @@ class _YouTubeThumbnail extends StatelessWidget {
       child: AspectRatio(
         aspectRatio: 1.5,
         child: BasicBtn(
-          label: 'Youtube thumbnail',
+          semanticLabel: 'Youtube thumbnail',
           onPressed: handlePressed,
           child: CachedNetworkImage(imageUrl: imageUrl, fit: BoxFit.cover),
         ),
@@ -111,7 +111,7 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
           Positioned.fill(
             child: BasicBtn(
               onPressed: handlePressed,
-              label: 'Maps Thumbnail',
+              semanticLabel: 'Maps Thumbnail',
               child: Container(color: Colors.transparent),
             ),
           ),

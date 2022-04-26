@@ -7,7 +7,7 @@ import 'package:wonders/ui/screens/collectible_found/collectible_found_screen.da
 class CollectibleItem extends StatelessWidget with GetItMixin {
   CollectibleItem(this.collectible, {this.size = 64.0, Key? key}) : super(key: key) {
     // pre-fetch the image, so it's ready if we show the collectible found screen.
-    imageProvider = CachedNetworkImageProvider(collectible.imageUrl);
+    imageProvider = CachedNetworkImageProvider(collectible.imageUrlSmall);
     imageProvider.resolve(ImageConfiguration()).addListener(ImageStreamListener((_, __) {}));
   }
 

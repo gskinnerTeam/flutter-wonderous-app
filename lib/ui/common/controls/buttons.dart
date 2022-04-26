@@ -73,9 +73,9 @@ class _AppBtnState extends State<AppBtn> {
 /// //////////////////////////////////////////////////
 
 class BasicBtn extends StatelessWidget {
-  const BasicBtn({Key? key, required this.child, required this.label, required this.onPressed, this.expand = false}) : super(key: key);
+  const BasicBtn({Key? key, required this.child, required this.semanticLabel, required this.onPressed, this.expand = false}) : super(key: key);
   final Widget child;
-  final String label;
+  final String semanticLabel;
   final VoidCallback? onPressed;
   final bool expand;
 
@@ -84,7 +84,7 @@ class BasicBtn extends StatelessWidget {
     return AppBtn(
       children: [expand ? Expanded(child: child) : child],
       onPressed: onPressed,
-      semanticLabel: label,
+      semanticLabel: semanticLabel,
       padding: EdgeInsets.zero,
       bgColor: Colors.transparent,
       expand: expand,
@@ -149,6 +149,7 @@ class AppTextIconBtn extends StatelessWidget {
       padding: padding,
       expand: expand,
       isSecondary: isSecondary,
+      semanticLabel: text,
       children: [
         Text(text, style: context.textStyles.button),
         Gap(context.insets.xs),
@@ -180,6 +181,7 @@ class AppTextBtn extends StatelessWidget {
       padding: padding,
       expand: expand,
       isSecondary: isSecondary,
+      semanticLabel: text,
       children: [
         Text(text.toUpperCase(), style: context.textStyles.button),
       ],

@@ -64,7 +64,7 @@ class _CollectionTile extends StatelessWidget {
       ),
       child: CachedNetworkImage(
         alignment: Alignment.center,
-        imageUrl: collectible.imageUrl,
+        imageUrl: collectible.imageUrlSmall,
         fit: BoxFit.cover,
       ),
     );

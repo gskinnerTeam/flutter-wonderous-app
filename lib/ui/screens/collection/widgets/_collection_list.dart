@@ -58,7 +58,7 @@ class _CollectionList extends StatelessWidget {
 
   Widget _buildCollectibleRow(BuildContext context, WonderType wonder, Map<String, int> states) {
     final double height = context.insets.lg * 6;
-    List<CollectibleData> list = CollectibleData.all.where((o) => o.wonder == wonder).toList(growable: false);
+    List<CollectibleData> list = CollectibleData.forWonder(wonder);
     if (list.isEmpty) return Container(height: height, color: context.colors.black);
 
     List<Widget> children = [];

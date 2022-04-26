@@ -11,7 +11,7 @@ class _ResultTile extends StatelessWidget {
     return ConstrainedBox(
       constraints: BoxConstraints(maxHeight: context.widthPx),
       child: BasicBtn(
-        label: data.title,
+        semanticLabel: data.title,
         onPressed: () => onPressed(data),
         child: Expanded(
           child: ClipRRect(
