@@ -179,6 +179,7 @@ class _ImageGalleryState extends State<ImageGallery> {
                     child: CircleIconBtn(
                       icon: _scale == 1 ? Icons.zoom_out : Icons.zoom_in,
                       onPressed: _handleZoomToggled,
+                      semanticLabel: _scale == 1 ? 'zoom out' : 'zoom in',
                     ),
                   ),
                 ),

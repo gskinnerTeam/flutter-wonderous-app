@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:wonders/common_libs.dart';
 
+// TODO: GDS: implement semantic labels
 class CircleBtn extends StatelessWidget {
   const CircleBtn({
     Key? key,
@@ -7,11 +10,13 @@ class CircleBtn extends StatelessWidget {
     required this.onPressed,
     this.border,
     this.bgColor,
+    required this.semanticLabel,
   }) : super(key: key);
   final VoidCallback? onPressed;
   final Color? bgColor;
   final BorderSide? border;
   final Widget child;
+  final String semanticLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -36,22 +41,45 @@ class CircleIconBtn extends StatelessWidget {
     this.border,
     this.bgColor,
     this.color,
+    required this.semanticLabel,
   }) : super(key: key);
   final IconData icon;
   final VoidCallback onPressed;
   final BorderSide? border;
   final Color? bgColor;
   final Color? color;
+  final String semanticLabel;
 
   @override
   Widget build(BuildContext context) {
     Color defaultColor = context.colors.greyStrong;
     Color iconColor = color ?? context.colors.offWhite;
     return CircleBtn(
-      child: Icon(icon, size: 24, color: iconColor),
+      child: Icon(icon, size: context.insets.md, color: iconColor),
       onPressed: onPressed,
       border: border,
       bgColor: bgColor ?? defaultColor,
+      semanticLabel: semanticLabel,
+    );
+  }
+}
+
+class BackBtn extends StatelessWidget {
+  const BackBtn({
+    Key? key,
+    this.useCloseIcon = false,
+    this.onPressed,
+  }) : super(key: key);
+
+  final bool useCloseIcon;
+  final VoidCallback? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return CircleIconBtn(
+      icon: useCloseIcon ? Icons.close : Icons.arrow_back,
+      onPressed: onPressed ?? () => Navigator.pop(context),
+      semanticLabel: useCloseIcon ? 'close' : 'back',
     );
   }
 }
@@ -72,9 +100,9 @@ class PositionedBackBtn extends StatelessWidget {
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.all(context.insets.sm),
-        child: CircleIconBtn(
-          icon: useCloseIcon ? Icons.close : Icons.arrow_back,
-          onPressed: onPressed ?? () => Navigator.pop(context),
+        child: BackBtn(
+          useCloseIcon: useCloseIcon,
+          onPressed: onPressed,
         ),
       ),
     );
