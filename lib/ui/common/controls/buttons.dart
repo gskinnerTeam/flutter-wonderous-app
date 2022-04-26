@@ -73,19 +73,21 @@ class _AppBtnState extends State<AppBtn> {
 /// //////////////////////////////////////////////////
 
 class BasicBtn extends StatelessWidget {
-  const BasicBtn({Key? key, required this.child, required this.label, required this.onPressed}) : super(key: key);
+  const BasicBtn({Key? key, required this.child, required this.label, required this.onPressed, this.expand = false}) : super(key: key);
   final Widget child;
   final String label;
   final VoidCallback? onPressed;
+  final bool expand;
 
   @override
   Widget build(BuildContext context) {
     return AppBtn(
-      children: [child],
+      children: [expand ? Expanded(child: child) : child],
       onPressed: onPressed,
       semanticLabel: label,
       padding: EdgeInsets.zero,
       bgColor: Colors.transparent,
+      expand: expand,
     );
   }
 }
