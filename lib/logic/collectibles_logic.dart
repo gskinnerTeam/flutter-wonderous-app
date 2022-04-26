@@ -16,6 +16,7 @@ class CollectiblesLogic with SaveLoadMixin {
   }
 
   void reset() {
+    List<CollectibleData> collectibles = CollectibleData.all;
     Map<String, int> states = {};
     for (int i = 0; i < collectibles.length; i++) {
       states[collectibles[i].id] = CollectibleState.lost;
@@ -27,6 +28,7 @@ class CollectiblesLogic with SaveLoadMixin {
 
   @override
   void copyFromJson(Map<String, dynamic> value) {
+    List<CollectibleData> collectibles = CollectibleData.all;
     Map<String, int> states = {};
     for (int i = 0; i < collectibles.length; i++) {
       String id = collectibles[i].id;

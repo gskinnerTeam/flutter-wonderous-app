@@ -27,8 +27,8 @@ class _ScrollingContent extends StatelessWidget {
           // TODO: temporary for testing. Remove.
           Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
             CollectibleItem(CollectibleData.all[0]),
-            CollectibleItem(CollectibleData.all[10]),
-            CollectibleItem(CollectibleData.all[18]),
+            CollectibleItem(CollectibleData.all[9]),
+            CollectibleItem(CollectibleData.all[19]),
           ]),
           buildDropCapText(data.historyInfo1),
           _CollapsingPullQuoteImage(data: data, scrollPos: scrollPos),
