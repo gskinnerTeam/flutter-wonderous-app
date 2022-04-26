@@ -153,7 +153,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
           // Prev tap button
           CenterLeft(
             child: BasicBtn(
-              label: '',
+              semanticLabel: 'previous',
               onPressed: () => _handlePageJump(-1),
               child: Container(width: 100, height: 500, color: Colors.transparent),
             ),
@@ -162,7 +162,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
           // Next tap button
           CenterRight(
             child: BasicBtn(
-              label: '',
+              semanticLabel: 'next',
               onPressed: () => _handlePageJump(1),
               child: Container(width: 100, height: 500, color: Colors.transparent),
             ),

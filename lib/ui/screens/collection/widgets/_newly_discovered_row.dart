@@ -12,7 +12,7 @@ class _NewlyDiscoveredRow extends StatelessWidget {
     if (count == 0) return SizedBox.shrink();
     return BasicBtn(
       expand: true,
-      label: 'Scroll to new item',
+      semanticLabel: 'Scroll to new item',
       onPressed: onPressed,
       child: Container(
         height: 40,

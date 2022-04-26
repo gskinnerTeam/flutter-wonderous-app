@@ -154,7 +154,7 @@ class _SearchInput extends StatelessWidget {
 
   Widget _buildSuggestion(BuildContext context, String suggestion, VoidCallback onPressed) {
     return BasicBtn(
-      label: suggestion,
+      semanticLabel: suggestion,
       onPressed: onPressed,
       child: Expanded(
         child: Padding(
