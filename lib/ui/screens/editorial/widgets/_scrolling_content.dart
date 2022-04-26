@@ -40,7 +40,7 @@ class _ScrollingContent extends StatelessWidget {
           _SlidingImageStack(scrollPos: scrollPos, type: data.type),
           _SectionDivider(scrollPos, sectionNotifier, index: 2),
           buildDropCapText(data.locationInfo),
-          _MapsThumbnail(data, height: 300),
+          _MapsThumbnail(data, height: 200),
         ],
       ),
     );
@@ -99,11 +99,14 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
       height: widget.height,
       child: Stack(
         children: [
-          GoogleMap(
-            markers: {getMapsMarker(startPos.target)},
-            zoomControlsEnabled: false,
-            mapType: MapType.normal,
-            initialCameraPosition: startPos,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(context.corners.md),
+            child: GoogleMap(
+              markers: {getMapsMarker(startPos.target)},
+              zoomControlsEnabled: false,
+              mapType: MapType.normal,
+              initialCameraPosition: startPos,
+            ),
           ),
           Positioned.fill(
             child: BasicBtn(

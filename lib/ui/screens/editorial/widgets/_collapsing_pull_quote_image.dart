@@ -10,17 +10,20 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
     // Start transitioning when we are halfway up the screen
     final collapseStartPx = context.heightPx * .75;
     final collapseEndPx = context.heightPx * .25;
-    const double imgHeight = 450;
+    const double imgHeight = 350;
     const outerPadding = 150;
     double collapseAmt = 0;
 
     /// A single piece of quote text, this widget has one on top, and one on bottom
-    Widget buildText(String value, {required bool top}) {
-      final quoteStyle = context.textStyles.quote.copyWith(
-        letterSpacing: -4,
+    Widget buildText(String value, {required bool top, bool isAuthor = false}) {
+      var quoteStyle = context.textStyles.quote.copyWith(
+        letterSpacing: isAuthor ? 0 : -4,
         height: 1,
         color: Color(0xFF888888).withOpacity(1),
       );
+      if (isAuthor) {
+        quoteStyle = quoteStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w600);
+      }
       return Transform.translate(
           offset: Offset(0, (imgHeight / 2 + outerPadding * .25) * (1 - collapseAmt) * (top ? -1 : 1)),
           child: BlendMask(
@@ -45,23 +48,27 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
               /// Main image
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: context.insets.md),
-                child: SizedBox(
-                  height: imgHeight,
-                  width: 290,
-                  // Clip the image with an curved top
-                  child: ClipPath(
-                    clipper: CurvedTopClipper(),
-                    child: Stack(
-                      fit: StackFit.expand,
-                      children: [
-                        ScalingListItem(
-                          scrollPos: scrollPos,
-                          child: Image.asset(data.type.photo2, fit: BoxFit.cover),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      height: imgHeight,
+                      width: 290,
+                      // Clip the image with an curved top
+                      child: ClipPath(
+                        clipper: CurvedTopClipper(),
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            ScalingListItem(
+                              scrollPos: scrollPos,
+                              child: Image.asset(data.type.photo2, fit: BoxFit.cover),
+                            ),
+                          ],
                         ),
-                        Positioned.fill(child: ColoredBox(color: Colors.black.withOpacity(.3)))
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
 
@@ -72,6 +79,9 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
                   children: [
                     buildText(data.quote1, top: true),
                     buildText(data.quote2, top: false),
+                    if (data.quoteAuthor.isNotEmpty) ...[
+                      buildText(data.quoteAuthor, top: false, isAuthor: true),
+                    ],
                   ],
                 ),
               )
