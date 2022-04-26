@@ -1,5 +1,7 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/app_scaffold.dart';
+import 'package:wonders/ui/common/modals//fullscreen_video_viewer.dart';
+import 'package:wonders/ui/common/modals/fullscreen_maps_viewer.dart';
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_screen.dart';
 import 'package:wonders/ui/screens/artifact/artifact_details/artifact_details_screen.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_screen.dart';
@@ -8,7 +10,6 @@ import 'package:wonders/ui/screens/home/wonders_home_screen.dart';
 import 'package:wonders/ui/screens/settings/settings_screen.dart';
 import 'package:wonders/ui/screens/splash/splash_screen.dart';
 import 'package:wonders/ui/screens/timeline/timeline_screen.dart';
-import 'package:wonders/ui/screens/video_player/video_playback_screen.dart';
 import 'package:wonders/ui/screens/wonder_details/wonders_details_screen.dart';
 
 class ScreenPaths {
@@ -22,6 +23,7 @@ class ScreenPaths {
   static String search(WonderType type) => '/search/${type.name}';
   static String artifact(String id) => '/artifact/$id';
   static String collection(String id) => '/collection/$id';
+  static String maps(WonderType type) => '/maps/${type.name}';
 }
 
 String? _handleRedirect(GoRouterState state) {
@@ -63,6 +65,9 @@ final appRouter = GoRouter(
     }),
     AppRoute('/collection/:id', (s) {
       return CollectionScreen(fromId: s.params['id']);
+    }),
+    AppRoute('/maps/:id', (s) {
+      return FullscreenMapsViewer(type: _parseWonderType(s.params['id']!));
     }),
   ],
 );

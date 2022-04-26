@@ -40,7 +40,7 @@ class _ScrollingContent extends StatelessWidget {
           _SlidingImageStack(scrollPos: scrollPos, type: data.type),
           _SectionDivider(scrollPos, sectionNotifier, index: 2),
           buildDropCapText(data.locationInfo),
-          PlaceholderImage(height: 200),
+          _MapsThumbnail(data, height: 300),
         ],
       ),
     );
@@ -66,14 +66,53 @@ class _YouTubeThumbnail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void handleVideoPressed() => context.push(ScreenPaths.video(id));
+    void handlePressed() => context.push(ScreenPaths.video(id));
     return SizedBox(
       child: AspectRatio(
         aspectRatio: 1.5,
-        child: GestureDetector(
-          onTap: handleVideoPressed,
+        child: BasicBtn(
+          label: 'Youtube thumbnail',
+          onPressed: handlePressed,
           child: CachedNetworkImage(imageUrl: imageUrl, fit: BoxFit.cover),
         ),
+      ),
+    );
+  }
+}
+
+class _MapsThumbnail extends StatefulWidget {
+  _MapsThumbnail(this.data, {Key? key, required this.height}) : super(key: key);
+  final WonderData data;
+  final double height;
+
+  @override
+  State<_MapsThumbnail> createState() => _MapsThumbnailState();
+}
+
+class _MapsThumbnailState extends State<_MapsThumbnail> {
+  CameraPosition get startPos => CameraPosition(target: LatLng(widget.data.lat, widget.data.lng), zoom: 3);
+
+  @override
+  Widget build(BuildContext context) {
+    void handlePressed() => context.push(ScreenPaths.maps(widget.data.type));
+    return SizedBox(
+      height: widget.height,
+      child: Stack(
+        children: [
+          GoogleMap(
+            markers: {getMapsMarker(startPos.target)},
+            zoomControlsEnabled: false,
+            mapType: MapType.normal,
+            initialCameraPosition: startPos,
+          ),
+          Positioned.fill(
+            child: BasicBtn(
+              onPressed: handlePressed,
+              label: 'Maps Thumbnail',
+              child: Container(color: Colors.transparent),
+            ),
+          ),
+        ],
       ),
     );
   }

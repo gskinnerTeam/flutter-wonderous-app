@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drop_cap_text/drop_cap_text.dart';
 import 'package:flutter_circular_text/circular_text.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
@@ -10,6 +11,7 @@ import 'package:wonders/ui/common/blend_mask.dart';
 import 'package:wonders/ui/common/collectible_item.dart';
 import 'package:wonders/ui/common/compass_divider.dart';
 import 'package:wonders/ui/common/curved_clippers.dart';
+import 'package:wonders/ui/common/google_maps_marker.dart';
 import 'package:wonders/ui/common/placeholder_image.dart';
 import 'package:wonders/ui/common/scaling_list_item.dart';
 import 'package:wonders/ui/common/themed_text.dart';
@@ -175,7 +177,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
 
                   /// Bottom padding
                   SliverToBoxAdapter(
-                    child: Container(height: 300, color: context.colors.offWhite),
+                    child: Container(height: 150, color: context.colors.offWhite),
                   ),
                 ],
               ),
