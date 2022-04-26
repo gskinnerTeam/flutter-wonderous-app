@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/platform_info.dart';
+import 'package:wonders/ui/common/modals/fullscreen_web_view.dart';
 import 'package:wonders/ui/modals/app_modals.dart';
 import 'package:wonders/ui/screens/wallpaper_preview/wallpaper_preview.dart';
 
@@ -14,6 +14,7 @@ class AppLogic {
   /// Indicates to the rest of the app that bootstrap has not completed.
   /// The router will use this to prevent redirects while bootstrapping.
   bool isBootstrapComplete = false;
+  bool enableTimeline = false;
 
   /// The currently selected tab on the WonderDetails screen
   static const enablePersistentTabs = false;
@@ -24,6 +25,9 @@ class AppLogic {
   Future<void> bootstrap() async {
     // Default error handler
     FlutterError.onError = _handleFlutterError;
+
+    // Load any bitmaps the views might need
+    await AppBitmaps.init();
 
     // Settings load
     await settingsLogic.load();
@@ -74,21 +78,4 @@ class AppLogic {
         /// TODO: Switch from Cupertino to one of the "Animation" Page routes?
         CupertinoPageRoute(builder: (_) => FullscreenWebView(url)),
       );
-}
-
-class FullscreenWebView extends StatelessWidget {
-  const FullscreenWebView(this.url, {Key? key}) : super(key: key);
-  final String url;
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(),
-        body: InAppWebView(
-          initialUrlRequest: URLRequest(url: Uri.parse(url)),
-        ),
-      ),
-    );
-  }
 }

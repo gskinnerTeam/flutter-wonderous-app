@@ -20,7 +20,7 @@ class StringUtils {
     return str;
   }
 
-  static Size measure(String text, TextStyle style, {int maxLines: 1, TextDirection direction = TextDirection.ltr}) {
+  static Size measure(String text, TextStyle style, {int maxLines = 1, TextDirection direction = TextDirection.ltr}) {
     final TextPainter textPainter =
         TextPainter(text: TextSpan(text: text, style: style), maxLines: maxLines, textDirection: direction)
           ..layout(minWidth: 0, maxWidth: double.infinity);

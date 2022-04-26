@@ -1,4 +1,3 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 
 class TimelineData {

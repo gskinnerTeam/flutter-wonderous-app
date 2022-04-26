@@ -1,15 +1,29 @@
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/platform_info.dart';
+
+class AppBitmaps {
+  static late final BitmapDescriptor mapMarker;
+
+  static Future<void> init() async {
+    mapMarker = await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(devicePixelRatio: PlatformInfo.dpi),
+      '${ImagePaths.common}/location-pin.png',
+    );
+  }
+}
 
 /// Consolidate common paths used across the app
 class ImagePaths {
   static String root = 'assets/images';
-  static String cloud = '$root/cloud-white.png';
+  static String common = 'assets/images/_common';
+  static String cloud = '$common/cloud-white.png';
 
   static String collectibles = '$root/collectibles';
   static String collectibleIcons = '$collectibles/icons';
   static String sparkle = '$collectibles/sparkle_21x23.png';
 
-  static String textures = '$root/texture';
+  static String textures = '$common/texture';
   static String speckles = '$textures/speckles-white.png';
   static String roller1 = '$textures/roller-1-white.png';
   static String roller2 = '$textures/roller-2-white.png';
@@ -17,8 +31,8 @@ class ImagePaths {
 
 /// Place Svg paths in their own class, to hint to the views to use an SvgPicture to render
 class SvgPaths {
-  static String compassFull = '${ImagePaths.root}/compass-full.svg';
-  static String compassSimple = '${ImagePaths.root}/compass-simple.svg';
+  static String compassFull = '${ImagePaths.common}/compass-full.svg';
+  static String compassSimple = '${ImagePaths.common}/compass-simple.svg';
 }
 
 /// For wonder specific assets, add an extension to [WonderType] for easy lookup

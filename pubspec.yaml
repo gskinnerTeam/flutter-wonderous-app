@@ -77,7 +77,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/
+    - assets/images/_common/
     - assets/images/chichen_itza/
     - assets/images/christ_redeemer/
     - assets/images/colosseum/
@@ -86,7 +86,7 @@ flutter:
     - assets/images/petra/
     - assets/images/pyramids_giza/
     - assets/images/taj_mahal/
-    - assets/images/texture/
+    - assets/images/_common/texture/
     - assets/images/collectibles/
     - assets/images/collectibles/icons/
 
