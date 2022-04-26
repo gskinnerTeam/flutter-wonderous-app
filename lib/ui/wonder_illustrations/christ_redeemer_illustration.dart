@@ -8,7 +8,9 @@ class ChristRedeemerIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //String assetPath = WonderType.christRedeemer.assetPath;
+    String assetPath = WonderType.christRedeemer.assetPath;
+    final fgColor = WonderType.christRedeemer.fgColor;
+    final bgColor = WonderType.christRedeemer.bgColor;
     return WonderIllustrationBuilder(
       config: config,
       bgBuilder: (_, __) => [FlutterLogo()],

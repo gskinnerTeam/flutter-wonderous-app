@@ -235,7 +235,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
 
                         Gap(context.insets.lg),
                         // Selection indicator
-                        _buildPageIndicator(context),
+                        _buildPageIndicator(context, _highlightedArtifactIds.length),
                       ],
                     ),
                   ),
@@ -259,10 +259,10 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     );
   }
 
-  SmoothPageIndicator _buildPageIndicator(BuildContext context) {
+  SmoothPageIndicator _buildPageIndicator(BuildContext context, int count) {
     return SmoothPageIndicator(
       controller: _controller,
-      count: 6,
+      count: count,
       onDotClicked: _changeArtifactIndex,
       effect: ExpandingDotsEffect(
           dotWidth: 4,

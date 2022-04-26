@@ -8,7 +8,9 @@ class PyramidsGizaIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //String assetPath = WonderType.pyramidsGiza.assetPath;
+    String assetPath = WonderType.pyramidsGiza.assetPath;
+    final fgColor = WonderType.pyramidsGiza.fgColor;
+    final bgColor = WonderType.pyramidsGiza.bgColor;
     return WonderIllustrationBuilder(
       config: config,
       bgBuilder: (_, __) => [FlutterLogo()],
