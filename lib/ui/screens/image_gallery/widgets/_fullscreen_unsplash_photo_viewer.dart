@@ -44,7 +44,7 @@ class _FullScreenUnsplashPhotoViewerState extends State<_FullScreenUnsplashPhoto
                   semanticLabel: 'prev',
                   onPressed: () => incrementId(-1),
                 ),
-                BackBtn(useCloseIcon: true),
+                BackBtn.close().padded(),
                 CircleIconBtn(
                   icon: Icons.chevron_right,
                   semanticLabel: 'next',

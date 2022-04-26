@@ -64,43 +64,43 @@ class CircleIconBtn extends StatelessWidget {
 class BackBtn extends StatelessWidget {
   const BackBtn({
     Key? key,
-    this.useCloseIcon = false,
+    this.icon = Icons.arrow_back,
     this.onPressed,
+    this.semanticLabel = 'back',
   }) : super(key: key);
 
-  final bool useCloseIcon;
+  const BackBtn.close({Key? key, VoidCallback? onPressed})
+      : this(key: key, icon: Icons.close, onPressed: onPressed, semanticLabel: 'close');
+
+  final IconData icon;
   final VoidCallback? onPressed;
+  final String? semanticLabel;
 
   @override
   Widget build(BuildContext context) {
     return CircleIconBtn(
-      icon: useCloseIcon ? Icons.close : Icons.arrow_back,
+      icon: icon,
       onPressed: onPressed ?? () => Navigator.pop(context),
-      semanticLabel: useCloseIcon ? 'close' : 'back',
+      semanticLabel: 'back',
     );
+  }
+
+  Widget padded() {
+    return _BackPositioned(child: this);
   }
 }
 
-// A circular back button for adding to a Stack, to ensure consistent sizing and location.
-class PositionedBackBtn extends StatelessWidget {
-  const PositionedBackBtn({
-    Key? key,
-    this.useCloseIcon = false,
-    this.onPressed,
-  }) : super(key: key);
+class _BackPositioned extends StatelessWidget {
+  const _BackPositioned({Key? key, required this.child}) : super(key: key);
 
-  final bool useCloseIcon;
-  final VoidCallback? onPressed;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.all(context.insets.sm),
-        child: BackBtn(
-          useCloseIcon: useCloseIcon,
-          onPressed: onPressed,
-        ),
+        child: child,
       ),
     );
   }

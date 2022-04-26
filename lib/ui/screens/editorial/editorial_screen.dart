@@ -12,7 +12,6 @@ import 'package:wonders/ui/common/collectible_item.dart';
 import 'package:wonders/ui/common/compass_divider.dart';
 import 'package:wonders/ui/common/curved_clippers.dart';
 import 'package:wonders/ui/common/google_maps_marker.dart';
-import 'package:wonders/ui/common/placeholder_image.dart';
 import 'package:wonders/ui/common/scaling_list_item.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/utils/context_utils.dart';
@@ -194,7 +193,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                       child: child,
                     );
                   },
-                  child: PositionedBackBtn()),
+                  child: BackBtn(icon: Icons.arrow_upward).padded()),
             ],
           ),
         ),

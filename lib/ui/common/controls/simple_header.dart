@@ -16,7 +16,7 @@ class SimpleHeader extends StatelessWidget {
             width: context.insets.lg * 2,
             height: context.insets.offset,
             alignment: Alignment.topLeft,
-            child: PositionedBackBtn(),
+            child: BackBtn().padded(),
           ),
           Flexible(
             fit: FlexFit.tight,

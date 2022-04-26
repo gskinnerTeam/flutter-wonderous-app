@@ -20,7 +20,7 @@ class FullscreenUrlImgViewer extends StatelessWidget {
               ),
             ),
           )),
-          PositionedBackBtn(useCloseIcon: true),
+          BackBtn.close().padded(),
         ],
       ),
     );
