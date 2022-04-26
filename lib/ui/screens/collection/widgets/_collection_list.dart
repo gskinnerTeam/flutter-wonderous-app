@@ -1,32 +1,21 @@
 part of '../collection_screen.dart';
 
 @immutable
-class _CollectionList extends StatefulWidget {
-  const _CollectionList({Key? key, required this.states, required this.onPressed, this.fromId}) : super(key: key);
+class _CollectionList extends StatelessWidget {
+  const _CollectionList({
+    Key? key,
+    required this.states,
+    required this.onPressed,
+    this.fromId,
+    this.scrollWonder,
+    this.scrollKey,
+  }) : super(key: key);
 
   final Map<String, int> states;
   final ValueSetter<CollectibleData> onPressed;
+  final Key? scrollKey;
+  final WonderType? scrollWonder;
   final String? fromId;
-
-  @override
-  State<_CollectionList> createState() => _CollectionListState();
-}
-
-class _CollectionListState extends State<_CollectionList> {
-  late final GlobalKey scrollKey = GlobalKey();
-  late final WonderType? fromWonder;
-
-  @override
-  void initState() {
-    fromWonder = CollectibleData.fromId(widget.fromId)?.wonder;
-    if (fromWonder != null) {
-      WidgetsBinding.instance?.addPostFrameCallback((_) => Scrollable.ensureVisible(
-            scrollKey.currentContext!,
-            alignment: 0.15,
-          ));
-    }
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +23,9 @@ class _CollectionListState extends State<_CollectionList> {
     List<Widget> children = [];
     for (int i = 0; i < wonders.length; i++) {
       WonderData data = wonders[i];
-      children.add(_buildCategoryTitle(context, data, data.type == fromWonder ? scrollKey : null));
+      children.add(_buildCategoryTitle(context, data, data.type == scrollWonder ? scrollKey : null));
       children.add(Gap(context.insets.md));
-      children.add(_buildCollectibleRow(context, data.type, widget.states));
+      children.add(_buildCollectibleRow(context, data.type, states));
       children.add(Gap(context.insets.xl));
     }
     children.add(Gap(context.insets.offset));
@@ -81,8 +70,8 @@ class _CollectionListState extends State<_CollectionList> {
         child: _CollectionTile(
           collectible: collectible,
           state: state,
-          onPressed: widget.onPressed,
-          heroTag: collectible.id == widget.fromId ? 'collectible_image_${widget.fromId}' : null,
+          onPressed: onPressed,
+          heroTag: collectible.id == fromId ? 'collectible_image_$fromId' : null,
         ),
       ));
     }

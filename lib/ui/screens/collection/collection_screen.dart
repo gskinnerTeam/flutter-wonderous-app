@@ -7,29 +7,59 @@ import 'package:wonders/ui/common/gradient_container.dart';
 
 part 'widgets/_collection_tile.dart';
 part 'widgets/_collection_header.dart';
+part 'widgets/_newly_discovered_row.dart';
 part 'widgets/_collection_list.dart';
 part 'widgets/_collection_footer.dart';
 
-class CollectionScreen extends StatelessWidget with GetItMixin {
+// TODO: GDS: maybe refactor so that the "new item" header scrolls to the first new item when clicked.
+
+class CollectionScreen extends StatefulWidget with GetItStatefulWidgetMixin {
   CollectionScreen({this.fromId, Key? key}) : super(key: key);
 
   final String? fromId;
 
   @override
+  State<CollectionScreen> createState() => _CollectionScreenState();
+}
+
+class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixin {
+  Map<String, int> states = collectiblesLogic.states.value;
+  GlobalKey? scrollKey;
+
+  @override
+  void initState() {
+    if (widget.fromId != null && states[widget.fromId] == CollectibleState.discovered) {
+      WidgetsBinding.instance?.addPostFrameCallback((_) => _scrollToTarget(false));
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final states = watchX((CollectiblesLogic o) => o.states);
+    states = watchX((CollectiblesLogic o) => o.states);
     int discovered = 0, explored = 0, total = CollectibleData.all.length;
     states.forEach((_, state) {
       if (state == CollectibleState.discovered) discovered++;
       if (state == CollectibleState.explored) explored++;
     });
+
+    WonderType? scrollWonder = scrollTargetWonder;
+    if (scrollWonder != null) scrollKey = GlobalKey();
+
     return ColoredBox(
       color: context.colors.greyStrong,
       child: Stack(children: [
         Positioned.fill(
           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            _CollectionHeader(newCount: discovered),
-            _CollectionList(states: states, fromId: fromId, onPressed: (o) => _showDetails(context, o)),
+            _CollectionHeader(),
+            _NewlyDiscoveredRow(count: discovered, onPressed: _scrollToTarget),
+            _CollectionList(
+              states: states,
+              fromId: widget.fromId,
+              scrollKey: scrollKey,
+              scrollWonder: scrollWonder,
+              onPressed: (o) => _showDetails(context, o),
+            ),
           ]),
         ),
         Positioned(
@@ -40,6 +70,20 @@ class CollectionScreen extends StatelessWidget with GetItMixin {
         ),
       ]),
     );
+  }
+
+  WonderType? get scrollTargetWonder {
+    String? id = widget.fromId;
+    if (id == null || states[id] != CollectibleState.discovered) {
+      id = states.keys.firstWhereOrNull((id) => states[id] == CollectibleState.discovered);
+    }
+    return CollectibleData.fromId(id)?.wonder;
+  }
+
+  void _scrollToTarget([bool animate = true]) {
+    if (scrollKey != null) {
+      Scrollable.ensureVisible(scrollKey!.currentContext!, alignment: 0.15, duration: animate ? 300.ms : 0.ms);
+    }
   }
 
   void _showDetails(BuildContext context, CollectibleData collectible) {
