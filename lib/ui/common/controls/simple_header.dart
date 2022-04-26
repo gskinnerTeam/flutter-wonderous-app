@@ -1,9 +1,10 @@
-part of '../artifact_search_screen.dart';
+import 'package:wonders/common_libs.dart';
 
-class _SearchHeader extends StatelessWidget {
-  const _SearchHeader(this.type, this.title, {Key? key}) : super(key: key);
-  final WonderType type;
+class SimpleHeader extends StatelessWidget {
+  const SimpleHeader(this.title, {Key? key, this.subtitle, this.child}) : super(key: key);
   final String title;
+  final String? subtitle;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +16,7 @@ class _SearchHeader extends StatelessWidget {
             width: context.insets.lg * 2,
             height: context.insets.offset,
             alignment: Alignment.centerRight,
-            child: CircleIconBtn(
-              icon: Icons.arrow_back,
-              onPressed: () => context.pop(),
-            ),
+            child: BackBtn(),
           ),
           Flexible(
             fit: FlexFit.tight,
@@ -28,15 +26,16 @@ class _SearchHeader extends StatelessWidget {
                   title.toUpperCase(),
                   style: context.textStyles.h3.copyWith(color: context.colors.offWhite),
                 ),
-                Gap(context.insets.xxs),
-                Text(
-                  type.name.toUpperCase(),
-                  style: context.textStyles.title1.copyWith(color: context.colors.accent1),
-                ),
+                if (subtitle != null) Gap(context.insets.xxs),
+                if (subtitle != null)
+                  Text(
+                    subtitle!.toUpperCase(),
+                    style: context.textStyles.title1.copyWith(color: context.colors.accent1),
+                  ),
               ],
             ),
           ),
-          Gap(context.insets.lg * 2),
+          Container(width: context.insets.lg * 2, alignment: Alignment.centerLeft, child: child),
         ]),
       ),
     );

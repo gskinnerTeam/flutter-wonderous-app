@@ -97,6 +97,7 @@ class _WonderHomeBtn extends StatelessWidget {
       onPressed: () => Navigator.of(context).pop(),
       bgColor: context.colors.accent1,
       border: BorderSide(color: context.colors.offWhite, width: 6),
+      semanticLabel: 'back to wonder selection',
       child: SizedBox(
           width: size,
           height: size,

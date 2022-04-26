@@ -3,10 +3,10 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/collectibles_logic.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
+import 'package:wonders/ui/common/controls/simple_header.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 
 part 'widgets/_collection_tile.dart';
-part 'widgets/_collection_header.dart';
 part 'widgets/_newly_discovered_row.dart';
 part 'widgets/_collection_list.dart';
 part 'widgets/_collection_footer.dart';
@@ -51,7 +51,7 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
       child: Stack(children: [
         Positioned.fill(
           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            _CollectionHeader(),
+            SimpleHeader('Collection'),
             _NewlyDiscoveredRow(count: discovered, onPressed: _scrollToTarget),
             _CollectionList(
               states: states,
