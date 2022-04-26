@@ -2,7 +2,7 @@ import 'dart:math' as math;
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/data/artifact_data.dart';
+import 'package:wonders/logic/data/highlights_data.dart';
 
 class ArtifactCarouselImage extends StatelessWidget {
   const ArtifactCarouselImage(
@@ -14,7 +14,7 @@ class ArtifactCarouselImage extends StatelessWidget {
       this.borderOnly = false,
       required this.onPressed})
       : super(key: key);
-  final ArtifactData artifact;
+  final HighlightsData artifact;
   final int index;
   final double currentPage;
   final double viewportFraction;
@@ -28,10 +28,10 @@ class ArtifactCarouselImage extends StatelessWidget {
           // Show immediately; don't delay the appearance on the sides.
           fadeInDuration: context.times.fast,
           fadeOutDuration: context.times.fast,
-          imageUrl: artifact.image,
+          imageUrl: artifact.imageUrl,
           imageBuilder: (context, imageProvider) => _ImagePreview(
             image: imageProvider,
-            heroTag: artifact.image,
+            heroTag: artifact.imageUrlSmall,
             viewportFraction: viewportFraction,
             offsetAmt: currentPage - index.toDouble(),
           ),

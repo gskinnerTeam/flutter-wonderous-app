@@ -72,8 +72,7 @@ tajMahal
 73309,
 24932,
 56230,
-35633
-</textarea>
+35633</textarea>
         <br>
         <input type="button" onclick="run();" value="RUN">
         <br>
@@ -148,7 +147,9 @@ function out() {
   wonder: WonderType.${wonder.type},
   artifactId: '${o.data.objectID}',
   culture: '${o.data.culture}',
-  imageUrl: '${o.data.primaryImageSmall}',
+  imageUrlSmall: '${o.data.primaryImageSmall}',
+  imageUrl: '${o.data.primaryImage}',
+  date: '${o.data.objectDate}',
 ),\n`;
         }
         str += "\n";
