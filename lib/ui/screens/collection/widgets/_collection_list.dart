@@ -2,10 +2,19 @@ part of '../collection_screen.dart';
 
 @immutable
 class _CollectionList extends StatelessWidget {
-  const _CollectionList({Key? key, required this.states, required this.onPressed, this.fromId}) : super(key: key);
+  const _CollectionList({
+    Key? key,
+    required this.states,
+    required this.onPressed,
+    this.fromId,
+    this.scrollWonder,
+    this.scrollKey,
+  }) : super(key: key);
 
   final Map<String, int> states;
   final ValueSetter<CollectibleData> onPressed;
+  final Key? scrollKey;
+  final WonderType? scrollWonder;
   final String? fromId;
 
   @override
@@ -14,7 +23,7 @@ class _CollectionList extends StatelessWidget {
     List<Widget> children = [];
     for (int i = 0; i < wonders.length; i++) {
       WonderData data = wonders[i];
-      children.add(_buildCategoryTitle(context, data));
+      children.add(_buildCategoryTitle(context, data, data.type == scrollWonder ? scrollKey : null));
       children.add(Gap(context.insets.md));
       children.add(_buildCollectibleRow(context, data.type, states));
       children.add(Gap(context.insets.xl));
@@ -38,17 +47,18 @@ class _CollectionList extends StatelessWidget {
     );
   }
 
-  Widget _buildCategoryTitle(BuildContext context, WonderData data) {
+  Widget _buildCategoryTitle(BuildContext context, WonderData data, Key? key) {
     return Text(
       data.title.toUpperCase(),
       textAlign: TextAlign.left,
+      key: key,
       style: context.textStyles.title1.copyWith(color: context.colors.offWhite),
     );
   }
 
   Widget _buildCollectibleRow(BuildContext context, WonderType wonder, Map<String, int> states) {
     final double height = context.insets.lg * 6;
-    List<CollectibleData> list = collectibles.where((o) => o.wonder == wonder).toList(growable: false);
+    List<CollectibleData> list = CollectibleData.all.where((o) => o.wonder == wonder).toList(growable: false);
     if (list.isEmpty) return Container(height: height, color: context.colors.black);
 
     List<Widget> children = [];

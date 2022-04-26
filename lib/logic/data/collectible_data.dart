@@ -17,6 +17,9 @@ class CollectibleData {
     icon = AssetImage('${ImagePaths.collectibleIcons}/$iconName.png');
   }
 
+  static CollectibleData? fromId(String? id) => id == null ? null : _collectibles.firstWhereOrNull((o) => o.id == id);
+  static List<CollectibleData> get all => _collectibles;
+
   final String title;
   final String imageUrl;
   final String iconName;
@@ -33,7 +36,7 @@ class CollectibleData {
 // Note: look up a human readable page with:
 // https://www.metmuseum.org/art/collection/search/503940
 // where 503940 is the ID.
-List<CollectibleData> collectibles = [
+List<CollectibleData> _collectibles = [
   // chichenItza
   CollectibleData(
     title: 'Pendant',
@@ -218,4 +221,3 @@ List<CollectibleData> collectibles = [
     iconName: 'scroll',
   ),
 ];
-
