@@ -67,16 +67,7 @@ class WonderData extends Equatable {
   final List<String> hiddenArtifacts;
   final Map<int, String> events;
 
-  String get titleWithBreaks {
-    /*
-    final words = title.split(' ');
-    if (words.length >= 2) {
-      words.insert(1, '\n');
-    }
-    return words.join();
-    */
-    return title.replaceFirst(' ', '\n');
-  }
+  String get titleWithBreaks => title.replaceFirst(' ', '\n');
 
   factory WonderData.fromJson(Map<String, dynamic> json) => _$WonderDataFromJson(json);
   Map<String, dynamic> toJson() => _$WonderDataToJson(this);
