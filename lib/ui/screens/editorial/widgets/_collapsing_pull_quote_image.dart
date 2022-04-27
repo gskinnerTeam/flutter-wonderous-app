@@ -80,7 +80,7 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
                     buildText(data.quote1, top: true),
                     buildText(data.quote2, top: false),
                     if (data.quoteAuthor.isNotEmpty) ...[
-                      buildText(data.quoteAuthor, top: false, isAuthor: true),
+                      buildText('- ${data.quoteAuthor}', top: false, isAuthor: true),
                     ],
                   ],
                 ),
