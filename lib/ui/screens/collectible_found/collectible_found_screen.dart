@@ -179,6 +179,6 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   Widget _buildCloseButton(BuildContext context, double ratio) {
-    return BackBtn.close().padded().fx().fade(delay: 1200.ms, duration: 900.ms);
+    return BackBtn.close().safe().fx().fade(delay: 1200.ms, duration: 900.ms);
   }
 }

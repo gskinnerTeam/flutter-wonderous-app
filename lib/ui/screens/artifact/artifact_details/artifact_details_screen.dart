@@ -54,7 +54,7 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
                 SliverToBoxAdapter(child: _Content(data: data)),
               ],
             ),
-            BackBtn().padded(),
+            BackBtn().safe(),
           ]);
         },
       ),

@@ -19,7 +19,7 @@ class FullscreenMapsViewer extends StatelessWidget {
           markers: {getMapsMarker(startPos.target)},
           initialCameraPosition: startPos,
         ),
-        BackBtn().padded(),
+        BackBtn().safe(),
       ],
     );
   }

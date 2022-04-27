@@ -88,13 +88,13 @@ class BackBtn extends StatelessWidget {
     );
   }
 
-  Widget padded() {
-    return _BackPositioned(child: this);
+  Widget safe() {
+    return _SafeAreaWithPadding(child: this);
   }
 }
 
-class _BackPositioned extends StatelessWidget {
-  const _BackPositioned({Key? key, required this.child}) : super(key: key);
+class _SafeAreaWithPadding extends StatelessWidget {
+  const _SafeAreaWithPadding({Key? key, required this.child}) : super(key: key);
 
   final Widget child;
 

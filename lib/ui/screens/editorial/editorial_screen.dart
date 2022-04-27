@@ -194,7 +194,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                       child: child,
                     );
                   },
-                  child: BackBtn(icon: Icons.arrow_upward).padded()),
+                  child: BackBtn(icon: Icons.arrow_upward).safe()),
             ],
           ),
         ),
