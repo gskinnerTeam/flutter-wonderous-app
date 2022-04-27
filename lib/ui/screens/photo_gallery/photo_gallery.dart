@@ -24,7 +24,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
   int _index = ((_gridCount * _gridCount) / 2).round();
   late int _prevIndex = _index;
   Offset _lastSwipeDir = Offset.zero;
-  double _scale = 1;
+  double _scale = .75;
   bool _skipNextOffsetTween = false;
   late Duration swipeDuration = context.times.med * .6;
 
@@ -59,10 +59,10 @@ class _PhotoGalleryState extends State<PhotoGallery> {
     }
   }
 
-  void _handleZoomToggled() => setState(() {
-        _skipNextOffsetTween = true;
-        _scale = _scale == 1 ? .65 : 1;
-      });
+  // void _handleZoomToggled() => setState(() {
+  //       _skipNextOffsetTween = true;
+  //       _scale = _scale == 1 ? .65 : 1;
+  //     });
 
   void _setIndex(int value) {
     _prevIndex = _index;
@@ -172,18 +172,6 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                   ),
                 ),
               ),
-              Positioned.fill(
-                child: BottomCenter(
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: context.insets.offset),
-                    child: CircleIconBtn(
-                      icon: _scale == 1 ? Icons.zoom_out : Icons.zoom_in,
-                      onPressed: _handleZoomToggled,
-                      semanticLabel: _scale == 1 ? 'zoom out' : 'zoom in',
-                    ),
-                  ),
-                ),
-              )
             ],
           );
         });

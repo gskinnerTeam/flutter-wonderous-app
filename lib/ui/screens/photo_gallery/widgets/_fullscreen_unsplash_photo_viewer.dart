@@ -1,4 +1,4 @@
-part of '../image_gallery.dart';
+part of '../photo_gallery.dart';
 
 class _FullScreenUnsplashPhotoViewer extends StatefulWidget {
   const _FullScreenUnsplashPhotoViewer(this.initialId, this.idList, {Key? key}) : super(key: key);

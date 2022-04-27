@@ -2,7 +2,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/lazy_indexed_stack.dart';
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_screen.dart';
 import 'package:wonders/ui/screens/editorial/editorial_screen.dart';
-import 'package:wonders/ui/screens/image_gallery/image_gallery.dart';
+import 'package:wonders/ui/screens/photo_gallery/photo_gallery.dart';
 import 'package:wonders/ui/screens/timeline/timeline_screen.dart';
 import 'package:wonders/ui/screens/wonder_details/wonder_details_tab_menu.dart';
 

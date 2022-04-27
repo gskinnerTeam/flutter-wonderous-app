@@ -1,4 +1,4 @@
-part of '../image_gallery.dart';
+part of '../photo_gallery.dart';
 
 /// An overlay with a animated cutout in the middle.
 /// When animationKey changes, the box animates its size, shrinking then returning to its original size.
