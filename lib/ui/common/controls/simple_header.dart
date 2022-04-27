@@ -12,12 +12,7 @@ class SimpleHeader extends StatelessWidget {
       color: context.colors.greyStrong,
       child: SafeArea(
         child: Row(children: [
-          Container(
-            width: context.insets.lg * 2,
-            height: context.insets.offset,
-            alignment: Alignment.topLeft,
-            child: BackBtn().padded(),
-          ),
+          BackBtn().padded(),
           Flexible(
             fit: FlexFit.tight,
             child: Column(

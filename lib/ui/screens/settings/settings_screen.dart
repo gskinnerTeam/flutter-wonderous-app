@@ -35,8 +35,7 @@ class SettingsScreen extends StatelessWidget with GetItMixin {
               AppTextBtn(
                 'RESET',
                 isSecondary: true,
-                padding: EdgeInsets.all(0),
-                onPressed: () => collectiblesLogic.reset(),
+                onPressed: collectiblesLogic.reset,
               ),
             ),
             Divider(),

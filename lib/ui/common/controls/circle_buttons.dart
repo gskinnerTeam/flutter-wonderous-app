@@ -102,7 +102,7 @@ class _BackPositioned extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.all(context.insets.sm),
+        padding: EdgeInsets.all(context.insets.xs),
         child: child,
       ),
     );

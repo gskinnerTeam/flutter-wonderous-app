@@ -28,10 +28,29 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
 
   @override
   void initState() {
+    super.initState();
     if (widget.fromId != null && states[widget.fromId] == CollectibleState.discovered) {
       WidgetsBinding.instance?.addPostFrameCallback((_) => _scrollToTarget(false));
     }
-    super.initState();
+  }
+
+  WonderType? get scrollTargetWonder {
+    String? id = widget.fromId;
+    if (id == null || states[id] != CollectibleState.discovered) {
+      id = states.keys.firstWhereOrNull((id) => states[id] == CollectibleState.discovered);
+    }
+    return CollectibleData.fromId(id)?.wonder;
+  }
+
+  void _scrollToTarget([bool animate = true]) {
+    if (scrollKey != null) {
+      Scrollable.ensureVisible(scrollKey!.currentContext!, alignment: 0.15, duration: animate ? 300.ms : 0.ms);
+    }
+  }
+
+  void _showDetails(BuildContext context, CollectibleData collectible) {
+    context.push(ScreenPaths.artifact(collectible.artifactId));
+    Future.delayed(300.ms).then((_) => collectiblesLogic.updateState(collectible.id, CollectibleState.explored));
   }
 
   @override
@@ -70,24 +89,5 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
         ),
       ]),
     );
-  }
-
-  WonderType? get scrollTargetWonder {
-    String? id = widget.fromId;
-    if (id == null || states[id] != CollectibleState.discovered) {
-      id = states.keys.firstWhereOrNull((id) => states[id] == CollectibleState.discovered);
-    }
-    return CollectibleData.fromId(id)?.wonder;
-  }
-
-  void _scrollToTarget([bool animate = true]) {
-    if (scrollKey != null) {
-      Scrollable.ensureVisible(scrollKey!.currentContext!, alignment: 0.15, duration: animate ? 300.ms : 0.ms);
-    }
-  }
-
-  void _showDetails(BuildContext context, CollectibleData collectible) {
-    context.push(ScreenPaths.artifact(collectible.artifactId));
-    Future.delayed(300.ms).then((_) => collectiblesLogic.updateState(collectible.id, CollectibleState.explored));
   }
 }
