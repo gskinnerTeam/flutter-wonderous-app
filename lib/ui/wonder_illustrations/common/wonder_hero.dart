@@ -12,7 +12,8 @@ class WonderHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) => config.enableHero
       ? Hero(
-          createRectTween: (begin, end) => MaterialRectCenterArcTween(begin: begin!, end: end!),
+          /// TODO: See how to apply RectTween to all heros?
+          createRectTween: (begin, end) => RectTween(begin: begin!, end: end!),
           tag: tag,
           child: child,
         )
