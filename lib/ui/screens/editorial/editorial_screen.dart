@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drop_cap_text/drop_cap_text.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_circular_text/circular_text.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wonders/common_libs.dart';
@@ -115,7 +116,8 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                     double opacity = (1 - value / 700).clamp(0, 1);
                     return Opacity(opacity: opacity, child: child);
                   },
-                  child: _TopIllustration(widget.data.type),
+                  // This is due to a bug: https://github.com/flutter/flutter/issues/101872
+                  child: RepaintBoundary(child: _TopIllustration(widget.data.type)),
                 ),
               ),
 
