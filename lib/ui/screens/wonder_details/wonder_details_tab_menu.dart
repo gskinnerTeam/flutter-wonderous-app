@@ -162,8 +162,8 @@ class _TabBtn extends StatelessWidget {
                   child: buildDot().fx(key: ValueKey(selected)).fade().move(
                       curve: selected ? Curves.easeOutBack : Curves.easeIn,
                       duration: context.times.med,
-                      begin: Offset(0, selected ? 60 : 10),
-                      end: Offset(0, selected ? 10 : 60)),
+                      begin: Offset(0, selected ? 60 : 5),
+                      end: Offset(0, selected ? 5 : 60)),
                 ),
               )
             ],

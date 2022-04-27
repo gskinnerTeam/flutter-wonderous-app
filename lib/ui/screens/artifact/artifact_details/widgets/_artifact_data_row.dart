@@ -27,7 +27,7 @@ class _ArtifactDataRow extends StatelessWidget {
           Expanded(
             child: Text(
               c,
-              style: context.textStyles.body1.copyWith(color: context.colors.offWhite, height: _textHeight),
+              style: context.textStyles.body.copyWith(color: context.colors.offWhite, height: _textHeight),
             ),
           ),
         ],

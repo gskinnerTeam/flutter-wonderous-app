@@ -42,12 +42,12 @@ class _CollectionFooter extends StatelessWidget {
     return Row(children: [
       Text(
         '${(count / total * 100).round()}% discovered',
-        style: context.textStyles.body1.copyWith(color: context.colors.accent1),
+        style: context.textStyles.body.copyWith(color: context.colors.accent1),
       ),
       Spacer(),
       Text(
         '$count of $total',
-        style: context.textStyles.body1.copyWith(color: context.colors.offWhite),
+        style: context.textStyles.body.copyWith(color: context.colors.offWhite),
       )
     ]);
   }

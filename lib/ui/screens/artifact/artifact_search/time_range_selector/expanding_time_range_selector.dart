@@ -92,37 +92,50 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
     return LayoutBuilder(builder: (_, constraints) {
       return GestureDetector(
         onTap: () => setState(() => _isPanelOpen = !_isPanelOpen),
-        child: AnimatedPadding(
-          duration: context.times.fast,
-          curve: Curves.easeOut,
-          padding: _isPanelOpen ? EdgeInsets.zero : EdgeInsets.symmetric(vertical: context.insets.md),
-          child: Container(
-            decoration: BoxDecoration(
-              color: context.colors.white.withOpacity(0.85),
-              borderRadius: BorderRadius.all(Radius.circular(context.corners.md)),
-              boxShadow: [
-                BoxShadow(
-                  color: context.colors.black.withOpacity(0.25),
-                  offset: Offset(0, 4),
-                  blurRadius: 4,
-                ),
-              ],
+        child: Stack(
+          children: [
+            IgnorePointer(
+              ignoring: !_isPanelOpen,
+              child: AnimatedContainer(
+                duration: context.times.med,
+                color: context.colors.black.withOpacity(_isPanelOpen ? .3 : 0),
+              ),
             ),
-            child: OpeningGlassCard(
-              isOpen: _isPanelOpen,
-              padding: EdgeInsets.all(pad),
-              closedBuilder: (_) => _ClosedTimeRange(this),
-              openBuilder: (_) => SizedBox(
-                width: constraints.maxWidth - pad * 2,
-                child: _OpenedTimeRange(
-                  this,
-                  _handleYearRangeUpdate,
-                  _handleYearRangeChange,
-                  () => _handleCustomToggle(isWonderTime: !isWonderTimeframe),
+            BottomCenter(
+              child: AnimatedPadding(
+                duration: context.times.fast,
+                curve: Curves.easeOut,
+                padding: _isPanelOpen ? EdgeInsets.zero : EdgeInsets.symmetric(vertical: context.insets.md),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: context.colors.white.withOpacity(.65),
+                    borderRadius: BorderRadius.all(Radius.circular(context.corners.md)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: context.colors.black.withOpacity(0.25),
+                        offset: Offset(0, 4),
+                        blurRadius: 4,
+                      ),
+                    ],
+                  ),
+                  child: OpeningGlassCard(
+                    isOpen: _isPanelOpen,
+                    padding: EdgeInsets.all(pad),
+                    closedBuilder: (_) => _ClosedTimeRange(this),
+                    openBuilder: (_) => SizedBox(
+                      width: constraints.maxWidth - pad * 2,
+                      child: _OpenedTimeRange(
+                        this,
+                        _handleYearRangeUpdate,
+                        _handleYearRangeChange,
+                        () => _handleCustomToggle(isWonderTime: !isWonderTimeframe),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
+          ],
         ),
       );
     });
@@ -149,12 +162,13 @@ class _OpenedTimeRange extends StatelessWidget {
 
     double startSliderRange = (startYr - state.startYrRange) / (state.endYrRange - state.startYrRange);
     double endSliderRange = (endYr - state.startYrRange) / (state.endYrRange - state.startYrRange);
-
+    final captionTextStyle = context.text.btn.copyWith(color: context.colors.caption);
+    final headingTextStyle = context.textStyles.h3.copyWith(color: context.colors.greyStrong);
     return Column(
       children: [
         Text(
           'Choose a timeframe',
-          style: context.textStyles.title3.copyWith(color: context.colors.greyStrong),
+          style: context.textStyles.bodyBold.copyWith(color: context.colors.greyStrong),
           textAlign: TextAlign.center,
         ),
         Gap(context.insets.sm),
@@ -190,23 +204,26 @@ class _OpenedTimeRange extends StatelessWidget {
         ),
 
         // Year range text.
-        // Note: Cannot use StringUtils.formatYr here because the year number and BCE/CE are different styles.
         Gap(context.insets.lg),
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Text(startYr.abs().toString(), style: context.textStyles.body3.copyWith(color: context.colors.greyStrong)),
+          Text(startYr.abs().toString(), style: context.textStyles.h3.copyWith(color: context.colors.greyStrong)),
           Gap(context.insets.xxs),
-          Text(startYr >= 0 ? 'CE' : 'BCE', style: context.textStyles.tab.copyWith(color: context.colors.caption)),
+          Text(StringUtils.getYrSuffix(startYr), style: captionTextStyle),
           Gap(context.insets.xs),
-          Text('-', style: context.textStyles.tab.copyWith(color: context.colors.caption)),
+          Text('-', style: captionTextStyle),
           Gap(context.insets.xs),
-          Text(endYr.abs().toString(), style: context.textStyles.body3.copyWith(color: context.colors.greyStrong)),
+          Text(endYr.abs().toString(), style: headingTextStyle),
           Gap(context.insets.xxs),
-          Text(endYr >= 0 ? 'CE' : 'BCE', style: context.textStyles.tab.copyWith(color: context.colors.caption)),
+          Text(StringUtils.getYrSuffix(endYr), style: captionTextStyle),
         ]),
 
         Gap(context.insets.md),
         LabelledToggle(
-            optionOff: 'Custom', optionOn: wonderData.title, isOn: state.isWonderTimeframe, onClick: onToggleTap),
+          optionOff: 'Custom',
+          optionOn: wonderData.title,
+          isOn: state.isWonderTimeframe,
+          onClick: onToggleTap,
+        ),
         Gap(context.insets.xs),
       ],
     );

@@ -77,7 +77,7 @@ class _BaseContentModal extends StatelessWidget {
       child: SeparatedColumn(mainAxisSize: MainAxisSize.min, separatorBuilder: () => Gap(context.insets.md), children: [
         if (title != null) Text(title!, style: context.textStyles.h2),
         if (child != null) child!,
-        if (msg != null) Text(msg!, style: context.textStyles.body1),
+        if (msg != null) Text(msg!, style: context.textStyles.body),
         Gap(context.insets.md),
         Row(children: buttons.map((e) => Expanded(child: e)).toList())
       ]),

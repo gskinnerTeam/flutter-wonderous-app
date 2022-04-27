@@ -55,7 +55,7 @@ class _Marker extends StatelessWidget {
       alignment: Alignment(0, -1 + offset * 2),
       child: FractionalTranslation(
         translation: Offset(0, -.5),
-        child: Text('$yr', style: context.text.body1.copyWith(color: Colors.white)),
+        child: Text('$yr', style: context.text.body.copyWith(color: Colors.white)),
       ),
     );
   }

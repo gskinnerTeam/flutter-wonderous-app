@@ -52,7 +52,10 @@ class CircleIconBtn extends StatelessWidget {
     Color defaultColor = context.colors.greyStrong;
     Color iconColor = color ?? context.colors.offWhite;
     return CircleBtn(
-      child: Icon(icon, size: context.insets.md, color: iconColor),
+      child: Padding(
+        padding: EdgeInsets.all(context.insets.sm),
+        child: Icon(icon, size: context.insets.md, color: iconColor),
+      ),
       onPressed: onPressed,
       border: border,
       bgColor: bgColor ?? defaultColor,

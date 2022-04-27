@@ -24,7 +24,7 @@ class SimpleHeader extends StatelessWidget {
               children: [
                 Text(
                   title.toUpperCase(),
-                  style: context.textStyles.h3.copyWith(color: context.colors.offWhite),
+                  style: context.textStyles.h4.copyWith(color: context.colors.offWhite),
                 ),
                 if (subtitle != null) Gap(context.insets.xxs),
                 if (subtitle != null)

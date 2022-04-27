@@ -9,11 +9,11 @@ class _ScrollingContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Text buildText(String value) => Text(_fixNewlines(value), style: context.textStyles.body1);
+    Text buildText(String value) => Text(_fixNewlines(value), style: context.textStyles.body);
     DropCapText buildDropCapText(String value) => DropCapText(
           _fixNewlines(value),
           mode: DropCapMode.upwards,
-          style: context.textStyles.body1,
+          style: context.textStyles.body,
           dropCapPadding: EdgeInsets.only(right: context.insets.xs, top: 10),
           dropCapStyle: context.textStyles.dropCase.copyWith(color: context.colors.accent1),
         );

@@ -25,7 +25,7 @@ class _DashedDividerWithYear extends StatelessWidget {
               children: [
                 Text('$roundedYr', style: context.text.h2.copyWith(color: context.colors.white)),
                 Gap(context.insets.xs),
-                Text(StringUtils.getYrSuffix(roundedYr), style: context.text.body1.copyWith(color: Colors.white)),
+                Text(StringUtils.getYrSuffix(roundedYr), style: context.text.body.copyWith(color: Colors.white)),
               ],
             ),
           ),

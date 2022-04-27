@@ -173,7 +173,6 @@ class CollectibleFoundScreen extends StatelessWidget {
         'view in my collection',
         isSecondary: true,
         expand: true,
-        padding: EdgeInsets.all(context.insets.sm),
         onPressed: () => context.push(ScreenPaths.collection(collectible.id)),
       ),
     ).fx().show(delay: 1200.ms).move(begin: Offset(0, context.insets.md), duration: 900.ms, curve: Curves.easeOutExpo);

@@ -22,7 +22,7 @@ class _NewlyDiscoveredRow extends StatelessWidget {
           '$count new item${count == 1 ? '' : 's'} to explore',
           textAlign: TextAlign.center,
           textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
-          style: context.textStyles.body2.copyWith(color: context.colors.accent1),
+          style: context.textStyles.bodySmallBold.copyWith(color: context.colors.accent1),
         ),
       ),
     );

@@ -26,7 +26,7 @@ class _TextContent extends StatelessWidget {
         /// Region
         Text(
           currentWonder.regionTitle.toUpperCase(),
-          style: context.textStyles.h3.copyWith(
+          style: context.textStyles.h4.copyWith(
             height: 1,
             fontWeight: FontWeight.w400,
             fontSize: 16,

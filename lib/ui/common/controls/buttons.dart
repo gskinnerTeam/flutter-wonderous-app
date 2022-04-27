@@ -56,9 +56,9 @@ class _AppBtnState extends State<AppBtn> {
             splashFactory: NoSplash.splashFactory,
             backgroundColor: widget.bgColor ?? defaultColor,
             shape: widget.circular
-              ? CircleBorder(side: border)
-              : RoundedRectangleBorder(side: border, borderRadius: BorderRadius.circular(context.corners.md)),
-            padding: widget.padding ?? EdgeInsets.all(context.insets.sm),
+                ? CircleBorder(side: border)
+                : RoundedRectangleBorder(side: border, borderRadius: BorderRadius.circular(context.corners.md)),
+            padding: widget.padding ?? EdgeInsets.all(context.insets.md),
           ),
           child: DefaultTextStyle(
             style: DefaultTextStyle.of(context).style.copyWith(color: textColor),
@@ -165,7 +165,7 @@ class AppTextIconBtn extends StatelessWidget {
       isSecondary: isSecondary,
       semanticLabel: text,
       children: [
-        Text(text, style: context.textStyles.button),
+        Text(text, style: context.textStyles.btn),
         Gap(context.insets.xs),
         _buildIcon(context, icon, isSecondary: isSecondary, size: iconSize),
       ],
@@ -197,7 +197,7 @@ class AppTextBtn extends StatelessWidget {
       isSecondary: isSecondary,
       semanticLabel: text,
       children: [
-        Text(text.toUpperCase(), style: context.textStyles.button),
+        Text(text.toUpperCase(), style: context.textStyles.btn),
       ],
     );
   }

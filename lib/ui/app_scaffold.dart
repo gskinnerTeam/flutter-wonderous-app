@@ -26,7 +26,7 @@ class WondersAppScaffold extends StatelessWidget with GetItMixin {
               data: styles.colors.toThemeData(),
               // Provide a default texts style to allow Hero's to render text properly
               child: DefaultTextStyle(
-                style: styles.text.body1,
+                style: styles.text.body,
                 //Custom scroll behavior to make responsive testing easier on desktop
                 child: ScrollConfiguration(
                   behavior: AppScrollBehavior(),

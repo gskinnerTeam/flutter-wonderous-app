@@ -163,7 +163,7 @@ class _SearchInput extends StatelessWidget {
             suggestion,
             overflow: TextOverflow.ellipsis,
             textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
-            style: context.textStyles.body4.copyWith(color: context.colors.greyStrong),
+            style: context.textStyles.bodySmall.copyWith(color: context.colors.greyStrong),
           ),
         ),
       ),

@@ -23,7 +23,7 @@ class SettingsScreen extends StatelessWidget with GetItMixin {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Global', style: context.textStyles.h3),
+            Text('Global', style: context.textStyles.h4),
             SwitchListTile(
               value: enableFpsMeter,
               onChanged: _handleFpsToggle,
@@ -40,7 +40,7 @@ class SettingsScreen extends StatelessWidget with GetItMixin {
               ),
             ),
             Divider(),
-            Text('Image Grid', style: context.textStyles.h3),
+            Text('Image Grid', style: context.textStyles.h4),
             SwitchListTile(
               value: enableBlur,
               onChanged: _handleMotionBlurToggle,

@@ -35,22 +35,33 @@ class _FullScreenUnsplashPhotoViewerState extends State<_FullScreenUnsplashPhoto
           ),
           Container(
             color: context.colors.greyStrong,
-            padding: EdgeInsets.symmetric(vertical: context.insets.xs),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                CircleIconBtn(
-                  icon: Icons.chevron_left,
-                  semanticLabel: 'prev',
-                  onPressed: () => incrementId(-1),
+            child: SafeArea(
+              child: SizedBox(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: AppIconBtn(
+                        Icons.chevron_left,
+                        semanticLabel: 'prev',
+                        onPressed: () => incrementId(-1),
+                      ),
+                    ),
+                    AppIconBtn(
+                      Icons.close,
+                      semanticLabel: 'close',
+                      onPressed: () => Navigator.of(context).pop(_id),
+                    ),
+                    Expanded(
+                      child: AppIconBtn(
+                        Icons.chevron_right,
+                        semanticLabel: 'next',
+                        onPressed: () => incrementId(1),
+                      ),
+                    ),
+                  ],
                 ),
-                BackBtn.close().padded(),
-                CircleIconBtn(
-                  icon: Icons.chevron_right,
-                  semanticLabel: 'next',
-                  onPressed: () => incrementId(-1),
-                )
-              ],
+              ),
             ),
           ).fx().slide(delay: context.times.introDelay, begin: Offset(0, 1)),
         ],

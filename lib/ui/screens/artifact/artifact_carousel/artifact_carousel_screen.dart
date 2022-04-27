@@ -177,7 +177,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                   Gap(context.insets.md),
                   Text(
                     'HIGHLIGHTS',
-                    style: context.textStyles.h3.copyWith(color: context.colors.offWhite, fontSize: 14),
+                    style: context.textStyles.h4.copyWith(color: context.colors.offWhite, fontSize: 14),
                   ),
 
                   // Carousel images
@@ -223,7 +223,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                                     // Time frame
                                     Text(
                                       _currentArtifact?.date ?? '',
-                                      style: context.textStyles.body1.copyWith(color: context.colors.body),
+                                      style: context.textStyles.body.copyWith(color: context.colors.body),
                                       textAlign: TextAlign.center,
                                     ),
                                   ],

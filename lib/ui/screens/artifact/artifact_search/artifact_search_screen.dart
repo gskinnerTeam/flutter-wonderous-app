@@ -15,7 +15,6 @@ part 'widgets/_search_input.dart';
 /// User can use this screen to search the MET server for an artifact by name or timeline. Artifacts results will
 /// appear as images, which the user can click on to being up the details view for more information.
 
-
 // TODO: GDS: refactor to match other views.
 // TODO: GDS: create a shared header widget with collection
 
@@ -52,6 +51,12 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
     _endYr = data.artifactEndYr;
 
     _preloadHighlights(data.highlightArtifacts);
+  }
+
+  @override
+  void dispose() {
+    _gridScrollController.dispose();
+    super.dispose();
   }
 
   void _preloadHighlights(List<String> data) async {
@@ -141,7 +146,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
     _handleSearchSubmitted(_currentQuery);
   }
 
-  void onResultClick(ArtifactData artifact) {
+  void _handleResultClick(ArtifactData artifact) {
     // User clicked image. Open Artifact Details view
     context.push(ScreenPaths.artifact(artifact.objectId));
   }
@@ -187,7 +192,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
                           padding: EdgeInsets.symmetric(horizontal: context.insets.sm),
                           child: Text(
                             resultsText,
-                            style: context.textStyles.body1.copyWith(color: context.colors.body),
+                            style: context.textStyles.body.copyWith(color: context.colors.body),
                           ),
                         ),
                         Gap(context.insets.xs),
@@ -198,7 +203,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
                         child: _ResultsGrid(
                             searchResults: _searchResultsAll,
                             scrollController: _gridScrollController,
-                            onPressed: onResultClick),
+                            onPressed: _handleResultClick),
                       ),
                     ],
                   ),
@@ -209,7 +214,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
         ),
 
         // Timeline bar
-        BottomCenter(
+        Positioned.fill(
           child: ExpandingTimeRangeSelector(
             wonderType: widget.type,
             location: data.title,
