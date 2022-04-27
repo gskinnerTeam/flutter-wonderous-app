@@ -50,7 +50,7 @@ class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProvid
       case WonderType.christRedeemer:
         return 3;
       case WonderType.colosseum:
-        return 4;
+        return 1;
       case WonderType.greatWall:
         return 5;
       case WonderType.machuPicchu:

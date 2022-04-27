@@ -13,28 +13,31 @@ class _TextContent extends StatelessWidget {
     final textShadows = [
       Shadow(color: Colors.black.withOpacity(.6), offset: Offset(0, 2), blurRadius: 2),
     ];
-    return Column(
-      children: [
-        /// Page indicator
-        DiagonalPageIndicator(current: wonderIndex + 1, total: wonders.length),
-        Gap(context.insets.sm),
+    return SizedBox(
+      height: 230,
+      child: Column(
+        children: [
+          /// Page indicator
+          DiagonalPageIndicator(current: wonderIndex + 1, total: wonders.length),
+          Gap(context.insets.sm),
 
-        /// Title
-        WonderTitleText(currentWonder, enableShadows: true),
-        Gap(context.insets.sm),
+          /// Title
+          WonderTitleText(currentWonder, enableShadows: true),
+          Gap(context.insets.sm),
 
-        /// Region
-        Text(
-          currentWonder.regionTitle.toUpperCase(),
-          style: context.textStyles.h4.copyWith(
-            height: 1,
-            fontWeight: FontWeight.w400,
-            fontSize: 16,
-            shadows: textShadows,
-          ),
-          textAlign: TextAlign.center,
-        )
-      ],
+          /// Region
+          Text(
+            currentWonder.regionTitle.toUpperCase(),
+            style: context.textStyles.h4.copyWith(
+              height: 1,
+              fontWeight: FontWeight.w400,
+              fontSize: 16,
+              shadows: textShadows,
+            ),
+            textAlign: TextAlign.center,
+          )
+        ],
+      ),
     );
   }
 }

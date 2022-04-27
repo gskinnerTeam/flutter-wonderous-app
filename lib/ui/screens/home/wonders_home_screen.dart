@@ -91,7 +91,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
                   /// Title Content
                   IgnorePointer(
                     child: LightText(
-                      child: SizedBox(height: 250, child: _TextContent(wonderIndex: _wonderIndex, wonders: _wonders)),
+                      child: _TextContent(wonderIndex: _wonderIndex, wonders: _wonders),
                     ),
                   ),
                   Gap(context.insets.sm),
