@@ -69,7 +69,7 @@ class BackBtn extends StatelessWidget {
     Key? key,
     this.icon = Icons.arrow_back,
     this.onPressed,
-    this.semanticLabel = 'back',
+    this.semanticLabel,
   }) : super(key: key);
 
   const BackBtn.close({Key? key, VoidCallback? onPressed})
@@ -84,13 +84,11 @@ class BackBtn extends StatelessWidget {
     return CircleIconBtn(
       icon: icon,
       onPressed: onPressed ?? () => Navigator.pop(context),
-      semanticLabel: 'back',
+      semanticLabel: semanticLabel ?? 'back',
     );
   }
 
-  Widget safe() {
-    return _SafeAreaWithPadding(child: this);
-  }
+  Widget safe() => _SafeAreaWithPadding(child: this);
 }
 
 class _SafeAreaWithPadding extends StatelessWidget {
