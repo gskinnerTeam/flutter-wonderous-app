@@ -184,7 +184,6 @@ class _SearchInput extends StatelessWidget {
         Expanded(
           child: TextField(
             onSubmitted: handleSearchSubmitted,
-            autofocus: true,
             controller: textController,
             focusNode: focusNode,
             style: TextStyle(color: captionColor),
