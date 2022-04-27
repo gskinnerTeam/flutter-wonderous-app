@@ -61,7 +61,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
 
           /// Foreground gradient-bottom, gets darker when swiping up
           BottomCenter(
-            child: _buildSwipeableBgGradient(currentWonder.type.bgColor),
+            child: _buildSwipeableBgGradient(currentWonder.type.bgColor.withOpacity(.5)),
           ),
 
           /// Foreground decorators
@@ -69,7 +69,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
 
           /// Foreground gradient-top, gets darker when swiping up
           BottomCenter(
-            child: _buildSwipeableBgGradient(currentWonder.type.bgColor.withOpacity(.2)),
+            child: _buildSwipeableBgGradient(currentWonder.type.bgColor),
           ),
 
           /// Floating controls / UI

@@ -127,7 +127,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                 slivers: [
                   /// Invisible padding at the top of the list, so the illustration shows through the btm
                   SliverToBoxAdapter(
-                    child: SizedBox(height: illustrationHeight + context.insets.md),
+                    child: SizedBox(height: illustrationHeight),
                   ),
 
                   /// Text content, animates itself to hide behind the app bar as it scrolls up

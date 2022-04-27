@@ -138,6 +138,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
             ),
           ),
 
+          // Gradient
           BottomCenter(
             child: VtGradient(
               [Colors.transparent, context.colors.black.withOpacity(0.1)],

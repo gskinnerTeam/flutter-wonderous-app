@@ -68,28 +68,25 @@ class ChichenItzaIllustration extends StatelessWidget {
               scale: 1 + (config.zoom - 1) / 3,
               child: Transform.translate(
                   offset: Offset(0, (1 - curvedAnim) * 100),
-                  child: FadeTransition(
-                    opacity: anim,
-                    child: Stack(children: [
-                      BottomLeft(
-                        child: FractionalTranslation(
-                          translation: Offset(-.3, -.3),
-                          child: Image.asset('$assetPath/agave-left.png',
+                  child: Stack(children: [
+                    BottomLeft(
+                      child: FractionalTranslation(
+                        translation: Offset(-.3, -.3),
+                        child: Image.asset('$assetPath/agave-left.png',
+                            opacity: anim, cacheWidth: context.widthPx.round()),
+                      ),
+                    ),
+                    BottomRight(
+                      child: FractionalTranslation(
+                        translation: Offset(.35, -.35),
+                        child: Transform.scale(
+                          scale: 1.1,
+                          child: Image.asset('$assetPath/agave-right.png',
                               opacity: anim, cacheWidth: context.widthPx.round()),
                         ),
                       ),
-                      BottomRight(
-                        child: FractionalTranslation(
-                          translation: Offset(.35, -.35),
-                          child: Transform.scale(
-                            scale: 1.1,
-                            child: Image.asset('$assetPath/agave-right.png',
-                                opacity: anim, cacheWidth: context.widthPx.round()),
-                          ),
-                        ),
-                      ),
-                    ]),
-                  )),
+                    ),
+                  ])),
             )
           ];
         });
