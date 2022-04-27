@@ -13,7 +13,7 @@ class WonderDetailsTabMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color tabIconColor = showBg ? context.colors.black : context.colors.white;
+    Color iconColor = showBg ? context.colors.black : context.colors.white;
     const double homeBtnSize = 70;
     const double buttonInset = 12;
     // Use SafeArea padding if its more than the default padding.
@@ -45,19 +45,16 @@ class WonderDetailsTabMenu extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
+                    // Holds a gap for the Home button which pushed the other icons to the side
                     AnimatedContainer(
                         curve: Curves.easeOut,
                         duration: context.times.fast,
                         width: showHomeBtn ? homeBtnSize : 0,
                         height: 0),
-                    _TabBtn(0, tabController,
-                        icon: Icons.info_outline, semanticLabel: 'information', iconColor: tabIconColor),
-                    _TabBtn(1, tabController,
-                        icon: Icons.image_outlined, semanticLabel: 'images', iconColor: tabIconColor),
-                    _TabBtn(2, tabController,
-                        icon: Icons.search, semanticLabel: 'artifact search', iconColor: tabIconColor),
-                    _TabBtn(3, tabController,
-                        icon: Icons.timelapse, semanticLabel: 'timeline', iconColor: tabIconColor),
+                    _TabBtn(0, tabController, iconImg: 'editorial', label: 'information', color: iconColor),
+                    _TabBtn(1, tabController, iconImg: 'photos', label: 'images', color: iconColor),
+                    _TabBtn(2, tabController, iconImg: 'artifacts', label: 'artifact search', color: iconColor),
+                    _TabBtn(3, tabController, iconImg: 'timeline', label: 'timeline', color: iconColor),
                   ],
                 ),
               ),
@@ -121,31 +118,59 @@ class _TabBtn extends StatelessWidget {
     this.index,
     this.tabController, {
     Key? key,
-    required this.icon,
-    required this.semanticLabel,
-    required this.iconColor,
+    required this.iconImg,
+    required this.color,
+    required this.label,
   }) : super(key: key);
   final int index;
   final TabController tabController;
-  final IconData icon;
-  final Color iconColor;
-  final String semanticLabel;
+  final String iconImg;
+  final Color color;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
+    bool selected = tabController.index == index;
+
+    Widget buildDot([double size = 4]) => Container(
+          width: size,
+          height: size,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(99),
+            color: context.colors.accent1,
+          ),
+        );
+
     return Expanded(
       child: AppBtn(
         bgColor: Colors.transparent,
         padding: EdgeInsets.symmetric(vertical: context.insets.md),
         children: [
-          Icon(
-            icon,
-            color: index == tabController.index ? context.colors.accent1 : iconColor,
-            size: 32,
+          Stack(
+            children: [
+              /// Image icon
+              Image.asset(
+                '${ImagePaths.common}/tab-$iconImg${selected ? '-active' : ''}.png',
+                height: 32,
+                width: 32,
+                color: selected ? null : color,
+              ),
+
+              /// Dot, shows when selected
+              Positioned.fill(
+                child: BottomCenter(
+                  child: buildDot().fx(key: ValueKey(selected)).fade().move(
+                      curve: selected ? Curves.easeOutBack : Curves.easeIn,
+                      duration: context.times.med,
+                      begin: Offset(0, selected ? 60 : 10),
+                      end: Offset(0, selected ? 10 : 60)),
+                ),
+              )
+            ],
           )
         ],
         onPressed: () => tabController.index = index,
-        semanticLabel: semanticLabel,
+        semanticLabel: label,
       ),
     );
   }

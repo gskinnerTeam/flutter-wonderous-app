@@ -22,7 +22,6 @@ dependencies:
   flextras: ^0.0.2
   flutter_circular_text: ^0.3.1
   flutter_inappwebview: ^5.3.2
-  flutter_lorem: ^2.0.0
   flutter_placeholder_textlines: ^1.1.2
   flutter_staggered_grid_view: ^0.6.1
   flutter_svg: ^1.0.3
@@ -49,7 +48,6 @@ dependencies:
   sized_context: ^1.0.0+1
   smooth_page_indicator: ^1.0.0+2
   system_info: ^1.0.1
-  widget_mask: ^1.0.0+0 # TODO: remove if not used
   window_interface: ^0.3.1
   unsplash_client: ^2.1.0+3
   youtube_player_iframe: ^2.2.2

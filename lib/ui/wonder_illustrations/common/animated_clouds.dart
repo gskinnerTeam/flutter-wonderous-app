@@ -140,6 +140,6 @@ class _Cloud extends StatelessWidget {
         scaleY: scale * (flipY ? -1 : 1),
         child: SizedBox(
             width: 300,
-            child: Image.asset(ImagePaths.cloud, opacity: const AlwaysStoppedAnimation(.4), cacheWidth: 300)),
+            child: Image.asset(ImagePaths.cloud, opacity: const AlwaysStoppedAnimation(.4), cacheWidth: 600)),
       );
 }

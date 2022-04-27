@@ -11,6 +11,12 @@ class _AppBar extends StatelessWidget {
     'Location Info',
   ];
 
+  final _iconValues = const [
+    'history.png',
+    'construction.png',
+    'geography.png',
+  ];
+
   @override
   Widget build(BuildContext context) {
     ArchType? archType;
@@ -70,6 +76,7 @@ class _AppBar extends StatelessWidget {
                 return _CircularTitleBar(
                   index: value,
                   titles: _titleValues,
+                  icons: _iconValues,
                 );
               },
             ),

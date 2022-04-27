@@ -9,16 +9,16 @@ import 'package:wonders/ui/common/utils/page_routes.dart';
 part 'widgets/_animated_cutout_overlay.dart';
 part 'widgets/_fullscreen_unsplash_photo_viewer.dart';
 
-class ImageGallery extends StatefulWidget {
-  const ImageGallery({Key? key, this.imageSize, required this.collectionId}) : super(key: key);
+class PhotoGallery extends StatefulWidget {
+  const PhotoGallery({Key? key, this.imageSize, required this.collectionId}) : super(key: key);
   final Size? imageSize;
   final String collectionId;
 
   @override
-  State<ImageGallery> createState() => _ImageGalleryState();
+  State<PhotoGallery> createState() => _PhotoGalleryState();
 }
 
-class _ImageGalleryState extends State<ImageGallery> {
+class _PhotoGalleryState extends State<PhotoGallery> {
   static const int _gridCount = 5;
   // Index starts in the middle of the grid (eg, 25 items, index will start at 13)
   int _index = ((_gridCount * _gridCount) / 2).round();

@@ -368,13 +368,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
-  flutter_lorem:
-    dependency: "direct main"
-    description:
-      name: flutter_lorem
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
   flutter_placeholder_textlines:
     dependency: "direct main"
     description:
@@ -1191,13 +1184,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0"
-  widget_mask:
-    dependency: "direct main"
-    description:
-      name: widget_mask
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0+0"
   win32:
     dependency: transitive
     description:

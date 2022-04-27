@@ -31,14 +31,7 @@ class _TitleText extends StatelessWidget {
               ],
             ),
             Gap(context.insets.md),
-            Hero(
-              tag: '${data.type}-title',
-              child: Text(
-                data.titleWithBreaks.toUpperCase(),
-                style: context.textStyles.h1,
-                textAlign: TextAlign.center,
-              ),
-            ),
+            WonderTitleText(data),
             Gap(30),
             Gap(context.insets.md),
           ],

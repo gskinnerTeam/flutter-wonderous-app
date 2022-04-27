@@ -11,7 +11,7 @@ class _TextContent extends StatelessWidget {
     final currentWonder = wonders[wonderIndex];
     // TODO: Consolidate app shadows in styles.shadows? Note: Lets see how it develops, not sure there is enough to standardize
     final textShadows = [
-      Shadow(color: Colors.black.withOpacity(.6), offset: Offset(2, 2), blurRadius: 2),
+      Shadow(color: Colors.black.withOpacity(.6), offset: Offset(0, 2), blurRadius: 2),
     ];
     return Column(
       children: [
@@ -20,14 +20,7 @@ class _TextContent extends StatelessWidget {
         Gap(context.insets.sm),
 
         /// Title
-        Hero(
-          tag: '${currentWonder.type}-title',
-          child: Text(
-            currentWonder.titleWithBreaks.toUpperCase(),
-            style: context.textStyles.h1.copyWith(height: 1),
-            textAlign: TextAlign.center,
-          ),
-        ),
+        WonderTitleText(currentWonder, enableShadows: true),
         Gap(context.insets.sm),
 
         /// Region

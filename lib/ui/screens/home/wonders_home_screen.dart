@@ -6,6 +6,7 @@ import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/wonder_illustrations/common/animated_clouds.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 import 'package:wonders/ui/wonder_illustrations/wonder_illustration.dart';
+import 'package:wonders/ui/wonder_illustrations/wonder_title_text.dart';
 
 part '_vertical_swipe_controller.dart';
 part 'widgets/_animated_arrow_button.dart';
@@ -22,7 +23,7 @@ class WondersHomeScreen extends StatefulWidget with GetItStatefulWidgetMixin {
 /// arranged in a parallax style.
 class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTickerProviderStateMixin {
   final _pageController = PageController(viewportFraction: 1);
-  final _wonders = wondersLogic.enabled;
+  final _wonders = wondersLogic.all;
   late int _wonderIndex = _pageController.initialPage;
 
   late final _VerticalSwipeController _swipeController = _VerticalSwipeController(this, _showDetailsPage);
@@ -33,7 +34,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
 
   void _handleSettingsPressed() => context.push(ScreenPaths.settings);
 
-  void _showDetailsPage() => context.push(ScreenPaths.wonderDetails(wondersLogic.enabled[_wonderIndex].type));
+  void _showDetailsPage() => context.push(ScreenPaths.wonderDetails(_wonders[_wonderIndex].type));
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +91,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
                   /// Title Content
                   IgnorePointer(
                     child: LightText(
-                      child: _TextContent(wonderIndex: _wonderIndex, wonders: _wonders),
+                      child: SizedBox(height: 250, child: _TextContent(wonderIndex: _wonderIndex, wonders: _wonders)),
                     ),
                   ),
                   Gap(context.insets.sm),

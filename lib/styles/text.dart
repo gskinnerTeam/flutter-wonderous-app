@@ -25,7 +25,7 @@ class AppTextStyles {
   TextStyle get body3 => copy(contentFont, sizePx: 24, heightPx: 26, weight: FontWeight.w600);
   TextStyle get body4 => copy(contentFont, sizePx: 14, heightPx: 26);
 
-  TextStyle get quote => copy(titleFont, sizePx: 46, heightPx: 48, spacingPc: -10, weight: FontWeight.w500);
+  TextStyle get quote => copy(titleFont, sizePx: 42, heightPx: 42, spacingPc: -10, weight: FontWeight.w500);
   TextStyle get caption => copy(contentFont, sizePx: 12, weight: FontWeight.w500).copyWith(fontStyle: FontStyle.italic);
   TextStyle get button => copy(titleFont, sizePx: 12, weight: FontWeight.w600, heightPx: 13.2);
   TextStyle get tab => copy(contentFont, sizePx: 12, weight: FontWeight.w600);

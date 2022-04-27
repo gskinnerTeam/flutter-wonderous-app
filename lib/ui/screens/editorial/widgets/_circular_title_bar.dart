@@ -1,8 +1,11 @@
 part of '../editorial_screen.dart';
 
 class _CircularTitleBar extends StatelessWidget {
-  const _CircularTitleBar({Key? key, required this.titles, required this.index}) : super(key: key);
+  _CircularTitleBar({Key? key, required this.titles, required this.icons, required this.index})
+      : assert(titles.length == icons.length, 'The number of titles and icons do not match.'),
+        super(key: key);
   final List<String> titles;
+  final List<String> icons;
   final int index;
 
   @override
@@ -26,6 +29,16 @@ class _CircularTitleBar extends StatelessWidget {
                 alignment: Alignment.topCenter,
                 maxHeight: circleSize,
                 child: _AnimatedCircleWithText(titles: titles, index: index),
+              ),
+            ),
+
+            BottomCenter(
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 16),
+                child: Image.asset('${ImagePaths.common}/${icons[index]}')
+                    .fx(key: ValueKey(index))
+                    .fade()
+                    .scale(begin: .5, curve: Curves.easeOutBack, duration: context.times.med),
               ),
             ),
           ],
@@ -59,6 +72,12 @@ class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with S
   )..forward();
 
   bool get isAnimStopped => _anim.value == 0 || _anim.value == _anim.upperBound;
+
+  @override
+  void dispose() {
+    _anim.dispose();
+    super.dispose();
+  }
 
   @override
   void didUpdateWidget(covariant _AnimatedCircleWithText oldWidget) {

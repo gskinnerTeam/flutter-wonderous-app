@@ -12,25 +12,13 @@ import 'package:wonders/logic/data/wonders_data/taj_mahal_data.dart';
 class WondersLogic {
   final List<WonderData> all = [
     chichenItzaData,
-    christRedeemerData,
-    colosseumData,
-    greatWallData,
-    machuPicchuData,
-    petraData,
-    pyramidsGizaData,
-    tajMahalData
-  ];
-
-  ///SB: Used to determine which wonders actually get shown on HomeView, TODO: For debug / testing only, remove once all wonders are working
-  final List<WonderData> enabled = [
-    chichenItzaData,
-    christRedeemerData,
-    colosseumData,
-    greatWallData,
-    machuPicchuData,
-    petraData,
-    pyramidsGizaData,
     tajMahalData,
+    christRedeemerData,
+    colosseumData,
+    greatWallData,
+    machuPicchuData,
+    petraData,
+    pyramidsGizaData,
   ];
 
   final int startYear = -3000;
