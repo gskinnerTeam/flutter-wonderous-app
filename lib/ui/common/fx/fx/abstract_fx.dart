@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:wonders/ui/common/fx/fx.dart';
+import '../fx.dart';
 
 // Abstract class that defines the required interface and a number of helper
 // methods for effect classes.
