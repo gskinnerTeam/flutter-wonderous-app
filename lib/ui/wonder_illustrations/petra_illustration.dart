@@ -3,19 +3,23 @@ import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_build
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 
 class PetraIllustration extends StatelessWidget {
-  const PetraIllustration({Key? key, required this.config}) : super(key: key);
+  PetraIllustration({Key? key, required this.config}) : super(key: key);
   final WonderIllustrationConfig config;
+  final String assetPath = WonderType.greatWall.assetPath;
+  final fgColor = WonderType.petra.fgColor;
+  final bgColor = WonderType.petra.bgColor;
 
   @override
   Widget build(BuildContext context) {
-    String assetPath = WonderType.petra.assetPath;
-    final fgColor = WonderType.petra.fgColor;
-    final bgColor = WonderType.petra.bgColor;
     return WonderIllustrationBuilder(
       config: config,
-      bgBuilder: (_, __) => [FlutterLogo()],
-      mgBuilder: (_, __) => [FlutterLogo()],
-      fgBuilder: (_, __) => [FlutterLogo()],
+      bgBuilder: _buildBg,
+      mgBuilder: _buildMg,
+      fgBuilder: _buildFg,
     );
   }
+
+  List<Widget> _buildFg(BuildContext context, Animation<double> animation) => [];
+  List<Widget> _buildMg(BuildContext context, Animation<double> animation) => [];
+  List<Widget> _buildBg(BuildContext context, Animation<double> animation) => [];
 }
