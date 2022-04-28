@@ -1,6 +1,4 @@
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
-import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration.dart';
 
 class WonderDetailsTabMenu extends StatelessWidget {
   const WonderDetailsTabMenu(
@@ -54,7 +52,7 @@ class WonderDetailsTabMenu extends StatelessWidget {
                     _TabBtn(0, tabController, iconImg: 'editorial', label: 'information', color: iconColor),
                     _TabBtn(1, tabController, iconImg: 'photos', label: 'images', color: iconColor),
                     _TabBtn(2, tabController, iconImg: 'artifacts', label: 'artifact search', color: iconColor),
-                    //_TabBtn(3, tabController, iconImg: 'timeline', label: 'timeline', color: iconColor),
+                    _TabBtn(3, tabController, iconImg: 'timeline', label: 'timeline', color: iconColor),
                   ],
                 ),
               ),

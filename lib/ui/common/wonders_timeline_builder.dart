@@ -22,6 +22,7 @@ class WondersTimelineBuilder extends StatelessWidget {
     return max(.01, (data.endYr - data.startYr) / totalYrs);
   }
 
+  // ignore: unused_element
   Alignment _calculateTimelinePos(WonderData data) {
     final totalYrs = wondersLogic.endYear - wondersLogic.startYear;
     final fraction = -1 + ((data.startYr - wondersLogic.startYear) / totalYrs) * 2;

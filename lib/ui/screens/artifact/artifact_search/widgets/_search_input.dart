@@ -6,6 +6,7 @@ class _SearchInput extends StatelessWidget {
   final void Function(String) handleSearchSubmitted;
 
   // TODO: Get prebuilt list of common autocomplete terms. Might be artifact-specific.
+  // ignore: unused_field
   final List<String> _kOptions = [
     'hat',
     'coin',

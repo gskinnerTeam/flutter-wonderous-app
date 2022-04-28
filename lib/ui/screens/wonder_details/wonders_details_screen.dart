@@ -3,6 +3,7 @@ import 'package:wonders/ui/common/lazy_indexed_stack.dart';
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_screen.dart';
 import 'package:wonders/ui/screens/editorial/editorial_screen.dart';
 import 'package:wonders/ui/screens/photo_gallery/photo_gallery.dart';
+import 'package:wonders/ui/screens/timeline/timeline_screen.dart';
 import 'package:wonders/ui/screens/wonder_details/wonder_details_tab_menu.dart';
 
 class WonderDetailsScreen extends StatefulWidget with GetItStatefulWidgetMixin {
@@ -37,8 +38,6 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
     setState(() {});
   }
 
-  void _handleSettingsPressed() => context.push(ScreenPaths.settings);
-
   void _handleDetailsScrolled(double scrollPos) => _detailsHasScrolled.value = scrollPos > 0;
 
   @override
@@ -59,7 +58,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
               WonderEditorialScreen(wonder, onScroll: _handleDetailsScrolled),
               PhotoGallery(collectionId: wonder.unsplashCollectionId),
               Padding(padding: EdgeInsets.only(bottom: tabBarHeight), child: ArtifactCarouselScreen(type: wonder.type)),
-              //Padding(padding: EdgeInsets.only(bottom: tabBarHeight), child: TimelineScreen(type: widget.type)),
+              Padding(padding: EdgeInsets.only(bottom: tabBarHeight), child: TimelineScreen(type: widget.type)),
             ],
           ),
 
