@@ -96,19 +96,10 @@ class _WonderHomeBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return CircleBtn(
       onPressed: () => Navigator.of(context).pop(),
-      bgColor: context.colors.accent1,
+      bgColor: wonderType.fgColor,
       border: BorderSide(color: context.colors.offWhite, width: 6),
       semanticLabel: 'back to wonder selection',
-      child: SizedBox(
-          width: size,
-          height: size,
-          child: Transform.scale(
-            scale: 1.3,
-            child: WonderIllustration(
-              wonderType,
-              config: WonderIllustrationConfig.mg(enableHero: false),
-            ),
-          )),
+      child: SizedBox(width: size, height: size, child: Image.asset(wonderType.homeBtn)),
     );
   }
 }
