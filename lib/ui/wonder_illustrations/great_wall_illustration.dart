@@ -33,21 +33,21 @@ class GreatWallIllustration extends StatelessWidget {
           opacity: anim.drive(Tween(begin: 0, end: .5)),
         ),
       ),
-      // Align(
-      //   alignment: config.shortMode ? Alignment.center : Alignment(-.5, -.7),
-      //   child: WonderHero(
-      //     config,
-      //     'great-wall-sun',
-      //     child: Transform.scale(
-      //       scale: config.shortMode ? .75 : 1,
-      //       child: Image.asset(
-      //         '$assetPath/sun.png',
-      //         cacheWidth: context.widthPx.round() * 2,
-      //         opacity: anim,
-      //       ),
-      //     ),
-      //   ),
-      // ),
+      Align(
+        alignment: config.shortMode ? Alignment.center : Alignment(-.5, -.7),
+        child: WonderHero(
+          config,
+          'great-wall-sun',
+          child: Transform.scale(
+            scale: config.shortMode ? .75 : 1,
+            child: Image.asset(
+              '$assetPath/sun.png',
+              cacheWidth: context.widthPx.round() * 2,
+              opacity: anim,
+            ),
+          ),
+        ),
+      ),
     ];
   }
 

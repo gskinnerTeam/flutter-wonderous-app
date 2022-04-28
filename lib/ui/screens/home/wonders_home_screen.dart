@@ -49,7 +49,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
           FractionallySizedBox(
             widthFactor: 1,
             heightFactor: .5,
-            child: AnimatedClouds(wonderType: currentWonder.type),
+            child: AnimatedClouds(wonderType: currentWonder.type, opacity: 1),
           ),
 
           /// Wonders Illustrations
@@ -69,7 +69,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
 
           /// Foreground gradient-top, gets darker when swiping up
           BottomCenter(
-            child: _buildSwipeableBgGradient(currentWonder.type.bgColor),
+            child: _buildSwipeableBgGradient(currentWonder.type.bgColor.withOpacity(.5)),
           ),
 
           /// Floating controls / UI
@@ -85,7 +85,10 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
                   Gap(context.insets.lg * 3),
 
                   /// Settings Btn
-                  AppTextBtn('Settings', onPressed: _handleSettingsPressed),
+                  Opacity(
+                    opacity: 0, // TODO: Remove this btn before launch, its for testing settings only
+                    child: AppTextBtn('Settings', onPressed: _handleSettingsPressed, padding: EdgeInsets.all(30)),
+                  ),
                   const Spacer(),
 
                   /// Title Content

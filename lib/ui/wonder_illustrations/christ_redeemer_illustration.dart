@@ -9,7 +9,7 @@ class ChristRedeemerIllustration extends StatelessWidget {
   ChristRedeemerIllustration({Key? key, required this.config}) : super(key: key);
   final WonderIllustrationConfig config;
   final String assetPath = WonderType.christRedeemer.assetPath;
-  final bgColor = WonderType.christRedeemer.fgColor;
+  final fgColor = WonderType.christRedeemer.fgColor;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class ChristRedeemerIllustration extends StatelessWidget {
 
   List<Widget> _buildBg(BuildContext context, Animation<double> anim) {
     return [
-      FadeColorTransition(animation: anim, color: bgColor),
+      FadeColorTransition(animation: anim, color: fgColor),
       Positioned.fill(
         child: IllustrationTexture(
           ImagePaths.roller1,

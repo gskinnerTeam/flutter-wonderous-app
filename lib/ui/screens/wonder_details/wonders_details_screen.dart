@@ -64,13 +64,6 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
             ],
           ),
 
-          /// Settings btn
-          SafeArea(
-            child: TopRight(
-              child: AppTextBtn('Settings', onPressed: _handleSettingsPressed),
-            ),
-          ),
-
           /// Tab menu
           BottomCenter(
             child: ValueListenableBuilder<bool>(

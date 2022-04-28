@@ -1,13 +1,16 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/ui/common/fade_color_transition.dart';
+import 'package:wonders/ui/wonder_illustrations/common/paint_textures.dart';
+import 'package:wonders/ui/wonder_illustrations/common/wonder_hero.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_builder.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 
 class PyramidsGizaIllustration extends StatelessWidget {
   PyramidsGizaIllustration({Key? key, required this.config}) : super(key: key);
   final WonderIllustrationConfig config;
-  final String assetPath = WonderType.petra.assetPath;
-  final fgColor = WonderType.petra.fgColor;
-  final bgColor = WonderType.petra.bgColor;
+  final String assetPath = WonderType.pyramidsGiza.assetPath;
+  final fgColor = WonderType.pyramidsGiza.fgColor;
+  final bgColor = WonderType.pyramidsGiza.bgColor;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,69 @@ class PyramidsGizaIllustration extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildFg(BuildContext context, Animation<double> animation) => [];
-  List<Widget> _buildMg(BuildContext context, Animation<double> animation) => [];
-  List<Widget> _buildBg(BuildContext context, Animation<double> animation) => [];
+  List<Widget> _buildBg(BuildContext context, Animation<double> anim) {
+    return [
+      FadeColorTransition(animation: anim, color: fgColor),
+      Positioned.fill(
+        child: IllustrationTexture(
+          ImagePaths.roller2,
+          color: Colors.white,
+          opacity: anim.drive(Tween(begin: 0, end: .3)),
+          flipY: true,
+        ),
+      ),
+      Align(
+        alignment: config.shortMode ? Alignment.center : Alignment(.2, -.5),
+        child: FractionalTranslation(
+          translation: Offset(.7, config.shortMode ? .1 : -.1),
+          child: WonderHero(
+            config,
+            'pyramids-sun',
+            child: Image.asset('$assetPath/sun.png', opacity: anim),
+          ),
+        ),
+      ),
+    ];
+  }
+
+  List<Widget> _buildMg(BuildContext context, Animation<double> anim) {
+    return [
+      Align(
+        alignment: Alignment(0, config.shortMode ? 1 : 0),
+        child: WonderHero(config, 'pyramids-mg',
+            child: Transform.scale(
+              scale: config.zoom,
+              child: Image.asset('$assetPath/pyramids.png', opacity: anim),
+            )),
+      ),
+    ];
+  }
+
+  List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
+    final curvedAnim = Curves.easeOut.transform(anim.value);
+    return [
+      Transform.translate(
+          offset: Offset(0, (1 - curvedAnim) * 100),
+          child: Stack(children: [
+            BottomLeft(
+              child: Transform.scale(
+                scale: .9 + config.zoom * .1,
+                child: FractionalTranslation(
+                  translation: Offset(-.4, -.3),
+                  child: Image.asset('$assetPath/foreground-left.png', opacity: anim, width: 300, color: bgColor),
+                ),
+              ),
+            ),
+            BottomRight(
+              child: Transform.scale(
+                scale: .9 + config.zoom * .1,
+                child: FractionalTranslation(
+                  translation: Offset(.35, -.1),
+                  child: Image.asset('$assetPath/foreground-right.png', opacity: anim, width: 300, color: bgColor),
+                ),
+              ),
+            ),
+          ]))
+    ];
+  }
 }

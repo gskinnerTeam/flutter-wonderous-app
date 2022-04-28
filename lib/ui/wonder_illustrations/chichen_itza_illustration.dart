@@ -9,7 +9,7 @@ class ChichenItzaIllustration extends StatelessWidget {
   ChichenItzaIllustration({Key? key, required this.config}) : super(key: key);
   final WonderIllustrationConfig config;
   final String assetPath = WonderType.chichenItza.assetPath;
-
+  final fgColor = WonderType.chichenItza.fgColor;
   @override
   Widget build(BuildContext context) {
     return WonderIllustrationBuilder(config: config, bgBuilder: _buildBg, mgBuilder: _buildMg, fgBuilder: _buildFg);
@@ -17,7 +17,7 @@ class ChichenItzaIllustration extends StatelessWidget {
 
   List<Widget> _buildBg(BuildContext context, Animation<double> anim) {
     return [
-      FadeColorTransition(animation: anim, color: WonderType.chichenItza.fgColor),
+      FadeColorTransition(animation: anim, color: fgColor),
       Positioned.fill(
         child: IllustrationTexture(
           ImagePaths.roller2,
