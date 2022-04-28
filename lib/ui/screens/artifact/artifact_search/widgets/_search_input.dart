@@ -5,26 +5,6 @@ class _SearchInput extends StatelessWidget {
   _SearchInput({Key? key, required this.handleSearchSubmitted}) : super(key: key);
   final void Function(String) handleSearchSubmitted;
 
-  // TODO: Get prebuilt list of common autocomplete terms. Might be artifact-specific.
-  // ignore: unused_field
-  final List<String> _kOptions = [
-    'hat',
-    'coin',
-    'urn',
-    'jar',
-    'bust',
-    'figurine',
-    'vase',
-    'toy',
-    'statue',
-    'painting',
-    'sculpture',
-    'graffiti',
-    'art',
-    'clothing',
-    'tool'
-  ];
-
   final List<String> _materialFilteringTerms = [
     'Axes',
     'Arrowheads',
