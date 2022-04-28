@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:wonders/ui/common/fx/fx.dart';
+
+import '../fx.dart';
 
 @immutable
 class BuildFX extends AbstractFX<double> {
