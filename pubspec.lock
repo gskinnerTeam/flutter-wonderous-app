@@ -590,14 +590,14 @@ packages:
       name: json_annotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.4.0"
+    version: "4.5.0"
   json_serializable:
     dependency: "direct dev"
     description:
       name: json_serializable
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.1.5"
+    version: "6.2.0"
   lints:
     dependency: transitive
     description:
@@ -1239,7 +1239,7 @@ packages:
       name: window_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.1"
+    version: "0.4.1"
   xdg_directories:
     dependency: transitive
     description:
@@ -1269,5 +1269,5 @@ packages:
     source: hosted
     version: "2.2.2"
 sdks:
-  dart: ">=2.16.1 <3.0.0"
+  dart: ">=2.16.2 <3.0.0"
   flutter: ">=2.10.0"
