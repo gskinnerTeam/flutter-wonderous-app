@@ -13,9 +13,10 @@ class _TextContent extends StatelessWidget {
     final textShadows = [
       Shadow(color: Colors.black.withOpacity(.6), offset: Offset(0, 2), blurRadius: 2),
     ];
-    return SizedBox(
-      height: 230,
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxHeight: 250),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           /// Page indicator
           DiagonalPageIndicator(current: wonderIndex + 1, total: wonders.length),

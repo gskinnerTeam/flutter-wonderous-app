@@ -1,4 +1,5 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/styles/corners.dart';
 import 'package:wonders/styles/insets.dart';
 import 'package:wonders/styles/text.dart';
@@ -36,6 +37,7 @@ class AppStyle {
 
   /// Scale text down a little on smaller devices, and up slightly on larger ones
   double _calculateScale(Size size) {
+    if (PlatformInfo.isDesktop) return 1;
     final diagonalPx = (size.shortestSide + size.longestSide) / 2;
     return .85 + diagonalPx / 3000;
   }
