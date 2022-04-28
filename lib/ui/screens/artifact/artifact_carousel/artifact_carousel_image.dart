@@ -58,6 +58,9 @@ class _ImagePreview extends StatelessWidget {
   final String heroTag;
   @override
   Widget build(BuildContext context) {
+    // Universal scaledown from full window height/width.
+    double universalYScale = 0.6;
+
     // Y scale of the size elements, compared to main.
     double sideElementYScale = 0.75;
 
@@ -76,25 +79,35 @@ class _ImagePreview extends StatelessWidget {
     // Calculated variables.
     const double elementWidth = 150;
     double offset = math.max(-2, math.min(2, offsetAmt));
-    double elementYScale =
-        sideElementYScale + ((1 - sideElementYScale) - (math.min(1, offset.abs()) * (1 - sideElementYScale)));
+
+    // Scale the element down entirely by this factor when it's on the side.
     double elementScale =
         sideElementScale + ((1 - sideElementScale) - (math.min(1, offset.abs()) * (1 - sideElementScale)));
+
+    // Add a scaledown to the Y factor to the side pages.
+    double elementYScale =
+        sideElementYScale + ((1 - sideElementYScale) - (math.min(1, offset.abs()) * (1 - sideElementYScale)));
 
     // Calculate the offset positions of the side elements.
     double xOffset = math.sin(offset * math.pi / 4.0) * offsetScrollXScale;
     double yOffset = (offset * offset) * offsetScrollYScale;
 
+    // Apply a vertical offset based on the bottom padding provided.
     double bottomPaddingScale = (bottomPadding / context.heightPx) - 0.1;
-    double heightScaleLimit = 0.65;
+
+    // Ensure the pages don't get too small.
+    double minWidthScale = 300 / context.widthPx;
+    double minHeightScale = (400 / context.heightPx) * universalYScale;
 
     // Scale box for sizing. Uses both the element scale and the element Y scale.
     return FractionalTranslation(
+      // Move the pages around before scaling, as scaling will directly affect their translation.
       translation: Offset(xOffset, yOffset - bottomPaddingScale),
       child: FractionallySizedBox(
+        // Scale the elements according to whether they are on the sides or middle.
         alignment: Alignment.bottomCenter,
-        widthFactor: elementScale * heightScaleLimit,
-        heightFactor: elementScale * heightScaleLimit * elementYScale * 0.6,
+        widthFactor: math.max(minWidthScale, elementScale * universalYScale),
+        heightFactor: math.max(minHeightScale, elementScale * universalYScale * elementYScale * universalYScale),
         // Translation box for positioning.
         child: Container(
           // Add an outer border with the rounded ends.
