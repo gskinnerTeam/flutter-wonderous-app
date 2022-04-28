@@ -78,12 +78,12 @@ flutter:
   assets:
     - assets/images/_common/
     - assets/images/chichen_itza/
-    - assets/images/christ_redeemer/
+    - assets/images/christ_the_redeemer/
     - assets/images/colosseum/
-    - assets/images/great_wall/
+    - assets/images/great_wall_of_china/
     - assets/images/machu_picchu/
     - assets/images/petra/
-    - assets/images/pyramids_giza/
+    - assets/images/pyramids/
     - assets/images/taj_mahal/
     - assets/images/_common/texture/
     - assets/images/collectibles/
