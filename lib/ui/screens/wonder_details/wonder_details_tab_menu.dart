@@ -1,6 +1,6 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
-import 'package:wonders/ui/wonder_illustrations/wonder_illustration.dart';
+import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration.dart';
 
 class WonderDetailsTabMenu extends StatelessWidget {
   const WonderDetailsTabMenu(

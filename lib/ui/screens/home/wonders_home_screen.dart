@@ -5,8 +5,8 @@ import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/wonder_illustrations/common/animated_clouds.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
-import 'package:wonders/ui/wonder_illustrations/wonder_illustration.dart';
-import 'package:wonders/ui/wonder_illustrations/wonder_title_text.dart';
+import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration.dart';
+import 'package:wonders/ui/wonder_illustrations/common/wonder_title_text.dart';
 
 part '_vertical_swipe_controller.dart';
 part 'widgets/_animated_arrow_button.dart';

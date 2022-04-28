@@ -18,8 +18,8 @@ import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/utils/context_utils.dart';
 import 'package:wonders/ui/wonder_illustrations/common/animated_clouds.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
-import 'package:wonders/ui/wonder_illustrations/wonder_illustration.dart';
-import 'package:wonders/ui/wonder_illustrations/wonder_title_text.dart';
+import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration.dart';
+import 'package:wonders/ui/wonder_illustrations/common/wonder_title_text.dart';
 
 part 'widgets/_app_bar.dart';
 part 'widgets/_circular_title_bar.dart';
@@ -162,10 +162,10 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                         widget.data.type,
                         scrollPos: _scrollPos,
                         sectionIndex: _sectionIndex,
-                      ).fx().fade(duration: context.times.med).move(
-                            curve: Curves.easeOut,
-                            begin: Offset(0, 100),
-                          ),
+                      )
+                          .fx()
+                          .fade(duration: context.times.med, delay: context.times.introDelay)
+                          .move(begin: Offset(0, 100)),
                     ),
                   ),
 

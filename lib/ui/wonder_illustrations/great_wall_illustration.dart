@@ -59,7 +59,7 @@ class GreatWallIllustration extends StatelessWidget {
               config,
               'great-wall-mg',
               child: Transform.scale(
-                scale: config.shortMode ? .85 : 1.4 + config.zoom * .2,
+                scale: config.shortMode ? .95 : 1.4 + config.zoom * .2,
                 child: Image.asset(
                   '$assetPath/great-wall.png',
                   cacheWidth: context.widthPx.round() * 2,
