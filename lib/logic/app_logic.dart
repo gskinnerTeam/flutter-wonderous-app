@@ -53,16 +53,14 @@ class AppLogic {
         ));
     if (result) {
       showModal(context, child: LoadingModal(title: 'Saving Image. Please wait...'));
-      await ScreenshotController().captureFromWidget(widget).then((Uint8List? image) async {
-        if (image != null) {
-          if (PlatformInfo.isMobile) {
-            await ImageGallerySaver.saveImage(image, quality: 95, name: name);
-          } else {
-            await Future.delayed(500.ms);
-          }
-          Navigator.pop(context);
-          showModal(context, child: OkModal(title: 'Save complete!'));
+      await ScreenshotController().captureFromWidget(widget).then((image) async {
+        if (PlatformInfo.isMobile) {
+          await ImageGallerySaver.saveImage(image, quality: 95, name: name);
+        } else {
+          await Future.delayed(500.ms);
         }
+        Navigator.pop(context);
+        showModal(context, child: OkModal(title: 'Save complete!'));
       });
     }
   }
