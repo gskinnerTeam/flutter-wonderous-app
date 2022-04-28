@@ -1,15 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/logic/data/artifact_search_options.dart';
+import 'package:wonders/ui/common/cards/glass_card.dart';
+import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:wonders/ui/common/controls/simple_header.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/expanding_time_range_selector.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:wonders/ui/common/controls/app_loader.dart';
-import 'package:wonders/ui/common/cards/glass_card.dart';
 
-part 'widgets/_results_grid.dart';
 part 'widgets/_result_tile.dart';
+part 'widgets/_results_grid.dart';
 part 'widgets/_search_input.dart';
 
 /// User can use this screen to search the MET server for an artifact by name or timeline. Artifacts results will
@@ -59,7 +59,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
     super.dispose();
   }
 
-  void _preloadHighlights(List<String> data) async {
+  Future<void> _preloadHighlights(List<String> data) async {
     // Preloaded highlight data.
     _isHighlights = true;
     setState(() => _isLoading = true);
@@ -79,7 +79,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
     setState(() => _isLoading = false);
   }
 
-  void _handleSearchSubmitted(String query) async {
+  Future<void> _handleSearchSubmitted(String query) async {
     if (_isLoading) {
       return;
     }
@@ -90,7 +90,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
 
     if (query.isEmpty) {
       // Empty query. Show the highlights.
-      _preloadHighlights(wondersLogic.getData(widget.type).highlightArtifacts);
+      await _preloadHighlights(wondersLogic.getData(widget.type).highlightArtifacts);
       return;
     }
 
@@ -112,7 +112,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
     });
   }
 
-  void _handleScroll() async {
+  Future<void> _handleScroll() async {
     if (_isLoading) return;
     const loadThreshold = 500;
     ScrollPosition pos = _gridScrollController.position;
