@@ -92,7 +92,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double carouselImageWidth = math.min(_maxElementWidth, context.widthPx / 1.25);
+    double carouselImageWidth = math.min(_maxElementWidth, context.widthPx / 1.5);
     double bottomHalfHeight = math.min(_maxBottomHeight, context.heightPx / 6);
 
     final pageViewArtifacts = _loadedArtifacts.isEmpty
@@ -148,12 +148,26 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
             ),
           ),
 
+          // Header
+          TopCenter(
+            child: Padding(
+              padding: EdgeInsets.only(top: context.insets.lg),
+              child: Text(
+                'HIGHLIGHTS',
+                style: context.textStyles.h4.copyWith(color: context.colors.offWhite, fontSize: 14),
+              ),
+            ),
+          ),
+
+          // Carousel images
+          SizedBox(width: carouselImageWidth, height: carouselImageWidth * 0.75, child: pageViewArtifacts),
+
           // Prev tap button
           CenterLeft(
             child: BasicBtn(
               semanticLabel: 'previous',
               onPressed: () => _handlePageJump(-1),
-              child: Container(width: 100, height: 500, color: Colors.transparent),
+              child: Container(width: context.widthPx / 6, height: context.heightPx, color: Colors.transparent),
             ),
           ),
 
@@ -162,7 +176,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
             child: BasicBtn(
               semanticLabel: 'next',
               onPressed: () => _handlePageJump(1),
-              child: Container(width: 100, height: 500, color: Colors.transparent),
+              child: Container(width: context.widthPx / 6, height: context.heightPx, color: Colors.transparent),
             ),
           ),
 
@@ -174,17 +188,6 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Header
-                  Gap(context.insets.md),
-                  Text(
-                    'HIGHLIGHTS',
-                    style: context.textStyles.h4.copyWith(color: context.colors.offWhite, fontSize: 14),
-                  ),
-
-                  // Carousel images
-                  Gap(context.insets.md),
-                  SizedBox(width: carouselImageWidth, height: carouselImageWidth * 0.75, child: pageViewArtifacts),
-
                   // Title and Desc
                   Gap(context.insets.md),
                   IgnorePointer(

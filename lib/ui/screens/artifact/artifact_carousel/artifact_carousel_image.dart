@@ -50,7 +50,7 @@ class _ImagePreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Y scale of the size elements, compared to main.
-    double sideElementYScale = 0.65;
+    double sideElementYScale = 0.75;
 
     // Shrink factor of the side elements, compared to main.
     double sideElementScale = 0.65;
@@ -78,12 +78,12 @@ class _ImagePreview extends StatelessWidget {
 
     // Scale box for sizing. Uses both the element scale and the element Y scale.
     return FractionallySizedBox(
-      alignment: Alignment.bottomCenter,
-      widthFactor: elementScale,
-      heightFactor: elementScale * elementYScale,
+      alignment: Alignment.center,
+      widthFactor: elementScale * 0.8,
+      heightFactor: elementScale * 0.5 * elementYScale,
       // Translation box for positioning.
       child: FractionalTranslation(
-        translation: Offset(xOffset, yOffset),
+        translation: Offset(xOffset, yOffset - 0.2),
         child: Container(
           // Add an outer border with the rounded ends.
           decoration: BoxDecoration(
