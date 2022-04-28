@@ -28,7 +28,7 @@ dependencies:
   gap: ^2.0.0
   get_it: ^7.2.0
   get_it_mixin: ^3.1.4
-  google_maps_flutter: ^2.1.3
+  google_maps_flutter: ^2.1.4
   google_maps_flutter_web: ^0.3.2
   go_router: ^3.0.1
   image_gallery_saver: ^1.7.1
@@ -49,7 +49,7 @@ dependencies:
   sized_context: ^1.0.0+1
   smooth_page_indicator: ^1.0.0+2
   system_info: ^1.0.1
-  window_interface: ^0.3.1
+  window_interface: ^0.4.1
   unsplash_client: ^2.1.0+3
   youtube_player_iframe: ^2.2.2
   visibility_detector: ^0.2.2
