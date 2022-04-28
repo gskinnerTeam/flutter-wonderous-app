@@ -6,7 +6,7 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void _handleImagePressed() async {
+    Future<void> _handleImagePressed() async {
       await Navigator.push(
         context,
         PageRoutes.fadeThrough(FullscreenUrlImgViewer(url: data.image)),
@@ -17,7 +17,7 @@ class _Header extends StatelessWidget {
       children: [
         BottomCenter(
           child: Transform.translate(
-            offset: Offset(0, context.insets.lg-1),
+            offset: Offset(0, context.insets.lg - 1),
             child: VtGradient(
               [context.colors.greyStrong, context.colors.greyStrong.withOpacity(0)],
               const [.2, 1],
@@ -36,7 +36,7 @@ class _Header extends StatelessWidget {
                 imageUrl: data.image,
                 fit: BoxFit.cover,
                 alignment: Alignment.topCenter,
-                placeholder: (BuildContext context, String url) => const AppLoader(),
+                placeholder: (context, url) => const AppLoader(),
               ),
             ),
           ),

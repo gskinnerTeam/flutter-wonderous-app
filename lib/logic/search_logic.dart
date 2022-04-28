@@ -95,7 +95,7 @@ class SearchLogic {
     int i = options.offset;
     int l = math.min(ids.length, options.offset + options.count);
 
-    for (i; i < l; i++) {
+    for (; i < l; i++) {
       futures.add(getArtifactByID(ids[i]));
     }
 

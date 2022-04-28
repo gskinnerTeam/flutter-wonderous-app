@@ -1,7 +1,7 @@
 part of '../editorial_screen.dart';
 
 class _CircularTitleBar extends StatelessWidget {
-  _CircularTitleBar({Key? key, required this.titles, required this.icons, required this.index})
+  const _CircularTitleBar({Key? key, required this.titles, required this.icons, required this.index})
       : assert(titles.length == icons.length, 'The number of titles and icons do not match.'),
         super(key: key);
   final List<String> titles;

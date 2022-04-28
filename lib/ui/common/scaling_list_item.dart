@@ -20,7 +20,7 @@ class ScalingListItem extends StatelessWidget {
                 final yPos = ContextUtils.getGlobalPos(context)?.dy;
                 final widgetHeight = constraints.maxHeight;
                 double scale = 1;
-                if (yPos != null && widgetHeight != null) {
+                if (yPos != null) {
                   final amtVisible = context.heightPx - yPos;
                   final pctVisible = (amtVisible / widgetHeight * .5).clamp(0, 1);
                   scale = 1.35 - pctVisible * .35;

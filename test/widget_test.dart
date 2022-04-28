@@ -10,7 +10,7 @@ import 'package:wonders/common_libs.dart';
 
 void main() {
   registerSingletons();
-  testWidgets('App test', (WidgetTester tester) async {
+  testWidgets('App test', (tester) async {
     await tester.pumpWidget(WondersApp());
   });
 }

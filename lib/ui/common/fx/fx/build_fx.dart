@@ -6,8 +6,8 @@ import '../fx.dart';
 class BuildFX extends AbstractFX<double> {
   final BuildFXBuilder builder;
 
-  const BuildFX(this.builder, {Duration? delay, Duration? duration, Curve? curve, double? begin, double? end}) :
-    super(delay:delay, duration:duration, curve:curve, begin:begin ?? 0.0, end:end ?? 1.0);
+  const BuildFX(this.builder, {Duration? delay, Duration? duration, Curve? curve, double? begin, double? end})
+      : super(delay: delay, duration: duration, curve: curve, begin: begin ?? 0.0, end: end ?? 1.0);
 
   @override
   Widget build(BuildContext context, Widget child, AnimationController controller, FXEntry entry) {
@@ -19,9 +19,10 @@ class BuildFX extends AbstractFX<double> {
     );
   }
 }
+
 extension BuildFXExtensions<T> on FXManager<T> {
   T build(BuildFXBuilder builder, {Duration? delay, Duration? duration, Curve? curve, double? begin, double? end}) =>
-    addFX(BuildFX(builder, delay: delay, duration: duration, curve: curve, begin:begin, end: end));
+      addFX(BuildFX(builder, delay: delay, duration: duration, curve: curve, begin: begin, end: end));
 }
 
 typedef BuildFXBuilder = Widget Function(BuildContext context, double ratio, Widget child);

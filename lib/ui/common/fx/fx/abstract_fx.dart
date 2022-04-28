@@ -11,7 +11,7 @@ abstract class AbstractFX<T> {
 
   final T? begin;
   final T? end;
-  
+
   const AbstractFX({this.delay, this.duration, this.curve, this.begin, this.end});
 
   Widget build(BuildContext context, Widget child, AnimationController controller, FXEntry entry) {

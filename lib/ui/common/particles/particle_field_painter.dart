@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'particle_field.dart';
+import 'package:wonders/ui/common/particles/particle_field.dart';
 
 // Renders a ParticleField.
 class ParticleFieldPainter extends CustomPainter {
