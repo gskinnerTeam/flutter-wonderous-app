@@ -17,37 +17,30 @@ class _AppBar extends StatelessWidget {
     'geography.png',
   ];
 
-  @override
-  Widget build(BuildContext context) {
-    ArchType? archType;
+  ArchType _getArchType() {
     switch (wonderType) {
       case WonderType.chichenItza:
-        archType = ArchType.flatPyramid;
-        break;
+        return ArchType.flatPyramid;
       case WonderType.christRedeemer:
-        archType = ArchType.wideArch;
-        break;
+        return ArchType.wideArch;
       case WonderType.colosseum:
-        archType = ArchType.arch;
-        break;
+        return ArchType.arch;
       case WonderType.greatWall:
-        archType = ArchType.arch;
-        break;
+        return ArchType.arch;
       case WonderType.machuPicchu:
-        archType = ArchType.pyramid;
-        break;
+        return ArchType.pyramid;
       case WonderType.petra:
-        archType = ArchType.wideArch;
-        break;
+        return ArchType.wideArch;
       case WonderType.pyramidsGiza:
-        archType = ArchType.pyramid;
-        break;
+        return ArchType.pyramid;
       case WonderType.tajMahal:
-        archType = ArchType.spade;
-        break;
-      default:
-        archType = ArchType.pyramid;
+        return ArchType.spade;
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final arch = _getArchType();
     return LayoutBuilder(builder: (_, constraints) {
       bool showOverlay = constraints.biggest.height < 300;
       return Stack(
@@ -63,7 +56,7 @@ class _AppBar extends StatelessWidget {
                 /// Masked image
                 ClipPath(
                   // Switch arch type to Rect if we are showing the title bar
-                  clipper: showOverlay ? null : ArchClipper(archType!),
+                  clipper: showOverlay ? null : ArchClipper(arch),
                   child: ValueListenableBuilder<double>(
                     valueListenable: scrollPos,
                     builder: (_, value, child) {
