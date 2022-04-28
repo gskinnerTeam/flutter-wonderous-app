@@ -24,23 +24,25 @@ class _ScrollingContent extends StatelessWidget {
       child: SeparatedColumn(
         separatorBuilder: () => Gap(context.insets.md),
         children: [
-          // TODO: temporary for testing. Remove.
-          Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-            CollectibleItem(CollectibleData.all[0]),
-            CollectibleItem(CollectibleData.all[9]),
-            CollectibleItem(CollectibleData.all[19]),
-          ]),
+          HiddenCollectibleByIndex(data.type, index: 0, wonders: const [WonderType.chichenItza, WonderType.colosseum]),
           buildDropCapText(data.historyInfo1),
           _CollapsingPullQuoteImage(data: data, scrollPos: scrollPos),
+          HiddenCollectibleByIndex(data.type, index: 0, wonders: const [WonderType.pyramidsGiza, WonderType.petra]),
           buildText(data.historyInfo2),
           _SectionDivider(scrollPos, sectionNotifier, index: 1),
           buildDropCapText(data.constructionInfo1),
+          HiddenCollectibleByIndex(data.type,
+              index: 0, wonders: const [WonderType.machuPicchu, WonderType.christRedeemer]),
           _YouTubeThumbnail(id: data.videoId),
           buildText(data.constructionInfo2),
           _SlidingImageStack(scrollPos: scrollPos, type: data.type),
           _SectionDivider(scrollPos, sectionNotifier, index: 2),
           buildDropCapText(data.locationInfo),
-          _MapsThumbnail(data, height: 200),
+          // SB: Disable maps thumbnail in debug mode, as it pollutes the logs too much in the android simulator
+          if (kReleaseMode) ...[
+            _MapsThumbnail(data, height: 200),
+          ],
+          HiddenCollectibleByIndex(data.type, index: 0, wonders: const [WonderType.tajMahal, WonderType.greatWall]),
         ],
       ),
     );

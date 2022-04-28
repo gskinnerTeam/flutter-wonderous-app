@@ -23,7 +23,7 @@ class CollectionScreen extends StatefulWidget with GetItStatefulWidgetMixin {
 }
 
 class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixin {
-  Map<String, int> states = collectiblesLogic.states.value;
+  Map<String, int> states = collectiblesLogic.statesById.value;
   GlobalKey? scrollKey;
 
   @override
@@ -39,7 +39,7 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
     if (id == null || states[id] != CollectibleState.discovered) {
       id = states.keys.firstWhereOrNull((id) => states[id] == CollectibleState.discovered);
     }
-    return CollectibleData.fromId(id)?.wonder;
+    return collectiblesLogic.fromId(id)?.wonder;
   }
 
   void _scrollToTarget([bool animate = true]) {
@@ -55,8 +55,8 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
 
   @override
   Widget build(BuildContext context) {
-    states = watchX((CollectiblesLogic o) => o.states);
-    int discovered = 0, explored = 0, total = CollectibleData.all.length;
+    states = watchX((CollectiblesLogic o) => o.statesById);
+    int discovered = 0, explored = 0, total = collectiblesLogic.all.length;
     states.forEach((_, state) {
       if (state == CollectibleState.discovered) discovered++;
       if (state == CollectibleState.explored) explored++;

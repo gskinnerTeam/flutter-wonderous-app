@@ -14,9 +14,8 @@ class _TextContent extends StatelessWidget {
       Shadow(color: Colors.black.withOpacity(.6), offset: Offset(0, 2), blurRadius: 2),
     ];
     return ConstrainedBox(
-      constraints: BoxConstraints(maxHeight: 250),
+      constraints: BoxConstraints(maxHeight: 220 * context.style.scale),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         children: [
           /// Page indicator
           DiagonalPageIndicator(current: wonderIndex + 1, total: wonders.length),

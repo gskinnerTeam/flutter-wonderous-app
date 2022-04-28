@@ -1,3 +1,10 @@
+# 0.0.11
+- Home screen
+  - Improved sizing on Christ Redeemer home page
+- Added proper "Wonder Buttons"
+- Added proper collectibles to Editorial and Photo Grid
+- Restored Timeline tab (shows 'Under Construction')
+
 # 0.0.10
 - Home screen
   - Added remaining home screens! (ready for QA)
