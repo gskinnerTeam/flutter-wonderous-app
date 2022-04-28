@@ -14,7 +14,7 @@ class WondersAppScaffold extends StatelessWidget with GetItMixin {
     final styles = AppStyle(screenSize: context.sizePx);
     FXAnimate.defaultDuration = styles.times.fast;
     // Respect fps meter setting
-    bool enableFpsMeter = watchX<SettingsLogic, bool>((c) => c.enableFpsMeter);
+    bool enableFpsMeter = watchX((SettingsLogic c) => c.enableFpsMeter);
     // Pass our custom style down to the tree with provider and inject a themData to style existing Material components.
     return CustomPerformanceOverlay(
       enabled: enableFpsMeter,
