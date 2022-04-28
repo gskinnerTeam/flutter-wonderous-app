@@ -863,7 +863,7 @@ packages:
       name: share_plus
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.3"
+    version: "4.0.4"
   share_plus_linux:
     dependency: transitive
     description:
