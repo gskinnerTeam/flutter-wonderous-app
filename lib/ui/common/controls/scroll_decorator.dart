@@ -16,7 +16,7 @@ class ScrollDecorator extends StatefulWidget {
     Axis direction = Axis.vertical,
     Duration duration = const Duration(milliseconds: 150),
   }) : super(key: key) {
-    Flex builder(controller) {
+    Flex flexBuilder(controller) {
       return Flex(
         direction: direction,
         children: [
@@ -37,8 +37,8 @@ class ScrollDecorator extends StatefulWidget {
       );
     }
 
-    backgroundBuilder = background ? builder : null;
-    foregroundBuilder = !background ? builder : null;
+    backgroundBuilder = background ? flexBuilder : null;
+    foregroundBuilder = !background ? flexBuilder : null;
   }
 
   ScrollDecorator.shadow({Key? key, required this.builder, this.controller, double opacity = 0.5}) : super(key: key) {
