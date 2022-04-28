@@ -28,12 +28,35 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var preloadScreen = Stack(
+      children: [
+        BackBtn().safe(),
+        Center(
+            child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 50,
+              height: 50,
+              child: AppLoader(),
+            ),
+            Gap(context.insets.md),
+            Text(
+              'Just a moment, please...',
+              style: context.textStyles.body.copyWith(color: context.colors.accent1),
+            ),
+          ],
+        )),
+      ],
+    );
+
     return ColoredBox(
       color: context.colors.greyStrong,
       child: FutureBuilder<ArtifactData?>(
         future: _future,
         builder: (_, snapshot) {
-          if (snapshot.hasData == false) return Center(child: AppLoader());
+          if (snapshot.hasData == false) return preloadScreen;
           final data = snapshot.data;
           if (data == null) {
             return AppLoadError(label: 'Unable to find info for artifact ${widget.artifactId} ');
