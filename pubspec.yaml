@@ -21,7 +21,7 @@ dependencies:
   file_picker: ^4.5.1
   flextras: ^0.0.2
   flutter_circular_text: ^0.3.1
-  flutter_inappwebview: ^5.3.2
+  flutter_inappwebview: ^5.4.3
   flutter_placeholder_textlines: ^1.1.2
   flutter_staggered_grid_view: ^0.6.1
   flutter_svg: ^1.0.3
