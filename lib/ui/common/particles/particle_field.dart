@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:wonders/ui/common/particles/particle.dart';
+import 'package:wonders/ui/common/particles/particle_field_painter.dart';
+import 'package:wonders/ui/common/particles/sprite_sheet.dart';
 
-import 'particle_field_painter.dart';
-import 'particle.dart';
-import 'sprite_sheet.dart';
-
-export 'particle_field_painter.dart';
 export 'particle.dart';
+export 'particle_field_painter.dart';
 export 'sprite_sheet.dart';
 
 class ParticleField extends StatefulWidget {

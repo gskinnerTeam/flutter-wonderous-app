@@ -72,11 +72,11 @@ class _SearchInput extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: context.insets.sm),
       child: LayoutBuilder(
-        builder: (ctx, constraints) => Autocomplete(
-          displayStringForOption: (String data) => data,
+        builder: (ctx, constraints) => Autocomplete<String>(
+          displayStringForOption: (data) => data,
           onSelected: handleSearchSubmitted,
           optionsBuilder: _getSuggestions,
-          optionsViewBuilder: (context, onSelected, Iterable<String> results) =>
+          optionsViewBuilder: (context, onSelected, results) =>
               _buildSuggestionsView(context, onSelected, results, constraints),
           fieldViewBuilder: _buildInput,
         ),
@@ -90,7 +90,7 @@ class _SearchInput extends StatelessWidget {
     }
 
     // Start with a list of results from a prebaked list of strings. TODO: Make this more thorough, like a JSON based on Wonder type.
-    List<String> results = _materialFilteringTerms.where((String option) {
+    List<String> results = _materialFilteringTerms.where((option) {
       return option.toLowerCase().startsWith(textEditingValue.text.toLowerCase());
     }).toList();
 
@@ -98,16 +98,14 @@ class _SearchInput extends StatelessWidget {
     List<ArtifactData> allArtifacts = searchLogic.allLoadedArtifacts;
     if (allArtifacts.isNotEmpty) {
       // Get all artifacts that follow the same search convention.
-      List<ArtifactData?> artifacts = allArtifacts.where((ArtifactData? data) {
-        return data?.title.toLowerCase().startsWith(textEditingValue.text.toLowerCase()) ?? false;
+      List<ArtifactData> artifacts = allArtifacts.where((data) {
+        return data.title.toLowerCase().startsWith(textEditingValue.text.toLowerCase());
       }).toList();
 
       // Only use titles if there are less than 10 results.
       if (artifacts.length <= 10) {
         for (var artifact in artifacts) {
-          if (artifact != null) {
-            results.add(artifact.title);
-          }
+          results.add(artifact.title);
         }
       }
     }

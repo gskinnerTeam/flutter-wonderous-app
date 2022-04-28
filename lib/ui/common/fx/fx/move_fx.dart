@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
-
-import '../fx.dart';
+import 'package:wonders/ui/common/fx/fx.dart';
 
 @immutable
 class MoveFX extends AbstractFX<Offset> {
@@ -13,8 +12,7 @@ class MoveFX extends AbstractFX<Offset> {
             end: end ?? Offset.zero);
 
   @override
-  Widget build(BuildContext context, Widget child,
-      AnimationController controller, FXEntry entry) {
+  Widget build(BuildContext context, Widget child, AnimationController controller, FXEntry entry) {
     Animation<Offset> animation = buildAnimation(controller, entry);
     return AnimatedBuilder(
         animation: animation,
@@ -27,16 +25,6 @@ class MoveFX extends AbstractFX<Offset> {
 }
 
 extension MoveFXExtensions<T> on FXManager<T> {
-  T move(
-          {Duration? delay,
-          Duration? duration,
-          Curve? curve,
-          Offset? begin,
-          Offset? end}) =>
-      addFX(MoveFX(
-          delay: delay,
-          duration: duration,
-          curve: curve,
-          begin: begin,
-          end: end));
+  T move({Duration? delay, Duration? duration, Curve? curve, Offset? begin, Offset? end}) =>
+      addFX(MoveFX(delay: delay, duration: duration, curve: curve, begin: begin, end: end));
 }

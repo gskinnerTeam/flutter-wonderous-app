@@ -55,7 +55,7 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
 
   @override
   Widget build(BuildContext context) {
-    states = watchX((CollectiblesLogic o) => o.states);
+    states = watchX<CollectiblesLogic, Map<String, int>>((o) => o.states);
     int discovered = 0, explored = 0, total = CollectibleData.all.length;
     states.forEach((_, state) {
       if (state == CollectibleState.discovered) discovered++;

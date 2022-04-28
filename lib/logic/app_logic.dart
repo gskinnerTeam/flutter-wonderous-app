@@ -31,7 +31,7 @@ class AppLogic {
 
     // Settings load
     await settingsLogic.load();
-    settingsLogic.scheduleSave(); // test save calls on each boot
+    await settingsLogic.scheduleSave(); // test save calls on each boot
 
     // Collectibles
     await collectiblesLogic.load();
@@ -52,7 +52,10 @@ class AppLogic {
           ),
         ));
     if (result) {
-      showModal(context, child: LoadingModal(title: 'Saving Image. Please wait...'));
+      await showModal(context, child: LoadingModal(title: 'Saving Image. Please wait...'));
+      // TODO: Why is the callback typed as Uint8List?
+      // According to the types, it should be Uint8List, which eliminates the
+      // if (image != null) test.
       await ScreenshotController().captureFromWidget(widget).then((Uint8List? image) async {
         if (image != null) {
           if (PlatformInfo.isMobile) {
@@ -61,7 +64,7 @@ class AppLogic {
             await Future.delayed(500.ms);
           }
           Navigator.pop(context);
-          showModal(context, child: OkModal(title: 'Save complete!'));
+          await showModal(context, child: OkModal(title: 'Save complete!'));
         }
       });
     }

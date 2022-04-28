@@ -10,10 +10,10 @@ class SettingsScreen extends StatelessWidget with GetItMixin {
 
   @override
   Widget build(BuildContext context) {
-    final enableBlur = watchX((SettingsLogic s) => s.enableMotionBlur);
-    final swipeThreshold = watchX((SettingsLogic s) => s.swipeThreshold);
-    final enableFpsMeter = watchX((SettingsLogic s) => s.enableFpsMeter);
-    final enableClouds = watchX((SettingsLogic s) => s.enableClouds);
+    final enableBlur = watchX<SettingsLogic, bool>((s) => s.enableMotionBlur);
+    final swipeThreshold = watchX<SettingsLogic, double>((s) => s.swipeThreshold);
+    final enableFpsMeter = watchX<SettingsLogic, bool>((s) => s.enableFpsMeter);
+    final enableClouds = watchX<SettingsLogic, bool>((s) => s.enableClouds);
     return Scaffold(
       appBar: AppBar(
         title: Text('Settings', style: context.textStyles.h2),

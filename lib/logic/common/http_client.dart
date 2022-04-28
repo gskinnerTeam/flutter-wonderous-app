@@ -33,7 +33,7 @@ class HttpClient {
 
     if (urlParams != null) {
       Map<String, String> _urlParams = {};
-      urlParams.forEach((String key, dynamic value) {
+      urlParams.forEach((key, value) {
         _urlParams[key] = value.toString();
       });
 

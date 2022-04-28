@@ -12,7 +12,9 @@ class TimelineSection extends StatelessWidget {
     int startYr = data.startYr, endYr = data.endYr;
     double fraction = (selectedYr - startYr) / (endYr - startYr);
     fraction = fraction.clamp(0, 1);
-    print(fraction);
+    if (kDebugMode) {
+      print(fraction);
+    }
     return Container(
       alignment: Alignment(0, -1 + fraction * 2),
       decoration: BoxDecoration(color: data.type.fgColor),

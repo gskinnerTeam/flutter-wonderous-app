@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
-
-import '../fx.dart';
+import 'package:wonders/ui/common/fx/fx.dart';
 
 // TODO: GDS: possibly add other properties of visibility as params?
 

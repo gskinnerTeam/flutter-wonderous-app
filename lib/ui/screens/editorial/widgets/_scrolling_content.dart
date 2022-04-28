@@ -81,7 +81,7 @@ class _YouTubeThumbnail extends StatelessWidget {
 }
 
 class _MapsThumbnail extends StatefulWidget {
-  _MapsThumbnail(this.data, {Key? key, required this.height}) : super(key: key);
+  const _MapsThumbnail(this.data, {Key? key, required this.height}) : super(key: key);
   final WonderData data;
   final double height;
 

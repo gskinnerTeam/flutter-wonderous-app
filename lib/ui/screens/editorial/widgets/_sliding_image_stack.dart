@@ -28,7 +28,7 @@ class _SlidingImageStack extends StatelessWidget {
         height: size.height,
         child: ValueListenableBuilder(
           valueListenable: scrollPos,
-          builder: (BuildContext context, double value, Widget? child) {
+          builder: (context, value, child) {
             double pctVisible = 0;
             final yPos = ContextUtils.getGlobalPos(context)?.dy;
             final height = ContextUtils.getSize(context)?.height;

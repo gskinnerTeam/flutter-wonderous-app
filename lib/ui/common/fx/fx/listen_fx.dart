@@ -1,14 +1,14 @@
 import 'package:flutter/widgets.dart';
-
-import '../fx.dart';
+import 'package:wonders/ui/common/fx/fx.dart';
 
 @immutable
 class ListenFX extends AbstractFX<double> {
   final Function(double) callback;
   final bool clamp;
 
-  const ListenFX(this.callback, {Duration? delay, Duration? duration, Curve? curve, double? begin, double? end, this.clamp=true}) :
-    super(delay:delay, duration:duration, curve:curve, begin:begin ?? 0.0, end:end ?? 1.0);
+  const ListenFX(this.callback,
+      {Duration? delay, Duration? duration, Curve? curve, double? begin, double? end, this.clamp = true})
+      : super(delay: delay, duration: duration, curve: curve, begin: begin ?? 0.0, end: end ?? 1.0);
 
   @override
   Widget build(BuildContext context, Widget child, AnimationController controller, FXEntry entry) {
@@ -18,14 +18,16 @@ class ListenFX extends AbstractFX<double> {
     animation.addListener(() {
       double value = animation.value;
       if (!clamp || value != prev) {
-        callback(begin + (end-begin) * entry.curve.transform(value));
+        callback(begin + (end - begin) * entry.curve.transform(value));
         prev = value;
       }
     });
     return child;
   }
 }
+
 extension ListenFXExtensions<T> on FXManager<T> {
-  T listen(Function(double) callback, {Duration? delay, Duration? duration, Curve? curve, double? begin, double? end, bool clamp=true}) =>
-    addFX(ListenFX(callback, delay: delay, duration: duration, curve: curve, begin:begin, end: end, clamp:clamp));
+  T listen(Function(double) callback,
+          {Duration? delay, Duration? duration, Curve? curve, double? begin, double? end, bool clamp = true}) =>
+      addFX(ListenFX(callback, delay: delay, duration: duration, curve: curve, begin: begin, end: end, clamp: clamp));
 }

@@ -22,9 +22,9 @@ linter:
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
   rules:
+    always_declare_return_types: true
+    always_use_package_imports: true
     prefer_const_constructors: false
     prefer_single_quotes: true
-    always_use_package_imports: true
-    always_declare_return_types: true
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

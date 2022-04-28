@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
@@ -72,7 +73,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
             // TODO: remove this slider when Timeline is complete
             Slider(
               value: _zoomOverride,
-              onChanged: (double value) {
+              onChanged: (value) {
                 _zoomOverride = value;
                 _viewport?.setZoom(_zoomOverride);
                 setState(() {});

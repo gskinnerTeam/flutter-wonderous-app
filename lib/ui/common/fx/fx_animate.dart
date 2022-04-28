@@ -1,7 +1,6 @@
 import 'dart:collection';
 import 'package:flutter/widgets.dart';
-
-import 'fx.dart';
+import 'package:wonders/ui/common/fx/fx.dart';
 
 typedef ReparentChildBuilder = Widget Function(Widget parent, Widget child);
 

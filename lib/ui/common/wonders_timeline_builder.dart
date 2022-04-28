@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 
@@ -26,7 +27,9 @@ class WondersTimelineBuilder extends StatelessWidget {
     final fraction = -1 + ((data.startYr - wondersLogic.startYear) / totalYrs) * 2;
     final double x = isHz ? fraction : 0;
     final double y = isHz ? 0 : fraction;
-    print('align: $y');
+    if (kDebugMode) {
+      print('align: $y');
+    }
     return Alignment(x, y);
   }
 

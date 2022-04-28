@@ -24,7 +24,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
   int _index = ((_gridCount * _gridCount) / 2).round();
   late int _prevIndex = _index;
   Offset _lastSwipeDir = Offset.zero;
-  double _scale = .75;
+  final double _scale = .75;
   bool _skipNextOffsetTween = false;
   late Duration swipeDuration = context.times.med * .6;
 
@@ -37,7 +37,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
     _loadCollections();
   }
 
-  void _loadCollections() async {
+  Future<void> _loadCollections() async {
     var ids = (await unsplashLogic.getCollectionPhotos(widget.collectionId));
     if (!mounted) return;
     if (ids != null && ids.isNotEmpty) {
@@ -52,7 +52,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
       // Start loading the other visible images, but don't await them, just give them a head-start.
       final indexes = [_index + 1, _index - 1, _index - _gridCount, _index + _gridCount];
       for (var i in indexes) {
-        unsplashLogic.preload(context, ids[i], size: UnsplashPhotoSize.med);
+        await unsplashLogic.preload(context, ids[i], size: UnsplashPhotoSize.med);
       }
       await Future.delayed(1.seconds);
       _photoIds.value = ids;
@@ -97,7 +97,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
     return originOffset + indexedOffset;
   }
 
-  void _handleImageTapped(int index) async {
+  Future<void> _handleImageTapped(int index) async {
     if (_index == index) {
       String? newId = await Navigator.push(
         context,
