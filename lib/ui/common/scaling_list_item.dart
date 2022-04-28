@@ -9,19 +9,30 @@ class ScalingListItem extends StatelessWidget {
   final Widget child;
 
   @override
-  Widget build(BuildContext context) => ValueListenableBuilder(
-      valueListenable: scrollPos,
-      builder: (_, value, __) {
-        final yPos = ContextUtils.getGlobalPos(context)?.dy;
-        final widgetHeight = ContextUtils.getSize(context)?.height;
-        double scale = 1;
-        if (yPos != null && widgetHeight != null) {
-          final amtVisible = context.heightPx - yPos;
-          final pctVisible = (amtVisible / widgetHeight * .5).clamp(0, 1);
-          scale = 1.35 - pctVisible * .35;
-        }
-        return ClipRect(
-          child: Transform.scale(scale: scale, child: child),
-        );
-      });
+  Widget build(BuildContext context) {
+    // Use a FxRunAnimated to build the child twice, this will allow it to properly measure its size and position.
+    return FXRunAnimated(
+      (_, value) => ValueListenableBuilder(
+          valueListenable: scrollPos,
+          builder: (_, value, __) {
+            return LayoutBuilder(
+              builder: (_, constraints) {
+                final yPos = ContextUtils.getGlobalPos(context)?.dy;
+                final widgetHeight = constraints.maxHeight;
+                double scale = 1;
+                if (yPos != null && widgetHeight != null) {
+                  final amtVisible = context.heightPx - yPos;
+                  final pctVisible = (amtVisible / widgetHeight * .5).clamp(0, 1);
+                  scale = 1.35 - pctVisible * .35;
+                }
+
+                return ClipRect(
+                  child: Transform.scale(scale: scale, child: child),
+                );
+              },
+            );
+          }),
+      delay: context.times.fast,
+    );
+  }
 }

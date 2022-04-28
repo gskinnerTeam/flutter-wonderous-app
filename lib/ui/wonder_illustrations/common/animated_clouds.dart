@@ -4,11 +4,13 @@ import 'package:wonders/ui/common/utils/context_utils.dart';
 
 // Shows a set of clouds that animated onto stage.
 // When value-key is changed, a new set of clouds will animate into place and the old ones will animate out.
-// Uses a random seed system, to make sure we get the same set of clouds for each wonder.
+// Uses a random seed system, to make sure we get the same set of clouds for each wonder, without actually having to hand-position them.
 class AnimatedClouds extends StatefulWidget with GetItStatefulWidgetMixin {
-  AnimatedClouds({Key? key, this.enableAnimations = true, required this.wonderType}) : super(key: key);
+  AnimatedClouds({Key? key, this.enableAnimations = true, required this.wonderType, required this.opacity})
+      : super(key: key);
   final WonderType wonderType;
   final bool enableAnimations;
+  final double opacity;
   @override
   State<AnimatedClouds> createState() => _AnimatedCloudsState();
 }
@@ -50,13 +52,13 @@ class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProvid
       case WonderType.christRedeemer:
         return 3;
       case WonderType.colosseum:
-        return 4;
+        return 1;
       case WonderType.greatWall:
-        return 5;
+        return 10;
       case WonderType.machuPicchu:
-        return 6;
+        return 12;
       case WonderType.petra:
-        return 7;
+        return 1;
       case WonderType.pyramidsGiza:
         return 8;
       case WonderType.tajMahal:
@@ -115,12 +117,13 @@ class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProvid
   List<_Cloud> _getClouds() {
     Size size = ContextUtils.getSize(context) ?? Size(context.widthPx, 400);
     rndSeed = _getCloudSeed(widget.wonderType);
-    return List<_Cloud>.generate(4, (index) {
+    return List<_Cloud>.generate(3, (index) {
       return _Cloud(
         Offset(rnd.getDouble(-200, size.width - 100), rnd.getDouble(50, size.height - 50)),
-        scale: rnd.getDouble(.5, 1),
+        scale: rnd.getDouble(.7, 1),
         flipX: rnd.getBool(),
         flipY: rnd.getBool(),
+        opacity: widget.opacity,
       );
     }).toList();
   }
@@ -131,8 +134,9 @@ class _Cloud extends StatelessWidget {
   final double scale;
   final bool flipX;
   final bool flipY;
+  final double opacity;
 
-  const _Cloud(this.pos, {this.scale = 1, this.flipX = false, this.flipY = false});
+  const _Cloud(this.pos, {this.scale = 1, this.flipX = false, this.flipY = false, required this.opacity});
 
   @override
   Widget build(BuildContext context) => Transform.scale(
@@ -140,6 +144,6 @@ class _Cloud extends StatelessWidget {
         scaleY: scale * (flipY ? -1 : 1),
         child: SizedBox(
             width: 300,
-            child: Image.asset(ImagePaths.cloud, opacity: const AlwaysStoppedAnimation(.4), cacheWidth: 600)),
+            child: Image.asset(ImagePaths.cloud, opacity: AlwaysStoppedAnimation(.4 * opacity), cacheWidth: 600)),
       );
 }

@@ -5,8 +5,8 @@ import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/wonder_illustrations/common/animated_clouds.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
-import 'package:wonders/ui/wonder_illustrations/wonder_illustration.dart';
-import 'package:wonders/ui/wonder_illustrations/wonder_title_text.dart';
+import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration.dart';
+import 'package:wonders/ui/wonder_illustrations/common/wonder_title_text.dart';
 
 part '_vertical_swipe_controller.dart';
 part 'widgets/_animated_arrow_button.dart';
@@ -49,7 +49,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
           FractionallySizedBox(
             widthFactor: 1,
             heightFactor: .5,
-            child: AnimatedClouds(wonderType: currentWonder.type),
+            child: AnimatedClouds(wonderType: currentWonder.type, opacity: 1),
           ),
 
           /// Wonders Illustrations
@@ -69,7 +69,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
 
           /// Foreground gradient-top, gets darker when swiping up
           BottomCenter(
-            child: _buildSwipeableBgGradient(currentWonder.type.bgColor),
+            child: _buildSwipeableBgGradient(currentWonder.type.bgColor.withOpacity(.5)),
           ),
 
           /// Floating controls / UI
@@ -85,13 +85,16 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
                   Gap(context.insets.lg * 3),
 
                   /// Settings Btn
-                  AppTextBtn('Settings', onPressed: _handleSettingsPressed),
+                  Opacity(
+                    opacity: 0, // TODO: Remove this btn before launch, its for testing settings only
+                    child: AppTextBtn('Settings', onPressed: _handleSettingsPressed, padding: EdgeInsets.all(30)),
+                  ),
                   const Spacer(),
 
                   /// Title Content
                   IgnorePointer(
                     child: LightText(
-                      child: SizedBox(height: 250, child: _TextContent(wonderIndex: _wonderIndex, wonders: _wonders)),
+                      child: _TextContent(wonderIndex: _wonderIndex, wonders: _wonders),
                     ),
                   ),
                   Gap(context.insets.sm),

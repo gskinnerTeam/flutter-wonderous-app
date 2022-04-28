@@ -1,8 +1,7 @@
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
-import 'package:wonders/logic/common/http_client.dart';
+import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/platform_info.dart';
+import 'package:wonders/logic/common/http_client.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/logic/data/artifact_search_options.dart';
 import 'package:wonders/logic/data/department_data.dart';
@@ -127,42 +126,4 @@ class SearchService {
     }
     return data;
   }
-
-  // Future<ServiceResult<List<String>?>> writeUniqueTypesToDisk({DateTime? date, String? departmentIds}) async {
-  //   var result = await getObjectIDList(date: date, departmentIds: departmentIds);
-  //   var allIds = result.content!;
-  //   allIds.removeRange(0, 477500);
-  //   final countsByType = <String, int>{};
-  //
-  //   /// Loop through all ids in a set of chunks
-  //   int chunkSize = 100;
-  //   while (allIds.length > 1) {
-  //     final ids = allIds.take(chunkSize);
-  //     allIds.removeRange(0, min(chunkSize, allIds.length));
-  //     final futures = <Future<ServiceResult<ArtifactData?>>>[];
-  //     for (var id in ids) {
-  //       futures.add(getObjectByID(id));
-  //     }
-  //
-  //     final results = await Future.wait(futures);
-  //     for (var r in results) {
-  //       final type = r.content!.objectType;
-  //       if (r.content == null) continue;
-  //       if (countsByType.containsKey(type) == false) {
-  //         countsByType[type] = 0;
-  //       }
-  //       countsByType[type] = countsByType[type]! + 1;
-  //     }
-  //     debugPrint('Batch complete, ${allIds.length} remaining');
-  //   }
-  //
-  //   /// Write file
-  //   final types = countsByType.keys.toList()..removeWhere((k) => countsByType[k]! <= 1);
-  //   types.sort();
-  //   var dir = await getApplicationDocumentsDirectory();
-  //   var f = File('${dir.path}/artifact_types.csv');
-  //   await f.writeAsString(types.join(','));
-  //   debugPrint('file saved at: ${f.path}');
-  //   return ServiceResult(result.response, (json) => []);
-  // }
 }

@@ -5,8 +5,8 @@ jobs:
   tests_remote:
     runs-on: [macos-latest]
     steps:
-    - uses: actions/checkout@v1
-    - uses: subosito/flutter-action@v1
+    - uses: actions/checkout@v3
+    - uses: subosito/flutter-action@v2
     - run: flutter test
     - run: flutter config --enable-macos-desktop  
     - run: flutter test -d macos integration_test/smoke_test.dart

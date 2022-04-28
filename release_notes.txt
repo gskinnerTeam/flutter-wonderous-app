@@ -1,8 +1,22 @@
 # 0.0.10
 - Home screen
+  - Added remaining home screens! (ready for QA)
   - Page Indicator: Increase size, add shadow
   - Add sub-title
--
+  - Settings button is now invisible in preparation for apple submission and trailer recording
+- Artifacts
+ - Loading speed improvements
+- Search (WIP)
+ - Design is be ready for QA
+ - UX is still a work in progress, we have a plan to make it instant.
+- Timeline
+ - Removed timeline button from tab menu for Apple submission
+- Editorial (Ready for QA!)
+ - All final content and images are in
+ - Added maps section + maps fullscreen view
+ - Added icons to the section headers
+ - Added quote author to pull quotes
+ - Added "up" button to reduce UX confusion
 
 # 0.0.9
 - Enable bounce scrolling for all platforms and lists

@@ -60,15 +60,8 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
               WonderEditorialScreen(wonder, onScroll: _handleDetailsScrolled),
               PhotoGallery(collectionId: wonder.unsplashCollectionId),
               Padding(padding: EdgeInsets.only(bottom: tabBarHeight), child: ArtifactCarouselScreen(type: wonder.type)),
-              Padding(padding: EdgeInsets.only(bottom: tabBarHeight), child: TimelineScreen(type: widget.type)),
+              //Padding(padding: EdgeInsets.only(bottom: tabBarHeight), child: TimelineScreen(type: widget.type)),
             ],
-          ),
-
-          /// Settings btn
-          SafeArea(
-            child: TopRight(
-              child: AppTextBtn('Settings', onPressed: _handleSettingsPressed),
-            ),
           ),
 
           /// Tab menu
