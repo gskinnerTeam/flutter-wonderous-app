@@ -98,6 +98,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
   }
 
   Future<void> _handleImageTapped(int index) async {
+    HapticFeedback.mediumImpact();
     if (_index == index) {
       String? newId = await Navigator.push(
         context,

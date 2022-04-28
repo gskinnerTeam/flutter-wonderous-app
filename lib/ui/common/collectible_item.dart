@@ -26,6 +26,8 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
   }
 
   void _handleTap(BuildContext context) {
+    HapticFeedback.mediumImpact();
+
     Duration duration = 300.ms;
     Navigator.of(context).push(
       PageRouteBuilder(

@@ -20,7 +20,10 @@ class _AnimatedArrowButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final Duration duration = context.times.med;
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        HapticFeedback.mediumImpact();
+        onTap();
+      },
       behavior: HitTestBehavior.translucent,
       child: SizedBox(
         height: 80,

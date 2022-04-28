@@ -49,6 +49,7 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
   }
 
   void _showDetails(BuildContext context, CollectibleData collectible) {
+    HapticFeedback.mediumImpact();
     context.push(ScreenPaths.artifact(collectible.artifactId));
     Future.delayed(300.ms).then((_) => collectiblesLogic.updateState(collectible.id, CollectibleState.explored));
   }

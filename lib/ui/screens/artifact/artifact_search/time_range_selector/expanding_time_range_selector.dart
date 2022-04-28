@@ -92,7 +92,10 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
 
     return LayoutBuilder(builder: (_, constraints) {
       return GestureDetector(
-        onTap: () => setState(() => _isPanelOpen = !_isPanelOpen),
+        onTap: () {
+          HapticFeedback.mediumImpact();
+          setState(() => _isPanelOpen = !_isPanelOpen);
+        },
         child: Stack(
           children: [
             IgnorePointer(

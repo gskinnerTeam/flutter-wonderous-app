@@ -49,7 +49,11 @@ class _AppBtnState extends State<AppBtn> {
       child: Opacity(
         opacity: _tapDown ? .7 : 1,
         child: TextButton(
-          onPressed: widget.onPressed,
+          onPressed: () {
+            // On pressing, give a light vibration on device.
+            HapticFeedback.mediumImpact();
+            widget.onPressed();
+          },
           style: TextButton.styleFrom(
             minimumSize: widget.minimumSize ?? Size.zero,
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
