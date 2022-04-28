@@ -33,7 +33,7 @@ dependencies:
   go_router: ^3.1.0
   image_gallery_saver: ^1.7.1
   internet_connection_checker: ^0.0.1+3
-  json_annotation: ^4.4.0
+  json_annotation: ^4.5.0
   loading_indicator: ^3.0.3
   memoize: ^3.0.0
   modal_bottom_sheet: ^2.0.0
