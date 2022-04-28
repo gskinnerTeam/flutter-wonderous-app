@@ -58,6 +58,7 @@ extension WonderAssetExtensions on WonderType {
     }
   }
 
+  String get homeBtn => '$assetPath/wonder-button.png';
   String get photo1 => '$assetPath/photo-1.jpg';
   String get photo2 => '$assetPath/photo-2.jpg';
   String get photo3 => '$assetPath/photo-3.jpg';
