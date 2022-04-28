@@ -30,7 +30,7 @@ class AppLogic {
 
     // Settings load
     await settingsLogic.load();
-    await settingsLogic.scheduleSave(); // test save calls on each boot
+    unawaited(settingsLogic.scheduleSave()); // test save calls on each boot
 
     // Collectibles
     await collectiblesLogic.load();
