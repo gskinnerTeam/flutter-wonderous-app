@@ -64,7 +64,7 @@ dev_dependencies:
     sdk: flutter
   integration_test:
     sdk: flutter
-  json_serializable: ^6.1.5
+  json_serializable: ^6.2.0
 
 flutter_icons:
   android: "launcher_icon"
