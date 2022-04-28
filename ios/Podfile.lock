@@ -49,10 +49,10 @@ PODS:
   - google_maps_flutter (0.0.1):
     - Flutter
     - GoogleMaps
-  - GoogleMaps (6.1.1):
-    - GoogleMaps/Maps (= 6.1.1)
-  - GoogleMaps/Base (6.1.1)
-  - GoogleMaps/Maps (6.1.1):
+  - GoogleMaps (6.2.0):
+    - GoogleMaps/Maps (= 6.2.0)
+  - GoogleMaps/Base (6.2.0)
+  - GoogleMaps/Maps (6.2.0):
     - GoogleMaps/Base
   - image_gallery_saver (1.5.0):
     - Flutter
@@ -134,7 +134,7 @@ SPEC CHECKSUMS:
   flutter_inappwebview: bfd58618f49dc62f2676de690fc6dcda1d6c3721
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   google_maps_flutter: c59fc576c0d0c7f4dc4bd63832c862d22d5a7c6d
-  GoogleMaps: 94e6e0851beece6678af9f508f4918b7a7c61722
+  GoogleMaps: c1b9de14cecc940b2d334dd4e6dfa116bff4a40e
   image_gallery_saver: 259eab68fb271cfd57d599904f7acdc7832e7ef2
   integration_test: a1e7d09bd98eca2fc37aefd79d4f41ad37bdbbe5
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
@@ -148,4 +148,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3
