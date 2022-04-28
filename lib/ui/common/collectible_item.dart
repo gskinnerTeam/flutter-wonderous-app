@@ -17,7 +17,7 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
 
   @override
   Widget build(BuildContext context) {
-    final states = watchX<CollectiblesLogic, Map<String, int>>((o) => o.states);
+    final states = watchX((CollectiblesLogic o) => o.states);
     if (states[collectible.id] != CollectibleState.lost) return SizedBox(width: size, height: size);
     return GestureDetector(
       onTap: () => _handleTap(context),
