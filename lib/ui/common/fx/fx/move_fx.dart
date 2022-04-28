@@ -26,6 +26,18 @@ class MoveFX extends AbstractFX<Offset> {
 }
 
 extension MoveFXExtensions<T> on FXManager<T> {
-  T move({Duration? delay, Duration? duration, Curve? curve, Offset? begin, Offset? end}) =>
-      addFX(MoveFX(delay: delay, duration: duration, curve: curve, begin: begin, end: end));
+  T move({
+    Duration? delay,
+    Duration? duration,
+    Curve? curve,
+    Offset? begin,
+    Offset? end,
+  }) =>
+      addFX(MoveFX(
+        delay: delay,
+        duration: duration,
+        curve: curve,
+        begin: begin,
+        end: end,
+      ));
 }
