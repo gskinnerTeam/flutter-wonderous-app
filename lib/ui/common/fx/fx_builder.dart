@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:wonders/ui/common/fx/fx.dart';
+
+import 'fx.dart';
 
 // FXBuilder simplifies working with AnimatedBuilder, especially in
 // StatelessWidgets. It handles the creation and disposal of the controller,
