@@ -11,6 +11,7 @@ class ArtifactCarouselImage extends StatelessWidget {
       required this.currentPage,
       required this.artifact,
       required this.viewportFraction,
+      required this.bottomPadding,
       this.borderOnly = false,
       required this.onPressed})
       : super(key: key);
@@ -18,6 +19,7 @@ class ArtifactCarouselImage extends StatelessWidget {
   final int index;
   final double currentPage;
   final double viewportFraction;
+  final double bottomPadding;
   final bool borderOnly;
   final VoidCallback onPressed;
 
@@ -33,6 +35,7 @@ class ArtifactCarouselImage extends StatelessWidget {
             image: imageProvider,
             heroTag: artifact.imageUrlSmall,
             viewportFraction: viewportFraction,
+            bottomPadding: bottomPadding,
             offsetAmt: currentPage - index.toDouble(),
           ),
         ),
@@ -41,11 +44,17 @@ class ArtifactCarouselImage extends StatelessWidget {
 
 class _ImagePreview extends StatelessWidget {
   const _ImagePreview(
-      {Key? key, required this.image, required this.offsetAmt, required this.heroTag, required this.viewportFraction})
+      {Key? key,
+      required this.image,
+      required this.offsetAmt,
+      required this.bottomPadding,
+      required this.heroTag,
+      required this.viewportFraction})
       : super(key: key);
   final ImageProvider image;
   final double offsetAmt;
   final double viewportFraction;
+  final double bottomPadding;
   final String heroTag;
   @override
   Widget build(BuildContext context) {
@@ -53,12 +62,12 @@ class _ImagePreview extends StatelessWidget {
     double sideElementYScale = 0.75;
 
     // Shrink factor of the side elements, compared to main.
-    double sideElementScale = 0.65;
+    double sideElementScale = 0.75;
 
     // Scale of the X position offset.
-    const double offsetScrollXScale = 0.3;
+    const double offsetScrollXScale = 0.15;
     // Scale of the Y position offset.
-    const double offsetScrollYScale = 0.8;
+    const double offsetScrollYScale = 0.2;
 
     // Border variables
     const double borderPadding = 4.0;
@@ -73,17 +82,20 @@ class _ImagePreview extends StatelessWidget {
         sideElementScale + ((1 - sideElementScale) - (math.min(1, offset.abs()) * (1 - sideElementScale)));
 
     // Calculate the offset positions of the side elements.
-    double xOffset = math.sin(offset * math.pi / 4.0) * -offsetScrollXScale;
+    double xOffset = math.sin(offset * math.pi / 4.0) * offsetScrollXScale;
     double yOffset = (offset * offset) * offsetScrollYScale;
 
+    double bottomPaddingScale = (bottomPadding / context.heightPx) - 0.1;
+    double heightScaleLimit = 0.65;
+
     // Scale box for sizing. Uses both the element scale and the element Y scale.
-    return FractionallySizedBox(
-      alignment: Alignment.center,
-      widthFactor: elementScale * 0.8,
-      heightFactor: elementScale * 0.5 * elementYScale,
-      // Translation box for positioning.
-      child: FractionalTranslation(
-        translation: Offset(xOffset, yOffset - 0.2),
+    return FractionalTranslation(
+      translation: Offset(xOffset, yOffset - bottomPaddingScale),
+      child: FractionallySizedBox(
+        alignment: Alignment.bottomCenter,
+        widthFactor: elementScale * heightScaleLimit,
+        heightFactor: elementScale * heightScaleLimit * elementYScale * 0.6,
+        // Translation box for positioning.
         child: Container(
           // Add an outer border with the rounded ends.
           decoration: BoxDecoration(

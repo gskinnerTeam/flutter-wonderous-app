@@ -22,13 +22,13 @@ class ArtifactCarouselScreen extends StatefulWidget {
 
 class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   final _pageViewportFraction = 0.5;
+  final _bottomHeight = 300.0;
 
   late final _highlightedArtifactIds = wondersLogic.getData(widget.type).highlightArtifacts;
   // Used to determine carousel element size.
-  static const double _maxElementWidth = 500;
+  static const double _maxElementWidth = 400;
   // Used to determine white background dimensions.
   static const double _maxBottomHeight = 300;
-  static const double _maxBottomWidth = 650;
   final _loadedArtifacts = [];
   late PageController _controller;
   HighlightsData? _currentArtifact;
@@ -92,9 +92,6 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double carouselImageWidth = math.min(_maxElementWidth, context.widthPx / 1.5);
-    double bottomHalfHeight = math.min(_maxBottomHeight, context.heightPx / 6);
-
     final pageViewArtifacts = _loadedArtifacts.isEmpty
         ? Container()
         : PageView.builder(
@@ -108,6 +105,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                 currentPage: _currentPage,
                 artifact: _loadedArtifacts[index % _loadedArtifacts.length],
                 viewportFraction: _pageViewportFraction,
+                bottomPadding: _bottomHeight + math.min(context.widthPx, _maxBottomHeight) / 2,
                 onPressed: () => _handleArtifactTap(index),
               );
             },
@@ -128,12 +126,12 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
           // White space, covering bottom half.
           BottomCenter(
             child: Container(
-              width: math.min(context.widthPx, _maxBottomWidth),
-              height: bottomHalfHeight + _maxBottomWidth / 2,
+              width: math.min(context.widthPx, _maxElementWidth),
+              height: _bottomHeight + math.min(context.widthPx, _maxBottomHeight) / 2,
               decoration: BoxDecoration(
                 color: context.colors.offWhite,
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(_maxBottomWidth / 2), topRight: Radius.circular(_maxBottomWidth / 2)),
+                    topLeft: Radius.circular(_maxElementWidth / 2), topRight: Radius.circular(_maxElementWidth / 2)),
               ),
             ),
           ),
@@ -148,6 +146,9 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
             ),
           ),
 
+          // Carousel images
+          pageViewArtifacts,
+
           // Header
           TopCenter(
             child: Padding(
@@ -159,23 +160,18 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
             ),
           ),
 
-          // Carousel images
-          SizedBox(width: carouselImageWidth, height: carouselImageWidth * 0.75, child: pageViewArtifacts),
-
           // Prev tap button
           CenterLeft(
-            child: BasicBtn(
-              semanticLabel: 'previous',
-              onPressed: () => _handlePageJump(-1),
+            child: GestureDetector(
+              onTap: () => _handlePageJump(-1),
               child: Container(width: context.widthPx / 6, height: context.heightPx, color: Colors.transparent),
             ),
           ),
 
           // Next tap button
           CenterRight(
-            child: BasicBtn(
-              semanticLabel: 'next',
-              onPressed: () => _handlePageJump(1),
+            child: GestureDetector(
+              onTap: () => _handlePageJump(1),
               child: Container(width: context.widthPx / 6, height: context.heightPx, color: Colors.transparent),
             ),
           ),
