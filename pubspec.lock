@@ -1239,7 +1239,7 @@ packages:
       name: window_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.1"
+    version: "0.5.0"
   xdg_directories:
     dependency: transitive
     description:
