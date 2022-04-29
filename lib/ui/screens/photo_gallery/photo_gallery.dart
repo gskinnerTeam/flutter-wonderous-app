@@ -98,7 +98,6 @@ class _PhotoGalleryState extends State<PhotoGallery> {
   }
 
   Future<void> _handleImageTapped(int index) async {
-    HapticFeedback.mediumImpact();
     if (_index == index) {
       String? newId = await Navigator.push(
         context,
@@ -181,8 +180,9 @@ class _PhotoGalleryState extends State<PhotoGallery> {
   Widget _buildImage(int index, Duration swipeDuration, Size imgSize) {
     bool selected = index == _index;
     bool wasSelected = index == _prevIndex;
-    return GestureDetector(
-      onTap: () => _handleImageTapped(index),
+    return BasicBtn(
+      semanticLabel: 'Show photo',
+      onPressed: () => _handleImageTapped(index),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(6),
         child: AnimatedMotionBlur(

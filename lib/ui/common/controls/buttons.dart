@@ -17,6 +17,7 @@ class AppBtn extends StatefulWidget {
       this.minimumSize,
       this.bgColor,
       this.border,
+      this.behavior,
       required this.semanticLabel})
       : super(key: key);
   final List<Widget> children;
@@ -29,6 +30,7 @@ class AppBtn extends StatefulWidget {
   final Color? bgColor;
   final bool circular;
   final Size? minimumSize;
+  final HitTestBehavior? behavior;
 
   @override
   State<AppBtn> createState() => _AppBtnState();
@@ -46,6 +48,7 @@ class _AppBtnState extends State<AppBtn> {
       onTapDown: (_) => setState(() => _tapDown = true),
       onTapUp: (_) => setState(() => _tapDown = false),
       onTapCancel: () => setState(() => _tapDown = false),
+      behavior: widget.behavior,
       child: Opacity(
         opacity: _tapDown ? .7 : 1,
         child: TextButton(
@@ -87,12 +90,18 @@ class _AppBtnState extends State<AppBtn> {
 
 class BasicBtn extends StatelessWidget {
   const BasicBtn(
-      {Key? key, required this.child, required this.semanticLabel, required this.onPressed, this.expand = false})
+      {Key? key,
+      required this.child,
+      required this.semanticLabel,
+      required this.onPressed,
+      this.expand = false,
+      this.behavior})
       : super(key: key);
   final Widget child;
   final String semanticLabel;
   final VoidCallback onPressed;
   final bool expand;
+  final HitTestBehavior? behavior;
 
   @override
   Widget build(BuildContext context) {
@@ -103,6 +112,7 @@ class BasicBtn extends StatelessWidget {
       padding: EdgeInsets.zero,
       bgColor: Colors.transparent,
       expand: expand,
+      behavior: behavior,
     );
   }
 }

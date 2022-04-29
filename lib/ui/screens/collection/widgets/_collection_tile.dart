@@ -69,6 +69,6 @@ class _CollectionTile extends StatelessWidget {
       ),
     );
     if (heroTag != null) content = Hero(tag: heroTag!, child: content);
-    return GestureDetector(onTap: () => onPressed(collectible), child: content);
+    return BasicBtn(semanticLabel: 'Collectible', onPressed: () => onPressed(collectible), child: content);
   }
 }

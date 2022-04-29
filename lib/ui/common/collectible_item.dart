@@ -19,15 +19,14 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
   Widget build(BuildContext context) {
     final states = watchX((CollectiblesLogic o) => o.states);
     if (states[collectible.id] != CollectibleState.lost) return SizedBox(width: size, height: size);
-    return GestureDetector(
-      onTap: () => _handleTap(context),
+    return BasicBtn(
+      onPressed: () => _handleTap(context),
+      semanticLabel: 'collectible',
       child: Hero(tag: 'collectible_icon_${collectible.id}', child: _buildIcon()),
     );
   }
 
   void _handleTap(BuildContext context) {
-    HapticFeedback.mediumImpact();
-
     Duration duration = 300.ms;
     Navigator.of(context).push(
       PageRouteBuilder(

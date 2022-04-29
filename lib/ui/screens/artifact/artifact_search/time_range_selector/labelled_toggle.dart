@@ -33,11 +33,9 @@ class LabelledToggle extends StatelessWidget {
     );
 
     BoxDecoration circleDec = BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(maxHeight)));
-    return GestureDetector(
-      onTap: () {
-        HapticFeedback.mediumImpact();
-        onClick();
-      },
+    return BasicBtn(
+      onPressed: onClick,
+      semanticLabel: 'toggle',
       child: LayoutBuilder(
         builder: (context, constraints) => Container(
           width: maxWidth,
