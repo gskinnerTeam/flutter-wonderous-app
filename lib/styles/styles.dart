@@ -37,7 +37,6 @@ class AppStyle {
 
   /// Scale text down a little on smaller devices, and up slightly on larger ones
   double _calculateScale(Size size) {
-    return 1;
     if (PlatformInfo.isDesktop) return 1;
     final diagonalPx = (size.shortestSide + size.longestSide) / 2;
     return .85 + diagonalPx / 3000;

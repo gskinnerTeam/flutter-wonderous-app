@@ -39,8 +39,6 @@ class _TimelineScreenState extends State<TimelineScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (appLogic.enableTimeline == false) return Center(child: LightText(child: Text('Under Construction.')));
-
     return LayoutBuilder(builder: (_, constraints) {
       // Determine min and max size of the timeline based on the size available to this widget
       const double scrubberSize = 80;
@@ -68,7 +66,11 @@ class _TimelineScreenState extends State<TimelineScreen> {
 
             /// Mini Horizontal timeline, reacts to the state of the larger scrolling timeline,
             /// and changes the timelines scroll position on Hz drag
-            _BottomScrubber(_scroller, size: scrubberSize, timelineMinSize: minSize),
+            _BottomScrubber(
+              _scroller,
+              size: scrubberSize,
+              timelineMinSize: minSize,
+            ),
 
             // TODO: remove this slider when Timeline is complete
             Slider(
@@ -79,6 +81,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                 setState(() {});
               },
             ),
+            Gap(30),
           ],
         ),
       );

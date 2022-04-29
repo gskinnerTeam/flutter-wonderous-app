@@ -12,13 +12,17 @@ class TimelineSection extends StatelessWidget {
     int startYr = data.startYr, endYr = data.endYr;
     double fraction = (selectedYr - startYr) / (endYr - startYr);
     fraction = fraction.clamp(0, 1);
-    if (kDebugMode) {
-      print(fraction);
-    }
     return Container(
       alignment: Alignment(0, -1 + fraction * 2),
+      padding: EdgeInsets.all(context.insets.sm),
       decoration: BoxDecoration(color: data.type.fgColor),
-      child: FractionalTranslation(translation: Offset(0, 0), child: FlutterLogo(size: 100)),
+      child: Container(
+        height: 120,
+        decoration: BoxDecoration(
+          color: data.type.bgColor,
+          borderRadius: BorderRadius.circular(99),
+        ),
+      ),
     );
   }
 }

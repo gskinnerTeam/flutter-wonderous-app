@@ -196,7 +196,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
               _handleImageTapped(index);
             },
             child: showCollectible
-                ? HiddenCollectibleByIndex(widget.wonderType, index: 1, size: 100)
+                ? HiddenCollectible(widget.wonderType, index: 1, size: 100)
                 : ClipRRect(
                     borderRadius: BorderRadius.circular(6),
                     child: AnimatedMotionBlur(

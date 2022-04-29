@@ -9,7 +9,7 @@ final chichenItzaData = WonderData(
   regionTitle: 'Yucatan, Mexico',
   videoId: 'Q6eBJjdca14',
   startYr: 550,
-  endYr: 1550,
+  endYr: 1200,
   artifactStartYr: -500,
   artifactEndYr: 1600,
   artifactCulture: 'Maya',

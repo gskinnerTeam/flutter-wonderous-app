@@ -69,12 +69,16 @@ class ScalingViewportState extends State<_ScalingViewport> {
                       child: WondersTimelineBuilder(
                           axis: Axis.vertical,
                           crossAxisGap: 24,
+                          minSize: 110,
                           timelineBuilder: (_, data) {
                             return ClipRRect(
                               borderRadius: BorderRadius.circular(99),
                               child: AnimatedBuilder(
                                 animation: controller.scroller,
-                                builder: (_, __) => TimelineSection(data, controller.calculateYearFromScrollPos()),
+                                builder: (_, __) => TimelineSection(
+                                  data,
+                                  controller.calculateYearFromScrollPos(),
+                                ),
                               ),
                             );
                           }),
