@@ -1,11 +1,9 @@
-import 'package:flutter/foundation.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 
 /// Visualizes all of the wonders over time.
-/// Distributes the wonders over multiple "tracks" so that
-/// they do not overlap. Provides a builder, so the visual representation
-/// of each "track item" can be customized.
+/// Distributes the wonders over multiple "tracks" so that they do not overlap.
+/// Provides a builder, so the visual representation of each "track item" can be customized.
 ///
 class WondersTimelineBuilder extends StatelessWidget {
   const WondersTimelineBuilder({

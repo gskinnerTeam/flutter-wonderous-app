@@ -1,6 +1,6 @@
 import 'package:wonders/logic/common/platform_info.dart';
 
-enum UnsplashPhotoSize { small, med, large, xl }
+enum UnsplashPhotoSize { med, large, xl }
 
 class UnsplashPhotoData {
   static const String unsplashUrl = 'https://unsplash.com/?utm_source=wonders&utm_medium=referral';

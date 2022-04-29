@@ -1,10 +1,8 @@
 import 'dart:ui';
 
-import 'package:flutter/foundation.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
-import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/wonders_timeline_builder.dart';
 
 part 'widgets/_bottom_scrubber.dart';
