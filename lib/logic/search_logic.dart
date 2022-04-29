@@ -99,11 +99,34 @@ class SearchLogic {
       futures.add(getArtifactByID(ids[i]));
     }
 
-    // Make all future calls simultaneously.
-    final results = (await Future.wait<ArtifactData?>(futures));
+    // Make all future calls simultaneously and trim the results.
+    final results = _trimResults(await Future.wait<ArtifactData?>(futures));
+    return results;
+  }
 
-    // Trim null results before returning.
+  List<ArtifactData?> _trimResults(List<ArtifactData?> results) {
+    // Trim null results to start.
     results.removeWhere((r) => r == null || r.image.isEmpty);
+
+    // There exist some duplicate objects on the MET server that have differen ObjectIDs, but
+    // use the same data otherwise. Use the image URLs to weed out doubles.
+    List<String> jsonList = results.map((item) => item?.image ?? '').toList();
+    jsonList = jsonList.toSet().toList();
+    if (jsonList.length < results.length) {
+      // Duplicates found!
+      int test = 0;
+      // This will go through the list in reverse order and search for the first instance of
+      // an element with the same image URL as the tested one. If the result isn't equal
+      // to i, we have an imposter, and it is removed.
+      for (var i = results.length - 1; i >= 0; i--) {
+        test = results.indexWhere((element) => element?.image == results[i]?.image);
+        if (test != i) {
+          // Remove the duplicate object from both search result IDs and actual.
+          _lastSearchResults.remove(results[i]?.objectId);
+          results.remove(results[i]);
+        }
+      }
+    }
     return results;
   }
 }
