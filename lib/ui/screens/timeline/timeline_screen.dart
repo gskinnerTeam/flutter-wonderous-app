@@ -1,21 +1,19 @@
 import 'dart:ui';
 
-import 'package:defer_pointer/defer_pointer.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/blend_mask.dart';
 import 'package:wonders/ui/common/dashed_line.dart';
-import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/list_gradient.dart';
 import 'package:wonders/ui/common/wonders_timeline_builder.dart';
 
 part 'widgets/_bottom_scrubber.dart';
+part 'widgets/_dashed_divider_with_year.dart';
 part 'widgets/_scrolling_viewport.dart';
 part 'widgets/_scrolling_viewport_controller.dart';
-part 'widgets/_dashed_divider_with_year.dart';
-part 'widgets/_year_markers.dart';
 part 'widgets/_timeline_section.dart';
+part 'widgets/_year_markers.dart';
 
 class TimelineScreen extends StatefulWidget {
   final WonderType type;
