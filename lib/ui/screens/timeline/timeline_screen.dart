@@ -1,13 +1,18 @@
 import 'dart:ui';
 
+import 'package:defer_pointer/defer_pointer.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
+import 'package:wonders/ui/common/blend_mask.dart';
+import 'package:wonders/ui/common/dashed_line.dart';
+import 'package:wonders/ui/common/gradient_container.dart';
+import 'package:wonders/ui/common/list_gradient.dart';
 import 'package:wonders/ui/common/wonders_timeline_builder.dart';
 
 part 'widgets/_bottom_scrubber.dart';
-part 'widgets/_scaling_viewport.dart';
-part 'widgets/_scaling_viewport_controller.dart';
+part 'widgets/_scrolling_viewport.dart';
+part 'widgets/_scrolling_viewport_controller.dart';
 part 'widgets/_dashed_divider_with_year.dart';
 part 'widgets/_year_markers.dart';
 part 'widgets/_timeline_section.dart';
@@ -27,13 +32,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
 
   /// Create a scroll controller that the top and bottom timelines can share
   final ScrollController _scroller = ScrollController();
-  _ScalingViewportController? _viewport;
-
-  @override
-  void dispose() {
-    _scroller.dispose();
-    super.dispose();
-  }
+  _ScrollingViewportController? _viewport;
 
   @override
   Widget build(BuildContext context) {
@@ -42,45 +41,51 @@ class _TimelineScreenState extends State<TimelineScreen> {
       const double scrubberSize = 80;
       final double minSize = max(500, constraints.biggest.height - scrubberSize);
       const double maxSize = 3000;
-      return SafeArea(
-        child: Column(
-          children: [
-            /// Vertically scrolling timeline, manages a ScrollController.
-            Expanded(
-              child: Stack(
-                children: [
-                  /// The timeline content itself
-                  _ScalingViewport(
-                    onInit: (v) => _viewport = v,
-                    scroller: _scroller,
-                    minSize: minSize,
-                    maxSize: maxSize,
-                    startYr: wondersLogic.startYear,
-                    endYr: wondersLogic.endYear,
+      return Container(
+        color: context.colors.greyStrong,
+        child: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.only(bottom: context.mq.viewPadding.bottom),
+            child: Column(
+              children: [
+                /// Vertically scrolling timeline, manages a ScrollController.
+                Expanded(
+                  child: Stack(
+                    children: [
+                      /// The timeline content itself
+                      _ScrollingViewport(
+                        onInit: (v) => _viewport = v,
+                        scroller: _scroller,
+                        minSize: minSize,
+                        maxSize: maxSize,
+                        selectedWonder: widget.type,
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
+                ),
 
-            /// Mini Horizontal timeline, reacts to the state of the larger scrolling timeline,
-            /// and changes the timelines scroll position on Hz drag
-            _BottomScrubber(
-              _scroller,
-              size: scrubberSize,
-              timelineMinSize: minSize,
-            ),
+                /// Mini Horizontal timeline, reacts to the state of the larger scrolling timeline,
+                /// and changes the timelines scroll position on Hz drag
+                _BottomScrubber(
+                  _scroller,
+                  size: scrubberSize,
+                  timelineMinSize: minSize,
+                  wonderType: widget.type,
+                ),
 
-            // TODO: remove this slider when Timeline is complete
-            Slider(
-              value: _zoomOverride,
-              onChanged: (value) {
-                _zoomOverride = value;
-                _viewport?.setZoom(_zoomOverride);
-                setState(() {});
-              },
+                // TODO: remove this slider when Timeline is complete
+                // Slider(
+                //   value: _zoomOverride,
+                //   onChanged: (value) {
+                //     _zoomOverride = value;
+                //     _viewport?.setZoom(_zoomOverride);
+                //     setState(() {});
+                //   },
+                // ),
+                Gap(30),
+              ],
             ),
-            Gap(30),
-          ],
+          ),
         ),
       );
     });

@@ -50,4 +50,11 @@ class StringUtils {
   }
 
   static String getYrSuffix(int yr) => yr < 0 ? 'BCE' : 'CE';
+
+  static String getEra(int yr) {
+    if (yr <= -600) return 'Prehistory';
+    if (yr <= 476) return 'Classical Era';
+    if (yr <= 1450) return 'Early Modern Era';
+    return 'Modern Era';
+  }
 }

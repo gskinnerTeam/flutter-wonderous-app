@@ -41,7 +41,13 @@ class ScrollDecorator extends StatefulWidget {
     foregroundBuilder = !background ? flexBuilder : null;
   }
 
-  ScrollDecorator.shadow({Key? key, required this.builder, this.controller, double opacity = 0.5}) : super(key: key) {
+  ScrollDecorator.shadow({
+    Key? key,
+    required this.builder,
+    this.controller,
+    double opacity = 0.5,
+    Color color = Colors.black,
+  }) : super(key: key) {
     backgroundBuilder = null;
     foregroundBuilder = (controller) {
       final double ratio = controller.hasClients ? min(1, controller.position.extentBefore / 60) : 0;
@@ -50,7 +56,7 @@ class ScrollDecorator extends StatefulWidget {
           height: 24,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.black.withOpacity(ratio * opacity), Colors.transparent],
+              colors: [color.withOpacity(ratio * opacity), Colors.transparent],
               stops: [0, ratio],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,

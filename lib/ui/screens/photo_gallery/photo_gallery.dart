@@ -212,7 +212,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                           curve: Curves.easeOut,
                           tween: Tween(begin: 1, end: selected ? 1.15 : 1),
                           builder: (_, value, child) => Transform.scale(child: child, scale: value),
-                          child: UnsplashPhoto(imgUrl, fit: BoxFit.cover, size: UnsplashPhotoSize.med).fx().fade(),
+                          child: UnsplashPhoto(imgUrl, fit: BoxFit.cover, size: UnsplashPhotoSize.large).fx().fade(),
                         ),
                       ),
                     ),

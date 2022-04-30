@@ -78,40 +78,42 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
             child: RepaintBoundary(
               // Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
               key: ValueKey(_wonderIndex),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(width: double.infinity),
-                  Gap(context.insets.lg * 3),
+              child: OverflowBox(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(width: double.infinity),
+                    Gap(context.insets.lg * 3),
 
-                  /// Settings Btn
-                  Opacity(
-                    opacity: 0, // TODO: Remove this btn before launch, its for testing settings only
-                    child: AppTextBtn('Settings', onPressed: _handleSettingsPressed, padding: EdgeInsets.all(30)),
-                  ),
-                  const Spacer(),
-
-                  /// Title Content
-                  IgnorePointer(
-                    child: LightText(
-                      child: _TextContent(wonderIndex: _wonderIndex, wonders: _wonders),
+                    /// Settings Btn
+                    Opacity(
+                      opacity: 0, // TODO: Remove this btn before launch, its for testing settings only
+                      child: AppTextBtn('Settings', onPressed: _handleSettingsPressed, padding: EdgeInsets.all(30)),
                     ),
-                  ),
-                  Gap(context.insets.sm),
+                    const Spacer(),
 
-                  Stack(
-                    children: [
-                      /// Expanding rounded rect that grows in height as user swipes up
-                      Positioned.fill(
-                        child: _buildSwipeableButtonBg(),
+                    /// Title Content
+                    IgnorePointer(
+                      child: LightText(
+                        child: _TextContent(wonderIndex: _wonderIndex, wonders: _wonders),
                       ),
+                    ),
+                    Gap(context.insets.sm),
 
-                      /// Arrow Btn that fades in and out
-                      _AnimatedArrowButton(onTap: _showDetailsPage),
-                    ],
-                  ),
-                  Gap(context.insets.md),
-                ],
+                    Stack(
+                      children: [
+                        /// Expanding rounded rect that grows in height as user swipes up
+                        Positioned.fill(
+                          child: _buildSwipeableButtonBg(),
+                        ),
+
+                        /// Arrow Btn that fades in and out
+                        _AnimatedArrowButton(onTap: _showDetailsPage),
+                      ],
+                    ),
+                    Gap(context.insets.md),
+                  ],
+                ),
               ),
             ),
           ),

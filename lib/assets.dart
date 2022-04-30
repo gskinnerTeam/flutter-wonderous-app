@@ -63,4 +63,5 @@ extension WonderAssetExtensions on WonderType {
   String get photo2 => '$assetPath/photo-2.jpg';
   String get photo3 => '$assetPath/photo-3.jpg';
   String get photo4 => '$assetPath/photo-4.jpg';
+  String get flattened => '$assetPath/flattened.jpg';
 }

@@ -1,9 +1,11 @@
 part of '../timeline_screen.dart';
 
 class _YearMarkers extends StatelessWidget {
-  _YearMarkers({Key? key, required this.startYr, required this.endYr}) : super(key: key);
-  final int startYr;
-  final int endYr;
+  _YearMarkers({Key? key}) : super(key: key);
+
+  int get startYr => wondersLogic.startYear;
+  int get endYr => wondersLogic.endYear;
+
   late final int _totalYrs = endYr - startYr;
 
   /// Normalizes a given year to a value from 0 - 1, based on start and end yr.
