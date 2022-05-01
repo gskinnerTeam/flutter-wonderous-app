@@ -32,8 +32,13 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
   String _query = '';
 
   late final WonderData wonder = wondersLogic.getData(widget.type);
+  late final PanelController panelController = PanelController(false);
+  late final SearchVizController vizController = SearchVizController(
+    _searchResults,
+    minYear: wondersLogic.startYear,
+    maxYear: wondersLogic.endYear,
+  );
   late double _startYear = wonder.artifactStartYr * 1.0, _endYear = wonder.artifactEndYr * 1.0;
-  late PanelController panelController = PanelController(false);
 
   @override
   void initState() {
@@ -60,6 +65,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
       String q = _query.toLowerCase();
       _searchResults = wonder.searchData.where((o) => o.title.contains(q) || o.keywords.contains(q)).toList();
     }
+    vizController.value = _searchResults;
     _filter();
   }
 
@@ -70,6 +76,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
 
   @override
   Widget build(BuildContext context) {
+    vizController.color = context.colors.accent1;
     Widget content = Column(children: [
       SimpleHeader('Browse Artifacts', subtitle: wonder.title),
       Gap(context.insets.sm),
@@ -108,7 +115,8 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
           wonder: wonder,
           startYear: _startYear,
           endYear: _endYear,
-          controller: panelController,
+          panelController: panelController,
+          vizController: vizController,
           onChanged: _handleTimelineChanged,
         ),
       ),
@@ -120,4 +128,25 @@ class PanelController extends ValueNotifier<bool> {
   PanelController(bool value) : super(value);
 
   void toggle() => value = !value;
+}
+
+// this is basically a ValueNotifier, but it always notifies when the value is assigned, w/o checking equality.
+class SearchVizController extends ChangeNotifier {
+  SearchVizController(
+    List<SearchData> value, {
+    required this.minYear,
+    required this.maxYear,
+    this.color = Colors.black,
+  }) : _value = value;
+
+  Color color;
+  final int minYear;
+  final int maxYear;
+
+  List<SearchData> _value;
+  List<SearchData> get value => _value;
+  set value(List<SearchData> value) {
+    _value = value;
+    notifyListeners();
+  }
 }

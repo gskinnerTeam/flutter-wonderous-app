@@ -5,6 +5,7 @@ import 'package:wonders/ui/common/cards/glass_card.dart';
 import 'package:wonders/ui/common/wonders_timeline_builder.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_screen.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/range_selector.dart';
+import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/time_range_painter.dart';
 
 /// TODO: GDS: Clean code up.
 
@@ -16,33 +17,37 @@ class ExpandingTimeRangeSelector extends StatefulWidget {
     required this.startYear,
     required this.endYear,
     required this.onChanged,
-    required this.controller,
+    required this.panelController,
+    required this.vizController,
   }) : super(key: key);
   final WonderData wonder;
   final double startYear;
   final double endYear;
   final void Function(double start, double end) onChanged;
-  final PanelController controller;
+  final PanelController panelController;
+  final SearchVizController vizController;
 
   @override
   State<ExpandingTimeRangeSelector> createState() => _ExpandingTimeRangeSelectorState();
 }
 
 class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector> {
+  late final TimeRangePainter _painter;
+
   @override
   void initState() {
-    PanelController controller = widget.controller;
-    controller.addListener(() => setState(() {}));
+    widget.panelController.addListener(() => setState(() {}));
+    _painter = TimeRangePainter(controller: widget.vizController);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final double pad = context.insets.sm;
-    final bool isOpen = widget.controller.value;
+    final bool isOpen = widget.panelController.value;
     return LayoutBuilder(builder: (_, constraints) {
       return GestureDetector(
-        onTap: widget.controller.toggle,
+        onTap: widget.panelController.toggle,
         child: Stack(
           children: [
             BottomCenter(
@@ -73,6 +78,7 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
                         endYear: widget.endYear,
                         onChange: widget.onChanged,
                         wonder: widget.wonder,
+                        painter: _painter,
                       ),
                     ),
                   ),
@@ -94,11 +100,13 @@ class _OpenedTimeRange extends StatelessWidget {
     required this.startYear,
     required this.endYear,
     required this.wonder,
+    required this.painter,
   }) : super(key: key);
   final double startYear;
   final double endYear;
   final void Function(double start, double end) onChange;
   final WonderData wonder;
+  final TimeRangePainter painter;
 
   @override
   Widget build(BuildContext context) {
@@ -139,6 +147,27 @@ class _OpenedTimeRange extends StatelessWidget {
         SizedBox(
           height: 86,
           child: Stack(children: [
+            // grid lines:
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(context.corners.md),
+                color: context.colors.black.withOpacity(0.1),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: _timelineGrid,
+              ),
+            ),
+
+            // results visualization:
+            Positioned.fill(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: RangeSelector.handleWidth),
+                child: CustomPaint(painter: painter),
+              ),
+            ),
+            
+            // wonder minimap:
             Positioned.fill(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: RangeSelector.handleWidth, vertical: context.insets.sm),
@@ -153,18 +182,6 @@ class _OpenedTimeRange extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
-            ),
-
-            // Grid lines container
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(context.corners.md),
-                color: context.colors.black.withOpacity(0.1),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: _timelineGrid,
               ),
             ),
 
