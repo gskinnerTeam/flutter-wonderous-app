@@ -2,10 +2,11 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/cards/glass_card.dart';
+import 'package:wonders/ui/common/wonders_timeline_builder.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_screen.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/range_selector.dart';
 
-// TODO: GDS: Clean code up.
+/// TODO: GDS: Clean code up.
 
 // Expandable timerange selector component that further refines Artifact Search based on date range.
 class ExpandingTimeRangeSelector extends StatefulWidget {
@@ -68,7 +69,11 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
                     openBuilder: (_) => SizedBox(
                       width: constraints.maxWidth - pad * 2,
                       child: _OpenedTimeRange(
-                          startYear: widget.startYear, endYear: widget.endYear, onChange: widget.onChanged),
+                        startYear: widget.startYear,
+                        endYear: widget.endYear,
+                        onChange: widget.onChanged,
+                        wonder: widget.wonder,
+                      ),
                     ),
                   ),
                 ),
@@ -83,11 +88,17 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
 
 /// Shows the opened timeline view
 class _OpenedTimeRange extends StatelessWidget {
-  const _OpenedTimeRange({Key? key, required this.onChange, required this.startYear, required this.endYear})
-      : super(key: key);
+  const _OpenedTimeRange({
+    Key? key,
+    required this.onChange,
+    required this.startYear,
+    required this.endYear,
+    required this.wonder,
+  }) : super(key: key);
   final double startYear;
   final double endYear;
   final void Function(double start, double end) onChange;
+  final WonderData wonder;
 
   @override
   Widget build(BuildContext context) {
@@ -128,6 +139,23 @@ class _OpenedTimeRange extends StatelessWidget {
         SizedBox(
           height: 86,
           child: Stack(children: [
+            Positioned.fill(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: RangeSelector.handleWidth, vertical: context.insets.sm),
+                child: WondersTimelineBuilder(
+                  crossAxisGap: 8,
+                  minSize: 16,
+                  selectedWonders: [wonder.type],
+                  timelineBuilder: (_, __, sel) => Container(
+                    decoration: BoxDecoration(
+                      color: context.colors.black.withOpacity(sel ? 0.4 : 0.12),
+                      borderRadius: BorderRadius.circular(999),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
             // Grid lines container
             Container(
               decoration: BoxDecoration(

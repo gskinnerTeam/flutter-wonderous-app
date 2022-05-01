@@ -3,6 +3,8 @@ import 'package:wonders/common_libs.dart';
 
 // Expandable timerange selector component that further refines Artifact Search based on date range.
 class RangeSelector extends StatefulWidget {
+  static const double handleWidth = 20;
+
   const RangeSelector({
     Key? key,
     required this.start,
@@ -28,8 +30,6 @@ class RangeSelector extends StatefulWidget {
 }
 
 class _RangeSelectorState extends State<RangeSelector> {
-  static const double _handleWidth = 20;
-
   // drag values:
   double _initStart = 0, _initEnd = 0, _initX = 0;
 
@@ -76,7 +76,7 @@ class _RangeSelectorState extends State<RangeSelector> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (_, constraints) {
-      double dragWidth = constraints.maxWidth - _handleWidth * 2;
+      double dragWidth = constraints.maxWidth - RangeSelector.handleWidth * 2;
 
       return Row(
         children: [
@@ -88,8 +88,10 @@ class _RangeSelectorState extends State<RangeSelector> {
               dragWidth: dragWidth,
               child: Container(
                 decoration: BoxDecoration(
-                  color: context.colors.offWhite.withOpacity(0.2),
-                  border: Border.symmetric(horizontal: BorderSide(color: context.colors.greyStrong, width: 1)),
+                  color: context.colors.offWhite.withOpacity(0.25),
+                  border: Border.symmetric(
+                    horizontal: BorderSide(color: context.colors.black.withOpacity(0.66), width: 1),
+                  ),
                 ),
               ),
             ),
@@ -109,15 +111,15 @@ class _RangeSelectorState extends State<RangeSelector> {
         scaleX: isRight ? 1 : -1,
         child: Container(
           alignment: Alignment.center,
-          width: _handleWidth,
+          width: RangeSelector.handleWidth,
           decoration: BoxDecoration(
-            color: context.colors.greyStrong,
+            color: context.colors.black.withOpacity(0.66),
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(context.corners.md),
               bottomRight: Radius.circular(context.corners.md),
             ),
           ),
-          child: Icon(Icons.chevron_right, color: context.colors.offWhite, size: _handleWidth - 2),
+          child: Icon(Icons.chevron_right, color: context.colors.offWhite, size: RangeSelector.handleWidth),
         ),
       ),
     );
