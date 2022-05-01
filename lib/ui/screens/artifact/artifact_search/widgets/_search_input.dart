@@ -1,9 +1,11 @@
 part of '../artifact_search_screen.dart';
 
+// TODO: GDS: evaluate search suggestions.
+
 /// Autopopulating textfield used for searching for Artifacts by name.
 class _SearchInput extends StatelessWidget {
-  _SearchInput({Key? key, required this.handleSearchSubmitted}) : super(key: key);
-  final void Function(String) handleSearchSubmitted;
+  _SearchInput({Key? key, required this.onSubmit}) : super(key: key);
+  final void Function(String) onSubmit;
 
   final List<String> _materialFilteringTerms = [
     'Axes',
@@ -41,6 +43,7 @@ class _SearchInput extends StatelessWidget {
     'Sarcophagi',
     'Scepters',
     'Statues',
+    'Stone', //
     'Swords',
     'Textiles',
     'Vases',
@@ -50,17 +53,14 @@ class _SearchInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: context.insets.sm),
-      child: LayoutBuilder(
-        builder: (ctx, constraints) => Autocomplete<String>(
-          displayStringForOption: (data) => data,
-          onSelected: handleSearchSubmitted,
-          optionsBuilder: _getSuggestions,
-          optionsViewBuilder: (context, onSelected, results) =>
-              _buildSuggestionsView(context, onSelected, results, constraints),
-          fieldViewBuilder: _buildInput,
-        ),
+    return LayoutBuilder(
+      builder: (ctx, constraints) => Autocomplete<String>(
+        displayStringForOption: (data) => data,
+        onSelected: onSubmit,
+        optionsBuilder: _getSuggestions,
+        optionsViewBuilder: (context, onSelected, results) =>
+            _buildSuggestionsView(context, onSelected, results, constraints),
+        fieldViewBuilder: _buildInput,
       ),
     );
   }
@@ -70,11 +70,12 @@ class _SearchInput extends StatelessWidget {
       return const Iterable<String>.empty();
     }
 
-    // Start with a list of results from a prebaked list of strings. TODO: Make this more thorough, like a JSON based on Wonder type.
+    // Start with a list of results from a prebaked list of strings.
     List<String> results = _materialFilteringTerms.where((option) {
       return option.toLowerCase().startsWith(textEditingValue.text.toLowerCase());
     }).toList();
 
+    /*
     // Use titles of artifacts that have already been loaded.
     List<ArtifactData> allArtifacts = searchLogic.allLoadedArtifacts;
     if (allArtifacts.isNotEmpty) {
@@ -90,6 +91,7 @@ class _SearchInput extends StatelessWidget {
         }
       }
     }
+    */
 
     // Sort everything in alphabetical order.
     results.sort((a, b) {
@@ -162,7 +164,7 @@ class _SearchInput extends StatelessWidget {
         Icon(Icons.search, color: context.colors.caption),
         Expanded(
           child: TextField(
-            onSubmitted: handleSearchSubmitted,
+            onSubmitted: onSubmit,
             controller: textController,
             focusNode: focusNode,
             style: TextStyle(color: captionColor),

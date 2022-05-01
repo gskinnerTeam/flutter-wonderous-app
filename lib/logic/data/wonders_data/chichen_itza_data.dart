@@ -1,8 +1,12 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/data/wonders_data/mock_data.dart';
+import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
+
+part 'search/chichen_itza_search_data.dart';
 
 final chichenItzaData = WonderData(
+  searchData: _searchData,  // included as a part from ./search/
   type: WonderType.chichenItza,
   title: 'Chichen Itza',
   subTitle: 'The Great Mayan City',

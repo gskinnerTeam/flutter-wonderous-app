@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:wonders/common_libs.dart';
 
 // Expandable timerange selector component that further refines Artifact Search based on date range.
@@ -6,155 +7,135 @@ class RangeSelector extends StatefulWidget {
     Key? key,
     required this.start,
     required this.end,
-    required this.isLocked,
-    required this.onUpdated,
-    required this.onChanged,
+    required this.min,
+    required this.max,
+    this.minDelta = 0,
+    this.isLocked = false,
+    this.onUpdated,
+    this.onChanged,
   }) : super(key: key);
   final double start;
   final double end;
+  final double min;
+  final double max;
+  final double minDelta;
   final bool isLocked;
-  final void Function(double start, double end) onUpdated;
-  final void Function(double start, double end) onChanged;
+  final void Function(double start, double end)? onUpdated;
+  final void Function(double start, double end)? onChanged;
 
   @override
   State<RangeSelector> createState() => _RangeSelectorState();
 }
 
 class _RangeSelectorState extends State<RangeSelector> {
-  final _buttonWidth = 20.0;
+  static const double _handleWidth = 20;
 
-  double _startVal = 0.0;
-  double _endVal = 1.0;
+  // drag values:
+  double _initStart = 0, _initEnd = 0, _initX = 0;
 
-  double _startAnchor = 0.0;
-  double _endAnchor = 1.0;
+  // shortcuts to make calculations less fussy:
+  double get _start => widget.start;
+  double get _end => widget.end;
+  double get _min => widget.min;
+  double get _max => widget.max;
+  double get _delta => widget.max - widget.min;
 
-  @override
-  void initState() {
-    super.initState();
-
-    _startVal = widget.start;
-    _endVal = widget.end;
-  }
-
-  void _handleStartDrag(DragStartDetails d) {
+  void _handleStartDrag(DragDownDetails d) {
     if (widget.isLocked) return;
-    _startAnchor = _startVal;
-    _endAnchor = _endVal;
+    _initStart = _start;
+    _initEnd = _end;
+    _initX = d.localPosition.dx;
   }
 
   void _handleLeftDrag(DragUpdateDetails d, double width) {
     if (widget.isLocked) return;
-    double newStart = max(0, min(_endVal, _startAnchor + (d.localPosition.dx) / width));
-    _startVal = newStart;
-    setState(() {});
-    widget.onUpdated(_startVal, _endVal);
+    double value = _initStart + (d.localPosition.dx - _initX) / width * _delta;
+    value = max(_min, min(_end - widget.minDelta, value));
+    widget.onUpdated?.call(value, _end);
   }
 
   void _handleMidDrag(DragUpdateDetails d, double width) {
     if (widget.isLocked) return;
-    double dist = (_endAnchor - _startAnchor);
-    double newStart = max(0, min(1 - dist, _startAnchor + (d.localPosition.dx / width) - dist / 2));
-    double newEnd = _startVal + dist;
-    _startVal = newStart;
-    _endVal = newEnd;
-    setState(() {});
-    widget.onUpdated(_startVal, _endVal);
+    double delta = (d.localPosition.dx - _initX) / width * _delta;
+    delta = max(_min - _initStart, min(_max - _initEnd, delta));
+    widget.onUpdated?.call(_initStart + delta, _initEnd + delta);
   }
 
   void _handleRightDrag(DragUpdateDetails d, double width) {
     if (widget.isLocked) return;
-    double newEnd = min(1, max(_startVal, _endAnchor + (d.localPosition.dx) / width));
-    _endVal = newEnd;
-    setState(() {});
-    widget.onUpdated(_startVal, _endVal);
+    double value = _initEnd + (d.localPosition.dx - _initX) / width * _delta;
+    value = max(_start + widget.minDelta, min(_max, value));
+    widget.onUpdated?.call(_start, value);
   }
 
   void _handleEndDrag(DragEndDetails d, double width) {
     if (widget.isLocked) return;
-    widget.onChanged(_startVal, _endVal);
+    widget.onChanged?.call(_start, _end);
   }
 
   @override
   Widget build(BuildContext context) {
-    var buttonColor = widget.isLocked ? context.colors.greyMedium : context.colors.greyStrong;
-
     return LayoutBuilder(builder: (_, constraints) {
-      return Container(
-        width: constraints.maxWidth - _buttonWidth * 2,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(context.corners.md)),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            // Left-side Padding
-            Gap((constraints.maxWidth - _buttonWidth * 2) * _startVal),
+      double dragWidth = constraints.maxWidth - _handleWidth * 2;
 
-            // Left-side button
-            GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onHorizontalDragStart: _handleStartDrag,
-              onHorizontalDragUpdate: (d) => _handleLeftDrag(d, constraints.maxWidth),
-              onHorizontalDragEnd: (d) => _handleEndDrag(d, constraints.maxWidth),
+      return Row(
+        children: [
+          Gap(dragWidth * (_start - _min) / _delta),
+          _getHandle(dragWidth: dragWidth),
+          Expanded(
+            child: _getDragDetector(
+              onUpdate: _handleMidDrag,
+              dragWidth: dragWidth,
               child: Container(
-                alignment: Alignment.centerLeft,
-                width: _buttonWidth,
                 decoration: BoxDecoration(
-                  color: buttonColor,
-                  border: Border.all(color: buttonColor, width: 1),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(context.corners.md),
-                    bottomLeft: Radius.circular(context.corners.md),
-                  ),
-                ),
-                child: Center(child: Icon(Icons.chevron_left, color: context.colors.offWhite, size: _buttonWidth - 2)),
-              ),
-            ),
-
-            // Glass pane
-            Expanded(
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onHorizontalDragStart: _handleStartDrag,
-                onHorizontalDragUpdate: (d) => _handleMidDrag(d, constraints.maxWidth),
-                onHorizontalDragEnd: (d) => _handleEndDrag(d, constraints.maxWidth),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: context.colors.offWhite.withOpacity(0.2),
-                      backgroundBlendMode: BlendMode.screen,
-                      border: Border.symmetric(horizontal: BorderSide(color: context.colors.greyStrong, width: 1))),
+                  color: context.colors.offWhite.withOpacity(0.2),
+                  border: Border.symmetric(horizontal: BorderSide(color: context.colors.greyStrong, width: 1)),
                 ),
               ),
             ),
-
-            // Right-side button
-            GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onHorizontalDragStart: _handleStartDrag,
-              onHorizontalDragUpdate: (d) => _handleRightDrag(d, constraints.maxWidth),
-              onHorizontalDragEnd: (d) => _handleEndDrag(d, constraints.maxWidth),
-              child: Container(
-                alignment: Alignment.centerRight,
-                width: _buttonWidth,
-                decoration: BoxDecoration(
-                  color: buttonColor,
-                  border: Border.all(color: buttonColor, width: 1),
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(context.corners.md),
-                    bottomRight: Radius.circular(context.corners.md),
-                  ),
-                ),
-                child: Center(child: Icon(Icons.chevron_right, color: context.colors.offWhite, size: _buttonWidth - 2)),
-              ),
-            ),
-
-            // Right-side Padding
-            Gap((constraints.maxWidth - _buttonWidth * 2) * (1 - _endVal)),
-          ],
-        ),
+          ),
+          _getHandle(dragWidth: dragWidth, isRight: true),
+          Gap(dragWidth * (1 - (_end - _min) / _delta)),
+        ],
       );
     });
+  }
+
+  Widget _getHandle({required double dragWidth, bool isRight = false}) {
+    return _getDragDetector(
+      onUpdate: isRight ? _handleRightDrag : _handleLeftDrag,
+      dragWidth: dragWidth,
+      child: Transform.scale(
+        scaleX: isRight ? 1 : -1,
+        child: Container(
+          alignment: Alignment.center,
+          width: _handleWidth,
+          decoration: BoxDecoration(
+            color: context.colors.greyStrong,
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(context.corners.md),
+              bottomRight: Radius.circular(context.corners.md),
+            ),
+          ),
+          child: Icon(Icons.chevron_right, color: context.colors.offWhite, size: _handleWidth - 2),
+        ),
+      ),
+    );
+  }
+
+  GestureDetector _getDragDetector({
+    required Function(DragUpdateDetails, double) onUpdate,
+    required double dragWidth,
+    required Widget child,
+  }) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onHorizontalDragDown: _handleStartDrag,
+      onHorizontalDragUpdate: (d) => onUpdate(d, dragWidth),
+      onHorizontalDragEnd: (d) => _handleEndDrag(d, dragWidth),
+      dragStartBehavior: DragStartBehavior.down,
+      onTap: () {}, // block parent
+      child: child,
+    );
   }
 }

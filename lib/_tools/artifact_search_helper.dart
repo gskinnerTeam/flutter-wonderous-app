@@ -6,6 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:http/http.dart' as http;
 import 'package:wonders/logic/data/wonder_data.dart';
+import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
 
 final int minYear = wondersLogic.startYear;
 final int maxYear = wondersLogic.endYear;
@@ -110,7 +111,7 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
     }
     idQueue = idSet.toList();
 
-    _log('    - ${ids.length} artifacts found, added $foundCount');
+    _log('    - ${ids.length} artifacts found, added $foundCount (${ids.length - foundCount} duplicates)');
 
     _nextQuery();
   }
@@ -122,7 +123,6 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
       _completeIds();
       return;
     }
-
     while (count-- > 0) {
       _nextId();
     }
@@ -151,11 +151,13 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
   String? _parseId(int id, Map? json) {
     if (json == null) {
       return 'could not parse json';
-    } else if (!json.containsKey('isPublicDomain') || !json['isPublicDomain']) {
-      return 'not public domain';
+    } else if ((json['title'] ?? '') == '') {
+      return 'missing title';
     } else if (!json.containsKey('objectBeginDate') || !json.containsKey('objectBeginDate')) {
       return 'missing years';
     }
+    //} else if (!json.containsKey('isPublicDomain') || !json['isPublicDomain']) {
+    //  return 'not public domain';
 
     int year = ((json['objectBeginDate'] as int) + (json['objectEndDate'] as int)) ~/ 2;
 
@@ -163,14 +165,15 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
 
     String? imageUrlSmall = json['primaryImageSmall'];
     if (imageUrlSmall == null) return 'no small image';
-    if (!imageUrlSmall.startsWith(SearchData.baseImageUri)) return 'unexpected image uri: "$imageUrlSmall"';
+    if (!imageUrlSmall.startsWith(SearchData.baseImagePath)) return 'unexpected image uri: "$imageUrlSmall"';
 
-    imageUrlSmall = imageUrlSmall.substring(SearchData.baseImageUri.length);
+    imageUrlSmall = imageUrlSmall.substring(SearchData.baseImagePath.length);
     imageUrlSmall = imageUrlSmall.replaceFirst('/web-large/', '/mobile-large/');
 
     _Entry entry = _Entry(
       id: id,
       year: year,
+      title: json['title'],
       imageUrlSmall: imageUrlSmall,
       keywords: _getKeywords(json),
     );
@@ -179,7 +182,7 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
   }
 
   String _getKeywords(Map json) {
-    String str = '${json['title'] ?? ''}|${json['objectName'] ?? ''}|${json['medium'] ?? ''}|${json['classification'] ?? ''}';
+    String str = '${json['objectName'] ?? ''}|${json['medium'] ?? ''}|${json['classification'] ?? ''}';
     return str.toLowerCase().replaceAll("'", "\\'").replaceAll('\r', ' ').replaceAll('\n', ' ');
   }
 
@@ -201,10 +204,10 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
     String entryStr = '';
     for (int i = 0; i < entries.length; i++) {
       _Entry o = entries[i];
-      entryStr += "  SearchData(${o.year}, ${o.id}, '${o.imageUrlSmall}', '${o.keywords}'),\n";
+      entryStr += "  SearchData(${o.year}, ${o.id}, '${o.title}', '${o.keywords}', '${o.imageUrlSmall}'),\n";
     }
 
-    String output = '// ${wonder!.title}\nList<SearchData> data = [\n$entryStr];';
+    String output = '// ${wonder!.title} (${entries.length})\nList<SearchData> _searchData = [\n$entryStr];';
     
     Directory dir = await getApplicationDocumentsDirectory();
     String type = wonder!.type.toString().split('.').last;
@@ -217,7 +220,7 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
   }
 
   void _complete() {
-    _log('\n----------\nCompleted with ${errors.length} errors in ${timer.elapsed.inSeconds} seconds.');
+    _log('\n----------\nCompleted with ${errors.length} unique errors in ${timer.elapsed.inSeconds} seconds.');
     String errorStr = '';
     errors.forEach((key, value) { errorStr += '$key (${value.length})\n'; });
     _log(errorStr);
@@ -347,24 +350,14 @@ class _Entry {
   const _Entry({
     required this.id,
     required this.keywords,
+    required this.title,
     required this.year,
     required this.imageUrlSmall,
   });
 
   final int id;
   final String keywords;
+  final String title;
   final int year;
   final String imageUrlSmall;
-}
-
-/// thoughts:
-/// - if these lists were pre-sorted by year, then when the filter changes we could upate beginIndex/endIndex and just run a search there
-class SearchData {
-  static const String baseImageUri = 'https://images.metmuseum.org/CRDImages/';
-
-  const SearchData(this.year, this.id, this.imageUrl, this.keywords);
-  final int year;
-  final String id;
-  final String imageUrl;
-  final String keywords;
 }
