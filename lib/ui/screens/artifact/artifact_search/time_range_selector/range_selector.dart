@@ -38,6 +38,7 @@ class _RangeSelectorState extends State<RangeSelector> {
   }
 
   void _handleStartDrag(DragStartDetails d) {
+    HapticFeedback.mediumImpact();
     if (widget.isLocked) return;
     _startAnchor = _startVal;
     _endAnchor = _endVal;

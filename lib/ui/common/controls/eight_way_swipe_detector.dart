@@ -1,7 +1,8 @@
 import 'package:wonders/common_libs.dart';
 
 class EightWaySwipeDetector extends StatefulWidget {
-  const EightWaySwipeDetector({Key? key, required this.child, this.threshold = 50, required this.onSwipe}) : super(key: key);
+  const EightWaySwipeDetector({Key? key, required this.child, this.threshold = 50, required this.onSwipe})
+      : super(key: key);
   final Widget child;
   final double threshold;
   final void Function(Offset dir)? onSwipe;
@@ -57,12 +58,17 @@ class _EightWaySwipeDetectorState extends State<EightWaySwipeDetector> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        onPanStart: _handleSwipeStart,
-        onPanUpdate: _handleSwipeUpdate,
-        onPanCancel: _resetSwipe,
-        onPanEnd: _handleSwipeEnd,
-        child: widget.child);
+    return Semantics(
+      container: true,
+      button: true,
+      label: 'eight-way swipe detector',
+      child: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onPanStart: _handleSwipeStart,
+          onPanUpdate: _handleSwipeUpdate,
+          onPanCancel: _resetSwipe,
+          onPanEnd: _handleSwipeEnd,
+          child: widget.child),
+    );
   }
 }

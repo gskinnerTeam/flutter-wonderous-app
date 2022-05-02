@@ -61,15 +61,20 @@ class _BottomScrubber extends StatelessWidget {
               double viewPortFraction = _calculateViewPortFraction(pos);
 
               return Positioned.fill(
-                child: GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onPanUpdate: _handleScrubberPan,
-                  child: Align(
-                    alignment: Alignment(-1 + scrollFraction * 2, 0),
-                    child: FractionallySizedBox(
-                      child: ColoredBox(color: Colors.red.withOpacity(.3), child: Text('')),
-                      widthFactor: viewPortFraction,
-                      heightFactor: 1,
+                child: Semantics(
+                  container: true,
+                  button: true,
+                  label: 'scrubber',
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onPanUpdate: _handleScrubberPan,
+                    child: Align(
+                      alignment: Alignment(-1 + scrollFraction * 2, 0),
+                      child: FractionallySizedBox(
+                        child: ColoredBox(color: Colors.red.withOpacity(.3), child: Text('')),
+                        widthFactor: viewPortFraction,
+                        heightFactor: 1,
+                      ),
                     ),
                   ),
                 ),

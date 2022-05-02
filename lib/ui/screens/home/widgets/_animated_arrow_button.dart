@@ -22,7 +22,6 @@ class _AnimatedArrowButton extends StatelessWidget {
     return BasicBtn(
       semanticLabel: 'arrow button',
       onPressed: onTap,
-      behavior: HitTestBehavior.translucent,
       child: SizedBox(
         height: 80,
         width: 50,
