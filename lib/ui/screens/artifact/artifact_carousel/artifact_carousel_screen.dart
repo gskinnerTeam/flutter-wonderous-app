@@ -188,7 +188,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                 children: [
                   Gap(context.insets.md),
                   // Text Content
-                  _buildTextContentWithPageIndicator(),
+                  _buildTextContent(),
                   // Selection indicator
                   _buildPageIndicator(context, _highlightedArtifactIds.length),
                   // Big ol' button
@@ -214,7 +214,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     );
   }
 
-  Widget _buildTextContentWithPageIndicator() {
+  Widget _buildTextContent() {
     return IgnorePointer(
       child: Column(
         mainAxisSize: MainAxisSize.min,
