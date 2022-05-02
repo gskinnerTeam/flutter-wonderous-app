@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/collectibles_logic.dart';
@@ -30,7 +32,7 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
   void initState() {
     super.initState();
     if (widget.fromId != null && states[widget.fromId] == CollectibleState.discovered) {
-      WidgetsBinding.instance?.addPostFrameCallback((_) => _scrollToTarget(false));
+      scheduleMicrotask(() => _scrollToTarget(false));
     }
   }
 
