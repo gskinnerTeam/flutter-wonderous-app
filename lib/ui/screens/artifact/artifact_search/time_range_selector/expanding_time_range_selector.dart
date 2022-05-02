@@ -91,11 +91,9 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
     final double pad = context.insets.sm;
 
     return LayoutBuilder(builder: (_, constraints) {
-      return GestureDetector(
-        onTap: () {
-          HapticFeedback.mediumImpact();
-          setState(() => _isPanelOpen = !_isPanelOpen);
-        },
+      return SemanticsBtn(
+        label: 'time range selector',
+        onPressed: () => setState(() => _isPanelOpen = !_isPanelOpen),
         child: Stack(
           children: [
             IgnorePointer(

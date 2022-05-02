@@ -53,16 +53,21 @@ class _VerticalSwipeController {
   }
 
   /// Utility method to wrap a gesture detector and wire up the required handlers.
-  Widget wrapGestureDetector(Widget child, {Key? key}) => GestureDetector(
-      key: key,
-      onTapDown: (_) {
-        HapticFeedback.mediumImpact();
-        handleTapDown();
-      },
-      onTapUp: (_) => handleTapCancelled(),
-      onVerticalDragUpdate: handleVerticalSwipeUpdate,
-      onVerticalDragEnd: (_) => handleVerticalSwipeCancelled(),
-      onVerticalDragCancel: handleVerticalSwipeCancelled,
-      behavior: HitTestBehavior.translucent,
-      child: child);
+  Widget wrapGestureDetector(Widget child, {Key? key}) => Semantics(
+        container: true,
+        button: true,
+        label: 'swipe controller',
+        child: GestureDetector(
+            key: key,
+            onTapDown: (_) {
+              HapticFeedback.mediumImpact();
+              handleTapDown();
+            },
+            onTapUp: (_) => handleTapCancelled(),
+            onVerticalDragUpdate: handleVerticalSwipeUpdate,
+            onVerticalDragEnd: (_) => handleVerticalSwipeCancelled(),
+            onVerticalDragCancel: handleVerticalSwipeCancelled,
+            behavior: HitTestBehavior.translucent,
+            child: child),
+      );
 }

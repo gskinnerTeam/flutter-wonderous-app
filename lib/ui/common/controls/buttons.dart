@@ -216,3 +216,27 @@ class AppTextBtn extends StatelessWidget {
     );
   }
 }
+
+class SemanticsBtn extends StatelessWidget {
+  const SemanticsBtn({Key? key, required this.label, required this.child, required this.onPressed}) : super(key: key);
+  final String label;
+  final VoidCallback onPressed;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      container: true,
+      button: true,
+      enabled: true,
+      label: label,
+      child: GestureDetector(
+        onTap: () {
+          HapticFeedback.mediumImpact();
+          onPressed();
+        },
+        child: child,
+      ),
+    );
+  }
+}
