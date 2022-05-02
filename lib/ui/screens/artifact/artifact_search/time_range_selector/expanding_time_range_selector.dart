@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
-import 'package:wonders/ui/common/cards/glass_card.dart';
+import 'package:wonders/ui/common/cards/opening_card.dart';
 import 'package:wonders/ui/common/wonders_timeline_builder.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_screen.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/range_selector.dart';
@@ -55,31 +55,31 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
                 duration: context.times.fast,
                 curve: Curves.easeOut,
                 padding: isOpen ? EdgeInsets.zero : EdgeInsets.symmetric(vertical: context.insets.md),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: context.colors.white.withOpacity(.65),
-                    borderRadius: BorderRadius.all(Radius.circular(context.corners.md)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: context.colors.black.withOpacity(0.25),
-                        offset: Offset(0, 4),
-                        blurRadius: 4,
-                      ),
-                    ],
+                child: OpeningCard(
+                  isOpen: isOpen,
+                  padding: EdgeInsets.symmetric(horizontal: pad, vertical: context.insets.xs),
+                  background: Container(
+                    decoration: BoxDecoration(
+                      color: context.colors.black.withOpacity(0.85),
+                      borderRadius: BorderRadius.circular(context.corners.md),
+                      boxShadow: [
+                        BoxShadow(
+                          color: context.colors.black.withOpacity(0.5),
+                          offset: Offset(0, 4),
+                          blurRadius: 4,
+                        )
+                      ],
+                    ),
                   ),
-                  child: OpeningGlassCard(
-                    isOpen: isOpen,
-                    padding: EdgeInsets.all(pad),
-                    closedBuilder: (_) => _ClosedTimeRange(startYear: widget.startYear, endYear: widget.endYear),
-                    openBuilder: (_) => SizedBox(
-                      width: constraints.maxWidth - pad * 2,
-                      child: _OpenedTimeRange(
-                        startYear: widget.startYear,
-                        endYear: widget.endYear,
-                        onChange: widget.onChanged,
-                        wonder: widget.wonder,
-                        painter: _painter,
-                      ),
+                  closedBuilder: (_) => _ClosedTimeRange(startYear: widget.startYear, endYear: widget.endYear),
+                  openBuilder: (_) => SizedBox(
+                    width: constraints.maxWidth - pad * 2,
+                    child: _OpenedTimeRange(
+                      startYear: widget.startYear,
+                      endYear: widget.endYear,
+                      onChange: widget.onChanged,
+                      wonder: widget.wonder,
+                      painter: _painter,
                     ),
                   ),
                 ),
@@ -92,7 +92,32 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
   }
 }
 
-/// Shows the opened timeline view
+class _ClosedTimeRange extends StatelessWidget {
+  const _ClosedTimeRange({
+    Key? key,
+    required this.startYear,
+    required this.endYear,
+  }) : super(key: key);
+  final double startYear, endYear;
+
+  @override
+  Widget build(BuildContext context) {
+    final String text =
+        'Time range: ${StringUtils.formatYr(startYear.round())} - ${StringUtils.formatYr(endYear.round())}';
+
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: context.insets.xs),
+      child: Row(
+        children: [
+          Text(text, style: context.textStyles.titleFont.copyWith(color: context.colors.offWhite)),
+          Gap(context.insets.xs),
+          Icon(Icons.edit_outlined, color: context.colors.greyMedium, size: 14.0),
+        ],
+      ),
+    );
+  }
+}
+
 class _OpenedTimeRange extends StatelessWidget {
   const _OpenedTimeRange({
     Key? key,
@@ -111,20 +136,21 @@ class _OpenedTimeRange extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> _timelineGrid =
-        List.generate(5, (_) => Container(width: 1, color: context.colors.black.withOpacity(0.1)));
+        List.generate(5, (_) => Container(width: 1, color: context.colors.black));
 
-    final headingTextStyle = context.textStyles.h3.copyWith(color: context.colors.greyStrong);
-    final captionTextStyle = context.text.bodySmall;
+    final headingTextStyle = context.textStyles.title1.copyWith(color: context.colors.offWhite, fontSize: 18);
+    final captionTextStyle = context.text.bodySmall.copyWith(color: context.colors.greyMedium);
 
     final startYr = startYear.round(), endYr = endYear.round();
 
     return Column(
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
               width: context.insets.lg,
-              child: Icon(Icons.close, color: context.colors.caption, size: context.insets.md),
+              child: Icon(Icons.close, color: context.colors.caption, size: 20),
             ),
             Spacer(),
             Text(startYr.abs().toString(), style: headingTextStyle),
@@ -141,17 +167,17 @@ class _OpenedTimeRange extends StatelessWidget {
           ],
         ),
 
-        Gap(context.insets.sm),
+        Gap(context.insets.xs * 1.5),
 
         // Timeframe slider
         SizedBox(
-          height: 86,
+          height: context.insets.lg * 2,
           child: Stack(children: [
             // grid lines:
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(context.corners.md),
-                color: context.colors.black.withOpacity(0.1),
+                color: context.colors.greyStrong,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -166,18 +192,18 @@ class _OpenedTimeRange extends StatelessWidget {
                 child: CustomPaint(painter: painter),
               ),
             ),
-            
+
             // wonder minimap:
             Positioned.fill(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: RangeSelector.handleWidth, vertical: context.insets.sm),
+                padding: EdgeInsets.symmetric(horizontal: RangeSelector.handleWidth, vertical: 12),
                 child: WondersTimelineBuilder(
-                  crossAxisGap: 8,
+                  crossAxisGap: 6,
                   minSize: 16,
                   selectedWonders: [wonder.type],
                   timelineBuilder: (_, __, sel) => Container(
                     decoration: BoxDecoration(
-                      color: context.colors.black.withOpacity(sel ? 0.4 : 0.12),
+                      color: context.colors.greyMedium.withOpacity(sel ? 0.9 : 0.4),
                       borderRadius: BorderRadius.circular(999),
                     ),
                   ),
@@ -200,30 +226,7 @@ class _OpenedTimeRange extends StatelessWidget {
           ]),
         ),
 
-        Gap(context.insets.md),
-      ],
-    );
-  }
-}
-
-class _ClosedTimeRange extends StatelessWidget {
-  const _ClosedTimeRange({
-    Key? key,
-    required this.startYear,
-    required this.endYear,
-  }) : super(key: key);
-  final double startYear, endYear;
-
-  @override
-  Widget build(BuildContext context) {
-    final String text =
-        'Time range: ${StringUtils.formatYr(startYear.round())} - ${StringUtils.formatYr(endYear.round())}';
-
-    return Row(
-      children: [
-        Text(text, style: context.textStyles.titleFont),
-        Gap(context.insets.xs),
-        Icon(Icons.edit_outlined, color: context.colors.greyStrong, size: 14.0),
+        Gap(context.insets.sm),
       ],
     );
   }

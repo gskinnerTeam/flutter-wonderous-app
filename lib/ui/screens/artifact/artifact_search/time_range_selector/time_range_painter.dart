@@ -18,7 +18,7 @@ class TimeRangePainter extends CustomPainter {
     int l = results.length;
     if (l == 0) return;
 
-    Paint fill = Paint()..color = controller.color.withOpacity(0.1);
+    Paint fill = Paint()..color = controller.color.withOpacity(0.2);
 
     double height = size.height, width = size.width;
     int minYr = controller.minYear, delta = controller.maxYear - minYr;
