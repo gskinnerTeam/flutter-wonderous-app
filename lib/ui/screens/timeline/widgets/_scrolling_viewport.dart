@@ -21,10 +21,12 @@ class _ScrollingViewport extends StatefulWidget {
 
 class ScalingViewportState extends State<_ScrollingViewport> {
   late final _ScrollingViewportController controller = _ScrollingViewportController(this);
+  static const double _minTimelineSize = 100;
 
   @override
   void initState() {
     super.initState();
+    controller.init();
     widget.onInit?.call(controller);
   }
 
@@ -46,32 +48,35 @@ class ScalingViewportState extends State<_ScrollingViewport> {
         onScaleUpdate: controller._handleScaleUpdate,
         onScaleStart: controller._handleScaleStart,
         behavior: HitTestBehavior.opaque,
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                /// Main scrolling area, holds the year markers, and the [WondersTimelineBuilder]
-                Expanded(
-                  child: _buildScrollingStack(vtPadding, size, context),
-                ),
-                Gap(context.insets.xs),
+        child: FXAnimate(
+          fx: const [FadeFX()],
+          child: Stack(
+            children: [
+              Column(
+                children: [
+                  /// Main scrolling area, holds the year markers, and the [WondersTimelineBuilder]
+                  Expanded(
+                    child: _buildScrollingStack(vtPadding, size, context, constraints),
+                  ),
+                  Gap(context.insets.xs),
 
-                /// Era Text
-                _buildAnimatedEraText(context),
-                Gap(context.insets.xs),
-              ],
-            ),
-
-            /// Dashed line with a year that changes as we scroll
-            IgnorePointer(
-              child: AnimatedBuilder(
-                animation: controller.scroller,
-                builder: (_, __) {
-                  return _DashedDividerWithYear(controller.calculateYearFromScrollPos());
-                },
+                  /// Era Text
+                  _buildAnimatedEraText(context),
+                  Gap(context.insets.xs),
+                ],
               ),
-            ),
-          ],
+
+              /// Dashed line with a year that changes as we scroll
+              IgnorePointer(
+                child: AnimatedBuilder(
+                  animation: controller.scroller,
+                  builder: (_, __) {
+                    return _DashedDividerWithYear(controller.calculateYearFromScrollPos());
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       );
     });
@@ -90,7 +95,7 @@ class ScalingViewportState extends State<_ScrollingViewport> {
         });
   }
 
-  Widget _buildScrollingStack(double vtPadding, double size, BuildContext context) {
+  Widget _buildScrollingStack(double vtPadding, double size, BuildContext context, BoxConstraints constraints) {
     return Stack(
       children: [
         SingleChildScrollView(
@@ -111,8 +116,8 @@ class ScalingViewportState extends State<_ScrollingViewport> {
                   right: context.insets.sm,
                   child: WondersTimelineBuilder(
                       axis: Axis.vertical,
-                      crossAxisGap: 24,
-                      minSize: 110,
+                      crossAxisGap: max(6, (constraints.maxWidth - (120 * 3)) / 2),
+                      minSize: _minTimelineSize,
                       timelineBuilder: (_, data, __) {
                         return ClipRRect(
                           borderRadius: BorderRadius.circular(99),

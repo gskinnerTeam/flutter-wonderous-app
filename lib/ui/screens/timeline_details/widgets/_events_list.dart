@@ -9,37 +9,59 @@ class _EventsList extends StatefulWidget {
 }
 
 class _EventsListState extends State<_EventsList> {
-  final ScrollController _scroller = ScrollController();
+  late final ScrollController _scroller = ScrollController()..addListener(_handleScrollChanged);
+  bool _hasPopped = false;
+  bool _isPointerDown = false;
+  @override
+  void dispose() {
+    _scroller.dispose();
+    super.dispose();
+  }
+
+  void _handleScrollChanged() {
+    if (!_isPointerDown) return;
+    if (_scroller.position.pixels < -100 && !_hasPopped) {
+      _hasPopped = true;
+      context.pop();
+    }
+  }
+
+  bool _checkPointerIsDown(d) => _isPointerDown = d.dragDetails != null;
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        AnimatedBuilder(
-          animation: _scroller,
-          builder: (_, __) {
-            double blur = 0;
-            double scrollAmt = 0;
-            if (_scroller.hasClients) {
-              double blurStart = 100;
-              scrollAmt = (_scroller.position.pixels - blurStart).clamp(0, 50) / 50;
-              blur = scrollAmt * 10;
-            }
-            // Container provides a underlay which gets darker as the background blurs
-            return Container(
-              color: context.colors.greyStrong.withOpacity(min(1, scrollAmt * 2) * .5),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
-                child: _buildEventsListView(),
-              ),
-            );
-          },
-        ),
-      ],
+    return NotificationListener<ScrollUpdateNotification>(
+      onNotification: _checkPointerIsDown,
+      child: LayoutBuilder(builder: (_, constraints) {
+        return Stack(
+          children: [
+            AnimatedBuilder(
+              animation: _scroller,
+              builder: (_, __) {
+                double blur = 0;
+                double scrollAmt = 0;
+                if (_scroller.hasClients) {
+                  double blurStart = 100;
+                  scrollAmt = (_scroller.position.pixels - blurStart).clamp(0, 50) / 50;
+                  blur = scrollAmt * 10;
+                }
+                // Container provides a underlay which gets darker as the background blurs
+                return Container(
+                  color: context.colors.greyStrong.withOpacity(min(1, scrollAmt * 2) * .5),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
+                    child: _buildScrollingList(),
+                  ),
+                );
+              },
+            ),
+          ],
+        );
+      }),
     );
   }
 
-  Widget _buildEventsListView() {
+  Widget _buildScrollingList() {
     Container buildHandle() {
       return Container(
         width: 35,

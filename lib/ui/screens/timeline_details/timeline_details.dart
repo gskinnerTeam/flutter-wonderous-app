@@ -21,24 +21,26 @@ class TimelineDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: context.colors.greyStrong,
-      child: Stack(
-        children: [
-          /// Top content, sits underneath scrolling list
-          _TopContent(data: _data),
+    return LayoutBuilder(builder: (_, constraints) {
+      return Container(
+        color: context.colors.greyStrong,
+        child: Stack(
+          children: [
+            /// Top content, sits underneath scrolling list
+            _TopContent(data: _data),
 
-          /// Scrolling Events list, takes up the full view
-          _EventsList(data: _data),
+            /// Scrolling Events list, takes up the full view
+            _EventsList(data: _data),
 
-          /// Back btn
-          BackBtn(
-            bgColor: context.colors.white,
-            icon: Icons.close,
-            iconColor: context.colors.greyStrong,
-          ).safe(),
-        ],
-      ),
-    );
+            /// Back btn
+            BackBtn(
+              bgColor: context.colors.white,
+              icon: Icons.close,
+              iconColor: context.colors.greyStrong,
+            ).safe(),
+          ],
+        ),
+      );
+    });
   }
 }

@@ -29,13 +29,11 @@ class TimelineSection extends StatelessWidget {
         decoration: BoxDecoration(color: data.type.fgColor),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(99),
-          child: isSelected
-              ? _buildWonderImage()
-              : BlendMask(
-                  blendModes: const [BlendMode.luminosity],
-                  opacity: 1,
-                  child: _buildWonderImage(),
-                ),
+          child: BlendMask(
+            blendModes: isSelected ? [] : const [BlendMode.luminosity],
+            opacity: .6,
+            child: _buildWonderImage(),
+          ),
         ),
       ),
     );
@@ -48,6 +46,7 @@ class TimelineSection extends StatelessWidget {
         color: data.type.bgColor,
         image: DecorationImage(
           fit: BoxFit.cover,
+          alignment: Alignment(0, -.5),
           image: AssetImage(data.type.flattened),
         ),
       ),

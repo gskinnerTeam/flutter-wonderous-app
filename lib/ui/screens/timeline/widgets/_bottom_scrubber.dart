@@ -2,12 +2,12 @@ part of '../timeline_screen.dart';
 
 class _BottomScrubber extends StatelessWidget {
   const _BottomScrubber(this.scroller,
-      {Key? key, required this.timelineMinSize, required this.size, required this.wonderType})
+      {Key? key, required this.timelineMinSize, required this.size, required this.selectedWonder})
       : super(key: key);
   final ScrollController? scroller;
   final double timelineMinSize;
   final double size;
-  final WonderType wonderType;
+  final WonderType selectedWonder;
 
   /// Calculate what fraction the scroller has travelled
   double _calculateScrollFraction(ScrollPosition? pos) {
@@ -44,7 +44,7 @@ class _BottomScrubber extends StatelessWidget {
           /// Timeline background
           Padding(
             padding: EdgeInsets.all(context.insets.sm),
-            child: WondersTimelineBuilder(selectedWonders: [wonderType]),
+            child: WondersTimelineBuilder(selectedWonders: [selectedWonder]),
           ),
 
           /// Visible area, follows the position of scroller
@@ -62,6 +62,7 @@ class _BottomScrubber extends StatelessWidget {
                 child: GestureDetector(
                   behavior: HitTestBehavior.translucent,
                   onPanUpdate: _handleScrubberPan,
+                  onTap: _handleTap,
 
                   /// Scrub area
                   child: Align(
@@ -88,4 +89,6 @@ class _BottomScrubber extends StatelessWidget {
       child: Align(alignment: alignment, child: DashedLine(vertical: true)),
     );
   }
+
+  void _handleTap() {}
 }

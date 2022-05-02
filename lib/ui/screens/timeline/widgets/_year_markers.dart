@@ -36,7 +36,7 @@ class _YearMarkers extends StatelessWidget {
             child: Stack(
               key: ValueKey(interval),
               children: markers.map((yr) {
-                return _Marker(yr, calculateOffsetY(yr));
+                return _YearMarker(yr, calculateOffsetY(yr));
               }).toList(),
             ),
           ),
@@ -46,8 +46,8 @@ class _YearMarkers extends StatelessWidget {
   }
 }
 
-class _Marker extends StatelessWidget {
-  const _Marker(this.yr, this.offset, {Key? key}) : super(key: key);
+class _YearMarker extends StatelessWidget {
+  const _YearMarker(this.yr, this.offset, {Key? key}) : super(key: key);
   final int yr;
   final double offset;
 

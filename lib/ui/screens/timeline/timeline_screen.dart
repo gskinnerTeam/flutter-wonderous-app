@@ -1,7 +1,10 @@
+import 'dart:async';
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/string_utils.dart';
+import 'package:wonders/logic/data/timeline_data.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/blend_mask.dart';
 import 'package:wonders/ui/common/dashed_line.dart';
@@ -14,6 +17,7 @@ part 'widgets/_scrolling_viewport.dart';
 part 'widgets/_scrolling_viewport_controller.dart';
 part 'widgets/_timeline_section.dart';
 part 'widgets/_year_markers.dart';
+part 'widgets/_event_markers.dart';
 
 class TimelineScreen extends StatefulWidget {
   final WonderType type;
@@ -32,16 +36,21 @@ class _TimelineScreenState extends State<TimelineScreen> {
   final ScrollController _scroller = ScrollController();
   _ScrollingViewportController? _viewport;
 
+  void _handleViewportInit(v) {
+    _viewport = v;
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (_, constraints) {
       // Determine min and max size of the timeline based on the size available to this widget
       const double scrubberSize = 80;
-      final double minSize = max(500, constraints.biggest.height - scrubberSize);
-      const double maxSize = 3000;
+      const double minSize = 1200;
+      const double maxSize = 4000;
       return Container(
         color: context.colors.greyStrong,
         child: SafeArea(
+          bottom: false,
           child: Padding(
             padding: EdgeInsets.only(bottom: context.mq.viewPadding.bottom),
             child: Column(
@@ -52,7 +61,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                     children: [
                       /// The timeline content itself
                       _ScrollingViewport(
-                        onInit: (v) => _viewport = v,
+                        onInit: _handleViewportInit,
                         scroller: _scroller,
                         minSize: minSize,
                         maxSize: maxSize,
@@ -68,19 +77,21 @@ class _TimelineScreenState extends State<TimelineScreen> {
                   _scroller,
                   size: scrubberSize,
                   timelineMinSize: minSize,
-                  wonderType: widget.type,
+                  selectedWonder: widget.type,
                 ),
 
                 // TODO: remove this slider when Timeline is complete
-                // Slider(
-                //   value: _zoomOverride,
-                //   onChanged: (value) {
-                //     _zoomOverride = value;
-                //     _viewport?.setZoom(_zoomOverride);
-                //     setState(() {});
-                //   },
-                // ),
-                Gap(30),
+                if (kDebugMode) ...[
+                  Slider(
+                    value: _zoomOverride,
+                    onChanged: (value) {
+                      _zoomOverride = value;
+                      _viewport?.setZoom(_zoomOverride);
+                      setState(() {});
+                    },
+                  ),
+                ],
+                Gap(context.insets.sm),
               ],
             ),
           ),

@@ -11,7 +11,7 @@ class PlatformInfo {
   static bool get isDesktop => _desktopPlatforms.contains(defaultTargetPlatform);
   static bool get isMobile => _mobilePlatforms.contains(defaultTargetPlatform);
 
-  static double get pixelRatio => WidgetsBinding.instance!.window.devicePixelRatio;
+  static double get pixelRatio => WidgetsBinding.instance?.window.devicePixelRatio ?? 1;
 
   static bool get isWindows => defaultTargetPlatform == TargetPlatform.windows;
   static bool get isLinux => defaultTargetPlatform == TargetPlatform.linux;
