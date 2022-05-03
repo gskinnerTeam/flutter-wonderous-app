@@ -40,7 +40,11 @@ class _ImagePlaceholder extends StatelessWidget {
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: 1,
-      child: Center(child: AppLoader()),
+      child: Container(
+        decoration: BoxDecoration(
+          color: context.colors.greyMedium.withOpacity(0.1),
+        ),
+      ),
     );
   }
 }
