@@ -69,11 +69,11 @@ class _ImagePreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Full scale of the main page, making it larger than the others.
-    double mainPageScaleFactor = 0.2;
+    // Additional scale of the main page, making it larger than the others.
+    const double mainPageScaleFactor = 0.2;
 
-    // Y scale of the main page, making it elongated.
-    double mainPageScaleFactorY = -0.05;
+    // Additional Y scale of the main page, making it elongated.
+    const double mainPageScaleFactorY = -0.05;
 
     // Border variables
     const double borderPadding = 4.0;
@@ -81,11 +81,11 @@ class _ImagePreview extends StatelessWidget {
 
     // Base scale units that we can treat like pixels.
     double baseWidthScale = 1 / context.widthPx;
-    double baseHeightScale = 0.5 / context.heightPx;
+    double baseHeightScale = 1 / context.heightPx;
 
     // Size of the pages themselves.
     double pageWidth = baseWidthScale * maxWidth * 0.75;
-    double pageHeight = baseHeightScale * maxWidth * 0.75;
+    double pageHeight = baseHeightScale * maxWidth * 0.4;
 
     // Get the current page offset value compared to other pages. -1 is left, 0 is middle, 1 is right, etc.
     // Note: This value can be in between whole numbers, like 0.25 and -0.75.
@@ -101,6 +101,7 @@ class _ImagePreview extends StatelessWidget {
     double xOffsetFactor = pageOffset;
     // Use absolute value of offset so images always move down.
     double yOffsetFactor = pageOffset.abs();
+    // Set opacity of the page.
     double opacity = 1;
     if (pageOffset >= -1 && pageOffset <= 1) {
       // Create an offset factor using sin/cos to ease.
@@ -112,11 +113,15 @@ class _ImagePreview extends StatelessWidget {
       opacity = math.max(0, math.min(1, 1 - (pageOffset.abs() - 1) / viewportFraction));
     }
 
+    // Multiply the offset factors with the width/height scale to convert them to fractionals.
     double xOffset = xOffsetFactor * (baseWidthScale * xOffsetPad);
-    double yOffset = yOffsetFactor * (baseHeightScale * (maxWidth / 2));
+    double yOffset = yOffsetFactor * ((baseHeightScale / 2) * (maxWidth / 2));
 
-    // Apply a vertical offset based on the bottom padding provided.
-    double bottomPadding = baseHeightScale * (maxHeight + (maxWidth / 2));
+    // Apply a vertical offset based on the bottom padding provided. This includes half the element width.
+    double bottomPadding = (baseHeightScale / 2) * (maxHeight * 2 - (maxWidth / 2));
+
+    double widthFactor = pageWidth + midPageScaleUp;
+    double heightFactor = pageHeight + midPageScaleUp + midPageScaleUpY;
 
     // Scale box for sizing. Uses both the element scale and the element Y scale.
     return FractionalTranslation(
@@ -125,8 +130,8 @@ class _ImagePreview extends StatelessWidget {
       child: FractionallySizedBox(
         // Scale the elements according to whether they are on the sides or middle.
         alignment: Alignment.bottomCenter,
-        widthFactor: pageWidth + midPageScaleUp,
-        heightFactor: pageHeight + midPageScaleUp + midPageScaleUpY,
+        widthFactor: widthFactor,
+        heightFactor: heightFactor,
         // Translation box for positioning.
         child: Opacity(
           opacity: opacity,

@@ -3,7 +3,6 @@ import 'dart:math' as math;
 
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/logic/data/highlights_data.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
@@ -24,10 +23,11 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   final _pageViewportFraction = 0.5;
 
   late final _highlightedArtifactIds = wondersLogic.getData(widget.type).highlightArtifacts;
-  // Used to determine carousel element size.
+  // Used to cap white background dimensions.
   static const double _maxElementWidth = 400;
-  // Used to determine white background dimensions.
-  static const double _maxBottomHeight = 700;
+  static const double _maxElementHeight = 700;
+
+  // Locally store loaded artifacts.
   final _loadedArtifacts = <HighlightsData>[];
   late PageController _controller;
   HighlightsData? _currentArtifact;
@@ -55,10 +55,6 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     }
   }
 
-  void _handlePageChanged() {
-    setState(() => _currentPage = _controller.page ?? 0.0);
-  }
-
   @override
   void dispose() {
     _controller.dispose();
@@ -72,9 +68,11 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   }
 
   Future<void> _animatePageJump(int to) async {
-    scheduleMicrotask(() {
-      _controller.animateToPage(to, duration: context.times.fast, curve: Curves.easeOut);
-    });
+    scheduleMicrotask(() => _controller.animateToPage(to, duration: context.times.fast, curve: Curves.easeOut));
+  }
+
+  void _handlePageChanged() {
+    setState(() => _currentPage = _controller.page ?? 0.0);
   }
 
   void _handlePageJump(int jumpBy) {
@@ -91,7 +89,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   @override
   Widget build(BuildContext context) {
     double backdropWidth = math.min(context.widthPx, _maxElementWidth);
-    double backdropHeight = math.min(context.heightPx * 0.8, _maxBottomHeight);
+    double backdropHeight = math.min(context.heightPx * 0.6, _maxElementHeight);
 
     return Container(
       color: context.colors.greyStrong,
@@ -228,14 +226,19 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Wonder Name
-            Text(
-              (_loadedArtifacts.isEmpty ? 'Just a moment...' : _currentArtifact?.culture ?? '').toUpperCase(),
-              style: context.textStyles.titleFont.copyWith(
-                color: context.colors.accent1,
-                fontSize: 14,
-                height: 1.2,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: width * 0.14),
+              child: Text(
+                (_loadedArtifacts.isEmpty ? 'Just a moment...' : _currentArtifact?.culture ?? '').toUpperCase(),
+                style: context.textStyles.titleFont.copyWith(
+                  color: context.colors.accent1,
+                  fontSize: 14,
+                  height: 1.2,
+                ),
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
-              textAlign: TextAlign.center,
             ),
             Gap(context.insets.md),
 
