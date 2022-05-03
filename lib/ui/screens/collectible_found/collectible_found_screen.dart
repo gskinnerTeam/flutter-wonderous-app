@@ -159,8 +159,13 @@ class CollectibleFoundScreen extends StatelessWidget {
       child: FXBuilder(
         delay: delay.ms,
         duration: 600.ms,
-        builder: (_, m, __) =>
-            Text(text, textAlign: TextAlign.center, style: style.copyWith(color: color.withOpacity(m))),
+        builder: (_, m, __) => Text(
+          text,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
+          style: style.copyWith(color: color.withOpacity(m)),
+        ),
       ),
     );
   }
