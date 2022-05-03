@@ -68,7 +68,8 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   }
 
   Future<void> _animatePageJump(int to) async {
-    scheduleMicrotask(() => _controller.animateToPage(to, duration: context.times.fast, curve: Curves.easeOut));
+    scheduleMicrotask(
+        () => _controller.animateToPage(to, duration: Duration(milliseconds: 200), curve: Curves.easeOut));
   }
 
   void _handlePageChanged() {
