@@ -101,9 +101,11 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
       ]),
       Gap(context.insets.xs),
       Expanded(
-        child: _ResultsGrid(
-          searchResults: _filteredResults,
-          onPressed: (o) => context.push(ScreenPaths.artifact(o.id.toString())),
+        child: RepaintBoundary(
+          child: _ResultsGrid(
+            searchResults: _filteredResults,
+            onPressed: (o) => context.push(ScreenPaths.artifact(o.id.toString())),
+          ),
         ),
       ),
     ]);
@@ -111,13 +113,15 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
     return Stack(children: [
       Positioned.fill(child: ColoredBox(color: context.colors.offWhite, child: content)),
       Positioned.fill(
-        child: ExpandingTimeRangeSelector(
-          wonder: wonder,
-          startYear: _startYear,
-          endYear: _endYear,
-          panelController: panelController,
-          vizController: vizController,
-          onChanged: _handleTimelineChanged,
+        child: RepaintBoundary(
+          child: ExpandingTimeRangeSelector(
+            wonder: wonder,
+            startYear: _startYear,
+            endYear: _endYear,
+            panelController: panelController,
+            vizController: vizController,
+            onChanged: _handleTimelineChanged,
+          ),
         ),
       ),
     ]);

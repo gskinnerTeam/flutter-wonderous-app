@@ -23,26 +23,13 @@ class _ResultTile extends StatelessWidget {
               child: CachedNetworkImage(
                 imageUrl: data.imageUrl,
                 fit: BoxFit.cover,
-                placeholder: (_, __) => _ImagePlaceholder(),
+                placeholder: (_, __) => AspectRatio(
+                  aspectRatio: 1,
+                  child: ColoredBox(color: context.colors.greyMedium.withOpacity(0.1)),
+                ),
               ),
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _ImagePlaceholder extends StatelessWidget {
-  const _ImagePlaceholder({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1,
-      child: Container(
-        decoration: BoxDecoration(
-          color: context.colors.greyMedium.withOpacity(0.1),
         ),
       ),
     );
