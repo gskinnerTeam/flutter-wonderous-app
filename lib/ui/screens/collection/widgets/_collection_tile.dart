@@ -1,7 +1,5 @@
 part of '../collection_screen.dart';
 
-// TODO: GDS: Semantics, possibly use BasicBtn
-
 class _CollectionTile extends StatelessWidget {
   const _CollectionTile({
     Key? key,
@@ -69,6 +67,11 @@ class _CollectionTile extends StatelessWidget {
       ),
     );
     if (heroTag != null) content = Hero(tag: heroTag!, child: content);
-    return GestureDetector(onTap: () => onPressed(collectible), child: content);
+    return Semantics(
+      label: collectible.title,
+      button: true,
+      container: true,
+      child: GestureDetector(onTap: () => onPressed(collectible), child: content),
+    );
   }
 }
