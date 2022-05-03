@@ -161,10 +161,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                         widget.data.type,
                         scrollPos: _scrollPos,
                         sectionIndex: _sectionIndex,
-                      )
-                          .fx()
-                          .fade(duration: context.times.med, delay: context.times.introDelay)
-                          .move(begin: Offset(0, 100)),
+                      ).fx().fade(duration: context.times.med, delay: context.times.introDelay),
                     ),
                   ),
 

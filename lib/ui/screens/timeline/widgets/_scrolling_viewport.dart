@@ -48,6 +48,7 @@ class ScalingViewportState extends State<_ScrollingViewport> {
         onScaleUpdate: controller._handleScaleUpdate,
         onScaleStart: controller._handleScaleStart,
         behavior: HitTestBehavior.opaque,
+        // Fade in entire view when first shown
         child: FXAnimate(
           fx: const [FadeFX()],
           child: Stack(
@@ -90,7 +91,7 @@ class ScalingViewportState extends State<_ScrollingViewport> {
           final style = context.text.body.copyWith(color: context.colors.offWhite);
           return AnimatedSwitcher(
             duration: context.times.fast,
-            child: Text(era, key: ValueKey(era), style: style),
+            child: Text(era, key: ValueKey(era), style: style).fx(key: ValueKey(era)).slide(begin: Offset(0, .2)),
           );
         });
   }
@@ -131,7 +132,10 @@ class ScalingViewportState extends State<_ScrollingViewport> {
                           ),
                         );
                       }),
-                )
+                ),
+
+                /// Events
+                _EventMarkers(),
               ],
             ),
           ),

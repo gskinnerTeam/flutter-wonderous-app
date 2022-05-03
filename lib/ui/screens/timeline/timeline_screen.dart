@@ -44,9 +44,9 @@ class _TimelineScreenState extends State<TimelineScreen> {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (_, constraints) {
       // Determine min and max size of the timeline based on the size available to this widget
-      const double scrubberSize = 80;
+      const double scrubberSize = 70;
       const double minSize = 1200;
-      const double maxSize = 4000;
+      const double maxSize = 5000;
       return Container(
         color: context.colors.greyStrong,
         child: SafeArea(

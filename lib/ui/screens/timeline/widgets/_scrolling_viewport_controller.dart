@@ -19,7 +19,7 @@ class _ScrollingViewportController extends ChangeNotifier {
       final data = wondersLogic.getData(widget.selectedWonder);
       final pos = calculateScrollPosFromYear(data.startYr);
       scroller.jumpTo(pos - 200);
-      scroller.animateTo(pos, duration: 1.35.seconds, curve: Curves.easeOut);
+      scroller.animateTo(pos, duration: 1.35.seconds, curve: Curves.easeOutCubic);
     });
   }
 
