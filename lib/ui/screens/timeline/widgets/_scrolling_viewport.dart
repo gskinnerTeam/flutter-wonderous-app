@@ -39,6 +39,7 @@ class ScalingViewportState extends State<_ScrollingViewport> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (_, constraints) {
+      return Placeholder();
       // cache constraints, so they can be used to maintain the selected year while zooming
       controller._constraints = constraints;
       double vtPadding = constraints.maxHeight / 2;

@@ -13,11 +13,11 @@ import 'package:wonders/ui/common/wonders_timeline_builder.dart';
 
 part 'widgets/_bottom_scrubber.dart';
 part 'widgets/_dashed_divider_with_year.dart';
+part 'widgets/_event_markers.dart';
 part 'widgets/_scrolling_viewport.dart';
 part 'widgets/_scrolling_viewport_controller.dart';
 part 'widgets/_timeline_section.dart';
 part 'widgets/_year_markers.dart';
-part 'widgets/_event_markers.dart';
 
 class TimelineScreen extends StatefulWidget {
   final WonderType type;
@@ -49,51 +49,48 @@ class _TimelineScreenState extends State<TimelineScreen> {
       const double maxSize = 5000;
       return Container(
         color: context.colors.greyStrong,
-        child: SafeArea(
-          bottom: false,
-          child: Padding(
-            padding: EdgeInsets.only(bottom: context.mq.viewPadding.bottom),
-            child: Column(
-              children: [
-                /// Vertically scrolling timeline, manages a ScrollController.
-                Expanded(
-                  child: Stack(
-                    children: [
-                      /// The timeline content itself
-                      _ScrollingViewport(
-                        onInit: _handleViewportInit,
-                        scroller: _scroller,
-                        minSize: minSize,
-                        maxSize: maxSize,
-                        selectedWonder: widget.type,
-                      ),
-                    ],
-                  ),
+        child: Padding(
+          padding: EdgeInsets.only(bottom: 0),
+          child: Column(
+            children: [
+              /// Vertically scrolling timeline, manages a ScrollController.
+              Expanded(
+                child: Stack(
+                  children: [
+                    /// The timeline content itself
+                    _ScrollingViewport(
+                      onInit: _handleViewportInit,
+                      scroller: _scroller,
+                      minSize: minSize,
+                      maxSize: maxSize,
+                      selectedWonder: widget.type,
+                    ),
+                  ],
                 ),
+              ),
 
-                /// Mini Horizontal timeline, reacts to the state of the larger scrolling timeline,
-                /// and changes the timelines scroll position on Hz drag
-                _BottomScrubber(
-                  _scroller,
-                  size: scrubberSize,
-                  timelineMinSize: minSize,
-                  selectedWonder: widget.type,
-                ),
-
-                // TODO: remove this slider when Timeline is complete
-                if (kDebugMode) ...[
-                  Slider(
-                    value: _zoomOverride,
-                    onChanged: (value) {
-                      _zoomOverride = value;
-                      _viewport?.setZoom(_zoomOverride);
-                      setState(() {});
-                    },
-                  ),
-                ],
-                Gap(context.insets.sm),
-              ],
-            ),
+              /// Mini Horizontal timeline, reacts to the state of the larger scrolling timeline,
+              /// and changes the timelines scroll position on Hz drag
+              // _BottomScrubber(
+              //   _scroller,
+              //   size: scrubberSize,
+              //   timelineMinSize: minSize,
+              //   selectedWonder: widget.type,
+              // ),
+              //
+              // // TODO: remove this slider when Timeline is complete
+              // if (kDebugMode) ...[
+              //   Slider(
+              //     value: _zoomOverride,
+              //     onChanged: (value) {
+              //       _zoomOverride = value;
+              //       _viewport?.setZoom(_zoomOverride);
+              //       setState(() {});
+              //     },
+              //   ),
+              // ],
+              // Gap(context.insets.sm),
+            ],
           ),
         ),
       );
