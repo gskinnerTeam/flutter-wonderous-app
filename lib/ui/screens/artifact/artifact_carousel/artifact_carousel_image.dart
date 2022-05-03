@@ -12,6 +12,8 @@ class ArtifactCarouselImage extends StatelessWidget {
       required this.artifact,
       required this.viewportFraction,
       required this.bottomPadding,
+      required this.maxWidth,
+      required this.maxHeight,
       this.borderOnly = false,
       required this.onPressed})
       : super(key: key);
@@ -20,6 +22,8 @@ class ArtifactCarouselImage extends StatelessWidget {
   final double currentPage;
   final double viewportFraction;
   final double bottomPadding;
+  final double maxWidth;
+  final double maxHeight;
   final bool borderOnly;
   final VoidCallback onPressed;
 
@@ -36,6 +40,8 @@ class ArtifactCarouselImage extends StatelessWidget {
             heroTag: artifact.imageUrlSmall,
             viewportFraction: viewportFraction,
             bottomPadding: bottomPadding,
+            maxWidth: maxWidth,
+            maxHeight: maxHeight,
             offsetAmt: currentPage - index.toDouble(),
           ),
         ),
@@ -48,6 +54,8 @@ class _ImagePreview extends StatelessWidget {
       required this.image,
       required this.offsetAmt,
       required this.bottomPadding,
+      required this.maxWidth,
+      required this.maxHeight,
       required this.heroTag,
       required this.viewportFraction})
       : super(key: key);
@@ -55,84 +63,98 @@ class _ImagePreview extends StatelessWidget {
   final double offsetAmt;
   final double viewportFraction;
   final double bottomPadding;
+  final double maxWidth;
+  final double maxHeight;
   final String heroTag;
+
   @override
   Widget build(BuildContext context) {
-    // Universal scaledown from full window height/width.
-    double universalYScale = 0.6;
+    // Full scale of the main page, making it larger than the others.
+    double mainPageScaleFactor = 0.2;
 
-    // Y scale of the size elements, compared to main.
-    double sideElementYScale = 0.75;
-
-    // Shrink factor of the side elements, compared to main.
-    double sideElementScale = 0.75;
-
-    // Scale of the X position offset.
-    const double offsetScrollXScale = 0.15;
-    // Scale of the Y position offset.
-    const double offsetScrollYScale = 0.2;
+    // Y scale of the main page, making it elongated.
+    double mainPageScaleFactorY = -0.05;
 
     // Border variables
     const double borderPadding = 4.0;
     const double borderWidth = 1.0;
 
-    // Calculated variables.
-    const double elementWidth = 150;
-    double offset = math.max(-2, math.min(2, offsetAmt));
+    // Base scale units that we can treat like pixels.
+    double baseWidthScale = 1 / context.widthPx;
+    double baseHeightScale = 0.5 / context.heightPx;
 
-    // Scale the element down entirely by this factor when it's on the side.
-    double elementScale =
-        sideElementScale + ((1 - sideElementScale) - (math.min(1, offset.abs()) * (1 - sideElementScale)));
+    // Size of the pages themselves.
+    double pageWidth = baseWidthScale * maxWidth * 0.75;
+    double pageHeight = baseHeightScale * maxWidth * 0.75;
 
-    // Add a scaledown to the Y factor to the side pages.
-    double elementYScale =
-        sideElementYScale + ((1 - sideElementYScale) - (math.min(1, offset.abs()) * (1 - sideElementYScale)));
+    // Get the current page offset value compared to other pages. -1 is left, 0 is middle, 1 is right, etc.
+    // Note: This value can be in between whole numbers, like 0.25 and -0.75.
+    double pageOffset = math.max(-2, math.min(2, offsetAmt));
+
+    // Add a scale-up to the main page.
+    double midPageScaleUp = (1 - math.min(1, pageOffset.abs())) * mainPageScaleFactor;
+    double midPageScaleUpY = (1 - math.min(1, pageOffset.abs())) * mainPageScaleFactorY;
 
     // Calculate the offset positions of the side elements.
-    double xOffset = math.sin(offset * math.pi / 4.0) * offsetScrollXScale;
-    double yOffset = (offset * offset) * offsetScrollYScale;
+    double xOffsetPad = (context.widthPx - maxWidth);
+    // Use cube of pageOffset to create a loop-around effect.
+    double xOffsetFactor = pageOffset;
+    // Use absolute value of offset so images always move down.
+    double yOffsetFactor = pageOffset.abs();
+    double opacity = 1;
+    if (pageOffset >= -1 && pageOffset <= 1) {
+      // Create an offset factor using sin/cos to ease.
+      xOffsetFactor = pageOffset - math.sin(pageOffset * math.pi) / 3;
+      yOffsetFactor = 1 - math.cos(pageOffset * math.pi / 2.0).abs();
+    } else {
+      // Apply an opacity to elements beyond -1 to 1 offset to create a fadeout.
+      xOffsetFactor = pageOffset * pageOffset * (pageOffset < 0 ? -1 : 1);
+      opacity = math.max(0, math.min(1, 1 - (pageOffset.abs() - 1) / viewportFraction));
+    }
+
+    double xOffset = xOffsetFactor * (baseWidthScale * xOffsetPad);
+    double yOffset = yOffsetFactor * (baseHeightScale * (maxWidth / 2));
 
     // Apply a vertical offset based on the bottom padding provided.
-    double bottomPaddingScale = (bottomPadding / context.heightPx) - 0.1;
-
-    // Ensure the pages don't get too small.
-    double minWidthScale = 300 / context.widthPx;
-    double minHeightScale = (400 / context.heightPx) * universalYScale;
+    double bottomPadding = baseHeightScale * (maxHeight + (maxWidth / 2));
 
     // Scale box for sizing. Uses both the element scale and the element Y scale.
     return FractionalTranslation(
       // Move the pages around before scaling, as scaling will directly affect their translation.
-      translation: Offset(xOffset, yOffset - bottomPaddingScale),
+      translation: Offset(xOffset, yOffset - bottomPadding),
       child: FractionallySizedBox(
         // Scale the elements according to whether they are on the sides or middle.
         alignment: Alignment.bottomCenter,
-        widthFactor: math.max(minWidthScale, elementScale * universalYScale),
-        heightFactor: math.max(minHeightScale, elementScale * universalYScale * elementYScale * universalYScale),
+        widthFactor: pageWidth + midPageScaleUp,
+        heightFactor: pageHeight + midPageScaleUp + midPageScaleUpY,
         // Translation box for positioning.
-        child: Container(
-          // Add an outer border with the rounded ends.
-          decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            border: Border.all(color: context.colors.offWhite, width: borderWidth),
-            borderRadius: BorderRadius.all(Radius.circular(elementWidth)),
-          ),
+        child: Opacity(
+          opacity: opacity,
+          child: Container(
+            // Add an outer border with the rounded ends.
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              border: Border.all(color: context.colors.offWhite, width: borderWidth),
+              borderRadius: BorderRadius.all(Radius.circular(maxWidth)),
+            ),
 
-          child: Padding(
-            padding: EdgeInsets.all(borderPadding),
-            child: Container(
-              // Round the edges, but make a capsule rather than a circle by only setting to width.
-              decoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.all(Radius.circular(elementWidth)),
+            child: Padding(
+              padding: EdgeInsets.all(borderPadding),
+              child: Container(
+                // Round the edges, but make a capsule rather than a circle by only setting to width.
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.all(Radius.circular(maxWidth)),
 
-                // Display image
-                image: DecorationImage(
-                    image: image,
-                    fit: BoxFit.cover,
-                    colorFilter: ColorFilter.mode(
-                      Colors.black.withOpacity(math.min(1, offset.abs())), // 0 = Colored, 1 = Black & White
-                      BlendMode.saturation,
-                    )),
+                  // Display image
+                  image: DecorationImage(
+                      image: image,
+                      fit: BoxFit.cover,
+                      colorFilter: ColorFilter.mode(
+                        Colors.black.withOpacity(math.min(1, pageOffset.abs())), // 0 = Colored, 1 = Black & White
+                        BlendMode.saturation,
+                      )),
+                ),
               ),
             ),
           ),

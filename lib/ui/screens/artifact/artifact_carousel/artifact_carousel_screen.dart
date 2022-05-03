@@ -23,13 +23,12 @@ class ArtifactCarouselScreen extends StatefulWidget {
 
 class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   final _pageViewportFraction = 0.5;
-  final _bottomHeight = 300.0;
 
   late final _highlightedArtifactIds = wondersLogic.getData(widget.type).highlightArtifacts;
   // Used to determine carousel element size.
   static const double _maxElementWidth = 400;
   // Used to determine white background dimensions.
-  static const double _maxBottomHeight = 300;
+  static const double _maxBottomHeight = 700;
   final _loadedArtifacts = <HighlightsData>[];
   late PageController _controller;
   HighlightsData? _currentArtifact;
@@ -92,24 +91,8 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final pageViewArtifacts = _loadedArtifacts.isEmpty
-        ? Container()
-        : PageView.builder(
-            controller: _controller,
-            itemCount: _highlightedArtifactIds.length * 10000,
-            clipBehavior: Clip.none,
-            onPageChanged: _changeArtifactIndex,
-            itemBuilder: (context, index) {
-              return ArtifactCarouselImage(
-                index: index,
-                currentPage: _currentPage,
-                artifact: _loadedArtifacts[index % _loadedArtifacts.length],
-                viewportFraction: _pageViewportFraction,
-                bottomPadding: _bottomHeight + math.min(context.widthPx, _maxBottomHeight) / 2,
-                onPressed: () => _handleArtifactTap(index),
-              );
-            },
-          );
+    double backdropWidth = math.min(context.widthPx, _maxElementWidth);
+    double backdropHeight = math.min(context.heightPx * 0.8, _maxBottomHeight);
 
     return Container(
       color: context.colors.greyStrong,
@@ -128,12 +111,12 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
           // White space, covering bottom half.
           BottomCenter(
             child: Container(
-              width: math.min(context.widthPx, _maxElementWidth),
-              height: _bottomHeight + math.min(context.widthPx, _maxBottomHeight) / 2,
+              width: backdropWidth,
+              height: backdropHeight,
               decoration: BoxDecoration(
                 color: context.colors.offWhite,
                 borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(_maxElementWidth / 2),
+                  top: Radius.circular(backdropWidth),
                 ),
               ),
             ),
@@ -150,7 +133,26 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
           ),
 
           // Carousel images
-          pageViewArtifacts,
+          _loadedArtifacts.isEmpty
+              ? Container()
+              : PageView.builder(
+                  controller: _controller,
+                  itemCount: _highlightedArtifactIds.length * 10000,
+                  clipBehavior: Clip.none,
+                  onPageChanged: _changeArtifactIndex,
+                  itemBuilder: (context, index) {
+                    return ArtifactCarouselImage(
+                      index: index,
+                      currentPage: _currentPage,
+                      artifact: _loadedArtifacts[index % _loadedArtifacts.length],
+                      viewportFraction: _pageViewportFraction,
+                      bottomPadding: backdropHeight,
+                      maxWidth: backdropWidth,
+                      maxHeight: backdropHeight,
+                      onPressed: () => _handleArtifactTap(index),
+                    );
+                  },
+                ),
 
           // Header
           TopCenter(
@@ -188,12 +190,12 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                 children: [
                   Gap(context.insets.md),
                   // Text Content
-                  _buildTextContent(),
+                  _buildTextContent(backdropWidth),
                   // Selection indicator
                   _buildPageIndicator(context, _highlightedArtifactIds.length),
                   // Big ol' button
                   Gap(context.insets.xl),
-                  _buildBrowseBtn(context),
+                  _buildBrowseBtn(context, backdropWidth),
                   Gap(context.insets.lg),
                 ],
               ),
@@ -204,62 +206,71 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     );
   }
 
-  AppTextIconBtn _buildBrowseBtn(BuildContext context) {
-    return AppTextIconBtn(
-      'BROWSE ALL ARTIFACTS',
-      Icons.search,
-      expand: true,
-      padding: EdgeInsets.symmetric(vertical: context.insets.md),
-      onPressed: _handleSearchButtonTap,
-    );
+  Widget _buildBrowseBtn(BuildContext context, double width) {
+    return Container(
+        width: width,
+        padding: EdgeInsets.symmetric(horizontal: context.insets.sm),
+        child: AppTextIconBtn(
+          'BROWSE ALL ARTIFACTS',
+          Icons.search,
+          expand: true,
+          padding: EdgeInsets.symmetric(vertical: context.insets.md),
+          onPressed: _handleSearchButtonTap,
+        ));
   }
 
-  Widget _buildTextContent() {
+  Widget _buildTextContent(double width) {
     return IgnorePointer(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Wonder Name
-          Text(
-            (_loadedArtifacts.isEmpty ? 'Just a moment...' : _currentArtifact?.culture ?? '').toUpperCase(),
-            style: context.textStyles.titleFont.copyWith(
-              color: context.colors.accent1,
-              fontSize: 14,
-              height: 1.2,
+      child: Container(
+        width: width,
+        padding: EdgeInsets.symmetric(horizontal: context.insets.sm),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Wonder Name
+            Text(
+              (_loadedArtifacts.isEmpty ? 'Just a moment...' : _currentArtifact?.culture ?? '').toUpperCase(),
+              style: context.textStyles.titleFont.copyWith(
+                color: context.colors.accent1,
+                fontSize: 14,
+                height: 1.2,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
-          ),
-          Gap(context.insets.md),
+            Gap(context.insets.md),
 
-          _loadedArtifacts.isEmpty
-              ? AppLoader()
-              : FXAnimate(
-                  fx: const [FadeFX()],
-                  key: ValueKey(_currentArtifact?.artifactId),
-                  child: Column(
-                    children: [
-                      // Artifact Title
-                      Text(
-                        _currentArtifact?.title ?? '',
-                        style: context.textStyles.h2.copyWith(color: context.colors.greyStrong),
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                      ),
-                      Gap(context.insets.xs),
+            _loadedArtifacts.isEmpty
+                ? AppLoader()
+                : FXAnimate(
+                    fx: const [FadeFX()],
+                    key: ValueKey(_currentArtifact?.artifactId),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Artifact Title
+                        Text(
+                          _currentArtifact?.title ?? '',
+                          overflow: TextOverflow.ellipsis,
+                          style: context.textStyles.h2.copyWith(color: context.colors.greyStrong),
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                        ),
+                        Gap(context.insets.xs),
 
-                      // Time frame
-                      Text(
-                        _currentArtifact?.date ?? '',
-                        style: context.textStyles.body.copyWith(color: context.colors.body),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
+                        // Time frame
+                        Text(
+                          _currentArtifact?.date ?? '',
+                          style: context.textStyles.body.copyWith(color: context.colors.body),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
 
-          Gap(context.insets.lg),
-        ],
+            Gap(context.insets.lg),
+          ],
+        ),
       ),
     );
   }
