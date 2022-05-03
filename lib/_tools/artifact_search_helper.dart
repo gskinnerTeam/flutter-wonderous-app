@@ -13,6 +13,8 @@ final int maxYear = wondersLogic.endYear;
 const int maxRequests = 32;
 
 class ArtifactSearchHelper extends StatefulWidget {
+  const ArtifactSearchHelper({Key? key}) : super(key: key);
+
   @override
   State<ArtifactSearchHelper> createState() => _ArtifactSearchHelperState();
 }
@@ -215,7 +217,7 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
     File file = File(path);
     await file.writeAsString(output);
     _log('- Wrote file: $type.dart');
-    print(path);
+    debugPrint(path);
     _nextWonder();
   }
 
@@ -245,22 +247,22 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
         SizedBox(
           width: 200,
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text("Wonder to run:"),
+            Text('Wonder to run:'),
             _buildWonderPicker(context),
             Gap(16),
-            Text("Max items:"),
+            Text('Max items:'),
             TextFormField(
               initialValue: maxIds.toString(),
               onChanged: (s) => setState(() => maxIds = int.parse(s)),
             ),
             Gap(16),
-            Text("Max priority items:"),
+            Text('Max priority items:'),
             TextFormField(
               initialValue: maxPriority.toString(),
               onChanged: (s) => setState(() => maxPriority = int.parse(s)),
             ),
             Gap(16),
-            MaterialButton(onPressed: () => _run(), child: Text("RUN")),
+            MaterialButton(onPressed: () => _run(), child: Text('RUN')),
           ]),
         ),
         Gap(40),

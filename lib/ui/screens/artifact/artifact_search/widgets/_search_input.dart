@@ -1,6 +1,6 @@
 part of '../artifact_search_screen.dart';
 
-// TODO: GDS: evaluate search suggestions.
+// TODO: GDS: evaluate search suggestions. Possibly generate alongside SearchData
 
 /// Autopopulating textfield used for searching for Artifacts by name.
 class _SearchInput extends StatelessWidget {
