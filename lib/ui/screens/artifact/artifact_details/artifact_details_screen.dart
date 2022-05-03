@@ -26,27 +26,6 @@ class ArtifactDetailsScreen extends StatefulWidget {
 class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
   late final _future = searchLogic.getArtifactByID(widget.artifactId);
 
-  Widget _buildPreloadScreen(BuildContext context) {
-    return Stack(
-      children: [
-        BackBtn().safe(),
-        Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              AppLoader(),
-              Gap(context.insets.md),
-              Text(
-                'Just a moment, please...',
-                style: context.textStyles.body.copyWith(color: context.colors.accent1),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
@@ -79,6 +58,27 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
           ]);
         },
       ),
+    );
+  }
+
+  Widget _buildPreloadScreen(BuildContext context) {
+    return Stack(
+      children: [
+        BackBtn().safe(),
+        Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AppLoader(),
+              Gap(context.insets.md),
+              Text(
+                'Just a moment, please...',
+                style: context.textStyles.body.copyWith(color: context.colors.accent1),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
