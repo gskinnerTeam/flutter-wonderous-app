@@ -13,8 +13,6 @@ part 'widgets/_newly_discovered_row.dart';
 part 'widgets/_collection_list.dart';
 part 'widgets/_collection_footer.dart';
 
-// TODO: GDS: maybe refactor so that the "new item" header scrolls to the first new item when clicked.
-
 class CollectionScreen extends StatefulWidget with GetItStatefulWidgetMixin {
   CollectionScreen({this.fromId, Key? key}) : super(key: key);
 
