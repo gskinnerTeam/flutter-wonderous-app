@@ -34,9 +34,7 @@ class WonderTitleText extends StatelessWidget {
       );
     }
 
-    List<Shadow> shadows =
-        enableShadows ? [Shadow(color: Colors.black.withOpacity(.6), offset: Offset(0, 2), blurRadius: 2)] : [];
-
+    List<Shadow> shadows = enableShadows ? context.shadows.text : [];
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(

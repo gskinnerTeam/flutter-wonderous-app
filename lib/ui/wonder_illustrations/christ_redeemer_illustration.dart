@@ -62,7 +62,8 @@ class ChristRedeemerIllustration extends StatelessWidget {
                 scale: config.shortMode ? 1.8 : 1.2 + config.zoom * .2,
                 child: Image.asset(
                   '$assetPath/redeemer.png',
-                  cacheWidth: context.widthPx.round() * 2,
+                  height: context.heightPx * .6,
+                  fit: BoxFit.fitHeight,
                   opacity: anim,
                 ),
               ),

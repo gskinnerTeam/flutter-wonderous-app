@@ -7,43 +7,59 @@ import 'package:wonders/logic/data/collectible_data.dart';
 /// In the editorial view, this will be somewhere within 3 common spots,
 /// in image-grid, we can distribute it anywhere (in a deterministic way)
 /// in search, we can tie it into a specific year value, which will cause it to be revealed.
-class CollectiblesLogic with SaveLoadMixin {
+class CollectiblesLogic with ThrottledSaveLoadMixin {
   @override
   String get fileName => 'collectibles.dat';
 
-  final states = ValueNotifier<Map<String, int>>({});
+  /// Holds all collectibles that the views should care about
+  final List<CollectibleData> all = collectiblesData;
+
+  /// Current state for each collectible
+  final statesById = ValueNotifier<Map<String, int>>({});
+
+  CollectibleData? fromId(String? id) => id == null ? null : all.firstWhereOrNull((o) => o.id == id);
+  List<CollectibleData> forWonder(WonderType wonder) {
+    return all.where((o) => o.wonder == wonder).toList(growable: false);
+  }
 
   void updateState(String id, int state) {
-    Map<String, int> states = Map.of(this.states.value);
+    Map<String, int> states = Map.of(statesById.value);
     states[id] = state;
-    this.states.value = states;
+    statesById.value = states;
     scheduleSave();
   }
 
   void reset() {
-    List<CollectibleData> collectibles = CollectibleData.all;
     Map<String, int> states = {};
-    for (int i = 0; i < collectibles.length; i++) {
-      states[collectibles[i].id] = CollectibleState.lost;
+    for (int i = 0; i < all.length; i++) {
+      states[all[i].id] = CollectibleState.lost;
     }
-    this.states.value = states;
+    statesById.value = states;
     debugPrint('collection reset');
     scheduleSave();
   }
 
   @override
   void copyFromJson(Map<String, dynamic> value) {
-    List<CollectibleData> collectibles = CollectibleData.all;
     Map<String, int> states = {};
-    for (int i = 0; i < collectibles.length; i++) {
-      String id = collectibles[i].id;
+    for (int i = 0; i < all.length; i++) {
+      String id = all[i].id;
       states[id] = value[id] ?? CollectibleState.lost;
     }
-    this.states.value = states;
+    statesById.value = states;
   }
 
   @override
   Map<String, dynamic> toJson() {
-    return states.value;
+    return statesById.value;
+  }
+
+  bool isLost(WonderType wonderType, int i) {
+    final datas = forWonder(wonderType);
+    final states = statesById.value;
+    if (datas.length > i && states.containsKey(datas[i].id)) {
+      return states[datas[i].id] == CollectibleState.lost;
+    }
+    return true;
   }
 }

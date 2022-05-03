@@ -1,9 +1,11 @@
 part of '../timeline_screen.dart';
 
 class _YearMarkers extends StatelessWidget {
-  _YearMarkers({Key? key, required this.startYr, required this.endYr}) : super(key: key);
-  final int startYr;
-  final int endYr;
+  _YearMarkers({Key? key}) : super(key: key);
+
+  int get startYr => wondersLogic.startYear;
+  int get endYr => wondersLogic.endYear;
+
   late final int _totalYrs = endYr - startYr;
 
   /// Normalizes a given year to a value from 0 - 1, based on start and end yr.
@@ -34,7 +36,7 @@ class _YearMarkers extends StatelessWidget {
             child: Stack(
               key: ValueKey(interval),
               children: markers.map((yr) {
-                return _Marker(yr, calculateOffsetY(yr));
+                return _YearMarker(yr, calculateOffsetY(yr));
               }).toList(),
             ),
           ),
@@ -44,8 +46,8 @@ class _YearMarkers extends StatelessWidget {
   }
 }
 
-class _Marker extends StatelessWidget {
-  const _Marker(this.yr, this.offset, {Key? key}) : super(key: key);
+class _YearMarker extends StatelessWidget {
+  const _YearMarker(this.yr, this.offset, {Key? key}) : super(key: key);
   final int yr;
   final double offset;
 
@@ -54,8 +56,8 @@ class _Marker extends StatelessWidget {
     return Align(
       alignment: Alignment(0, -1 + offset * 2),
       child: FractionalTranslation(
-        translation: Offset(0, -.5),
-        child: Text('$yr', style: context.text.body.copyWith(color: Colors.white)),
+        translation: Offset(0, 0),
+        child: Text('$yr', style: context.text.body.copyWith(color: Colors.white, height: 1)),
       ),
     );
   }

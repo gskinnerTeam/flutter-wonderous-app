@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:wonders/ui/common/particles/particle_field.dart';
 
 // Renders a ParticleField.

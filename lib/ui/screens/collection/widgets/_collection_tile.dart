@@ -1,6 +1,6 @@
 part of '../collection_screen.dart';
 
-// TODO: Semantics
+// TODO: GDS: Semantics, possibly use BasicBtn
 
 class _CollectionTile extends StatelessWidget {
   const _CollectionTile({
@@ -13,7 +13,7 @@ class _CollectionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: remove for production. Useful for videos / screenshots:
+    // TODO: GDS: remove for production. Useful for videos / screenshots:
     /*
     state = rnd.getBool(0.67) ? 2 : 0;
     if (collectible.id == '701645') state = 1;

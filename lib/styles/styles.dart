@@ -2,6 +2,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/styles/corners.dart';
 import 'package:wonders/styles/insets.dart';
+import 'package:wonders/styles/shadows.dart';
 import 'package:wonders/styles/text.dart';
 import 'package:wonders/styles/times.dart';
 
@@ -18,6 +19,8 @@ class AppStyle {
 
   /// Rounded edge corner radii
   late final AppCorners corners = AppCorners();
+
+  late final AppShadows shadows = AppShadows();
 
   /// Padding and margin values
   late final AppInsets insets = AppInsets(scale);
@@ -46,6 +49,7 @@ class AppStyle {
 extension StyleContextExtension on BuildContext {
   AppStyle get style => watch<AppStyle>();
   AppInsets get insets => style.insets;
+  AppShadows get shadows => style.shadows;
   AppTextStyles get textStyles => style.text;
   AppColors get colors => style.colors;
   AppTimes get times => style.times;

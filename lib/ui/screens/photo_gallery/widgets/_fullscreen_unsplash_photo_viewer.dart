@@ -36,6 +36,7 @@ class _FullScreenUnsplashPhotoViewerState extends State<_FullScreenUnsplashPhoto
           Container(
             color: context.colors.greyStrong,
             child: SafeArea(
+              top: false,
               child: SizedBox(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,

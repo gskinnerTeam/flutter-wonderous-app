@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/save_load_mixin.dart';
 
-class SettingsLogic with SaveLoadMixin {
+class SettingsLogic with ThrottledSaveLoadMixin {
   @override
   String get fileName => 'settings.dat';
 

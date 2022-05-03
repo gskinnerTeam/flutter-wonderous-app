@@ -2,6 +2,7 @@ import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:wonders/logic/data/wonder_type.dart';
+import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
 
 part 'wonder_data.g.dart';
 
@@ -36,6 +37,7 @@ class WonderData extends Equatable {
     required this.events,
     this.highlightArtifacts = const [],
     this.hiddenArtifacts = const [],
+    this.searchData = const [],
   });
 
   @JsonKey(defaultValue: WonderType.chichenItza)
@@ -66,6 +68,7 @@ class WonderData extends Equatable {
   final List<String> highlightArtifacts;
   final List<String> hiddenArtifacts;
   final Map<int, String> events;
+  final List<SearchData> searchData;
 
   String get titleWithBreaks => title.replaceFirst(' ', '\n');
 
