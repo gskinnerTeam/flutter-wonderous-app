@@ -2,6 +2,8 @@ import 'package:flutter/widgets.dart';
 
 import '../fx.dart';
 
+/// Effect that calls a callback function with the current animation value.
+/// See also: [CustomFX].
 @immutable
 class ListenFX extends AbstractFX<double> {
   final Function(double) callback;
@@ -28,6 +30,7 @@ class ListenFX extends AbstractFX<double> {
 }
 
 extension ListenFXExtensions<T> on FXManager<T> {
+  /// Adds a `.listen()` extension to [FXManager] ([FXAnimate] and [FXAnimateList]).
   T listen(Function(double) callback,
           {Duration? delay, Duration? duration, Curve? curve, double? begin, double? end, bool clamp = true}) =>
       addFX(ListenFX(callback, delay: delay, duration: duration, curve: curve, begin: begin, end: end, clamp: clamp));

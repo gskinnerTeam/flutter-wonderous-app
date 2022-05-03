@@ -2,6 +2,8 @@ import 'package:flutter/widgets.dart';
 
 import '../fx.dart';
 
+/// Effect that moves the target (via `Transform.translate`) between the specified begin and end offsets.
+/// Defaults to `begin=Offset(0, -16), end=Offset.zero`.
 @immutable
 class MoveFX extends AbstractFX<Offset> {
   const MoveFX({Duration? delay, Duration? duration, Curve? curve, Offset? begin, Offset? end})
@@ -26,18 +28,7 @@ class MoveFX extends AbstractFX<Offset> {
 }
 
 extension MoveFXExtensions<T> on FXManager<T> {
-  T move({
-    Duration? delay,
-    Duration? duration,
-    Curve? curve,
-    Offset? begin,
-    Offset? end,
-  }) =>
-      addFX(MoveFX(
-        delay: delay,
-        duration: duration,
-        curve: curve,
-        begin: begin,
-        end: end,
-      ));
+  /// Adds a `.move()` extension to [FXManager] ([FXAnimate] and [FXAnimateList]).
+  T move({Duration? delay, Duration? duration, Curve? curve, Offset? begin, Offset? end}) =>
+      addFX(MoveFX(delay: delay, duration: duration, curve: curve, begin: begin, end: end));
 }
