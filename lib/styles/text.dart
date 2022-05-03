@@ -14,7 +14,7 @@ class AppTextStyles {
 
   TextStyle get h1 => copy(titleFont, sizePx: 64, heightPx: 62);
   TextStyle get h2 => copy(titleFont, sizePx: 32, heightPx: 46);
-  TextStyle get h3 => copy(contentFont, sizePx: 24, heightPx: 36, weight: FontWeight.w600);
+  TextStyle get h3 => copy(titleFont, sizePx: 24, heightPx: 36, weight: FontWeight.w600);
   TextStyle get h4 => copy(titleFont, sizePx: 14, heightPx: 23, spacingPc: 5, weight: FontWeight.w600);
 
   TextStyle get title1 => copy(titleFont, sizePx: 16, heightPx: 26, spacingPc: 5);

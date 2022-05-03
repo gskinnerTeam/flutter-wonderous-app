@@ -1,8 +1,12 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/data/wonders_data/mock_data.dart';
+import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
+
+part 'search/pyramids_giza_search_data.dart';
 
 final pyramidsGizaData = WonderData(
+  searchData: _searchData, // included as a part from ./search/
   type: WonderType.pyramidsGiza,
   title: 'Pyramids of Giza',
   subTitle: 'The ancient wonder',

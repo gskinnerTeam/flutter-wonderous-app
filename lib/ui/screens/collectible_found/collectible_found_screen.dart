@@ -6,7 +6,7 @@ import 'package:wonders/ui/common/particles/particle_field.dart';
 part 'widgets/_animated_ribbon.dart';
 part 'widgets/_celebration_particles.dart';
 
-// TODO: GDS: maybe: title text size (2 line max): https://pub.dev/packages/auto_size_text
+// TODO: GDS: limit title to 2 lines, with elipsis
 
 class CollectibleFoundScreen extends StatelessWidget {
   // CollectibleItem passes in a (theoretically) pre-loaded imageProvider.

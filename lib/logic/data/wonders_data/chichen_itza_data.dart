@@ -1,15 +1,19 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/data/wonders_data/mock_data.dart';
+import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
+
+part 'search/chichen_itza_search_data.dart';
 
 final chichenItzaData = WonderData(
+  searchData: _searchData,  // included as a part from ./search/
   type: WonderType.chichenItza,
   title: 'Chichen Itza',
   subTitle: 'The Great Mayan City',
   regionTitle: 'Yucatan, Mexico',
   videoId: 'Q6eBJjdca14',
   startYr: 550,
-  endYr: 1550,
+  endYr: 1200,
   artifactStartYr: -500,
   artifactEndYr: 1600,
   artifactCulture: 'Maya',

@@ -9,20 +9,27 @@ class Throttler {
   VoidCallback? _action;
   Timer? _timer;
 
-  void call(VoidCallback action, {bool immediateCall = false}) {
+  void call(VoidCallback action, {bool immediateCall = true}) {
+    // Let the latest action override whatever was there before
     _action = action;
+    // If no timer is running, we want to start one
     if (_timer == null) {
-      // If no timer is running, and immediateCall is true, just handle the action now
+      //  If immediateCall is true, we handle the action now
       if (immediateCall) {
-        _action?.call();
-        _action = null; // Set it to null since we've already handled it
+        _callAction();
       }
-      _timer = Timer(interval, () {
-        _action?.call();
-        _timer = null;
-      });
+      // Start a timer that will temporarily throttle subsequent calls, and eventually make a call to whatever _action is (if anything)
+      _timer = Timer(interval, _callAction);
     }
   }
 
-  void cancelPending() => _action = null;
+  void _callAction() {
+    _action?.call(); // If we have an action queued up, complete it.
+    _timer = null;
+  }
+
+  void cancelPending() {
+    _action = null;
+    _timer = null;
+  }
 }

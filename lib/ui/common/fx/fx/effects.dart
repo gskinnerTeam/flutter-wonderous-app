@@ -1,6 +1,7 @@
+// collects effect classes for easy import.
 export 'abstract_fx.dart';
 export 'blur_fx.dart';
-export 'build_fx.dart';
+export 'custom_fx.dart';
 export 'fade_fx.dart';
 export 'listen_fx.dart';
 export 'move_fx.dart';

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/collectibles_logic.dart';
@@ -11,8 +13,6 @@ part 'widgets/_newly_discovered_row.dart';
 part 'widgets/_collection_list.dart';
 part 'widgets/_collection_footer.dart';
 
-// TODO: GDS: maybe refactor so that the "new item" header scrolls to the first new item when clicked.
-
 class CollectionScreen extends StatefulWidget with GetItStatefulWidgetMixin {
   CollectionScreen({this.fromId, Key? key}) : super(key: key);
 
@@ -23,14 +23,14 @@ class CollectionScreen extends StatefulWidget with GetItStatefulWidgetMixin {
 }
 
 class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixin {
-  Map<String, int> states = collectiblesLogic.states.value;
+  Map<String, int> states = collectiblesLogic.statesById.value;
   GlobalKey? scrollKey;
 
   @override
   void initState() {
     super.initState();
     if (widget.fromId != null && states[widget.fromId] == CollectibleState.discovered) {
-      WidgetsBinding.instance?.addPostFrameCallback((_) => _scrollToTarget(false));
+      scheduleMicrotask(() => _scrollToTarget(false));
     }
   }
 
@@ -39,7 +39,7 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
     if (id == null || states[id] != CollectibleState.discovered) {
       id = states.keys.firstWhereOrNull((id) => states[id] == CollectibleState.discovered);
     }
-    return CollectibleData.fromId(id)?.wonder;
+    return collectiblesLogic.fromId(id)?.wonder;
   }
 
   void _scrollToTarget([bool animate = true]) {
@@ -55,8 +55,8 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
 
   @override
   Widget build(BuildContext context) {
-    states = watchX((CollectiblesLogic o) => o.states);
-    int discovered = 0, explored = 0, total = CollectibleData.all.length;
+    states = watchX((CollectiblesLogic o) => o.statesById);
+    int discovered = 0, explored = 0, total = collectiblesLogic.all.length;
     states.forEach((_, state) {
       if (state == CollectibleState.discovered) discovered++;
       if (state == CollectibleState.explored) explored++;

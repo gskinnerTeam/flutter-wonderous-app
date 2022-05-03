@@ -9,14 +9,9 @@ class _TextContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentWonder = wonders[wonderIndex];
-    // TODO: Consolidate app shadows in styles.shadows? Note: Lets see how it develops, not sure there is enough to standardize
-    final textShadows = [
-      Shadow(color: Colors.black.withOpacity(.6), offset: Offset(0, 2), blurRadius: 2),
-    ];
     return ConstrainedBox(
-      constraints: BoxConstraints(maxHeight: 250),
+      constraints: BoxConstraints(maxHeight: 230 * context.style.scale),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         children: [
           /// Page indicator
           DiagonalPageIndicator(current: wonderIndex + 1, total: wonders.length),
@@ -33,7 +28,7 @@ class _TextContent extends StatelessWidget {
               height: 1,
               fontWeight: FontWeight.w400,
               fontSize: 16,
-              shadows: textShadows,
+              shadows: context.shadows.text,
             ),
             textAlign: TextAlign.center,
           )

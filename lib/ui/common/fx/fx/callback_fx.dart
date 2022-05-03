@@ -2,6 +2,8 @@ import 'package:flutter/widgets.dart';
 
 import '../fx.dart';
 
+/// Effect that calls a callback function at a particular point in the animation
+/// (specified via `delay`).
 @immutable
 class CallbackFX extends AbstractFX<void> {
   final Function() callback;
@@ -24,5 +26,6 @@ class CallbackFX extends AbstractFX<void> {
 }
 
 extension CallbackFXExtensions<T> on FXManager<T> {
+  /// Adds a `.callback()` extension to [FXManager] ([FXAnimate] and [FXAnimateList]).
   T callback(Function() callback, {Duration? delay}) => addFX(CallbackFX(callback, delay: delay));
 }

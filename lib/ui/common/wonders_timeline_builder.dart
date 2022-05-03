@@ -1,38 +1,24 @@
-import 'package:flutter/foundation.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 
+/// Visualizes all of the wonders over time.
+/// Distributes the wonders over multiple "tracks" so that they do not overlap.
+/// Provides a builder, so the visual representation of each track entry can be customized
 class WondersTimelineBuilder extends StatelessWidget {
   const WondersTimelineBuilder({
     Key? key,
     this.selectedWonders = const [],
-    required this.timelineBuilder,
+    this.timelineBuilder,
     this.axis = Axis.horizontal,
     this.crossAxisGap,
+    this.minSize = 10,
   }) : super(key: key);
   final List<WonderType> selectedWonders;
-  final Widget Function(BuildContext, WonderData type) timelineBuilder;
+  final Widget Function(BuildContext, WonderData type, bool isSelected)? timelineBuilder;
   final Axis axis;
   final double? crossAxisGap;
+  final double minSize;
   bool get isHz => axis == Axis.horizontal;
-
-  double _calculateTimelineSize(WonderData data) {
-    final totalYrs = wondersLogic.endYear - wondersLogic.startYear;
-    // TODO: Min size needs to be a pixel based number (not fraction), injected from outside. Probably need to get the constraints of this builder to do that (Layout Builder)
-    return max(.01, (data.endYr - data.startYr) / totalYrs);
-  }
-
-  // ignore: unused_element
-  Alignment _calculateTimelinePos(WonderData data) {
-    final totalYrs = wondersLogic.endYear - wondersLogic.startYear;
-    final fraction = -1 + ((data.startYr - wondersLogic.startYear) / totalYrs) * 2;
-    final double x = isHz ? fraction : 0;
-    final double y = isHz ? 0 : fraction;
-    if (kDebugMode) {
-      print('align: $y');
-    }
-    return Alignment(x, y);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,56 +31,82 @@ class WondersTimelineBuilder extends StatelessWidget {
           : SeparatedRow(separatorBuilder: () => Gap(gap), children: c);
     }
 
-    return Stack(children: [
-      /// We always have 3 "lanes" which we strategically distribute wonders that
-      /// should not overlap
-      wrapFlex([
-        // Slot 1
-        // _buildTimelineStack(
-        //   context,
-        //   [
-        //     WonderType.greatWall,
-        //   ],
-        // ),
-        // Slot 2
-        _buildTimelineStack(
+    return LayoutBuilder(builder: (_, constraints) {
+      /// Builds one timeline track, may contain multiple wonders, but they should not overlap
+      Widget buildSingleTimelineTrack(BuildContext context, List<WonderType> types) {
+        return Stack(
+          clipBehavior: Clip.none,
+          children: types.map(
+            (t) {
+              final data = wondersLogic.getData(t);
+              // To keep the math simple, first figure out a multiplier we can use to convert yrs to pixels.
+              int totalYrs = wondersLogic.endYear - wondersLogic.startYear;
+              double pxToYrRatio = totalYrs / ((isHz ? constraints.maxWidth : constraints.maxHeight));
+              // Now we just need to calculate year spans, and then convert them to pixels for the start/end position in the Stack
+              int wonderYrs = data.endYr - data.startYr;
+              int yrsFromStart = data.startYr - wondersLogic.startYear;
+              double startPx = yrsFromStart / pxToYrRatio;
+              double sizePx = wonderYrs / pxToYrRatio;
+              if (sizePx < minSize) {
+                double yearDelta = ((minSize - sizePx) / 2);
+                sizePx = minSize;
+                startPx -= yearDelta;
+              }
+              final isSelected = selectedWonders.contains(data.type);
+              final child =
+                  timelineBuilder?.call(context, data, isSelected) ?? _DefaultTrackEntry(isSelected: isSelected);
+              return isHz
+                  ? Positioned(left: startPx, width: sizePx, top: 0, bottom: 0, child: child)
+                  : Positioned(top: startPx, height: sizePx, left: 0, right: 0, child: child);
+            },
+          ).toList(),
+        );
+      }
+
+      return wrapFlex([
+        // Track 1
+        buildSingleTimelineTrack(
           context,
           [
-            //WonderType.chichenItza,
-            //WonderType.machuPicchu,
+            WonderType.greatWall,
+            WonderType.pyramidsGiza,
+            WonderType.christRedeemer,
+          ],
+        ),
+        // Track 2
+        buildSingleTimelineTrack(
+          context,
+          [
+            WonderType.chichenItza,
+            WonderType.machuPicchu,
             WonderType.petra,
           ],
         ),
-        // Slot 3
-        // _buildTimelineStack(
-        //   context,
-        //   [
-        //     WonderType.tajMahal,
-        //     WonderType.christRedeemer,
-        //     WonderType.colosseum,
-        //   ],
-        // ),
-      ])
-    ]);
+        // Track 3
+        buildSingleTimelineTrack(
+          context,
+          [
+            WonderType.tajMahal,
+            WonderType.colosseum,
+          ],
+        ),
+      ]);
+    });
   }
+}
 
-  Widget _buildTimelineStack(BuildContext context, List<WonderType> types) {
-    return Stack(
-      children: types.map(
-        (t) {
-          final data = wondersLogic.getData(t);
-          // Depending on axis, we set either width, or height to a number < 1.
-          double width = isHz ? _calculateTimelineSize(data) : 1;
-          double height = isHz ? 1 : _calculateTimelineSize(data);
-          return SizedBox.expand(
-            child: FractionallySizedBox(
-              widthFactor: width,
-              heightFactor: height,
-              child: timelineBuilder.call(context, data),
-            ),
-          );
-        },
-      ).toList(),
+class _DefaultTrackEntry extends StatelessWidget {
+  const _DefaultTrackEntry({Key? key, required this.isSelected}) : super(key: key);
+  final bool isSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: isSelected ? context.colors.accent2 : Colors.transparent,
+        borderRadius: BorderRadius.circular(99),
+        border: Border.all(color: context.colors.accent2),
+      ),
     );
   }
 }

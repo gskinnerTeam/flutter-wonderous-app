@@ -7,45 +7,6 @@ class _ScrollingContent extends StatelessWidget {
   final ValueNotifier<double> scrollPos;
   final ValueNotifier<int> sectionNotifier;
 
-  @override
-  Widget build(BuildContext context) {
-    Text buildText(String value) => Text(_fixNewlines(value), style: context.textStyles.body);
-    DropCapText buildDropCapText(String value) => DropCapText(
-          _fixNewlines(value),
-          mode: DropCapMode.upwards,
-          style: context.textStyles.body,
-          dropCapPadding: EdgeInsets.only(right: context.insets.xs, top: 10),
-          dropCapStyle: context.textStyles.dropCase.copyWith(color: context.colors.accent1),
-        );
-
-    return Container(
-      color: context.colors.offWhite,
-      padding: EdgeInsets.all(context.insets.md),
-      child: SeparatedColumn(
-        separatorBuilder: () => Gap(context.insets.md),
-        children: [
-          // TODO: temporary for testing. Remove.
-          Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-            CollectibleItem(CollectibleData.all[0]),
-            CollectibleItem(CollectibleData.all[9]),
-            CollectibleItem(CollectibleData.all[19]),
-          ]),
-          buildDropCapText(data.historyInfo1),
-          _CollapsingPullQuoteImage(data: data, scrollPos: scrollPos),
-          buildText(data.historyInfo2),
-          _SectionDivider(scrollPos, sectionNotifier, index: 1),
-          buildDropCapText(data.constructionInfo1),
-          _YouTubeThumbnail(id: data.videoId),
-          buildText(data.constructionInfo2),
-          _SlidingImageStack(scrollPos: scrollPos, type: data.type),
-          _SectionDivider(scrollPos, sectionNotifier, index: 2),
-          buildDropCapText(data.locationInfo),
-          _MapsThumbnail(data, height: 200),
-        ],
-      ),
-    );
-  }
-
   String _fixNewlines(String text) {
     const nl = '\n';
     final chunks = text.split(nl);
@@ -55,6 +16,76 @@ class _ScrollingContent extends StatelessWidget {
     chunks.removeWhere((element) => element.trim().isEmpty);
     final result = chunks.join('$nl$nl');
     return result;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Text buildText(String value) => Text(_fixNewlines(value), style: context.textStyles.body);
+
+    DropCapText buildDropCapText(String value) => DropCapText(
+          _fixNewlines(value),
+          mode: DropCapMode.upwards,
+          style: context.textStyles.body,
+          dropCapPadding: EdgeInsets.only(right: context.insets.xs, top: 10),
+          dropCapStyle: context.textStyles.dropCase.copyWith(color: context.colors.accent1),
+        );
+
+    Widget buildHiddenCollectible({required int slot}) {
+      List<WonderType> getTypesForSlot(slot) {
+        switch (slot) {
+          case 0:
+            return [WonderType.chichenItza, WonderType.colosseum];
+          case 1:
+            return [WonderType.pyramidsGiza, WonderType.petra];
+          case 2:
+            return [WonderType.machuPicchu, WonderType.christRedeemer];
+          default:
+            return [WonderType.tajMahal, WonderType.greatWall];
+        }
+      }
+
+      return HiddenCollectible(data.type, index: 0, matches: getTypesForSlot(slot));
+    }
+
+    return Container(
+      color: context.colors.offWhite,
+      padding: EdgeInsets.all(context.insets.md),
+      child: SeparatedColumn(
+        separatorBuilder: () => Gap(context.insets.md),
+        children: [
+          buildHiddenCollectible(slot: 0),
+
+          /// History 1
+          buildDropCapText(data.historyInfo1),
+
+          /// Pull Quote
+          _CollapsingPullQuoteImage(data: data, scrollPos: scrollPos),
+          buildHiddenCollectible(slot: 1),
+
+          /// History 2
+          buildText(data.historyInfo2),
+          _SectionDivider(scrollPos, sectionNotifier, index: 1),
+
+          /// Construction 1
+          buildDropCapText(data.constructionInfo1),
+          buildHiddenCollectible(slot: 2),
+          _YouTubeThumbnail(id: data.videoId),
+
+          /// Construction 2
+          buildText(data.constructionInfo2),
+          _SlidingImageStack(scrollPos: scrollPos, type: data.type),
+          _SectionDivider(scrollPos, sectionNotifier, index: 2),
+
+          /// Location
+          buildDropCapText(data.locationInfo),
+          // SB: Disable maps thumbnail in debug mode, as it pollutes the logs too much in the android simulator
+          if (kReleaseMode) ...[
+            _MapsThumbnail(data, height: 200),
+          ],
+          buildHiddenCollectible(slot: 3),
+        ],
+      ),
+    );
   }
 }
 

@@ -22,7 +22,7 @@ class WondersLogic {
   ];
 
   final int startYear = -3000;
-  final int endYear = 2000;
+  final int endYear = 2200;
 
   WonderData getData(WonderType value) {
     WonderData? result = all.firstWhereOrNull((w) => w.type == value);

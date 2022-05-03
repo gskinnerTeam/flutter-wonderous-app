@@ -18,10 +18,6 @@ class CollectibleData {
     icon = AssetImage('${ImagePaths.collectibleIcons}/$iconName.png');
   }
 
-  static CollectibleData? fromId(String? id) => id == null ? null : _collectibles.firstWhereOrNull((o) => o.id == id);
-  static List<CollectibleData> forWonder(WonderType wonder) => _collectibles.where((o) => o.wonder == wonder).toList(growable: false);
-  static List<CollectibleData> get all => _collectibles;
-
   final String title;
   final String imageUrl;
   final String imageUrlSmall;
@@ -39,7 +35,7 @@ class CollectibleData {
 // Note: look up a human readable page with:
 // https://www.metmuseum.org/art/collection/search/503940
 // where 503940 is the ID.
-List<CollectibleData> _collectibles = [
+List<CollectibleData> collectiblesData = [
   // chichenItza
   CollectibleData(
     title: 'Pendant',
@@ -247,5 +243,4 @@ List<CollectibleData> _collectibles = [
     imageUrlSmall: 'https://images.metmuseum.org/CRDImages/is/web-large/DP299944.jpg',
     iconName: 'scroll',
   ),
-
 ];

@@ -3,6 +3,8 @@ import 'package:flutter/widgets.dart';
 
 import '../fx.dart';
 
+/// Effect that animates a blur on the target between the specified begin and end values.
+/// Defaults to a blur radius of `begin=0, end=4`.
 @immutable
 class BlurFX extends AbstractFX<double> {
   const BlurFX({Duration? delay, Duration? duration, Curve? curve, double? begin, double? end})
@@ -26,6 +28,7 @@ class BlurFX extends AbstractFX<double> {
 }
 
 extension BlurFXExtensions<T> on FXManager<T> {
+  /// Adds a `.blur()` extension to [FXManager] ([FXAnimate] and [FXAnimateList]).
   T blur({Duration? delay, Duration? duration, Curve? curve, double? begin, double? end}) =>
       addFX(BlurFX(delay: delay, duration: duration, curve: curve, begin: begin, end: end));
 }

@@ -1,16 +1,21 @@
 part of '../timeline_screen.dart';
 
 class _BottomScrubber extends StatelessWidget {
-  const _BottomScrubber(this.scroller, {Key? key, required this.timelineMinSize, required this.size}) : super(key: key);
+  const _BottomScrubber(this.scroller,
+      {Key? key, required this.timelineMinSize, required this.size, required this.selectedWonder})
+      : super(key: key);
   final ScrollController? scroller;
   final double timelineMinSize;
   final double size;
+  final WonderType selectedWonder;
 
+  /// Calculate what fraction the scroller has travelled
   double _calculateScrollFraction(ScrollPosition? pos) {
     if (pos == null || pos.maxScrollExtent == 0) return 0;
     return pos.pixels / pos.maxScrollExtent;
   }
 
+  /// Calculates what fraction of the scroller is current visible
   double _calculateViewPortFraction(ScrollPosition? pos) {
     if (pos == null) return 1;
     final viewportSize = pos.viewportDimension;
@@ -36,21 +41,13 @@ class _BottomScrubber extends StatelessWidget {
       height: size,
       child: Stack(
         children: [
+          /// Timeline background
           Padding(
             padding: EdgeInsets.all(context.insets.sm),
-            child: WondersTimelineBuilder(
-              crossAxisGap: 8,
-              timelineBuilder: (_, data) {
-                return Container(
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(99),
-                    border: Border.all(color: context.colors.greyMedium),
-                  ),
-                );
-              },
-            ),
+            child: WondersTimelineBuilder(selectedWonders: [selectedWonder]),
           ),
+
+          /// Visible area, follows the position of scroller
           AnimatedBuilder(
             animation: scroller,
             builder: (_, __) {
@@ -59,6 +56,7 @@ class _BottomScrubber extends StatelessWidget {
               // Get current scroll offset and move the viewport to match
               double scrollFraction = _calculateScrollFraction(pos);
               double viewPortFraction = _calculateViewPortFraction(pos);
+              final scrubberAlign = Alignment(-1 + scrollFraction * 2, 0);
 
               return Positioned.fill(
                 child: Semantics(
@@ -68,12 +66,15 @@ class _BottomScrubber extends StatelessWidget {
                   child: GestureDetector(
                     behavior: HitTestBehavior.translucent,
                     onPanUpdate: _handleScrubberPan,
+                    onTap: _handleTap,
+
+                    /// Scrub area
                     child: Align(
-                      alignment: Alignment(-1 + scrollFraction * 2, 0),
+                      alignment: scrubberAlign,
                       child: FractionallySizedBox(
-                        child: ColoredBox(color: Colors.red.withOpacity(.3), child: Text('')),
                         widthFactor: viewPortFraction,
                         heightFactor: 1,
+                        child: _buildOutlineBox(context, scrubberAlign),
                       ),
                     ),
                   ),
@@ -85,4 +86,14 @@ class _BottomScrubber extends StatelessWidget {
       ),
     );
   }
+
+  Container _buildOutlineBox(BuildContext context, Alignment alignment) {
+    final borderColor = context.colors.white;
+    return Container(
+      decoration: BoxDecoration(border: Border.all(color: borderColor)),
+      child: Align(alignment: alignment, child: DashedLine(vertical: true)),
+    );
+  }
+
+  void _handleTap() {}
 }
