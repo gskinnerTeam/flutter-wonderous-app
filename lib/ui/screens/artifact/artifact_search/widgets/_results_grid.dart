@@ -10,11 +10,15 @@ class _ResultsGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepaintBoundary(
       child: ScrollDecorator.shadow(
-        color: context.colors.black.withOpacity(0.25),
         builder: (controller) => MasonryGridView.count(
           shrinkWrap: true,
           addAutomaticKeepAlives: false,
-          padding: EdgeInsets.symmetric(vertical: context.insets.xxs, horizontal: context.insets.sm),
+          padding: EdgeInsets.only(
+            top: context.insets.xxs,
+            bottom: context.insets.offset,
+            left: context.insets.sm,
+            right: context.insets.sm,
+          ),
           controller: controller,
           crossAxisCount: 2,
           mainAxisSpacing: context.insets.sm,

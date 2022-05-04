@@ -12,8 +12,8 @@ part 'widgets/_results_grid.dart';
 part 'widgets/_search_input.dart';
 
 /// TODO: GDS: refactor to match other views.
-/// TDOD: GDS: evaluate a different transition (Ex. vertical grow) for items
 /// TODO: GDS: add word boundaries to the search
+/// https://www.figma.com/file/814LAO3wAzMNbB7YYPZpnZ/Wireframes?node-id=785%3A7621#189648988
 
 /// User can use this screen to search the MET server for an artifact by name or timeline. Artifacts results will
 /// appear as images, which the user can click on to being up the details view for more information.
@@ -80,27 +80,34 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
         onTap: () => WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus(),
         child: Column(children: [
           SimpleHeader('Browse Artifacts', subtitle: wonder.title),
-          Gap(context.insets.sm),
+          Gap(context.insets.xs),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: context.insets.sm),
             child: _SearchInput(onSubmit: _handleSearchSubmitted),
           ),
-          Gap(context.insets.xs),
-          Row(children: [
-            Gap(context.insets.sm),
-            Text(
-              '${_searchResults.length} artifacts found, ${_filteredResults.length} in ',
-              style: context.textStyles.body,
-            ),
-            GestureDetector(
+          Gap(context.insets.sm),
+          Container(
+            color: context.colors.black,
+            padding: EdgeInsets.all(context.insets.xs * 1.5),
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Gap(context.insets.sm),
+              Text(
+                '${_searchResults.length} artifacts found, ${_filteredResults.length} in ',
+                textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+                style: context.textStyles.body.copyWith(color: context.colors.accent1),
+              ),
+              GestureDetector(
                 onTap: () => panelController.toggle(),
                 child: Text(
-                  'time range',
-                  style: context.textStyles.body.copyWith(decoration: TextDecoration.underline),
-                )),
-            Gap(context.insets.sm),
-          ]),
-          Gap(context.insets.xs),
+                  'timeframe',
+                  textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+                  style: context.textStyles.body
+                      .copyWith(decoration: TextDecoration.underline, color: context.colors.accent1),
+                ),
+              ),
+              Gap(context.insets.sm),
+            ]),
+          ),
           Expanded(
             child: RepaintBoundary(
               child: _ResultsGrid(
@@ -112,7 +119,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
         ]));
 
     return Stack(children: [
-      Positioned.fill(child: ColoredBox(color: context.colors.offWhite, child: content)),
+      Positioned.fill(child: ColoredBox(color: context.colors.greyStrong, child: content)),
       Positioned.fill(
         child: RepaintBoundary(
           child: ExpandingTimeRangeSelector(

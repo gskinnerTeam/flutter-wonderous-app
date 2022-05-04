@@ -102,8 +102,7 @@ class _ClosedTimeRange extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String text =
-        'Time range: ${StringUtils.formatYr(startYear.round())} - ${StringUtils.formatYr(endYear.round())}';
+    final String text = '${StringUtils.formatYr(startYear.round())} - ${StringUtils.formatYr(endYear.round())}';
 
     return Padding(
       padding: EdgeInsets.symmetric(vertical: context.insets.xs),
@@ -111,7 +110,7 @@ class _ClosedTimeRange extends StatelessWidget {
         children: [
           Text(text, style: context.textStyles.titleFont.copyWith(color: context.colors.offWhite)),
           Gap(context.insets.xs),
-          Icon(Icons.edit_outlined, color: context.colors.greyMedium, size: 14.0),
+          Icon(Icons.edit_calendar_outlined, color: context.colors.accent1, size: context.insets.md),
         ],
       ),
     );
@@ -135,8 +134,7 @@ class _OpenedTimeRange extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> _timelineGrid =
-        List.generate(5, (_) => Container(width: 1, color: context.colors.black));
+    List<Widget> _timelineGrid = List.generate(5, (_) => Container(width: 1, color: context.colors.black));
 
     final headingTextStyle = context.textStyles.title1.copyWith(color: context.colors.offWhite, fontSize: 18);
     final captionTextStyle = context.text.bodySmall.copyWith(color: context.colors.greyMedium);

@@ -87,21 +87,23 @@ class _SearchInput extends StatelessWidget {
   Widget _buildSuggestionsView(BuildContext context, onSelected, Iterable<String> results, BoxConstraints constraints) {
     return TopLeft(
       child: Container(
-        margin: EdgeInsets.only(top: context.insets.xs),
+        margin: EdgeInsets.only(top: context.insets.xxs),
         width: constraints.maxWidth,
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
               color: context.colors.black.withOpacity(0.25),
-              spreadRadius: 0,
               blurRadius: 4,
               offset: Offset(0, 4),
             ),
           ],
         ),
-        child: GlassCard(
+        child: Container(
           padding: EdgeInsets.all(context.insets.xxs),
-          color: context.colors.white.withOpacity(0.75),
+          decoration: BoxDecoration(
+            color: context.colors.white.withOpacity(0.9),
+            borderRadius: BorderRadius.circular(context.insets.xs),
+          ),
           child: ConstrainedBox(
             constraints: BoxConstraints(maxHeight: 120),
             child: ListView(
@@ -159,7 +161,7 @@ class _SearchInput extends StatelessWidget {
               prefixStyle: TextStyle(color: captionColor),
               focusedBorder: OutlineInputBorder(borderSide: BorderSide.none),
               enabledBorder: UnderlineInputBorder(borderSide: BorderSide.none),
-              hintText: 'Search type or material',
+              hintText: 'Search (ex. type or material)',
             ),
           ),
         ),
@@ -171,16 +173,16 @@ class _SearchInput extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.only(right: context.insets.xs),
               child: CircleIconBtn(
-                bgColor: context.colors.greyMedium.withOpacity(0.5),
+                bgColor: context.colors.caption,
                 color: context.colors.white,
                 icon: Icons.clear,
+                semanticLabel: 'clear search',
+                size: context.insets.lg,
+                iconSize: context.insets.sm,
                 onPressed: () {
                   textController.clear();
                   onSubmit('');
                 },
-                semanticLabel: 'clear search',
-                size: context.insets.lg,
-                iconSize: context.insets.sm,
               ),
             ),
           ),

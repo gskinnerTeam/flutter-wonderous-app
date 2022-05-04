@@ -58,9 +58,8 @@ class _ResultTileState extends State<_ResultTile> {
         (widget.data.aspectRatio == 0) ? (widget.data.id % 10) / 20 + 0.7 : widget.data.aspectRatio;
 
     final BoxDecoration decoration = BoxDecoration(
-      color: context.colors.white,
+      color: context.colors.black,
       borderRadius: BorderRadius.circular(context.insets.sm),
-      boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2))],
     );
 
     final Widget content = _imageWidth == 0
