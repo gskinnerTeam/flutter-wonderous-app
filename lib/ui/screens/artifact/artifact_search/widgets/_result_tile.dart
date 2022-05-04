@@ -17,15 +17,18 @@ class _ResultTileState extends State<_ResultTile> {
   CachedNetworkImageProvider? _image;
   ImageStream? _stream;
   int _imageWidth = 0, _imageHeight = 0;
+  bool _immediate = false;
 
   @override
   void initState() {
-    _listener = ImageStreamListener((info, _) {
+    _listener = ImageStreamListener((info, b) {
       setState(() {
         _imageWidth = info.image.width;
         _imageHeight = info.image.height;
+        _immediate = b;
       });
     });
+    _load();
     super.initState();
   }
 
@@ -64,7 +67,7 @@ class _ResultTileState extends State<_ResultTile> {
         ? Container(decoration: decoration)
         : FXBuilder(
             key: ValueKey(widget.data.id),
-            duration: 300.ms,
+            duration: _immediate ? 0.ms : 300.ms,
             builder: (_, ratio, __) => Container(
               decoration: decoration.copyWith(
                 image: DecorationImage(
