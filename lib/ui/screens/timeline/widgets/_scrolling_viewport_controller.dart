@@ -78,7 +78,6 @@ class _ScrollingViewportController extends ChangeNotifier {
   void _handleScaleStart(ScaleStartDetails _) => _zoomOnScaleStart = _zoom;
 
   void _handleScaleUpdate(ScaleUpdateDetails details) {
-    const double scaleMultiplier = 1.5;
-    setZoom(details.scale * _zoomOnScaleStart * scaleMultiplier);
+    setZoom(details.scale * _zoomOnScaleStart);
   }
 }

@@ -31,57 +31,54 @@ class WonderDetailsTabMenu extends StatelessWidget {
         ),
         // Buttons
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: context.insets.xs),
+          padding: EdgeInsets.symmetric(horizontal: context.insets.xs).copyWith(bottom: bottomInset),
           // TabButtons are a Stack with a row of icon buttons, and an illustrated home button sitting on top.
           // The home buttons shows / hides itself based on `showHomeBtn`
           // The row contains an animated placeholder gap which makes room for the icon as it transitions in.
-          child: SafeArea(
-            top: false,
-            child: Stack(
-              children: [
-                // Main tab btns + animated gap
-                Padding(
-                  padding: EdgeInsets.only(top: buttonInset),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      // Holds a gap for the Home button which pushed the other icons to the side
-                      AnimatedContainer(
-                          curve: Curves.easeOut,
-                          duration: context.times.fast,
-                          width: showHomeBtn ? homeBtnSize : 0,
-                          height: 0),
-                      _TabBtn(0, tabController, iconImg: 'editorial', label: 'information', color: iconColor),
-                      _TabBtn(1, tabController, iconImg: 'photos', label: 'images', color: iconColor),
-                      _TabBtn(2, tabController, iconImg: 'artifacts', label: 'artifact search', color: iconColor),
-                      _TabBtn(3, tabController, iconImg: 'timeline', label: 'timeline', color: iconColor),
-                    ],
-                  ),
+          child: Stack(
+            children: [
+              // Main tab btns + animated gap
+              Padding(
+                padding: EdgeInsets.only(top: buttonInset),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    // Holds a gap for the Home button which pushed the other icons to the side
+                    AnimatedContainer(
+                        curve: Curves.easeOut,
+                        duration: context.times.fast,
+                        width: showHomeBtn ? homeBtnSize : 0,
+                        height: 0),
+                    _TabBtn(0, tabController, iconImg: 'editorial', label: 'information', color: iconColor),
+                    _TabBtn(1, tabController, iconImg: 'photos', label: 'images', color: iconColor),
+                    _TabBtn(2, tabController, iconImg: 'artifacts', label: 'artifact search', color: iconColor),
+                    _TabBtn(3, tabController, iconImg: 'timeline', label: 'timeline', color: iconColor),
+                  ],
                 ),
+              ),
 
-                // Home btn, animates into view
-                TweenAnimationBuilder<double>(
-                  duration: context.times.fast,
-                  tween: Tween(begin: 0, end: showHomeBtn ? 1 : 0),
-                  child: _WonderHomeBtn(size: homeBtnSize, wonderType: wonderType),
-                  builder: (_, value, child) {
-                    final curvedValue = Curves.easeOut.transform(value);
-                    return Transform.scale(
-                      scale: .5 + .5 * curvedValue,
-                      child: Transform.translate(
-                        offset: Offset(0, 100 * (1 - curvedValue)),
-                        child: AnimatedOpacity(
-                          opacity: showHomeBtn ? 1 : 0,
-                          child: child!,
-                          duration: context.times.fast,
-                        ),
+              // Home btn, animates into view
+              TweenAnimationBuilder<double>(
+                duration: context.times.fast,
+                tween: Tween(begin: 0, end: showHomeBtn ? 1 : 0),
+                child: _WonderHomeBtn(size: homeBtnSize, wonderType: wonderType),
+                builder: (_, value, child) {
+                  final curvedValue = Curves.easeOut.transform(value);
+                  return Transform.scale(
+                    scale: .5 + .5 * curvedValue,
+                    child: Transform.translate(
+                      offset: Offset(0, 100 * (1 - curvedValue)),
+                      child: AnimatedOpacity(
+                        opacity: showHomeBtn ? 1 : 0,
+                        child: child!,
+                        duration: context.times.fast,
                       ),
-                    );
-                  },
-                  // Wonder Button
-                ),
-              ],
-            ),
+                    ),
+                  );
+                },
+                // Wonder Button
+              ),
+            ],
           ),
         ),
       ],

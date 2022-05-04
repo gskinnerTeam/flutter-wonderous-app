@@ -16,8 +16,8 @@ import 'package:wonders/ui/common/scaling_list_item.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/utils/context_utils.dart';
 import 'package:wonders/ui/wonder_illustrations/common/animated_clouds.dart';
-import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration.dart';
+import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_title_text.dart';
 
 part 'widgets/_app_bar.dart';
@@ -173,6 +173,10 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                       builder: (_, value, child) => value ? child! : SizedBox(height: 1000),
                       child: _ScrollingContent(widget.data, scrollPos: _scrollPos, sectionNotifier: _sectionIndex),
                     ),
+                  ),
+
+                  SliverList(
+                    delegate: SliverChildListDelegate.fixed([]),
                   ),
 
                   /// Bottom padding

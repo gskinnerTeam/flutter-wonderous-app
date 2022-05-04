@@ -46,7 +46,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
       // Determine min and max size of the timeline based on the size available to this widget
       const double scrubberSize = 70;
       const double minSize = 1200;
-      const double maxSize = 5000;
+      const double maxSize = 3000;
       return Container(
         color: context.colors.greyStrong,
         child: Padding(
@@ -71,12 +71,12 @@ class _TimelineScreenState extends State<TimelineScreen> {
 
               /// Mini Horizontal timeline, reacts to the state of the larger scrolling timeline,
               /// and changes the timelines scroll position on Hz drag
-              // _BottomScrubber(
-              //   _scroller,
-              //   size: scrubberSize,
-              //   timelineMinSize: minSize,
-              //   selectedWonder: widget.type,
-              // ),
+              _BottomScrubber(
+                _scroller,
+                size: scrubberSize,
+                timelineMinSize: minSize,
+                selectedWonder: widget.type,
+              ),
               //
               // // TODO: remove this slider when Timeline is complete
               // if (kDebugMode) ...[
@@ -89,7 +89,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
               //     },
               //   ),
               // ],
-              // Gap(context.insets.sm),
+              Gap(context.insets.sm),
             ],
           ),
         ),

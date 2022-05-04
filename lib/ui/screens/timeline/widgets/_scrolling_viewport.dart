@@ -39,7 +39,6 @@ class ScalingViewportState extends State<_ScrollingViewport> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (_, constraints) {
-      return Placeholder();
       // cache constraints, so they can be used to maintain the selected year while zooming
       controller._constraints = constraints;
       double vtPadding = constraints.maxHeight / 2;
@@ -48,7 +47,7 @@ class ScalingViewportState extends State<_ScrollingViewport> {
         // Handle pinch to zoom
         onScaleUpdate: controller._handleScaleUpdate,
         onScaleStart: controller._handleScaleStart,
-        behavior: HitTestBehavior.opaque,
+        behavior: HitTestBehavior.translucent,
         // Fade in entire view when first shown
         child: FXAnimate(
           fx: const [FadeFX()],
