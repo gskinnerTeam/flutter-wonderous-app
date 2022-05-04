@@ -69,7 +69,7 @@ class _ResultTileState extends State<_ResultTile> {
       child: BasicBtn(
         semanticLabel: widget.data.title,
         onPressed: () => widget.onPressed(widget.data),
-        child: Expanded(child: Hero(tag: widget.data.imageUrl, child: content)),
+        child: Expanded(child: content),
       ),
     );
   }
