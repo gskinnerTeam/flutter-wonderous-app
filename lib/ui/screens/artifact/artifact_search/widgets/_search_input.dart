@@ -1,7 +1,6 @@
 part of '../artifact_search_screen.dart';
 
 // TODO: GDS: evaluate search suggestions. Possibly generate alongside SearchData
-// TODO: GDS: add a clear button
 
 /// Autopopulating textfield used for searching for Artifacts by name.
 class _SearchInput extends StatelessWidget {
@@ -75,24 +74,6 @@ class _SearchInput extends StatelessWidget {
     List<String> results = _materialFilteringTerms.where((option) {
       return option.toLowerCase().startsWith(textEditingValue.text.toLowerCase());
     }).toList();
-
-    /*
-    // Use titles of artifacts that have already been loaded.
-    List<ArtifactData> allArtifacts = searchLogic.allLoadedArtifacts;
-    if (allArtifacts.isNotEmpty) {
-      // Get all artifacts that follow the same search convention.
-      List<ArtifactData> artifacts = allArtifacts.where((data) {
-        return data.title.toLowerCase().startsWith(textEditingValue.text.toLowerCase());
-      }).toList();
-
-      // Only use titles if there are less than 10 results.
-      if (artifacts.length <= 10) {
-        for (var artifact in artifacts) {
-          results.add(artifact.title);
-        }
-      }
-    }
-    */
 
     // Sort everything in alphabetical order.
     results.sort((a, b) {
@@ -182,6 +163,27 @@ class _SearchInput extends StatelessWidget {
             ),
           ),
         ),
+        Gap(context.insets.xs),
+        ValueListenableBuilder(
+          valueListenable: textController,
+          builder: (_, value, __) => Visibility(
+            visible: textController.value.text.isNotEmpty,
+            child: Padding(
+              padding: EdgeInsets.only(right: context.insets.xs),
+              child: CircleIconBtn(
+                bgColor: context.colors.greyMedium.withOpacity(0.5),
+                icon: Icons.clear,
+                onPressed: () {
+                  textController.clear();
+                  onSubmit('');
+                },
+                semanticLabel: 'clear search',
+                size: context.insets.lg,
+                iconSize: context.insets.sm,
+              ),
+            ),
+          ),
+        )
       ]),
     );
   }
