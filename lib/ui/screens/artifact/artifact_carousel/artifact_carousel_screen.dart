@@ -5,6 +5,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/highlights_data.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
+import 'package:wonders/ui/common/controls/simple_header.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_bg.dart';
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_image.dart';
@@ -22,9 +23,10 @@ class ArtifactCarouselScreen extends StatefulWidget {
 class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   final _pageViewportFraction = 0.5;
 
+  late final _wonderData = wondersLogic.getData(widget.type);
   late final _highlightedArtifactIds = wondersLogic.getData(widget.type).highlightArtifacts;
   // Used to cap white background dimensions.
-  static const double _maxElementWidth = 400;
+  static const double _maxElementWidth = 375;
   static const double _maxElementHeight = 700;
 
   // Locally store loaded artifacts.
@@ -90,12 +92,13 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   @override
   Widget build(BuildContext context) {
     double backdropWidth = math.min(context.widthPx, _maxElementWidth);
-    double backdropHeight = math.min(context.heightPx * 0.6, _maxElementHeight);
+    double backdropHeight = math.min(context.heightPx * 0.65, _maxElementHeight);
+
+    bool small = backdropHeight / _maxElementHeight < 0.7;
 
     return Container(
       color: context.colors.greyStrong,
       child: Stack(
-        fit: StackFit.expand,
         children: [
           // Background Image
           AnimatedSwitcher(
@@ -106,118 +109,109 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
             duration: context.times.fast,
           ),
 
-          // White space, covering bottom half.
-          BottomCenter(
-            child: Container(
-              width: backdropWidth,
-              height: backdropHeight,
-              decoration: BoxDecoration(
-                color: context.colors.offWhite,
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(backdropWidth),
-                ),
-              ),
-            ),
-          ),
-
-          // Gradient
-          BottomCenter(
-            child: VtGradient(
-              [Colors.transparent, context.colors.black.withOpacity(0.1)],
-              const [0, 1],
-              alignment: Alignment.topCenter,
-              height: context.insets.md,
-            ),
-          ),
-
-          // Carousel images
-          _loadedArtifacts.isEmpty
-              ? Container()
-              : PageView.builder(
-                  controller: _controller,
-                  itemCount: _highlightedArtifactIds.length * 10000,
-                  clipBehavior: Clip.none,
-                  onPageChanged: _changeArtifactIndex,
-                  itemBuilder: (context, index) {
-                    return ArtifactCarouselImage(
-                      index: index,
-                      currentPage: _currentPage,
-                      artifact: _loadedArtifacts[index % _loadedArtifacts.length],
-                      viewportFraction: _pageViewportFraction,
-                      bottomPadding: backdropHeight,
-                      maxWidth: backdropWidth,
-                      maxHeight: backdropHeight,
-                      onPressed: () => _handleArtifactTap(index),
-                    );
-                  },
-                ),
-
           // Header
-          TopCenter(
-            child: Padding(
-              padding: EdgeInsets.only(top: context.insets.lg),
-              child: Text(
-                'HIGHLIGHTS',
-                style: context.textStyles.h4.copyWith(color: context.colors.offWhite, fontSize: 14),
-              ),
+          Column(children: [
+            SimpleHeader(
+              'ARTIFACTS',
+              showBackBtn: false,
+              isTransparent: true,
             ),
-          ),
-
-          // Prev tap button
-          CenterLeft(
-            child: GestureDetector(
-              onTap: () => _handlePageJump(-1),
-              child: Container(width: context.widthPx / 6, height: context.heightPx, color: Colors.transparent),
-            ),
-          ),
-
-          // Next tap button
-          CenterRight(
-            child: GestureDetector(
-              onTap: () => _handlePageJump(1),
-              child: Container(width: context.widthPx / 6, height: context.heightPx, color: Colors.transparent),
-            ),
-          ),
-
-          BottomCenter(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: context.insets.md),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
+            Expanded(
+              child: Stack(
                 children: [
-                  Gap(context.insets.md),
-                  // Text Content
-                  _buildTextContent(backdropWidth),
-                  // Selection indicator
-                  _buildPageIndicator(context, _highlightedArtifactIds.length),
-                  // Big ol' button
-                  Gap(context.insets.xl),
-                  _buildBrowseBtn(context, backdropWidth),
-                  Gap(context.insets.lg),
+                  // White space, covering bottom half.
+                  BottomCenter(
+                    child: Container(
+                      width: backdropWidth,
+                      height: backdropHeight,
+                      decoration: BoxDecoration(
+                        color: context.colors.offWhite,
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(backdropWidth),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  // Gradient
+                  BottomCenter(
+                    child: VtGradient(
+                      [Colors.transparent, context.colors.black.withOpacity(0.1)],
+                      const [0, 1],
+                      alignment: Alignment.topCenter,
+                      height: context.insets.md,
+                    ),
+                  ),
+
+                  // Carousel images
+                  _loadedArtifacts.isEmpty
+                      ? Container()
+                      : PageView.builder(
+                          controller: _controller,
+                          itemCount: _highlightedArtifactIds.length * 10000,
+                          clipBehavior: Clip.none,
+                          onPageChanged: _changeArtifactIndex,
+                          itemBuilder: (context, index) {
+                            return ArtifactCarouselImage(
+                              index: index,
+                              currentPage: _currentPage,
+                              artifact: _loadedArtifacts[index % _loadedArtifacts.length],
+                              viewportFraction: _pageViewportFraction,
+                              bottomPadding: backdropHeight,
+                              maxWidth: backdropWidth,
+                              maxHeight: backdropHeight,
+                              onPressed: () => _handleArtifactTap(index),
+                            );
+                          },
+                        ),
+
+                  // Prev tap button
+                  CenterLeft(
+                    child: GestureDetector(
+                      onTap: () => _handlePageJump(-1),
+                      child: Container(width: context.widthPx / 6, height: context.heightPx, color: Colors.transparent),
+                    ),
+                  ),
+
+                  // Next tap button
+                  CenterRight(
+                    child: GestureDetector(
+                      onTap: () => _handlePageJump(1),
+                      child: Container(width: context.widthPx / 6, height: context.heightPx, color: Colors.transparent),
+                    ),
+                  ),
+
+                  // Text content
+                  BottomCenter(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: context.insets.xl),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Gap(context.insets.md),
+                          // Text Content
+                          _buildTextContent(context, backdropWidth, small),
+                          // Selection indicator
+                          _buildPageIndicator(context, _highlightedArtifactIds.length),
+                          // Big ol' button
+                          Gap(small ? context.insets.md : context.insets.xl),
+                          _buildBrowseBtn(context, backdropWidth),
+                          Gap(small ? context.insets.md : context.insets.lg),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
-            ),
-          ),
+            )
+          ]),
         ],
       ),
     );
   }
 
-  Widget _buildBrowseBtn(BuildContext context, double width) {
-    return Container(
-        width: width,
-        padding: EdgeInsets.symmetric(horizontal: context.insets.sm),
-        child: AppTextIconBtn(
-          'BROWSE ALL ARTIFACTS',
-          Icons.search,
-          expand: true,
-          padding: EdgeInsets.symmetric(vertical: context.insets.md),
-          onPressed: _handleSearchButtonTap,
-        ));
-  }
-
-  Widget _buildTextContent(double width) {
+  Widget _buildTextContent(BuildContext context, double width, bool small) {
     return IgnorePointer(
       child: Container(
         width: width,
@@ -228,7 +222,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
           children: [
             // Wonder Name
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: width * 0.14),
+              padding: EdgeInsets.symmetric(horizontal: width * 0.1),
               child: Text(
                 (_loadedArtifacts.isEmpty ? 'Just a moment...' : _currentArtifact?.culture ?? '').toUpperCase(),
                 style: context.textStyles.titleFont.copyWith(
@@ -241,7 +235,9 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            Gap(context.insets.md),
+            // Note; title's line height is 14px more than its size,
+            // so adding that to the gap should be padding enough.
+            Gap(context.insets.xxs),
 
             _loadedArtifacts.isEmpty
                 ? AppLoader()
@@ -252,14 +248,20 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         // Artifact Title
-                        Text(
-                          _currentArtifact?.title ?? '',
-                          overflow: TextOverflow.ellipsis,
-                          style: context.textStyles.h2.copyWith(color: context.colors.greyStrong),
-                          textAlign: TextAlign.center,
-                          maxLines: 2,
+                        SizedBox(
+                          height: small ? 84 : 92,
+                          child: Center(
+                            child: Text(
+                              (_currentArtifact?.title ?? ''),
+                              overflow: TextOverflow.ellipsis,
+                              style: context.textStyles.h2
+                                  .copyWith(color: context.colors.greyStrong, height: small ? 1.1 : null),
+                              textAlign: TextAlign.center,
+                              maxLines: 2,
+                            ),
+                          ),
                         ),
-                        Gap(context.insets.xs),
+                        Gap(context.insets.xxs),
 
                         // Time frame
                         Text(
@@ -271,7 +273,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                     ),
                   ),
 
-            Gap(context.insets.lg),
+            Gap(small ? context.insets.sm : context.insets.lg),
           ],
         ),
       ),
@@ -294,5 +296,17 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
             expansionFactor: 4),
       ),
     );
+  }
+
+  Widget _buildBrowseBtn(BuildContext context, double width) {
+    return SizedBox(
+        width: width,
+        child: AppTextIconBtn(
+          'Browse all artifacts',
+          Icons.search,
+          expand: true,
+          padding: EdgeInsets.symmetric(vertical: context.insets.sm),
+          onPressed: _handleSearchButtonTap,
+        ));
   }
 }

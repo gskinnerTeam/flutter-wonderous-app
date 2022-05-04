@@ -70,10 +70,10 @@ class _ImagePreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Additional scale of the main page, making it larger than the others.
-    const double mainPageScaleFactor = 0.2;
+    const double mainPageScaleFactor = 0.40;
 
     // Additional Y scale of the main page, making it elongated.
-    const double mainPageScaleFactorY = -0.05;
+    const double mainPageScaleFactorY = -0.1;
 
     // Border variables
     const double borderPadding = 4.0;
@@ -84,8 +84,8 @@ class _ImagePreview extends StatelessWidget {
     double baseHeightScale = 1 / context.heightPx;
 
     // Size of the pages themselves.
-    double pageWidth = baseWidthScale * maxWidth * 0.75;
-    double pageHeight = baseHeightScale * maxWidth * 0.4;
+    double pageWidth = baseWidthScale * maxWidth * 0.65;
+    double pageHeight = baseHeightScale * maxWidth * 0.45;
 
     // Get the current page offset value compared to other pages. -1 is left, 0 is middle, 1 is right, etc.
     // Note: This value can be in between whole numbers, like 0.25 and -0.75.
