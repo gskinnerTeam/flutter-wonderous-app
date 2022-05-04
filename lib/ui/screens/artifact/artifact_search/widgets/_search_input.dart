@@ -172,6 +172,7 @@ class _SearchInput extends StatelessWidget {
               padding: EdgeInsets.only(right: context.insets.xs),
               child: CircleIconBtn(
                 bgColor: context.colors.greyMedium.withOpacity(0.5),
+                color: context.colors.white,
                 icon: Icons.clear,
                 onPressed: () {
                   textController.clear();
