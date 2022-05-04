@@ -6,7 +6,6 @@ import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
 import 'package:wonders/ui/common/cards/glass_card.dart';
 import 'package:wonders/ui/common/controls/simple_header.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/expanding_time_range_selector.dart';
-import 'package:wonders/ui/common/controls/app_loader.dart';
 
 part 'widgets/_result_tile.dart';
 part 'widgets/_results_grid.dart';
@@ -77,38 +76,40 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
   @override
   Widget build(BuildContext context) {
     vizController.color = context.colors.accent1;
-    Widget content = Column(children: [
-      SimpleHeader('Browse Artifacts', subtitle: wonder.title),
-      Gap(context.insets.sm),
-      Padding(
-        padding: EdgeInsets.symmetric(horizontal: context.insets.sm),
-        child: _SearchInput(onSubmit: _handleSearchSubmitted),
-      ),
-      Gap(context.insets.xs),
-      Row(children: [
-        Gap(context.insets.sm),
-        Text(
-          '${_searchResults.length} artifacts found, ${_filteredResults.length} in ',
-          style: context.textStyles.body,
-        ),
-        GestureDetector(
-            onTap: () => panelController.toggle(),
-            child: Text(
-              'time range',
-              style: context.textStyles.body.copyWith(decoration: TextDecoration.underline),
-            )),
-        Gap(context.insets.sm),
-      ]),
-      Gap(context.insets.xs),
-      Expanded(
-        child: RepaintBoundary(
-          child: _ResultsGrid(
-            searchResults: _filteredResults,
-            onPressed: (o) => context.push(ScreenPaths.artifact(o.id.toString())),
+    Widget content = GestureDetector(
+        onTap: () => WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus(),
+        child: Column(children: [
+          SimpleHeader('Browse Artifacts', subtitle: wonder.title),
+          Gap(context.insets.sm),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: context.insets.sm),
+            child: _SearchInput(onSubmit: _handleSearchSubmitted),
           ),
-        ),
-      ),
-    ]);
+          Gap(context.insets.xs),
+          Row(children: [
+            Gap(context.insets.sm),
+            Text(
+              '${_searchResults.length} artifacts found, ${_filteredResults.length} in ',
+              style: context.textStyles.body,
+            ),
+            GestureDetector(
+                onTap: () => panelController.toggle(),
+                child: Text(
+                  'time range',
+                  style: context.textStyles.body.copyWith(decoration: TextDecoration.underline),
+                )),
+            Gap(context.insets.sm),
+          ]),
+          Gap(context.insets.xs),
+          Expanded(
+            child: RepaintBoundary(
+              child: _ResultsGrid(
+                searchResults: _filteredResults,
+                onPressed: (o) => context.push(ScreenPaths.artifact(o.id.toString())),
+              ),
+            ),
+          ),
+        ]));
 
     return Stack(children: [
       Positioned.fill(child: ColoredBox(color: context.colors.offWhite, child: content)),
