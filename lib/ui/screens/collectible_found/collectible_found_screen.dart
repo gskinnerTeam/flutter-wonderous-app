@@ -6,8 +6,6 @@ import 'package:wonders/ui/common/particles/particle_field.dart';
 part 'widgets/_animated_ribbon.dart';
 part 'widgets/_celebration_particles.dart';
 
-// TODO: GDS: limit title to 2 lines, with elipsis
-
 class CollectibleFoundScreen extends StatelessWidget {
   // CollectibleItem passes in a (theoretically) pre-loaded imageProvider.
   // we could check for load completion, and hold after introT, but that shouldn't be necessary in a real-world scenario.
