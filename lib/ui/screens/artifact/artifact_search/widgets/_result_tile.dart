@@ -2,35 +2,74 @@ part of '../artifact_search_screen.dart';
 
 // TODO: GDS: update the Hero tag.
 
-class _ResultTile extends StatelessWidget {
+class _ResultTile extends StatefulWidget {
   const _ResultTile({Key? key, required this.onPressed, required this.data}) : super(key: key);
 
   final void Function(SearchData data) onPressed;
   final SearchData data;
 
   @override
+  State<_ResultTile> createState() => _ResultTileState();
+}
+
+class _ResultTileState extends State<_ResultTile> {
+  late final CachedNetworkImageProvider _image;
+  late final ImageStreamListener _listener;
+  late final ImageStream _stream;
+  int _imageWidth = 0, _imageHeight = 0;
+
+  @override
+  void initState() {
+    _image = CachedNetworkImageProvider(widget.data.imageUrl);
+    _stream = _image.resolve(ImageConfiguration());
+    _listener = ImageStreamListener((info, _) {
+      setState(() {
+        _imageWidth = info.image.width;
+        _imageHeight = info.image.height;
+      });
+    });
+    _stream.addListener(_listener);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _stream.removeListener(_listener);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: BoxConstraints(maxHeight: context.widthPx * 0.8),
-      child: BasicBtn(
-        semanticLabel: data.title,
-        onPressed: () => onPressed(data),
-        child: Expanded(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(context.insets.xs),
-            child: Hero(
-              tag: data.imageUrl,
-              child: CachedNetworkImage(
-                imageUrl: data.imageUrl,
-                fit: BoxFit.cover,
-                placeholder: (_, __) => AspectRatio(
-                  aspectRatio: 1,
-                  child: ColoredBox(color: context.colors.greyMedium.withOpacity(0.1)),
+    double aspectRatio = widget.data.aspectRatio;
+    if (aspectRatio == 0) aspectRatio = (widget.data.id % 10) / 20 + 0.7;
+
+    BoxDecoration decoration = BoxDecoration(
+      color: context.colors.white,
+      borderRadius: BorderRadius.circular(context.insets.sm),
+      boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2))],
+    );
+
+    Widget content = _imageWidth == 0
+        ? Container(decoration: decoration)
+        : FXBuilder(
+            duration: 300.ms,
+            builder: (_, ratio, __) => Container(
+              decoration: decoration.copyWith(
+                image: DecorationImage(
+                  image: _image,
+                  opacity: ratio,
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
-          ),
-        ),
+          );
+
+    return AspectRatio(
+      aspectRatio: aspectRatio,
+      child: BasicBtn(
+        semanticLabel: widget.data.title,
+        onPressed: () => widget.onPressed(widget.data),
+        child: Expanded(child: Hero(tag: widget.data.imageUrl, child: content)),
       ),
     );
   }
