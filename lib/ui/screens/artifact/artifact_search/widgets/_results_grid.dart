@@ -13,12 +13,7 @@ class _ResultsGrid extends StatelessWidget {
         builder: (controller) => MasonryGridView.count(
           shrinkWrap: true,
           addAutomaticKeepAlives: false,
-          padding: EdgeInsets.only(
-            top: context.insets.xxs,
-            bottom: context.insets.offset,
-            left: context.insets.sm,
-            right: context.insets.sm,
-          ),
+          padding: EdgeInsets.all(context.insets.sm).copyWith(bottom: context.insets.offset),
           controller: controller,
           crossAxisCount: 2,
           mainAxisSpacing: context.insets.sm,
