@@ -12,8 +12,8 @@ part 'widgets/_results_grid.dart';
 part 'widgets/_search_input.dart';
 
 /// TODO: GDS: refactor to match other views.
-/// TODO: GDS: Performance optimizations. Ex repaintboundaries.
 /// TDOD: GDS: evaluate a different transition (Ex. vertical grow) for items
+/// TODO: GDS: add word boundaries to the search
 
 /// User can use this screen to search the MET server for an artifact by name or timeline. Artifacts results will
 /// appear as images, which the user can click on to being up the details view for more information.

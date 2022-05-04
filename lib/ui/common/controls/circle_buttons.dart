@@ -105,6 +105,7 @@ class _SafeAreaWithPadding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      bottom: false,
       child: Padding(
         padding: EdgeInsets.all(context.insets.sm),
         child: child,

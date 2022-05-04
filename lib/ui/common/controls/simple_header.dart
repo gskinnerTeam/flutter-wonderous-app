@@ -11,6 +11,7 @@ class SimpleHeader extends StatelessWidget {
     return ColoredBox(
       color: context.colors.greyStrong,
       child: SafeArea(
+        bottom: false,
         child: Row(children: [
           BackBtn().safe(),
           Flexible(
@@ -21,7 +22,6 @@ class SimpleHeader extends StatelessWidget {
                   title.toUpperCase(),
                   style: context.textStyles.h4.copyWith(color: context.colors.offWhite),
                 ),
-                if (subtitle != null) Gap(context.insets.xxs),
                 if (subtitle != null)
                   Text(
                     subtitle!.toUpperCase(),
