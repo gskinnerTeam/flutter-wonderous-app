@@ -13,50 +13,62 @@ class _ResultTile extends StatefulWidget {
 }
 
 class _ResultTileState extends State<_ResultTile> {
-  late final CachedNetworkImageProvider _image;
   late final ImageStreamListener _listener;
-  late final ImageStream _stream;
+  CachedNetworkImageProvider? _image;
+  ImageStream? _stream;
   int _imageWidth = 0, _imageHeight = 0;
 
   @override
   void initState() {
-    _image = CachedNetworkImageProvider(widget.data.imageUrl);
-    _stream = _image.resolve(ImageConfiguration());
     _listener = ImageStreamListener((info, _) {
       setState(() {
         _imageWidth = info.image.width;
         _imageHeight = info.image.height;
       });
     });
-    _stream.addListener(_listener);
     super.initState();
   }
 
   @override
   void dispose() {
-    _stream.removeListener(_listener);
+    _stream?.removeListener(_listener);
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) {
-    double aspectRatio = widget.data.aspectRatio;
-    if (aspectRatio == 0) aspectRatio = (widget.data.id % 10) / 20 + 0.7;
+  void didUpdateWidget(_ResultTile oldWidget) {
+    if (oldWidget.data != widget.data) _load();
+    super.didUpdateWidget(oldWidget);
+  }
 
-    BoxDecoration decoration = BoxDecoration(
+  void _load() {
+    _stream?.removeListener(_listener);
+    _imageWidth = _imageHeight = 0;
+    _image = CachedNetworkImageProvider(widget.data.imageUrl);
+    _stream = _image!.resolve(ImageConfiguration());
+    _stream!.addListener(_listener);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final double aspectRatio =
+        (widget.data.aspectRatio == 0) ? (widget.data.id % 10) / 20 + 0.7 : widget.data.aspectRatio;
+
+    final BoxDecoration decoration = BoxDecoration(
       color: context.colors.white,
       borderRadius: BorderRadius.circular(context.insets.sm),
       boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2))],
     );
 
-    Widget content = _imageWidth == 0
+    final Widget content = _imageWidth == 0
         ? Container(decoration: decoration)
         : FXBuilder(
+            key: ValueKey(widget.data.id),
             duration: 300.ms,
             builder: (_, ratio, __) => Container(
               decoration: decoration.copyWith(
                 image: DecorationImage(
-                  image: _image,
+                  image: _image!,
                   opacity: ratio,
                   fit: BoxFit.cover,
                 ),
