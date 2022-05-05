@@ -60,8 +60,8 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
     if (_query.isEmpty) {
       _searchResults = wonder.searchData;
     } else {
-      // TODO: improve this search. AND? OR?
-      String q = _query.toLowerCase();
+      // this is a somewhat naive search, but is sufficient for demoing the UI:
+      final RegExp q = RegExp('\\b${_query}s?\\b', caseSensitive: false);
       _searchResults = wonder.searchData.where((o) => o.title.contains(q) || o.keywords.contains(q)).toList();
     }
     vizController.value = _searchResults;
