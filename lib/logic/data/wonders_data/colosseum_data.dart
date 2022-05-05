@@ -14,7 +14,7 @@ final colosseumData = WonderData(
   videoId: 'GXoEpNjgKzg',
   startYr: 70,
   endYr: 80,
-  artifactStartYr: 1,
+  artifactStartYr: 0,
   artifactEndYr: 500,
   artifactCulture: 'Roman',
   artifactGeolocation: 'Roman Empire',

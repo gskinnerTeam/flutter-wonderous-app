@@ -15,7 +15,7 @@ final petraData = WonderData(
   startYr: -312,
   endYr: 100,
   artifactStartYr: -500,
-  artifactEndYr: 500,
+  artifactEndYr: 200,
   artifactCulture: 'Nabataean',
   artifactGeolocation: 'Levant',
   lat: 30.328830750209903,

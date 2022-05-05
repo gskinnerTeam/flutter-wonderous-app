@@ -14,7 +14,7 @@ final greatWallData = WonderData(
   videoId: 'do1Go22Wu8o',
   startYr: -700,
   endYr: 1644,
-  artifactStartYr: 1350,
+  artifactStartYr: -700,
   artifactEndYr: 1650,
   artifactCulture: 'Chinese',
   artifactGeolocation: 'China',
