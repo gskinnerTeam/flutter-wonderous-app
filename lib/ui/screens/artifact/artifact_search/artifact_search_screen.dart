@@ -83,7 +83,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
           Gap(context.insets.xs),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: context.insets.sm),
-            child: _SearchInput(onSubmit: _handleSearchSubmitted),
+            child: _SearchInput(onSubmit: _handleSearchSubmitted, wonder: wonder),
           ),
           Gap(context.insets.sm),
           Container(

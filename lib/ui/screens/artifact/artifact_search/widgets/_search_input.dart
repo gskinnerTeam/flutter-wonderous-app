@@ -4,52 +4,9 @@ part of '../artifact_search_screen.dart';
 
 /// Autopopulating textfield used for searching for Artifacts by name.
 class _SearchInput extends StatelessWidget {
-  _SearchInput({Key? key, required this.onSubmit}) : super(key: key);
+  const _SearchInput({Key? key, required this.onSubmit, required this.wonder}) : super(key: key);
   final void Function(String) onSubmit;
-
-  final List<String> _materialFilteringTerms = [
-    'Axes',
-    'Arrowheads',
-    'Belts',
-    'Blades',
-    'Books',
-    'Bowls',
-    'Busts',
-    'Calligraphy',
-    'Chisels',
-    'Costume',
-    'Cups',
-    'Daggers',
-    'Dishes',
-    'Earrings',
-    'Engraving',
-    'Figures',
-    'Flute',
-    'Furniture',
-    'Glass',
-    'Jars',
-    'Jewelry',
-    'Lamps',
-    'Masks',
-    'Metalwork',
-    'Musical Instruments',
-    'Ornaments',
-    'Paintings',
-    'Pendants',
-    'Plate',
-    'Pottery',
-    'Reliefs',
-    'Rings',
-    'Sarcophagi',
-    'Scepters',
-    'Statues',
-    'Stone', //
-    'Swords',
-    'Textiles',
-    'Vases',
-    'Vessels',
-    'Whistles',
-  ];
+  final WonderData wonder;
 
   @override
   Widget build(BuildContext context) {
@@ -66,19 +23,14 @@ class _SearchInput extends StatelessWidget {
   }
 
   Iterable<String> _getSuggestions(TextEditingValue textEditingValue) {
-    if (textEditingValue.text == '') {
-      return const Iterable<String>.empty();
-    }
+    if (textEditingValue.text == '') return [];
 
-    // Start with a list of results from a prebaked list of strings.
-    List<String> results = _materialFilteringTerms.where((option) {
-      return option.toLowerCase().startsWith(textEditingValue.text.toLowerCase());
+    List<String> results = wonder.searchSuggestions.where((str) {
+      return str.startsWith(textEditingValue.text.toLowerCase());
     }).toList();
 
     // Sort everything in alphabetical order.
-    results.sort((a, b) {
-      return a.toLowerCase().compareTo(b.toLowerCase());
-    });
+    results.sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
 
     // Return the autocomplete results.
     return results;
@@ -105,7 +57,7 @@ class _SearchInput extends StatelessWidget {
             borderRadius: BorderRadius.circular(context.insets.xs),
           ),
           child: ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: 120),
+            constraints: BoxConstraints(maxHeight: 190),
             child: ListView(
               padding: EdgeInsets.zero,
               shrinkWrap: true,
@@ -123,7 +75,7 @@ class _SearchInput extends StatelessWidget {
       onPressed: onPressed,
       child: Expanded(
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: context.insets.xxs, horizontal: context.insets.xs),
+          padding: EdgeInsets.all(context.insets.xs),
           child: Text(
             suggestion,
             overflow: TextOverflow.ellipsis,

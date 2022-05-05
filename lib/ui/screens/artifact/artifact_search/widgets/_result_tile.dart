@@ -1,6 +1,6 @@
 part of '../artifact_search_screen.dart';
 
-// TODO: GDS: update the Hero tag.
+// TODO: GDS: handle image errors.
 
 class _ResultTile extends StatefulWidget {
   const _ResultTile({Key? key, required this.onPressed, required this.data}) : super(key: key);

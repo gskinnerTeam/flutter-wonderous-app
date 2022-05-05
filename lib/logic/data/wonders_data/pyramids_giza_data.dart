@@ -7,6 +7,7 @@ part 'search/pyramids_giza_search_data.dart';
 
 final pyramidsGizaData = WonderData(
   searchData: _searchData, // included as a part from ./search/
+  searchSuggestions: _searchSuggestions, // included as a part from ./search/
   type: WonderType.pyramidsGiza,
   title: 'Pyramids of Giza',
   subTitle: 'The ancient wonder',

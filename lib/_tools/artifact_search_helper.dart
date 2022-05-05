@@ -8,6 +8,8 @@ import 'package:http/http.dart' as http;
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
 
+// TODO: GDS: Possibly load images, discard any that fail, and fill in aspectRatio
+
 final int minYear = wondersLogic.startYear;
 final int maxYear = wondersLogic.endYear;
 const int maxRequests = 32;
@@ -32,7 +34,7 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
   List<int> idQueue = <int>[];
   HashSet<int> idSet = HashSet();
   HashMap<String, List<int>> errors = HashMap();
-  List<_Entry> entries = <_Entry>[];
+  List<SearchData> entries = <SearchData>[];
 
   http.Client _http = http.Client();
   int activeRequestCount = 0;
@@ -61,7 +63,9 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
     // reset:
     errors.clear();
     log.clear();
-    timer..reset()..start();
+    timer
+      ..reset()
+      ..start();
 
     if (selectedWonder == 'All') {
       wonderQueue = wondersLogic.all.toList();
@@ -113,7 +117,7 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
     }
     idQueue = idSet.toList();
 
-    _log('    - ${ids.length} artifacts found, added $foundCount (${ids.length - foundCount} duplicates)');
+    _log('    - ${ids.length} artifacts found, added $foundCount');
 
     _nextQuery();
   }
@@ -172,12 +176,12 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
     imageUrlSmall = imageUrlSmall.substring(SearchData.baseImagePath.length);
     imageUrlSmall = imageUrlSmall.replaceFirst('/web-large/', '/mobile-large/');
 
-    _Entry entry = _Entry(
-      id: id,
-      year: year,
-      title: json['title'],
-      imageUrlSmall: imageUrlSmall,
-      keywords: _getKeywords(json),
+    SearchData entry = SearchData(
+      year,
+      id,
+      _escape(json['title']),
+      _getKeywords(json),
+      imageUrlSmall,
     );
     entries.add(entry);
     return null;
@@ -185,8 +189,10 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
 
   String _getKeywords(Map json) {
     String str = '${json['objectName'] ?? ''}|${json['medium'] ?? ''}|${json['classification'] ?? ''}';
-    return str.toLowerCase().replaceAll("'", "\\'").replaceAll('\r', ' ').replaceAll('\n', ' ');
+    return _escape(str.toLowerCase());
   }
+
+  String _escape(String str) => str.replaceAll("'", "\\'").replaceAll('\r', ' ').replaceAll('\n', ' ');
 
   void _completeId() {
     --activeRequestCount;
@@ -200,22 +206,23 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
   Future<void> _completeIds() async {
     _log('- Created ${entries.length} entries');
     // remove excess > maxIds?
-    entries.sort((_Entry a, _Entry b) => a.year - b.year);
+    entries.sort((SearchData a, SearchData b) => a.year - b.year);
 
     // build output:
     String entryStr = '';
     for (int i = 0; i < entries.length; i++) {
-      _Entry o = entries[i];
-      entryStr += "  SearchData(${o.year}, ${o.id}, '${o.title}', '${o.keywords}', '${o.imageUrlSmall}'),\n";
+      entryStr += '  ${entries[i].write()},\n';
     }
 
-    String output = '// ${wonder!.title} (${entries.length})\nList<SearchData> _searchData = [\n$entryStr];';
-    
+    String output = '// ${wonder!.title} (${entries.length})\nList<SearchData> _searchData = const [\n$entryStr];';
+
+    String suggestions = _getSuggestions(entries);
+
     Directory dir = await getApplicationDocumentsDirectory();
     String type = wonder!.type.toString().split('.').last;
     String path = '${dir.path}/$type.dart';
     File file = File(path);
-    await file.writeAsString(output);
+    await file.writeAsString('$suggestions\n\n$output');
     _log('- Wrote file: $type.dart');
     debugPrint(path);
     _nextWonder();
@@ -224,7 +231,9 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
   void _complete() {
     _log('\n----------\nCompleted with ${errors.length} unique errors in ${timer.elapsed.inSeconds} seconds.');
     String errorStr = '';
-    errors.forEach((key, value) { errorStr += '$key (${value.length})\n'; });
+    errors.forEach((key, value) {
+      errorStr += '$key (${value.length})\n';
+    });
     _log(errorStr);
     timer.stop();
     _http.close();
@@ -238,6 +247,49 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
   void _logError(int id, String str) {
     if (!errors.containsKey(str)) errors[str] = [];
     errors[str]!.add(id);
+  }
+
+  void _runSuggestions() {
+    if (selectedWonder == 'All') {
+      print('select a single wonder');
+    } else {
+      WonderData wonder = wondersLogic.all.firstWhere((o) => o.title == selectedWonder);
+      print(_getSuggestions(wonder.searchData));
+    }
+  }
+
+  String _getSuggestions(List<SearchData> data) {
+    HashMap<String, int> counts = HashMap<String, int>();
+    HashSet<String> ignore = HashSet<String>();
+
+    // iterate through all items, and count the number of times keywords show up
+    // but don't count multiple times for a single item
+    for (int i = 0; i < data.length; i++) {
+      ignore.clear();
+      ignore.addAll(['and', 'the', 'with', 'from', 'for', 'form']);
+      SearchData o = data[i];
+      RegExp re = RegExp(r'\b\w{3,}\b');
+      List<Match> matches = re.allMatches(o.title).toList() + re.allMatches(o.keywords).toList();
+      for (int j = 0; j < matches.length; j++) {
+        String match = matches[j].group(0)!.toLowerCase();
+        if (ignore.contains(match)) continue;
+        ignore.add(match);
+        counts[match] = (counts[match] ?? 0) + 1;
+      }
+    }
+
+    String str = 'List<String> _searchSuggestions = const [';
+
+    int minCount = min(10, max(3, data.length / 60)).round();
+    int suggestionCount = 0;
+    counts.forEach((key, value) {
+      if (value >= minCount) {
+        str += "'$key', ";
+        suggestionCount++;
+      }
+    });
+    _log('- extracted $suggestionCount keyword suggestions');
+    return '// Search suggestions ($suggestionCount)\n$str];';
   }
 
   Widget _buildContent(BuildContext context) {
@@ -262,7 +314,8 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
               onChanged: (s) => setState(() => maxPriority = int.parse(s)),
             ),
             Gap(16),
-            MaterialButton(onPressed: () => _run(), child: Text('RUN')),
+            MaterialButton(onPressed: () => _run(), child: Text('RUN ALL')),
+            MaterialButton(onPressed: () => _runSuggestions(), child: Text('RUN SUGGESTIONS')),
           ]),
         ),
         Gap(40),
@@ -347,19 +400,3 @@ const Map<WonderType, List<String>> queries = {
     'geoLocation=India&q=mughal', // 399,
   ],
 };
-
-class _Entry {
-  const _Entry({
-    required this.id,
-    required this.keywords,
-    required this.title,
-    required this.year,
-    required this.imageUrlSmall,
-  });
-
-  final int id;
-  final String keywords;
-  final String title;
-  final int year;
-  final String imageUrlSmall;
-}

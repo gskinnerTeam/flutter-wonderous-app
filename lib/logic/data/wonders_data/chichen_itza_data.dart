@@ -7,6 +7,7 @@ part 'search/chichen_itza_search_data.dart';
 
 final chichenItzaData = WonderData(
   searchData: _searchData,  // included as a part from ./search/
+  searchSuggestions: _searchSuggestions,  // included as a part from ./search/
   type: WonderType.chichenItza,
   title: 'Chichen Itza',
   subTitle: 'The Great Mayan City',

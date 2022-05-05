@@ -1,5 +1,8 @@
 part of '../chichen_itza_data.dart';
 
+// Search suggestions (58)
+List<String> _searchSuggestions = const ['yoke', 'stamp', 'hacha', 'male', 'female', 'figure', 'andesite', 'cylindrical', 'chisel', 'earflare', 'relief', 'model', 'plate', 'ornament', 'red', 'censer', 'jade', 'slip', 'gold', 'implements', 'musical', 'jar', 'stone', 'sculpture', 'pendant', 'rattle', 'monkey', 'seated', 'mythological', 'beads', 'ceramics', 'ornaments', 'pigment', 'metal', 'instruments', 'deity', 'head', 'ceramic', 'shell', 'containers', 'flint', 'bird', 'double', 'bead', 'ochre', 'carved', 'face', 'jadeite', 'tripod', 'tubular', 'vessel', 'celt', 'bowl', 'eagle', 'paint', 'limestone', 'scene', 'lid', ];
+
 // Chichen Itza (186)
 List<SearchData> _searchData = [
   SearchData(-1050, 316302, 'Bowl (Tecomate)', 'bowl|ceramic|ceramics-containers', 'ao/mobile-large/DP23126.jpg'),

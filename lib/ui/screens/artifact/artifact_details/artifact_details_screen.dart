@@ -14,7 +14,8 @@ part 'widgets/_content.dart';
 part 'widgets/_artifact_data_row.dart';
 
 // TODO: GDS: add list shadow
-// TODO: add safearea, and min padding
+// TODO: GDS: add safearea, and min padding
+// TODO: GDS: image error handling
 
 class ArtifactDetailsScreen extends StatefulWidget {
   final String artifactId;
