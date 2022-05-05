@@ -277,7 +277,7 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
     // but don't count multiple times for a single item
     for (int i = 0; i < data.length; i++) {
       ignore.clear();
-      ignore.addAll(['and', 'the', 'with', 'from', 'for', 'form', 'probably', 'back', 'front', 'under', 'his', 'one', 'two', 'three', 'four']);
+      ignore.addAll(['and', 'the', 'with', 'from', 'for', 'form', 'probably', 'back', 'front', 'under', 'his', 'one', 'two', 'three', 'four', 'part', 'called', 'over']);
       SearchData o = data[i];
       RegExp re = RegExp(r'\b\w{3,}\b');
       List<Match> matches = re.allMatches(o.title).toList() + re.allMatches(o.keywords).toList();
@@ -386,8 +386,11 @@ const Map<WonderType, List<String>> queries = {
   ],
   WonderType.colosseum: [
     // 1 500
-    '!dateBegin=1&dateEnd=500&geoLocation=Roman Empire&q=imperial rome', // 408
+    //'!geoLocation=Rome&q=Rome',
+    //'geoLocation=Roman Empire&q=roman', // 408
+    //'!q=colosseum',
     'artistOrCulture=true&q=roman', // 6068
+    //'!dateBegin=-&dateEnd=500&geoLocation=Roman Empire&q=imperial rome', // 408
   ],
   WonderType.greatWall: [
     // -700 1650
@@ -396,12 +399,14 @@ const Map<WonderType, List<String>> queries = {
   ],
   WonderType.machuPicchu: [
     // 1400 1600
+    '!artistOrCulture=true&geoLocation=Peru&q=quechua',
     'geoLocation=South%20America&q=inca', // 344
   ],
   WonderType.petra: [
     // -500 500
-    'artistOrCulture=true&q=nabataean', // 50
-    'geoLocation=Levant&q=levant', // 346
+    '!artistOrCulture=true&q=nabataean', // 50
+    '!geoLocation=Levant&q=levant', // 346
+    'geoLocation=Asia&q=Arabia',
   ],
   WonderType.pyramidsGiza: [
     // -2600 -2500
@@ -410,6 +415,7 @@ const Map<WonderType, List<String>> queries = {
   ],
   WonderType.tajMahal: [
     // 1600 1700
-    'geoLocation=India&q=mughal', // 399,
+    '!geoLocation=India&q=mughal', // 399,
+    'geoLocation=India&q=India',
   ],
 };
