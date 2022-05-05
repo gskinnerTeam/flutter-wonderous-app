@@ -1,6 +1,5 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
-import 'package:wonders/logic/data/wonders_data/mock_data.dart';
 import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
 
 part 'search/chichen_itza_search_data.dart';
@@ -21,7 +20,6 @@ final chichenItzaData = WonderData(
   artifactGeolocation: 'North and Central America',
   lat: 20.68346184201756,
   lng: -88.56769676930931,
-  imageIds: mockImageIds,
   unsplashCollectionId: 'SUK0tuMnLLw',
   quote1: 'The Beauty Between',
   quote2: 'the Heavens\nand the\nUnderworld',

@@ -1,8 +1,12 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
-import 'package:wonders/logic/data/wonders_data/mock_data.dart';
+import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
+
+part 'search/machu_picchu_search_data.dart';
 
 final machuPicchuData = WonderData(
+  searchData: _searchData, // included as a part from ./search/
+  searchSuggestions: _searchSuggestions, // included as a part from ./search/
   type: WonderType.machuPicchu,
   title: 'Machu Picchu',
   subTitle: 'Citadel of the Inca',
@@ -16,7 +20,6 @@ final machuPicchuData = WonderData(
   artifactGeolocation: 'South America',
   lat: -13.162690683637758,
   lng: -72.54500778824891,
-  imageIds: mockImageIds,
   unsplashCollectionId: 'wUhgZTyUnl8',
   quote1: 'Few romances can ever surpass',
   quote2: 'that of the granite citadel',

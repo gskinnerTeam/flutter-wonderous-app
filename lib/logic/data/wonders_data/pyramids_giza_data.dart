@@ -1,6 +1,5 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
-import 'package:wonders/logic/data/wonders_data/mock_data.dart';
 import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
 
 part 'search/pyramids_giza_search_data.dart';
@@ -21,7 +20,6 @@ final pyramidsGizaData = WonderData(
   artifactGeolocation: 'Egypt',
   lat: 29.976111,
   lng: 31.132778,
-  imageIds: mockImageIds,
   unsplashCollectionId: 'CSEvB5Tza9E',
   quote1: 'The tallest structures on earth',
   quote2: 'until the advent of modern skyscrapers',

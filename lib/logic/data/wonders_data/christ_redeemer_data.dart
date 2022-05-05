@@ -1,8 +1,12 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
-import 'package:wonders/logic/data/wonders_data/mock_data.dart';
+import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
+
+part 'search/christ_redeemer_search_data.dart';
 
 final christRedeemerData = WonderData(
+  searchData: _searchData, // included as a part from ./search/
+  searchSuggestions: _searchSuggestions, // included as a part from ./search/
   type: WonderType.christRedeemer,
   title: 'Christ the Redeemer',
   subTitle: 'A symbol of peace',
@@ -16,7 +20,6 @@ final christRedeemerData = WonderData(
   artifactGeolocation: 'Brazil',
   lat: -22.95238891944396,
   lng: -43.21045520611561,
-  imageIds: mockImageIds,
   unsplashCollectionId: 'dPgX5iK8Ufo',
   quote1: 'The perfect union between',
   quote2: 'nature and architecture',
