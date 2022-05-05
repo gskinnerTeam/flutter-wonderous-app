@@ -58,7 +58,7 @@ class _ResultTileState extends State<_ResultTile> {
   @override
   Widget build(BuildContext context) {
     final double aspectRatio =
-        (widget.data.aspectRatio == 0) ? (widget.data.id % 10) / 15 + 0.6 : widget.data.aspectRatio;
+        (widget.data.aspectRatio == 0) ? (widget.data.id % 10) / 15 + 0.6 : max(0.5, widget.data.aspectRatio);
 
     final BoxDecoration decoration = BoxDecoration(
       color: context.colors.black,
