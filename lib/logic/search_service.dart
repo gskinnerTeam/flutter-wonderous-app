@@ -1,129 +1,30 @@
-import 'dart:convert';
-import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/logic/common/http_client.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
-import 'package:wonders/logic/data/artifact_search_options.dart';
-import 'package:wonders/logic/data/department_data.dart';
 
 class SearchService {
   final String _baseMETUrl = 'https://collectionapi.metmuseum.org/public/collection/v1';
 
-  Future<ServiceResult<List<String>?>> getObjectIDList({DateTime? date, String? departmentIds}) async {
-    HttpResponse response = await _request('objects', urlParams: {
-      'metadataDate': date, // in the format YYYY-MM-DD
-      'departmentIds': departmentIds // use | as delimiter
-    });
-    return ServiceResult(response, _parseObjectIds);
-  }
-
-  Future<ServiceResult<List<DepartmentData>?>> getDepartmentList() async {
-    HttpResponse? response = await _request('departments');
-    return ServiceResult(response, _parseDepartmentData);
-  }
-
   Future<ServiceResult<ArtifactData?>> getObjectByID(String id) async {
-    HttpResponse? response = await _request('objects/$id');
-    return ServiceResult(response, _parseArtifactData);
-  }
-
-  Future<ServiceResult<List<String>?>> searchForArtifacts(ArtifactSearchOptions options) async {
-    Map<String, dynamic> urlParams = {};
-
-    // Note; URL params are specificly named; ArtifactSearchOptions are simply labelled this way for better clarity.
-    if (options.isHighlight != null) urlParams['isHighlight'] = options.isHighlight;
-    if (options.isTitle != null) urlParams['title'] = options.isTitle;
-    if (options.isKeyword != null) urlParams['tags'] = options.isKeyword;
-    if (options.departmentId != null) urlParams['departmentId'] = options.departmentId;
-    if (options.location != null) urlParams['geoLocation'] = options.location;
-
-    // Years only as ints. Both dates must be used, if at all. Use negative numbers for B.C. and positive for A.D.
-    if (options.startYear != null) urlParams['dateBegin'] = options.startYear;
-    if (options.endYear != null) urlParams['dateEnd'] = options.endYear;
-
-    // Query needs to be at the end of the argument list. Don't ask why.
-    urlParams['q'] = options.query;
-
-    // Must have images. That's a given. This also needs to be after query.
-    urlParams['hasImages'] = true;
-
-    // TODO: run a check for images with odd sizes. To do this:
-    // - check the artifact's dimensions for multiple artifacts; see how often it relates to the image dimensions (should be at least a bit related)
-    HttpResponse response = await _request('search', method: MethodType.get, urlParams: urlParams);
-    return ServiceResult(response, _parseObjectIds);
-  }
-
-  // ------------------------------------------------
-
-  Future<HttpResponse> _request(
-    String url, {
-    MethodType method = MethodType.get,
-    Map<String, dynamic>? urlParams,
-    Map<String, String>? headers,
-    Map<String, dynamic>? body,
-    Encoding? encoding,
-  }) async {
-    url = '$_baseMETUrl/$url';
-    urlParams ??= {};
-    headers ??= {};
-
-    if (await PlatformInfo.isDisconnected) {
-      return HttpResponse(null);
-    }
-    String jsonBody = json.encode(body);
-    HttpResponse? response = await HttpClient.send(url,
-        urlParams: urlParams, method: method, headers: headers, body: jsonBody, encoding: encoding);
-    return response;
-  }
-
-  List<String>? _parseObjectIds(Map<String, dynamic> content) {
-    List<dynamic> idList = (content['objectIDs'] ?? []).toList();
-    return idList.map((e) => e.toString()).toList();
-  }
-
-  List<DepartmentData>? _parseDepartmentData(Map<String, dynamic> content) {
-    List<dynamic> idList = (content['departments'] ?? []).toList();
-    List<DepartmentData> result = idList.map((e) {
-      return DepartmentData(
-        departmentId: e['departmentId'],
-        displayName: e['displayName'],
-      );
-    }).toList();
-    return result;
+    HttpResponse? response = await HttpClient.send('$_baseMETUrl/objects/$id');
+    return ServiceResult<ArtifactData?>(response, _parseArtifactData);
   }
 
   ArtifactData? _parseArtifactData(Map<String, dynamic> content) {
     // Source: https://metmuseum.github.io/
-    ArtifactData? data;
-    try {
-      String yearStr = content['accessionYear'] ?? content['objectDate'] ?? '';
-      int year = 0;
-      RegExpMatch? possibleYear = RegExp(r'[0-9-]{1,5}.*?').firstMatch(yearStr);
-      if (possibleYear != null) {
-        year = int.parse(possibleYear.input);
-      }
-
-      /// TODO: We should be able to use ArtifactData.fromJson here instead with some tweaks
-      data = ArtifactData(
-        objectId: content['objectID'].toString(),
-        title: content['title'] ?? '',
-        image: content['primaryImage'] ?? '',
-        year: year,
-        yearStr: yearStr,
-        date: content['objectDate'] ?? '',
-        objectType: content['objectName'] ?? '',
-        period: content['period'] ?? '',
-        country: content['country'] ?? '',
-        medium: content['medium'] ?? '',
-        dimension: content['dimension'] ?? '',
-        classification: content['classification'] ?? '',
-        culture: content['culture'] ?? '',
-        objectBeginYear: content['objectBeginDate'],
-        objectEndYear: content['objectEndDate'],
-      );
-    } catch (e) {
-      debugPrint('Error: Search response missing content.');
-    }
-    return data;
+    return ArtifactData(
+      objectId: content['objectID'].toString(),
+      title: content['title'] ?? '',
+      image: content['primaryImage'] ?? '',
+      date: content['objectDate'] ?? '',
+      objectType: content['objectName'] ?? '',
+      period: content['period'] ?? '',
+      country: content['country'] ?? '',
+      medium: content['medium'] ?? '',
+      dimension: content['dimension'] ?? '',
+      classification: content['classification'] ?? '',
+      culture: content['culture'] ?? '',
+      objectBeginYear: content['objectBeginDate'],
+      objectEndYear: content['objectEndDate'],
+    );
   }
 }
