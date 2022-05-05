@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
@@ -24,6 +25,7 @@ class ArtifactSearchHelper extends StatefulWidget {
 class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
   String selectedWonder = 'All';
   int maxIds = 1000, maxPriority = 200;
+  bool checkImages = true;
 
   List<WonderData> wonderQueue = [];
   WonderData? wonder;
@@ -139,52 +141,62 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
     activeRequestCount++;
     int id = idQueue.removeLast();
     Uri uri = Uri.parse(_baseArtifactUri + id.toString());
-    String? error;
     http.Response response = await _http.get(uri);
     if (response.statusCode != 200) {
-      error = 'bad status code ${response.statusCode}';
+      _logError(id, 'bad status code ${response.statusCode}');
     } else {
       Map? json = jsonDecode(response.body) as Map?;
-      error = _parseId(id, json);
-    }
-    if (error != null) {
-      _logError(id, error);
+      await _parseId(id, json);
     }
 
     _completeId();
   }
 
-  String? _parseId(int id, Map? json) {
-    if (json == null) {
-      return 'could not parse json';
-    } else if ((json['title'] ?? '') == '') {
-      return 'missing title';
-    } else if (!json.containsKey('objectBeginDate') || !json.containsKey('objectBeginDate')) {
-      return 'missing years';
+  Future<void> _parseId(int id, Map? json) async {
+    // catch all error conditions:
+    if (json == null) return _logError(id, 'could not parse json');
+    if ((json['title'] ?? '') == '') return _logError(id, 'missing title');
+    if (!json.containsKey('objectBeginDate') || !json.containsKey('objectBeginDate')) {
+      return _logError(id, 'missing years');
     }
-    //} else if (!json.containsKey('isPublicDomain') || !json['isPublicDomain']) {
-    //  return 'not public domain';
+    //if (!json.containsKey('isPublicDomain') || !json['isPublicDomain']) return _logError(id, 'not public domain')
 
-    int year = ((json['objectBeginDate'] as int) + (json['objectEndDate'] as int)) ~/ 2;
-
-    if (year < minYear || year > maxYear) return 'year is out of range';
+    final int year = ((json['objectBeginDate'] as int) + (json['objectEndDate'] as int)) ~/ 2;
+    if (year < minYear || year > maxYear) return _logError(id, 'year is out of range');
 
     String? imageUrlSmall = json['primaryImageSmall'];
-    if (imageUrlSmall == null) return 'no small image';
-    if (!imageUrlSmall.startsWith(SearchData.baseImagePath)) return 'unexpected image uri: "$imageUrlSmall"';
+    if (imageUrlSmall == null) return _logError(id, 'no small image url');
+    if (!imageUrlSmall.startsWith(SearchData.baseImagePath)) {
+      return _logError(id, 'unexpected image uri: "$imageUrlSmall"');
+    }
+    String imagePath = imageUrlSmall.substring(SearchData.baseImagePath.length);
+    imagePath = imagePath.replaceFirst('/web-large/', '/mobile-large/');
 
-    imageUrlSmall = imageUrlSmall.substring(SearchData.baseImagePath.length);
-    imageUrlSmall = imageUrlSmall.replaceFirst('/web-large/', '/mobile-large/');
+    double? aspectRatio = 0;
+    if (checkImages) aspectRatio = await _getAspectRatio(imageUrlSmall);
+    if (aspectRatio == null) return _logError(id, 'image failed to load');
 
     SearchData entry = SearchData(
       year,
       id,
       _escape(json['title']),
       _getKeywords(json),
-      imageUrlSmall,
+      imagePath,
+      aspectRatio,
     );
+
     entries.add(entry);
-    return null;
+  }
+
+  Future<double?> _getAspectRatio(String imagePath) async {
+    Completer<double?> completer = Completer<double?>();
+    NetworkImage image = NetworkImage(imagePath);
+    ImageStream stream = image.resolve(ImageConfiguration());
+    stream.addListener(ImageStreamListener(
+      (info, _) => completer.complete(info.image.width / info.image.height),
+      onError: (_, __) => completer.complete(null),
+    ));
+    return completer.future;
   }
 
   String _getKeywords(Map json) {
@@ -205,7 +217,8 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
 
   Future<void> _completeIds() async {
     _log('- Created ${entries.length} entries');
-    // remove excess > maxIds?
+
+    // TODO: maybe randomize instead?
     entries.sort((SearchData a, SearchData b) => a.year - b.year);
 
     // build output:
@@ -314,8 +327,10 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
               onChanged: (s) => setState(() => maxPriority = int.parse(s)),
             ),
             Gap(16),
-            MaterialButton(onPressed: () => _run(), child: Text('RUN ALL')),
-            MaterialButton(onPressed: () => _runSuggestions(), child: Text('RUN SUGGESTIONS')),
+            CheckboxListTile(
+                title: Text('images'), value: checkImages, onChanged: (b) => setState(() => checkImages = b!)),
+            Gap(32),
+            MaterialButton(onPressed: () => _run(), child: Text('RUN')),
           ]),
         ),
         Gap(40),

@@ -13,5 +13,5 @@ class SearchData {
 
   // used by the search helper tool:
   String write() =>
-      "SearchData($year, $id, '$title', '$keywords', '$imagePath'${aspectRatio == 0 ? '' : ', $aspectRatio'})";
+      "SearchData($year, $id, '$title', '$keywords', '$imagePath'${aspectRatio == 0 ? '' : ', ${aspectRatio.toStringAsFixed(2)}'})";
 }
