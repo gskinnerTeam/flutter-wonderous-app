@@ -26,7 +26,7 @@ class ArtifactDetailsScreen extends StatefulWidget {
 }
 
 class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
-  late final _future = searchLogic.getArtifactByID(widget.artifactId);
+  late final _future = metAPILogic.getArtifactByID(widget.artifactId);
 
   @override
   Widget build(BuildContext context) {

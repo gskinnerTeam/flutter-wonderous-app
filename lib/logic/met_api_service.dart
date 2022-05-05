@@ -1,7 +1,7 @@
 import 'package:wonders/logic/common/http_client.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 
-class SearchService {
+class MetAPIService {
   final String _baseMETUrl = 'https://collectionapi.metmuseum.org/public/collection/v1';
 
   Future<ServiceResult<ArtifactData?>> getObjectByID(String id) async {
