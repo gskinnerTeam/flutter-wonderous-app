@@ -9,8 +9,6 @@ import 'package:http/http.dart' as http;
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
 
-// TODO: GDS: Possibly load images, discard any that fail, and fill in aspectRatio
-
 final int minYear = wondersLogic.startYear;
 final int maxYear = wondersLogic.endYear;
 const int maxRequests = 32;
@@ -24,7 +22,7 @@ class ArtifactSearchHelper extends StatefulWidget {
 
 class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
   String selectedWonder = 'All';
-  int maxIds = 1000, maxPriority = 200;
+  int maxIds = 500, maxPriority = 200;
   bool checkImages = true;
 
   List<WonderData> wonderQueue = [];
@@ -109,9 +107,8 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
     Map json = jsonDecode(response.body) as Map;
     List<dynamic> ids = json['objectIDs'];
 
-    int adjustedMax = (maxIds * 1.25).round(); // add 25% to make up for errors
-    int count = priority ? maxPriority : adjustedMax;
-    count = min(ids.length, min(count, adjustedMax - idQueue.length));
+    int count = priority ? maxPriority : maxIds;
+    count = min(ids.length, min(count, maxIds - idQueue.length));
     int foundCount = 0;
 
     for (int i = 0; i < ids.length && foundCount < count; i++) {
@@ -219,7 +216,8 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
     _log('- Created ${entries.length} entries');
 
     // TODO: maybe randomize instead?
-    entries.sort((SearchData a, SearchData b) => a.year - b.year);
+    //entries.sort((SearchData a, SearchData b) => a.year - b.year);
+    entries.shuffle();
 
     // build output:
     String entryStr = '';
@@ -279,7 +277,7 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
     // but don't count multiple times for a single item
     for (int i = 0; i < data.length; i++) {
       ignore.clear();
-      ignore.addAll(['and', 'the', 'with', 'from', 'for', 'form']);
+      ignore.addAll(['and', 'the', 'with', 'from', 'for', 'form', 'probably', 'back', 'front', 'under', 'his', 'one', 'two', 'three', 'four']);
       SearchData o = data[i];
       RegExp re = RegExp(r'\b\w{3,}\b');
       List<Match> matches = re.allMatches(o.title).toList() + re.allMatches(o.keywords).toList();
