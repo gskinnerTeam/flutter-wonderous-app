@@ -17,8 +17,7 @@ class _ResultTileState extends State<_ResultTile> {
   CachedNetworkImageProvider? _image;
   ImageStream? _stream;
   int _imageWidth = 0, _imageHeight = 0;
-  bool _immediate = false;
-  bool _error = false;
+  bool _immediate = false, _error = false;
 
   @override
   void initState() {
@@ -46,9 +45,11 @@ class _ResultTileState extends State<_ResultTile> {
   }
 
   void _load() {
+    setState(() {
+      _imageWidth = _imageHeight = 0;
+      _immediate = _error = false;
+    });
     _stream?.removeListener(_listener);
-    _imageWidth = _imageHeight = 0;
-    _error = false;
     _image = CachedNetworkImageProvider(widget.data.imageUrl);
     _stream = _image!.resolve(ImageConfiguration());
     _stream!.addListener(_listener);
