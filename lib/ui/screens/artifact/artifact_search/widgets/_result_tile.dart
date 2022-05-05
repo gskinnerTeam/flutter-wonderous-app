@@ -18,6 +18,7 @@ class _ResultTileState extends State<_ResultTile> {
   ImageStream? _stream;
   int _imageWidth = 0, _imageHeight = 0;
   bool _immediate = false;
+  bool _error = false;
 
   @override
   void initState() {
@@ -27,7 +28,7 @@ class _ResultTileState extends State<_ResultTile> {
         _imageHeight = info.image.height;
         _immediate = b;
       });
-    });
+    }, onError: (_, __) => setState(() => _error = true));
     _load();
     super.initState();
   }
@@ -47,6 +48,7 @@ class _ResultTileState extends State<_ResultTile> {
   void _load() {
     _stream?.removeListener(_listener);
     _imageWidth = _imageHeight = 0;
+    _error = false;
     _image = CachedNetworkImageProvider(widget.data.imageUrl);
     _stream = _image!.resolve(ImageConfiguration());
     _stream!.addListener(_listener);
@@ -63,7 +65,17 @@ class _ResultTileState extends State<_ResultTile> {
     );
 
     final Widget content = _imageWidth == 0
-        ? Container(decoration: decoration)
+        ? Container(
+            decoration: decoration,
+            child: _error
+                ? Center(
+                    child: Icon(
+                      Icons.image_not_supported,
+                      color: context.colors.greyStrong,
+                      size: context.insets.lg,
+                    ),
+                  )
+                : null)
         : FXBuilder(
             key: ValueKey(widget.data.id),
             duration: _immediate ? 0.ms : 300.ms,
