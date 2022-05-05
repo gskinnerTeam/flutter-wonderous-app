@@ -75,7 +75,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
 
   @override
   Widget build(BuildContext context) {
-    vizController.color = context.colors.accent1;
+    vizController.color = Color.lerp(context.colors.accent1, context.colors.black, 0.33)!;
     Widget content = GestureDetector(
         onTap: () => WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus(),
         child: Column(children: [

@@ -62,7 +62,7 @@ class _ResultTileState extends State<_ResultTile> {
 
     final BoxDecoration decoration = BoxDecoration(
       color: context.colors.black,
-      borderRadius: BorderRadius.circular(context.insets.sm),
+      borderRadius: BorderRadius.circular(context.insets.xs),
     );
 
     final Widget content = _imageWidth == 0
