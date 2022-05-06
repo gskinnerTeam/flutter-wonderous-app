@@ -11,7 +11,7 @@ class AppColors {
   final Color greyStrong = const Color(0xFF272625);
   final Color greyMedium = const Color(0xFF9D9995);
   final Color white = Colors.white;
-  final Color black = Colors.black;
+  final Color black = const Color(0xFF1E1B18);
 
   final bool isDark = false;
 
