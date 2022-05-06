@@ -45,7 +45,6 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
             CustomScrollView(
               slivers: [
                 SliverAppBar(
-                  backgroundColor: Colors.transparent,
                   pinned: true,
                   elevation: 0,
                   leading: SizedBox.shrink(),

@@ -18,27 +18,30 @@ class _Content extends StatelessWidget {
         children: [
           Gap(context.insets.lg),
 
-          // Wonder Type
-          Text(
-            data.culture.toUpperCase(),
-            style: context.textStyles.titleFont.copyWith(color: context.colors.accent1),
-          ).fx().fade(delay: animDelay, duration: animDuration),
-
-          Gap(context.insets.sm),
+          if (data.culture.isNotEmpty) ...[
+            // Wonder Type
+            Text(
+              data.culture.toUpperCase(),
+              style: context.textStyles.titleFont.copyWith(color: context.colors.accent1),
+            ).fx().fade(delay: animDelay, duration: animDuration),
+            Gap(context.insets.sm),
+          ],
 
           Text(
             data.title,
             textAlign: TextAlign.center,
             style: context.textStyles.h2.copyWith(color: context.colors.offWhite, height: _textHeight),
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
           ).fx().fade(delay: animDelay * 1.05, duration: animDuration),
 
-          Gap(context.insets.xxl),
+          Gap(context.insets.lg),
 
           FXRunAnimated((_, value) {
             return CompassDivider(isExpanded: !value, duration: context.times.med);
           }, delay: animDelay * 1.5),
 
-          Gap(context.insets.xxl),
+          Gap(context.insets.xl),
 
           // Description
           Column(

@@ -17,21 +17,22 @@ class _Header extends StatelessWidget {
       children: [
         BottomCenter(
           child: Transform.translate(
-            offset: Offset(0, context.insets.lg - 1),
+            offset: Offset(0, context.insets.xl - 1),
             child: VtGradient(
               [context.colors.greyStrong, context.colors.greyStrong.withOpacity(0)],
-              const [.2, 1],
-              height: context.insets.lg,
+              const [0, 1],
+              height: context.insets.xl,
             ),
           ),
         ),
         Container(
-          color: context.colors.greyStrong,
+          color: context.colors.black,
           alignment: Alignment.center,
           child: TextButton(
             onPressed: _handleImagePressed,
-            child: Hero(
-              tag: data.image,
+            child: SafeArea(
+              bottom: false,
+              minimum: EdgeInsets.symmetric(vertical: context.insets.sm),
               child: CachedNetworkImage(
                 imageUrl: data.image,
                 fit: BoxFit.cover,
