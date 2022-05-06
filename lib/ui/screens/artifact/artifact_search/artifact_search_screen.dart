@@ -57,7 +57,8 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
     if (_query.isEmpty) {
       _searchResults = wonder.searchData;
     } else {
-      // this is a somewhat naive search, but is sufficient for demoing the UI:
+      // whole word search on title and keywords.
+      // this is a somewhat naive search, but is sufficient for demoing the UI.
       final RegExp q = RegExp('\\b${_query}s?\\b', caseSensitive: false);
       _searchResults = wonder.searchData.where((o) => o.title.contains(q) || o.keywords.contains(q)).toList();
     }
@@ -72,7 +73,8 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
 
   @override
   Widget build(BuildContext context) {
-    vizController.color = Color.lerp(context.colors.accent1, context.colors.black, 0.33)!;
+    // tone down the orange just a bit:
+    vizController.color = Color.lerp(context.colors.accent1, context.colors.black, 0.2)!;
     Widget content = GestureDetector(
       onTap: () => WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus(),
       child: Column(
@@ -175,7 +177,6 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
 
 class PanelController extends ValueNotifier<bool> {
   PanelController(bool value) : super(value);
-
   void toggle() => value = !value;
 }
 

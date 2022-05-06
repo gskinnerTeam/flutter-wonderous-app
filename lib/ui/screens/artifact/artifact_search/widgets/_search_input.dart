@@ -47,7 +47,7 @@ class _SearchInput extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.all(context.insets.xxs),
           decoration: BoxDecoration(
-            color: context.colors.white.withOpacity(0.9),
+            color: context.colors.offWhite.withOpacity(0.9),
             borderRadius: BorderRadius.circular(context.insets.xs),
           ),
           child: ConstrainedBox(
@@ -86,7 +86,7 @@ class _SearchInput extends StatelessWidget {
     return Container(
       height: context.insets.xl,
       decoration: BoxDecoration(
-        color: context.colors.white,
+        color: context.colors.offWhite,
         borderRadius: BorderRadius.circular(context.insets.xs),
       ),
       child: Row(children: [
