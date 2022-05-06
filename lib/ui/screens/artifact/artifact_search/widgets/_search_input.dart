@@ -23,17 +23,11 @@ class _SearchInput extends StatelessWidget {
   }
 
   Iterable<String> _getSuggestions(TextEditingValue textEditingValue) {
-    if (textEditingValue.text == '') return [];
+    if (textEditingValue.text == '') return wonder.searchSuggestions.getRange(0, 10);
 
-    List<String> results = wonder.searchSuggestions.where((str) {
+    return wonder.searchSuggestions.where((str) {
       return str.startsWith(textEditingValue.text.toLowerCase());
-    }).toList();
-
-    // Sort everything in alphabetical order.
-    results.sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
-
-    // Return the autocomplete results.
-    return results;
+    }).toList()..sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
   }
 
   Widget _buildSuggestionsView(BuildContext context, onSelected, Iterable<String> results, BoxConstraints constraints) {
