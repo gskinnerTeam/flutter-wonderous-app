@@ -14,24 +14,21 @@ class CollectibleFoundScreen extends StatelessWidget {
   final CollectibleData collectible;
   final CachedNetworkImageProvider imageProvider;
 
-  // major timing cues as durations in ms:
-  static const double introT = 600; // initial build
-  static const double introPauseT = 600; // visual pause between states
-  static const double introTotalT = introT + introPauseT;
-  static const double detailT = 1800; // detail state build
-
   @override
   Widget build(BuildContext context) {
     return RepaintBoundary(
-      child: _buildIntro(context).fx().swap(delay: introTotalT.ms, builder: (_) => _buildDetail(context)),
+      child: _buildIntro(context).fx().swap(
+            delay: 1500.ms,
+            builder: (_) => _buildDetail(context),
+          ),
     );
   }
 
   Widget _buildIntro(BuildContext context) {
     return Stack(children: [
-      FXAnimate().custom(duration: introTotalT.ms, builder: (context, ratio, _) => _buildGradient(context, ratio, 0)),
+      FXAnimate().custom(duration: 1500.ms, builder: (context, ratio, _) => _buildGradient(context, ratio, 0)),
 
-      // icon is handled by Hero initially, then scales slowly during the pause:
+      // icon is handled by Hero initially, then scales slowly:
       Center(
         child: FractionallySizedBox(
           widthFactor: 0.33,
@@ -41,9 +38,9 @@ class CollectibleFoundScreen extends StatelessWidget {
             child: Image(
               image: collectible.icon,
               fit: BoxFit.contain,
-            ).fx().scale(begin: 1, end: 2, curve: Curves.easeInExpo, duration: introTotalT.ms),
+            ),
           ),
-        ),
+        ).fx().scale(begin: 1, end: 3, curve: Curves.easeInExpo, duration: 900.ms),
       )
     ]);
   }
@@ -56,7 +53,10 @@ class CollectibleFoundScreen extends StatelessWidget {
       SafeArea(
         child: Column(children: [
           Spacer(flex: 5),
-          Flexible(flex: 18, child: _buildImage(context)),
+          Flexible(
+            flex: 18,
+            child: Center(child: Hero(tag: 'collectible_image_${collectible.id}', child: _buildImage(context))),
+          ),
           Spacer(flex: 2),
           _buildRibbon(context),
           Spacer(flex: 2),
@@ -93,10 +93,11 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   Widget _buildImage(BuildContext context) {
-    Widget animatedImage = Image(image: imageProvider)
+    // build an image with animated shadows and scaling
+    return Image(image: imageProvider)
         .fx()
         .custom(
-          duration: detailT.ms,
+          duration: 1800.ms,
           builder: (_, ratio, child) => Container(
             padding: EdgeInsets.all(context.insets.xxs),
             margin: EdgeInsets.symmetric(horizontal: context.insets.xl),
@@ -115,13 +116,6 @@ class CollectibleFoundScreen extends StatelessWidget {
           ),
         )
         .scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo, alignment: Alignment(0, 0.7));
-
-    return Center(
-      child: Hero(
-        tag: 'collectible_image_${collectible.id}',
-        child: animatedImage,
-      ),
-    );
   }
 
   Widget _buildRibbon(BuildContext buildContext) {
