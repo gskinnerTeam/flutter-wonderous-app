@@ -11,15 +11,15 @@ class CollectibleFoundScreen extends StatelessWidget {
   // we could check for load completion, and hold after introT, but that shouldn't be necessary in a real-world scenario.
   const CollectibleFoundScreen({required this.collectible, required this.imageProvider, Key? key}) : super(key: key);
 
+  final CollectibleData collectible;
+  final CachedNetworkImageProvider imageProvider;
+
   // major timing cues as durations in ms:
   static const double introT = 600; // initial build
   static const double introPauseT = 600; // visual pause between states
   static const double introTotalT = introT + introPauseT;
   static const double detailT = 1800; // detail state build
   static const double totalT = introT + introPauseT + detailT;
-
-  final CollectibleData collectible;
-  final CachedNetworkImageProvider imageProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -67,16 +67,16 @@ class CollectibleFoundScreen extends StatelessWidget {
           Flexible(flex: 18, child: _buildImage(context, detailRatio)),
           Spacer(flex: 2),
           _buildRibbon(context, detailRatio),
-          Spacer(flex: 1),
+          Spacer(flex: 2),
           _buildTitle(context, collectible.title, context.textStyles.h2, context.colors.offWhite, 450),
-          Spacer(flex: 1),
+          Gap(context.insets.xs),
           _buildTitle(
               context, collectible.subtitle.toUpperCase(), context.textStyles.title2, context.colors.accent1, 600),
-          Spacer(flex: 3),
+          Spacer(flex: 2),
           _buildCollectionButton(context, detailRatio),
         ]),
       ),
-      _buildCloseButton(context, detailRatio),
+      BackBtn.close().safe().fx().fade(delay: 1200.ms, duration: 900.ms),
     ];
   }
 
@@ -85,21 +85,15 @@ class CollectibleFoundScreen extends StatelessWidget {
     final Color light = context.colors.offWhite;
     final Color dark = context.colors.black;
 
-    // final state is a solid fill, so optimize for that:
+    // final state is a solid fill, so optimize that case:
     if (ratioOut == 1) return Container(color: dark.withOpacity(opacity));
 
     ratioIn = Curves.easeOutQuint.transform(ratioIn);
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         gradient: RadialGradient(
-          colors: [
-            Color.lerp(light, dark, ratioOut)!.withOpacity(opacity),
-            dark.withOpacity(opacity),
-          ],
-          stops: [
-            0.2,
-            min(1, 0.25 + ratioIn * 0.5 + ratioOut * 0.5),
-          ],
+          colors: [Color.lerp(light, dark, ratioOut)!.withOpacity(opacity), dark.withOpacity(opacity)],
+          stops: [0.2, min(1, 0.25 + ratioIn * 0.5 + ratioOut * 0.5)],
         ),
       ),
     );
@@ -152,6 +146,7 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   Widget _buildTitle(BuildContext context, String text, TextStyle style, Color color, double delay) {
+    // because this is a performance-sensitive screen, we are fading in the text by adjusting its color:
     return Container(
       padding: EdgeInsets.symmetric(horizontal: context.insets.lg),
       child: FXBuilder(
@@ -169,9 +164,8 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   Widget _buildCollectionButton(BuildContext context, double ratio) {
-    final double pad = context.insets.lg;
     return Container(
-      padding: EdgeInsets.only(left: pad, right: pad, bottom: pad),
+      padding: EdgeInsets.all(context.insets.lg),
       child: AppTextBtn(
         'view in my collection',
         isSecondary: true,
@@ -179,9 +173,5 @@ class CollectibleFoundScreen extends StatelessWidget {
         onPressed: () => context.push(ScreenPaths.collection(collectible.id)),
       ),
     ).fx().show(delay: 1200.ms).move(begin: Offset(0, context.insets.md), duration: 900.ms, curve: Curves.easeOutExpo);
-  }
-
-  Widget _buildCloseButton(BuildContext context, double ratio) {
-    return BackBtn.close().safe().fx().fade(delay: 1200.ms, duration: 900.ms);
   }
 }

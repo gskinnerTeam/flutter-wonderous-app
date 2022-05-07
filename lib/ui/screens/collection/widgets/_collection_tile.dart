@@ -9,6 +9,11 @@ class _CollectionTile extends StatelessWidget {
     this.heroTag,
   }) : super(key: key);
 
+  final CollectibleData collectible;
+  final ValueSetter<CollectibleData> onPressed;
+  final int state;
+  final String? heroTag;
+
   @override
   Widget build(BuildContext context) {
     return RepaintBoundary(
@@ -17,11 +22,6 @@ class _CollectionTile extends StatelessWidget {
           : _buildFound(context, collectible, state),
     );
   }
-
-  final CollectibleData collectible;
-  final ValueSetter<CollectibleData> onPressed;
-  final int state;
-  final String? heroTag;
 
   Widget _buildHidden(BuildContext context, CollectibleData collectible) {
     return Container(

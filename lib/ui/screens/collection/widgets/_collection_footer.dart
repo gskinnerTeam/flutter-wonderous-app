@@ -10,7 +10,6 @@ class _CollectionFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      // ensure the gradient doesn't block interactions with the list layered below it:
       Transform.translate(
         offset: Offset(0, -context.insets.xl),
         child: VtGradient(
@@ -65,13 +64,11 @@ class _CollectionFooter extends StatelessWidget {
             color: context.colors.accent1,
             borderRadius: BorderRadius.circular(1000),
           ),
-        ).fx().fade(duration: 1500.ms, curve: Curves.easeOutExpo).custom(
-              (_, m, child) => FractionallySizedBox(
-                alignment: Alignment.centerLeft,
-                widthFactor: m * count / total,
-                child: child,
-              ),
-            ),
+        ).fx().fade(duration: 1500.ms, curve: Curves.easeOutExpo).custom((_, m, child) => FractionallySizedBox(
+              alignment: Alignment.centerLeft,
+              widthFactor: m * count / total,
+              child: child,
+            )),
       ),
     );
   }
