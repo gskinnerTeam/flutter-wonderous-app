@@ -25,7 +25,7 @@ class _AnimatedCutoutOverlay extends StatelessWidget {
       children: [
         child,
         FXAnimate(
-          fx: [CustomFX(_buildAnimatedCutout, curve: Curves.easeOut, duration: duration)],
+          fx: [CustomFX(builder: _buildAnimatedCutout, curve: Curves.easeOut, duration: duration)],
           key: animationKey,
           onComplete: (c) => c.reverse(),
           child: IgnorePointer(child: Container(color: Colors.black.withOpacity(opacity))),

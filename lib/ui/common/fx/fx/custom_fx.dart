@@ -14,7 +14,7 @@ import '../fx.dart';
 class CustomFX extends AbstractFX<double> {
   final CustomFXBuilder builder;
 
-  const CustomFX(this.builder, {Duration? delay, Duration? duration, Curve? curve, double? begin, double? end})
+  const CustomFX({required this.builder, Duration? delay, Duration? duration, Curve? curve, double? begin, double? end})
       : super(delay: delay, duration: duration, curve: curve, begin: begin ?? 0.0, end: end ?? 1.0);
 
   @override
@@ -30,8 +30,8 @@ class CustomFX extends AbstractFX<double> {
 
 extension CustomFXExtensions<T> on FXManager<T> {
   /// Adds a `.custom()` extension to [FXManager] ([FXAnimate] and [FXAnimateList]).
-  T custom(CustomFXBuilder builder, {Duration? delay, Duration? duration, Curve? curve, double? begin, double? end}) =>
-      addFX(CustomFX(builder, delay: delay, duration: duration, curve: curve, begin: begin, end: end));
+  T custom({required CustomFXBuilder builder, Duration? delay, Duration? duration, Curve? curve, double? begin, double? end}) =>
+      addFX(CustomFX(builder: builder, delay: delay, duration: duration, curve: curve, begin: begin, end: end));
 }
 
 typedef CustomFXBuilder = Widget Function(BuildContext context, double value, Widget child);
