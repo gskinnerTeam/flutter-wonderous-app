@@ -19,77 +19,70 @@ class CollectibleFoundScreen extends StatelessWidget {
   static const double introPauseT = 600; // visual pause between states
   static const double introTotalT = introT + introPauseT;
   static const double detailT = 1800; // detail state build
-  static const double totalT = introT + introPauseT + detailT;
 
   @override
   Widget build(BuildContext context) {
     return RepaintBoundary(
-      child: FXBuilder(
-        duration: totalT.ms,
-        builder: (ctx, ratio, _) => Stack(children: [
-          ..._buildIntro(context, ratio),
-          ..._buildDetail(context, ratio),
-        ]),
-      ),
+      child: _buildIntro(context).fx().swap(delay: introTotalT.ms, builder: (_) => _buildDetail(context)),
     );
   }
 
-  // returns a new ratio (0-1) normalized within the time period specified by start and duration
-  double _subRatio(double ratio, double start, [double? duration]) {
-    final double end = duration == null ? totalT : start + duration;
-    return max(0, min(1, (ratio * totalT - start) / (end - start)));
-  }
+  Widget _buildIntro(BuildContext context) {
+    return Stack(children: [
+      FXAnimate().custom(duration: introTotalT.ms, builder: (context, ratio, _) => _buildGradient(context, ratio, 0)),
 
-  List<Widget> _buildIntro(BuildContext context, double ratio) {
-    final double introRatio = _subRatio(ratio, 0, introTotalT);
-    final double introPauseRatio = _subRatio(ratio, introT, introPauseT);
-    if (introRatio == 1) return [];
-    return [
-      // build radial gradient over initial intro:
-      _buildGradient(context, introRatio, 0),
       // icon is handled by Hero initially, then scales slowly during the pause:
-      _buildIcon(context, introPauseRatio),
-    ];
+      Center(
+        child: FractionallySizedBox(
+          widthFactor: 0.33,
+          heightFactor: 0.33,
+          child: Hero(
+            tag: 'collectible_icon_${collectible.id}',
+            child: Image(
+              image: collectible.icon,
+              fit: BoxFit.contain,
+            ).fx().scale(begin: 1, end: 2, curve: Curves.easeInExpo, duration: introTotalT.ms),
+          ),
+        ),
+      )
+    ]);
   }
 
-  List<Widget> _buildDetail(BuildContext context, double ratio) {
-    final double detailRatio = _subRatio(ratio, introTotalT);
-    if (detailRatio == 0) return [];
-    return [
+  Widget _buildDetail(BuildContext context) {
+    return Stack(key: ValueKey('detail'), children: [
       // radial gradient to solid fill in first 300ms:
-      _buildGradient(context, 1, _subRatio(ratio, introTotalT, 300)),
-      // fade out and then remove particles completely at the end:
+      FXAnimate().custom(duration: 300.ms, builder: (context, ratio, _) => _buildGradient(context, 1, ratio)),
       _CelebrationParticles(),
-      // add the detail UI in a column to facilitate better responsiveness:
       SafeArea(
         child: Column(children: [
           Spacer(flex: 5),
-          Flexible(flex: 18, child: _buildImage(context, detailRatio)),
+          Flexible(flex: 18, child: _buildImage(context)),
           Spacer(flex: 2),
-          _buildRibbon(context, detailRatio),
+          _buildRibbon(context),
           Spacer(flex: 2),
           _buildTitle(context, collectible.title, context.textStyles.h2, context.colors.offWhite, 450),
           Gap(context.insets.xs),
           _buildTitle(
               context, collectible.subtitle.toUpperCase(), context.textStyles.title2, context.colors.accent1, 600),
           Spacer(flex: 2),
-          _buildCollectionButton(context, detailRatio),
+          _buildCollectionButton(context),
         ]),
       ),
       BackBtn.close().safe().fx().fade(delay: 1200.ms, duration: 900.ms),
-    ];
+    ]);
   }
 
   Widget _buildGradient(BuildContext context, double ratioIn, double ratioOut) {
-    final double opacity = 0.9 * (Curves.easeOutExpo.transform(ratioIn) * 0.8 + ratioOut * 0.2);
+    // used by both intro and detail animations to ensure they share a mid-point.
+    ratioIn = Curves.easeOutExpo.transform(ratioIn);
+    final double opacity = 0.9 * (ratioIn * 0.8 + ratioOut * 0.2);
     final Color light = context.colors.offWhite;
     final Color dark = context.colors.black;
 
     // final state is a solid fill, so optimize that case:
     if (ratioOut == 1) return Container(color: dark.withOpacity(opacity));
 
-    ratioIn = Curves.easeOutQuint.transform(ratioIn);
-    return DecoratedBox(
+    return Container(
       decoration: BoxDecoration(
         gradient: RadialGradient(
           colors: [Color.lerp(light, dark, ratioOut)!.withOpacity(opacity), dark.withOpacity(opacity)],
@@ -99,57 +92,49 @@ class CollectibleFoundScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildIcon(BuildContext context, double ratio) {
+  Widget _buildImage(BuildContext context) {
+    Widget animatedImage = Image(image: imageProvider)
+        .fx()
+        .custom(
+          duration: detailT.ms,
+          builder: (_, ratio, child) => Container(
+            padding: EdgeInsets.all(context.insets.xxs),
+            margin: EdgeInsets.symmetric(horizontal: context.insets.xl),
+            decoration: BoxDecoration(color: context.colors.offWhite, boxShadow: [
+              BoxShadow(
+                color: context.colors.accent1.withOpacity(ratio * 0.75),
+                blurRadius: context.insets.xl * 2,
+              ),
+              BoxShadow(
+                color: context.colors.black.withOpacity(ratio * 0.75),
+                offset: Offset(0, context.insets.xxs),
+                blurRadius: context.insets.sm,
+              ),
+            ]),
+            child: child,
+          ),
+        )
+        .scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo, alignment: Alignment(0, 0.7));
+
     return Center(
-      child: FractionallySizedBox(
-        widthFactor: 0.33,
-        heightFactor: 0.33,
-        child: Hero(
-          tag: 'collectible_icon_${collectible.id}',
-          child: Image(
-            image: collectible.icon,
-            fit: BoxFit.contain,
-          ).fx().scale(begin: 1, end: 2, curve: Curves.easeInExpo, duration: introTotalT.ms),
-        ),
+      child: Hero(
+        tag: 'collectible_image_${collectible.id}',
+        child: animatedImage,
       ),
     );
   }
 
-  Widget _buildImage(BuildContext context, double ratio) {
-    return Center(
-      child: Hero(
-        tag: 'collectible_image_${collectible.id}',
-        child: Container(
-          padding: EdgeInsets.all(context.insets.xxs),
-          margin: EdgeInsets.symmetric(horizontal: context.insets.xl),
-          decoration: BoxDecoration(color: context.colors.offWhite, boxShadow: [
-            BoxShadow(
-              color: context.colors.accent1.withOpacity(ratio * 0.75),
-              blurRadius: context.insets.xl * 2,
-            ),
-            BoxShadow(
-              color: context.colors.black.withOpacity(ratio * 0.75),
-              offset: Offset(0, context.insets.xxs),
-              blurRadius: context.insets.sm,
-            ),
-          ]),
-          child: Image(image: imageProvider),
-        ),
-      ),
-    ).fx().scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo, alignment: Alignment(0, 0.7));
-  }
-
-  Widget _buildRibbon(BuildContext context, double ratio) {
+  Widget _buildRibbon(BuildContext buildContext) {
     return _AnimatedRibbon('Artifact Discovered'.toUpperCase())
         .fx()
         .scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo, alignment: Alignment(0, -1));
   }
 
   Widget _buildTitle(BuildContext context, String text, TextStyle style, Color color, double delay) {
-    // because this is a performance-sensitive screen, we are fading in the text by adjusting its color:
+    // because this is a performance-sensitive screen, we are fading in the text by adjusting color:
     return Container(
       padding: EdgeInsets.symmetric(horizontal: context.insets.lg),
-      child: FXBuilder(
+      child: FXAnimate().custom(
         delay: delay.ms,
         duration: 600.ms,
         builder: (_, m, __) => Text(
@@ -163,7 +148,7 @@ class CollectibleFoundScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCollectionButton(BuildContext context, double ratio) {
+  Widget _buildCollectionButton(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(context.insets.lg),
       child: AppTextBtn(
