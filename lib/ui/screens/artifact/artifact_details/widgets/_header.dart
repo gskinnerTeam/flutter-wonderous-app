@@ -6,13 +6,6 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<void> _handleImagePressed() async {
-      await Navigator.push(
-        context,
-        PageRoutes.fadeThrough(FullscreenUrlImgViewer(url: data.image)),
-      );
-    }
-
     return Stack(
       children: [
         BottomCenter(
@@ -29,7 +22,7 @@ class _Header extends StatelessWidget {
           color: context.colors.black,
           alignment: Alignment.center,
           child: TextButton(
-            onPressed: _handleImagePressed,
+            onPressed: () => _handleImagePressed(context),
             child: SafeArea(
               bottom: false,
               minimum: EdgeInsets.symmetric(vertical: context.insets.sm),
@@ -44,5 +37,9 @@ class _Header extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void _handleImagePressed(BuildContext context) {
+    Navigator.push(context, PageRoutes.fadeThrough(FullscreenUrlImgViewer(url: data.image)));
   }
 }

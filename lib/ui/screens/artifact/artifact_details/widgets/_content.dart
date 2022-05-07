@@ -6,61 +6,79 @@ class _Content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double _textHeight = 1.2;
-    final animDelay = 250.ms;
-    final animDuration = context.times.slow * .5;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: context.insets.lg),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Gap(context.insets.lg),
+          Gap(context.insets.xl),
 
           if (data.culture.isNotEmpty) ...[
-            // Wonder Type
             Text(
               data.culture.toUpperCase(),
               style: context.textStyles.titleFont.copyWith(color: context.colors.accent1),
-            ).fx().fade(delay: animDelay, duration: animDuration),
-            Gap(context.insets.sm),
+            ).fx().fade(delay: 150.ms, duration: 600.ms),
+            Gap(context.insets.xs),
           ],
 
           Text(
             data.title,
             textAlign: TextAlign.center,
-            style: context.textStyles.h2.copyWith(color: context.colors.offWhite, height: _textHeight),
+            style: context.textStyles.h2.copyWith(color: context.colors.offWhite, height: 1.2),
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
-          ).fx().fade(delay: animDelay * 1.05, duration: animDuration),
+          ).fx().fade(delay: 250.ms, duration: 600.ms),
 
           Gap(context.insets.lg),
 
           FXRunAnimated((_, value) {
             return CompassDivider(isExpanded: !value, duration: context.times.med);
-          }, delay: animDelay * 1.5),
+          }, delay: 500.ms),
 
-          Gap(context.insets.xl),
+          Gap(context.insets.lg),
 
-          // Description
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _ArtifactDataRow(title: 'Date', content: data.date),
-              _ArtifactDataRow(title: 'Period', content: data.period),
-              _ArtifactDataRow(title: 'Geography', content: data.country),
-              _ArtifactDataRow(title: 'Medium', content: data.medium),
-              _ArtifactDataRow(title: 'Dimension', content: data.dimension),
-              _ArtifactDataRow(title: 'Classification', content: data.classification),
-              Gap(context.heightPx * .15),
-            ]
-                .fx(interval: 70.ms)
-                .fade(delay: animDelay * 1.55, duration: context.times.med)
-                .slide(begin: Offset(.2, 0), curve: Curves.easeOut),
-          ),
+          ...[
+            _InfoRow('Date', data.date),
+            _InfoRow('Period', data.period),
+            _InfoRow('Geography', data.country),
+            _InfoRow('Medium', data.medium),
+            _InfoRow('Dimension', data.dimension),
+            _InfoRow('Classification', data.classification),
+          ]
+              .fx(interval: 100.ms)
+              .fade(delay: 600.ms, duration: context.times.med)
+              .slide(begin: Offset(0.2, 0), curve: Curves.easeOut),
+          
+          Gap(context.insets.offset),
         ],
       ),
+    );
+  }
+}
+
+class _InfoRow extends StatelessWidget {
+  const _InfoRow(this.label, this.value, {Key? key}) : super(key: key);
+
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: context.insets.sm),
+      child: Row(children: [
+        Expanded(
+          child: Text(
+            StringUtils.isEmpty(label) ? '---' : label.toUpperCase(),
+            style: context.textStyles.titleFont.copyWith(color: context.colors.accent2),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            StringUtils.isEmpty(value) ? '---' : value,
+            style: context.textStyles.body.copyWith(color: context.colors.offWhite),
+          ),
+        ),
+      ]),
     );
   }
 }
