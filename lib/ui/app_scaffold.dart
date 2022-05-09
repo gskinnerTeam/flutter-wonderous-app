@@ -9,7 +9,6 @@ class WondersAppScaffold extends StatelessWidget with GetItMixin {
 
   @override
   Widget build(BuildContext context) {
-    timeDilation = 1;
     // Construct an AppStyle using the current screen size.
     final styles = AppStyle(screenSize: context.sizePx);
     FXAnimate.defaultDuration = styles.times.fast;
