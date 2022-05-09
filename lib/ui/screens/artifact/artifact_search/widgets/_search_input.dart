@@ -4,52 +4,9 @@ part of '../artifact_search_screen.dart';
 
 /// Autopopulating textfield used for searching for Artifacts by name.
 class _SearchInput extends StatelessWidget {
-  _SearchInput({Key? key, required this.onSubmit}) : super(key: key);
+  const _SearchInput({Key? key, required this.onSubmit, required this.wonder}) : super(key: key);
   final void Function(String) onSubmit;
-
-  final List<String> _materialFilteringTerms = [
-    'Axes',
-    'Arrowheads',
-    'Belts',
-    'Blades',
-    'Books',
-    'Bowls',
-    'Busts',
-    'Calligraphy',
-    'Chisels',
-    'Costume',
-    'Cups',
-    'Daggers',
-    'Dishes',
-    'Earrings',
-    'Engraving',
-    'Figures',
-    'Flute',
-    'Furniture',
-    'Glass',
-    'Jars',
-    'Jewelry',
-    'Lamps',
-    'Masks',
-    'Metalwork',
-    'Musical Instruments',
-    'Ornaments',
-    'Paintings',
-    'Pendants',
-    'Plate',
-    'Pottery',
-    'Reliefs',
-    'Rings',
-    'Sarcophagi',
-    'Scepters',
-    'Statues',
-    'Stone', //
-    'Swords',
-    'Textiles',
-    'Vases',
-    'Vessels',
-    'Whistles',
-  ];
+  final WonderData wonder;
 
   @override
   Widget build(BuildContext context) {
@@ -66,44 +23,35 @@ class _SearchInput extends StatelessWidget {
   }
 
   Iterable<String> _getSuggestions(TextEditingValue textEditingValue) {
-    if (textEditingValue.text == '') {
-      return const Iterable<String>.empty();
-    }
+    if (textEditingValue.text == '') return wonder.searchSuggestions.getRange(0, 10);
 
-    // Start with a list of results from a prebaked list of strings.
-    List<String> results = _materialFilteringTerms.where((option) {
-      return option.toLowerCase().startsWith(textEditingValue.text.toLowerCase());
-    }).toList();
-
-    // Sort everything in alphabetical order.
-    results.sort((a, b) {
-      return a.toLowerCase().compareTo(b.toLowerCase());
-    });
-
-    // Return the autocomplete results.
-    return results;
+    return wonder.searchSuggestions.where((str) {
+      return str.startsWith(textEditingValue.text.toLowerCase());
+    }).toList()..sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
   }
 
   Widget _buildSuggestionsView(BuildContext context, onSelected, Iterable<String> results, BoxConstraints constraints) {
     return TopLeft(
       child: Container(
-        margin: EdgeInsets.only(top: context.insets.xs),
+        margin: EdgeInsets.only(top: context.insets.xxs),
         width: constraints.maxWidth,
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
               color: context.colors.black.withOpacity(0.25),
-              spreadRadius: 0,
               blurRadius: 4,
               offset: Offset(0, 4),
             ),
           ],
         ),
-        child: GlassCard(
+        child: Container(
           padding: EdgeInsets.all(context.insets.xxs),
-          color: context.colors.white.withOpacity(0.75),
+          decoration: BoxDecoration(
+            color: context.colors.offWhite.withOpacity(0.9),
+            borderRadius: BorderRadius.circular(context.insets.xs),
+          ),
           child: ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: 120),
+            constraints: BoxConstraints(maxHeight: 190),
             child: ListView(
               padding: EdgeInsets.zero,
               shrinkWrap: true,
@@ -121,7 +69,7 @@ class _SearchInput extends StatelessWidget {
       onPressed: onPressed,
       child: Expanded(
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: context.insets.xxs, horizontal: context.insets.xs),
+          padding: EdgeInsets.all(context.insets.xs),
           child: Text(
             suggestion,
             overflow: TextOverflow.ellipsis,
@@ -138,7 +86,7 @@ class _SearchInput extends StatelessWidget {
     return Container(
       height: context.insets.xl,
       decoration: BoxDecoration(
-        color: context.colors.white,
+        color: context.colors.offWhite,
         borderRadius: BorderRadius.circular(context.insets.xs),
       ),
       child: Row(children: [
@@ -159,7 +107,7 @@ class _SearchInput extends StatelessWidget {
               prefixStyle: TextStyle(color: captionColor),
               focusedBorder: OutlineInputBorder(borderSide: BorderSide.none),
               enabledBorder: UnderlineInputBorder(borderSide: BorderSide.none),
-              hintText: 'Search type or material',
+              hintText: 'Search (ex. type or material)',
             ),
           ),
         ),
@@ -171,16 +119,16 @@ class _SearchInput extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.only(right: context.insets.xs),
               child: CircleIconBtn(
-                bgColor: context.colors.greyMedium.withOpacity(0.5),
+                bgColor: context.colors.caption,
                 color: context.colors.white,
                 icon: Icons.clear,
+                semanticLabel: 'clear search',
+                size: context.insets.lg,
+                iconSize: context.insets.sm,
                 onPressed: () {
                   textController.clear();
                   onSubmit('');
                 },
-                semanticLabel: 'clear search',
-                size: context.insets.lg,
-                iconSize: context.insets.sm,
               ),
             ),
           ),

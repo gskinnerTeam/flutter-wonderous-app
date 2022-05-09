@@ -22,7 +22,9 @@ class UnsplashService {
   Future<UnsplashPhotoData?> loadInfo(String id) async {
     final photo = await client.photos.get(id).go();
     final data = photo.data;
-    if (data == null) return null;
+    if (data == null) {
+      throw ('Photo did not load. statusCode=${photo.statusCode}');
+    }
     return UnsplashPhotoData(
         id: id,
         width: data.width,

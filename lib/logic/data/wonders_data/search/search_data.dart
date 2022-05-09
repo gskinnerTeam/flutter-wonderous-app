@@ -10,4 +10,8 @@ class SearchData {
   final double aspectRatio;
 
   String get imageUrl => baseImagePath + imagePath;
+
+  // used by the search helper tool:
+  String write() =>
+      "SearchData($year, $id, '$title', '$keywords', '$imagePath'${aspectRatio == 0 ? '' : ', ${aspectRatio.toStringAsFixed(2)}'})";
 }

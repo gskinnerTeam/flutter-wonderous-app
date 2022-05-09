@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/collectibles_logic.dart';
-import 'package:wonders/logic/search_logic.dart';
-import 'package:wonders/logic/search_service.dart';
+import 'package:wonders/logic/met_api_logic.dart';
+import 'package:wonders/logic/met_api_service.dart';
 import 'package:wonders/logic/unsplash_logic.dart';
 import 'package:wonders/logic/unsplash_service.dart';
 import 'package:wonders/logic/wonders_logic.dart';
@@ -30,8 +30,8 @@ void registerSingletons() {
   // Wonders
   GetIt.I.registerLazySingleton<WondersLogic>(() => WondersLogic());
   // Search
-  GetIt.I.registerLazySingleton<SearchLogic>(() => SearchLogic());
-  GetIt.I.registerLazySingleton<SearchService>(() => SearchService());
+  GetIt.I.registerLazySingleton<MetAPILogic>(() => MetAPILogic());
+  GetIt.I.registerLazySingleton<MetAPIService>(() => MetAPIService());
   // Settings
   GetIt.I.registerLazySingleton<SettingsLogic>(() => SettingsLogic());
   // Unsplash
@@ -47,5 +47,5 @@ AppLogic get appLogic => GetIt.I.get<AppLogic>();
 WondersLogic get wondersLogic => GetIt.I.get<WondersLogic>();
 SettingsLogic get settingsLogic => GetIt.I.get<SettingsLogic>();
 UnsplashLogic get unsplashLogic => GetIt.I.get<UnsplashLogic>();
-SearchLogic get searchLogic => GetIt.I.get<SearchLogic>();
+MetAPILogic get metAPILogic => GetIt.I.get<MetAPILogic>();
 CollectiblesLogic get collectiblesLogic => GetIt.I.get<CollectiblesLogic>();

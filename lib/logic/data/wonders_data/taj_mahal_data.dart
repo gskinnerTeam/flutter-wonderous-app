@@ -1,8 +1,12 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
-import 'package:wonders/logic/data/wonders_data/mock_data.dart';
+import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
+
+part 'search/taj_mahal_search_data.dart';
 
 final tajMahalData = WonderData(
+  searchData: _searchData, // included as a part from ./search/
+  searchSuggestions: _searchSuggestions, // included as a part from ./search/
   type: WonderType.tajMahal,
   title: 'Taj Mahal',
   subTitle: 'Heaven on Earth',
@@ -10,13 +14,12 @@ final tajMahalData = WonderData(
   videoId: 'EWkDzLrhpXI',
   startYr: 1632,
   endYr: 1653,
-  artifactStartYr: 1600,
-  artifactEndYr: 1700,
+  artifactStartYr: 1300,
+  artifactEndYr: 1800,
   artifactCulture: 'Mughal',
   artifactGeolocation: 'India',
   lat: 27.17405039840427,
   lng: 78.04211890065208,
-  imageIds: mockImageIds,
   unsplashCollectionId: '684IRta86_c',
   quote1: 'Not just a monument,',
   quote2: 'but a symbol of love.',

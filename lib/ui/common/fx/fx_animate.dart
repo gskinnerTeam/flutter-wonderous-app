@@ -82,7 +82,7 @@ class FXAnimate extends StatefulWidget with FXManager<FXAnimate> {
   /// specified child.
   FXAnimate({
     Key? key,
-    required this.child,
+    this.child = const SizedBox.shrink(),
     List<AbstractFX>? fx,
     this.onComplete,
     this.onInit,

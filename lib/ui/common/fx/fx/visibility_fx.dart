@@ -23,14 +23,17 @@ class VisibilityFX extends AbstractFX<bool> {
   Widget build(BuildContext context, Widget child, AnimationController controller, FXEntry entry) {
     // instead of setting up an animation, we can optimize a bit to calculate the callback time once:
     double ratio = entry.begin.inMilliseconds / (controller.duration?.inMilliseconds ?? 0);
-    bool visible = begin! == (controller.value < ratio);
-    return Visibility(
-      child: child,
-      visible: visible,
-      maintainSize: maintain,
-      maintainAnimation: maintain,
-      maintainState: maintain,
-      maintainSemantics: maintain,
+
+    return AnimatedBuilder(
+      animation: controller,
+      builder: (context, _) => Visibility(
+        child: child,
+        visible: begin! == (controller.value < ratio),
+        maintainSize: maintain,
+        maintainAnimation: maintain,
+        maintainState: maintain,
+        maintainSemantics: maintain,
+      ),
     );
   }
 }

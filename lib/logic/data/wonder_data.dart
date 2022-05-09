@@ -38,6 +38,7 @@ class WonderData extends Equatable {
     this.highlightArtifacts = const [],
     this.hiddenArtifacts = const [],
     this.searchData = const [],
+    this.searchSuggestions = const [],
   });
 
   @JsonKey(defaultValue: WonderType.chichenItza)
@@ -69,6 +70,7 @@ class WonderData extends Equatable {
   final List<String> hiddenArtifacts;
   final Map<int, String> events;
   final List<SearchData> searchData;
+  final List<String> searchSuggestions;
 
   String get titleWithBreaks => title.replaceFirst(' ', '\n');
 

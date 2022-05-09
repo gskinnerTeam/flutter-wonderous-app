@@ -1,6 +1,6 @@
 part of '../artifact_search_screen.dart';
 
-// TODO: GDS: update the Hero tag.
+// TODO: GDS: handle image errors.
 
 class _ResultTile extends StatefulWidget {
   const _ResultTile({Key? key, required this.onPressed, required this.data}) : super(key: key);
@@ -17,7 +17,7 @@ class _ResultTileState extends State<_ResultTile> {
   CachedNetworkImageProvider? _image;
   ImageStream? _stream;
   int _imageWidth = 0, _imageHeight = 0;
-  bool _immediate = false;
+  bool _immediate = false, _error = false;
 
   @override
   void initState() {
@@ -27,7 +27,7 @@ class _ResultTileState extends State<_ResultTile> {
         _imageHeight = info.image.height;
         _immediate = b;
       });
-    });
+    }, onError: (_, __) => setState(() => _error = true));
     _load();
     super.initState();
   }
@@ -45,8 +45,11 @@ class _ResultTileState extends State<_ResultTile> {
   }
 
   void _load() {
+    setState(() {
+      _imageWidth = _imageHeight = 0;
+      _immediate = _error = false;
+    });
     _stream?.removeListener(_listener);
-    _imageWidth = _imageHeight = 0;
     _image = CachedNetworkImageProvider(widget.data.imageUrl);
     _stream = _image!.resolve(ImageConfiguration());
     _stream!.addListener(_listener);
@@ -55,16 +58,25 @@ class _ResultTileState extends State<_ResultTile> {
   @override
   Widget build(BuildContext context) {
     final double aspectRatio =
-        (widget.data.aspectRatio == 0) ? (widget.data.id % 10) / 20 + 0.7 : widget.data.aspectRatio;
+        (widget.data.aspectRatio == 0) ? (widget.data.id % 10) / 15 + 0.6 : max(0.5, widget.data.aspectRatio);
 
     final BoxDecoration decoration = BoxDecoration(
-      color: context.colors.white,
-      borderRadius: BorderRadius.circular(context.insets.sm),
-      boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2))],
+      color: context.colors.black,
+      borderRadius: BorderRadius.circular(context.insets.xs),
     );
 
     final Widget content = _imageWidth == 0
-        ? Container(decoration: decoration)
+        ? Container(
+            decoration: decoration,
+            child: _error
+                ? Center(
+                    child: Icon(
+                      Icons.image_not_supported,
+                      color: context.colors.greyStrong,
+                      size: context.insets.lg,
+                    ),
+                  )
+                : null)
         : FXBuilder(
             key: ValueKey(widget.data.id),
             duration: _immediate ? 0.ms : 300.ms,

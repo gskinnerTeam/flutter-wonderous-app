@@ -8,34 +8,29 @@ class _AnimatedRibbon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Positioned.fill(
-            child: Row(
+    return Stack(children: [
+      Positioned.fill(
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildEnd(context, false),
             Spacer(),
             _buildEnd(context, true),
           ],
-        )),
-        _buildFront(context),
-      ],
-    );
-  }
-
-  Widget _buildFront(BuildContext context) {
-    return Container(
-      height: height,
-      color: context.colors.accent1,
-      padding: EdgeInsets.symmetric(horizontal: context.insets.sm),
-      margin: EdgeInsets.only(bottom: 10),
-      // this aligns the text vertically, without expanding the container:
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [Text(text, textAlign: TextAlign.center, style: context.textStyles.title1)],
+        ),
       ),
-    );
+      Container(
+        height: height,
+        color: context.colors.accent1,
+        padding: EdgeInsets.symmetric(horizontal: context.insets.sm),
+        margin: EdgeInsets.only(bottom: 10),
+        // this aligns the text vertically, without expanding the container:
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [Text(text, textAlign: TextAlign.center, style: context.textStyles.title1)],
+        ),
+      ),
+    ]);
   }
 
   Widget _buildEnd(BuildContext context, bool flip) {

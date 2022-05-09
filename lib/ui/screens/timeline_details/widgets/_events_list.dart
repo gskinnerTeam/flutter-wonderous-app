@@ -76,7 +76,7 @@ class _EventsListState extends State<_EventsList> {
     for (var e in events.entries) {
       final delay = 100.ms + (100 * listItems.length).ms;
       listItems.add(
-        _EventListItem(year: e.key, text: e.value)
+        TimelineEventCard(year: e.key, text: e.value)
             .fx()
             .fade(delay: delay, duration: context.times.med * 1.5)
             .slide(begin: Offset(0, 1), curve: Curves.easeOutBack),
@@ -105,42 +105,6 @@ class _EventsListState extends State<_EventsList> {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _EventListItem extends StatelessWidget {
-  const _EventListItem({Key? key, required this.year, required this.text}) : super(key: key);
-  final int year;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: context.insets.sm),
-      child: Container(
-        color: context.colors.offWhite,
-        padding: EdgeInsets.all(context.insets.sm),
-        child: Row(
-          children: [
-            SizedBox(
-              width: 75,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('$year', style: context.text.h3.copyWith(fontWeight: FontWeight.w400, height: 1)),
-                  Text(StringUtils.getYrSuffix(year), style: context.text.bodySmall),
-                ],
-              ),
-            ),
-            Center(child: Container(width: 1, height: 50, color: context.colors.black)),
-            Gap(context.insets.sm),
-            Expanded(
-              child: Text(text, style: context.text.bodySmall),
-            ),
-          ],
-        ),
       ),
     );
   }

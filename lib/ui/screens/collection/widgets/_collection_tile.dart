@@ -9,6 +9,11 @@ class _CollectionTile extends StatelessWidget {
     this.heroTag,
   }) : super(key: key);
 
+  final CollectibleData collectible;
+  final ValueSetter<CollectibleData> onPressed;
+  final int state;
+  final String? heroTag;
+
   @override
   Widget build(BuildContext context) {
     return RepaintBoundary(
@@ -18,29 +23,14 @@ class _CollectionTile extends StatelessWidget {
     );
   }
 
-  final CollectibleData collectible;
-  final ValueSetter<CollectibleData> onPressed;
-  final int state;
-  final String? heroTag;
-
   Widget _buildHidden(BuildContext context, CollectibleData collectible) {
-    final Color fadedGrey = context.colors.greyMedium.withOpacity(0.25);
     return Container(
-      decoration: BoxDecoration(
-        color: context.colors.black,
-        border: Border.all(color: fadedGrey),
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [context.colors.greyStrong, context.colors.black],
-          stops: const [0, 1],
-        ),
-      ),
+      color: context.colors.black,
       child: Center(
         child: FractionallySizedBox(
           widthFactor: 0.6,
           heightFactor: 0.6,
-          child: Image(image: collectible.icon, color: fadedGrey),
+          child: Image(image: collectible.icon, color: context.colors.greyStrong),
         ),
       ),
     );
