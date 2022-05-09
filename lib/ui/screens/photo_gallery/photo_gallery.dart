@@ -145,7 +145,8 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                 duration: swipeDuration * .5,
                 opacity: _scale == 1 ? .7 : .5,
                 child: SafeArea(
-                  /// Place content in overflow box, to allow it to flow outside the parent
+                  bottom: false,
+                  // Place content in overflow box, to allow it to flow outside the parent
                   child: OverflowBox(
                     maxWidth: _gridSize * imgSize.width + padding * (_gridSize - 1),
                     maxHeight: _gridSize * imgSize.height + padding * (_gridSize - 1),

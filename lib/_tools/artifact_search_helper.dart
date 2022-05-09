@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
@@ -21,7 +22,8 @@ class ArtifactSearchHelper extends StatefulWidget {
 
 class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
   String selectedWonder = 'All';
-  int maxIds = 1000, maxPriority = 200;
+  int maxIds = 500, maxPriority = 200;
+  bool checkImages = true;
 
   List<WonderData> wonderQueue = [];
   WonderData? wonder;
@@ -32,7 +34,7 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
   List<int> idQueue = <int>[];
   HashSet<int> idSet = HashSet();
   HashMap<String, List<int>> errors = HashMap();
-  List<_Entry> entries = <_Entry>[];
+  List<SearchData> entries = <SearchData>[];
 
   http.Client _http = http.Client();
   int activeRequestCount = 0;
@@ -61,7 +63,9 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
     // reset:
     errors.clear();
     log.clear();
-    timer..reset()..start();
+    timer
+      ..reset()
+      ..start();
 
     if (selectedWonder == 'All') {
       wonderQueue = wondersLogic.all.toList();
@@ -103,9 +107,8 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
     Map json = jsonDecode(response.body) as Map;
     List<dynamic> ids = json['objectIDs'];
 
-    int adjustedMax = (maxIds * 1.25).round(); // add 25% to make up for errors
-    int count = priority ? maxPriority : adjustedMax;
-    count = min(ids.length, min(count, adjustedMax - idQueue.length));
+    int count = priority ? maxPriority : maxIds;
+    count = min(ids.length, min(count, maxIds - idQueue.length));
     int foundCount = 0;
 
     for (int i = 0; i < ids.length && foundCount < count; i++) {
@@ -113,7 +116,7 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
     }
     idQueue = idSet.toList();
 
-    _log('    - ${ids.length} artifacts found, added $foundCount (${ids.length - foundCount} duplicates)');
+    _log('    - ${ids.length} artifacts found, added $foundCount');
 
     _nextQuery();
   }
@@ -135,58 +138,70 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
     activeRequestCount++;
     int id = idQueue.removeLast();
     Uri uri = Uri.parse(_baseArtifactUri + id.toString());
-    String? error;
     http.Response response = await _http.get(uri);
     if (response.statusCode != 200) {
-      error = 'bad status code ${response.statusCode}';
+      _logError(id, 'bad status code ${response.statusCode}');
     } else {
       Map? json = jsonDecode(response.body) as Map?;
-      error = _parseId(id, json);
-    }
-    if (error != null) {
-      _logError(id, error);
+      await _parseId(id, json);
     }
 
     _completeId();
   }
 
-  String? _parseId(int id, Map? json) {
-    if (json == null) {
-      return 'could not parse json';
-    } else if ((json['title'] ?? '') == '') {
-      return 'missing title';
-    } else if (!json.containsKey('objectBeginDate') || !json.containsKey('objectBeginDate')) {
-      return 'missing years';
+  Future<void> _parseId(int id, Map? json) async {
+    // catch all error conditions:
+    if (json == null) return _logError(id, 'could not parse json');
+    if ((json['title'] ?? '') == '') return _logError(id, 'missing title');
+    if (!json.containsKey('objectBeginDate') || !json.containsKey('objectBeginDate')) {
+      return _logError(id, 'missing years');
     }
-    //} else if (!json.containsKey('isPublicDomain') || !json['isPublicDomain']) {
-    //  return 'not public domain';
+    //if (!json.containsKey('isPublicDomain') || !json['isPublicDomain']) return _logError(id, 'not public domain')
 
-    int year = ((json['objectBeginDate'] as int) + (json['objectEndDate'] as int)) ~/ 2;
-
-    if (year < minYear || year > maxYear) return 'year is out of range';
+    final int year = ((json['objectBeginDate'] as int) + (json['objectEndDate'] as int)) ~/ 2;
+    if (year < minYear || year > maxYear) return _logError(id, 'year is out of range');
 
     String? imageUrlSmall = json['primaryImageSmall'];
-    if (imageUrlSmall == null) return 'no small image';
-    if (!imageUrlSmall.startsWith(SearchData.baseImagePath)) return 'unexpected image uri: "$imageUrlSmall"';
+    if (imageUrlSmall == null) return _logError(id, 'no small image url');
+    if (!imageUrlSmall.startsWith(SearchData.baseImagePath)) {
+      return _logError(id, 'unexpected image uri: "$imageUrlSmall"');
+    }
+    String imagePath = imageUrlSmall.substring(SearchData.baseImagePath.length);
+    imagePath = imagePath.replaceFirst('/web-large/', '/mobile-large/');
 
-    imageUrlSmall = imageUrlSmall.substring(SearchData.baseImagePath.length);
-    imageUrlSmall = imageUrlSmall.replaceFirst('/web-large/', '/mobile-large/');
+    double? aspectRatio = 0;
+    if (checkImages) aspectRatio = await _getAspectRatio(imageUrlSmall);
+    if (aspectRatio == null) return _logError(id, 'image failed to load');
 
-    _Entry entry = _Entry(
-      id: id,
-      year: year,
-      title: json['title'],
-      imageUrlSmall: imageUrlSmall,
-      keywords: _getKeywords(json),
+    SearchData entry = SearchData(
+      year,
+      id,
+      _escape(json['title']),
+      _getKeywords(json),
+      imagePath,
+      aspectRatio,
     );
+
     entries.add(entry);
-    return null;
+  }
+
+  Future<double?> _getAspectRatio(String imagePath) async {
+    Completer<double?> completer = Completer<double?>();
+    NetworkImage image = NetworkImage(imagePath);
+    ImageStream stream = image.resolve(ImageConfiguration());
+    stream.addListener(ImageStreamListener(
+      (info, _) => completer.complete(info.image.width / info.image.height),
+      onError: (_, __) => completer.complete(null),
+    ));
+    return completer.future;
   }
 
   String _getKeywords(Map json) {
     String str = '${json['objectName'] ?? ''}|${json['medium'] ?? ''}|${json['classification'] ?? ''}';
-    return str.toLowerCase().replaceAll("'", "\\'").replaceAll('\r', ' ').replaceAll('\n', ' ');
+    return _escape(str.toLowerCase());
   }
+
+  String _escape(String str) => str.replaceAll("'", "\\'").replaceAll('\r', ' ').replaceAll('\n', ' ');
 
   void _completeId() {
     --activeRequestCount;
@@ -199,23 +214,26 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
 
   Future<void> _completeIds() async {
     _log('- Created ${entries.length} entries');
-    // remove excess > maxIds?
-    entries.sort((_Entry a, _Entry b) => a.year - b.year);
+
+    // TODO: maybe randomize instead?
+    //entries.sort((SearchData a, SearchData b) => a.year - b.year);
+    entries.shuffle();
 
     // build output:
     String entryStr = '';
     for (int i = 0; i < entries.length; i++) {
-      _Entry o = entries[i];
-      entryStr += "  SearchData(${o.year}, ${o.id}, '${o.title}', '${o.keywords}', '${o.imageUrlSmall}'),\n";
+      entryStr += '  ${entries[i].write()},\n';
     }
 
-    String output = '// ${wonder!.title} (${entries.length})\nList<SearchData> _searchData = [\n$entryStr];';
-    
+    String output = '// ${wonder!.title} (${entries.length})\nList<SearchData> _searchData = const [\n$entryStr];';
+
+    String suggestions = _getSuggestions(entries);
+
     Directory dir = await getApplicationDocumentsDirectory();
     String type = wonder!.type.toString().split('.').last;
     String path = '${dir.path}/$type.dart';
     File file = File(path);
-    await file.writeAsString(output);
+    await file.writeAsString('$suggestions\n\n$output');
     _log('- Wrote file: $type.dart');
     debugPrint(path);
     _nextWonder();
@@ -224,7 +242,9 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
   void _complete() {
     _log('\n----------\nCompleted with ${errors.length} unique errors in ${timer.elapsed.inSeconds} seconds.');
     String errorStr = '';
-    errors.forEach((key, value) { errorStr += '$key (${value.length})\n'; });
+    errors.forEach((key, value) {
+      errorStr += '$key (${value.length})\n';
+    });
     _log(errorStr);
     timer.stop();
     _http.close();
@@ -238,6 +258,49 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
   void _logError(int id, String str) {
     if (!errors.containsKey(str)) errors[str] = [];
     errors[str]!.add(id);
+  }
+
+  void _runSuggestions() {
+    if (selectedWonder == 'All') {
+      debugPrint('select a single wonder');
+    } else {
+      WonderData wonder = wondersLogic.all.firstWhere((o) => o.title == selectedWonder);
+      debugPrint(_getSuggestions(wonder.searchData));
+    }
+  }
+
+  String _getSuggestions(List<SearchData> data) {
+    HashMap<String, int> counts = HashMap<String, int>();
+    HashSet<String> ignore = HashSet<String>();
+
+    // iterate through all items, and count the number of times keywords show up
+    // but don't count multiple times for a single item
+    for (int i = 0; i < data.length; i++) {
+      ignore.clear();
+      ignore.addAll(['and', 'the', 'with', 'from', 'for', 'form', 'probably', 'back', 'front', 'under', 'his', 'one', 'two', 'three', 'four', 'part', 'called', 'over']);
+      SearchData o = data[i];
+      RegExp re = RegExp(r'\b\w{3,}\b');
+      List<Match> matches = re.allMatches(o.title).toList() + re.allMatches(o.keywords).toList();
+      for (int j = 0; j < matches.length; j++) {
+        String match = matches[j].group(0)!.toLowerCase();
+        if (ignore.contains(match)) continue;
+        ignore.add(match);
+        counts[match] = (counts[match] ?? 0) + 1;
+      }
+    }
+
+    String str = 'List<String> _searchSuggestions = const [';
+
+    int minCount = min(10, max(3, data.length / 60)).round();
+    int suggestionCount = 0;
+    counts.forEach((key, value) {
+      if (value >= minCount) {
+        str += "'$key', ";
+        suggestionCount++;
+      }
+    });
+    _log('- extracted $suggestionCount keyword suggestions');
+    return '// Search suggestions ($suggestionCount)\n$str];';
   }
 
   Widget _buildContent(BuildContext context) {
@@ -262,6 +325,9 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
               onChanged: (s) => setState(() => maxPriority = int.parse(s)),
             ),
             Gap(16),
+            CheckboxListTile(
+                title: Text('images'), value: checkImages, onChanged: (b) => setState(() => checkImages = b!)),
+            Gap(32),
             MaterialButton(onPressed: () => _run(), child: Text('RUN')),
           ]),
         ),
@@ -320,8 +386,11 @@ const Map<WonderType, List<String>> queries = {
   ],
   WonderType.colosseum: [
     // 1 500
-    '!dateBegin=1&dateEnd=500&geoLocation=Roman Empire&q=imperial rome', // 408
+    //'!geoLocation=Rome&q=Rome',
+    //'geoLocation=Roman Empire&q=roman', // 408
+    //'!q=colosseum',
     'artistOrCulture=true&q=roman', // 6068
+    //'!dateBegin=-&dateEnd=500&geoLocation=Roman Empire&q=imperial rome', // 408
   ],
   WonderType.greatWall: [
     // -700 1650
@@ -330,12 +399,14 @@ const Map<WonderType, List<String>> queries = {
   ],
   WonderType.machuPicchu: [
     // 1400 1600
+    '!artistOrCulture=true&geoLocation=Peru&q=quechua',
     'geoLocation=South%20America&q=inca', // 344
   ],
   WonderType.petra: [
     // -500 500
-    'artistOrCulture=true&q=nabataean', // 50
-    'geoLocation=Levant&q=levant', // 346
+    '!artistOrCulture=true&q=nabataean', // 50
+    '!geoLocation=Levant&q=levant', // 346
+    'geoLocation=Asia&q=Arabia',
   ],
   WonderType.pyramidsGiza: [
     // -2600 -2500
@@ -344,22 +415,7 @@ const Map<WonderType, List<String>> queries = {
   ],
   WonderType.tajMahal: [
     // 1600 1700
-    'geoLocation=India&q=mughal', // 399,
+    '!geoLocation=India&q=mughal', // 399,
+    'geoLocation=India&q=India',
   ],
 };
-
-class _Entry {
-  const _Entry({
-    required this.id,
-    required this.keywords,
-    required this.title,
-    required this.year,
-    required this.imageUrlSmall,
-  });
-
-  final int id;
-  final String keywords;
-  final String title;
-  final int year;
-  final String imageUrlSmall;
-}

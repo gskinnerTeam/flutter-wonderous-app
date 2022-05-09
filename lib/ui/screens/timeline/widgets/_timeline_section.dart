@@ -1,7 +1,7 @@
 part of '../timeline_screen.dart';
 
 class TimelineSection extends StatelessWidget {
-  TimelineSection(this.data, this.selectedYr, {Key? key, required this.selectedWonder}) : super(key: key);
+  const TimelineSection(this.data, this.selectedYr, {Key? key, required this.selectedWonder}) : super(key: key);
   final WonderData data;
   final int selectedYr;
   final WonderType selectedWonder;

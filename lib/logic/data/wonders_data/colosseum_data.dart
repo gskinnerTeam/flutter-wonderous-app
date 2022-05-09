@@ -1,8 +1,12 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
-import 'package:wonders/logic/data/wonders_data/mock_data.dart';
+import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
+
+part 'search/colosseum_search_data.dart';
 
 final colosseumData = WonderData(
+  searchData: _searchData, // included as a part from ./search/
+  searchSuggestions: _searchSuggestions, // included as a part from ./search/
   type: WonderType.colosseum,
   title: 'Colosseum',
   subTitle: 'The icon of Rome',
@@ -10,13 +14,12 @@ final colosseumData = WonderData(
   videoId: 'GXoEpNjgKzg',
   startYr: 70,
   endYr: 80,
-  artifactStartYr: 1,
+  artifactStartYr: 0,
   artifactEndYr: 500,
   artifactCulture: 'Roman',
   artifactGeolocation: 'Roman Empire',
   lat: 41.890242126393495,
   lng: 12.492349361871392,
-  imageIds: mockImageIds,
   unsplashCollectionId: 'VPdti8Kjq9o',
   quote1: 'Still the largest standing',
   quote2: 'amphitheater in the world today',

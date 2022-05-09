@@ -15,21 +15,23 @@ class SimpleHeader extends StatelessWidget {
     return ColoredBox(
       color: isTransparent ? Colors.transparent : context.colors.greyStrong,
       child: SafeArea(
+        bottom: false,
         child: Row(children: [
           if (showBackBtn) BackBtn().safe(),
           Flexible(
             fit: FlexFit.tight,
             child: Column(
               children: [
-                if (!showBackBtn) Gap(context.insets.md),
+                if (!showBackBtn) Gap(context.insets.xs),
                 Text(
                   title.toUpperCase(),
+                  textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
                   style: context.textStyles.h4.copyWith(color: context.colors.offWhite),
                 ),
-                if (subtitle != null) Gap(context.insets.xxs),
                 if (subtitle != null)
                   Text(
                     subtitle!.toUpperCase(),
+                    textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
                     style: context.textStyles.title1.copyWith(color: context.colors.accent1),
                   ),
                 if (!showBackBtn) Gap(context.insets.md),

@@ -32,7 +32,6 @@ class ScalingListItem extends StatelessWidget {
               },
             );
           }),
-      delay: context.times.fast,
     );
   }
 }

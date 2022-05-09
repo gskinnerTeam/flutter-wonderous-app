@@ -22,6 +22,8 @@ class UnsplashPhotoData {
 
   late final String photographerUrl = 'https://unsplash.com/@$ownerUsername?utm_source=wonders&utm_medium=referral';
 
+  String getExactSizeUrl(int size) => '$url?q=90&fm=jpg&w=$size&fit=max';
+
   String getSizedUrl(UnsplashPhotoSize targetSize) {
     late int size;
     switch (targetSize) {
@@ -38,7 +40,6 @@ class UnsplashPhotoData {
     if (PlatformInfo.pixelRatio >= 1.5) {
       size *= 2;
     }
-    //return 'http://wonderous.info/test_$size.jpg';
-    return '$url?q=90&fm=jpg&w=$size&fit=max';
+    return 'http://wonderous.info/unsplash/$id-$size.jpg';
   }
 }

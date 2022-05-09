@@ -79,9 +79,9 @@ class _ScrollingContent extends StatelessWidget {
           /// Location
           buildDropCapText(data.locationInfo),
           // SB: Disable maps thumbnail in debug mode, as it pollutes the logs too much in the android simulator
-          if (kReleaseMode) ...[
-            _MapsThumbnail(data, height: 200),
-          ],
+          //if (kReleaseMode) ...[
+          _MapsThumbnail(data, height: 200),
+          //],
           buildHiddenCollectible(slot: 3),
         ],
       ),

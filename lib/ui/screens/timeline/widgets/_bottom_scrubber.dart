@@ -44,7 +44,10 @@ class _BottomScrubber extends StatelessWidget {
           /// Timeline background
           Padding(
             padding: EdgeInsets.all(context.insets.sm),
-            child: WondersTimelineBuilder(selectedWonders: [selectedWonder]),
+            child: WondersTimelineBuilder(
+              crossAxisGap: 4,
+              selectedWonders: [selectedWonder],
+            ),
           ),
 
           /// Visible area, follows the position of scroller
@@ -59,18 +62,21 @@ class _BottomScrubber extends StatelessWidget {
               final scrubberAlign = Alignment(-1 + scrollFraction * 2, 0);
 
               return Positioned.fill(
-                child: GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onPanUpdate: _handleScrubberPan,
-                  onTap: _handleTap,
+                child: Semantics(
+                  container: true,
+                  slider: true,
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onPanUpdate: _handleScrubberPan,
 
-                  /// Scrub area
-                  child: Align(
-                    alignment: scrubberAlign,
-                    child: FractionallySizedBox(
-                      widthFactor: viewPortFraction,
-                      heightFactor: 1,
-                      child: _buildOutlineBox(context, scrubberAlign),
+                    /// Scrub area
+                    child: Align(
+                      alignment: scrubberAlign,
+                      child: FractionallySizedBox(
+                        widthFactor: viewPortFraction,
+                        heightFactor: 1,
+                        child: _buildOutlineBox(context, scrubberAlign),
+                      ),
                     ),
                   ),
                 ),
@@ -89,6 +95,4 @@ class _BottomScrubber extends StatelessWidget {
       child: Align(alignment: alignment, child: DashedLine(vertical: true)),
     );
   }
-
-  void _handleTap() {}
 }

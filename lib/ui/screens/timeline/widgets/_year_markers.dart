@@ -9,7 +9,7 @@ class _YearMarkers extends StatelessWidget {
   late final int _totalYrs = endYr - startYr;
 
   /// Normalizes a given year to a value from 0 - 1, based on start and end yr.
-  double calculateOffsetY(int yr) => (yr - startYr) / _totalYrs;
+  double _calculateOffsetY(int yr) => (yr - startYr) / _totalYrs;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class _YearMarkers extends StatelessWidget {
             child: Stack(
               key: ValueKey(interval),
               children: markers.map((yr) {
-                return _YearMarker(yr, calculateOffsetY(yr));
+                return _YearMarker(yr, _calculateOffsetY(yr));
               }).toList(),
             ),
           ),

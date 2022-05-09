@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:drop_cap_text/drop_cap_text.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_circular_text/circular_text.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wonders/common_libs.dart';
@@ -16,8 +15,8 @@ import 'package:wonders/ui/common/scaling_list_item.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/utils/context_utils.dart';
 import 'package:wonders/ui/wonder_illustrations/common/animated_clouds.dart';
-import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration.dart';
+import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_title_text.dart';
 
 part 'widgets/_app_bar.dart';
@@ -161,10 +160,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                         widget.data.type,
                         scrollPos: _scrollPos,
                         sectionIndex: _sectionIndex,
-                      )
-                          .fx()
-                          .fade(duration: context.times.med, delay: context.times.introDelay)
-                          .move(begin: Offset(0, 100)),
+                      ).fx().fade(duration: context.times.med, delay: context.times.introDelay),
                     ),
                   ),
 
@@ -176,6 +172,10 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                       builder: (_, value, child) => value ? child! : SizedBox(height: 1000),
                       child: _ScrollingContent(widget.data, scrollPos: _scrollPos, sectionNotifier: _sectionIndex),
                     ),
+                  ),
+
+                  SliverList(
+                    delegate: SliverChildListDelegate.fixed([]),
                   ),
 
                   /// Bottom padding

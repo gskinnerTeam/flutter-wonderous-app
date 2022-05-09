@@ -11,7 +11,7 @@ export 'colors.dart';
 class AppStyle {
   AppStyle({required this.screenSize}) {
     scale = _calculateScale(screenSize);
-    debugPrint('appStyle.scale=$scale');
+    //debugPrint('appStyle.scale=$scale');
   }
 
   /// The current theme colors for the app
