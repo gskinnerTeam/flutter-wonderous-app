@@ -79,8 +79,14 @@ class BackBtn extends StatelessWidget {
     this.iconColor,
   }) : super(key: key);
 
-  const BackBtn.close({Key? key, VoidCallback? onPressed})
-      : this(key: key, icon: Icons.close, onPressed: onPressed, semanticLabel: 'close');
+  const BackBtn.close({Key? key, VoidCallback? onPressed, Color? bgColor, Color? iconColor})
+      : this(
+            key: key,
+            icon: Icons.close,
+            onPressed: onPressed,
+            semanticLabel: 'close',
+            bgColor: bgColor,
+            iconColor: iconColor);
 
   final Color? bgColor;
   final Color? iconColor;

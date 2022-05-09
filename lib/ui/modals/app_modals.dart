@@ -1,8 +1,12 @@
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/ui/common/themed_text.dart';
 
 Future<bool> showModal(BuildContext context, {required Widget child}) async {
-  return await showMaterialModalBottomSheet(expand: false, context: context, builder: (_) => child) ?? false;
+  var colors = context.read<AppStyle>().colors;
+  return await showMaterialModalBottomSheet(
+          expand: false, context: context, backgroundColor: colors.greyStrong, builder: (_) => child) ??
+      false;
 }
 
 class LoadingModal extends StatelessWidget {
@@ -35,7 +39,7 @@ class OkModal extends StatelessWidget {
       msg: msg,
       child: child,
       buttons: [
-        AppTextBtn('Ok', onPressed: () => Navigator.of(context).pop(true)),
+        AppTextBtn('Ok', expand: true, isSecondary: true, onPressed: () => Navigator.of(context).pop(true)),
       ],
     );
   }
@@ -54,8 +58,9 @@ class OkCancelModal extends StatelessWidget {
       msg: msg,
       child: child,
       buttons: [
-        AppTextBtn('Cancel', onPressed: () => Navigator.of(context).pop(false)),
-        AppTextBtn('Ok', onPressed: () => Navigator.of(context).pop(true)),
+        AppTextBtn('Ok', expand: true, isSecondary: true, onPressed: () => Navigator.of(context).pop(true)),
+        Gap(context.insets.xs),
+        AppTextBtn('Cancel', expand: true, onPressed: () => Navigator.of(context).pop(false)),
       ],
     );
   }
@@ -74,13 +79,19 @@ class _BaseContentModal extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(context.insets.lg),
-      child: SeparatedColumn(mainAxisSize: MainAxisSize.min, separatorBuilder: () => Gap(context.insets.md), children: [
-        if (title != null) Text(title!, style: context.textStyles.h2),
-        if (child != null) child!,
-        if (msg != null) Text(msg!, style: context.textStyles.body),
-        Gap(context.insets.md),
-        Row(children: buttons.map((e) => Expanded(child: e)).toList())
-      ]),
+      child: LightText(
+        child: SeparatedColumn(
+          mainAxisSize: MainAxisSize.min,
+          separatorBuilder: () => Gap(context.insets.md),
+          children: [
+            if (title != null) Text(title!, style: context.textStyles.h2),
+            if (child != null) child!,
+            if (msg != null) Text(msg!, style: context.textStyles.body),
+            Gap(context.insets.md),
+            Column(children: buttons.map((e) => e).toList())
+          ],
+        ),
+      ),
     );
   }
 }

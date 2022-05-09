@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/rendering.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:wonders/common_libs.dart';
@@ -39,27 +42,31 @@ class AppLogic {
     appRouter.go(ScreenPaths.home);
   }
 
+  Future<Image?> takeScreenshot(RenderRepaintBoundary boundary) async {
+    return null;
+  }
+
   /// Walks user through flow to save a Wonder Poster to their gallery
-  Future<void> saveWallpaper(BuildContext context, Widget widget, {required String name}) async {
-    bool result = await showModal(context,
-        child: OkCancelModal(
-          msg: 'Save this poster to your photo gallery?',
-          child: SizedBox(
-            height: context.heightPct(.7),
-            child: WallpaperPreview(child: widget),
-          ),
-        ));
-    if (result) {
-      showModal(context, child: LoadingModal(title: 'Saving Image. Please wait...'));
-      await ScreenshotController().captureFromWidget(widget).then((image) async {
+  Future<void> saveWallpaper(BuildContext context, RenderRepaintBoundary boundary, {required String name}) async {
+    // Time to create an image!
+    ui.Image uiImage = await boundary.toImage();
+    ByteData? byteData = await uiImage.toByteData(format: ui.ImageByteFormat.png);
+    if (byteData != null) {
+      Uint8List pngBytes = byteData.buffer.asUint8List();
+      bool result = await showModal(context,
+          child: OkCancelModal(
+            msg: 'Save this poster to your photo gallery?',
+          ));
+      if (result) {
+        showModal(context, child: LoadingModal(msg: 'Saving Image. Please wait...'));
         if (PlatformInfo.isMobile) {
-          await ImageGallerySaver.saveImage(image, quality: 95, name: name);
+          await ImageGallerySaver.saveImage(pngBytes, quality: 95, name: name);
         } else {
           await Future.delayed(500.ms);
         }
         Navigator.pop(context);
-        showModal(context, child: OkModal(title: 'Save complete!'));
-      });
+        showModal(context, child: OkModal(msg: 'Save complete!'));
+      }
     }
   }
 
