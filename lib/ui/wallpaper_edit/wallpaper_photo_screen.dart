@@ -175,8 +175,8 @@ class _WallpaperPhotoScreenState extends State<WallpaperPhotoScreen> {
             // Title text
             if (_isTextOn)
               BottomCenter(
-                child: FractionalTranslation(
-                  translation: Offset(0.0, -1),
+                child: Transform.translate(
+                  offset: Offset(0.0, -context.insets.xl * 2),
                   child: WonderTitleText(wonderData, enableShadows: true),
                 ),
               ),
