@@ -18,15 +18,16 @@ class CollectibleFoundScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepaintBoundary(
       child: _buildIntro(context).fx().swap(
-            delay: 1500.ms,
+            delay: context.times.fast * 3,
             builder: (_) => _buildDetail(context),
           ),
     );
   }
 
   Widget _buildIntro(BuildContext context) {
+    Duration t = context.times.fast;
     return Stack(children: [
-      FXAnimate().custom(duration: 1500.ms, builder: (context, ratio, _) => _buildGradient(context, ratio, 0)),
+      FXAnimate().custom(duration: t * 5, builder: (context, ratio, _) => _buildGradient(context, ratio, 0)),
 
       // icon is handled by Hero initially, then scales slowly:
       Center(
@@ -40,16 +41,16 @@ class CollectibleFoundScreen extends StatelessWidget {
               fit: BoxFit.contain,
             ),
           ),
-        ).fx().scale(begin: 1, end: 3, curve: Curves.easeInExpo, duration: 900.ms),
+        ).fx().scale(begin: 1, end: 3, curve: Curves.easeInExpo, delay: t, duration: t * 3),
       )
     ]);
   }
 
   Widget _buildDetail(BuildContext context) {
+    Duration t = context.times.fast;
     return Stack(key: ValueKey('detail'), children: [
-      // radial gradient to solid fill in first 300ms:
-      FXAnimate().custom(duration: 300.ms, builder: (context, ratio, _) => _buildGradient(context, 1, ratio)),
-      _CelebrationParticles(),
+      FXAnimate().custom(duration: t, builder: (context, ratio, _) => _buildGradient(context, 1, ratio)),
+      _CelebrationParticles(fadeMs: (t * 6).inMilliseconds),
       SafeArea(
         child: Column(children: [
           Spacer(flex: 5),
@@ -60,15 +61,15 @@ class CollectibleFoundScreen extends StatelessWidget {
           Spacer(flex: 2),
           _buildRibbon(context),
           Spacer(flex: 2),
-          _buildTitle(context, collectible.title, context.textStyles.h2, context.colors.offWhite, 450),
+          _buildTitle(context, collectible.title, context.textStyles.h2, context.colors.offWhite, t * 1.5),
           Gap(context.insets.xs),
           _buildTitle(
-              context, collectible.subtitle.toUpperCase(), context.textStyles.title2, context.colors.accent1, 600),
+              context, collectible.subtitle.toUpperCase(), context.textStyles.title2, context.colors.accent1, t * 2),
           Spacer(flex: 2),
           _buildCollectionButton(context),
         ]),
       ),
-      BackBtn.close().safe().fx().fade(delay: 1200.ms, duration: 900.ms),
+      BackBtn.close().safe().fx().fade(delay: t * 4, duration: t * 2),
     ]);
   }
 
@@ -93,11 +94,12 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   Widget _buildImage(BuildContext context) {
+    Duration t = context.times.fast;
     // build an image with animated shadows and scaling
     return Image(image: imageProvider)
         .fx()
         .custom(
-          duration: 1800.ms,
+          duration: t * 6,
           builder: (_, ratio, child) => Container(
             padding: EdgeInsets.all(context.insets.xxs),
             margin: EdgeInsets.symmetric(horizontal: context.insets.xl),
@@ -115,22 +117,24 @@ class CollectibleFoundScreen extends StatelessWidget {
             child: child,
           ),
         )
-        .scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo, alignment: Alignment(0, 0.7));
+        .scale(begin: 0.3, duration: t * 2, curve: Curves.easeOutExpo, alignment: Alignment(0, 0.7));
   }
 
-  Widget _buildRibbon(BuildContext buildContext) {
+  Widget _buildRibbon(BuildContext context) {
+    Duration t = context.times.fast;
     return _AnimatedRibbon('Artifact Discovered'.toUpperCase())
         .fx()
-        .scale(begin: 0.3, duration: 600.ms, curve: Curves.easeOutExpo, alignment: Alignment(0, -1));
+        .scale(begin: 0.3, duration: t * 2, curve: Curves.easeOutExpo, alignment: Alignment(0, -1));
   }
 
-  Widget _buildTitle(BuildContext context, String text, TextStyle style, Color color, double delay) {
+  Widget _buildTitle(BuildContext context, String text, TextStyle style, Color color, Duration delay) {
+    Duration t = context.times.fast;
     // because this is a performance-sensitive screen, we are fading in the text by adjusting color:
     return Container(
       padding: EdgeInsets.symmetric(horizontal: context.insets.lg),
       child: FXAnimate().custom(
-        delay: delay.ms,
-        duration: 600.ms,
+        delay: delay,
+        duration: t * 2,
         builder: (_, m, __) => Text(
           text,
           maxLines: 2,
@@ -143,6 +147,7 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   Widget _buildCollectionButton(BuildContext context) {
+    Duration t = context.times.fast;
     return Container(
       padding: EdgeInsets.all(context.insets.lg),
       child: AppTextBtn(
@@ -151,6 +156,6 @@ class CollectibleFoundScreen extends StatelessWidget {
         expand: true,
         onPressed: () => context.push(ScreenPaths.collection(collectible.id)),
       ),
-    ).fx().show(delay: 1200.ms).move(begin: Offset(0, context.insets.md), duration: 900.ms, curve: Curves.easeOutExpo);
+    ).fx().show(delay: t * 4).move(begin: Offset(0, context.insets.md), duration: t * 3, curve: Curves.easeOutExpo);
   }
 }

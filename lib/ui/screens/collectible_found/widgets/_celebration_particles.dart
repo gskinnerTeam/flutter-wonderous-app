@@ -1,10 +1,13 @@
 part of '../collectible_found_screen.dart';
 
 class _CelebrationParticles extends StatelessWidget {
+  const _CelebrationParticles({Key? key, this.fadeMs = 1000}) : super(key: key);
+
+  final int fadeMs;
+
   @override
   Widget build(BuildContext context) {
     final Color color = context.colors.accent1;
-    const double fadeT = 1800;
     int particleCount = 1200;
 
     return Positioned.fill(
@@ -15,6 +18,7 @@ class _CelebrationParticles extends StatelessWidget {
             frameWidth: 21,
             scale: 0.75,
           ),
+          
           onTick: (controller, elapsed, size) {
             List<Particle> particles = controller.particles;
 
@@ -23,7 +27,7 @@ class _CelebrationParticles extends StatelessWidget {
             final double v = d * 0.08;
 
             // calculate an opacity multiplier based on time elapsed (ie. fade out):
-            controller.opacity = Curves.easeOutExpo.transform(max(0, 1 - elapsed.inMilliseconds / fadeT));
+            controller.opacity = Curves.easeOutExpo.transform(max(0, 1 - elapsed.inMilliseconds / fadeMs));
             if (controller.opacity == 0) return;
 
             // add new particles, reducing the number added each tick:
