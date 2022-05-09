@@ -49,7 +49,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
       // Determine min and max size of the timeline based on the size available to this widget
       const double scrubberSize = 70;
       const double minSize = 1200;
-      const double maxSize = 3000;
+      const double maxSize = 5500;
       return Container(
         color: context.colors.greyStrong,
         child: Padding(

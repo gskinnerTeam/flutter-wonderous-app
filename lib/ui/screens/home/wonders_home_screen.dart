@@ -188,16 +188,19 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
   Widget _buildSwipeableBgGradient(Color fgColor) {
     return _swipeController.buildListener(builder: (swipeAmt, isPointerDown, _) {
       return IgnorePointer(
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                fgColor.withOpacity(0),
-                fgColor.withOpacity(fgColor.opacity * .75 + (isPointerDown ? .05 : 0) + swipeAmt * .20),
-              ],
-              stops: const [0, 1],
+        child: FractionallySizedBox(
+          heightFactor: .5,
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  fgColor.withOpacity(0),
+                  fgColor.withOpacity(fgColor.opacity * .75 + (isPointerDown ? .05 : 0) + swipeAmt * .20),
+                ],
+                stops: const [0, 1],
+              ),
             ),
           ),
         ),

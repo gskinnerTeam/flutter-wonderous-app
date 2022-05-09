@@ -27,7 +27,7 @@ class _EventPopupsState extends State<_EventPopups> {
   @override
   Widget build(BuildContext context) {
     final evt = _eventToShow;
-    return BottomCenter(
+    return TopCenter(
       child: ClipRect(
         child: IgnorePointer(
           child: AnimatedSwitcher(
@@ -36,7 +36,7 @@ class _EventPopupsState extends State<_EventPopups> {
                 ? SizedBox.shrink()
                 : FXAnimate(
                     fx: const [
-                      SlideFX(begin: Offset(0, .1)),
+                      SlideFX(begin: Offset(0, -.1)),
                     ],
                     key: ValueKey(_eventToShow?.year),
                     child: IntrinsicHeight(
