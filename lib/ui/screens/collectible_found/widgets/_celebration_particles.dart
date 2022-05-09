@@ -4,7 +4,7 @@ class _CelebrationParticles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Color color = context.colors.accent1;
-    const double fadeT = CollectibleFoundScreen.detailT;
+    const double fadeT = 1800;
     int particleCount = 1200;
 
     return Positioned.fill(
@@ -15,7 +15,6 @@ class _CelebrationParticles extends StatelessWidget {
             frameWidth: 21,
             scale: 0.75,
           ),
-          
           onTick: (controller, elapsed, size) {
             List<Particle> particles = controller.particles;
 
