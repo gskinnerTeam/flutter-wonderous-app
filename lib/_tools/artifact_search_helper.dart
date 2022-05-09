@@ -262,10 +262,10 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
 
   void _runSuggestions() {
     if (selectedWonder == 'All') {
-      print('select a single wonder');
+      debugPrint('select a single wonder');
     } else {
       WonderData wonder = wondersLogic.all.firstWhere((o) => o.title == selectedWonder);
-      print(_getSuggestions(wonder.searchData));
+      debugPrint(_getSuggestions(wonder.searchData));
     }
   }
 
