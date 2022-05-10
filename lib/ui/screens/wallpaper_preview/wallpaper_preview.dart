@@ -8,10 +8,7 @@ class WallpaperPreview extends StatelessWidget {
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: context.widthPx / context.heightPx,
-      child: Container(
-        color: Colors.red.shade900,
-        child: child,
-      ),
+      child: child,
     );
   }
 }

@@ -12,6 +12,7 @@ import 'package:wonders/ui/screens/splash/splash_screen.dart';
 import 'package:wonders/ui/screens/timeline/timeline_screen.dart';
 import 'package:wonders/ui/screens/timeline_details/timeline_details.dart';
 import 'package:wonders/ui/screens/wonder_details/wonders_details_screen.dart';
+import 'package:wonders/ui/wallpaper_edit/wallpaper_photo_screen.dart';
 
 class ScreenPaths {
   static String splash = '/';
@@ -26,6 +27,7 @@ class ScreenPaths {
   static String artifact(String id) => '/artifact/$id';
   static String collection(String id) => '/collection/$id';
   static String maps(WonderType type) => '/maps/${type.name}';
+  static String wallpaperPhoto(WonderType type) => '/wallpaperPhoto/${type.name}';
 }
 
 String? _handleRedirect(GoRouterState state) {
@@ -73,6 +75,9 @@ final appRouter = GoRouter(
     }),
     AppRoute('/maps/:id', (s) {
       return FullscreenMapsViewer(type: _parseWonderType(s.params['id']!));
+    }),
+    AppRoute('/wallpaperPhoto/:id', (s) {
+      return WallpaperPhotoScreen(type: _parseWonderType(s.params['id']!));
     }),
   ],
 );
