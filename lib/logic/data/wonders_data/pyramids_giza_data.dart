@@ -1,12 +1,12 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
-import 'package:wonders/logic/data/wonders_data/mock_data.dart';
 import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
 
 part 'search/pyramids_giza_search_data.dart';
 
 final pyramidsGizaData = WonderData(
   searchData: _searchData, // included as a part from ./search/
+  searchSuggestions: _searchSuggestions, // included as a part from ./search/
   type: WonderType.pyramidsGiza,
   title: 'Pyramids of Giza',
   subTitle: 'The ancient wonder',
@@ -14,13 +14,12 @@ final pyramidsGizaData = WonderData(
   videoId: 'lJKX3Y7Vqvs',
   startYr: -2600,
   endYr: -2500,
-  artifactStartYr: -2600,
-  artifactEndYr: -2500,
+  artifactStartYr: -2800,
+  artifactEndYr: -2300,
   artifactCulture: 'Egyptian',
   artifactGeolocation: 'Egypt',
   lat: 29.976111,
   lng: 31.132778,
-  imageIds: mockImageIds,
   unsplashCollectionId: 'CSEvB5Tza9E',
   quote1: 'The tallest structures on earth',
   quote2: 'until the advent of modern skyscrapers',

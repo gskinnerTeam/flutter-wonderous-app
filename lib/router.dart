@@ -83,6 +83,27 @@ class AppRoute extends GoRoute {
       : super(
           path: path,
           routes: routes,
-          builder: (_, state) => Scaffold(body: builder(state), resizeToAvoidBottomInset: false),
+          pageBuilder: (context, state) => buildAppPage(
+            context: context,
+            state: state,
+            child: Scaffold(
+              body: builder(state),
+              resizeToAvoidBottomInset: false,
+            ),
+          ),
         );
+}
+
+CustomTransitionPage<T> buildAppPage<T>({
+  required BuildContext context,
+  required GoRouterState state,
+  required Widget child,
+}) {
+  return CustomTransitionPage<T>(
+    key: state.pageKey,
+    child: child,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      return FadeTransition(opacity: animation, child: child);
+    },
+  );
 }

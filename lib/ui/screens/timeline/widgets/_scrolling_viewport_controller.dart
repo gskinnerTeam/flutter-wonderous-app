@@ -19,7 +19,7 @@ class _ScrollingViewportController extends ChangeNotifier {
       final data = wondersLogic.getData(widget.selectedWonder);
       final pos = calculateScrollPosFromYear(data.startYr);
       scroller.jumpTo(pos - 200);
-      scroller.animateTo(pos, duration: 1.35.seconds, curve: Curves.easeOut);
+      scroller.animateTo(pos, duration: 1.35.seconds, curve: Curves.easeOutCubic);
     });
   }
 
@@ -78,7 +78,6 @@ class _ScrollingViewportController extends ChangeNotifier {
   void _handleScaleStart(ScaleStartDetails _) => _zoomOnScaleStart = _zoom;
 
   void _handleScaleUpdate(ScaleUpdateDetails details) {
-    const double scaleMultiplier = 1.5;
-    setZoom(details.scale * _zoomOnScaleStart * scaleMultiplier);
+    setZoom(details.scale * _zoomOnScaleStart);
   }
 }

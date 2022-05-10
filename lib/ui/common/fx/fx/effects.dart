@@ -7,4 +7,5 @@ export 'listen_fx.dart';
 export 'move_fx.dart';
 export 'scale_fx.dart';
 export 'slide_fx.dart';
+export 'swap_fx.dart';
 export 'visibility_fx.dart';

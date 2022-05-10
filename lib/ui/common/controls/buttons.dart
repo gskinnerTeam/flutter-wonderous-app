@@ -63,7 +63,7 @@ class _AppBtnState extends State<AppBtn> {
             shape: widget.circular
                 ? CircleBorder(side: border)
                 : RoundedRectangleBorder(side: border, borderRadius: BorderRadius.circular(context.corners.md)),
-            padding: widget.padding ?? EdgeInsets.all(context.insets.sm),
+            padding: widget.padding ?? EdgeInsets.all(context.insets.md),
           ),
           child: DefaultTextStyle(
             style: DefaultTextStyle.of(context).style.copyWith(color: textColor),

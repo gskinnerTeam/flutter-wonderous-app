@@ -27,8 +27,8 @@ class _AnimatedArrowButton extends StatelessWidget {
         width: 50,
         child: FXAnimate(
           fx: [
-            CustomFX(_buildOpacityTween, duration: duration, curve: Curves.easeOut),
-            CustomFX(_buildSlideTween, duration: duration, curve: Curves.easeOut),
+            CustomFX(builder: _buildOpacityTween, duration: duration, curve: Curves.easeOut),
+            CustomFX(builder: _buildSlideTween, duration: duration, curve: Curves.easeOut),
           ],
           child: Transform.rotate(
             angle: pi * .5,

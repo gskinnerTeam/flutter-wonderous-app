@@ -1,3 +1,8 @@
+# 0.0.13
+- Latest search updates (ready for QA)
+- Latest Timeline
+- Fixed issue with sliding pages on iOS
+
 # 0.0.12
 - Updated collectible icons
 - Cached iOS Shaders

@@ -23,28 +23,28 @@ class CollectionScreen extends StatefulWidget with GetItStatefulWidgetMixin {
 }
 
 class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixin {
-  Map<String, int> states = collectiblesLogic.statesById.value;
-  GlobalKey? scrollKey;
+  Map<String, int> _states = collectiblesLogic.statesById.value;
+  GlobalKey? _scrollKey;
 
   @override
   void initState() {
     super.initState();
-    if (widget.fromId != null && states[widget.fromId] == CollectibleState.discovered) {
+    if (widget.fromId != null && _states[widget.fromId] == CollectibleState.discovered) {
       scheduleMicrotask(() => _scrollToTarget(false));
     }
   }
 
   WonderType? get scrollTargetWonder {
     String? id = widget.fromId;
-    if (id == null || states[id] != CollectibleState.discovered) {
-      id = states.keys.firstWhereOrNull((id) => states[id] == CollectibleState.discovered);
+    if (id == null || _states[id] != CollectibleState.discovered) {
+      id = _states.keys.firstWhereOrNull((id) => _states[id] == CollectibleState.discovered);
     }
     return collectiblesLogic.fromId(id)?.wonder;
   }
 
   void _scrollToTarget([bool animate = true]) {
-    if (scrollKey != null) {
-      Scrollable.ensureVisible(scrollKey!.currentContext!, alignment: 0.15, duration: animate ? 300.ms : 0.ms);
+    if (_scrollKey != null) {
+      Scrollable.ensureVisible(_scrollKey!.currentContext!, alignment: 0.15, duration: animate ? 300.ms : 0.ms);
     }
   }
 
@@ -55,15 +55,15 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
 
   @override
   Widget build(BuildContext context) {
-    states = watchX((CollectiblesLogic o) => o.statesById);
+    _states = watchX((CollectiblesLogic o) => o.statesById);
     int discovered = 0, explored = 0, total = collectiblesLogic.all.length;
-    states.forEach((_, state) {
+    _states.forEach((_, state) {
       if (state == CollectibleState.discovered) discovered++;
       if (state == CollectibleState.explored) explored++;
     });
 
     WonderType? scrollWonder = scrollTargetWonder;
-    if (scrollWonder != null) scrollKey = GlobalKey();
+    if (scrollWonder != null) _scrollKey = GlobalKey();
 
     return ColoredBox(
       color: context.colors.greyStrong,
@@ -73,9 +73,9 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
             SimpleHeader('Collection'),
             _NewlyDiscoveredRow(count: discovered, onPressed: _scrollToTarget),
             _CollectionList(
-              states: states,
+              states: _states,
               fromId: widget.fromId,
-              scrollKey: scrollKey,
+              scrollKey: _scrollKey,
               scrollWonder: scrollWonder,
               onPressed: (o) => _showDetails(context, o),
             ),

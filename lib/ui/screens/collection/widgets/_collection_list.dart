@@ -28,20 +28,14 @@ class _CollectionList extends StatelessWidget {
       children.add(_buildCollectibleRow(context, data.type, states));
       children.add(Gap(context.insets.xl));
     }
-    children.add(Gap(context.insets.offset));
 
     return Flexible(
       child: RepaintBoundary(
         child: ScrollDecorator.shadow(
           builder: (controller) => ListView(
             controller: controller,
-            padding: EdgeInsets.all(context.insets.md),
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: children,
-              ),
-            ],
+            padding: EdgeInsets.all(context.insets.md).copyWith(bottom: context.insets.offset * 2),
+            children:  children,
           ),
         ),
       ),

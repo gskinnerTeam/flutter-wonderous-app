@@ -15,6 +15,7 @@ class _NewlyDiscoveredRow extends StatelessWidget {
       semanticLabel: 'Scroll to new item',
       onPressed: onPressed,
       child: Container(
+        alignment: Alignment.center,
         height: 40,
         color: context.colors.black,
         padding: EdgeInsets.symmetric(vertical: context.insets.xs),

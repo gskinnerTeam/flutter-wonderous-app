@@ -11,20 +11,17 @@ import 'package:wonders/ui/common/utils/page_routes.dart';
 
 part 'widgets/_header.dart';
 part 'widgets/_content.dart';
-part 'widgets/_artifact_data_row.dart';
-
-// TODO: GDS: add list shadow
 
 class ArtifactDetailsScreen extends StatefulWidget {
-  final String artifactId;
   const ArtifactDetailsScreen({Key? key, required this.artifactId}) : super(key: key);
+  final String artifactId;
 
   @override
   State<ArtifactDetailsScreen> createState() => _ArtifactDetailsScreenState();
 }
 
 class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
-  late final _future = searchLogic.getArtifactByID(widget.artifactId);
+  late final _future = metAPILogic.getArtifactByID(widget.artifactId);
 
   @override
   Widget build(BuildContext context) {
@@ -33,19 +30,15 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
       child: FutureBuilder<ArtifactData?>(
         future: _future,
         builder: (_, snapshot) {
-          if (snapshot.hasData == false) {
-            return Center(child: AppLoader());
-          }
+          if (snapshot.hasData == false) return _buildPreloadScreen(context);
           final data = snapshot.data;
-          if (data == null) {
-            return AppLoadError(label: 'Unable to find info for artifact ${widget.artifactId} ');
-          }
+          if (data == null) return AppLoadError(label: 'Unable to find info for artifact ${widget.artifactId} ');
+
           return Stack(children: [
             /// Content
             CustomScrollView(
               slivers: [
                 SliverAppBar(
-                  backgroundColor: Colors.transparent,
                   pinned: true,
                   elevation: 0,
                   leading: SizedBox.shrink(),
@@ -61,5 +54,12 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
         },
       ),
     );
+  }
+
+  Widget _buildPreloadScreen(BuildContext context) {
+    return Stack(children: [
+      BackBtn().safe(),
+      Center(child: AppLoader()),
+    ]);
   }
 }

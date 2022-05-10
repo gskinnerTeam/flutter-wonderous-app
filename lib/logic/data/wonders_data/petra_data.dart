@@ -1,8 +1,12 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
-import 'package:wonders/logic/data/wonders_data/mock_data.dart';
+import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
+
+part 'search/petra_search_data.dart';
 
 final petraData = WonderData(
+  searchData: _searchData, // included as a part from ./search/
+  searchSuggestions: _searchSuggestions, // included as a part from ./search/
   type: WonderType.petra,
   title: 'Petra',
   subTitle: 'The Lost City',
@@ -11,12 +15,11 @@ final petraData = WonderData(
   startYr: -312,
   endYr: 100,
   artifactStartYr: -500,
-  artifactEndYr: 500,
+  artifactEndYr: 200,
   artifactCulture: 'Nabataean',
   artifactGeolocation: 'Levant',
   lat: 30.328830750209903,
   lng: 35.44398203484667,
-  imageIds: mockImageIds,
   unsplashCollectionId: 'qWQJbDvCMW8',
   quote1: 'A rose-red city',
   quote2: 'half as old as Time',

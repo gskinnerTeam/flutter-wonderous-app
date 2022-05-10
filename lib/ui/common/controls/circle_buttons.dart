@@ -7,20 +7,23 @@ class CircleBtn extends StatelessWidget {
     required this.onPressed,
     this.border,
     this.bgColor,
+    this.size,
     required this.semanticLabel,
   }) : super(key: key);
   final VoidCallback onPressed;
   final Color? bgColor;
   final BorderSide? border;
   final Widget child;
+  final double? size;
   final String semanticLabel;
 
   @override
   Widget build(BuildContext context) {
+    double sz = size ?? context.insets.xl;
     return AppBtn(
       onPressed: onPressed,
       semanticLabel: semanticLabel,
-      minimumSize: Size(48, 48),
+      minimumSize: Size(sz, sz),
       padding: EdgeInsets.zero,
       children: [child],
       circular: true,
@@ -38,6 +41,8 @@ class CircleIconBtn extends StatelessWidget {
     this.border,
     this.bgColor,
     this.color,
+    this.size,
+    this.iconSize,
     required this.semanticLabel,
   }) : super(key: key);
   final IconData icon;
@@ -46,18 +51,18 @@ class CircleIconBtn extends StatelessWidget {
   final Color? bgColor;
   final Color? color;
   final String semanticLabel;
+  final double? size;
+  final double? iconSize;
 
   @override
   Widget build(BuildContext context) {
     Color defaultColor = context.colors.greyStrong;
     Color iconColor = color ?? context.colors.offWhite;
     return CircleBtn(
-      child: Padding(
-        padding: EdgeInsets.all(context.insets.xs),
-        child: Icon(icon, size: context.insets.md, color: iconColor),
-      ),
+      child: Icon(icon, size: iconSize ?? context.insets.md, color: iconColor),
       onPressed: onPressed,
       border: border,
+      size: size,
       bgColor: bgColor ?? defaultColor,
       semanticLabel: semanticLabel,
     );
@@ -105,6 +110,7 @@ class _SafeAreaWithPadding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      bottom: false,
       child: Padding(
         padding: EdgeInsets.all(context.insets.sm),
         child: child,

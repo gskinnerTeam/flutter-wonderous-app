@@ -1,8 +1,12 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
-import 'package:wonders/logic/data/wonders_data/mock_data.dart';
+import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
+
+part 'search/great_wall_search_data.dart';
 
 final greatWallData = WonderData(
+  searchData: _searchData, // included as a part from ./search/
+  searchSuggestions: _searchSuggestions, // included as a part from ./search/
   type: WonderType.greatWall,
   title: 'The Great Wall',
   subTitle: 'Longest structure on Earth',
@@ -10,13 +14,12 @@ final greatWallData = WonderData(
   videoId: 'do1Go22Wu8o',
   startYr: -700,
   endYr: 1644,
-  artifactStartYr: 1350,
+  artifactStartYr: -700,
   artifactEndYr: 1650,
   artifactCulture: 'Chinese',
   artifactGeolocation: 'China',
   lat: 40.43199751120627,
   lng: 116.57040708482984,
-  imageIds: mockImageIds,
   unsplashCollectionId: 'Kg_h04xvZEo',
   quote1: 'One of the most impressive',
   quote2: 'architectural feats in history',

@@ -103,8 +103,7 @@ class _ClosedTimeRange extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String text =
-        'Time range: ${StringUtils.formatYr(startYear.round())} - ${StringUtils.formatYr(endYear.round())}';
+    final String text = '${StringUtils.formatYr(startYear.round())} - ${StringUtils.formatYr(endYear.round())}';
 
     return Padding(
       padding: EdgeInsets.symmetric(vertical: context.insets.xs),
@@ -112,7 +111,7 @@ class _ClosedTimeRange extends StatelessWidget {
         children: [
           Text(text, style: context.textStyles.titleFont.copyWith(color: context.colors.offWhite)),
           Gap(context.insets.xs),
-          Icon(Icons.edit_outlined, color: context.colors.greyMedium, size: 14.0),
+          Icon(Icons.edit_calendar_outlined, color: context.colors.accent1, size: context.insets.md),
         ],
       ),
     );
@@ -148,10 +147,7 @@ class _OpenedTimeRange extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-              width: context.insets.lg,
-              child: Icon(Icons.close, color: context.colors.caption, size: 20),
-            ),
+            Gap(context.insets.lg),
             Spacer(),
             Text(startYr.abs().toString(), style: headingTextStyle),
             Gap(context.insets.xxs),
@@ -163,7 +159,10 @@ class _OpenedTimeRange extends StatelessWidget {
             Gap(context.insets.xxs),
             Text(StringUtils.getYrSuffix(endYr.round()), style: captionTextStyle),
             Spacer(),
-            Gap(context.insets.lg),
+            SizedBox(
+              width: context.insets.lg,
+              child: Icon(Icons.close, color: context.colors.caption, size: 20),
+            ),
           ],
         ),
 
@@ -177,7 +176,7 @@ class _OpenedTimeRange extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(context.corners.md),
-                color: context.colors.greyStrong,
+                color: Color.lerp(context.colors.black, Colors.black, 0.2),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -203,7 +202,7 @@ class _OpenedTimeRange extends StatelessWidget {
                   selectedWonders: [wonder.type],
                   timelineBuilder: (_, __, sel) => Container(
                     decoration: BoxDecoration(
-                      color: context.colors.greyMedium.withOpacity(sel ? 0.9 : 0.4),
+                      color: context.colors.offWhite.withOpacity(sel ? 0.75 : 0.25),
                       borderRadius: BorderRadius.circular(999),
                     ),
                   ),

@@ -44,7 +44,10 @@ class _BottomScrubber extends StatelessWidget {
           /// Timeline background
           Padding(
             padding: EdgeInsets.all(context.insets.sm),
-            child: WondersTimelineBuilder(selectedWonders: [selectedWonder]),
+            child: WondersTimelineBuilder(
+              crossAxisGap: 4,
+              selectedWonders: [selectedWonder],
+            ),
           ),
 
           /// Visible area, follows the position of scroller
@@ -61,12 +64,12 @@ class _BottomScrubber extends StatelessWidget {
               return Positioned.fill(
                 child: Semantics(
                   container: true,
+                  slider: true,
                   button: true,
                   label: 'scrubber',
                   child: GestureDetector(
                     behavior: HitTestBehavior.translucent,
                     onPanUpdate: _handleScrubberPan,
-                    onTap: _handleTap,
 
                     /// Scrub area
                     child: Align(
@@ -94,6 +97,4 @@ class _BottomScrubber extends StatelessWidget {
       child: Align(alignment: alignment, child: DashedLine(vertical: true)),
     );
   }
-
-  void _handleTap() {}
 }
