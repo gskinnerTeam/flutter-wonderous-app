@@ -22,15 +22,15 @@ class WondersHomeScreen extends StatefulWidget with GetItStatefulWidgetMixin {
 /// Shows a horizontally scrollable list PageView sandwiched between Foreground and Background layers
 /// arranged in a parallax style.
 class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTickerProviderStateMixin {
-  final _pageController = PageController(viewportFraction: 1);
+  late final _pageController = PageController(viewportFraction: 1, initialPage: _wonders.length * 999);
   final _wonders = wondersLogic.all;
-  late int _wonderIndex = _pageController.initialPage;
+  late int _wonderIndex = _pageController.initialPage % _wonders.length;
 
   late final _VerticalSwipeController _swipeController = _VerticalSwipeController(this, _showDetailsPage);
 
   bool _isSelected(WonderType t) => t == _wonders[_wonderIndex].type;
 
-  void _handlePageViewChanged(v) => setState(() => _wonderIndex = v);
+  void _handlePageViewChanged(v) => setState(() => _wonderIndex = v % _wonders.length);
 
   void _handleSettingsPressed() => context.push(ScreenPaths.settings);
 
@@ -55,10 +55,10 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
           ),
 
           /// Wonders Illustrations
-          PageView(
+          PageView.builder(
             controller: _pageController,
             onPageChanged: _handlePageViewChanged,
-            children: _buildMgChildren(),
+            itemBuilder: _buildMgChild,
           ),
 
           /// Foreground gradient-bottom, gets darker when swiping up
@@ -136,6 +136,17 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
     );
   }
 
+  Widget _buildMgChild(_, index) {
+    final wonderType = _wonders[index % _wonders.length].type;
+    return _swipeController.buildListener(builder: (swipeAmt, _, child) {
+      final config = WonderIllustrationConfig.mg(
+        isShowing: _isSelected(wonderType),
+        zoom: 1.3 + .05 * swipeAmt,
+      );
+      return WonderIllustration(wonderType, config: config);
+    });
+  }
+
   List<Widget> _buildBgChildren() {
     return _wonders.map((e) {
       final config = WonderIllustrationConfig.bg(isShowing: _isSelected(e.type));
@@ -151,18 +162,6 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
           zoom: 1.3 + .4 * swipeAmt,
         );
         return IgnorePointer(child: WonderIllustration(e.type, config: config));
-      });
-    }).toList();
-  }
-
-  List<Widget> _buildMgChildren() {
-    return _wonders.map((e) {
-      return _swipeController.buildListener(builder: (swipeAmt, _, child) {
-        final config = WonderIllustrationConfig.mg(
-          isShowing: _isSelected(e.type),
-          zoom: 1.3 + .05 * swipeAmt,
-        );
-        return WonderIllustration(e.type, config: config);
       });
     }).toList();
   }
