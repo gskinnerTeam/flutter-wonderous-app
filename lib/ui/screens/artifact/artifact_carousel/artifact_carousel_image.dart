@@ -73,7 +73,7 @@ class _ImagePreview extends StatelessWidget {
     const double mainPageScaleFactor = 0.40;
 
     // Additional Y scale of the main page, making it elongated.
-    const double mainPageScaleFactorY = -0.1;
+    const double mainPageScaleFactorY = -0.13;
 
     // Border variables
     const double borderPadding = 4.0;
