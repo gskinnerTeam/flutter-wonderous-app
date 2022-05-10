@@ -34,6 +34,8 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
 
   void _handleSettingsPressed() => context.push(ScreenPaths.settings);
 
+  void _handleScreenshotPressed() => context.push(ScreenPaths.wallpaperPhoto(_wonders[_wonderIndex].type));
+
   void _showDetailsPage() => context.push(ScreenPaths.wonderDetails(_wonders[_wonderIndex].type));
 
   @override
@@ -82,6 +84,18 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    // Wallpaper screenshot button
+                    TopRight(
+                      child: Padding(
+                        padding: EdgeInsets.all(context.insets.sm),
+                        child: CircleIconBtn(
+                          icon: Icons.screenshot,
+                          onPressed: _handleScreenshotPressed,
+                          semanticLabel: 'wallpaper screenshot button',
+                        ),
+                      ),
+                    ),
+
                     SizedBox(width: double.infinity),
                     Gap(context.insets.lg * 3),
 
