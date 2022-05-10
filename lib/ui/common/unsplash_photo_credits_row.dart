@@ -13,27 +13,22 @@ class UnsplashPhotoCreditsRow extends StatelessWidget {
     final style = context.text.caption.copyWith(color: context.colors.white, height: 1);
     return Container(
       width: double.infinity,
+      padding: EdgeInsets.only(bottom: context.insets.md),
       color: Colors.black.withOpacity(.5),
       child: Row(
         children: [
           Gap(context.insets.sm),
-          Text('Photo by', style: style),
-          TextButton(
-              style: TextButton.styleFrom(
-                  padding: EdgeInsets.zero,
-                  splashFactory: NoSplash.splashFactory,
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+          Text('Photo by ', style: style),
+          BasicBtn(
               child: Text(data.ownerUsername, style: style.copyWith(fontWeight: FontWeight.bold)),
-              onPressed: handleUserNamePressed),
+              onPressed: handleUserNamePressed,
+              semanticLabel: data.ownerUsername),
           Text(' on', style: style),
-          TextButton(
-              style: TextButton.styleFrom(
-                padding: EdgeInsets.zero,
-                splashFactory: NoSplash.splashFactory,
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
-              child: Text('Unsplash', style: style.copyWith(fontWeight: FontWeight.bold)),
-              onPressed: handleUnsplashPressed),
+          BasicBtn(
+            semanticLabel: 'Unsplash',
+            child: Text('Unsplash', style: style.copyWith(fontWeight: FontWeight.bold)),
+            onPressed: handleUnsplashPressed,
+          ),
         ],
       ),
     );
