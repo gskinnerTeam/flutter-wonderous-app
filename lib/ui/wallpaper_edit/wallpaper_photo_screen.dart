@@ -41,6 +41,16 @@ class _WallpaperPhotoScreenState extends State<WallpaperPhotoScreen> {
     appLogic.saveWallpaper(context, boundary, name: '${wonderName}_wallpaper');
   }
 
+  void _handleSharePhoto(BuildContext context, String wonderName) async {
+    RenderRepaintBoundary boundary = _containerKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+    if (boundary.debugNeedsPaint) {
+      _photoRetryTimer = Timer(Duration(milliseconds: 1), () => _handleTakePhoto(context, wonderName));
+      return;
+    }
+
+    appLogic.shareWallpaper(context, boundary, name: '${wonderName}_wallpaper', wonderName: wonderName);
+  }
+
   void _handleTextToggle(bool? isActive) {
     setState(() => _isTextOn = isActive ?? !_isNightOn);
   }
@@ -213,13 +223,13 @@ class _WallpaperPhotoScreenState extends State<WallpaperPhotoScreen> {
                     icon: Icons.share,
                     bgColor: context.colors.offWhite,
                     color: context.colors.black,
-                    onPressed: () => _handleTakePhoto(context, wonderData.title),
-                    semanticLabel: 'take photo',
+                    onPressed: () => _handleSharePhoto(context, wonderData.title),
+                    semanticLabel: 'share photo',
                     size: 44,
                   ),
                 ),
                 CircleIconBtn(
-                  icon: Icons.download,
+                  icon: Icons.file_download_outlined,
                   onPressed: () => _handleTakePhoto(context, wonderData.title),
                   semanticLabel: 'take photo',
                   size: 64,

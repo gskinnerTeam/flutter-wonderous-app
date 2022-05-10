@@ -1,16 +1,19 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/ui/common/modals/fullscreen_web_view.dart';
 import 'package:wonders/ui/modals/app_modals.dart';
 import 'package:wonders/ui/screens/wallpaper_preview/wallpaper_preview.dart';
+import 'package:share_plus/share_plus.dart';
 
 class AppLogic {
   /// Indicates to the rest of the app that bootstrap has not completed.
@@ -49,10 +52,8 @@ class AppLogic {
   /// Walks user through flow to save a Wonder Poster to their gallery
   Future<void> saveWallpaper(BuildContext context, RenderRepaintBoundary boundary, {required String name}) async {
     // Time to create an image!
-    ui.Image uiImage = await boundary.toImage();
-    ByteData? byteData = await uiImage.toByteData(format: ui.ImageByteFormat.png);
-    if (byteData != null) {
-      Uint8List pngBytes = byteData.buffer.asUint8List();
+    Uint8List? pngBytes = await _getPngFromBoundary(boundary);
+    if (pngBytes != null) {
       bool result = await showModal(context,
           child: OkCancelModal(
             msg: 'Save this poster to your photo gallery?',
@@ -68,6 +69,29 @@ class AppLogic {
         showModal(context, child: OkModal(msg: 'Save complete!'));
       }
     }
+  }
+
+  Future<void> shareWallpaper(BuildContext context, RenderRepaintBoundary boundary,
+      {required String name, String wonderName = 'Wonderous'}) async {
+    Uint8List? pngBytes = await _getPngFromBoundary(boundary);
+    if (pngBytes != null) {
+      final directory = (await getApplicationDocumentsDirectory()).path;
+      File imgFile = File('$directory/$name.png');
+      await imgFile.writeAsBytes(pngBytes);
+      Share.shareFiles([imgFile.path],
+          mimeTypes: ['image/png'],
+          subject: '$wonderName Wallpaper',
+          text: 'Check out this $wonderName wallpaper from the Wonderous app!');
+    }
+  }
+
+  Future<Uint8List?> _getPngFromBoundary(RenderRepaintBoundary boundary) async {
+    ui.Image uiImage = await boundary.toImage();
+    ByteData? byteData = await uiImage.toByteData(format: ui.ImageByteFormat.png);
+    if (byteData != null) {
+      return byteData.buffer.asUint8List();
+    }
+    return null;
   }
 
   void _handleFlutterError(FlutterErrorDetails details) {
