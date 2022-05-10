@@ -12,7 +12,7 @@ import 'package:wonders/ui/screens/splash/splash_screen.dart';
 import 'package:wonders/ui/screens/timeline/timeline_screen.dart';
 import 'package:wonders/ui/screens/timeline_details/timeline_details.dart';
 import 'package:wonders/ui/screens/wonder_details/wonders_details_screen.dart';
-import 'package:wonders/ui/wallpaper_edit/wallpaper_photo_screen.dart';
+import 'package:wonders/ui/wallpaper_photo/wallpaper_photo_screen.dart';
 
 class ScreenPaths {
   static String splash = '/';
