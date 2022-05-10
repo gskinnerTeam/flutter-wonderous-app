@@ -7,12 +7,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:screenshot/screenshot.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/ui/common/modals/fullscreen_web_view.dart';
 import 'package:wonders/ui/modals/app_modals.dart';
-import 'package:wonders/ui/screens/wallpaper_preview/wallpaper_preview.dart';
 import 'package:share_plus/share_plus.dart';
 
 class AppLogic {
