@@ -24,7 +24,10 @@ class SimpleCheckbox extends StatelessWidget {
               visualDensity: VisualDensity(horizontal: 0.5, vertical: 0.5),
               checkColor: context.colors.black.withOpacity(0.75),
               activeColor: context.colors.white.withOpacity(0.75),
-              onChanged: onToggled),
+              onChanged: (bool? active) {
+                HapticFeedback.mediumImpact();
+                onToggled.call(active);
+              }),
         ),
         Gap(context.insets.xs),
         Text(label, style: context.textStyles.body.copyWith(color: context.colors.offWhite)),
