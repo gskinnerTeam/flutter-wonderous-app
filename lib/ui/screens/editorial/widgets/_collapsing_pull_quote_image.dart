@@ -81,10 +81,10 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    buildText(data.quote1, top: true),
-                    buildText(data.quote2, top: false),
-                    if (data.quoteAuthor.isNotEmpty) ...[
-                      buildText('- ${data.quoteAuthor}', top: false, isAuthor: true),
+                    buildText(data.pullQuote1Top, top: true),
+                    buildText(data.pullQuote1Bottom, top: false),
+                    if (data.pullQuote1Author.isNotEmpty) ...[
+                      buildText('- ${data.pullQuote1Author}', top: false, isAuthor: true),
                     ],
                   ],
                 ),
