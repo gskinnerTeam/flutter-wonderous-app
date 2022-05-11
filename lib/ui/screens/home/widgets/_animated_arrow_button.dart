@@ -19,9 +19,9 @@ class _AnimatedArrowButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Duration duration = context.times.med;
-    return GestureDetector(
-      onTap: onTap,
-      behavior: HitTestBehavior.translucent,
+    return BasicBtn(
+      semanticLabel: 'arrow button',
+      onPressed: onTap,
       child: SizedBox(
         height: 80,
         width: 50,

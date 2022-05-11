@@ -31,7 +31,6 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
         future: _future,
         builder: (_, snapshot) {
           if (snapshot.hasData == false) return _buildPreloadScreen(context);
-
           final data = snapshot.data;
           if (data == null) return AppLoadError(label: 'Unable to find info for artifact ${widget.artifactId} ');
 

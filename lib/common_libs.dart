@@ -4,6 +4,7 @@ export 'package:collection/collection.dart';
 export 'package:extra_alignments/extra_alignments.dart';
 export 'package:flextras/flextras.dart';
 export 'package:flutter/material.dart';
+export 'package:flutter/services.dart';
 export 'package:gap/gap.dart';
 export 'package:get_it/get_it.dart';
 export 'package:get_it_mixin/get_it_mixin.dart';

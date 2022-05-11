@@ -65,6 +65,8 @@ class _BottomScrubber extends StatelessWidget {
                 child: Semantics(
                   container: true,
                   slider: true,
+                  button: true,
+                  label: 'scrubber',
                   child: GestureDetector(
                     behavior: HitTestBehavior.translucent,
                     onPanUpdate: _handleScrubberPan,

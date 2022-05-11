@@ -46,8 +46,9 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
     final double pad = context.insets.sm;
     final bool isOpen = widget.panelController.value;
     return LayoutBuilder(builder: (_, constraints) {
-      return GestureDetector(
-        onTap: widget.panelController.toggle,
+      return SemanticsBtn(
+        label: 'time range selector',
+        onPressed: widget.panelController.toggle,
         child: Stack(
           children: [
             BottomCenter(

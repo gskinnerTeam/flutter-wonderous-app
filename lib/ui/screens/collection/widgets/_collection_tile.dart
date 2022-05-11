@@ -52,11 +52,6 @@ class _CollectionTile extends StatelessWidget {
       ),
     );
     if (heroTag != null) content = Hero(tag: heroTag!, child: content);
-    return Semantics(
-      label: collectible.title,
-      button: true,
-      container: true,
-      child: GestureDetector(onTap: () => onPressed(collectible), child: content),
-    );
+    return BasicBtn(semanticLabel: collectible.title, onPressed: () => onPressed(collectible), child: content);
   }
 }

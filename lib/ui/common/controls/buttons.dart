@@ -46,10 +46,15 @@ class _AppBtnState extends State<AppBtn> {
       onTapDown: (_) => setState(() => _tapDown = true),
       onTapUp: (_) => setState(() => _tapDown = false),
       onTapCancel: () => setState(() => _tapDown = false),
+      behavior: HitTestBehavior.translucent,
       child: Opacity(
         opacity: _tapDown ? .7 : 1,
         child: TextButton(
-          onPressed: widget.onPressed,
+          onPressed: () {
+            // On pressing, give a light vibration on device.
+            HapticFeedback.mediumImpact();
+            widget.onPressed();
+          },
           style: TextButton.styleFrom(
             minimumSize: widget.minimumSize ?? Size.zero,
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -82,9 +87,13 @@ class _AppBtnState extends State<AppBtn> {
 /// //////////////////////////////////////////////////
 
 class BasicBtn extends StatelessWidget {
-  const BasicBtn(
-      {Key? key, required this.child, required this.semanticLabel, required this.onPressed, this.expand = false})
-      : super(key: key);
+  const BasicBtn({
+    Key? key,
+    required this.child,
+    required this.semanticLabel,
+    required this.onPressed,
+    this.expand = false,
+  }) : super(key: key);
   final Widget child;
   final String semanticLabel;
   final VoidCallback onPressed;
@@ -199,6 +208,30 @@ class AppTextBtn extends StatelessWidget {
       children: [
         Text(text.toUpperCase(), style: context.textStyles.btn),
       ],
+    );
+  }
+}
+
+class SemanticsBtn extends StatelessWidget {
+  const SemanticsBtn({Key? key, required this.label, required this.child, required this.onPressed}) : super(key: key);
+  final String label;
+  final VoidCallback onPressed;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      container: true,
+      button: true,
+      enabled: true,
+      label: label,
+      child: GestureDetector(
+        onTap: () {
+          HapticFeedback.mediumImpact();
+          onPressed();
+        },
+        child: child,
+      ),
     );
   }
 }

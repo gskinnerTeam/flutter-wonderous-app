@@ -22,8 +22,10 @@ class ArtifactCarouselImage extends StatelessWidget {
   final VoidCallback onPressed;
 
   @override
-  Widget build(BuildContext context) => GestureDetector(
-        onTap: onPressed,
+  Widget build(BuildContext context) => BasicBtn(
+        semanticLabel: 'carousel',
+        expand: true,
+        onPressed: onPressed,
         child: CachedNetworkImage(
           // Show immediately; don't delay the appearance on the sides.
           fadeInDuration: context.times.fast,
