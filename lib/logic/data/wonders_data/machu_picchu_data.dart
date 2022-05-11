@@ -21,18 +21,28 @@ final machuPicchuData = WonderData(
   lat: -13.162690683637758,
   lng: -72.54500778824891,
   unsplashCollectionId: 'wUhgZTyUnl8',
-  quote1: 'Few romances can ever surpass',
-  quote2: 'that of the granite citadel',
-  quoteAuthor: 'Hiram Bingham',
+  pullQuote1Top: 'Few Romances Can Ever Surpass',
+  pullQuote1Bottom: 'That of the Granite Citadel',
+  pullQuote1Author: 'Hiram Bingham',
+  pullQuote2:
+      'In the variety of its charms and the power of its spell, I know of no other place in the weld which can compare with it.',
+  pullQuote2Author: 'Hiram Bingham',
+  callout1:
+      'Although Machu Picchu is considered to be a "royal" estate, it would not have been passed down in the line of succession.',
+  callout2:
+      'The Incas were masters of this technique, called ashlar, in which blocks of stone are cut to fit together tightly without mortar.',
+  videoCaption: '',
+  mapCaption: '',
   historyInfo1:
-      '''Construction appears to date from two great Inca rulers, Pachacutec Inca Yupanqui (1438–1471 CE) and Túpac Inca Yupanqui (1472–1493 CE).
+      '''Construction appears to date from two great Inca rulers, Pachacutec Inca Yupanqui (1438-1471 CE) and Túpac Inca Yupanqui (1472-1493 CE).
 ''',
   historyInfo2:
       '''There is a consensus among archeologists that Pachacutec ordered the construction of the royal estate for his use as a retreat, most likely after a successful military campaign.
-Although Machu Picchu is considered to be a "royal" estate, it would not have been passed down in the line of succession. Rather it was used for 80 years before being abandoned, seemingly because of the Spanish conquests in other parts of the Inca Empire.
+Rather it was used for 80 years before being abandoned, seemingly because of the Spanish conquests in other parts of the Inca Empire.
 ''',
   constructionInfo1:
-      '''The central buildings use the classical Inca architectural style of polished dry-stone walls of regular shape. The Incas were masters of this technique, called ashlar, in which blocks of stone are cut to fit together tightly without mortar. This precision construction method made the structures at Machu Picchu resistant to seismic activity.
+      '''The central buildings use the classical Inca architectural style of polished dry-stone walls of regular shape. 
+This precision construction method made the structures at Machu Picchu resistant to seismic activity.
 The site itself may have been intentionally built on fault lines to afford better drainage and a ready supply of fractured stone.
 ''',
   constructionInfo2:
@@ -62,7 +72,7 @@ The Inca Bridge, an Inca grass rope bridge, across the Urubamba River in the Pon
     1867:
         'Speculated to have been originally discovered by German explorer Augusto Berns, but his findings were never effectively publicized.',
     1911:
-        'Introduced to the world by Hiram Bingham of Yale University, who was led there by locals after disclosing he was searching for Vilcabamba, the \'lost city of the Incas\'.',
+        'Introduced to the world by Hiram Bingham of Yale University, who was led there by locals after disclosing he was searching for Vilcabamba, the ’lost city of the Incas’.',
     1964:
         'Surrounding sites were excavated thoroughly by Gene Savoy, who found a much more suitable candidate for Vilcabamba in the ruin known as Espíritu Pampa.',
     1997:

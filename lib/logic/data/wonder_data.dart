@@ -24,9 +24,13 @@ class WonderData extends Equatable {
     this.lng = 0,
     this.imageIds = const [],
     required this.unsplashCollectionId,
-    required this.quote1,
-    required this.quote2,
-    required this.quoteAuthor,
+    required this.pullQuote1Top,
+    required this.pullQuote1Bottom,
+    required this.pullQuote1Author,
+    this.pullQuote2 = '',
+    this.pullQuote2Author = '',
+    this.callout1 = '',
+    this.callout2 = '',
     this.facts = const [],
     required this.historyInfo1,
     required this.historyInfo2,
@@ -34,6 +38,8 @@ class WonderData extends Equatable {
     required this.constructionInfo2,
     required this.locationInfo,
     required this.videoId,
+    this.videoCaption = '',
+    this.mapCaption = '',
     required this.events,
     this.highlightArtifacts = const [],
     this.hiddenArtifacts = const [],
@@ -51,11 +57,17 @@ class WonderData extends Equatable {
   final String constructionInfo1;
   final String constructionInfo2;
   final String locationInfo;
-  final String quote1;
-  final String quote2;
-  final String quoteAuthor;
+  final String pullQuote1Top;
+  final String pullQuote1Bottom;
+  final String pullQuote1Author;
+  final String pullQuote2;
+  final String pullQuote2Author;
+  final String callout1;
+  final String callout2;
   final String unsplashCollectionId;
   final String videoId;
+  final String videoCaption;
+  final String mapCaption;
   final List<String> imageIds;
   final List<String> facts;
   final int startYr;

@@ -21,9 +21,17 @@ final pyramidsGizaData = WonderData(
   lat: 29.976111,
   lng: 31.132778,
   unsplashCollectionId: 'CSEvB5Tza9E',
-  quote1: 'The tallest structures on earth',
-  quote2: 'until the advent of modern skyscrapers',
-  quoteAuthor: '',
+  pullQuote1Top: 'The Tallest Structures on Earth',
+  pullQuote1Bottom: 'Until the Advent of Modern Skyscrapers',
+  pullQuote1Author: '',
+  pullQuote2: 'From the heights of these pyramids, forty centuries look down on us.',
+  pullQuote2Author: 'Napoleon Bonaparte',
+  callout1:
+      'It is theorized the pyramid not only served as a tomb for the pharaoh, but also as a storage pit for various items he would need in the afterlife.',
+  callout2:
+      'The Great Pyramid consists of an estimated 2.3 million blocks. Approximately 5.5 million tonnes of limestone, 8,000 tonnes of granite, and 500,000 tonnes of mortar were used in the construction.',
+  videoCaption: '',
+  mapCaption: '',
   historyInfo1:
       '''The Giza pyramid complex, also called the Giza necropolis, is the site on the Giza Plateau in Greater Cairo, Egypt that includes the Great Pyramid of Giza, the Pyramid of Khafre, and the Pyramid of Menkaure, along with their associated pyramid complexes and the Great Sphinx of Giza. All were built during the Fourth Dynasty of the Old Kingdom of Ancient Egypt, between 2600 and 2500 BCE.
 ''',
@@ -65,6 +73,6 @@ To ensure that the pyramid remained symmetrical, the exterior casing stones all 
         'Tomb of Queen Hetepheres was discovered, containing furniture and jewelry. One of the last remaining treasure-filled tombs after many years of looting and plundering.',
     1979: 'Designated a UNESCO World Heritage Site to prevent any more unauthorized plundering and vandalism.',
     1990:
-        'Discovery of labouror\'s districts suggest that the workers building the pyramids were not slaves, and an ingenious building method proved a relatively small work-force was required to build such immense structures.',
+        'Discovery of labouror’s districts suggest that the workers building the pyramids were not slaves, and an ingenious building method proved a relatively small work-force was required to build such immense structures.',
   },
 );

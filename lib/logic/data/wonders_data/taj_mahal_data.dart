@@ -21,11 +21,19 @@ final tajMahalData = WonderData(
   lat: 27.17405039840427,
   lng: 78.04211890065208,
   unsplashCollectionId: '684IRta86_c',
-  quote1: 'Not just a monument,',
-  quote2: 'but a symbol of love.',
-  quoteAuthor: 'Suman Pokhrel',
+  pullQuote1Top: 'Not just a Monument,',
+  pullQuote1Bottom: 'but a Symbol of Love.',
+  pullQuote1Author: 'Suman Pokhrel',
+  pullQuote2: 'The Taj Mahal rises above the banks of the river like a solitary tear suspended on the cheek of time.',
+  pullQuote2Author: 'Rabindranath Tagore',
+  callout1:
+      'The Taj Mahal is distinguished as the finest example of Mughal architecture, a blend of Indian, Persian, and Islamic styles.',
+  callout2:
+      'It took the efforts of 22,000 laborers, painters, embroidery artists and stonecutters to shape the Taj Mahal.',
+  videoCaption: '',
+  mapCaption: '',
   historyInfo1:
-      '''The Taj Mahal is an ivory-white marble mausoleum on the right bank of the river Yamuna in the Indian city of Agra. It was commissioned in 1632 CE by the Mughal emperor Shah Jahan (r. 1628–1658) to house the tomb of his favorite wife, Mumtaz Mahal; it also houses the tomb of Shah Jahan himself.
+      '''The Taj Mahal is an ivory-white marble mausoleum on the right bank of the river Yamuna in the Indian city of Agra. It was commissioned in 1632 CE by the Mughal emperor Shah Jahan (r. 1628-1658) to house the tomb of his favorite wife, Mumtaz Mahal; it also houses the tomb of Shah Jahan himself.
 ''',
   historyInfo2:
       '''The Taj Mahal is distinguished as the finest example of Mughal architecture, a blend of Indian, Persian, and Islamic styles.

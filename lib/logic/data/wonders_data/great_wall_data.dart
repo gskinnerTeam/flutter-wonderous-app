@@ -21,15 +21,21 @@ final greatWallData = WonderData(
   lat: 40.43199751120627,
   lng: 116.57040708482984,
   unsplashCollectionId: 'Kg_h04xvZEo',
-  quote1: 'One of the most impressive',
-  quote2: 'architectural feats in history',
-  quoteAuthor: '',
+  pullQuote1Top: 'The Longest Man-Made',
+  pullQuote1Bottom: 'Structure in the World',
+  pullQuote1Author: '',
+  pullQuote2: 'Religion is not a bridge between God and Man; it is a Great Wall of China between them.',
+  pullQuote2Author: 'Mehmet Murat Ildan',
+  callout1: 'The best-known sections of the wall were built by the Ming dynasty (1368-1644).',
+  callout2: 'Apart from defense, other purposes of the Great Wall have included border controls.',
+  videoCaption: '',
+  mapCaption: '',
   historyInfo1:
       '''The Great Wall of China is a series of fortifications that were built across the historical northern borders of ancient Chinese states and Imperial China as protection against various nomadic groups from the Eurasian Steppe. The total length of all sections ever built is over 13,000 miles.
 ''',
   historyInfo2:
-      '''Several walls were built from as early as the 7th century BCE, with selective stretches later joined together by Qin Shi Huang (220–206  BCE), the first emperor of China. Little of the Qin wall remains.
-Later on, many successive dynasties built and maintained multiple stretches of border walls. The best-known sections of the wall were built by the Ming dynasty (1368–1644).
+      '''Several walls were built from as early as the 7th century BCE, with selective stretches later joined together by Qin Shi Huang (220-206  BCE), the first emperor of China. Little of the Qin wall remains.
+Later on, many successive dynasties built and maintained multiple stretches of border walls.
 ''',
   constructionInfo1:
       '''In early wall construction transporting the large quantity of materials required for construction was difficult, so builders always tried to use local resources. Stones from the mountains were used over mountain ranges, while rammed earth was used for construction in the plains. Most of the ancient walls have eroded away over the centuries.
@@ -39,8 +45,8 @@ Later on, many successive dynasties built and maintained multiple stretches of b
 Under the rule of the Qing dynasty, China's borders extended beyond the walls and Mongolia was annexed into the empire, so construction was discontinued.
 ''',
   locationInfo:
-      '''The frontier walls built by different dynasties have multiple courses. Collectively, they stretch from Liaodong in the east to Lop Lake in the west, from the present-day Sino–Russian border in the north to Tao River in the south; along an arc that roughly delineates the edge of the Mongolian steppe.
-Apart from defense, other purposes of the Great Wall have included border controls, allowing the imposition of duties on goods transported along the Silk Road, regulation or encouragement of trade and the control of immigration and emigration.
+      '''The frontier walls built by different dynasties have multiple courses. Collectively, they stretch from Liaodong in the east to Lop Lake in the west, from the present-day Sino-Russian border in the north to Tao River in the south; along an arc that roughly delineates the edge of the Mongolian steppe.
+It allowed the imposition of duties on goods transported along the Silk Road, regulation or encouragement of trade and the control of immigration and emigration.
 ''',
   highlightArtifacts: const [
     '79091',

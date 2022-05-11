@@ -291,16 +291,16 @@ class _$WonderDataCWProxyImpl implements _$WonderDataCWProxy {
           ? _value.locationInfo
           // ignore: cast_nullable_to_non_nullable
           : locationInfo as String,
-      quote1: quote1 == const $CopyWithPlaceholder() || quote1 == null
-          ? _value.quote1
+      pullQuote1Top: quote1 == const $CopyWithPlaceholder() || quote1 == null
+          ? _value.pullQuote1Top
           // ignore: cast_nullable_to_non_nullable
           : quote1 as String,
-      quote2: quote2 == const $CopyWithPlaceholder() || quote2 == null
-          ? _value.quote2
+      pullQuote1Bottom: quote2 == const $CopyWithPlaceholder() || quote2 == null
+          ? _value.pullQuote1Bottom
           // ignore: cast_nullable_to_non_nullable
           : quote2 as String,
-      quoteAuthor: quoteAuthor == const $CopyWithPlaceholder() || quoteAuthor == null
-          ? _value.quoteAuthor
+      pullQuote1Author: quoteAuthor == const $CopyWithPlaceholder() || quoteAuthor == null
+          ? _value.pullQuote1Author
           // ignore: cast_nullable_to_non_nullable
           : quoteAuthor as String,
       regionTitle: regionTitle == const $CopyWithPlaceholder() || regionTitle == null
@@ -359,9 +359,9 @@ WonderData _$WonderDataFromJson(Map<String, dynamic> json) => WonderData(
       lng: (json['lng'] as num?)?.toDouble() ?? 0,
       imageIds: (json['imageIds'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const [],
       unsplashCollectionId: json['unsplashCollectionId'] as String,
-      quote1: json['quote1'] as String,
-      quote2: json['quote2'] as String,
-      quoteAuthor: json['quoteAuthor'] as String,
+      pullQuote1Top: json['quote1'] as String,
+      pullQuote1Bottom: json['quote2'] as String,
+      pullQuote1Author: json['quoteAuthor'] as String,
       facts: (json['facts'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const [],
       historyInfo1: json['historyInfo1'] as String,
       historyInfo2: json['historyInfo2'] as String,
@@ -386,9 +386,9 @@ Map<String, dynamic> _$WonderDataToJson(WonderData instance) => <String, dynamic
       'constructionInfo1': instance.constructionInfo1,
       'constructionInfo2': instance.constructionInfo2,
       'locationInfo': instance.locationInfo,
-      'quote1': instance.quote1,
-      'quote2': instance.quote2,
-      'quoteAuthor': instance.quoteAuthor,
+      'quote1': instance.pullQuote1Top,
+      'quote2': instance.pullQuote1Bottom,
+      'quoteAuthor': instance.pullQuote1Author,
       'unsplashCollectionId': instance.unsplashCollectionId,
       'videoId': instance.videoId,
       'imageIds': instance.imageIds,
