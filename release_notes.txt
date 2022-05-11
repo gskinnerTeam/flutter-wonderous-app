@@ -1,3 +1,10 @@
+# 1.0.0
+- Add polish to home page transitions
+- Improve UX on carousel screen
+- Add Save Wallpaper flow
+- Improve UX and styling on Artifact Search
+- Add global events to the timeline
+
 # 0.0.13
 - Latest search updates (ready for QA)
 - Latest Timeline
