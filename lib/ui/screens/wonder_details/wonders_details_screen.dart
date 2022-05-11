@@ -45,8 +45,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
     final wonder = wondersLogic.getData(widget.type);
     int tabIndex = _tabController.index;
     bool showTabBarBg = tabIndex != 1;
-    // TODO: Need a better way to get the height of the tab bar here... options? MeasuredWidget, static height, app.tabBarHeight?
-    final double tabBarHeight = context.mq.padding.bottom + 85;
+    final double tabBarHeight = WonderDetailsTabMenu.bottomPadding + 60;
     return ColoredBox(
       color: Colors.black,
       child: Stack(

@@ -1,6 +1,7 @@
 import 'package:wonders/common_libs.dart';
 
 class WonderDetailsTabMenu extends StatelessWidget {
+  static double bottomPadding = 0;
   const WonderDetailsTabMenu(
       {Key? key, required this.tabController, this.showBg = false, required this.wonderType, required this.showHomeBtn})
       : super(key: key);
@@ -15,7 +16,7 @@ class WonderDetailsTabMenu extends StatelessWidget {
     const double homeBtnSize = 70;
     const double buttonInset = 12;
     // Use SafeArea padding if its more than the default padding.
-    double bottomInset = max(context.mq.padding.bottom, context.insets.xs);
+    bottomPadding = max(context.mq.padding.bottom, context.insets.xs);
     return Stack(
       children: [
         //Background
@@ -31,7 +32,7 @@ class WonderDetailsTabMenu extends StatelessWidget {
         ),
         // Buttons
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: context.insets.xs).copyWith(bottom: bottomInset),
+          padding: EdgeInsets.symmetric(horizontal: context.insets.xs).copyWith(bottom: bottomPadding),
           // TabButtons are a Stack with a row of icon buttons, and an illustrated home button sitting on top.
           // The home buttons shows / hides itself based on `showHomeBtn`
           // The row contains an animated placeholder gap which makes room for the icon as it transitions in.
