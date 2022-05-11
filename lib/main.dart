@@ -3,7 +3,6 @@ import 'package:wonders/logic/collectibles_logic.dart';
 import 'package:wonders/logic/met_api_logic.dart';
 import 'package:wonders/logic/met_api_service.dart';
 import 'package:wonders/logic/unsplash_logic.dart';
-import 'package:wonders/logic/unsplash_service.dart';
 import 'package:wonders/logic/wonders_logic.dart';
 
 void main() {
@@ -36,7 +35,6 @@ void registerSingletons() {
   GetIt.I.registerLazySingleton<SettingsLogic>(() => SettingsLogic());
   // Unsplash
   GetIt.I.registerLazySingleton<UnsplashLogic>(() => UnsplashLogic());
-  GetIt.I.registerLazySingleton<UnsplashService>(() => UnsplashService());
   // Collectibles
   GetIt.I.registerLazySingleton<CollectiblesLogic>(() => CollectiblesLogic());
 }

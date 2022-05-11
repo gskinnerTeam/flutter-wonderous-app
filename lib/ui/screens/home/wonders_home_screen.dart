@@ -1,16 +1,14 @@
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/data/wonder_data.dart';
-import 'package:wonders/ui/common/controls/diagonal_page_indicator.dart';
+import 'package:wonders/ui/common/app_page_indicator.dart';
+import 'package:wonders/ui/common/controls/diagonal_text_page_indicator.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/wonder_illustrations/common/animated_clouds.dart';
-import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration.dart';
-import 'package:wonders/ui/wonder_illustrations/common/wonder_title_text.dart';
+import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 
 part '_vertical_swipe_controller.dart';
 part 'widgets/_animated_arrow_button.dart';
-part 'widgets/_text_content.dart';
 
 class WondersHomeScreen extends StatefulWidget with GetItStatefulWidgetMixin {
   WondersHomeScreen({Key? key}) : super(key: key);
@@ -22,24 +20,67 @@ class WondersHomeScreen extends StatefulWidget with GetItStatefulWidgetMixin {
 /// Shows a horizontally scrollable list PageView sandwiched between Foreground and Background layers
 /// arranged in a parallax style.
 class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTickerProviderStateMixin {
-  late final _pageController = PageController(viewportFraction: 1, initialPage: _wonders.length * 999);
+  late final _pageController = PageController(
+    viewportFraction: 1,
+    initialPage: _numWonders * 9999, // allow 'infinite' scrolling by starting at a very high page
+  );
   final _wonders = wondersLogic.all;
-  late int _wonderIndex = _pageController.initialPage % _wonders.length;
+
+  /// Set initial wonderIndex
+  late int _wonderIndex = 0;
+  int get _numWonders => _wonders.length;
+
+  /// Used to let the foreground fade in when this view is returned to (from details)
+  bool _fadeInOnNextBuild = false;
+
+  /// All of the items that should fade in when returning from details view.
+  /// Using individual tweens is more efficient than tween the entire parent
+  final _fadeAnims = <AnimationController>[];
 
   late final _VerticalSwipeController _swipeController = _VerticalSwipeController(this, _showDetailsPage);
 
   bool _isSelected(WonderType t) => t == _wonders[_wonderIndex].type;
 
-  void _handlePageViewChanged(v) => setState(() => _wonderIndex = v % _wonders.length);
+  void _handlePageViewChanged(v) => setState(() => _wonderIndex = v % _numWonders);
 
   void _handleSettingsPressed() => context.push(ScreenPaths.settings);
 
   void _handleScreenshotPressed() => context.push(ScreenPaths.wallpaperPhoto(_wonders[_wonderIndex].type));
 
-  void _showDetailsPage() => context.push(ScreenPaths.wonderDetails(_wonders[_wonderIndex].type));
+  void _handleFadeAnimInit(AnimationController controller) {
+    _fadeAnims.add(controller);
+    controller.value = 1;
+  }
+
+  void _handlePageIndicatorDotPressed(int index) {
+    if (index == _wonderIndex) return;
+    // To support infinite scrolling, we can't jump directly to the pressed index. Instead, make it relative to our current position.
+    final pos = ((_pageController.page ?? 0) / _numWonders).floor() * _numWonders;
+    _pageController.jumpToPage(pos + index);
+  }
+
+  void _showDetailsPage() async {
+    context.push(ScreenPaths.wonderDetails(_wonders[_wonderIndex].type));
+    await Future.delayed(200.ms);
+    _fadeInOnNextBuild = true;
+  }
+
+  void _startDelayedFgFade() async {
+    for (var a in _fadeAnims) {
+      a.value = 0;
+    }
+    await Future.delayed(300.ms);
+    for (var a in _fadeAnims) {
+      a.forward();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (_fadeInOnNextBuild == true) {
+      _startDelayedFgFade();
+      _fadeInOnNextBuild = false;
+    }
     final currentWonder = _wonders[_wonderIndex];
     return _swipeController.wrapGestureDetector(
       Stack(
@@ -61,76 +102,94 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
             itemBuilder: _buildMgChild,
           ),
 
-          /// Foreground gradient-bottom, gets darker when swiping up
-          BottomCenter(
-            child: _buildSwipeableBgGradient(currentWonder.type.bgColor.withOpacity(.5)),
-          ),
+          Stack(children: [
+            /// Foreground gradient-bottom, gets darker when swiping up
+            BottomCenter(
+              child: _buildSwipeableBgGradient(currentWonder.type.bgColor.withOpacity(.5)),
+            ),
 
-          /// Foreground decorators
-          ..._buildFgChildren(),
+            /// Foreground decorators
+            ..._buildFgChildren(),
 
-          /// Foreground gradient-top, gets darker when swiping up
-          BottomCenter(
-            child: _buildSwipeableBgGradient(currentWonder.type.bgColor.withOpacity(.5)),
-          ),
+            /// Foreground gradient-top, gets darker when swiping up
+            BottomCenter(
+              child: _buildSwipeableBgGradient(currentWonder.type.bgColor.withOpacity(.5)),
+            ),
 
-          /// Floating controls / UI
-          AnimatedSwitcher(
-            duration: context.times.fast,
-            child: RepaintBoundary(
-              // Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
-              key: ValueKey(_wonderIndex),
-              child: OverflowBox(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // Wallpaper screenshot button
-                    TopRight(
-                      child: Padding(
-                        padding: EdgeInsets.all(context.insets.sm),
-                        child: CircleIconBtn(
-                          icon: Icons.screenshot,
-                          onPressed: _handleScreenshotPressed,
-                          semanticLabel: 'wallpaper screenshot button',
-                        ),
-                      ),
-                    ),
-
-                    SizedBox(width: double.infinity),
-                    Gap(context.insets.lg * 3),
-
-                    /// Settings Btn
-                    Opacity(
-                      opacity: 0, // TODO: Remove this btn before launch, its for testing settings only
-                      child: AppTextBtn('Settings', onPressed: _handleSettingsPressed, padding: EdgeInsets.all(30)),
-                    ),
-                    const Spacer(),
-
-                    /// Title Content
-                    IgnorePointer(
-                      child: LightText(
-                        child: _TextContent(wonderIndex: _wonderIndex, wonders: _wonders),
-                      ),
-                    ),
-                    Gap(context.insets.sm),
-
-                    Stack(
-                      children: [
-                        /// Expanding rounded rect that grows in height as user swipes up
-                        Positioned.fill(
-                          child: _buildSwipeableButtonBg(),
-                        ),
-
-                        /// Arrow Btn that fades in and out
-                        _AnimatedArrowButton(onTap: _showDetailsPage),
-                      ],
-                    ),
-                    Gap(context.insets.md),
-                  ],
+            // Wallpaper screenshot button
+            TopRight(
+              child: Padding(
+                padding: EdgeInsets.all(context.insets.sm),
+                child: SafeArea(
+                  child: CircleIconBtn(
+                    icon: Icons.screenshot,
+                    onPressed: _handleScreenshotPressed,
+                    semanticLabel: 'wallpaper screenshot button',
+                  ),
                 ),
               ),
             ),
-          ),
+
+            /// Floating controls / UI
+            AnimatedSwitcher(
+              duration: context.times.fast,
+              child: RepaintBoundary(
+                // Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
+                key: ValueKey(_wonderIndex),
+                child: OverflowBox(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(width: double.infinity),
+                      Gap(context.insets.lg * 3),
+
+                      /// Settings Btn
+                      Opacity(
+                        opacity: 0, // TODO: Remove this btn before launch, its for testing settings only
+                        child: AppTextBtn('Settings', onPressed: _handleSettingsPressed, padding: EdgeInsets.all(30)),
+                      ),
+                      const Spacer(),
+
+                      /// Title Content
+                      LightText(
+                        child: Column(
+                          children: [
+                            /// Page indicator
+                            IgnorePointer(
+                              child: DiagonalTextPageIndicator(current: _wonderIndex + 1, total: _numWonders),
+                            ),
+                            Gap(context.insets.md),
+                            AppPageIndicator(
+                              count: _numWonders,
+                              controller: _pageController,
+                              color: context.colors.white,
+                              dotSize: 8,
+                              onDotPressed: _handlePageIndicatorDotPressed,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Gap(context.insets.sm),
+
+                      /// Animated arrow and background
+                      Stack(
+                        children: [
+                          /// Expanding rounded rect that grows in height as user swipes up
+                          Positioned.fill(
+                            child: _buildSwipeableArrowBg(),
+                          ),
+
+                          /// Arrow Btn that fades in and out
+                          _AnimatedArrowButton(onTap: _showDetailsPage),
+                        ],
+                      ),
+                      Gap(context.insets.md),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ]),
         ],
       ),
     );
@@ -161,12 +220,15 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
           isShowing: _isSelected(e.type),
           zoom: 1.3 + .4 * swipeAmt,
         );
-        return IgnorePointer(child: WonderIllustration(e.type, config: config));
+        return FXAnimate(
+            fx: const [FadeFX()],
+            onInit: _handleFadeAnimInit,
+            child: IgnorePointer(child: WonderIllustration(e.type, config: config)));
       });
     }).toList();
   }
 
-  Widget _buildSwipeableButtonBg() {
+  Widget _buildSwipeableArrowBg() {
     return _swipeController.buildListener(
       builder: (swipeAmt, _, child) {
         double heightFactor = .5 + .5 * (1 + swipeAmt * 4);

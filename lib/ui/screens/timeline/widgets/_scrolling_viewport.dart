@@ -164,7 +164,7 @@ class ScalingViewportState extends State<_ScrollingViewport> {
         ValueListenableBuilder<TimelineEvent?>(
             valueListenable: _currentEventMarker,
             builder: (_, data, __) {
-              return _EventPopups(currentEvent: data);
+              return SafeArea(child: _EventPopups(currentEvent: data));
             })
       ],
     );

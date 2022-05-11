@@ -77,26 +77,32 @@ class ChristRedeemerIllustration extends StatelessWidget {
   List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
     final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
-      Transform.translate(
-          offset: Offset(0, (1 - curvedAnim) * 100),
+      Transform.scale(
+          scale: .8 + .2 * curvedAnim,
           child: Stack(children: [
             BottomLeft(
-              child: Transform.scale(
-                scale: .8 + config.zoom * .35,
-                child: FractionalTranslation(
-                  translation: Offset(-.46, 0),
-                  child: Image.asset('$assetPath/foreground-left.png',
-                      opacity: anim, cacheWidth: context.widthPx.round() * 3),
+              child: Transform.translate(
+                offset: Offset((1 - curvedAnim) * -40, 0),
+                child: Transform.scale(
+                  scale: .8 + config.zoom * .35,
+                  child: FractionalTranslation(
+                    translation: Offset(-.46, 0),
+                    child: Image.asset('$assetPath/foreground-left.png',
+                        opacity: anim, cacheWidth: context.widthPx.round() * 3),
+                  ),
                 ),
               ),
             ),
             BottomRight(
-              child: Transform.scale(
-                scale: .9 + config.zoom * .2,
-                child: FractionalTranslation(
-                  translation: Offset(.46, 0),
-                  child: Image.asset('$assetPath/foreground-right.png',
-                      opacity: anim, cacheWidth: context.widthPx.round() * 3),
+              child: Transform.translate(
+                offset: Offset((1 - curvedAnim) * 40, 0),
+                child: Transform.scale(
+                  scale: .9 + config.zoom * .2,
+                  child: FractionalTranslation(
+                    translation: Offset(.46, 0),
+                    child: Image.asset('$assetPath/foreground-right.png',
+                        opacity: anim, cacheWidth: context.widthPx.round() * 3),
+                  ),
                 ),
               ),
             ),

@@ -53,7 +53,7 @@ class TajMahalIllustration extends StatelessWidget {
       FractionalTranslation(
         translation: Offset(0, -.03),
         child: Transform.scale(
-          scale: 1 + (config.zoom - 1) / 2,
+          scale: (config.shortMode ? 1 : 1.4) + (config.zoom - 1) / 2,
           child: Transform.scale(
             scale: config.shortMode ? .75 : .6,
             child: Center(

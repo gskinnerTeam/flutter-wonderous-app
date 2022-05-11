@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:math' as math;
 
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/highlights_data.dart';
+import 'package:wonders/ui/common/app_page_indicator.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:wonders/ui/common/controls/simple_header.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
@@ -94,7 +94,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     double backdropWidth = math.min(context.widthPx, _maxElementWidth);
     double backdropHeight = math.min(context.heightPx * 0.65, _maxElementHeight);
 
-    bool small = backdropHeight / _maxElementHeight < 0.7;
+    bool small = backdropHeight / _maxElementHeight < .8;
 
     return Container(
       color: context.colors.greyStrong,
@@ -193,7 +193,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                           // Text Content
                           _buildTextContent(context, backdropWidth, small),
                           // Selection indicator
-                          _buildPageIndicator(context, _highlightedArtifactIds.length),
+                          AppPageIndicator(count: _highlightedArtifactIds.length, controller: _controller),
                           // Big ol' button
                           Gap(small ? context.insets.md : context.insets.xl),
                           _buildBrowseBtn(context, backdropWidth),
@@ -254,8 +254,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                             child: Text(
                               (_currentArtifact?.title ?? ''),
                               overflow: TextOverflow.ellipsis,
-                              style: context.textStyles.h2
-                                  .copyWith(color: context.colors.greyStrong, height: small ? 1.1 : null),
+                              style: context.textStyles.h2.copyWith(color: context.colors.greyStrong, height: 1.2),
                               textAlign: TextAlign.center,
                               maxLines: 2,
                             ),
@@ -276,24 +275,6 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
             Gap(small ? context.insets.sm : context.insets.lg),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildPageIndicator(BuildContext context, int count) {
-    return IgnorePointer(
-      child: SmoothPageIndicator(
-        controller: _controller,
-        count: count,
-        onDotClicked: _changeArtifactIndex,
-        effect: ExpandingDotsEffect(
-            dotWidth: 4,
-            dotHeight: 4,
-            paintStyle: PaintingStyle.fill,
-            strokeWidth: 2,
-            dotColor: context.colors.accent1,
-            activeDotColor: context.colors.accent1,
-            expansionFactor: 4),
       ),
     );
   }

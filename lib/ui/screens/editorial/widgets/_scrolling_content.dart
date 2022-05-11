@@ -24,10 +24,10 @@ class _ScrollingContent extends StatelessWidget {
 
     DropCapText buildDropCapText(String value) => DropCapText(
           _fixNewlines(value),
-          mode: DropCapMode.upwards,
+          mode: DropCapMode.inside,
           style: context.textStyles.body,
-          dropCapPadding: EdgeInsets.only(right: context.insets.xs, top: 10),
-          dropCapStyle: context.textStyles.dropCase.copyWith(color: context.colors.accent1),
+          dropCapPadding: EdgeInsets.only(top: 2, right: 6),
+          dropCapStyle: context.textStyles.dropCase.copyWith(color: context.colors.accent1, height: 1),
         );
 
     Widget buildHiddenCollectible({required int slot}) {
@@ -98,15 +98,11 @@ class _YouTubeThumbnail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void handlePressed() => context.push(ScreenPaths.video(id));
-    return SizedBox(
-      child: AspectRatio(
-        aspectRatio: 1.5,
-        child: BasicBtn(
-          semanticLabel: 'Youtube thumbnail',
-          onPressed: handlePressed,
-          child: CachedNetworkImage(imageUrl: imageUrl, fit: BoxFit.cover),
-        ),
-      ),
+    return BasicBtn(
+      semanticLabel: 'Youtube thumbnail',
+      onPressed: handlePressed,
+      expand: true,
+      child: CachedNetworkImage(imageUrl: imageUrl, fit: BoxFit.cover),
     );
   }
 }

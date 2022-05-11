@@ -38,7 +38,7 @@ class PetraIllustration extends StatelessWidget {
           config,
           'petra-sun',
           child: Transform.scale(
-            scale: config.shortMode ? .75 : 1,
+            scale: config.shortMode ? 1.5 : 3,
             child: Image.asset(
               '$assetPath/moon.png',
               cacheWidth: context.widthPx.round() * 2,
@@ -57,7 +57,7 @@ class PetraIllustration extends StatelessWidget {
             config,
             'petra-mg',
             child: Transform.scale(
-              scale: .8 + .2 * config.zoom,
+              scale: (config.shortMode ? 1 : 1.5) + .2 * config.zoom,
               child: Image.asset(
                 '$assetPath/petra.png',
                 cacheWidth: context.widthPx.round() * 2,
@@ -72,30 +72,34 @@ class PetraIllustration extends StatelessWidget {
   List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
     final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
-      Transform.translate(
-          offset: Offset(0, (1 - curvedAnim) * 100),
-          child: Stack(children: [
-            BottomLeft(
-              child: Transform.scale(
-                scale: .9 + config.zoom * .05,
-                child: FractionalTranslation(
-                  translation: Offset(-(config.zoom * .2), .1),
-                  child: Image.asset('$assetPath/foreground-left.png',
-                      opacity: anim, cacheWidth: context.widthPx.round() * 3),
-                ),
+      Stack(children: [
+        Transform.translate(
+          offset: Offset((1 - curvedAnim) * -100, 0),
+          child: BottomLeft(
+            child: Transform.scale(
+              scale: 1.2 + config.zoom * .05,
+              child: FractionalTranslation(
+                translation: Offset(-(config.zoom * .2) + .2, .1),
+                child: Image.asset('$assetPath/foreground-left.png',
+                    opacity: anim, cacheWidth: context.widthPx.round() * 3),
               ),
             ),
-            BottomRight(
-              child: Transform.scale(
-                scale: .9 + config.zoom * .05,
-                child: FractionalTranslation(
-                  translation: Offset(config.zoom * .2, .1),
-                  child: Image.asset('$assetPath/foreground-right.png',
-                      opacity: anim, cacheWidth: context.widthPx.round() * 3),
-                ),
+          ),
+        ),
+        Transform.translate(
+          offset: Offset((1 - curvedAnim) * 100, 0),
+          child: BottomRight(
+            child: Transform.scale(
+              scale: 1.2 + config.zoom * .05,
+              child: FractionalTranslation(
+                translation: Offset(config.zoom * .2 - .15, .1),
+                child: Image.asset('$assetPath/foreground-right.png',
+                    opacity: anim, cacheWidth: context.widthPx.round() * 3),
               ),
             ),
-          ]))
+          ),
+        ),
+      ])
     ];
   }
 }

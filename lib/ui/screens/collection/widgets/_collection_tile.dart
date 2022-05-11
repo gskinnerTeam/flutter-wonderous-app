@@ -52,6 +52,11 @@ class _CollectionTile extends StatelessWidget {
       ),
     );
     if (heroTag != null) content = Hero(tag: heroTag!, child: content);
-    return BasicBtn(semanticLabel: collectible.title, onPressed: () => onPressed(collectible), child: content);
+    return BasicBtn(
+      expand: true,
+      semanticLabel: collectible.title,
+      onPressed: () => onPressed(collectible),
+      child: content,
+    );
   }
 }

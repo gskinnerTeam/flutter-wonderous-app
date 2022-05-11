@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/unsplash_photo_data.dart';
 import 'package:wonders/ui/common/animated_motion_blur.dart';
@@ -36,20 +38,19 @@ class _PhotoGalleryState extends State<PhotoGallery> {
   @override
   void initState() {
     super.initState();
-    _loadCollections();
+    _initPhotoIds();
   }
 
-  Future<void> _loadCollections() async {
-    var ids = (await unsplashLogic.getCollectionPhotos(widget.collectionId));
-    if (!mounted) return;
+  Future<void> _initPhotoIds() async {
+    var ids = unsplashLogic.getCollectionPhotos(widget.collectionId);
     if (ids != null && ids.isNotEmpty) {
       // Ensure we have enough images to fill the grid, repeat if necessary
       while (ids.length < _imgCount) {
         ids.addAll(List.from(ids));
         if (ids.length > _imgCount) ids.length = _imgCount;
       }
-      _photoIds.value = ids;
     }
+    setState(() => _photoIds.value = ids ?? []);
   }
 
   void _setIndex(int value) {
@@ -213,7 +214,11 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                           curve: Curves.easeOut,
                           tween: Tween(begin: 1, end: selected ? 1.15 : 1),
                           builder: (_, value, child) => Transform.scale(child: child, scale: value),
-                          child: UnsplashPhoto(imgUrl, fit: BoxFit.cover, size: UnsplashPhotoSize.large).fx().fade(),
+                          child: UnsplashPhoto(
+                            imgUrl,
+                            fit: BoxFit.cover,
+                            size: UnsplashPhotoSize.large,
+                          ).fx().fade(),
                         ),
                       ),
                     ),

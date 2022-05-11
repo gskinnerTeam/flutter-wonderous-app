@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
 
-class DiagonalPageIndicator extends StatelessWidget {
-  const DiagonalPageIndicator({Key? key, required this.current, required this.total}) : super(key: key);
+class DiagonalTextPageIndicator extends StatelessWidget {
+  const DiagonalTextPageIndicator({Key? key, required this.current, required this.total}) : super(key: key);
   final int current;
   final int total;
   static const double _fontSize = 32;

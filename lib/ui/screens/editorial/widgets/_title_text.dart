@@ -1,8 +1,9 @@
 part of '../editorial_screen.dart';
 
 class _TitleText extends StatelessWidget {
-  const _TitleText(this.data, {Key? key}) : super(key: key);
+  const _TitleText(this.data, {Key? key, required this.scroller}) : super(key: key);
   final WonderData data;
+  final ScrollController scroller;
 
   @override
   Widget build(BuildContext context) => LightText(
@@ -32,8 +33,31 @@ class _TitleText extends StatelessWidget {
             ),
             Gap(context.insets.md),
             WonderTitleText(data),
-            Gap(30),
+            Gap(context.insets.xs),
+            Text(
+              data.regionTitle.toUpperCase(),
+              style: context.textStyles.title1,
+              textAlign: TextAlign.center,
+            ),
             Gap(context.insets.md),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: context.insets.md),
+              child: AnimatedBuilder(
+                animation: scroller,
+                builder: (_, __) => CompassDivider(
+                  isExpanded: scroller.position.pixels <= 0,
+                  linesColor: data.type.fgColor,
+                  compassColor: context.colors.white,
+                ),
+              ),
+            ),
+            Gap(context.insets.sm),
+            Text(
+              '${StringUtils.formatYr(data.startYr)} - ${StringUtils.formatYr(data.endYr)}',
+              style: context.textStyles.h4,
+              textAlign: TextAlign.center,
+            ),
+            Gap(context.insets.sm),
           ],
         ),
       );

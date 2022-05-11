@@ -35,7 +35,12 @@ class ChichenItzaIllustration extends StatelessWidget {
             'chichen-sun',
             child: FractionalTranslation(
               translation: Offset(0, -.2 * anim.value),
-              child: Image.asset('$assetPath/sun.png', cacheWidth: context.widthPx.round() * 2, opacity: anim),
+              child: Image.asset(
+                '$assetPath/sun.png',
+                width: config.shortMode ? 120 : 200,
+                cacheWidth: context.widthPx.round() * 2,
+                opacity: anim,
+              ),
             ),
           ),
         ),
@@ -49,11 +54,10 @@ class ChichenItzaIllustration extends StatelessWidget {
         alignment: Alignment(0, config.shortMode ? 1 : 0),
         child: WonderHero(config, 'chichen-mg',
             child: Transform.scale(
-              scale: config.zoom,
+              scale: config.zoom * (config.shortMode ? 1 : 1.6),
               child: Image.asset(
                 '$assetPath/pyramid.png',
                 opacity: anim,
-                cacheWidth: context.widthPx.round() * 2,
               ),
             )),
       ),
@@ -64,7 +68,7 @@ class ChichenItzaIllustration extends StatelessWidget {
     final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
       Transform.scale(
-        scale: 1 + (config.zoom - 1) / 3,
+        scale: (.5 + curvedAnim * .5) + (config.zoom - 1) / 3,
         child: Transform.translate(
             offset: Offset(0, (1 - curvedAnim) * 100),
             child: Stack(children: [

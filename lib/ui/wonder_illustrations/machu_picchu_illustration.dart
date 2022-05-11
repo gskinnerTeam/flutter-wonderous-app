@@ -53,18 +53,14 @@ class MachuPicchuIllustration extends StatelessWidget {
 
   List<Widget> _buildMg(BuildContext context, Animation<double> anim) => [
         Center(
-          child: FractionalTranslation(
-            translation: Offset(0, config.shortMode ? .35 : 0),
-            child: WonderHero(
-              config,
-              'machu-mg',
-              child: Transform.scale(
-                scale: config.shortMode ? 1.5 : 1.7 + config.zoom * .2,
-                child: Image.asset(
-                  '$assetPath/machu-picchu.png',
-                  cacheWidth: context.widthPx.round() * 2,
-                  opacity: anim,
-                ),
+          child: WonderHero(
+            config,
+            'machu-mg',
+            child: Transform.scale(
+              scale: config.shortMode ? 1.5 : 2.5 + config.zoom * .2,
+              child: Image.asset(
+                '$assetPath/machu-picchu.png',
+                opacity: anim,
               ),
             ),
           ),
@@ -74,30 +70,28 @@ class MachuPicchuIllustration extends StatelessWidget {
   List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
     final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
-      Transform.translate(
-          offset: Offset(0, (1 - curvedAnim) * 100),
-          child: Stack(children: [
-            BottomLeft(
-              child: Transform.scale(
-                scale: 1 + config.zoom * .2,
-                child: FractionalTranslation(
-                  translation: Offset(-.4, 0),
-                  child: Image.asset('$assetPath/foreground-left.png',
-                      opacity: anim, cacheWidth: context.widthPx.round() * 3),
-                ),
-              ),
+      Stack(children: [
+        BottomLeft(
+          child: Transform.scale(
+            scale: 1 + config.zoom * .2,
+            child: FractionalTranslation(
+              translation: Offset(-.4, 0),
+              child:
+                  Image.asset('$assetPath/foreground-left.png', opacity: anim, cacheWidth: context.widthPx.round() * 3),
             ),
-            BottomRight(
-              child: Transform.scale(
-                scale: .9 + config.zoom * .05,
-                child: FractionalTranslation(
-                  translation: Offset(.5, -.5),
-                  child: Image.asset('$assetPath/foreground-right.png',
-                      opacity: anim, cacheWidth: context.widthPx.round() * 3),
-                ),
-              ),
+          ),
+        ),
+        BottomRight(
+          child: Transform.scale(
+            scale: .9 + config.zoom * .05,
+            child: FractionalTranslation(
+              translation: Offset(.5, -.5),
+              child: Image.asset('$assetPath/foreground-right.png',
+                  opacity: anim, cacheWidth: context.widthPx.round() * 3),
             ),
-          ]))
+          ),
+        ),
+      ])
     ];
   }
 }

@@ -35,7 +35,7 @@ class _CollectionList extends StatelessWidget {
           builder: (controller) => ListView(
             controller: controller,
             padding: EdgeInsets.all(context.insets.md).copyWith(bottom: context.insets.offset * 2),
-            children:  children,
+            children: children,
           ),
         ),
       ),

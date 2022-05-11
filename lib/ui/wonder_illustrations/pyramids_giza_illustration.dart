@@ -53,7 +53,7 @@ class PyramidsGizaIllustration extends StatelessWidget {
         alignment: Alignment(0, config.shortMode ? 1 : 0),
         child: WonderHero(config, 'pyramids-mg',
             child: Transform.scale(
-              scale: config.zoom,
+              scale: (config.shortMode ? 0 : .8) + config.zoom,
               child: Image.asset('$assetPath/pyramids.png', opacity: anim),
             )),
       ),
@@ -68,9 +68,9 @@ class PyramidsGizaIllustration extends StatelessWidget {
           child: Stack(children: [
             BottomLeft(
               child: Transform.scale(
-                scale: .9 + config.zoom * .1,
+                scale: 1.2 + config.zoom * .1,
                 child: FractionalTranslation(
-                  translation: Offset(-.4, -.3),
+                  translation: Offset(-.35, -.3),
                   child: Image.asset('$assetPath/foreground-left.png', opacity: anim, width: 300, color: bgColor),
                 ),
               ),
@@ -79,7 +79,7 @@ class PyramidsGizaIllustration extends StatelessWidget {
               child: Transform.scale(
                 scale: .9 + config.zoom * .1,
                 child: FractionalTranslation(
-                  translation: Offset(.35, -.1),
+                  translation: Offset(.35 + .2 * (1 - curvedAnim), -.1),
                   child: Image.asset('$assetPath/foreground-right.png', opacity: anim, width: 300, color: bgColor),
                 ),
               ),

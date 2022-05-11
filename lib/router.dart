@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/app_scaffold.dart';
 import 'package:wonders/ui/common/modals//fullscreen_video_viewer.dart';
@@ -11,15 +12,14 @@ import 'package:wonders/ui/screens/settings/settings_screen.dart';
 import 'package:wonders/ui/screens/splash/splash_screen.dart';
 import 'package:wonders/ui/screens/timeline/timeline_screen.dart';
 import 'package:wonders/ui/screens/timeline_details/timeline_details.dart';
+import 'package:wonders/ui/screens/wallpaper_photo/wallpaper_photo_screen.dart';
 import 'package:wonders/ui/screens/wonder_details/wonders_details_screen.dart';
-import 'package:wonders/ui/wallpaper_photo/wallpaper_photo_screen.dart';
 
 class ScreenPaths {
   static String splash = '/';
   static String home = '/home';
   static String settings = '/settings';
   static String wonderDetails(WonderType type) => '/wonder/${type.name}';
-  static String timeline(WonderType type) => '/timeline/${type.name}';
   static String timelineDetails(WonderType type) => '/timelineDetails/${type.name}';
   static String video(String id) => '/video/$id';
   static String highlights(WonderType type) => '/highlights/${type.name}';
@@ -51,7 +51,7 @@ final appRouter = GoRouter(
     AppRoute(ScreenPaths.settings, (_) => SettingsScreen()),
     AppRoute('/wonder/:id', (s) {
       return WonderDetailsScreen(type: _parseWonderType(s.params['id']!));
-    }),
+    }, useFade: true),
     AppRoute('/timeline/:id', (s) {
       return TimelineScreen(type: _parseWonderType(s.params['id']!));
     }),
@@ -84,31 +84,40 @@ final appRouter = GoRouter(
 
 /// Custom GoRoute sub-class to make the router declaration easier to read
 class AppRoute extends GoRoute {
-  AppRoute(String path, Widget Function(GoRouterState s) builder, {List<GoRoute> routes = const []})
+  AppRoute(String path, Widget Function(GoRouterState s) builder,
+      {List<GoRoute> routes = const [], this.useFade = false})
       : super(
           path: path,
           routes: routes,
-          pageBuilder: (context, state) => buildAppPage(
-            context: context,
-            state: state,
-            child: Scaffold(
-              body: builder(state),
-              resizeToAvoidBottomInset: false,
-            ),
-          ),
+          pageBuilder: (context, state) {
+            return buildAppPage(
+              context: context,
+              state: state,
+              useFade: useFade,
+              child: Scaffold(
+                body: builder(state),
+                resizeToAvoidBottomInset: false,
+              ),
+            );
+          },
         );
+  final bool useFade;
 }
 
-CustomTransitionPage<T> buildAppPage<T>({
+Page<T> buildAppPage<T>({
   required BuildContext context,
   required GoRouterState state,
   required Widget child,
+  required bool useFade,
 }) {
-  return CustomTransitionPage<T>(
-    key: state.pageKey,
-    child: child,
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      return FadeTransition(opacity: animation, child: child);
-    },
-  );
+  if (useFade) {
+    return CustomTransitionPage<T>(
+      key: state.pageKey,
+      child: child,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(opacity: animation, child: child);
+      },
+    );
+  }
+  return CupertinoPage(child: child);
 }

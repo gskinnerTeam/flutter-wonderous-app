@@ -2,6 +2,7 @@ import 'package:wonders/common_libs.dart';
 
 class WonderDetailsTabMenu extends StatelessWidget {
   static double bottomPadding = 0;
+  static double buttonInset = 12;
   const WonderDetailsTabMenu(
       {Key? key, required this.tabController, this.showBg = false, required this.wonderType, required this.showHomeBtn})
       : super(key: key);
@@ -14,7 +15,6 @@ class WonderDetailsTabMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     Color iconColor = showBg ? context.colors.black : context.colors.white;
     const double homeBtnSize = 70;
-    const double buttonInset = 12;
     // Use SafeArea padding if its more than the default padding.
     bottomPadding = max(context.mq.padding.bottom, context.insets.xs);
     return Stack(

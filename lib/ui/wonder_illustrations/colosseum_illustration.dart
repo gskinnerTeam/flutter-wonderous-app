@@ -66,7 +66,7 @@ class ColosseumIllustration extends StatelessWidget {
                 config,
                 'colosseum-mg',
                 child: Transform.scale(
-                  scale: config.shortMode ? .85 : .8 + config.zoom * .2,
+                  scale: config.shortMode ? .85 : 1.2 + config.zoom * .2,
                   child: Image.asset(
                     '$assetPath/colosseum.png',
                     cacheWidth: context.widthPx.round() * 2,

@@ -54,12 +54,12 @@ class GreatWallIllustration extends StatelessWidget {
   List<Widget> _buildMg(BuildContext context, Animation<double> anim) => [
         Center(
           child: FractionalTranslation(
-            translation: Offset(0, config.shortMode ? .18 : 0),
+            translation: Offset(0, config.shortMode ? .1 : 0),
             child: WonderHero(
               config,
               'great-wall-mg',
               child: Transform.scale(
-                scale: config.shortMode ? .95 : 1 + config.zoom * .2,
+                scale: config.shortMode ? .95 : 1.4 + config.zoom * .2,
                 child: Image.asset(
                   '$assetPath/great-wall.png',
                   opacity: anim,
@@ -73,30 +73,34 @@ class GreatWallIllustration extends StatelessWidget {
   List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
     final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
-      Transform.translate(
-          offset: Offset(0, (1 - curvedAnim) * 100),
-          child: Stack(children: [
-            BottomLeft(
-              child: Transform.scale(
-                scale: .6 + config.zoom * .5,
-                child: FractionalTranslation(
-                  translation: Offset(-.26, 0),
-                  child: Image.asset('$assetPath/foreground-left.png',
-                      opacity: anim, cacheWidth: context.widthPx.round() * 3),
-                ),
+      Stack(children: [
+        BottomLeft(
+          child: Transform.translate(
+            offset: Offset(20, 20) * (1 - curvedAnim),
+            child: Transform.scale(
+              scale: .6 + config.zoom * .5,
+              child: FractionalTranslation(
+                translation: Offset(-.26, 0),
+                child: Image.asset('$assetPath/foreground-left.png',
+                    opacity: anim, cacheWidth: context.widthPx.round() * 3),
               ),
             ),
-            BottomRight(
-              child: Transform.scale(
-                scale: .9 + config.zoom * .1,
-                child: FractionalTranslation(
-                  translation: Offset(.46, -.5),
-                  child: Image.asset('$assetPath/foreground-right.png',
-                      opacity: anim, cacheWidth: context.widthPx.round() * 3),
-                ),
+          ),
+        ),
+        BottomRight(
+          child: Transform.translate(
+            offset: Offset((1 - curvedAnim) * 50, (1 - curvedAnim) * 100),
+            child: Transform.scale(
+              scale: .9 + config.zoom * .1,
+              child: FractionalTranslation(
+                translation: Offset(.46, -.5),
+                child: Image.asset('$assetPath/foreground-right.png',
+                    opacity: anim, cacheWidth: context.widthPx.round() * 3),
               ),
             ),
-          ]))
+          ),
+        ),
+      ])
     ];
   }
 }

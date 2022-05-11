@@ -25,12 +25,6 @@ class UnsplashService {
     if (data == null) {
       throw ('Photo did not load. statusCode=${photo.statusCode}');
     }
-    return UnsplashPhotoData(
-        id: id,
-        width: data.width,
-        height: data.height,
-        url: '${data.urls.raw}',
-        ownerName: data.user.name,
-        ownerUsername: data.user.username);
+    return UnsplashPhotoData(id: id, url: '${data.urls.raw}');
   }
 }

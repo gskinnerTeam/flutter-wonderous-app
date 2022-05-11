@@ -1,5 +1,6 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/lazy_indexed_stack.dart';
+import 'package:wonders/ui/common/measurable_widget.dart';
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_screen.dart';
 import 'package:wonders/ui/screens/editorial/editorial_screen.dart';
 import 'package:wonders/ui/screens/photo_gallery/photo_gallery.dart';
@@ -24,6 +25,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
   AnimationController? _fade;
 
   final _detailsHasScrolled = ValueNotifier(false);
+  double? _tabBarHeight;
 
   @override
   void dispose() {
@@ -40,12 +42,17 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
 
   void _handleDetailsScrolled(double scrollPos) => _detailsHasScrolled.value = scrollPos > 0;
 
+  void _handleTabMenuSized(Size size) {
+    setState(() => _tabBarHeight = size.height - WonderDetailsTabMenu.buttonInset);
+  }
+
   @override
   Widget build(BuildContext context) {
     final wonder = wondersLogic.getData(widget.type);
     int tabIndex = _tabController.index;
     bool showTabBarBg = tabIndex != 1;
-    final double tabBarHeight = WonderDetailsTabMenu.bottomPadding + 60;
+    final tabBarHeight = _tabBarHeight ?? 0;
+    //final double tabBarHeight = WonderDetailsTabMenu.bottomPadding + 60;
     return ColoredBox(
       color: Colors.black,
       child: Stack(
@@ -65,11 +72,14 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
           BottomCenter(
             child: ValueListenableBuilder<bool>(
               valueListenable: _detailsHasScrolled,
-              builder: (_, value, ___) => WonderDetailsTabMenu(
-                tabController: _tabController,
-                wonderType: wonder.type,
-                showBg: showTabBarBg,
-                showHomeBtn: value || tabIndex != 0,
+              builder: (_, value, ___) => MeasurableWidget(
+                onChange: _handleTabMenuSized,
+                child: WonderDetailsTabMenu(
+                  tabController: _tabController,
+                  wonderType: wonder.type,
+                  showBg: showTabBarBg,
+                  showHomeBtn: true, //value || tabIndex != 0,
+                ),
               ),
             ),
           ),
