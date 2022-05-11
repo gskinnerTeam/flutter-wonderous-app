@@ -36,7 +36,8 @@ class WonderData extends Equatable {
     required this.historyInfo2,
     required this.constructionInfo1,
     required this.constructionInfo2,
-    required this.locationInfo,
+    required this.locationInfo1,
+    required this.locationInfo2,
     required this.videoId,
     this.videoCaption = '',
     this.mapCaption = '',
@@ -56,7 +57,8 @@ class WonderData extends Equatable {
   final String historyInfo2;
   final String constructionInfo1;
   final String constructionInfo2;
-  final String locationInfo;
+  final String locationInfo1;
+  final String locationInfo2;
   final String pullQuote1Top;
   final String pullQuote1Bottom;
   final String pullQuote1Author;

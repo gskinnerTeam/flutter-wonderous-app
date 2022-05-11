@@ -77,7 +77,7 @@ class _ScrollingContent extends StatelessWidget {
           _SectionDivider(scrollPos, sectionNotifier, index: 2),
 
           /// Location
-          buildDropCapText(data.locationInfo),
+          buildDropCapText(data.locationInfo1),
           // SB: Disable maps thumbnail in debug mode, as it pollutes the logs too much in the android simulator
           //if (kReleaseMode) ...[
           _MapsThumbnail(data, height: 200),

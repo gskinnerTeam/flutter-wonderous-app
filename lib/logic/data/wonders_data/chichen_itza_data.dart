@@ -13,9 +13,9 @@ final chichenItzaData = WonderData(
   regionTitle: 'Yucatan, Mexico',
   videoId: 'Q6eBJjdca14',
   startYr: 550,
-  endYr: 1200,
+  endYr: 1550,
   artifactStartYr: 500,
-  artifactEndYr: 1250,
+  artifactEndYr: 1600,
   artifactCulture: 'Maya',
   artifactGeolocation: 'North and Central America',
   lat: 20.68346184201756,
@@ -27,26 +27,30 @@ final chichenItzaData = WonderData(
   pullQuote2:
       'The Chichen Itza is just a pyramid with four sides, with stairs on each side leading to some kind of bungalow on the top.',
   pullQuote2Author: 'Karl Pilkington',
-  callout1: 'Dominating the North Platform of Chichen Itza is the famous Temple of Kukulcán.',
+  callout1:
+      'The site exhibits a multitude of architectural styles, reminiscent of styles seen in central Mexico and of the Puuc and Chenes styles of the Northern Maya lowlands.',
   callout2: 'The city comprised an area of at least 1.9 sq miles (5 sq km) of densely clustered architecture.',
-  videoCaption: '',
+  videoCaption: '“Ancient Maya 101 | National Geographic.” Youtube, uploaded by National Geographic.',
   mapCaption: 'Map showing location of Chichen Itza in Yucatán State, Mexico.',
   historyInfo1:
       '''Chichen Itza was a powerful regional capital controlling north and central Yucatán. The earliest hieroglyphic date discovered at Chichen Itza is equivalent to 832 CE, while the last known date was recorded in the Osario temple in 998 CE.
-The temple was identified by the first Spaniards to see it, as El Castillo ("the castle"), and it regularly is referred to as such.
+Dominating the North Platform of Chichen Itza is the famous Temple of Kukulcán. The temple was identified by the first Spaniards to see it, as El Castillo ("the castle"), and it regularly is referred to as such. The temple was identified by the first Spaniards to see it, as El Castillo ("the castle"), and it regularly is referred to as such.
 ''',
   historyInfo2:
-      '''The site exhibits a multitude of architectural styles, reminiscent of styles seen in central Mexico and of the Puuc and Chenes styles of the Northern Maya lowlands. The city was thought to have the most diverse population in the Maya world, a factor that could have contributed to this architectural variety.
+      '''The city was thought to have the most diverse population in the Maya world, a factor that could have contributed to this architectural variety.
 ''',
   constructionInfo1:
       '''The structures of Chichen Itza were built from precisely chiseled limestone blocks that fit together perfectly without the mortar. Many of these stone buildings were originally painted in red, green, blue and purple colors depending on the availability of the pigments.
 The stepped pyramid El Castillo stands about 98 feet (30 m) high and consists of a series of nine square terraces, each approximately 8.4 feet (2.57 m) high, with a 20 foot (6 m) high temple upon the summit.
 ''',
   constructionInfo2:
-      '''It was built upon broken terrain, which was artificially leveled to support structures such as the Castillo pyramid. Important buildings within the center were connected by a dense network of paved roads called sacbeob.''',
-  locationInfo:
+      '''It was built upon broken terrain, which was artificially leveled to support structures such as the Castillo pyramid. Important buildings within the center were connected by a dense network of paved roads called sacbeob.
+''',
+  locationInfo1:
       '''Chichen Itza is located in the eastern portion of Yucatán state in Mexico. Nearby, four large sinkholes, called cenotes, could have provided plentiful water year round at Chichen, making it attractive for settlement.
-Of these cenotes, the "Cenote Sagrado" or Sacred Cenote, was used for the sacrifice of precious objects and human beings as a form of worship to the Maya rain god Chaac.
+''',
+  locationInfo2:
+      '''Of these cenotes, the "Cenote Sagrado" or Sacred Cenote, was used for the sacrifice of precious objects and human beings as a form of worship to the Maya rain god Chaac.
 ''',
   highlightArtifacts: const [
     '503940',

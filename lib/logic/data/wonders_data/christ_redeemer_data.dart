@@ -14,7 +14,7 @@ final christRedeemerData = WonderData(
   videoId: 'k_615AauSds',
   startYr: 1922,
   endYr: 1931,
-  artifactStartYr: 1500,
+  artifactStartYr: 1800,
   artifactEndYr: 2000,
   artifactCulture: '',
   artifactGeolocation: 'Brazil',
@@ -30,8 +30,9 @@ final christRedeemerData = WonderData(
   callout1: 'The statue of Christ the Redeemer with open arms, a symbol of peace, was chosen.',
   callout2:
       'Construction took nine years, from 1922 to 1931, and cost the equivalent of US\$250,000 (equivalent to \$3,600,000 in 2020) and the monument opened on October 12, 1931.',
-  videoCaption: '',
-  mapCaption: '',
+  videoCaption:
+      '“The Majestic Statue of Christ the Redeemer - Seven Wonders of the Modern World - See U in History.” Youtube, uploaded by See U in History / Mythology.',
+  mapCaption: 'Map showing location of Christ the Redeemer in Rio de Janeiro, Brazil.',
   historyInfo1:
       '''The placement of a Christian monument on Mount Corcovado was first suggested in the mid-1850s to honor Princess Isabel, regent of Brazil and the daughter of Emperor Pedro II, but the project was not approved.
 In 1889 the country became a republic, and owing to the separation of church and state the proposed statue was dismissed.
@@ -41,21 +42,23 @@ In 1889 the country became a republic, and owing to the separation of church and
 The designs considered for the "Statue of the Christ" included a representation of the Christian cross, a statue of Jesus with a globe in his hands, and a pedestal symbolizing the world.
 ''',
   constructionInfo1:
-      '''Local engineer Heitor da Silva Costa and artist Carlos Oswald designed the statue.[10] French sculptor Paul Landowski created the work. In 1922, Landowski commissioned fellow Parisian Romanian sculptor Gheorghe Leonida, who studied sculpture at the Fine Arts Conservatory in Bucharest and in Italy.
+      '''Artist Carlos Oswald and local engineer Heitor da Silva Costa designed the statue. French sculptor Paul Landowski created the work. In 1922, Landowski commissioned fellow Parisian Romanian sculptor Gheorghe Leonida, who studied sculpture at the Fine Arts Conservatory in Bucharest and in Italy.
 ''',
   constructionInfo2:
       '''A group of engineers and technicians studied Landowski's submissions and felt building the structure of reinforced concrete instead of steel was more suitable for the cross-shaped statue. The concrete making up the base was supplied from Limhamn, Sweden. The outer layers are soapstone, chosen for its enduring qualities and ease of use.
 ''',
-  locationInfo:
+  locationInfo1:
       '''Corcovado, which means "hunchback" in Portuguese, is a mountain in central Rio de Janeiro, Brazil. It is a 2,329 foot (710 m) granite peak located in the Tijuca Forest, a national park.
-Corcovado hill lies just west of the city center but is wholly within the city limits and visible from great distances.
+''',
+  locationInfo2:
+      '''Corcovado hill lies just west of the city center but is wholly within the city limits and visible from great distances.
 ''',
   highlightArtifacts: const [
+    '501319',
     '764815',
     '502019',
     '764814',
     '764816',
-    '501319',
   ],
   hiddenArtifacts: const [
     '501302',

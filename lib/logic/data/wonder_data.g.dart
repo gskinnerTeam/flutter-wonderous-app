@@ -39,7 +39,9 @@ abstract class _$WonderDataCWProxy {
 
   WonderData lng(double lng);
 
-  WonderData locationInfo(String locationInfo);
+  WonderData locationInfo1(String locationInfo1);
+
+  WonderData locationInfo2(String locationInfo2);
 
   WonderData quote1(String quote1);
 
@@ -84,7 +86,8 @@ abstract class _$WonderDataCWProxy {
     List<String>? imageIds,
     double? lat,
     double? lng,
-    String? locationInfo,
+    String? locationInfo1,
+    String? locationInfo2,
     String? quote1,
     String? quote2,
     String? quoteAuthor,
@@ -153,7 +156,10 @@ class _$WonderDataCWProxyImpl implements _$WonderDataCWProxy {
   WonderData lng(double lng) => this(lng: lng);
 
   @override
-  WonderData locationInfo(String locationInfo) => this(locationInfo: locationInfo);
+  WonderData locationInfo1(String locationInfo1) => this(locationInfo1: locationInfo1);
+
+  @override
+  WonderData locationInfo2(String locationInfo2) => this(locationInfo2: locationInfo2);
 
   @override
   WonderData quote1(String quote1) => this(quote1: quote1);
@@ -210,7 +216,8 @@ class _$WonderDataCWProxyImpl implements _$WonderDataCWProxy {
     Object? imageIds = const $CopyWithPlaceholder(),
     Object? lat = const $CopyWithPlaceholder(),
     Object? lng = const $CopyWithPlaceholder(),
-    Object? locationInfo = const $CopyWithPlaceholder(),
+    Object? locationInfo1 = const $CopyWithPlaceholder(),
+    Object? locationInfo2 = const $CopyWithPlaceholder(),
     Object? quote1 = const $CopyWithPlaceholder(),
     Object? quote2 = const $CopyWithPlaceholder(),
     Object? quoteAuthor = const $CopyWithPlaceholder(),
@@ -287,10 +294,14 @@ class _$WonderDataCWProxyImpl implements _$WonderDataCWProxy {
           ? _value.lng
           // ignore: cast_nullable_to_non_nullable
           : lng as double,
-      locationInfo: locationInfo == const $CopyWithPlaceholder() || locationInfo == null
-          ? _value.locationInfo
+      locationInfo1: locationInfo1 == const $CopyWithPlaceholder() || locationInfo1 == null
+          ? _value.locationInfo1
           // ignore: cast_nullable_to_non_nullable
-          : locationInfo as String,
+          : locationInfo1 as String,
+      locationInfo2: locationInfo2 == const $CopyWithPlaceholder() || locationInfo2 == null
+          ? _value.locationInfo2
+          // ignore: cast_nullable_to_non_nullable
+          : locationInfo2 as String,
       pullQuote1Top: quote1 == const $CopyWithPlaceholder() || quote1 == null
           ? _value.pullQuote1Top
           // ignore: cast_nullable_to_non_nullable
@@ -367,7 +378,8 @@ WonderData _$WonderDataFromJson(Map<String, dynamic> json) => WonderData(
       historyInfo2: json['historyInfo2'] as String,
       constructionInfo1: json['constructionInfo1'] as String,
       constructionInfo2: json['constructionInfo2'] as String,
-      locationInfo: json['locationInfo'] as String,
+      locationInfo1: json['locationInfo1'] as String,
+      locationInfo2: json['locationInfo2'] as String,
       videoId: json['videoId'] as String,
       events: (json['events'] as Map<String, dynamic>).map(
         (k, e) => MapEntry(int.parse(k), e as String),
@@ -385,7 +397,8 @@ Map<String, dynamic> _$WonderDataToJson(WonderData instance) => <String, dynamic
       'historyInfo2': instance.historyInfo2,
       'constructionInfo1': instance.constructionInfo1,
       'constructionInfo2': instance.constructionInfo2,
-      'locationInfo': instance.locationInfo,
+      'locationInfo1': instance.locationInfo1,
+      'locationInfo2': instance.locationInfo2,
       'quote1': instance.pullQuote1Top,
       'quote2': instance.pullQuote1Bottom,
       'quoteAuthor': instance.pullQuote1Author,
