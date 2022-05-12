@@ -154,13 +154,7 @@ class _ImagePreview extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(maxWidth)),
 
                   // Display image
-                  image: DecorationImage(
-                      image: image,
-                      fit: BoxFit.cover,
-                      colorFilter: ColorFilter.mode(
-                        Colors.black.withOpacity(math.min(1, pageOffset.abs())), // 0 = Colored, 1 = Black & White
-                        BlendMode.saturation,
-                      )),
+                  image: DecorationImage(image: image, fit: BoxFit.cover),
                 ),
               ),
             ),
