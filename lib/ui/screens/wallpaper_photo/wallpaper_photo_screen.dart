@@ -43,11 +43,6 @@ class _WallpaperPhotoScreenState extends State<WallpaperPhotoScreen> {
 
   void _handleSharePhoto(BuildContext context, String wonderName) async {
     RenderRepaintBoundary boundary = _containerKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
-    if (boundary.debugNeedsPaint) {
-      _photoRetryTimer = Timer(Duration(milliseconds: 1), () => _handleTakePhoto(context, wonderName));
-      return;
-    }
-
     appLogic.shareWallpaper(context, boundary, name: '${wonderName}_wallpaper', wonderName: wonderName);
   }
 
