@@ -25,8 +25,8 @@ final christRedeemerData = WonderData(
   pullQuote1Bottom: 'Nature and Architecture',
   pullQuote1Author: '',
   pullQuote2:
-      'The famous statue of Christ the Redeemer that overlooks Rio de Janeiro is only 130 feet tall. McGuintys eco-idols [Wind Turbines] will be three times that height, but will serve the same imposing purpose.',
-  pullQuote2Author: 'Ezra Levant',
+      'The statue looms large on the landscape, but it hides as much as it reveals about the diverse religious life of Brazilians.',
+  pullQuote2Author: 'Thomas Tweed',
   callout1: 'The statue of Christ the Redeemer with open arms, a symbol of peace, was chosen.',
   callout2:
       'Construction took nine years, from 1922 to 1931, and cost the equivalent of US\$250,000 (equivalent to \$3,600,000 in 2020) and the monument opened on October 12, 1931.',

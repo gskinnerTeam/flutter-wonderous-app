@@ -25,8 +25,8 @@ final chichenItzaData = WonderData(
   pullQuote1Bottom: 'the Heavens and the Underworld',
   pullQuote1Author: '',
   pullQuote2:
-      'The Chichen Itza is just a pyramid with four sides, with stairs on each side leading to some kind of bungalow on the top.',
-  pullQuote2Author: 'Karl Pilkington',
+      'The Maya and Toltec vision of the world and the universe is revealed in their stone monuments and artistic works.',
+  pullQuote2Author: 'UNESCO',
   callout1:
       'The site exhibits a multitude of architectural styles, reminiscent of styles seen in central Mexico and of the Puuc and Chenes styles of the Northern Maya lowlands.',
   callout2: 'The city comprised an area of at least 1.9 sq miles (5 sq km) of densely clustered architecture.',
