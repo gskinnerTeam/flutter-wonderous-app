@@ -11,6 +11,7 @@ import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_image.dart';
 
 // TODO: GDS: refactor to match other views.
+// TODO: GDS: simplify
 
 class ArtifactCarouselScreen extends StatefulWidget {
   final WonderType type;
@@ -30,7 +31,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   static const double _maxElementHeight = 700;
 
   // Locally store loaded artifacts.
-  final _loadedArtifacts = <HighlightsData>[];
+  final List<HighlightsData> _loadedArtifacts = [];
   late PageController _controller;
   HighlightsData? _currentArtifact;
   double _currentPage = 0;
@@ -101,13 +102,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
       child: Stack(
         children: [
           // Background Image
-          AnimatedSwitcher(
-            child: ArtifactCarouselBg(
-              key: ValueKey(_currentArtifact?.artifactId),
-              url: _currentArtifact?.imageUrl ?? '',
-            ),
-            duration: context.times.fast,
-          ),
+          Positioned.fill(child: ArtifactCarouselBg(url: _currentArtifact?.imageUrl)),
 
           // Header
           Column(children: [
@@ -119,27 +114,17 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
             Expanded(
               child: Stack(
                 children: [
-                  // White space, covering bottom half.
+                  // White arch, covering bottom half.
                   BottomCenter(
                     child: Container(
                       width: backdropWidth,
                       height: backdropHeight,
                       decoration: BoxDecoration(
-                        color: context.colors.offWhite,
+                        color: context.colors.offWhite.withOpacity(0.8),
                         borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(backdropWidth),
+                          top: Radius.circular(999),
                         ),
                       ),
-                    ),
-                  ),
-
-                  // Gradient
-                  BottomCenter(
-                    child: VtGradient(
-                      [Colors.transparent, context.colors.black.withOpacity(0.1)],
-                      const [0, 1],
-                      alignment: Alignment.topCenter,
-                      height: context.insets.md,
                     ),
                   ),
 
@@ -196,7 +181,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                           AppPageIndicator(count: _highlightedArtifactIds.length, controller: _controller),
                           // Big ol' button
                           Gap(small ? context.insets.md : context.insets.xl),
-                          _buildBrowseBtn(context, backdropWidth),
+                          _buildBrowseBtn(context),
                           Gap(small ? context.insets.md : context.insets.lg),
                         ],
                       ),
@@ -220,13 +205,12 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Wonder Name
             Padding(
               padding: EdgeInsets.symmetric(horizontal: width * 0.1),
               child: Text(
                 (_loadedArtifacts.isEmpty ? 'Just a moment...' : _currentArtifact?.culture ?? '').toUpperCase(),
                 style: context.textStyles.titleFont.copyWith(
-                  color: context.colors.accent1,
+                  color: context.colors.greyStrong,
                   fontSize: 14,
                   height: 1.2,
                 ),
@@ -254,7 +238,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                             child: Text(
                               (_currentArtifact?.title ?? ''),
                               overflow: TextOverflow.ellipsis,
-                              style: context.textStyles.h2.copyWith(color: context.colors.greyStrong, height: 1.2),
+                              style: context.textStyles.h2.copyWith(color: context.colors.black, height: 1.2),
                               textAlign: TextAlign.center,
                               maxLines: 2,
                             ),
@@ -265,7 +249,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                         // Time frame
                         Text(
                           _currentArtifact?.date ?? '',
-                          style: context.textStyles.body.copyWith(color: context.colors.body),
+                          style: context.textStyles.body.copyWith(color: context.colors.greyStrong),
                           textAlign: TextAlign.center,
                         ),
                       ],
@@ -279,15 +263,12 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     );
   }
 
-  Widget _buildBrowseBtn(BuildContext context, double width) {
-    return SizedBox(
-        width: width,
-        child: AppTextIconBtn(
-          'Browse all artifacts',
-          Icons.search,
-          expand: true,
-          padding: EdgeInsets.symmetric(vertical: context.insets.sm),
-          onPressed: _handleSearchButtonTap,
-        ));
+  Widget _buildBrowseBtn(BuildContext context) {
+    return AppTextIconBtn(
+      'Browse all artifacts',
+      Icons.search,
+      expand: true,
+      onPressed: _handleSearchButtonTap,
+    );
   }
 }

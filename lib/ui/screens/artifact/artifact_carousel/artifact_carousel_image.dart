@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:image_fade/image_fade.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/highlights_data.dart';
 
@@ -14,7 +14,6 @@ class ArtifactCarouselImage extends StatelessWidget {
       required this.bottomPadding,
       required this.maxWidth,
       required this.maxHeight,
-      this.borderOnly = false,
       required this.onPressed})
       : super(key: key);
   final HighlightsData artifact;
@@ -24,30 +23,24 @@ class ArtifactCarouselImage extends StatelessWidget {
   final double bottomPadding;
   final double maxWidth;
   final double maxHeight;
-  final bool borderOnly;
   final VoidCallback onPressed;
 
   @override
-  Widget build(BuildContext context) => BasicBtn(
-        semanticLabel: 'carousel',
-        expand: true,
-        onPressed: onPressed,
-        child: CachedNetworkImage(
-          // Show immediately; don't delay the appearance on the sides.
-          fadeInDuration: context.times.fast,
-          fadeOutDuration: context.times.fast,
-          imageUrl: artifact.imageUrl,
-          imageBuilder: (context, imageProvider) => _ImagePreview(
-            image: imageProvider,
-            heroTag: artifact.imageUrlSmall,
-            viewportFraction: viewportFraction,
-            bottomPadding: bottomPadding,
-            maxWidth: maxWidth,
-            maxHeight: maxHeight,
-            offsetAmt: currentPage - index.toDouble(),
-          ),
-        ),
-      );
+  Widget build(BuildContext context) {
+    return BasicBtn(
+      semanticLabel: 'carousel',
+      expand: true,
+      onPressed: onPressed,
+      child: _ImagePreview(
+        image: NetworkImage(artifact.imageUrlSmall),
+        viewportFraction: viewportFraction,
+        bottomPadding: bottomPadding,
+        maxWidth: maxWidth,
+        maxHeight: maxHeight,
+        offsetAmt: currentPage - index.toDouble(),
+      ),
+    );
+  }
 }
 
 class _ImagePreview extends StatelessWidget {
@@ -58,7 +51,6 @@ class _ImagePreview extends StatelessWidget {
       required this.bottomPadding,
       required this.maxWidth,
       required this.maxHeight,
-      required this.heroTag,
       required this.viewportFraction})
       : super(key: key);
   final ImageProvider image;
@@ -67,7 +59,6 @@ class _ImagePreview extends StatelessWidget {
   final double bottomPadding;
   final double maxWidth;
   final double maxHeight;
-  final String heroTag;
 
   @override
   Widget build(BuildContext context) {
@@ -103,8 +94,7 @@ class _ImagePreview extends StatelessWidget {
     double xOffsetFactor = pageOffset;
     // Use absolute value of offset so images always move down.
     double yOffsetFactor = pageOffset.abs();
-    // Set opacity of the page.
-    double opacity = 1;
+
     if (pageOffset >= -1 && pageOffset <= 1) {
       // Create an offset factor using sin/cos to ease.
       xOffsetFactor = pageOffset - math.sin(pageOffset * math.pi) / 3;
@@ -112,7 +102,6 @@ class _ImagePreview extends StatelessWidget {
     } else {
       // Apply an opacity to elements beyond -1 to 1 offset to create a fadeout.
       xOffsetFactor = pageOffset * pageOffset * (pageOffset < 0 ? -1 : 1);
-      opacity = math.max(0, math.min(1, 1 - (pageOffset.abs() - 1) / viewportFraction));
     }
 
     // Multiply the offset factors with the width/height scale to convert them to fractionals.
@@ -135,27 +124,22 @@ class _ImagePreview extends StatelessWidget {
         widthFactor: widthFactor,
         heightFactor: heightFactor,
         // Translation box for positioning.
-        child: Opacity(
-          opacity: opacity,
-          child: Container(
-            // Add an outer border with the rounded ends.
-            decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              border: Border.all(color: context.colors.offWhite, width: borderWidth),
-              borderRadius: BorderRadius.all(Radius.circular(maxWidth)),
-            ),
+        child: Container(
+          // Add an outer border with the rounded ends.
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            border: Border.all(color: context.colors.offWhite, width: borderWidth),
+            borderRadius: BorderRadius.all(Radius.circular(999)),
+          ),
 
-            child: Padding(
-              padding: EdgeInsets.all(borderPadding),
-              child: Container(
-                // Round the edges, but make a capsule rather than a circle by only setting to width.
-                decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.all(Radius.circular(maxWidth)),
-
-                  // Display image
-                  image: DecorationImage(image: image, fit: BoxFit.cover),
-                ),
+          child: Padding(
+            padding: EdgeInsets.all(borderPadding),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(999),
+              child: ImageFade(
+                image: image,
+                fit: BoxFit.cover,
+                placeholder: ColoredBox(color: context.colors.greyMedium)
               ),
             ),
           ),
