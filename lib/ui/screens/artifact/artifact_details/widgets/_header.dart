@@ -26,11 +26,11 @@ class _Header extends StatelessWidget {
             child: SafeArea(
               bottom: false,
               minimum: EdgeInsets.symmetric(vertical: context.insets.sm),
-              child: CachedNetworkImage(
-                imageUrl: data.image,
+              child: ImageFade(
+                image: NetworkImage(data.image),
                 fit: BoxFit.cover,
                 alignment: Alignment.topCenter,
-                placeholder: (context, url) => const AppLoader(),
+                loadingBuilder: (_, __, ___) => const AppLoader(),
               ),
             ),
           ),

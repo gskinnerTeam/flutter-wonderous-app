@@ -42,6 +42,7 @@ dependencies:
   provider: ^6.0.2
   reactives: ^0.2.0
   rnd: ^0.2.0
+  image_fade: ^0.5.0
   screenshot: ^1.2.3
   share_plus: ^4.0.4
   shared_preferences: ^2.0.13
