@@ -75,8 +75,7 @@ class MachuPicchuIllustration extends StatelessWidget {
             scale: 1 + config.zoom * .2,
             child: FractionalTranslation(
               translation: Offset(-.4, 0),
-              child:
-                  Image.asset('$assetPath/foreground-left.png', opacity: anim, cacheWidth: context.widthPx.round() * 3),
+              child: Image.asset('$assetPath/foreground-left.png', opacity: anim),
             ),
           ),
         ),
@@ -85,8 +84,7 @@ class MachuPicchuIllustration extends StatelessWidget {
             scale: .9 + config.zoom * .05,
             child: FractionalTranslation(
               translation: Offset(.5, -.5),
-              child: Image.asset('$assetPath/foreground-right.png',
-                  opacity: anim, cacheWidth: context.widthPx.round() * 3),
+              child: Image.asset('$assetPath/foreground-right.png', opacity: anim),
             ),
           ),
         ),
