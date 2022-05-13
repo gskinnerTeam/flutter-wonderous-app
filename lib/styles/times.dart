@@ -6,5 +6,5 @@ class AppTimes {
   final Duration med = Duration(milliseconds: 600);
   final Duration slow = Duration(milliseconds: 900);
   // TODO: do a pass, and consolidate any initial delays that are close to this
-  final Duration introDelay = Duration(milliseconds: 200);
+  final Duration pageTransition = Duration(milliseconds: 200);
 }
