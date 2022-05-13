@@ -54,6 +54,6 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
     );
     // wait to update the state, to ensure the hero works properly:
     await Future.delayed(duration);
-    //collectiblesLogic.updateState(collectible.id, CollectibleState.discovered);
+    collectiblesLogic.updateState(collectible.id, CollectibleState.discovered);
   }
 }
