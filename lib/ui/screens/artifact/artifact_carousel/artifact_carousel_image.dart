@@ -139,7 +139,7 @@ class _ImagePreview extends StatelessWidget {
               child: ImageFade(
                 image: image,
                 fit: BoxFit.cover,
-                placeholder: ColoredBox(color: context.colors.greyMedium)
+                placeholder: ColoredBox(color: context.colors.greyMedium.withOpacity(0.75))
               ),
             ),
           ),

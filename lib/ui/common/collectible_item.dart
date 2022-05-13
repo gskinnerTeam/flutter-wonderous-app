@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/collectibles_logic.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
@@ -8,13 +7,13 @@ import 'package:wonders/ui/screens/collectible_found/collectible_found_screen.da
 class CollectibleItem extends StatelessWidget with GetItMixin {
   CollectibleItem(this.collectible, {this.size = 64.0, Key? key}) : super(key: key) {
     // pre-fetch the image, so it's ready if we show the collectible found screen.
-    _imageProvider = CachedNetworkImageProvider(collectible.imageUrlSmall);
+    _imageProvider = NetworkImage(collectible.imageUrlSmall);
     _imageProvider.resolve(ImageConfiguration()).addListener(ImageStreamListener((_, __) {}));
   }
 
   final CollectibleData collectible;
   final double size;
-  late final CachedNetworkImageProvider _imageProvider;
+  late final ImageProvider _imageProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +54,6 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
     );
     // wait to update the state, to ensure the hero works properly:
     await Future.delayed(duration);
-    collectiblesLogic.updateState(collectible.id, CollectibleState.discovered);
+    //collectiblesLogic.updateState(collectible.id, CollectibleState.discovered);
   }
 }

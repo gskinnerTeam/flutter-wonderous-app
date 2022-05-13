@@ -6,7 +6,6 @@ import 'package:wonders/logic/data/highlights_data.dart';
 import 'package:wonders/ui/common/app_page_indicator.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:wonders/ui/common/controls/simple_header.dart';
-import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_bg.dart';
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_image.dart';
 
@@ -24,7 +23,6 @@ class ArtifactCarouselScreen extends StatefulWidget {
 class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   final _pageViewportFraction = 0.5;
 
-  late final _wonderData = wondersLogic.getData(widget.type);
   late final _highlightedArtifactIds = wondersLogic.getData(widget.type).highlightArtifacts;
   // Used to cap white background dimensions.
   static const double _maxElementWidth = 375;

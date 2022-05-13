@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:image_fade/image_fade.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:wonders/ui/common/particles/particle_field.dart';
@@ -12,7 +12,7 @@ class CollectibleFoundScreen extends StatelessWidget {
   const CollectibleFoundScreen({required this.collectible, required this.imageProvider, Key? key}) : super(key: key);
 
   final CollectibleData collectible;
-  final CachedNetworkImageProvider imageProvider;
+  final ImageProvider imageProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +96,7 @@ class CollectibleFoundScreen extends StatelessWidget {
   Widget _buildImage(BuildContext context) {
     Duration t = context.times.fast;
     // build an image with animated shadows and scaling
-    return Image(image: imageProvider)
+    return ImageFade(image: imageProvider, fadeDuration: t * 0.5)
         .fx()
         .custom(
           duration: t * 6,
