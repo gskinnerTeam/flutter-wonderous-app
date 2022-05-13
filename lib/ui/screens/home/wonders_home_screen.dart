@@ -1,8 +1,10 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/app_page_indicator.dart';
 import 'package:wonders/ui/common/controls/diagonal_text_page_indicator.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/themed_text.dart';
+import 'package:wonders/ui/screens/home_menu/home_menu.dart';
 import 'package:wonders/ui/wonder_illustrations/common/animated_clouds.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
@@ -25,6 +27,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
     initialPage: _numWonders * 9999, // allow 'infinite' scrolling by starting at a very high page
   );
   final _wonders = wondersLogic.all;
+  bool _isMenuOpen = false;
 
   /// Set initial wonderIndex
   late int _wonderIndex = 0;
@@ -37,15 +40,20 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
   /// Using individual tweens is more efficient than tween the entire parent
   final _fadeAnims = <AnimationController>[];
 
+  WonderData get currentWonder => _wonders[_wonderIndex];
+
   late final _VerticalSwipeController _swipeController = _VerticalSwipeController(this, _showDetailsPage);
 
-  bool _isSelected(WonderType t) => t == _wonders[_wonderIndex].type;
+  bool _isSelected(WonderType t) => t == currentWonder.type;
 
   void _handlePageViewChanged(v) => setState(() => _wonderIndex = v % _numWonders);
 
   void _handleSettingsPressed() => context.push(ScreenPaths.settings);
 
-  void _handleScreenshotPressed() => context.push(ScreenPaths.wallpaperPhoto(_wonders[_wonderIndex].type));
+  void _handleOpenMenuPressed() {
+    setState(() => _isMenuOpen = true);
+    await appLogic.showFullscreenDialogRoute(context, HomeMenu(data: currentWonder));
+  }
 
   void _handleFadeAnimInit(AnimationController controller) {
     _fadeAnims.add(controller);
@@ -60,7 +68,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
   }
 
   void _showDetailsPage() async {
-    context.push(ScreenPaths.wonderDetails(_wonders[_wonderIndex].type));
+    context.push(ScreenPaths.wonderDetails(currentWonder.type));
     await Future.delayed(200.ms);
     _fadeInOnNextBuild = true;
   }
@@ -81,7 +89,6 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
       _startDelayedFgFade();
       _fadeInOnNextBuild = false;
     }
-    final currentWonder = _wonders[_wonderIndex];
     return _swipeController.wrapGestureDetector(
       Stack(
         children: [
@@ -103,7 +110,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
           ),
 
           Stack(children: [
-            /// Foreground gradient-bottom, gets darker when swiping up
+            /// Foreground gradient-1, gets darker when swiping up
             BottomCenter(
               child: _buildSwipeableBgGradient(currentWonder.type.bgColor.withOpacity(.5)),
             ),
@@ -111,20 +118,24 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
             /// Foreground decorators
             ..._buildFgChildren(),
 
-            /// Foreground gradient-top, gets darker when swiping up
+            /// Foreground gradient-2, gets darker when swiping up
             BottomCenter(
               child: _buildSwipeableBgGradient(currentWonder.type.bgColor.withOpacity(.5)),
             ),
 
-            // Wallpaper screenshot button
-            TopRight(
-              child: Padding(
-                padding: EdgeInsets.all(context.insets.sm),
-                child: SafeArea(
-                  child: CircleIconBtn(
-                    icon: Icons.screenshot,
-                    onPressed: _handleScreenshotPressed,
-                    semanticLabel: 'wallpaper screenshot button',
+            /// Menu Btn
+            TopLeft(
+              child: AnimatedOpacity(
+                duration: context.times.fast,
+                opacity: _isMenuOpen ? 0 : 1,
+                child: Padding(
+                  padding: EdgeInsets.all(context.insets.sm),
+                  child: SafeArea(
+                    child: CircleIconBtn(
+                      icon: Icons.menu,
+                      onPressed: _handleOpenMenuPressed,
+                      semanticLabel: 'open home popup menu',
+                    ),
                   ),
                 ),
               ),

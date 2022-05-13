@@ -64,7 +64,7 @@ class _FullScreenUnsplashPhotoViewerState extends State<_FullScreenUnsplashPhoto
                 ),
               ),
             ),
-          ).fx().slide(delay: context.times.introDelay, begin: Offset(0, 1)),
+          ).fx().slide(delay: context.times.pageTransition, begin: Offset(0, 1)),
         ],
       ),
     );
