@@ -41,19 +41,12 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
   }
 
   void _handleTap(BuildContext context) async {
-    Duration duration = context.read<AppStyle>().times.fast;
-    Navigator.of(context).push(
-      PageRouteBuilder(
-        pageBuilder: (_, __, ___) => CollectibleFoundScreen(collectible: collectible, imageProvider: _imageProvider),
-        transitionsBuilder: (_, animation, __, child) => FadeTransition(opacity: animation, child: child),
-        transitionDuration: duration,
-        reverseTransitionDuration: duration,
-        opaque: false,
-        fullscreenDialog: true,
-      ),
-    );
+    final screen = CollectibleFoundScreen(collectible: collectible, imageProvider: _imageProvider);
+    appLogic.showFullscreenDialogRoute(context, screen);
+
     // wait to update the state, to ensure the hero works properly:
-    await Future.delayed(duration);
+    final times = context.read<AppStyle>().times;
+    await Future.delayed(times.pageTransition);
     collectiblesLogic.updateState(collectible.id, CollectibleState.discovered);
   }
 }

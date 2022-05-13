@@ -2,11 +2,24 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 
 class PageRoutes {
-  static const double kDefaultDuration = .3;
+  static const Duration kDefaultDuration = Duration(milliseconds: 300);
 
-  static Route<T> fadeThrough<T>(Widget child, [double duration = kDefaultDuration]) {
+  static Route<T> dialog<T>(Widget child, [Duration duration = kDefaultDuration, bool opaque = false]) {
     return PageRouteBuilder<T>(
-      transitionDuration: Duration(milliseconds: (duration * 1000).round()),
+      transitionDuration: duration,
+      reverseTransitionDuration: duration,
+      pageBuilder: (context, animation, secondaryAnimation) => child,
+      opaque: opaque,
+      fullscreenDialog: true,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(opacity: animation, child: child),
+    );
+  }
+
+  static Route<T> fadeThrough<T>(Widget child, [Duration duration = kDefaultDuration]) {
+    return PageRouteBuilder<T>(
+      transitionDuration: duration,
+      reverseTransitionDuration: duration,
       pageBuilder: (context, animation, secondaryAnimation) => child,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         return FadeThroughTransition(animation: animation, secondaryAnimation: secondaryAnimation, child: child);
@@ -14,9 +27,10 @@ class PageRoutes {
     );
   }
 
-  static Route<T> fadeScale<T>(Widget child, [double duration = kDefaultDuration]) {
+  static Route<T> fadeScale<T>(Widget child, [Duration duration = kDefaultDuration]) {
     return PageRouteBuilder<T>(
-      transitionDuration: Duration(milliseconds: (duration * 1000).round()),
+      transitionDuration: duration,
+      reverseTransitionDuration: duration,
       pageBuilder: (context, animation, secondaryAnimation) => child,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         return FadeScaleTransition(animation: animation, child: child);
@@ -25,9 +39,10 @@ class PageRoutes {
   }
 
   static Route<T> sharedAxis<T>(Widget child,
-      [SharedAxisTransitionType type = SharedAxisTransitionType.scaled, double duration = kDefaultDuration]) {
+      [SharedAxisTransitionType type = SharedAxisTransitionType.scaled, Duration duration = kDefaultDuration]) {
     return PageRouteBuilder<T>(
-      transitionDuration: Duration(milliseconds: (duration * 1000).round()),
+      transitionDuration: duration,
+      reverseTransitionDuration: duration,
       pageBuilder: (context, animation, secondaryAnimation) => child,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         return SharedAxisTransition(

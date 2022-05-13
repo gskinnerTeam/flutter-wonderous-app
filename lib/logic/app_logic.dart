@@ -10,8 +10,10 @@ import 'package:path_provider/path_provider.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/ui/common/modals/fullscreen_web_view.dart';
+import 'package:wonders/ui/common/utils/page_routes.dart';
 import 'package:wonders/ui/modals/app_modals.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:wonders/ui/screens/collectible_found/collectible_found_screen.dart';
 
 class AppLogic {
   /// Indicates to the rest of the app that bootstrap has not completed.
@@ -96,11 +98,9 @@ class AppLogic {
     FlutterError.dumpErrorToConsole(details);
   }
 
-  /// TODO: talk to design team about whether we should link out or use an inline view.
-  void showWebView(BuildContext context, String url) => Navigator.push(
-        context,
-
-        /// TODO: Switch from Cupertino to one of the "Animation" Page routes?
-        CupertinoPageRoute(builder: (_) => FullscreenWebView(url)),
-      );
+  Future<void> showFullscreenDialogRoute(BuildContext context, Widget child) async {
+    await Navigator.of(context).push(
+      PageRoutes.dialog(child, context.read<AppStyle>().times.pageTransition),
+    );
+  }
 }
