@@ -10,8 +10,7 @@ class _NewlyDiscoveredRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (count == 0) return SizedBox.shrink();
-    return BasicBtn(
-      expand: true,
+    return AppBtn.basic(
       semanticLabel: 'Scroll to new item',
       onPressed: onPressed,
       child: Container(

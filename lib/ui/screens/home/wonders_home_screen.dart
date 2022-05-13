@@ -146,7 +146,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
                       /// Settings Btn
                       Opacity(
                         opacity: 0, // TODO: Remove this btn before launch, its for testing settings only
-                        child: AppTextBtn('Settings', onPressed: _handleSettingsPressed, padding: EdgeInsets.all(30)),
+                        child: AppBtn.from(text: 'Settings', onPressed: _handleSettingsPressed, padding: EdgeInsets.all(30)),
                       ),
                       const Spacer(),
 

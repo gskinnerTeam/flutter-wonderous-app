@@ -27,7 +27,8 @@ class _SearchInput extends StatelessWidget {
 
     return wonder.searchSuggestions.where((str) {
       return str.startsWith(textEditingValue.text.toLowerCase());
-    }).toList()..sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
+    }).toList()
+      ..sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
   }
 
   Widget _buildSuggestionsView(BuildContext context, onSelected, Iterable<String> results, BoxConstraints constraints) {
@@ -64,18 +65,16 @@ class _SearchInput extends StatelessWidget {
   }
 
   Widget _buildSuggestion(BuildContext context, String suggestion, VoidCallback onPressed) {
-    return BasicBtn(
+    return AppBtn.basic(
       semanticLabel: suggestion,
       onPressed: onPressed,
-      child: Expanded(
-        child: Padding(
-          padding: EdgeInsets.all(context.insets.xs),
-          child: Text(
-            suggestion,
-            overflow: TextOverflow.ellipsis,
-            textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
-            style: context.textStyles.bodySmall.copyWith(color: context.colors.greyStrong),
-          ),
+      child: Padding(
+        padding: EdgeInsets.all(context.insets.xs),
+        child: Text(
+          suggestion,
+          overflow: TextOverflow.ellipsis,
+          textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+          style: context.textStyles.bodySmall.copyWith(color: context.colors.greyStrong),
         ),
       ),
     );

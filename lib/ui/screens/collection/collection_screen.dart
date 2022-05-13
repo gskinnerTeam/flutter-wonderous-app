@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:image_fade/image_fade.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/collectibles_logic.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
@@ -81,10 +82,8 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
             ),
           ]),
         ),
-        Positioned(
-          left: 0,
-          right: 0,
-          bottom: 0,
+        Positioned.fill(
+          top: null,
           child: _CollectionFooter(count: discovered + explored, total: total),
         ),
       ]),

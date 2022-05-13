@@ -42,20 +42,20 @@ class _FullScreenUnsplashPhotoViewerState extends State<_FullScreenUnsplashPhoto
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Expanded(
-                      child: AppIconBtn(
-                        Icons.chevron_left,
+                      child: AppBtn.from(
+                        icon: Icons.chevron_left,
                         semanticLabel: 'prev',
                         onPressed: () => incrementId(-1),
                       ),
                     ),
-                    AppIconBtn(
-                      Icons.close,
+                    AppBtn.from(
+                      icon: Icons.close,
                       semanticLabel: 'close',
                       onPressed: () => Navigator.of(context).pop(_id),
                     ),
                     Expanded(
-                      child: AppIconBtn(
-                        Icons.chevron_right,
+                      child: AppBtn.from(
+                        icon: Icons.chevron_right,
                         semanticLabel: 'next',
                         onPressed: () => incrementId(1),
                       ),

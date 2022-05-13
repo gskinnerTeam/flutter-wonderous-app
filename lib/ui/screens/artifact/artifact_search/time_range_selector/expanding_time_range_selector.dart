@@ -46,16 +46,16 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
     final double pad = context.insets.sm;
     final bool isOpen = widget.panelController.value;
     return LayoutBuilder(builder: (_, constraints) {
-      return SemanticsBtn(
-        label: 'time range selector',
-        onPressed: widget.panelController.toggle,
-        child: Stack(
-          children: [
-            BottomCenter(
-              child: AnimatedPadding(
-                duration: context.times.fast,
-                curve: Curves.easeOut,
-                padding: isOpen ? EdgeInsets.zero : EdgeInsets.symmetric(vertical: context.insets.md),
+      return Stack(
+        children: [
+          BottomCenter(
+            child: AnimatedPadding(
+              duration: context.times.fast,
+              curve: Curves.easeOut,
+              padding: isOpen ? EdgeInsets.zero : EdgeInsets.symmetric(vertical: context.insets.md),
+              child: AppBtn.basic(
+                semanticLabel: 'time range selector',
+                onPressed: widget.panelController.toggle,
                 child: OpeningCard(
                   isOpen: isOpen,
                   padding: EdgeInsets.symmetric(horizontal: pad, vertical: context.insets.xs),
@@ -86,8 +86,8 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       );
     });
   }

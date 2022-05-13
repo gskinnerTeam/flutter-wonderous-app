@@ -19,7 +19,7 @@ class _AnimatedArrowButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Duration duration = context.times.med;
-    return BasicBtn(
+    return AppBtn.basic(
       semanticLabel: 'arrow button',
       onPressed: onTap,
       child: SizedBox(

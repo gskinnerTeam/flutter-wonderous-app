@@ -10,8 +10,9 @@ class _ResultTile extends StatelessWidget {
   Widget build(BuildContext context) {
     Color iconColor = context.colors.greyStrong;
     double iconSize = context.insets.xl;
-    final Widget content = ColoredBox(
+    final Widget content = Container(
       color: context.colors.black,
+      width: double.infinity,
       child: ImageFade(
         image: NetworkImage(data.imageUrl),
         fadeDuration: context.times.fast,
@@ -30,10 +31,10 @@ class _ResultTile extends StatelessWidget {
       aspectRatio: (data.aspectRatio == 0) ? (data.id % 10) / 15 + 0.6 : max(0.5, data.aspectRatio),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(context.insets.xs),
-        child: BasicBtn(
+        child: AppBtn.basic(
           semanticLabel: data.title,
           onPressed: () => onPressed(data),
-          child: Expanded(child: content),
+          child: content,
         ),
       ),
     );

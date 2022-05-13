@@ -10,8 +10,6 @@ part 'widgets/_result_tile.dart';
 part 'widgets/_results_grid.dart';
 part 'widgets/_search_input.dart';
 
-/// TODO: GDS: refactor to match other views.
-
 /// User can use this screen to search the MET server for an artifact by name or timeline. Artifacts results will
 /// appear as images, which the user can click on to being up the details view for more information.
 class ArtifactSearchScreen extends StatefulWidget with GetItStatefulWidgetMixin {

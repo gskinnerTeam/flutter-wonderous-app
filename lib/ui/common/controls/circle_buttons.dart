@@ -25,7 +25,7 @@ class CircleBtn extends StatelessWidget {
       semanticLabel: semanticLabel,
       minimumSize: Size(sz, sz),
       padding: EdgeInsets.zero,
-      children: [child],
+      child: child,
       circular: true,
       bgColor: bgColor,
       border: border,

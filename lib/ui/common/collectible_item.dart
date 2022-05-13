@@ -24,7 +24,7 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
       isOpen: isLost,
       // SB: In order for the collapse animation to run properly, we must return a non-zero height or width. Not sure why :)
       closedBuilder: (_) => SizedBox(width: .01, height: 0),
-      openBuilder: (_) => BasicBtn(
+      openBuilder: (_) => AppBtn.basic(
         semanticLabel: 'collectible item',
         onPressed: () => _handleTap(context),
         child: Hero(

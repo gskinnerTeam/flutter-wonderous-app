@@ -150,8 +150,8 @@ class CollectibleFoundScreen extends StatelessWidget {
     Duration t = context.times.fast;
     return Container(
       padding: EdgeInsets.all(context.insets.lg),
-      child: AppTextBtn(
-        'view in my collection',
+      child: AppBtn.from(
+        text: 'view in my collection',
         isSecondary: true,
         expand: true,
         onPressed: () => context.push(ScreenPaths.collection(collectible.id)),

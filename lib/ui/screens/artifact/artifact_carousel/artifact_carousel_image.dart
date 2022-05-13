@@ -27,9 +27,8 @@ class ArtifactCarouselImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BasicBtn(
+    return AppBtn.basic(
       semanticLabel: 'carousel',
-      expand: true,
       onPressed: onPressed,
       child: _ImagePreview(
         image: NetworkImage(artifact.imageUrlSmall),

@@ -190,7 +190,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
           collectiblesLogic.forWonder(widget.wonderType)[1];
           final imgUrl = _photoIds.value[index];
           bool showCollectible = index == _getCollectibleIndex() && collectiblesLogic.isLost(widget.wonderType, 1);
-          return BasicBtn(
+          return AppBtn.basic(
             semanticLabel: 'collectible!',
             onPressed: () {
               if (showCollectible && selected) return;

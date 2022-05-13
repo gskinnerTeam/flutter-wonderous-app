@@ -5,232 +5,159 @@ Widget _buildIcon(BuildContext context, IconData icon, {required bool isSecondar
     Icon(icon, color: isSecondary ? context.colors.black : context.colors.offWhite, size: size ?? 18);
 
 /// The core button that drives all other buttons.
-class AppBtn extends StatefulWidget {
-  const AppBtn(
-      {Key? key,
-      required this.children,
-      required this.onPressed,
-      this.padding,
-      this.expand = false,
-      this.isSecondary = false,
-      this.circular = false,
-      this.minimumSize,
-      this.bgColor,
-      this.border,
-      required this.semanticLabel})
-      : super(key: key);
-  final List<Widget> children;
+class AppBtn extends StatelessWidget {
+  // ignore: prefer_const_constructors_in_immutables
+  AppBtn({
+    Key? key,
+    required this.onPressed,
+    required this.semanticLabel,
+    this.child,
+    this.padding,
+    this.expand = false,
+    this.isSecondary = false,
+    this.circular = false,
+    this.minimumSize,
+    this.bgColor,
+    this.border,
+  })  : _builder = null,
+        super(key: key);
+
+  AppBtn.from({
+    Key? key,
+    required this.onPressed,
+    this.padding,
+    this.expand = false,
+    this.isSecondary = false,
+    this.minimumSize,
+    this.bgColor,
+    this.border,
+    String? semanticLabel,
+    String? text,
+    IconData? icon,
+    double? iconSize,
+  })  : child = null,
+        circular = false,
+        super(key: key) {
+    if (semanticLabel == null && text == null) throw ('AppBtn.from must include either text or semanticLabel');
+    this.semanticLabel = semanticLabel ?? text ?? '';
+    _builder = (context) {
+      if (text == null && icon == null) return SizedBox.shrink();
+      Text? txt = text == null
+          ? null
+          : Text(
+              text.toUpperCase(),
+              style: context.textStyles.btn,
+              textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+            );
+      Widget? icn = icon == null ? null : _buildIcon(context, icon, isSecondary: isSecondary, size: iconSize);
+      if (txt != null && icn != null) {
+        return Row(mainAxisAlignment: MainAxisAlignment.center, mainAxisSize: MainAxisSize.min, children: [txt, Gap(8), icn]);
+      } else {
+        return (txt ?? icn)!;
+      }
+    };
+  }
+
+  // ignore: prefer_const_constructors_in_immutables
+  AppBtn.basic({
+    Key? key,
+    required this.onPressed,
+    required this.semanticLabel,
+    this.child,
+    this.padding = EdgeInsets.zero,
+    this.isSecondary = false,
+    this.circular = false,
+    this.minimumSize,
+  })  : expand = false,
+        bgColor = Colors.transparent,
+        border = null,
+        _builder = null,
+        super(key: key);
+
+  // interaction:
   final VoidCallback onPressed;
-  final String semanticLabel;
+  late final String semanticLabel;
+
+  // content:
+  late final Widget? child;
+  late final WidgetBuilder? _builder;
+
+  // layout:
   final EdgeInsets? padding;
   final bool expand;
-  final bool isSecondary;
-  final BorderSide? border;
-  final Color? bgColor;
   final bool circular;
   final Size? minimumSize;
 
-  @override
-  State<AppBtn> createState() => _AppBtnState();
-}
+  // style:
+  final bool isSecondary;
+  final BorderSide? border;
+  final Color? bgColor;
 
-class _AppBtnState extends State<AppBtn> {
-  bool _tapDown = false;
   @override
   Widget build(BuildContext context) {
-    Color defaultColor = widget.isSecondary ? context.colors.white : context.colors.greyStrong;
-    Color textColor = widget.isSecondary ? context.colors.black : context.colors.white;
-    BorderSide border = widget.border ?? BorderSide.none;
+    Color defaultColor = isSecondary ? context.colors.white : context.colors.greyStrong;
+    Color textColor = isSecondary ? context.colors.black : context.colors.white;
+    BorderSide side = border ?? BorderSide.none;
+    
+    Widget content = _builder?.call(context) ?? child ?? SizedBox.shrink();
+    if (expand) content = Center(child: content);
 
-    Widget button = GestureDetector(
-      onTapDown: (_) => setState(() => _tapDown = true),
-      onTapUp: (_) => setState(() => _tapDown = false),
-      onTapCancel: () => setState(() => _tapDown = false),
-      behavior: HitTestBehavior.translucent,
-      child: Opacity(
-        opacity: _tapDown ? .7 : 1,
-        child: TextButton(
-          onPressed: () {
-            // On pressing, give a light vibration on device.
-            HapticFeedback.mediumImpact();
-            widget.onPressed();
-          },
-          style: TextButton.styleFrom(
-            minimumSize: widget.minimumSize ?? Size.zero,
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            splashFactory: NoSplash.splashFactory,
-            backgroundColor: widget.bgColor ?? defaultColor,
-            shape: widget.circular
-                ? CircleBorder(side: border)
-                : RoundedRectangleBorder(side: border, borderRadius: BorderRadius.circular(context.corners.md)),
-            padding: widget.padding ?? EdgeInsets.all(context.insets.md),
-          ),
-          child: DefaultTextStyle(
-            style: DefaultTextStyle.of(context).style.copyWith(color: textColor),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: widget.expand ? MainAxisSize.max : MainAxisSize.min,
-              children: widget.children,
-            ),
-          ),
-        ),
+    Widget button = TextButton(
+      onPressed: onPressed,
+      style: TextButton.styleFrom(
+        minimumSize: minimumSize ?? Size.zero,
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        splashFactory: NoSplash.splashFactory,
+        backgroundColor: bgColor ?? defaultColor,
+        shape: circular
+            ? CircleBorder(side: side)
+            : RoundedRectangleBorder(side: side, borderRadius: BorderRadius.circular(context.corners.md)),
+        padding: padding ?? EdgeInsets.all(context.insets.md),
+      ),
+      child: DefaultTextStyle(
+        style: DefaultTextStyle.of(context).style.copyWith(color: textColor),
+        child: content,
       ),
     );
-    if (widget.circular) button = ClipRRect(borderRadius: BorderRadius.circular(99), child: button);
-    button = Semantics(label: widget.semanticLabel, button: true, container: true, child: button);
-    return button;
+
+    return _ButtonDecorator(button, semanticLabel);
   }
 }
 
 /// //////////////////////////////////////////////////
-/// AppButton Derivatives
+/// _ButtonDecorator
+/// Applies the "add-on" behviours common to all app buttons.
 /// //////////////////////////////////////////////////
-
-class BasicBtn extends StatelessWidget {
-  const BasicBtn({
-    Key? key,
-    required this.child,
-    required this.semanticLabel,
-    required this.onPressed,
-    this.expand = false,
-  }) : super(key: key);
+class _ButtonDecorator extends StatefulWidget {
+  const _ButtonDecorator(this.child, this.semanticLabel, {Key? key}) : super(key: key);
   final Widget child;
   final String semanticLabel;
-  final VoidCallback onPressed;
-  final bool expand;
 
   @override
-  Widget build(BuildContext context) {
-    return AppBtn(
-      children: [expand ? Expanded(child: child) : child],
-      onPressed: onPressed,
-      semanticLabel: semanticLabel,
-      padding: EdgeInsets.zero,
-      bgColor: Colors.transparent,
-      expand: expand,
-    );
-  }
+  State<_ButtonDecorator> createState() => _ButtonDecoratorState();
 }
 
-class AppIconBtn extends StatelessWidget {
-  const AppIconBtn(
-    this.icon, {
-    Key? key,
-    required this.onPressed,
-    required this.semanticLabel,
-    this.padding,
-    this.expand = false,
-    this.isSecondary = false,
-    this.size,
-  }) : super(key: key);
-  final IconData icon;
-  final double? size;
-  final VoidCallback onPressed;
-  final String semanticLabel;
-  final EdgeInsets? padding;
-  final bool expand;
-  final bool isSecondary;
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBtn(
-      onPressed: onPressed,
-      semanticLabel: semanticLabel,
-      padding: padding,
-      expand: expand,
-      isSecondary: isSecondary,
-      children: [
-        _buildIcon(context, icon, isSecondary: isSecondary, size: size),
-      ],
-    );
-  }
-}
-
-class AppTextIconBtn extends StatelessWidget {
-  const AppTextIconBtn(
-    this.text,
-    this.icon, {
-    Key? key,
-    required this.onPressed,
-    this.padding,
-    this.expand = false,
-    this.isSecondary = false,
-    this.iconSize,
-  }) : super(key: key);
-  final String text;
-  final IconData icon;
-  final double? iconSize;
-  final VoidCallback onPressed;
-  final EdgeInsets? padding;
-  final bool expand;
-  final bool isSecondary;
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBtn(
-      onPressed: onPressed,
-      padding: padding,
-      expand: expand,
-      isSecondary: isSecondary,
-      semanticLabel: text,
-      children: [
-        Text(text, style: context.textStyles.btn),
-        Gap(context.insets.xs),
-        _buildIcon(context, icon, isSecondary: isSecondary, size: iconSize),
-      ],
-    );
-  }
-}
-
-class AppTextBtn extends StatelessWidget {
-  const AppTextBtn(
-    this.text, {
-    Key? key,
-    required this.onPressed,
-    this.padding,
-    this.expand = false,
-    this.isSecondary = false,
-  }) : super(key: key);
-  final String text;
-  final VoidCallback onPressed;
-  final EdgeInsets? padding;
-  final bool expand;
-  final bool isSecondary;
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBtn(
-      onPressed: onPressed,
-      padding: padding,
-      expand: expand,
-      isSecondary: isSecondary,
-      semanticLabel: text,
-      children: [
-        Text(text.toUpperCase(), style: context.textStyles.btn),
-      ],
-    );
-  }
-}
-
-class SemanticsBtn extends StatelessWidget {
-  const SemanticsBtn({Key? key, required this.label, required this.child, required this.onPressed}) : super(key: key);
-  final String label;
-  final VoidCallback onPressed;
-  final Widget child;
+class _ButtonDecoratorState extends State<_ButtonDecorator> {
+  bool _isDown = false;
 
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      container: true,
+      label: widget.semanticLabel,
       button: true,
-      enabled: true,
-      label: label,
+      container: true,
       child: GestureDetector(
-        onTap: () {
+        onTapDown: (_) {
           HapticFeedback.mediumImpact();
-          onPressed();
+          setState(() => _isDown = true);
         },
-        child: child,
+        onTapUp: (_) => setState(() => _isDown = false),
+        onTapCancel: () => setState(() => _isDown = false),
+        behavior: HitTestBehavior.translucent,
+        child: Opacity(
+          opacity: _isDown ? .7 : 1,
+          child: widget.child,
+        ),
       ),
     );
   }

@@ -32,11 +32,7 @@ class SettingsScreen extends StatelessWidget with GetItMixin {
             _buildRow(
               context,
               'Reset collection',
-              AppTextBtn(
-                'RESET',
-                isSecondary: true,
-                onPressed: collectiblesLogic.reset,
-              ),
+              AppBtn.from(text: 'RESET', isSecondary: true, onPressed: collectiblesLogic.reset),
             ),
             Divider(),
             Text('Image Grid', style: context.textStyles.h4),

@@ -98,7 +98,10 @@ class _WonderHomeBtn extends StatelessWidget {
       bgColor: wonderType.fgColor,
       border: BorderSide(color: context.colors.offWhite, width: 6),
       semanticLabel: 'back to wonder selection',
-      child: SizedBox(width: size, height: size, child: Image.asset(wonderType.homeBtn)),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(99),
+        child: SizedBox(width: size, height: size, child: Image.asset(wonderType.homeBtn)),
+      ),
     );
   }
 }
@@ -132,36 +135,30 @@ class _TabBtn extends StatelessWidget {
         );
 
     return Expanded(
-      child: AppBtn(
-        bgColor: Colors.transparent,
+      child: AppBtn.basic(
         padding: EdgeInsets.symmetric(vertical: context.insets.md),
-        children: [
-          Stack(
-            children: [
-              /// Image icon
-              Image.asset(
-                '${ImagePaths.common}/tab-$iconImg${selected ? '-active' : ''}.png',
-                height: 32,
-                width: 32,
-                color: selected ? null : color,
-              ),
+        child: Stack(
+          children: [
+            /// Image icon
+            Image.asset(
+              '${ImagePaths.common}/tab-$iconImg${selected ? '-active' : ''}.png',
+              height: 32,
+              width: 32,
+              color: selected ? null : color,
+            ),
 
-              /// Dot, shows when selected
-              Positioned.fill(
-                child: BottomCenter(
-                  child: buildDot()
-                      .fx(key: ValueKey(selected))
-                      .fade(begin: selected ? 0 : 1, end: selected ? 1 : 0)
-                      .move(
-                          curve: selected ? Curves.easeOutBack : Curves.easeIn,
-                          duration: context.times.med,
-                          begin: Offset(0, selected ? 30 : 5),
-                          end: Offset(0, selected ? 5 : 30)),
-                ),
-              )
-            ],
-          )
-        ],
+            /// Dot, shows when selected
+            Positioned.fill(
+              child: BottomCenter(
+                child: buildDot().fx(key: ValueKey(selected)).fade(begin: selected ? 0 : 1, end: selected ? 1 : 0).move(
+                    curve: selected ? Curves.easeOutBack : Curves.easeIn,
+                    duration: context.times.med,
+                    begin: Offset(0, selected ? 30 : 5),
+                    end: Offset(0, selected ? 5 : 30)),
+              ),
+            )
+          ],
+        ),
         onPressed: () => tabController.index = index,
         semanticLabel: label,
       ),

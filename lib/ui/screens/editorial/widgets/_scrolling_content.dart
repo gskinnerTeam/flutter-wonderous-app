@@ -98,10 +98,9 @@ class _YouTubeThumbnail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void handlePressed() => context.push(ScreenPaths.video(id));
-    return BasicBtn(
+    return AppBtn.basic(
       semanticLabel: 'Youtube thumbnail',
       onPressed: handlePressed,
-      expand: true,
       child: CachedNetworkImage(imageUrl: imageUrl, fit: BoxFit.cover),
     );
   }
@@ -124,25 +123,18 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
     void handlePressed() => context.push(ScreenPaths.maps(widget.data.type));
     return SizedBox(
       height: widget.height,
-      child: Stack(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(context.corners.md),
-            child: GoogleMap(
-              markers: {getMapsMarker(startPos.target)},
-              zoomControlsEnabled: false,
-              mapType: MapType.normal,
-              initialCameraPosition: startPos,
-            ),
+      child: AppBtn.basic(
+        onPressed: handlePressed,
+        semanticLabel: 'Maps Thumbnail',
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(context.corners.md),
+          child: GoogleMap(
+            markers: {getMapsMarker(startPos.target)},
+            zoomControlsEnabled: false,
+            mapType: MapType.normal,
+            initialCameraPosition: startPos,
           ),
-          Positioned.fill(
-            child: BasicBtn(
-              onPressed: handlePressed,
-              semanticLabel: 'Maps Thumbnail',
-              child: Container(color: Colors.transparent),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

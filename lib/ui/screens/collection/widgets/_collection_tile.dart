@@ -39,21 +39,23 @@ class _CollectionTile extends StatelessWidget {
   Widget _buildFound(BuildContext context, CollectibleData collectible, int state) {
     final bool isNew = state == CollectibleState.discovered;
     Widget content = Container(
+      width: double.infinity,
+      height: double.infinity,
       decoration: BoxDecoration(
         color: context.colors.black,
         border: isNew ? Border.all(color: context.colors.accent1, width: 3) : null,
         boxShadow:
             !isNew ? null : [BoxShadow(color: context.colors.accent1.withOpacity(0.6), blurRadius: context.insets.sm)],
       ),
-      child: CachedNetworkImage(
+      child: ImageFade(
+        image: NetworkImage(collectible.imageUrlSmall),
+        fadeDuration: context.times.fast,
         alignment: Alignment.center,
-        imageUrl: collectible.imageUrlSmall,
         fit: BoxFit.cover,
       ),
     );
     if (heroTag != null) content = Hero(tag: heroTag!, child: content);
-    return BasicBtn(
-      expand: true,
+    return AppBtn.basic(
       semanticLabel: collectible.title,
       onPressed: () => onPressed(collectible),
       child: content,

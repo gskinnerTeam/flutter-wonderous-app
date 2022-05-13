@@ -19,8 +19,7 @@ class TimelineSection extends StatelessWidget {
     double fraction = (selectedYr - startYr) / (endYr - startYr);
     fraction = fraction.clamp(0, 1);
 
-    return BasicBtn(
-      expand: true,
+    return AppBtn.basic(
       semanticLabel: '${data.title} timeline',
       onPressed: _handlePressed,
       child: Container(

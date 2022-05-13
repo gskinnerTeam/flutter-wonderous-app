@@ -262,9 +262,9 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   }
 
   Widget _buildBrowseBtn(BuildContext context) {
-    return AppTextIconBtn(
-      'Browse all artifacts',
-      Icons.search,
+    return AppBtn.from(
+      text: 'Browse all artifacts',
+      icon: Icons.search,
       expand: true,
       onPressed: _handleSearchButtonTap,
     );

@@ -39,7 +39,7 @@ class OkModal extends StatelessWidget {
       msg: msg,
       child: child,
       buttons: [
-        AppTextBtn('Ok', expand: true, isSecondary: true, onPressed: () => Navigator.of(context).pop(true)),
+        AppBtn.from(text: 'Ok', expand: true, isSecondary: true, onPressed: () => Navigator.of(context).pop(true)),
       ],
     );
   }
@@ -58,9 +58,9 @@ class OkCancelModal extends StatelessWidget {
       msg: msg,
       child: child,
       buttons: [
-        AppTextBtn('Ok', expand: true, isSecondary: true, onPressed: () => Navigator.of(context).pop(true)),
+        AppBtn.from(text: 'Ok', expand: true, isSecondary: true, onPressed: () => Navigator.of(context).pop(true)),
         Gap(context.insets.xs),
-        AppTextBtn('Cancel', expand: true, onPressed: () => Navigator.of(context).pop(false)),
+        AppBtn.from(text: 'Cancel', expand: true, onPressed: () => Navigator.of(context).pop(false)),
       ],
     );
   }
