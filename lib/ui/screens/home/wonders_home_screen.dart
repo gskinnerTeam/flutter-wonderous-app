@@ -50,9 +50,10 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
 
   void _handleSettingsPressed() => context.push(ScreenPaths.settings);
 
-  void _handleOpenMenuPressed() {
+  void _handleOpenMenuPressed() async {
     setState(() => _isMenuOpen = true);
     await appLogic.showFullscreenDialogRoute(context, HomeMenu(data: currentWonder));
+    setState(() => _isMenuOpen = false);
   }
 
   void _handleFadeAnimInit(AnimationController controller) {
@@ -128,16 +129,11 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
               child: AnimatedOpacity(
                 duration: context.times.fast,
                 opacity: _isMenuOpen ? 0 : 1,
-                child: Padding(
-                  padding: EdgeInsets.all(context.insets.sm),
-                  child: SafeArea(
-                    child: CircleIconBtn(
-                      icon: Icons.menu,
-                      onPressed: _handleOpenMenuPressed,
-                      semanticLabel: 'open home popup menu',
-                    ),
-                  ),
-                ),
+                child: CircleIconBtn(
+                  icon: Icons.menu,
+                  onPressed: _handleOpenMenuPressed,
+                  semanticLabel: 'Open main menu',
+                ).safe(),
               ),
             ),
 
