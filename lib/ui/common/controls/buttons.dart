@@ -44,14 +44,15 @@ class AppBtn extends StatelessWidget {
       if (text == null && icon == null) return SizedBox.shrink();
       Text? txt = text == null
           ? null
-          : Text(
-              text.toUpperCase(),
-              style: context.textStyles.btn,
-              textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
-            );
+          : Text(text.toUpperCase(),
+              style: context.textStyles.btn, textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false));
       Widget? icn = icon == null ? null : _buildIcon(context, icon, isSecondary: isSecondary, size: iconSize);
       if (txt != null && icn != null) {
-        return Row(mainAxisAlignment: MainAxisAlignment.center, mainAxisSize: MainAxisSize.min, children: [txt, Gap(8), icn]);
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [txt, Gap(context.insets.xs), icn],
+        );
       } else {
         return (txt ?? icn)!;
       }
@@ -98,7 +99,7 @@ class AppBtn extends StatelessWidget {
     Color defaultColor = isSecondary ? context.colors.white : context.colors.greyStrong;
     Color textColor = isSecondary ? context.colors.black : context.colors.white;
     BorderSide side = border ?? BorderSide.none;
-    
+
     Widget content = _builder?.call(context) ?? child ?? SizedBox.shrink();
     if (expand) content = Center(child: content);
 
@@ -126,7 +127,7 @@ class AppBtn extends StatelessWidget {
 
 /// //////////////////////////////////////////////////
 /// _ButtonDecorator
-/// Applies the "add-on" behviours common to all app buttons.
+/// Applies the "add-on" behviours common to all app buttons: press effect, semantics, haptics.
 /// //////////////////////////////////////////////////
 class _ButtonDecorator extends StatefulWidget {
   const _ButtonDecorator(this.child, this.semanticLabel, {Key? key}) : super(key: key);
