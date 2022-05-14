@@ -67,6 +67,8 @@ class CircleIconBtn extends StatelessWidget {
       semanticLabel: semanticLabel,
     );
   }
+
+  Widget safe() => _SafeAreaWithPadding(child: this);
 }
 
 class BackBtn extends StatelessWidget {
