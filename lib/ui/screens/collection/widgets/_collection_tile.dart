@@ -49,7 +49,7 @@ class _CollectionTile extends StatelessWidget {
       ),
       child: ImageFade(
         image: NetworkImage(collectible.imageUrlSmall),
-        fadeDuration: context.times.fast,
+        duration: context.times.fast,
         alignment: Alignment.center,
         fit: BoxFit.cover,
       ),

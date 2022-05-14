@@ -8,20 +8,20 @@ class _ResultTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color iconColor = context.colors.greyStrong;
-    double iconSize = context.insets.xl;
     final Widget content = Container(
       color: context.colors.black,
       width: double.infinity,
       child: ImageFade(
+        key: ValueKey(data.id),
         image: NetworkImage(data.imageUrl),
-        fadeDuration: context.times.fast,
+        duration: context.times.fast,
+        syncDuration: 0.ms,
         fit: BoxFit.cover,
         errorBuilder: (ctx, __) => Center(
           child: Icon(
             Icons.image_not_supported,
-            color: iconColor,
-            size: iconSize,
+            color: ctx.colors.greyStrong,
+            size: ctx.insets.xl,
           ),
         ),
       ),
