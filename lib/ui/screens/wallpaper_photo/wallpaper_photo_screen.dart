@@ -32,20 +32,15 @@ class _WallpaperPhotoScreenState extends State<WallpaperPhotoScreen> {
   }
 
   void _handleTakePhoto(BuildContext context, String wonderName) async {
-    RenderRepaintBoundary boundary = _containerKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
-    if (boundary.debugNeedsPaint) {
-      _photoRetryTimer = Timer(Duration(milliseconds: 1), () => _handleTakePhoto(context, wonderName));
-      return;
+    final boundary = _containerKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+    if (boundary != null) {
+      appLogic.saveWallpaper(context, boundary, name: '${wonderName}_wallpaper');
     }
-
-    appLogic.saveWallpaper(context, boundary, name: '${wonderName}_wallpaper');
   }
 
   void _handleSharePhoto(BuildContext context, String wonderName) async {
-    final boundary = _containerKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
-    if (boundary != null) {
-      appLogic.shareWallpaper(context, boundary, name: '${wonderName}_wallpaper', wonderName: wonderName);
-    }
+    final boundary = _containerKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+    appLogic.shareWallpaper(context, boundary, name: '${wonderName}_wallpaper', wonderName: wonderName);
   }
 
   void _handleTextToggle(bool? isActive) {
