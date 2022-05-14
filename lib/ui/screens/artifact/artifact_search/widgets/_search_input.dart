@@ -46,15 +46,15 @@ class _SearchInput extends StatelessWidget {
           ],
         ),
         child: Container(
-          padding: EdgeInsets.all(context.insets.xxs),
+          padding: EdgeInsets.all(context.insets.xs),
           decoration: BoxDecoration(
             color: context.colors.offWhite.withOpacity(0.9),
             borderRadius: BorderRadius.circular(context.insets.xs),
           ),
           child: ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: 190),
+            constraints: BoxConstraints(maxHeight: 200),
             child: ListView(
-              padding: EdgeInsets.zero,
+              padding: EdgeInsets.all(context.insets.xs),
               shrinkWrap: true,
               children: results.map((str) => _buildSuggestion(context, str, () => onSelected(str))).toList(),
             ),
@@ -70,11 +70,13 @@ class _SearchInput extends StatelessWidget {
       onPressed: onPressed,
       child: Padding(
         padding: EdgeInsets.all(context.insets.xs),
-        child: Text(
-          suggestion,
-          overflow: TextOverflow.ellipsis,
-          textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
-          style: context.textStyles.bodySmall.copyWith(color: context.colors.greyStrong),
+        child: CenterLeft(
+          child: Text(
+            suggestion,
+            overflow: TextOverflow.ellipsis,
+            textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+            style: context.textStyles.bodySmall.copyWith(color: context.colors.greyStrong),
+          ),
         ),
       ),
     );
