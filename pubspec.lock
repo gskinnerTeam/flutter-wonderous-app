@@ -515,7 +515,7 @@ packages:
       name: image_fade
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.0"
+    version: "0.6.1"
   image_gallery_saver:
     dependency: "direct main"
     description:
