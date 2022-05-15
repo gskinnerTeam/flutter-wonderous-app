@@ -1,5 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:image_fade/image_fade.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/ui/common/controls/app_loader.dart';
 
 class FullscreenUrlImgViewer extends StatelessWidget {
   const FullscreenUrlImgViewer({Key? key, required this.url}) : super(key: key);
@@ -12,14 +13,16 @@ class FullscreenUrlImgViewer extends StatelessWidget {
       child: Stack(
         children: [
           Positioned.fill(
-              child: InteractiveViewer(
-            child: Hero(
-              tag: url,
-              child: CachedNetworkImage(
-                imageUrl: url,
+            child: InteractiveViewer(
+              child: Hero(
+                tag: url,
+                child: ImageFade(
+                  image: NetworkImage(url),
+                  loadingBuilder: (_, __, ___) => const Center(child: AppLoader()),
+                ),
               ),
             ),
-          )),
+          ),
           BackBtn.close().safe(),
         ],
       ),

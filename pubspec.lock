@@ -106,27 +106,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "8.1.4"
-  cached_network_image:
-    dependency: "direct main"
-    description:
-      name: cached_network_image
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.2.0"
-  cached_network_image_platform_interface:
-    dependency: transitive
-    description:
-      name: cached_network_image_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
-  cached_network_image_web:
-    dependency: transitive
-    description:
-      name: cached_network_image_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
   characters:
     dependency: transitive
     description:
@@ -328,20 +307,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_blurhash:
-    dependency: transitive
-    description:
-      name: flutter_blurhash
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.6.4"
-  flutter_cache_manager:
-    dependency: "direct main"
-    description:
-      name: flutter_cache_manager
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.3.0"
   flutter_circular_text:
     dependency: "direct main"
     description:
@@ -675,13 +640,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
-  octo_image:
-    dependency: transitive
-    description:
-      name: octo_image
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
   package_config:
     dependency: transitive
     description:
@@ -843,13 +801,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.0"
-  rxdart:
-    dependency: transitive
-    description:
-      name: rxdart
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.27.3"
   sanitize_html:
     dependency: transitive
     description:
@@ -1023,20 +974,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.1"
-  sqflite:
-    dependency: transitive
-    description:
-      name: sqflite
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.2"
-  sqflite_common:
-    dependency: transitive
-    description:
-      name: sqflite_common
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.2.1"
   stack_trace:
     dependency: transitive
     description:
@@ -1072,13 +1009,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.0"
-  synchronized:
-    dependency: transitive
-    description:
-      name: synchronized
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.0+2"
   system_info:
     dependency: "direct main"
     description:
@@ -1184,13 +1114,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0"
-  uuid:
-    dependency: transitive
-    description:
-      name: uuid
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.6"
   vector_math:
     dependency: transitive
     description:

@@ -101,7 +101,7 @@ class _YouTubeThumbnail extends StatelessWidget {
     return AppBtn.basic(
       semanticLabel: 'Youtube thumbnail',
       onPressed: handlePressed,
-      child: CachedNetworkImage(imageUrl: imageUrl, fit: BoxFit.cover),
+      child: ImageFade(image: NetworkImage(imageUrl), fit: BoxFit.cover),
     );
   }
 }

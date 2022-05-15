@@ -30,7 +30,7 @@ class _Header extends StatelessWidget {
                 image: NetworkImage(data.image),
                 fit: BoxFit.cover,
                 alignment: Alignment.topCenter,
-                loadingBuilder: (_, __, ___) => const AppLoader(),
+                loadingBuilder: (_, __, ___) => const Center(child: AppLoader()),
               ),
             ),
           ),

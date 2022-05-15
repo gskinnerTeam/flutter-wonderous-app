@@ -68,7 +68,6 @@ class MachuPicchuIllustration extends StatelessWidget {
       ];
 
   List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
-    final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
       Stack(children: [
         BottomLeft(
