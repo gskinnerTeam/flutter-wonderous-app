@@ -101,7 +101,8 @@ class _YouTubeThumbnail extends StatelessWidget {
     return AppBtn.basic(
       semanticLabel: 'Youtube thumbnail',
       onPressed: handlePressed,
-      child: ImageFade(image: NetworkImage(imageUrl), fit: BoxFit.cover),
+      // TODO: GDS: remove placeholder after adding default placeholder on ImageFade:
+      child: ImageFade(image: NetworkImage(imageUrl), placeholder: Container(), fit: BoxFit.cover),
     );
   }
 }
