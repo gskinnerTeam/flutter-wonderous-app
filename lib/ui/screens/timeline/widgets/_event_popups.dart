@@ -13,6 +13,12 @@ class _EventPopupsState extends State<_EventPopups> {
   TimelineEvent? _eventToShow;
 
   @override
+  void dispose() {
+    _debouncer.reset();
+    super.dispose();
+  }
+
+  @override
   void didUpdateWidget(covariant _EventPopups oldWidget) {
     super.didUpdateWidget(oldWidget);
     _debouncer.call(showCardForCurrentYr);
