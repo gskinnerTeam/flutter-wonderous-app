@@ -8,31 +8,24 @@ class TimelineSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void _handlePressed() {
-      context.push(ScreenPaths.timelineDetails(data.type));
-    }
-
-    bool isSelected = selectedWonder == data.type;
+    /// TODO: Remove isSelected state completely if design is ok with it
+    bool isSelected = true; //selectedWonder == data.type;
     // get a fraction from 0 - 1 based on selected yr and start/end yr of the wonder
     // 500, 250, 750
     int startYr = data.startYr, endYr = data.endYr;
     double fraction = (selectedYr - startYr) / (endYr - startYr);
     fraction = fraction.clamp(0, 1);
 
-    return AppBtn.basic(
-      semanticLabel: '${data.title} timeline',
-      onPressed: _handlePressed,
-      child: Container(
-        alignment: Alignment(0, -1 + fraction * 2),
-        padding: EdgeInsets.all(context.insets.xs),
-        decoration: BoxDecoration(color: data.type.fgColor),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(99),
-          child: BlendMask(
-            blendModes: isSelected ? [] : const [BlendMode.luminosity],
-            opacity: .6,
-            child: _buildWonderImage(),
-          ),
+    return Container(
+      alignment: Alignment(0, -1 + fraction * 2),
+      padding: EdgeInsets.all(context.insets.xs),
+      decoration: BoxDecoration(color: data.type.fgColor),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(99),
+        child: BlendMask(
+          blendModes: isSelected ? [] : const [BlendMode.luminosity],
+          opacity: .6,
+          child: _buildWonderImage(),
         ),
       ),
     );

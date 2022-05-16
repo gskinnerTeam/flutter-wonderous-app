@@ -77,15 +77,15 @@ class WondersTimelineBuilder extends StatelessWidget {
         buildSingleTimelineTrack(
           context,
           [
-            WonderType.chichenItza,
-            WonderType.machuPicchu,
             WonderType.petra,
+            WonderType.machuPicchu,
           ],
         ),
         // Track 3
         buildSingleTimelineTrack(
           context,
           [
+            WonderType.chichenItza,
             WonderType.tajMahal,
             WonderType.colosseum,
           ],

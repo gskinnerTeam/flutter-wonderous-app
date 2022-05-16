@@ -11,12 +11,16 @@ class HomeMenu extends StatelessWidget {
 
   void _handleAboutPressed() {}
 
-  void _handleCollectionPressed() {}
+  void _handleCollectionPressed(BuildContext context) => context.push(
+        ScreenPaths.collection(''),
+      );
 
-  void _handleTimelinePressed() {}
+  void _handleTimelinePressed(BuildContext context) => context.push(
+        ScreenPaths.timeline(data.type),
+      );
 
-  void handleWonderPressed(WonderData data) {
-    print(data);
+  void _handleWonderPressed(BuildContext context, WonderData data) {
+    Navigator.pop(context, data.type);
   }
 
   @override
@@ -46,7 +50,10 @@ class HomeMenu extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Spacer(flex: 3),
-                  _buildIconGrid(context),
+                  _buildIconGrid(context)
+                      .fx()
+                      .fade(duration: context.times.fast * 1.5)
+                      .scale(begin: .8, curve: Curves.easeOut),
                   Spacer(flex: 2),
                   _buildBottomBtns(context),
                   Gap(context.insets.xl),
@@ -63,58 +70,69 @@ class HomeMenu extends StatelessWidget {
     return GridView.count(
       physics: NeverScrollableScrollPhysics(),
       crossAxisCount: 3,
+      clipBehavior: Clip.none,
       shrinkWrap: true,
       crossAxisSpacing: context.insets.sm,
       mainAxisSpacing: context.insets.sm,
       children: [
-        _WonderGridBtn(data: wondersLogic.all[0], onPressed: (data) => _handleWonderPressed(context, data)),
-        _WonderGridBtn(data: wondersLogic.all[1], onPressed: (_) {}),
-        _WonderGridBtn(data: wondersLogic.all[2], onPressed: (_) {}),
-        _WonderGridBtn(data: wondersLogic.all[3], onPressed: (_) {}),
+        _buildGridBtn(context, wondersLogic.all[0]),
+        _buildGridBtn(context, wondersLogic.all[1]),
+        _buildGridBtn(context, wondersLogic.all[2]),
+        _buildGridBtn(context, wondersLogic.all[3]),
         Padding(
           padding: EdgeInsets.all(context.insets.sm),
           child: SvgPicture.asset(SvgPaths.compassFull, color: context.colors.offWhite),
         ),
-        _WonderGridBtn(data: wondersLogic.all[4], onPressed: (_) {}),
-        _WonderGridBtn(data: wondersLogic.all[5], onPressed: (_) {}),
-        _WonderGridBtn(data: wondersLogic.all[6], onPressed: (_) {}),
-        _WonderGridBtn(data: wondersLogic.all[7], onPressed: (_) {}),
+        _buildGridBtn(context, wondersLogic.all[4]),
+        _buildGridBtn(context, wondersLogic.all[5]),
+        _buildGridBtn(context, wondersLogic.all[6]),
+        _buildGridBtn(context, wondersLogic.all[7]),
       ],
     );
   }
 
   Widget _buildBottomBtns(BuildContext context) {
-    return SeparatedColumn(separatorBuilder: () => Divider(height: 1), children: [
-      _MenuTextBtn(label: 'Explore the timeline', onPressed: _handleTimelinePressed),
-      _MenuTextBtn(label: 'View your collection', onPressed: _handleCollectionPressed),
-      _MenuTextBtn(label: 'About this app', onPressed: _handleAboutPressed),
-    ]);
+    return SeparatedColumn(
+      separatorBuilder: () => Divider(height: 1),
+      children: [
+        _MenuTextBtn(label: 'Explore the timeline', onPressed: () => _handleTimelinePressed(context)),
+        _MenuTextBtn(label: 'View your collection', onPressed: () => _handleCollectionPressed(context)),
+        _MenuTextBtn(label: 'About this app', onPressed: _handleAboutPressed),
+      ]
+          .fx(interval: 80.ms)
+          .fade(delay: context.times.pageTransition + 200.ms)
+          .slide(begin: Offset(0, .1), curve: Curves.easeOut),
+    );
   }
 
-  void _handleWonderPressed(BuildContext context, WonderData data) {
-    Navigator.pop(context, data);
-  }
-}
-
-class _WonderGridBtn extends StatelessWidget {
-  const _WonderGridBtn({Key? key, required this.data, required this.onPressed}) : super(key: key);
-  final WonderData data;
-  final void Function(WonderData data) onPressed;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildGridBtn(BuildContext context, WonderData btnData) {
+    bool isSelected = btnData == data;
     return AspectRatio(
       aspectRatio: 1,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(context.corners.sm),
-        child: AppBtn(
-          bgColor: data.type.fgColor,
-          onPressed: () {},
-          padding: EdgeInsets.zero,
-          semanticLabel: data.title,
-          children: [
-            Expanded(child: Image.asset(data.type.homeBtn, fit: BoxFit.cover)),
-          ],
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(context.corners.md),
+          boxShadow: !isSelected
+              ? null
+              : [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(.3),
+                    blurRadius: 3,
+                    spreadRadius: 3,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(context.corners.md),
+          child: AppBtn(
+            border: !isSelected ? null : BorderSide(color: context.colors.offWhite, width: 5),
+            bgColor: btnData.type.fgColor,
+            onPressed: () => _handleWonderPressed(context, btnData),
+            padding: EdgeInsets.zero,
+            semanticLabel: btnData.title,
+            child: SizedBox.expand(child: Image.asset(btnData.type.homeBtn, fit: BoxFit.cover)),
+          ),
         ),
       ),
     );
@@ -130,7 +148,7 @@ class _MenuTextBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBtn(
       expand: true,
-      children: [Text(label, style: context.text.bodyBold)],
+      child: Text(label, style: context.text.bodyBold),
       padding: EdgeInsets.symmetric(vertical: context.insets.sm),
       onPressed: onPressed,
       bgColor: Colors.transparent,

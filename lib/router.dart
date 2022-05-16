@@ -11,7 +11,6 @@ import 'package:wonders/ui/screens/home/wonders_home_screen.dart';
 import 'package:wonders/ui/screens/settings/settings_screen.dart';
 import 'package:wonders/ui/screens/splash/splash_screen.dart';
 import 'package:wonders/ui/screens/timeline/timeline_screen.dart';
-import 'package:wonders/ui/screens/timeline_details/timeline_details.dart';
 import 'package:wonders/ui/screens/wallpaper_photo/wallpaper_photo_screen.dart';
 import 'package:wonders/ui/screens/wonder_details/wonders_details_screen.dart';
 
@@ -20,13 +19,13 @@ class ScreenPaths {
   static String home = '/home';
   static String settings = '/settings';
   static String wonderDetails(WonderType type) => '/wonder/${type.name}';
-  static String timelineDetails(WonderType type) => '/timelineDetails/${type.name}';
   static String video(String id) => '/video/$id';
   static String highlights(WonderType type) => '/highlights/${type.name}';
   static String search(WonderType type) => '/search/${type.name}';
   static String artifact(String id) => '/artifact/$id';
-  static String collection(String id) => '/collection/$id';
+  static String collection(String id) => '/collection?id=$id';
   static String maps(WonderType type) => '/maps/${type.name}';
+  static String timeline(WonderType type) => '/timeline/${type.name}';
   static String wallpaperPhoto(WonderType type) => '/wallpaperPhoto/${type.name}';
 }
 
@@ -45,7 +44,6 @@ final appRouter = GoRouter(
   redirect: _handleRedirect,
   navigatorBuilder: (_, __, child) => WondersAppScaffold(child: child),
   routes: [
-    // '/'
     AppRoute(ScreenPaths.splash, (_) => SplashScreen()),
     AppRoute(ScreenPaths.home, (_) => WondersHomeScreen()),
     AppRoute(ScreenPaths.settings, (_) => SettingsScreen()),
@@ -54,9 +52,6 @@ final appRouter = GoRouter(
     }, useFade: true),
     AppRoute('/timeline/:id', (s) {
       return TimelineScreen(type: _parseWonderType(s.params['id']!));
-    }),
-    AppRoute('/timelineDetails/:id', (s) {
-      return TimelineDetails(type: _parseWonderType(s.params['id']!));
     }),
     AppRoute('/video/:id', (s) {
       return FullscreenVideoPage(id: s.params['id']!);
@@ -70,8 +65,8 @@ final appRouter = GoRouter(
     AppRoute('/artifact/:id', (s) {
       return ArtifactDetailsScreen(artifactId: s.params['id']!);
     }),
-    AppRoute('/collection/:id', (s) {
-      return CollectionScreen(fromId: s.params['id']);
+    AppRoute('/collection', (s) {
+      return CollectionScreen(fromId: s.queryParams['id']);
     }),
     AppRoute('/maps/:id', (s) {
       return FullscreenMapsViewer(type: _parseWonderType(s.params['id']!));

@@ -1,4 +1,4 @@
-part of '../timeline_details.dart';
+part of '../wonder_events.dart';
 
 class _EventsList extends StatefulWidget {
   const _EventsList({Key? key, required this.data}) : super(key: key);
@@ -27,6 +27,8 @@ class _EventsListState extends State<_EventsList> {
   }
 
   bool _checkPointerIsDown(d) => _isPointerDown = d.dragDetails != null;
+
+  void _handleGlobalTimelinePressed() => context.push(ScreenPaths.timeline(widget.data.type));
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +88,7 @@ class _EventsListState extends State<_EventsList> {
       controller: _scroller,
       child: Column(
         children: [
-          Gap(TimelineDetails._topHeight),
+          Gap(WonderEvents._topHeight),
           Container(
             decoration: BoxDecoration(
               color: context.colors.white,
@@ -99,7 +101,16 @@ class _EventsListState extends State<_EventsList> {
                 buildHandle(),
                 Gap(context.insets.sm),
                 ...listItems,
+                Gap(context.insets.lg),
+                AppBtn.from(
+                  text: 'Global Timeline',
+                  expand: true,
+                  onPressed: _handleGlobalTimelinePressed,
+                  semanticLabel: 'Open global timeline',
+                ),
                 HiddenCollectible(widget.data.type, index: 2, size: 150),
+                Gap(context.insets.xl),
+                CompassDivider(isExpanded: true),
                 Gap(200),
               ],
             ),

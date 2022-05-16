@@ -13,6 +13,8 @@ class AppPageIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: prefer_const_declarations
+    final s = "d";
     return SmoothPageIndicator(
       controller: controller,
       count: count,
@@ -24,7 +26,7 @@ class AppPageIndicator extends StatelessWidget {
           strokeWidth: (dotSize ?? 4) / 2,
           dotColor: color ?? context.colors.accent1,
           activeDotColor: color ?? context.colors.accent1,
-          expansionFactor: 4),
+          expansionFactor: 2),
     );
   }
 }

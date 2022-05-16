@@ -8,6 +8,7 @@ import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/timeline_data.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/blend_mask.dart';
+import 'package:wonders/ui/common/controls/simple_header.dart';
 import 'package:wonders/ui/common/dashed_line.dart';
 import 'package:wonders/ui/common/list_gradient.dart';
 import 'package:wonders/ui/common/timeline_event_card.dart';
@@ -32,16 +33,9 @@ class TimelineScreen extends StatefulWidget {
 }
 
 class _TimelineScreenState extends State<TimelineScreen> {
-  // TODO: this + the slider that uses it, is just for testing, remove once timeline is completed
-  double _zoomOverride = 1;
-
   /// Create a scroll controller that the top and bottom timelines can share
   final ScrollController _scroller = ScrollController();
   _ScrollingViewportController? _viewport;
-
-  void _handleViewportInit(v) {
-    _viewport = v;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,13 +50,14 @@ class _TimelineScreenState extends State<TimelineScreen> {
           padding: EdgeInsets.only(bottom: 0),
           child: Column(
             children: [
+              SimpleHeader('Global Timeline'),
+
               /// Vertically scrolling timeline, manages a ScrollController.
               Expanded(
                 child: Stack(
                   children: [
                     /// The timeline content itself
                     _ScrollingViewport(
-                      onInit: _handleViewportInit,
                       scroller: _scroller,
                       minSize: minSize,
                       maxSize: maxSize,
@@ -80,18 +75,6 @@ class _TimelineScreenState extends State<TimelineScreen> {
                 timelineMinSize: minSize,
                 selectedWonder: widget.type,
               ),
-              //
-              // // TODO: remove this slider when Timeline is complete
-              if (kDebugMode) ...[
-                Slider(
-                  value: _zoomOverride,
-                  onChanged: (value) {
-                    _zoomOverride = value;
-                    _viewport?.setZoom(_zoomOverride);
-                    setState(() {});
-                  },
-                ),
-              ],
               Gap(context.insets.sm),
             ],
           ),

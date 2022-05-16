@@ -52,8 +52,14 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
 
   void _handleOpenMenuPressed() async {
     setState(() => _isMenuOpen = true);
-    await appLogic.showFullscreenDialogRoute(context, HomeMenu(data: currentWonder));
+    WonderType? pickedWonder = await appLogic.showFullscreenDialogRoute<WonderType>(
+      context,
+      HomeMenu(data: currentWonder),
+    );
     setState(() => _isMenuOpen = false);
+    if (pickedWonder != null) {
+      _showPageForIndex(_wonders.indexWhere((w) => w.type == pickedWonder));
+    }
   }
 
   void _handleFadeAnimInit(AnimationController controller) {
@@ -61,7 +67,9 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
     controller.value = 1;
   }
 
-  void _handlePageIndicatorDotPressed(int index) {
+  void _handlePageIndicatorDotPressed(int index) => _showPageForIndex(index);
+
+  void _showPageForIndex(int index) {
     if (index == _wonderIndex) return;
     // To support infinite scrolling, we can't jump directly to the pressed index. Instead, make it relative to our current position.
     final pos = ((_pageController.page ?? 0) / _numWonders).floor() * _numWonders;
@@ -153,7 +161,8 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
                       /// Settings Btn
                       Opacity(
                         opacity: 0, // TODO: Remove this btn before launch, its for testing settings only
-                        child: AppBtn.from(text: 'Settings', onPressed: _handleSettingsPressed, padding: EdgeInsets.all(30)),
+                        child: AppBtn.from(
+                            text: 'Settings', onPressed: _handleSettingsPressed, padding: EdgeInsets.all(30)),
                       ),
                       const Spacer(),
 

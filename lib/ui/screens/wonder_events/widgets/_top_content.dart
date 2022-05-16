@@ -1,4 +1,4 @@
-part of '../timeline_details.dart';
+part of '../wonder_events.dart';
 
 class _TopContent extends StatelessWidget {
   const _TopContent({Key? key, required this.data}) : super(key: key);
@@ -7,7 +7,7 @@ class _TopContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: TimelineDetails._topHeight,
+      height: WonderEvents._topHeight,
       child: LightText(
         child: SeparatedColumn(
           separatorBuilder: () => Gap(context.insets.xs * 1.5),

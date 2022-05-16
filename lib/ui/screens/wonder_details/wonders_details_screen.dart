@@ -4,8 +4,8 @@ import 'package:wonders/ui/common/measurable_widget.dart';
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_screen.dart';
 import 'package:wonders/ui/screens/editorial/editorial_screen.dart';
 import 'package:wonders/ui/screens/photo_gallery/photo_gallery.dart';
-import 'package:wonders/ui/screens/timeline/timeline_screen.dart';
 import 'package:wonders/ui/screens/wonder_details/wonder_details_tab_menu.dart';
+import 'package:wonders/ui/screens/wonder_events/wonder_events.dart';
 
 class WonderDetailsScreen extends StatefulWidget with GetItStatefulWidgetMixin {
   WonderDetailsScreen({Key? key, required this.type}) : super(key: key);
@@ -64,7 +64,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
               WonderEditorialScreen(wonder, onScroll: _handleDetailsScrolled),
               PhotoGallery(collectionId: wonder.unsplashCollectionId, wonderType: wonder.type),
               Padding(padding: EdgeInsets.only(bottom: tabBarHeight), child: ArtifactCarouselScreen(type: wonder.type)),
-              Padding(padding: EdgeInsets.only(bottom: tabBarHeight), child: TimelineScreen(type: widget.type)),
+              Padding(padding: EdgeInsets.only(bottom: tabBarHeight), child: WonderEvents(type: widget.type)),
             ],
           ),
 

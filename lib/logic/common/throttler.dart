@@ -28,7 +28,7 @@ class Throttler {
     _timer = null;
   }
 
-  void cancelPending() {
+  void reset() {
     _action = null;
     _timer = null;
   }

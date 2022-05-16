@@ -98,9 +98,9 @@ class AppLogic {
     FlutterError.dumpErrorToConsole(details);
   }
 
-  Future<void> showFullscreenDialogRoute(BuildContext context, Widget child) async {
-    await Navigator.of(context).push(
-      PageRoutes.dialog(child, context.read<AppStyle>().times.pageTransition),
+  Future<T?> showFullscreenDialogRoute<T>(BuildContext context, Widget child) async {
+    return await Navigator.of(context).push<T>(
+      PageRoutes.dialog<T>(child, context.read<AppStyle>().times.pageTransition),
     );
   }
 }
