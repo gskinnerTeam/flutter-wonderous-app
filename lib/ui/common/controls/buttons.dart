@@ -127,7 +127,7 @@ class AppBtn extends StatelessWidget {
 
 /// //////////////////////////////////////////////////
 /// _ButtonDecorator
-/// Applies the "add-on" behviours common to all app buttons: press effect, semantics, haptics.
+/// Applies the "add-on" behaviours common to all app buttons: press effect, semantics, haptics.
 /// //////////////////////////////////////////////////
 class _ButtonDecorator extends StatefulWidget {
   const _ButtonDecorator(this.child, this.semanticLabel, {Key? key}) : super(key: key);
