@@ -18,7 +18,7 @@ class CollectibleFoundScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepaintBoundary(
       child: _buildIntro(context).fx().swap(
-            delay: context.times.fast * 3,
+            delay: context.times.fast * 3.5,
             builder: (_) => _buildDetail(context),
           ),
     );
@@ -41,7 +41,7 @@ class CollectibleFoundScreen extends StatelessWidget {
               fit: BoxFit.contain,
             ),
           ),
-        ).fx().scale(begin: 1, end: 3, curve: Curves.easeInExpo, delay: t, duration: t * 3),
+        ).fx().scale(begin: 1.5, end: 3, curve: Curves.easeInExpo, delay: t, duration: t * 3).fadeOut(),
       )
     ]);
   }
