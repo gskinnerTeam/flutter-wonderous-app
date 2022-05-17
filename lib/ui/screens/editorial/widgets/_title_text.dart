@@ -6,7 +6,8 @@ class _TitleText extends StatelessWidget {
   final ScrollController scroller;
 
   @override
-  Widget build(BuildContext context) => LightText(
+  Widget build(BuildContext context) => DefaultTextColor(
+        color: context.colors.offWhite,
         child: Column(
           children: [
             Gap(context.insets.md),
@@ -47,7 +48,7 @@ class _TitleText extends StatelessWidget {
                 builder: (_, __) => CompassDivider(
                   isExpanded: scroller.position.pixels <= 0,
                   linesColor: data.type.fgColor,
-                  compassColor: context.colors.white,
+                  compassColor: context.colors.offWhite,
                 ),
               ),
             ),

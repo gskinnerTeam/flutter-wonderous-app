@@ -33,7 +33,7 @@ class _EventMarkersState extends State<_EventMarkers> {
     double closestDistance = double.infinity;
     // Convert current yr to a px position
     double currentYearPx = _calculateOffsetY(widget.selectedYr) * maxPxHeight;
-    for (var e in globalEvents) {
+    for (var e in timelineLogic.events) {
       // Convert both the event.yr to px, and compare with currentYearPx
       double eventPx = _calculateOffsetY(e.year) * maxPxHeight;
       double d = (eventPx - currentYearPx).abs();
@@ -58,7 +58,7 @@ class _EventMarkersState extends State<_EventMarkers> {
         _updateSelectedEvent(constraints.maxHeight);
 
         /// Create a marker for each event
-        List<Widget> markers = globalEvents.map((event) {
+        List<Widget> markers = timelineLogic.events.map((event) {
           final offsetY = _calculateOffsetY(event.year);
           return _EventMarker(offsetY, isSelected: event == selectedEvent);
         }).toList();

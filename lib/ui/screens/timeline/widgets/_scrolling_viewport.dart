@@ -12,7 +12,7 @@ class _ScrollingViewport extends StatefulWidget {
   final double minSize;
   final double maxSize;
   final ScrollController scroller;
-  final WonderType selectedWonder;
+  final WonderType? selectedWonder;
   final void Function(_ScrollingViewportController controller)? onInit;
 
   @override

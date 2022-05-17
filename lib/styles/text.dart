@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -7,28 +9,36 @@ class AppTextStyles {
 
   final double scale;
   final TextStyle titleFont = TextStyle(fontFamily: 'Tenor');
-  final TextStyle contentFont = TextStyle(fontFamily: 'Raleway');
+  final TextStyle quoteFont = TextStyle(fontFamily: 'Cinzel');
+  final TextStyle wonderTitleFont = TextStyle(fontFamily: 'Yeseva');
+  TextStyle get contentFont => TextStyle(fontFamily: 'Raleway', fontFeatures: const [
+        FontFeature.enable('dlig'),
+      ]);
 
-  //TODO: Change these from getters to final vars when design system has stopped changing
-  TextStyle get dropCase => copy(titleFont, sizePx: 49, heightPx: 20);
+  late TextStyle dropCase = copy(quoteFont, sizePx: 56, heightPx: 20);
 
-  TextStyle get h1 => copy(titleFont, sizePx: 64, heightPx: 62);
-  TextStyle get h2 => copy(titleFont, sizePx: 32, heightPx: 46);
-  TextStyle get h3 => copy(titleFont, sizePx: 24, heightPx: 36, weight: FontWeight.w600);
-  TextStyle get h4 => copy(titleFont, sizePx: 14, heightPx: 23, spacingPc: 5, weight: FontWeight.w600);
+  TextStyle get wonderTitle => copy(wonderTitleFont, sizePx: 64, heightPx: 56);
 
-  TextStyle get title1 => copy(titleFont, sizePx: 16, heightPx: 26, spacingPc: 5);
-  TextStyle get title2 => copy(titleFont, sizePx: 14, heightPx: 16.38);
-  //TextStyle get title3 => copy(contentFont, sizePx: 16, heightPx: 18.78, weight: FontWeight.w600);
+  late TextStyle h1 = copy(titleFont, sizePx: 64, heightPx: 62);
+  late TextStyle h2 = copy(titleFont, sizePx: 32, heightPx: 46);
+  late TextStyle h3 = copy(titleFont, sizePx: 24, heightPx: 36, weight: FontWeight.w600);
+  late TextStyle h4 = copy(titleFont, sizePx: 14, heightPx: 23, spacingPc: 5, weight: FontWeight.w600);
 
-  TextStyle get body => copy(contentFont, sizePx: 16, heightPx: 26);
-  TextStyle get bodyBold => copy(contentFont, sizePx: 16, heightPx: 26, weight: FontWeight.w600);
-  TextStyle get bodySmall => copy(contentFont, sizePx: 14, heightPx: 23);
-  TextStyle get bodySmallBold => copy(contentFont, sizePx: 14, heightPx: 23, weight: FontWeight.w600);
+  late TextStyle title1 = copy(titleFont, sizePx: 16, heightPx: 26, spacingPc: 5);
+  late TextStyle title2 = copy(titleFont, sizePx: 14, heightPx: 16.38);
 
-  TextStyle get quote => copy(titleFont, sizePx: 42, heightPx: 42, spacingPc: -10, weight: FontWeight.w500);
-  TextStyle get caption => copy(contentFont, sizePx: 12, weight: FontWeight.w500).copyWith(fontStyle: FontStyle.italic);
-  TextStyle get btn => copy(titleFont, sizePx: 12, weight: FontWeight.w600, heightPx: 13.2);
+  TextStyle get body => copy(contentFont, sizePx: 16, heightPx: 27);
+  late TextStyle bodyBold = copy(contentFont, sizePx: 16, heightPx: 26, weight: FontWeight.w600);
+  late TextStyle bodySmall = copy(contentFont, sizePx: 14, heightPx: 23);
+  late TextStyle bodySmallBold = copy(contentFont, sizePx: 14, heightPx: 23, weight: FontWeight.w600);
+
+  TextStyle get quote1 => copy(quoteFont, sizePx: 36, heightPx: 40, weight: FontWeight.w600, spacingPc: -3);
+  late TextStyle quote2 = copy(quoteFont, sizePx: 21, heightPx: 32, weight: FontWeight.w400);
+  late TextStyle quote2Sub = copy(body, sizePx: 16, heightPx: 40, weight: FontWeight.w400);
+
+  late TextStyle callout =
+      copy(contentFont, sizePx: 16, heightPx: 26, weight: FontWeight.w600).copyWith(fontStyle: FontStyle.italic);
+  late TextStyle btn = copy(titleFont, sizePx: 12, weight: FontWeight.w600, heightPx: 13.2);
 
   TextStyle copy(TextStyle style, {required double sizePx, double? heightPx, double? spacingPc, FontWeight? weight}) {
     return style.copyWith(

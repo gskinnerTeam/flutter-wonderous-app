@@ -24,7 +24,7 @@ part 'widgets/_timeline_section.dart';
 part 'widgets/_year_markers.dart';
 
 class TimelineScreen extends StatefulWidget {
-  final WonderType type;
+  final WonderType? type;
 
   const TimelineScreen({Key? key, required this.type}) : super(key: key);
 
@@ -35,7 +35,6 @@ class TimelineScreen extends StatefulWidget {
 class _TimelineScreenState extends State<TimelineScreen> {
   /// Create a scroll controller that the top and bottom timelines can share
   final ScrollController _scroller = ScrollController();
-  _ScrollingViewportController? _viewport;
 
   @override
   Widget build(BuildContext context) {

@@ -7,7 +7,7 @@ class _BottomScrubber extends StatelessWidget {
   final ScrollController? scroller;
   final double timelineMinSize;
   final double size;
-  final WonderType selectedWonder;
+  final WonderType? selectedWonder;
 
   /// Calculate what fraction the scroller has travelled
   double _calculateScrollFraction(ScrollPosition? pos) {
@@ -37,6 +37,8 @@ class _BottomScrubber extends StatelessWidget {
       scroller.position.jumpTo(newPos.clamp(0, scroller.position.maxScrollExtent));
     }
 
+    /// Create a list for the timeline builder to indicate the selected wonder
+    final wonder = selectedWonder;
     return SizedBox(
       height: size,
       child: Stack(
@@ -46,7 +48,9 @@ class _BottomScrubber extends StatelessWidget {
             padding: EdgeInsets.all(context.insets.sm),
             child: WondersTimelineBuilder(
               crossAxisGap: 4,
-              selectedWonders: [selectedWonder],
+              selectedWonders: [
+                if (wonder != null) ...[wonder]
+              ],
             ),
           ),
 

@@ -89,6 +89,14 @@ flutter:
     - assets/images/collectibles/icons/
 
   fonts:
+   - family: Cinzel
+     fonts:
+       - asset: assets/fonts/CinzelDecorative-Regular.ttf
+       - asset: assets/fonts/CinzelDecorative-Black.ttf
+       - asset: assets/fonts/CinzelDecorative-Bold.ttf
+   - family: Yeseva
+     fonts:
+       - asset: assets/fonts/YesevaOne-Regular.ttf
    - family: Tenor
      fonts:
        - asset: assets/fonts/TenorSans-Regular.ttf

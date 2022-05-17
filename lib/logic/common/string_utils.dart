@@ -58,4 +58,8 @@ class StringUtils {
     if (yr <= 1450) return 'Early Modern Era';
     return 'Modern Era';
   }
+
+  static String capitalize(String value) {
+    return '${value[0].toUpperCase()}${value.substring(1).toLowerCase()}';
+  }
 }

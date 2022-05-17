@@ -1,4 +1,5 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 
 /// To match designs:
@@ -11,7 +12,9 @@ class WonderTitleText extends StatelessWidget {
   final bool enableShadows;
   @override
   Widget build(BuildContext context) {
-    var textStyle = context.textStyles.h1.copyWith(height: 1.15, fontSize: 52);
+    var textStyle = context.textStyles.wonderTitle.copyWith(
+      color: context.colors.offWhite,
+    );
     bool smallText = [WonderType.christRedeemer, WonderType.colosseum].contains(data.type);
     if (smallText) {
       textStyle = textStyle.copyWith(fontSize: 48 * context.style.scale);
@@ -28,8 +31,11 @@ class WonderTitleText extends StatelessWidget {
       int i = pieces.indexOf(text);
       bool addLinebreak = i == 0 && pieces.length > 1;
       bool addSpace = !addLinebreak && i < pieces.length - 1;
+      if (useSmallText == false) {
+        text = StringUtils.capitalize(text);
+      }
       return TextSpan(
-        text: '${text.toUpperCase()}${addLinebreak ? '\n' : addSpace ? ' ' : ''}',
+        text: '$text${addLinebreak ? '\n' : addSpace ? ' ' : ''}',
         style: useSmallText ? textStyle.copyWith(fontSize: 20) : textStyle,
       );
     }

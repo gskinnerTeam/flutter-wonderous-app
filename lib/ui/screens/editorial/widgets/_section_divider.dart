@@ -40,7 +40,9 @@ class _SectionDividerState extends State<_SectionDivider> with SingleTickerProvi
         return ValueListenableBuilder<bool>(
           valueListenable: _isActivated,
           builder: (_, value, __) => Padding(
-              padding: EdgeInsets.symmetric(vertical: context.insets.lg), child: CompassDivider(isExpanded: value)),
+            padding: EdgeInsets.symmetric(vertical: context.insets.xl),
+            child: CompassDivider(isExpanded: value),
+          ),
         );
       },
     );

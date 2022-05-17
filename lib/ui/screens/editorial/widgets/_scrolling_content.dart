@@ -26,7 +26,7 @@ class _ScrollingContent extends StatelessWidget {
           _fixNewlines(value),
           mode: DropCapMode.inside,
           style: context.textStyles.body,
-          dropCapPadding: EdgeInsets.only(top: 2, right: 6),
+          dropCapPadding: EdgeInsets.only(top: 11, right: 6),
           dropCapStyle: context.textStyles.dropCase.copyWith(color: context.colors.accent1, height: 1),
         );
 
@@ -44,7 +44,12 @@ class _ScrollingContent extends StatelessWidget {
         }
       }
 
-      return HiddenCollectible(data.type, index: 0, matches: getTypesForSlot(slot));
+      return HiddenCollectible(
+        data.type,
+        index: 0,
+        matches: getTypesForSlot(slot),
+        size: 128,
+      );
     }
 
     return Container(
@@ -58,9 +63,12 @@ class _ScrollingContent extends StatelessWidget {
           /// History 1
           buildDropCapText(data.historyInfo1),
 
-          /// Pull Quote
+          /// Quote1
           _CollapsingPullQuoteImage(data: data, scrollPos: scrollPos),
           buildHiddenCollectible(slot: 1),
+
+          /// Callout1
+          _Callout(text: data.callout1),
 
           /// History 2
           buildText(data.historyInfo2),
@@ -71,6 +79,9 @@ class _ScrollingContent extends StatelessWidget {
           buildHiddenCollectible(slot: 2),
           _YouTubeThumbnail(id: data.videoId),
 
+          /// Callout2
+          _Callout(text: data.callout2),
+
           /// Construction 2
           buildText(data.constructionInfo2),
           _SlidingImageStack(scrollPos: scrollPos, type: data.type),
@@ -78,6 +89,8 @@ class _ScrollingContent extends StatelessWidget {
 
           /// Location
           buildDropCapText(data.locationInfo1),
+          _LargeSimpleQuote(text: data.pullQuote2, author: data.pullQuote2Author),
+          buildText(data.locationInfo2),
           // SB: Disable maps thumbnail in debug mode, as it pollutes the logs too much in the android simulator
           //if (kReleaseMode) ...[
           _MapsThumbnail(data, height: 200),
@@ -123,16 +136,26 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
     void handlePressed() => context.push(ScreenPaths.maps(widget.data.type));
     return SizedBox(
       height: widget.height,
-      child: AppBtn.basic(
-        onPressed: handlePressed,
-        semanticLabel: 'Maps Thumbnail',
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(context.corners.md),
-          child: GoogleMap(
-            markers: {getMapsMarker(startPos.target)},
-            zoomControlsEnabled: false,
-            mapType: MapType.normal,
-            initialCameraPosition: startPos,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(context.corners.md),
+        child: AppBtn.basic(
+          semanticLabel: 'Open fullscreen maps view',
+          onPressed: handlePressed,
+
+          /// To prevent the map widget from absorbing the onPressed action, use a Stack + IgnorePointer + a transparent Container
+          child: Stack(
+            children: [
+              Positioned.fill(child: ColoredBox(color: Colors.transparent)),
+              IgnorePointer(
+                child: GoogleMap(
+                  markers: {getMapsMarker(startPos.target)},
+                  zoomControlsEnabled: false,
+                  mapType: MapType.normal,
+                  mapToolbarEnabled: false,
+                  initialCameraPosition: startPos,
+                ),
+              ),
+            ],
           ),
         ),
       ),

@@ -6,15 +6,15 @@ class _SlidingImageStack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = Size(280, 360);
+    final totalSize = Size(280, 360);
     Container _buildPhoto(double scale, String url, Alignment align, {bool top = true}) {
       return Container(
-        width: size.width * scale,
-        height: size.height * scale,
+        width: totalSize.width * scale,
+        height: totalSize.height * scale,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.vertical(
-            top: Radius.circular(top ? size.width / 2 : 0),
-            bottom: Radius.circular(top ? 0 : size.width / 2),
+            top: Radius.circular(top ? totalSize.width / 2 : 0),
+            bottom: Radius.circular(top ? 0 : totalSize.width / 2),
           ),
           image: DecorationImage(image: AssetImage(url), fit: BoxFit.fitWidth, alignment: align),
         ),
@@ -24,8 +24,8 @@ class _SlidingImageStack extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
-        width: size.width,
-        height: size.height,
+        width: totalSize.width,
+        height: totalSize.height,
         child: ValueListenableBuilder(
           valueListenable: scrollPos,
           builder: (context, value, child) {

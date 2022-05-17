@@ -15,9 +15,7 @@ class HomeMenu extends StatelessWidget {
         ScreenPaths.collection(''),
       );
 
-  void _handleTimelinePressed(BuildContext context) => context.push(
-        ScreenPaths.timeline(data.type),
-      );
+  void _handleTimelinePressed(BuildContext context) => context.push(ScreenPaths.timeline(data.type));
 
   void _handleWonderPressed(BuildContext context, WonderData data) {
     Navigator.pop(context, data.type);
@@ -93,14 +91,18 @@ class HomeMenu extends StatelessWidget {
 
   Widget _buildBottomBtns(BuildContext context) {
     return SeparatedColumn(
-      separatorBuilder: () => Divider(height: 1),
+      separatorBuilder: () => Divider(thickness: 1.5, height: 1).fx().scale(
+            duration: context.times.slow,
+            delay: context.times.pageTransition + 200.ms,
+            curve: Curves.easeOutBack,
+          ),
       children: [
         _MenuTextBtn(label: 'Explore the timeline', onPressed: () => _handleTimelinePressed(context)),
         _MenuTextBtn(label: 'View your collection', onPressed: () => _handleCollectionPressed(context)),
         _MenuTextBtn(label: 'About this app', onPressed: _handleAboutPressed),
       ]
           .fx(interval: 80.ms)
-          .fade(delay: context.times.pageTransition + 200.ms)
+          .fade(delay: context.times.pageTransition + 100.ms)
           .slide(begin: Offset(0, .1), curve: Curves.easeOut),
     );
   }

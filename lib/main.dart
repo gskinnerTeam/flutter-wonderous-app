@@ -2,6 +2,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/collectibles_logic.dart';
 import 'package:wonders/logic/met_api_logic.dart';
 import 'package:wonders/logic/met_api_service.dart';
+import 'package:wonders/logic/timeline_logic.dart';
 import 'package:wonders/logic/unsplash_logic.dart';
 import 'package:wonders/logic/wonders_logic.dart';
 
@@ -28,6 +29,8 @@ void registerSingletons() {
   GetIt.I.registerLazySingleton<AppLogic>(() => AppLogic());
   // Wonders
   GetIt.I.registerLazySingleton<WondersLogic>(() => WondersLogic());
+  // Timeline / Events
+  GetIt.I.registerLazySingleton<TimelineLogic>(() => TimelineLogic());
   // Search
   GetIt.I.registerLazySingleton<MetAPILogic>(() => MetAPILogic());
   GetIt.I.registerLazySingleton<MetAPIService>(() => MetAPIService());
@@ -43,6 +46,7 @@ void registerSingletons() {
 /// We deliberately do not create shortcuts for services, to discourage their use directly in the ui layer.
 AppLogic get appLogic => GetIt.I.get<AppLogic>();
 WondersLogic get wondersLogic => GetIt.I.get<WondersLogic>();
+TimelineLogic get timelineLogic => GetIt.I.get<TimelineLogic>();
 SettingsLogic get settingsLogic => GetIt.I.get<SettingsLogic>();
 UnsplashLogic get unsplashLogic => GetIt.I.get<UnsplashLogic>();
 MetAPILogic get metAPILogic => GetIt.I.get<MetAPILogic>();

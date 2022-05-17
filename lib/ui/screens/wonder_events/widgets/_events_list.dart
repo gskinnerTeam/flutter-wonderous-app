@@ -48,12 +48,18 @@ class _EventsListState extends State<_EventsList> {
                   blur = scrollAmt * 10;
                 }
                 // Container provides a underlay which gets darker as the background blurs
-                return Container(
-                  color: context.colors.greyStrong.withOpacity(min(1, scrollAmt * 2) * .5),
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
-                    child: _buildScrollingList(),
-                  ),
+                return Stack(
+                  children: [
+                    BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
+                      child: IgnorePointer(
+                        child: Container(
+                          color: context.colors.greyStrong.withOpacity(min(1, scrollAmt * 2) * .5),
+                        ),
+                      ),
+                    ),
+                    _buildScrollingList()
+                  ],
                 );
               },
             ),
@@ -88,7 +94,7 @@ class _EventsListState extends State<_EventsList> {
       controller: _scroller,
       child: Column(
         children: [
-          Gap(WonderEvents._topHeight),
+          IgnorePointer(child: Gap(WonderEvents._topHeight)),
           Container(
             decoration: BoxDecoration(
               color: context.colors.white,
@@ -103,15 +109,16 @@ class _EventsListState extends State<_EventsList> {
                 ...listItems,
                 Gap(context.insets.lg),
                 AppBtn.from(
-                  text: 'Global Timeline',
+                  text: 'Open global timeline',
                   expand: true,
                   onPressed: _handleGlobalTimelinePressed,
                   semanticLabel: 'Open global timeline',
                 ),
-                HiddenCollectible(widget.data.type, index: 2, size: 150),
                 Gap(context.insets.xl),
                 CompassDivider(isExpanded: true),
-                Gap(200),
+                Gap(context.insets.md),
+                HiddenCollectible(widget.data.type, index: 2, size: 150),
+                Gap(150),
               ],
             ),
           ),

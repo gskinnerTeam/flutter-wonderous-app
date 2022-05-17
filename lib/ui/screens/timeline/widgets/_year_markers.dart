@@ -57,7 +57,7 @@ class _YearMarker extends StatelessWidget {
       alignment: Alignment(0, -1 + offset * 2),
       child: FractionalTranslation(
         translation: Offset(0, 0),
-        child: Text('$yr', style: context.text.body.copyWith(color: Colors.white, height: 1)),
+        child: Text('${yr.abs()}', style: context.text.body.copyWith(color: Colors.white, height: 1)),
       ),
     );
   }

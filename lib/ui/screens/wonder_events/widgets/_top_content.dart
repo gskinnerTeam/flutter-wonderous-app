@@ -6,6 +6,7 @@ class _TopContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void handleGlobalTimelinePressed() => context.push(ScreenPaths.timeline(data.type));
     return SizedBox(
       height: WonderEvents._topHeight,
       child: LightText(
@@ -31,7 +32,17 @@ class _TopContent extends StatelessWidget {
             /// Bottom timeline
             SizedBox(
               height: 50,
-              child: WondersTimelineBuilder(selectedWonders: [data.type]),
+              child: WondersTimelineBuilder(
+                  selectedWonders: [data.type],
+                  timelineBuilder: (_, data, isSelected) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        color: isSelected ? data.type.fgColor : Colors.transparent,
+                        border: Border.all(color: isSelected ? Colors.transparent : context.colors.greyMedium),
+                        borderRadius: BorderRadius.circular(context.corners.md),
+                      ),
+                    );
+                  }),
             ),
             _buildEraTextRow(context)
           ],

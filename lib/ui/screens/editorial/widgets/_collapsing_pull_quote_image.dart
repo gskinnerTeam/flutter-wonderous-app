@@ -10,16 +10,16 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
     // Start transitioning when we are halfway up the screen
     final collapseStartPx = context.heightPx * .75;
     final collapseEndPx = context.heightPx * .25;
-    const double imgHeight = 350;
+    const double imgHeight = 430;
     const outerPadding = 150;
     double collapseAmt = 0;
 
     /// A single piece of quote text, this widget has one on top, and one on bottom
     Widget buildText(String value, {required bool top, bool isAuthor = false}) {
-      var quoteStyle = context.textStyles.quote.copyWith(
-        letterSpacing: isAuthor ? 0 : -4,
-        height: 1,
-        color: Color(0xFF888888).withOpacity(1),
+      var quoteStyle = context.textStyles.quote1;
+      quoteStyle = quoteStyle.copyWith(
+        // letterSpacing: isAuthor ? quoteStyle.letterSpacing : -4,
+        color: Color(0xFF444444).withOpacity(1),
       );
       if (isAuthor) {
         quoteStyle = quoteStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w600);
@@ -46,34 +46,23 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
           child: Stack(
             children: [
               /// Main image
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: context.insets.md),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(
-                      height: imgHeight,
-                      width: 290,
-                      // Clip the image with an curved top
-                      child: ClipPath(
-                        clipper: CurvedTopClipper(),
-                        child: Stack(
-                          fit: StackFit.expand,
-                          children: [
-                            ScalingListItem(
-                              scrollPos: scrollPos,
-                              child: Image.asset(
-                                data.type.photo2,
-                                fit: BoxFit.cover,
-                                opacity: AlwaysStoppedAnimation(1 - collapseAmt * .7),
-                              ),
-                            ),
-                          ],
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    height: imgHeight,
+                    width: 400,
+                    // Clip the image with an curved top
+                    child: Stack(
+                      children: [
+                        ClipPath(
+                          clipper: CurvedTopClipper(),
+                          child: _buildImage(collapseAmt),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
 
               /// Collapsing text
@@ -93,6 +82,33 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  Stack _buildImage(double collapseAmt) {
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        ScalingListItem(
+          scrollPos: scrollPos,
+          child: Image.asset(
+            data.type.photo2,
+            fit: BoxFit.cover,
+            opacity: AlwaysStoppedAnimation(1 - collapseAmt * .7),
+          ),
+        ),
+        BlendMask(
+          blendModes: const [BlendMode.colorBurn],
+          opacity: .4,
+          child: VtGradient(
+            [
+              Color(0xFF333231).withOpacity(.4),
+              Color(0xFF333231).withOpacity(.8),
+            ],
+            const [0, 1],
+          ),
+        ),
+      ],
     );
   }
 }

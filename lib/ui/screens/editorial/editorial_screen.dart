@@ -11,6 +11,7 @@ import 'package:wonders/ui/common/blend_mask.dart';
 import 'package:wonders/ui/common/compass_divider.dart';
 import 'package:wonders/ui/common/curved_clippers.dart';
 import 'package:wonders/ui/common/google_maps_marker.dart';
+import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/hidden_collectible.dart';
 import 'package:wonders/ui/common/scaling_list_item.dart';
 import 'package:wonders/ui/common/themed_text.dart';
@@ -28,6 +29,8 @@ part 'widgets/_section_divider.dart';
 part 'widgets/_sliding_image_stack.dart';
 part 'widgets/_title_text.dart';
 part 'widgets/_top_illustration.dart';
+part 'widgets/_callout.dart';
+part 'widgets/_large_simple_quote.dart';
 
 // TODO: GDS: add list shadow
 

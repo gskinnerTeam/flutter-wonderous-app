@@ -25,7 +25,7 @@ class ScreenPaths {
   static String artifact(String id) => '/artifact/$id';
   static String collection(String id) => '/collection?id=$id';
   static String maps(WonderType type) => '/maps/${type.name}';
-  static String timeline(WonderType type) => '/timeline/${type.name}';
+  static String timeline(WonderType? type) => '/timeline?type=${type?.name ?? ''}';
   static String wallpaperPhoto(WonderType type) => '/wallpaperPhoto/${type.name}';
 }
 
@@ -38,7 +38,9 @@ String? _handleRedirect(GoRouterState state) {
   return null; // do nothing
 }
 
-WonderType _parseWonderType(String value) => WonderType.values.asNameMap()[value] ?? WonderType.chichenItza;
+WonderType _parseWonderType(String value) => _tryParseWonderType(value) ?? WonderType.chichenItza;
+
+WonderType? _tryParseWonderType(String value) => WonderType.values.asNameMap()[value];
 
 final appRouter = GoRouter(
   redirect: _handleRedirect,
@@ -47,20 +49,20 @@ final appRouter = GoRouter(
     AppRoute(ScreenPaths.splash, (_) => SplashScreen()),
     AppRoute(ScreenPaths.home, (_) => WondersHomeScreen()),
     AppRoute(ScreenPaths.settings, (_) => SettingsScreen()),
-    AppRoute('/wonder/:id', (s) {
-      return WonderDetailsScreen(type: _parseWonderType(s.params['id']!));
+    AppRoute('/wonder/:type', (s) {
+      return WonderDetailsScreen(type: _parseWonderType(s.params['type']!));
     }, useFade: true),
-    AppRoute('/timeline/:id', (s) {
-      return TimelineScreen(type: _parseWonderType(s.params['id']!));
+    AppRoute('/timeline', (s) {
+      return TimelineScreen(type: _tryParseWonderType(s.queryParams['type']!));
     }),
     AppRoute('/video/:id', (s) {
       return FullscreenVideoPage(id: s.params['id']!);
     }),
-    AppRoute('/highlights/:id', (s) {
-      return ArtifactCarouselScreen(type: _parseWonderType(s.params['id']!));
+    AppRoute('/highlights/:type', (s) {
+      return ArtifactCarouselScreen(type: _parseWonderType(s.params['type']!));
     }),
-    AppRoute('/search/:id', (s) {
-      return ArtifactSearchScreen(type: _parseWonderType(s.params['id']!));
+    AppRoute('/search/:type', (s) {
+      return ArtifactSearchScreen(type: _parseWonderType(s.params['type']!));
     }),
     AppRoute('/artifact/:id', (s) {
       return ArtifactDetailsScreen(artifactId: s.params['id']!);
@@ -68,11 +70,11 @@ final appRouter = GoRouter(
     AppRoute('/collection', (s) {
       return CollectionScreen(fromId: s.queryParams['id']);
     }),
-    AppRoute('/maps/:id', (s) {
-      return FullscreenMapsViewer(type: _parseWonderType(s.params['id']!));
+    AppRoute('/maps/:type', (s) {
+      return FullscreenMapsViewer(type: _parseWonderType(s.params['type']!));
     }),
-    AppRoute('/wallpaperPhoto/:id', (s) {
-      return WallpaperPhotoScreen(type: _parseWonderType(s.params['id']!));
+    AppRoute('/wallpaperPhoto/:type', (s) {
+      return WallpaperPhotoScreen(type: _parseWonderType(s.params['type']!));
     }),
   ],
 );

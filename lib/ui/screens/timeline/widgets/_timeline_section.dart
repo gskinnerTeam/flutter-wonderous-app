@@ -4,12 +4,12 @@ class TimelineSection extends StatelessWidget {
   const TimelineSection(this.data, this.selectedYr, {Key? key, required this.selectedWonder}) : super(key: key);
   final WonderData data;
   final int selectedYr;
-  final WonderType selectedWonder;
+  final WonderType? selectedWonder;
 
   @override
   Widget build(BuildContext context) {
     /// TODO: Remove isSelected state completely if design is ok with it
-    bool isSelected = true; //selectedWonder == data.type;
+    bool isSelected = selectedWonder == data.type;
     // get a fraction from 0 - 1 based on selected yr and start/end yr of the wonder
     // 500, 250, 750
     int startYr = data.startYr, endYr = data.endYr;

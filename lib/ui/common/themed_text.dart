@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:wonders/common_libs.dart';
+
+class DefaultTextColor extends StatelessWidget {
+  const DefaultTextColor({Key? key, required this.color, required this.child}) : super(key: key);
+  final Color color;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTextStyle(
+      style: DefaultTextStyle.of(context).style.copyWith(color: color),
+      child: child,
+    );
+  }
+}
 
 class LightText extends StatelessWidget {
   const LightText({Key? key, required this.child}) : super(key: key);
   final Widget child;
 
   @override
-  Widget build(BuildContext context) => DefaultTextStyle(
-        style: DefaultTextStyle.of(context).style.copyWith(color: Colors.white),
+  Widget build(BuildContext context) => DefaultTextColor(
+        color: Colors.white,
         child: child,
       );
 }
@@ -16,8 +31,8 @@ class DarkText extends StatelessWidget {
   final Widget child;
 
   @override
-  Widget build(BuildContext context) => DefaultTextStyle(
-        style: DefaultTextStyle.of(context).style.copyWith(color: Colors.black),
+  Widget build(BuildContext context) => DefaultTextColor(
+        color: context.colors.black,
         child: child,
       );
 }
