@@ -78,6 +78,7 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
               scrollKey: _scrollKey,
               scrollWonder: scrollWonder,
               onPressed: (o) => _showDetails(context, o),
+              onReset: discovered + explored > 0 ? collectiblesLogic.reset : null,
             ),
           ]),
         ),

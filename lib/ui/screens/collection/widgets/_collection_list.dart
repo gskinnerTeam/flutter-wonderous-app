@@ -6,6 +6,7 @@ class _CollectionList extends StatelessWidget {
     Key? key,
     required this.states,
     required this.onPressed,
+    this.onReset,
     this.fromId,
     this.scrollWonder,
     this.scrollKey,
@@ -13,6 +14,7 @@ class _CollectionList extends StatelessWidget {
 
   final Map<String, int> states;
   final ValueSetter<CollectibleData> onPressed;
+  final VoidCallback? onReset;
   final Key? scrollKey;
   final WonderType? scrollWonder;
   final String? fromId;
@@ -29,12 +31,14 @@ class _CollectionList extends StatelessWidget {
       children.add(Gap(context.insets.xl));
     }
 
+    children.add(_buildResetBtn(context));
+
     return Flexible(
       child: RepaintBoundary(
         child: ScrollDecorator.shadow(
           builder: (controller) => ListView(
             controller: controller,
-            padding: EdgeInsets.all(context.insets.md).copyWith(bottom: context.insets.offset * 2),
+            padding: EdgeInsets.all(context.insets.md).copyWith(bottom: context.insets.offset * 2.5),
             children: children,
           ),
         ),
@@ -71,5 +75,14 @@ class _CollectionList extends StatelessWidget {
       ));
     }
     return SizedBox(height: height, child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: children));
+  }
+
+  Widget _buildResetBtn(BuildContext context) {
+    Widget btn = AppBtn.from(
+      onPressed: onReset ?? () {},
+      text: 'Reset Collection',
+      isSecondary: true,
+    );
+    return AnimatedOpacity(opacity: onReset == null ? 0.25 : 1, duration: context.times.fast, child: btn);
   }
 }
