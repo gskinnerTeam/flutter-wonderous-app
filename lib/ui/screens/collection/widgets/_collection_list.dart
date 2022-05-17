@@ -39,7 +39,7 @@ class _CollectionList extends StatelessWidget {
           builder: (controller) => ListView(
             controller: controller,
             padding: EdgeInsets.all(context.insets.md).copyWith(bottom: context.insets.offset * 2.5),
-            children: children,
+            children: [Column(children: children,)],
           ),
         ),
       ),
@@ -82,6 +82,7 @@ class _CollectionList extends StatelessWidget {
       onPressed: onReset ?? () {},
       text: 'Reset Collection',
       isSecondary: true,
+      expand: true,
     );
     return AnimatedOpacity(opacity: onReset == null ? 0.25 : 1, duration: context.times.fast, child: btn);
   }
