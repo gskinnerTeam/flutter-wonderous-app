@@ -70,7 +70,15 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
       child: Stack(children: [
         Positioned.fill(
           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            SimpleHeader('Collection'),
+            SimpleHeader(
+              'Collection',
+              onBack: widget.fromId == null
+                  ? null
+                  : () {
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                    },
+            ),
             _NewlyDiscoveredRow(count: discovered, onPressed: _scrollToTarget),
             _CollectionList(
               states: _states,
