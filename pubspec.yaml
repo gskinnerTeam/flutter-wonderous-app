@@ -55,7 +55,7 @@ dependencies:
   visibility_detector: ^0.2.2
 
 dev_dependencies:
-  build_runner: ^2.1.10
+  build_runner: ^2.1.11
   copy_with_extension_gen: ^4.0.1
   flutter_launcher_icons: ^0.9.2
   flutter_lints: ^1.0.0
