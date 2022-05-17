@@ -54,7 +54,9 @@ class _CollectionTile extends StatelessWidget {
         fit: BoxFit.cover,
       ),
     );
-    if (heroTag != null) content = Hero(tag: heroTag!, child: content);
+
+    // TODO: GDS: hero is disabled for now, since it doesn't play well with Cupertino transitions:
+    //if (heroTag != null) content = Hero(tag: heroTag!, child: content);
     return AppBtn.basic(
       semanticLabel: collectible.title,
       onPressed: () => onPressed(collectible),
