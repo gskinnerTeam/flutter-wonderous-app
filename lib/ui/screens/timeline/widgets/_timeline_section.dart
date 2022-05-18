@@ -8,7 +8,6 @@ class TimelineSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /// TODO: Remove isSelected state completely if design is ok with it
     bool isSelected = selectedWonder == data.type;
     // get a fraction from 0 - 1 based on selected yr and start/end yr of the wonder
     // 500, 250, 750
