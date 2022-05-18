@@ -1,3 +1,8 @@
+# 1.1.0
+- Editorial Polish
+- Updated Wonder Illustrations
+- Add home menu
+
 # 1.0.0
 - Add polish to home page transitions
 - Improve UX on carousel screen
