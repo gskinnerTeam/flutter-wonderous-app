@@ -18,14 +18,11 @@ class AnimatedListItem extends StatelessWidget {
                 Offset? pos = ContextUtils.getGlobalPos(context);
                 final yPos = pos?.dy;
                 final widgetHeight = constraints.maxHeight;
-                double scale = 1;
                 double pctVisible = 0;
                 if (yPos != null) {
                   final amtVisible = context.heightPx - yPos;
                   pctVisible = (amtVisible / widgetHeight * .5).clamp(0, 1);
-                  scale = 1.35 - pctVisible * .35;
                 }
-
                 return builder(context, pctVisible);
               },
             );

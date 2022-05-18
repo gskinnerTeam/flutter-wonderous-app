@@ -18,11 +18,7 @@ class _TopIllustration extends StatelessWidget {
           offset: Offset(0, 10),
           child: WonderIllustration(
             type,
-            config: WonderIllustrationConfig.mg(
-              enableAnims: false,
-              shortMode: true,
-              zoom: 1.1,
-            ),
+            config: WonderIllustrationConfig.mg(enableAnims: false, shortMode: true),
           ),
         ),
       ],

@@ -34,16 +34,12 @@ class PyramidsGizaIllustration extends StatelessWidget {
         ),
       ),
       Align(
-        alignment: config.shortMode ? Alignment.center : Alignment(.2, -.5),
-        child: FractionalTranslation(
-          translation: Offset(.7, config.shortMode ? .1 : -.1),
+          alignment: Alignment(.8, -.8),
           child: WonderHero(
             config,
             'pyramids-sun',
-            child: Image.asset('$assetPath/sun.png', opacity: anim),
-          ),
-        ),
-      ),
+            child: Image.asset('$assetPath/moon.png', opacity: anim),
+          )),
     ];
   }
 
@@ -53,38 +49,70 @@ class PyramidsGizaIllustration extends StatelessWidget {
         alignment: Alignment(0, config.shortMode ? 1 : 0),
         child: WonderHero(config, 'pyramids-mg',
             child: Transform.scale(
-              scale: (config.shortMode ? 0 : .8) + config.zoom,
-              child: Image.asset('$assetPath/pyramids.png', opacity: anim),
+              scale: 1 + config.zoom * .1,
+              child: FractionallySizedBox(
+                widthFactor: config.shortMode ? 1.2 : 1.5,
+                child: Image.asset('$assetPath/pyramids.png', opacity: anim),
+              ),
             )),
       ),
     ];
   }
 
   List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
-    final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
-      Transform.translate(
-          offset: Offset(0, (1 - curvedAnim) * 100),
-          child: Stack(children: [
-            BottomLeft(
-              child: Transform.scale(
-                scale: 1.2 + config.zoom * .1,
-                child: FractionalTranslation(
-                  translation: Offset(-.35, -.3),
-                  child: Image.asset('$assetPath/foreground-left.png', opacity: anim, width: 300, color: bgColor),
-                ),
-              ),
-            ),
-            BottomRight(
-              child: Transform.scale(
-                scale: .9 + config.zoom * .1,
-                child: FractionalTranslation(
-                  translation: Offset(.35 + .2 * (1 - curvedAnim), -.1),
-                  child: Image.asset('$assetPath/foreground-right.png', opacity: anim, width: 300, color: bgColor),
-                ),
-              ),
-            ),
-          ]))
+      Transform.scale(
+        scale: 1 + config.zoom * .1,
+        child: BottomCenter(
+          child: FractionallySizedBox(
+            widthFactor: 1.2,
+            child: FractionalTranslation(
+                translation: Offset(0, -1),
+                child: Image.asset('$assetPath/foreground-back.png', opacity: anim, fit: BoxFit.cover)),
+          ),
+        ),
+      ),
+      Transform.scale(
+        scale: 1 + config.zoom * .2,
+        child: BottomCenter(
+          child: FractionallySizedBox(
+            widthFactor: 1.2,
+            child: Image.asset('$assetPath/foreground-front.png', opacity: anim, fit: BoxFit.cover),
+          ),
+        ),
+      )
+      //
+      // Transform.scale(
+      //   scale: 1 + -.1 * (1 - curvedAnim),
+      //   child: Stack(
+      //     children: [
+      //       Transform.scale(
+      //         scale: 1 + config.zoom * .2,
+      //         child: BottomLeft(
+      //           child: FractionallySizedBox(
+      //             widthFactor: .6,
+      //             child: FractionalTranslation(
+      //               translation: Offset(-.1, .1),
+      //               child: Image.asset('$assetPath/foreground-back.png', opacity: anim, fit: BoxFit.cover),
+      //             ),
+      //           ),
+      //         ),
+      //       ),
+      //       Transform.scale(
+      //         scale: 1 + config.zoom * .16,
+      //         child: BottomRight(
+      //           child: FractionallySizedBox(
+      //             widthFactor: .7,
+      //             child: FractionalTranslation(
+      //               translation: Offset(.3, .2),
+      //               child: Image.asset('$assetPath/foreground-front.png', opacity: anim, fit: BoxFit.cover),
+      //             ),
+      //           ),
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      // )
     ];
   }
 }

@@ -66,12 +66,8 @@ class ColosseumIllustration extends StatelessWidget {
                 config,
                 'colosseum-mg',
                 child: Transform.scale(
-                  scale: config.shortMode ? .85 : 1.2 + config.zoom * .2,
-                  child: Image.asset(
-                    '$assetPath/colosseum.png',
-                    cacheWidth: context.widthPx.round() * 2,
-                    opacity: anim,
-                  ),
+                  scale: config.shortMode ? .85 : 1.3 + config.zoom * .2,
+                  child: Image.asset('$assetPath/colosseum.png', opacity: anim, fit: BoxFit.cover),
                 ),
               ),
             ),
@@ -84,30 +80,37 @@ class ColosseumIllustration extends StatelessWidget {
   List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
     final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
-      Transform.translate(
-          offset: Offset(0, (1 - curvedAnim) * 100),
-          child: Stack(children: [
-            BottomLeft(
-              child: Transform.scale(
-                scale: .6 + config.zoom * .35,
-                child: FractionalTranslation(
-                  translation: Offset(-.46, 0),
-                  child: Image.asset('$assetPath/berries-left.png',
-                      opacity: anim, cacheWidth: context.widthPx.round() * 3),
+      Transform.scale(
+        scale: 1 + -.1 * (1 - curvedAnim),
+        child: Stack(
+          children: [
+            Transform.scale(
+              scale: 1 + config.zoom * .2,
+              child: BottomLeft(
+                child: FractionallySizedBox(
+                  widthFactor: .6,
+                  child: FractionalTranslation(
+                    translation: Offset(-.1, .1),
+                    child: Image.asset('$assetPath/foreground-left.png', opacity: anim, fit: BoxFit.cover),
+                  ),
                 ),
               ),
             ),
-            BottomRight(
-              child: Transform.scale(
-                scale: .7 + config.zoom * .2,
-                child: FractionalTranslation(
-                  translation: Offset(.46, .1),
-                  child: Image.asset('$assetPath/berries-right.png',
-                      opacity: anim, cacheWidth: context.widthPx.round() * 3),
+            Transform.scale(
+              scale: 1 + config.zoom * .16,
+              child: BottomRight(
+                child: FractionallySizedBox(
+                  widthFactor: .7,
+                  child: FractionalTranslation(
+                    translation: Offset(.3, .2),
+                    child: Image.asset('$assetPath/foreground-right.png', opacity: anim, fit: BoxFit.cover),
+                  ),
                 ),
               ),
             ),
-          ]))
+          ],
+        ),
+      )
     ];
   }
 }

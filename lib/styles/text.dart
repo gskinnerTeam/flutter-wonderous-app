@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-@immutable
+//TODO: Remove all accessors from here once design is final
 class AppTextStyles {
   AppTextStyles(this.scale);
 
@@ -13,6 +13,7 @@ class AppTextStyles {
   final TextStyle wonderTitleFont = TextStyle(fontFamily: 'Yeseva');
   TextStyle get contentFont => TextStyle(fontFamily: 'Raleway', fontFeatures: const [
         FontFeature.enable('dlig'),
+        FontFeature.enable('kern'),
       ]);
 
   late TextStyle dropCase = copy(quoteFont, sizePx: 56, heightPx: 20);
@@ -35,6 +36,9 @@ class AppTextStyles {
   TextStyle get quote1 => copy(quoteFont, sizePx: 36, heightPx: 40, weight: FontWeight.w600, spacingPc: -3);
   late TextStyle quote2 = copy(quoteFont, sizePx: 21, heightPx: 32, weight: FontWeight.w400);
   late TextStyle quote2Sub = copy(body, sizePx: 16, heightPx: 40, weight: FontWeight.w400);
+
+  late TextStyle caption =
+      copy(contentFont, sizePx: 12, heightPx: 18, weight: FontWeight.w500).copyWith(fontStyle: FontStyle.italic);
 
   late TextStyle callout =
       copy(contentFont, sizePx: 16, heightPx: 26, weight: FontWeight.w600).copyWith(fontStyle: FontStyle.italic);

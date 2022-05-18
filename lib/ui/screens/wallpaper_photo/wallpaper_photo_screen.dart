@@ -21,8 +21,7 @@ class _WallpaperPhotoScreenState extends State<WallpaperPhotoScreen> {
   final GlobalKey _containerKey = GlobalKey();
   Widget? _illustration;
 
-  bool _isTextOn = true;
-  bool _isNightOn = false;
+  bool _showTitleText = true;
   Timer? _photoRetryTimer;
 
   @override
@@ -44,7 +43,7 @@ class _WallpaperPhotoScreenState extends State<WallpaperPhotoScreen> {
   }
 
   void _handleTextToggle(bool? isActive) {
-    setState(() => _isTextOn = isActive ?? !_isNightOn);
+    setState(() => _showTitleText = isActive ?? !_showTitleText);
   }
 
   @override
@@ -105,7 +104,7 @@ class _WallpaperPhotoScreenState extends State<WallpaperPhotoScreen> {
             ),
 
             // Title text
-            if (_isTextOn)
+            if (_showTitleText)
               BottomCenter(
                 child: Transform.translate(
                   offset: Offset(0.0, -context.insets.xl * 2),
@@ -164,14 +163,7 @@ class _WallpaperPhotoScreenState extends State<WallpaperPhotoScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            /* TODO: Figure out Night Mode
-            Switch(
-              value: _isNightOn,
-              onChanged: _handleNightToggle,
-            ),
-            Gap(context.insets.md),
-            */
-            SimpleCheckbox(active: _isTextOn, label: 'Show Title', onToggled: _handleTextToggle),
+            SimpleCheckbox(active: _showTitleText, label: 'Show Title', onToggled: _handleTextToggle),
             Gap(context.insets.xl),
           ],
         ),

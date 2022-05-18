@@ -6,7 +6,6 @@ class _TopContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void handleGlobalTimelinePressed() => context.push(ScreenPaths.timeline(data.type));
     return SizedBox(
       height: WonderEvents._topHeight,
       child: LightText(

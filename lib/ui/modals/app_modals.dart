@@ -2,7 +2,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 
-Future<bool> showModal(BuildContext context, {required Widget child}) async {
+Future<bool?> showModal(BuildContext context, {required Widget child}) async {
   var colors = context.read<AppStyle>().colors;
   return await showMaterialModalBottomSheet(
           expand: false, context: context, backgroundColor: colors.greyStrong, builder: (_) => child) ??

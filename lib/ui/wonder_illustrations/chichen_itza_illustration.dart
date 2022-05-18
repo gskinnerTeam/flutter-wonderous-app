@@ -8,7 +8,7 @@ import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_confi
 class ChichenItzaIllustration extends StatelessWidget {
   ChichenItzaIllustration({Key? key, required this.config}) : super(key: key);
   final WonderIllustrationConfig config;
-  final String assetPath = WonderType.chichenItza.assetPath;
+  final _assetPath = WonderType.chichenItza.assetPath;
   final fgColor = WonderType.chichenItza.fgColor;
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class ChichenItzaIllustration extends StatelessWidget {
             child: FractionalTranslation(
               translation: Offset(0, -.2 * anim.value),
               child: Image.asset(
-                '$assetPath/sun.png',
+                '$_assetPath/sun.png',
                 width: config.shortMode ? 120 : 200,
                 cacheWidth: context.widthPx.round() * 2,
                 opacity: anim,
@@ -54,10 +54,10 @@ class ChichenItzaIllustration extends StatelessWidget {
         alignment: Alignment(0, config.shortMode ? 1 : 0),
         child: WonderHero(config, 'chichen-mg',
             child: Transform.scale(
-              scale: config.zoom * (config.shortMode ? 1 : 1.6),
-              child: Image.asset(
-                '$assetPath/pyramid.png',
-                opacity: anim,
+              scale: 1 + config.zoom * .2,
+              child: FractionallySizedBox(
+                widthFactor: config.shortMode ? 1.3 : 2,
+                child: Image.asset('$_assetPath/chichen.png', opacity: anim, fit: BoxFit.cover),
               ),
             )),
       ),
@@ -67,28 +67,36 @@ class ChichenItzaIllustration extends StatelessWidget {
   List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
     final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
-      Transform.scale(
-        scale: (.5 + curvedAnim * .5) + (config.zoom - 1) / 3,
-        child: Transform.translate(
-            offset: Offset(0, (1 - curvedAnim) * 100),
-            child: Stack(children: [
-              BottomLeft(
-                child: FractionalTranslation(
-                  translation: Offset(-.3, -.3),
-                  child: Image.asset('$assetPath/agave-left.png', opacity: anim, cacheWidth: context.widthPx.round()),
-                ),
-              ),
-              BottomRight(
-                child: FractionalTranslation(
-                  translation: Offset(.35, -.35),
-                  child: Transform.scale(
-                    scale: 1.1,
-                    child:
-                        Image.asset('$assetPath/agave-right.png', opacity: anim, cacheWidth: context.widthPx.round()),
+      Transform.translate(
+        offset: Offset(0, 30) * (1 - curvedAnim),
+        child: Stack(
+          children: [
+            Transform.scale(
+              scale: 1 + config.zoom * .2,
+              child: BottomLeft(
+                child: FractionallySizedBox(
+                  widthFactor: 1,
+                  child: FractionalTranslation(
+                    translation: Offset(-.5, 0),
+                    child: Image.asset('$_assetPath/foreground-left.png', opacity: anim, fit: BoxFit.cover),
                   ),
                 ),
               ),
-            ])),
+            ),
+            Transform.scale(
+              scale: 1 + config.zoom * .1,
+              child: BottomRight(
+                child: FractionallySizedBox(
+                  widthFactor: .7,
+                  child: FractionalTranslation(
+                    translation: Offset(.47, -.2),
+                    child: Image.asset('$_assetPath/foreground-right.png', opacity: anim, fit: BoxFit.cover),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       )
     ];
   }

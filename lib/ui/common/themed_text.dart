@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:wonders/common_libs.dart';
 
 class DefaultTextColor extends StatelessWidget {

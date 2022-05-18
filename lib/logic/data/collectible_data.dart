@@ -15,7 +15,7 @@ class CollectibleData {
     required this.artifactId,
     required this.wonder,
   }) {
-    icon = AssetImage('${ImagePaths.collectibleIcons}/$iconName.png');
+    icon = AssetImage('${ImagePaths.collectibles}/$iconName.png');
   }
 
   final String title;
