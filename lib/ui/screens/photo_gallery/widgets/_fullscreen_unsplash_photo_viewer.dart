@@ -20,51 +20,18 @@ class _FullScreenUnsplashPhotoViewerState extends State<_FullScreenUnsplashPhoto
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: Colors.black,
-      child: Column(
+      color: context.colors.black,
+      child: Stack(
         children: [
-          Expanded(
-            child: InteractiveViewer(
-              child: UnsplashPhoto(
-                _id,
-                fit: BoxFit.contain,
-                size: UnsplashPhotoSize.xl,
-                showCredits: true,
-              ),
+          InteractiveViewer(
+            child: UnsplashPhoto(
+              _id,
+              fit: BoxFit.contain,
+              size: UnsplashPhotoSize.xl,
+              showCredits: true,
             ),
           ),
-          Container(
-            color: context.colors.greyStrong,
-            child: SafeArea(
-              top: false,
-              child: SizedBox(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Expanded(
-                      child: AppBtn.from(
-                        icon: Icons.chevron_left,
-                        semanticLabel: 'prev',
-                        onPressed: () => incrementId(-1),
-                      ),
-                    ),
-                    AppBtn.from(
-                      icon: Icons.close,
-                      semanticLabel: 'close',
-                      onPressed: () => Navigator.of(context).pop(_id),
-                    ),
-                    Expanded(
-                      child: AppBtn.from(
-                        icon: Icons.chevron_right,
-                        semanticLabel: 'next',
-                        onPressed: () => incrementId(1),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ).fx().slide(delay: context.times.pageTransition, begin: Offset(0, 1)),
+          BackBtn().safe(),
         ],
       ),
     );

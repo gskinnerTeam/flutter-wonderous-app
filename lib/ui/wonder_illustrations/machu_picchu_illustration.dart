@@ -68,27 +68,31 @@ class MachuPicchuIllustration extends StatelessWidget {
       ];
 
   List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
+    final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
-      Stack(children: [
-        BottomLeft(
-          child: Transform.scale(
-            scale: 1 + config.zoom * .2,
-            child: FractionalTranslation(
-              translation: Offset(-.4, 0),
-              child: Image.asset('$assetPath/foreground-left.png', opacity: anim),
+      Transform.translate(
+        offset: Offset(0, 20 * (1 - curvedAnim)),
+        child: Stack(children: [
+          BottomRight(
+            child: Transform.scale(
+              scale: 1 + config.zoom * .05,
+              child: FractionalTranslation(
+                translation: Offset(0, 0),
+                child: Image.asset('$assetPath/foreground-back.png', opacity: anim),
+              ),
             ),
           ),
-        ),
-        BottomRight(
-          child: Transform.scale(
-            scale: .9 + config.zoom * .05,
-            child: FractionalTranslation(
-              translation: Offset(.5, -.5),
-              child: Image.asset('$assetPath/foreground-right.png', opacity: anim),
+          BottomLeft(
+            child: Transform.scale(
+              scale: 1 + config.zoom * .2,
+              child: FractionalTranslation(
+                translation: Offset(-.35, .3),
+                child: Image.asset('$assetPath/foreground-front.png', opacity: anim),
+              ),
             ),
           ),
-        ),
-      ])
+        ]),
+      )
     ];
   }
 }

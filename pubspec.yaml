@@ -1,7 +1,7 @@
 name: wonders
 description: Explore the famous wonders of the world.
 publish_to: 'none'
-version: 1.0.0
+version: 1.1.0
 
 environment:
   sdk: ">=2.16.2 <3.0.0"
@@ -86,7 +86,6 @@ flutter:
     - assets/images/taj_mahal/
     - assets/images/_common/texture/
     - assets/images/collectibles/
-    - assets/images/collectibles/icons/
 
   fonts:
    - family: Cinzel

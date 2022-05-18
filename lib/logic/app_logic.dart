@@ -3,17 +3,14 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/platform_info.dart';
-import 'package:wonders/ui/common/modals/fullscreen_web_view.dart';
 import 'package:wonders/ui/common/utils/page_routes.dart';
 import 'package:wonders/ui/modals/app_modals.dart';
-import 'package:share_plus/share_plus.dart';
-import 'package:wonders/ui/screens/collectible_found/collectible_found_screen.dart';
 
 class AppLogic {
   /// Indicates to the rest of the app that bootstrap has not completed.
@@ -54,11 +51,11 @@ class AppLogic {
     // Time to create an image!
     Uint8List? pngBytes = await _getPngFromBoundary(boundary);
     if (pngBytes != null) {
-      bool result = await showModal(context,
+      bool? result = await showModal(context,
           child: OkCancelModal(
             msg: 'Save this poster to your photo gallery?',
           ));
-      if (result) {
+      if (result == true) {
         showModal(context, child: LoadingModal(msg: 'Saving Image. Please wait...'));
         if (PlatformInfo.isMobile) {
           await ImageGallerySaver.saveImage(pngBytes, quality: 95, name: name);

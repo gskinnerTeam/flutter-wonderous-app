@@ -1,3 +1,4 @@
+import 'package:flutter/scheduler.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/app_page_indicator.dart';
@@ -32,6 +33,10 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
   /// Set initial wonderIndex
   late int _wonderIndex = 0;
   int get _numWonders => _wonders.length;
+
+  /// Used to polish the transition when leaving this page for the details view.
+  /// Used to capture the _swipeAmt at the time of transition, and freeze the wonder foreground in place as we transition away.
+  double? _swipeOverride;
 
   /// Used to let the foreground fade in when this view is returned to (from details)
   bool _fadeInOnNextBuild = false;
@@ -77,8 +82,10 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
   }
 
   void _showDetailsPage() async {
+    _swipeOverride = _swipeController.swipeAmt.value;
     context.push(ScreenPaths.wonderDetails(currentWonder.type));
-    await Future.delayed(200.ms);
+    await Future.delayed(500.ms);
+    _swipeOverride = null;
     _fadeInOnNextBuild = true;
   }
 
@@ -216,7 +223,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
     return _swipeController.buildListener(builder: (swipeAmt, _, child) {
       final config = WonderIllustrationConfig.mg(
         isShowing: _isSelected(wonderType),
-        zoom: 1.3 + .05 * swipeAmt,
+        zoom: .05 * swipeAmt,
       );
       return WonderIllustration(wonderType, config: config);
     });
@@ -234,7 +241,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
       return _swipeController.buildListener(builder: (swipeAmt, _, child) {
         final config = WonderIllustrationConfig.fg(
           isShowing: _isSelected(e.type),
-          zoom: 1.3 + .4 * swipeAmt,
+          zoom: .4 * (_swipeOverride ?? swipeAmt),
         );
         return FXAnimate(
             fx: const [FadeFX()],

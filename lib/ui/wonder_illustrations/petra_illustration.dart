@@ -33,17 +33,13 @@ class PetraIllustration extends StatelessWidget {
         ),
       ),
       Align(
-        alignment: Alignment(.5, -.7),
+        alignment: Alignment(-.5, -.7),
         child: WonderHero(
           config,
           'petra-sun',
-          child: Transform.scale(
-            scale: config.shortMode ? 1.5 : 3,
-            child: Image.asset(
-              '$assetPath/moon.png',
-              cacheWidth: context.widthPx.round() * 2,
-              opacity: anim,
-            ),
+          child: Image.asset(
+            '$assetPath/moon.png',
+            opacity: anim,
           ),
         ),
       ),
@@ -57,12 +53,15 @@ class PetraIllustration extends StatelessWidget {
             config,
             'petra-mg',
             child: Transform.scale(
-              scale: (config.shortMode ? 1 : 1.5) + .2 * config.zoom,
-              child: Image.asset(
-                '$assetPath/petra.png',
-                cacheWidth: context.widthPx.round() * 2,
-                height: config.shortMode ? 220 : 600,
-                opacity: anim,
+              scale: 1 + config.zoom * .2,
+              child: FractionallySizedBox(
+                widthFactor: config.shortMode ? 1 : 1.5,
+                //scale: (config.shortMode ? 1 : 1.5) + .2 * config.zoom,
+                child: Image.asset(
+                  '$assetPath/petra.png',
+                  fit: BoxFit.cover,
+                  opacity: anim,
+                ),
               ),
             ),
           ),
@@ -72,34 +71,37 @@ class PetraIllustration extends StatelessWidget {
   List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
     final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
-      Stack(children: [
-        Transform.translate(
-          offset: Offset((1 - curvedAnim) * -100, 0),
-          child: BottomLeft(
-            child: Transform.scale(
-              scale: 1.2 + config.zoom * .05,
-              child: FractionalTranslation(
-                translation: Offset(-(config.zoom * .2) + .2, .1),
-                child: Image.asset('$assetPath/foreground-left.png',
-                    opacity: anim, cacheWidth: context.widthPx.round() * 3),
+      Transform.translate(
+        offset: Offset(0, 30) * (1 - curvedAnim),
+        child: Stack(
+          children: [
+            Transform.scale(
+              scale: 1 + config.zoom * .2,
+              child: BottomLeft(
+                child: FractionallySizedBox(
+                  widthFactor: 1,
+                  child: FractionalTranslation(
+                    translation: Offset(-.2, 0),
+                    child: Image.asset('$assetPath/foreground-left.png', opacity: anim, fit: BoxFit.cover),
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
-        Transform.translate(
-          offset: Offset((1 - curvedAnim) * 100, 0),
-          child: BottomRight(
-            child: Transform.scale(
-              scale: 1.2 + config.zoom * .05,
-              child: FractionalTranslation(
-                translation: Offset(config.zoom * .2 - .15, .1),
-                child: Image.asset('$assetPath/foreground-right.png',
-                    opacity: anim, cacheWidth: context.widthPx.round() * 3),
+            Transform.scale(
+              scale: 1 + config.zoom * .1,
+              child: BottomRight(
+                child: FractionallySizedBox(
+                  widthFactor: .7,
+                  child: FractionalTranslation(
+                    translation: Offset(.4 + config.zoom * .1, -0),
+                    child: Image.asset('$assetPath/foreground-right.png', opacity: anim, fit: BoxFit.cover),
+                  ),
+                ),
               ),
             ),
-          ),
+          ],
         ),
-      ])
+      )
     ];
   }
 }

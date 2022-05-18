@@ -1,6 +1,6 @@
 /// Indicates the current setup for a WonderIllustration, allowing the single widget to be used in a variety of contexts.
 class WonderIllustrationConfig {
-  static const _defaultZoom = 1.3;
+  static const double _defaultZoom = 1;
 
   const WonderIllustrationConfig({
     this.zoom = _defaultZoom,

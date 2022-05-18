@@ -78,7 +78,7 @@ class GreatWallIllustration extends StatelessWidget {
           child: Transform.translate(
             offset: Offset(20, 20) * (1 - curvedAnim),
             child: Transform.scale(
-              scale: .6 + config.zoom * .5,
+              scale: 1 + config.zoom * .3,
               child: FractionalTranslation(
                 translation: Offset(-.26, 0),
                 child: Image.asset('$assetPath/foreground-left.png',
@@ -89,11 +89,11 @@ class GreatWallIllustration extends StatelessWidget {
         ),
         BottomRight(
           child: Transform.translate(
-            offset: Offset((1 - curvedAnim) * 50, (1 - curvedAnim) * 100),
+            offset: Offset((1 - curvedAnim) * 20, (1 - curvedAnim) * 30),
             child: Transform.scale(
-              scale: .9 + config.zoom * .1,
+              scale: 1.5 + config.zoom * .1,
               child: FractionalTranslation(
-                translation: Offset(.46, -.5),
+                translation: Offset(.46, -.2),
                 child: Image.asset('$assetPath/foreground-right.png',
                     opacity: anim, cacheWidth: context.widthPx.round() * 3),
               ),

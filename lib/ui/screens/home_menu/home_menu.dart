@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:wonders/assets.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 

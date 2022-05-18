@@ -13,8 +13,6 @@ class AppPageIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ignore: prefer_const_declarations
-    final s = "d";
     return SmoothPageIndicator(
       controller: controller,
       count: count,

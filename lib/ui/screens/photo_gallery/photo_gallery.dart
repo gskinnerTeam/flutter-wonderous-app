@@ -1,10 +1,12 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/unsplash_photo_data.dart';
 import 'package:wonders/ui/common/animated_motion_blur.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
+import 'package:wonders/ui/common/controls/simple_header.dart';
 import 'package:wonders/ui/common/hidden_collectible.dart';
 import 'package:wonders/ui/common/unsplash_photo.dart';
 import 'package:wonders/ui/common/utils/page_routes.dart';
@@ -29,9 +31,9 @@ class _PhotoGalleryState extends State<PhotoGallery> {
   int _index = ((_gridSize * _gridSize) / 2).round();
   late int _prevIndex = _index;
   Offset _lastSwipeDir = Offset.zero;
-  final double _scale = .75;
+  final double _scale = .65;
   bool _skipNextOffsetTween = false;
-  late Duration swipeDuration = context.times.med * .6;
+  late Duration swipeDuration = context.times.med * .4;
   final _photoIds = ValueNotifier<List<String>>([]);
   int get _imgCount => pow(_gridSize, 2).round();
 
@@ -108,7 +110,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
     if (_index == index) {
       String? newId = await Navigator.push(
         context,
-        PageRoutes.fadeScale(_FullScreenUnsplashPhotoViewer(_photoIds.value[index], _photoIds.value)),
+        CupertinoPageRoute(builder: (_) => _FullScreenUnsplashPhotoViewer(_photoIds.value[index], _photoIds.value)),
       );
       if (newId != null) {
         _setIndex(_photoIds.value.indexOf(newId));
@@ -217,7 +219,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                           child: UnsplashPhoto(
                             imgUrl,
                             fit: BoxFit.cover,
-                            size: UnsplashPhotoSize.large,
+                            size: UnsplashPhotoSize.med,
                           ).fx().fade(),
                         ),
                       ),
