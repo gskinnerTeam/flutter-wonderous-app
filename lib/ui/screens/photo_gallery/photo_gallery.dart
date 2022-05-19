@@ -31,7 +31,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
   int _index = ((_gridSize * _gridSize) / 2).round();
   late int _prevIndex = _index;
   Offset _lastSwipeDir = Offset.zero;
-  final double _scale = .65;
+  final double _scale = 1;
   bool _skipNextOffsetTween = false;
   late Duration swipeDuration = context.times.med * .4;
   final _photoIds = ValueNotifier<List<String>>([]);
@@ -128,9 +128,9 @@ class _PhotoGalleryState extends State<PhotoGallery> {
           if (value.isEmpty) {
             return Center(child: AppLoader());
           }
-          Size imgSize = (widget.imageSize ?? Size(context.widthPx * .7, context.heightPx * .6)) * _scale;
+          Size imgSize = (widget.imageSize ?? Size(context.widthPx * .66, context.heightPx * .5)) * _scale;
           // Get transform offset for the current _index
-          final padding = context.insets.sm;
+          final padding = context.insets.md;
           var gridOffset = _calculateCurrentOffset(padding, imgSize);
           // For some reason we need to add in half of the top-padding when this view does not use a safeArea.
           // TODO: Try and figure out why we need to incorporate top padding here, it's counter-intuitive. Maybe GridView or another of the material components is doing something we don't want?
@@ -201,7 +201,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
             child: showCollectible
                 ? HiddenCollectible(widget.wonderType, index: 1, size: 100)
                 : ClipRRect(
-                    borderRadius: BorderRadius.circular(6),
+                    borderRadius: BorderRadius.circular(8),
                     child: AnimatedMotionBlur(
                       swipeDuration,
                       animationKey: ValueKey(_index),
