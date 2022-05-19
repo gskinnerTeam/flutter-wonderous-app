@@ -7,6 +7,7 @@ import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/controls/simple_header.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
+import 'package:wonders/ui/modals/app_modals.dart';
 
 part 'widgets/_collection_tile.dart';
 part 'widgets/_newly_discovered_row.dart';
@@ -86,7 +87,7 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
               scrollKey: _scrollKey,
               scrollWonder: scrollWonder,
               onPressed: (o) => _showDetails(context, o),
-              onReset: discovered + explored > 0 ? collectiblesLogic.reset : null,
+              onReset: discovered + explored > 0 ? _handleReset : null,
             ),
           ]),
         ),
@@ -96,5 +97,10 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
         ),
       ]),
     );
+  }
+
+  void _handleReset() async {
+    String msg = 'Are you sure you want to reset your collection?';
+    if (await showModal(context, child: OkCancelModal(msg: msg)) == true) collectiblesLogic.reset();
   }
 }
