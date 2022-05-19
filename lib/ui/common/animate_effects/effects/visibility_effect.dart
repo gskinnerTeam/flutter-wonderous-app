@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../fx.dart';
+import '../animate_effects.dart';
 
 // TODO: GDS: possibly add other properties of visibility as params?
 
@@ -8,8 +8,8 @@ import '../fx.dart';
 /// The `maintain` parameter is assigned to the [Visibility] properties 'maintainSize`,
 /// `maintainAnimation`, `maintainState`, and `maintainSemantics`.
 @immutable
-class VisibilityFX extends AbstractFX<bool> {
-  const VisibilityFX({Duration? delay, bool end = true, this.maintain = true})
+class VisibilityEffect extends Effect<bool> {
+  const VisibilityEffect({Duration? delay, bool end = true, this.maintain = true})
       : super(
           delay: delay,
           duration: Duration.zero,
@@ -20,7 +20,7 @@ class VisibilityFX extends AbstractFX<bool> {
   final bool maintain;
 
   @override
-  Widget build(BuildContext context, Widget child, AnimationController controller, FXEntry entry) {
+  Widget build(BuildContext context, Widget child, AnimationController controller, EffectEntry entry) {
     // instead of setting up an animation, we can optimize a bit to calculate the callback time once:
     double ratio = entry.begin.inMilliseconds / (controller.duration?.inMilliseconds ?? 0);
 
@@ -38,16 +38,16 @@ class VisibilityFX extends AbstractFX<bool> {
   }
 }
 
-extension CallbackFXExtensions<T> on FXManager<T> {
-  /// Adds a `.visibility()` extension to [FXManager] ([FXAnimate] and [FXAnimateList]).
+extension VisibilityEffectExtensions<T> on AnimateManager<T> {
+  /// Adds a `.visibility()` extension to [AnimateManager] ([Animate] and [AnimateList]).
   T visibility({Duration? delay, bool maintain = true, bool end = false}) =>
-      addFX(VisibilityFX(delay: delay, end: end, maintain: maintain));
+      addEffect(VisibilityEffect(delay: delay, end: end, maintain: maintain));
 
-  /// Adds a `.show()` extension to [FXManager] ([FXAnimate] and [FXAnimateList]). This creates a VisibilityFX with
+  /// Adds a `.show()` extension to [AnimateManager] ([Animate] and [AnimateList]). This creates a VisibilityEffect with
   /// `end=true`
-  T show({Duration? delay, bool maintain = true}) => addFX(VisibilityFX(delay: delay, end: true, maintain: maintain));
+  T show({Duration? delay, bool maintain = true}) => addEffect(VisibilityEffect(delay: delay, end: true, maintain: maintain));
 
-  /// Adds a `.hide()` extension to [FXManager] ([FXAnimate] and [FXAnimateList]). This creates a VisibilityFX with
+  /// Adds a `.hide()` extension to [AnimateManager] ([Animate] and [AnimateList]). This creates a VisibilityEffect with
   /// `end=false`
-  T hide({Duration? delay, bool maintain = true}) => addFX(VisibilityFX(delay: delay, end: false, maintain: maintain));
+  T hide({Duration? delay, bool maintain = true}) => addEffect(VisibilityEffect(delay: delay, end: false, maintain: maintain));
 }

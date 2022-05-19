@@ -17,7 +17,7 @@ class CollectibleFoundScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RepaintBoundary(
-      child: _buildIntro(context).fx().swap(
+      child: _buildIntro(context).animate().swap(
             delay: context.times.fast * 3.5,
             builder: (_) => _buildDetail(context),
           ),
@@ -27,7 +27,7 @@ class CollectibleFoundScreen extends StatelessWidget {
   Widget _buildIntro(BuildContext context) {
     Duration t = context.times.fast;
     return Stack(children: [
-      FXAnimate().custom(duration: t * 5, builder: (context, ratio, _) => _buildGradient(context, ratio, 0)),
+      Animate().custom(duration: t * 5, builder: (context, ratio, _) => _buildGradient(context, ratio, 0)),
 
       // icon is handled by Hero initially, then scales slowly:
       Center(
@@ -41,7 +41,7 @@ class CollectibleFoundScreen extends StatelessWidget {
               fit: BoxFit.contain,
             ),
           ),
-        ).fx().scale(begin: 1.5, end: 3, curve: Curves.easeInExpo, delay: t, duration: t * 3).fadeOut(),
+        ).animate().scale(begin: 1.5, end: 3, curve: Curves.easeInExpo, delay: t, duration: t * 3).fadeOut(),
       )
     ]);
   }
@@ -49,7 +49,7 @@ class CollectibleFoundScreen extends StatelessWidget {
   Widget _buildDetail(BuildContext context) {
     Duration t = context.times.fast;
     return Stack(key: ValueKey('detail'), children: [
-      FXAnimate().custom(duration: t, builder: (context, ratio, _) => _buildGradient(context, 1, ratio)),
+      Animate().custom(duration: t, builder: (context, ratio, _) => _buildGradient(context, 1, ratio)),
       _CelebrationParticles(fadeMs: (t * 6).inMilliseconds),
       SafeArea(
         child: Column(children: [
@@ -69,7 +69,7 @@ class CollectibleFoundScreen extends StatelessWidget {
           _buildCollectionButton(context),
         ]),
       ),
-      BackBtn.close().safe().fx().fade(delay: t * 4, duration: t * 2),
+      BackBtn.close().safe().animate().fade(delay: t * 4, duration: t * 2),
     ]);
   }
 
@@ -97,7 +97,7 @@ class CollectibleFoundScreen extends StatelessWidget {
     Duration t = context.times.fast;
     // build an image with animated shadows and scaling
     return ImageFade(image: imageProvider, duration: t * 0.5)
-        .fx()
+        .animate()
         .custom(
           duration: t * 6,
           builder: (_, ratio, child) => Container(
@@ -123,7 +123,7 @@ class CollectibleFoundScreen extends StatelessWidget {
   Widget _buildRibbon(BuildContext context) {
     Duration t = context.times.fast;
     return _AnimatedRibbon('Artifact Discovered'.toUpperCase())
-        .fx()
+        .animate()
         .scale(begin: 0.3, duration: t * 2, curve: Curves.easeOutExpo, alignment: Alignment(0, -1));
   }
 
@@ -132,7 +132,7 @@ class CollectibleFoundScreen extends StatelessWidget {
     // because this is a performance-sensitive screen, we are fading in the text by adjusting color:
     return Container(
       padding: EdgeInsets.symmetric(horizontal: context.insets.lg),
-      child: FXAnimate().custom(
+      child: Animate().custom(
         delay: delay,
         duration: t * 2,
         builder: (_, m, __) => Text(
@@ -158,6 +158,6 @@ class CollectibleFoundScreen extends StatelessWidget {
           context.push(ScreenPaths.collection(collectible.id));
         },
       ),
-    ).fx().show(delay: t * 4).move(begin: Offset(0, context.insets.md), duration: t * 3, curve: Curves.easeOutExpo);
+    ).animate().show(delay: t * 4).move(begin: Offset(0, context.insets.md), duration: t * 3, curve: Curves.easeOutExpo);
   }
 }

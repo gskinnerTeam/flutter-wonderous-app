@@ -150,7 +150,7 @@ class _TabBtn extends StatelessWidget {
             /// Dot, shows when selected
             Positioned.fill(
               child: BottomCenter(
-                child: buildDot().fx(key: ValueKey(selected)).fade(begin: selected ? 0 : 1, end: selected ? 1 : 0).move(
+                child: buildDot().animate(key: ValueKey(selected)).fade(begin: selected ? 0 : 1, end: selected ? 1 : 0).move(
                     curve: selected ? Curves.easeOutBack : Curves.easeIn,
                     duration: context.times.med,
                     begin: Offset(0, selected ? 30 : 5),

@@ -37,6 +37,6 @@ class _AnimatedRibbon extends StatelessWidget {
     Widget end = Image.asset('${ImagePaths.collectibles}/ribbon_end.png', height: height);
     if (flip) end = Transform.scale(scaleX: -1, child: end);
     double m = flip ? 1 : -1;
-    return end.fx().move(begin: Offset(m * 8, 2), end: Offset(m * 32, 10), duration: 400.ms, curve: Curves.easeOut);
+    return end.animate().move(begin: Offset(m * 8, 2), end: Offset(m * 32, 10), duration: 400.ms, curve: Curves.easeOut);
   }
 }

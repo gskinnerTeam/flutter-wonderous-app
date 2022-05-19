@@ -40,9 +40,9 @@ class _EventPopupsState extends State<_EventPopups> {
             duration: context.times.fast,
             child: evt == null
                 ? SizedBox.shrink()
-                : FXAnimate(
-                    fx: const [
-                      SlideFX(begin: Offset(0, -.1)),
+                : Animate(
+                    effects: const [
+                      SlideEffect(begin: Offset(0, -.1)),
                     ],
                     key: ValueKey(_eventToShow?.year),
                     child: IntrinsicHeight(

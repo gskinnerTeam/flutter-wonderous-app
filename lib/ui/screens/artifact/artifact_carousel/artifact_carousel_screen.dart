@@ -223,8 +223,8 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
 
             _loadedArtifacts.isEmpty
                 ? AppLoader()
-                : FXAnimate(
-                    fx: const [FadeFX()],
+                : Animate(
+                    effects: const [FadeEffect()],
                     key: ValueKey(_currentArtifact?.artifactId),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,

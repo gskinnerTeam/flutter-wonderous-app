@@ -19,16 +19,16 @@ class _TitleText extends StatelessWidget {
                 Expanded(
                   child: Divider(
                     color: data.type.fgColor,
-                  ).fx().scale(curve: Curves.easeOut, delay: 500.ms),
+                  ).animate().scale(curve: Curves.easeOut, delay: 500.ms),
                 ),
                 Text(
                   data.subTitle.toUpperCase(),
                   style: context.textStyles.title2,
-                ).fx().fade(delay: 100.ms),
+                ).animate().fade(delay: 100.ms),
                 Expanded(
                   child: Divider(
                     color: data.type.fgColor,
-                  ).fx().scale(curve: Curves.easeOut, delay: 500.ms),
+                  ).animate().scale(curve: Curves.easeOut, delay: 500.ms),
                 ),
               ],
             ),

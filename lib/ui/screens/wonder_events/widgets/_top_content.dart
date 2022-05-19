@@ -90,7 +90,7 @@ class _TopContent extends StatelessWidget {
           style: context.text.body.copyWith(color: context.colors.accent2),
         ),
       ],
-    ).fx().fade(delay: context.times.pageTransition);
+    ).animate().fade(delay: context.times.pageTransition);
   }
 
   Container _buildDot(BuildContext context) {

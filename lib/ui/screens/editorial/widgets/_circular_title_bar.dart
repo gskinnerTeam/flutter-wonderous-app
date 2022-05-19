@@ -36,7 +36,7 @@ class _CircularTitleBar extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.only(bottom: 16),
                 child: Image.asset('${ImagePaths.common}/${icons[index]}')
-                    .fx(key: ValueKey(index))
+                    .animate(key: ValueKey(index))
                     .fade()
                     .scale(begin: .5, curve: Curves.easeOutBack, duration: context.times.med),
               ),

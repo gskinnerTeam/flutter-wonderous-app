@@ -1,12 +1,12 @@
 import 'package:flutter/widgets.dart';
 
-import '../fx.dart';
+import '../animate_effects.dart';
 
-/// Effect that moves the target (via `Transform.translate`) between the specified begin and end offsets.
+/// Effect that moves the target (via [Transform.translate]) between the specified begin and end offsets.
 /// Defaults to `begin=Offset(0, -16), end=Offset.zero`.
 @immutable
-class MoveFX extends AbstractFX<Offset> {
-  const MoveFX({Duration? delay, Duration? duration, Curve? curve, Offset? begin, Offset? end})
+class MoveEffect extends Effect<Offset> {
+  const MoveEffect({Duration? delay, Duration? duration, Curve? curve, Offset? begin, Offset? end})
       : super(
             delay: delay,
             duration: duration,
@@ -15,7 +15,7 @@ class MoveFX extends AbstractFX<Offset> {
             end: end ?? Offset.zero);
 
   @override
-  Widget build(BuildContext context, Widget child, AnimationController controller, FXEntry entry) {
+  Widget build(BuildContext context, Widget child, AnimationController controller, EffectEntry entry) {
     Animation<Offset> animation = buildAnimation(controller, entry);
     return AnimatedBuilder(
         animation: animation,
@@ -27,8 +27,8 @@ class MoveFX extends AbstractFX<Offset> {
   }
 }
 
-extension MoveFXExtensions<T> on FXManager<T> {
-  /// Adds a `.move()` extension to [FXManager] ([FXAnimate] and [FXAnimateList]).
+extension MoveEffectExtensions<T> on AnimateManager<T> {
+  /// Adds a `.move()` extension to [AnimateManager] ([Animate] and [AnimateList]).
   T move({Duration? delay, Duration? duration, Curve? curve, Offset? begin, Offset? end}) =>
-      addFX(MoveFX(delay: delay, duration: duration, curve: curve, begin: begin, end: end));
+      addEffect(MoveEffect(delay: delay, duration: duration, curve: curve, begin: begin, end: end));
 }

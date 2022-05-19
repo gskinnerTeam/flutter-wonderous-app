@@ -243,8 +243,8 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
           isShowing: _isSelected(e.type),
           zoom: .4 * (_swipeOverride ?? swipeAmt),
         );
-        return FXAnimate(
-            fx: const [FadeFX()],
+        return Animate(
+            effects: const [FadeEffect()],
             onInit: _handleFadeAnimInit,
             child: IgnorePointer(child: WonderIllustration(e.type, config: config)));
       });

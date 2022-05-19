@@ -16,7 +16,7 @@ class _Content extends StatelessWidget {
             Text(
               data.culture.toUpperCase(),
               style: context.textStyles.titleFont.copyWith(color: context.colors.accent1),
-            ).fx().fade(delay: 150.ms, duration: 600.ms),
+            ).animate().fade(delay: 150.ms, duration: 600.ms),
             Gap(context.insets.xs),
           ],
 
@@ -26,13 +26,13 @@ class _Content extends StatelessWidget {
             style: context.textStyles.h2.copyWith(color: context.colors.offWhite, height: 1.2),
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
-          ).fx().fade(delay: 250.ms, duration: 600.ms),
+          ).animate().fade(delay: 250.ms, duration: 600.ms),
 
           Gap(context.insets.lg),
 
-          FXRunAnimated((_, value) {
+          Animate().toggle(delay: 500.ms, builder: (_, value, __) {
             return CompassDivider(isExpanded: !value, duration: context.times.med);
-          }, delay: 500.ms),
+          }),
 
           Gap(context.insets.lg),
 
@@ -44,7 +44,7 @@ class _Content extends StatelessWidget {
             _InfoRow('Dimension', data.dimension),
             _InfoRow('Classification', data.classification),
           ]
-              .fx(interval: 100.ms)
+              .animate(interval: 100.ms)
               .fade(delay: 600.ms, duration: context.times.med)
               .slide(begin: Offset(0.2, 0), curve: Curves.easeOut),
           

@@ -1,17 +1,17 @@
 import 'dart:ui';
 import 'package:flutter/widgets.dart';
 
-import '../fx.dart';
+import '../animate_effects.dart';
 
 /// Effect that animates a blur on the target between the specified begin and end values.
 /// Defaults to a blur radius of `begin=0, end=4`.
 @immutable
-class BlurFX extends AbstractFX<double> {
-  const BlurFX({Duration? delay, Duration? duration, Curve? curve, double? begin, double? end})
+class BlurEffect extends Effect<double> {
+  const BlurEffect({Duration? delay, Duration? duration, Curve? curve, double? begin, double? end})
       : super(delay: delay, duration: duration, curve: curve, begin: begin ?? 0.0, end: end ?? 4.0);
 
   @override
-  Widget build(BuildContext context, Widget child, AnimationController controller, FXEntry entry) {
+  Widget build(BuildContext context, Widget child, AnimationController controller, EffectEntry entry) {
     Animation animation = buildAnimation(controller, entry);
     return AnimatedBuilder(
       animation: animation,
@@ -27,8 +27,8 @@ class BlurFX extends AbstractFX<double> {
   }
 }
 
-extension BlurFXExtensions<T> on FXManager<T> {
-  /// Adds a `.blur()` extension to [FXManager] ([FXAnimate] and [FXAnimateList]).
+extension BlurEffectExtensions<T> on AnimateManager<T> {
+  /// Adds a `.blur()` extension to [AnimateManager] ([Animate] and [AnimateList]).
   T blur({Duration? delay, Duration? duration, Curve? curve, double? begin, double? end}) =>
-      addFX(BlurFX(delay: delay, duration: duration, curve: curve, begin: begin, end: end));
+      addEffect(BlurEffect(delay: delay, duration: duration, curve: curve, begin: begin, end: end));
 }

@@ -30,8 +30,8 @@ class _AnimatedMotionBlurState extends State<AnimatedMotionBlur> {
   @override
   Widget build(BuildContext context) {
     timeDilation = 1;
-    return FXAnimate(
-      fx: [CustomFX(builder: _buildBlur, duration: widget.duration, curve: Curves.easeOut)],
+    return Animate(
+      effects: [CustomEffect(builder: _buildBlur, duration: widget.duration, curve: Curves.easeOut)],
       onInit: (t) => _blur = t,
       child: widget.child,
     );

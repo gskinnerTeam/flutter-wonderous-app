@@ -48,7 +48,7 @@ class HomeMenu extends StatelessWidget {
                 children: [
                   Spacer(flex: 3),
                   _buildIconGrid(context)
-                      .fx()
+                      .animate()
                       .fade(duration: context.times.fast * 1.5)
                       .scale(begin: .8, curve: Curves.easeOut),
                   Spacer(flex: 2),
@@ -90,7 +90,7 @@ class HomeMenu extends StatelessWidget {
 
   Widget _buildBottomBtns(BuildContext context) {
     return SeparatedColumn(
-      separatorBuilder: () => Divider(thickness: 1.5, height: 1).fx().scale(
+      separatorBuilder: () => Divider(thickness: 1.5, height: 1).animate().scale(
             duration: context.times.slow,
             delay: context.times.pageTransition + 200.ms,
             curve: Curves.easeOutBack,
@@ -100,7 +100,7 @@ class HomeMenu extends StatelessWidget {
         _MenuTextBtn(label: 'View your collection', onPressed: () => _handleCollectionPressed(context)),
         _MenuTextBtn(label: 'About this app', onPressed: _handleAboutPressed),
       ]
-          .fx(interval: 80.ms)
+          .animate(interval: 80.ms)
           .fade(delay: context.times.pageTransition + 100.ms)
           .slide(begin: Offset(0, .1), curve: Curves.easeOut),
     );

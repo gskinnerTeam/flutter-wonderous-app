@@ -52,8 +52,8 @@ class ScalingViewportState extends State<_ScrollingViewport> {
         onScaleStart: controller._handleScaleStart,
         behavior: HitTestBehavior.translucent,
         // Fade in entire view when first shown
-        child: FXAnimate(
-          fx: const [FadeFX()],
+        child: Animate(
+          effects: const [FadeEffect()],
           child: Stack(
             children: [
               Column(
@@ -94,7 +94,7 @@ class ScalingViewportState extends State<_ScrollingViewport> {
           final style = context.text.body.copyWith(color: context.colors.offWhite);
           return AnimatedSwitcher(
             duration: context.times.fast,
-            child: Text(era, key: ValueKey(era), style: style).fx(key: ValueKey(era)).slide(begin: Offset(0, .2)),
+            child: Text(era, key: ValueKey(era), style: style).animate(key: ValueKey(era)).slide(begin: Offset(0, .2)),
           );
         });
   }

@@ -8,25 +8,26 @@ class AnimatedListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Use a FxRunAnimated to build the child twice, this will allow it to properly measure its size and position.
-    return FXRunAnimated(
-      (_, value) => ValueListenableBuilder(
-          valueListenable: scrollPos,
-          builder: (_, value, __) {
-            return LayoutBuilder(
-              builder: (_, constraints) {
-                Offset? pos = ContextUtils.getGlobalPos(context);
-                final yPos = pos?.dy;
-                final widgetHeight = constraints.maxHeight;
-                double pctVisible = 0;
-                if (yPos != null) {
-                  final amtVisible = context.heightPx - yPos;
-                  pctVisible = (amtVisible / widgetHeight * .5).clamp(0, 1);
-                }
-                return builder(context, pctVisible);
-              },
-            );
-          }),
+    // Use Animate.toggle to build the child twice, this will allow it to properly measure its size and position.
+    return Animate().toggle(
+      builder: (_, value, __) => ValueListenableBuilder(
+        valueListenable: scrollPos,
+        builder: (_, value, __) {
+          return LayoutBuilder(
+            builder: (_, constraints) {
+              Offset? pos = ContextUtils.getGlobalPos(context);
+              final yPos = pos?.dy;
+              final widgetHeight = constraints.maxHeight;
+              double pctVisible = 0;
+              if (yPos != null) {
+                final amtVisible = context.heightPx - yPos;
+                pctVisible = (amtVisible / widgetHeight * .5).clamp(0, 1);
+              }
+              return builder(context, pctVisible);
+            },
+          );
+        },
+      ),
     );
   }
 }
