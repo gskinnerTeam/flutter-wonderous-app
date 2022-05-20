@@ -20,7 +20,8 @@ class ImagePaths {
   static String cloud = '$common/cloud-white.png';
 
   static String collectibles = '$root/collectibles';
-  static String sparkle = '$collectibles/sparkle_21x23.png';
+  static String particle = '$common/particle-21x23.png';
+  static String ribbonEnd = '$common/ribbon-end.png';
 
   static String textures = '$common/texture';
   static String speckles = '$textures/speckles-white.png';

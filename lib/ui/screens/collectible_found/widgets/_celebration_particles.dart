@@ -14,7 +14,7 @@ class _CelebrationParticles extends StatelessWidget {
       child: RepaintBoundary(
         child: ParticleField(
           spriteSheet: SpriteSheet(
-            image: AssetImage(ImagePaths.sparkle),
+            image: AssetImage(ImagePaths.particle),
             frameWidth: 21,
             scale: 0.75,
           ),
