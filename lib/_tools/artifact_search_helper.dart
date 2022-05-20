@@ -277,7 +277,26 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
     // but don't count multiple times for a single item
     for (int i = 0; i < data.length; i++) {
       ignore.clear();
-      ignore.addAll(['and', 'the', 'with', 'from', 'for', 'form', 'probably', 'back', 'front', 'under', 'his', 'one', 'two', 'three', 'four', 'part', 'called', 'over']);
+      ignore.addAll([
+        'and',
+        'the',
+        'with',
+        'from',
+        'for',
+        'form',
+        'probably',
+        'back',
+        'front',
+        'under',
+        'his',
+        'one',
+        'two',
+        'three',
+        'four',
+        'part',
+        'called',
+        'over'
+      ]);
       SearchData o = data[i];
       RegExp re = RegExp(r'\b\w{3,}\b');
       List<Match> matches = re.allMatches(o.title).toList() + re.allMatches(o.keywords).toList();

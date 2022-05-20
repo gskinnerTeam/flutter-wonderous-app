@@ -1,13 +1,7 @@
-import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:equatable/equatable.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:wonders/logic/data/wonder_type.dart';
 import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
 
-part 'wonder_data.g.dart';
-
-@JsonSerializable()
-@CopyWith()
 class WonderData extends Equatable {
   const WonderData({
     required this.type,
@@ -48,7 +42,6 @@ class WonderData extends Equatable {
     this.searchSuggestions = const [],
   });
 
-  @JsonKey(defaultValue: WonderType.chichenItza)
   final WonderType type;
   final String title;
   final String subTitle;
@@ -87,9 +80,6 @@ class WonderData extends Equatable {
   final List<String> searchSuggestions;
 
   String get titleWithBreaks => title.replaceFirst(' ', '\n');
-
-  factory WonderData.fromJson(Map<String, dynamic> json) => _$WonderDataFromJson(json);
-  Map<String, dynamic> toJson() => _$WonderDataToJson(this);
 
   @override
   List<Object?> get props => [type, title, historyInfo1, imageIds, facts];

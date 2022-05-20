@@ -149,11 +149,11 @@ class _MenuTextBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBtn(
       expand: true,
-      child: Text(label, style: context.text.bodyBold),
       padding: EdgeInsets.symmetric(vertical: context.insets.sm),
       onPressed: onPressed,
       bgColor: Colors.transparent,
       semanticLabel: label,
+      child: Text(label, style: context.text.bodyBold),
     );
   }
 }

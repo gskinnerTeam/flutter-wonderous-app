@@ -26,7 +26,6 @@ class GradientContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) => IgnorePointer(
         child: Container(
-          child: child,
           width: width,
           height: height,
           alignment: alignment,
@@ -40,6 +39,7 @@ class GradientContainer extends StatelessWidget {
             backgroundBlendMode: blendMode,
             borderRadius: borderRadius,
           ),
+          child: child,
         ),
       );
 }

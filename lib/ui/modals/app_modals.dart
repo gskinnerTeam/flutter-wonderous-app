@@ -20,8 +20,8 @@ class LoadingModal extends StatelessWidget {
     return _BaseContentModal(
       title: title,
       msg: msg,
-      child: child,
       buttons: const [],
+      child: child,
     );
   }
 }
@@ -37,10 +37,10 @@ class OkModal extends StatelessWidget {
     return _BaseContentModal(
       title: title,
       msg: msg,
-      child: child,
       buttons: [
         AppBtn.from(text: 'Ok', expand: true, isSecondary: true, onPressed: () => Navigator.of(context).pop(true)),
       ],
+      child: child,
     );
   }
 }
@@ -56,12 +56,12 @@ class OkCancelModal extends StatelessWidget {
     return _BaseContentModal(
       title: title,
       msg: msg,
-      child: child,
       buttons: [
         AppBtn.from(text: 'Ok', expand: true, isSecondary: true, onPressed: () => Navigator.of(context).pop(true)),
         Gap(context.insets.xs),
         AppBtn.from(text: 'Cancel', expand: true, onPressed: () => Navigator.of(context).pop(false)),
       ],
+      child: child,
     );
   }
 }

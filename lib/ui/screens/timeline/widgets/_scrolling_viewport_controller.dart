@@ -2,7 +2,7 @@ part of '../timeline_screen.dart';
 
 class _ScrollingViewportController extends ChangeNotifier {
   _ScrollingViewportController(this.state);
-  final ScalingViewportState state;
+  final _ScalingViewportState state;
 
   int get startYr => wondersLogic.startYear;
   int get endYr => wondersLogic.endYear;

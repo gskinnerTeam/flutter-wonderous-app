@@ -135,7 +135,7 @@ class _OpenedTimeRange extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> _timelineGrid = List.generate(5, (_) => Container(width: 1, color: context.colors.black));
+    List<Widget> timelineGrid = List.generate(5, (_) => Container(width: 1, color: context.colors.black));
 
     final headingTextStyle = context.textStyles.title1.copyWith(color: context.colors.offWhite, fontSize: 18);
     final captionTextStyle = context.text.bodySmall.copyWith(color: context.colors.greyMedium);
@@ -180,7 +180,7 @@ class _OpenedTimeRange extends StatelessWidget {
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: _timelineGrid,
+                children: timelineGrid,
               ),
             ),
 

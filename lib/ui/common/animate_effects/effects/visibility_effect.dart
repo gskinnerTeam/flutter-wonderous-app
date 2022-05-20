@@ -28,12 +28,12 @@ class VisibilityEffect extends Effect<bool> {
     return AnimatedBuilder(
       animation: controller,
       builder: (context, _) => Visibility(
-        child: child,
         visible: begin! == (controller.value < ratio),
         maintainSize: maintain,
         maintainAnimation: maintain,
         maintainState: maintain,
         maintainSemantics: maintain,
+        child: child,
       ),
     );
   }
@@ -46,9 +46,11 @@ extension VisibilityEffectExtensions<T> on AnimateManager<T> {
 
   /// Adds a `.show()` extension to [AnimateManager] ([Animate] and [AnimateList]). This creates a VisibilityEffect with
   /// `end=true`
-  T show({Duration? delay, bool maintain = true}) => addEffect(VisibilityEffect(delay: delay, end: true, maintain: maintain));
+  T show({Duration? delay, bool maintain = true}) =>
+      addEffect(VisibilityEffect(delay: delay, end: true, maintain: maintain));
 
   /// Adds a `.hide()` extension to [AnimateManager] ([Animate] and [AnimateList]). This creates a VisibilityEffect with
   /// `end=false`
-  T hide({Duration? delay, bool maintain = true}) => addEffect(VisibilityEffect(delay: delay, end: false, maintain: maintain));
+  T hide({Duration? delay, bool maintain = true}) =>
+      addEffect(VisibilityEffect(delay: delay, end: false, maintain: maintain));
 }

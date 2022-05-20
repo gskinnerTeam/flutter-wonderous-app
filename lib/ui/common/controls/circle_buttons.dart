@@ -25,10 +25,10 @@ class CircleBtn extends StatelessWidget {
       semanticLabel: semanticLabel,
       minimumSize: Size(sz, sz),
       padding: EdgeInsets.zero,
-      child: child,
       circular: true,
       bgColor: bgColor,
       border: border,
+      child: child,
     );
   }
 }
@@ -59,12 +59,12 @@ class CircleIconBtn extends StatelessWidget {
     Color defaultColor = context.colors.greyStrong;
     Color iconColor = color ?? context.colors.offWhite;
     return CircleBtn(
-      child: Icon(icon, size: iconSize ?? context.insets.md, color: iconColor),
       onPressed: onPressed,
       border: border,
       size: size,
       bgColor: bgColor ?? defaultColor,
       semanticLabel: semanticLabel,
+      child: Icon(icon, size: iconSize ?? context.insets.md, color: iconColor),
     );
   }
 

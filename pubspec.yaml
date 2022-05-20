@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  animations: ^2.0.2
+#  animations: ^2.0.2
   collection: ^1.15.0
   copy_with_extension: ^4.0.0
   device_info_plus: ^3.2.3
@@ -37,9 +37,12 @@ dependencies:
   memoize: ^3.0.0
   modal_bottom_sheet: ^2.0.0
   path_provider: ^2.0.10
-  performance: ^0.1.0+1
+  performance:
+    git:
+      url: https://github.com/creativecreatorormaybenot/performance.git
+      ref: e7c27813319ca14c4ca8c03a105bc6da21d8cf2c
+      path: performance/
   provider: ^6.0.2
-  reactives: ^0.2.0
   rnd: ^0.2.0
   image_fade: ^0.6.1
   screenshot: ^1.2.3
@@ -51,14 +54,15 @@ dependencies:
   system_info: ^1.0.1
   window_interface: ^0.5.0
   unsplash_client: ^2.1.0+3
-  youtube_player_iframe: ^2.2.2
-  visibility_detector: ^0.2.2
+  youtube_player_iframe: ^2.3.0
+  visibility_detector: ^0.3.3
+  http: ^0.13.4
 
 dev_dependencies:
   build_runner: ^2.1.10
   copy_with_extension_gen: ^4.0.1
   flutter_launcher_icons: ^0.9.2
-  flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
   integration_test:

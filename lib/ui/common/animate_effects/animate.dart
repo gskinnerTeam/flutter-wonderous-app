@@ -195,11 +195,11 @@ extension AnimateWidgetExtensions on Widget {
   }) =>
       Animate(
         key: key,
-        child: this,
         effects: effects,
         onComplete: onComplete,
         onInit: onInit,
         delay: delay,
+        child: this,
       );
 }
 

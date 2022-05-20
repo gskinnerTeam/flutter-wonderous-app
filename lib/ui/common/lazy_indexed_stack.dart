@@ -18,10 +18,10 @@ class LazyIndexedStack extends StatefulWidget {
   final List<Widget> children;
 
   @override
-  _LazyIndexedStackState createState() => _LazyIndexedStackState();
+  LazyIndexedStackState createState() => LazyIndexedStackState();
 }
 
-class _LazyIndexedStackState extends State<LazyIndexedStack> {
+class LazyIndexedStackState extends State<LazyIndexedStack> {
   late List<bool> _activated = _initializeActivatedList();
 
   List<bool> _initializeActivatedList() => List<bool>.generate(widget.children.length, (i) => i == widget.index);

@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 
 import 'animate_effects.dart';
 
-
 /// Applies animated effects to a list of widgets. It does this by wrapping each
 /// widget in [Animate], and then proxying `add` calls to all instances. It can
 /// also offset the timing of each widget's animation via `interval`.
@@ -30,7 +29,7 @@ class AnimateList<T extends Widget> extends ListBase<Widget> with AnimateManager
   /// Widget types to ignore in a list. By default, includes [Spacer].
   /// You can modify this list as appropriate. For example, to ignore a
   /// hypothetical "Gap" widget type:
-  /// 
+  ///
   ///     AnimateList.ignoreTypes.add(Gap);
   static Set<Type> ignoreTypes = {Spacer};
 
@@ -49,7 +48,11 @@ class AnimateList<T extends Widget> extends ListBase<Widget> with AnimateManager
       // add onComplete to last child, stripping the controller param:
       AnimateCallback? f = i == children.length - 1 && onComplete != null ? (_) => onComplete() : null;
       if (!ignoreTypes.contains(type)) {
-        child = Animate(child: child, delay: (interval ?? Duration.zero) * i, onComplete: f);
+        child = Animate(
+          delay: (interval ?? Duration.zero) * i,
+          onComplete: f,
+          child: child,
+        );
         _managers.add(child as Animate);
       }
       _widgets.add(child);

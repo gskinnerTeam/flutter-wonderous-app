@@ -6,7 +6,7 @@ class RestUtils {
     params.forEach((key, value) {
       if (!StringUtils.isEmpty(value) && value != 'null') {
         var urlEncode = Uri.encodeComponent(value);
-        s += (s == '' ? '?' : '&') + '$key=$urlEncode';
+        s += '${s == '' ? '?' : '&'}$key=$urlEncode';
       }
     });
     return s;

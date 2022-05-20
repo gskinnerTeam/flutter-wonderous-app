@@ -3,6 +3,7 @@ part of '../timeline_screen.dart';
 class _ScrollingViewport extends StatefulWidget {
   const _ScrollingViewport({
     Key? key,
+    // ignore: unused_element
     this.onInit,
     required this.scroller,
     required this.minSize,
@@ -16,10 +17,10 @@ class _ScrollingViewport extends StatefulWidget {
   final void Function(_ScrollingViewportController controller)? onInit;
 
   @override
-  State<_ScrollingViewport> createState() => ScalingViewportState();
+  State<_ScrollingViewport> createState() => _ScalingViewportState();
 }
 
-class ScalingViewportState extends State<_ScrollingViewport> {
+class _ScalingViewportState extends State<_ScrollingViewport> {
   late final _ScrollingViewportController controller = _ScrollingViewportController(this);
   static const double _minTimelineSize = 100;
   final _currentEventMarker = ValueNotifier<TimelineEvent?>(null);

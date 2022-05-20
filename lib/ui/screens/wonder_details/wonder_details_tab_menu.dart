@@ -71,8 +71,8 @@ class WonderDetailsTabMenu extends StatelessWidget {
                       offset: Offset(0, 100 * (1 - curvedValue)),
                       child: AnimatedOpacity(
                         opacity: showHomeBtn ? 1 : 0,
-                        child: child!,
                         duration: context.times.fast,
+                        child: child!,
                       ),
                     ),
                   );
@@ -137,6 +137,8 @@ class _TabBtn extends StatelessWidget {
     return Expanded(
       child: AppBtn.basic(
         padding: EdgeInsets.symmetric(vertical: context.insets.md),
+        onPressed: () => tabController.index = index,
+        semanticLabel: label,
         child: Stack(
           children: [
             /// Image icon
@@ -159,8 +161,6 @@ class _TabBtn extends StatelessWidget {
             )
           ],
         ),
-        onPressed: () => tabController.index = index,
-        semanticLabel: label,
       ),
     );
   }

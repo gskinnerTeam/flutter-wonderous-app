@@ -22,7 +22,7 @@ class UnsplashDownloadService {
         final url = photo.getUnsplashUrl(size);
         final imgResponse = await get(Uri.parse(url));
         final rootDir = await getApplicationDocumentsDirectory();
-        final imagesDir = rootDir.path + '/unsplash_images';
+        final imagesDir = '${rootDir.path}/unsplash_images';
         await Directory(imagesDir).create(recursive: true);
         File file = File('$imagesDir/$id-$size.jpg');
         file.writeAsBytesSync(imgResponse.bodyBytes);

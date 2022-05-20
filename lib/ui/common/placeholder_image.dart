@@ -10,11 +10,11 @@ class PlaceholderImage extends StatelessWidget {
     return Container(
       width: width ?? double.infinity,
       height: height ?? double.infinity,
-      child: Icon(Icons.image_outlined, color: Colors.grey.shade600, size: 48),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6),
         color: Colors.grey,
       ),
+      child: Icon(Icons.image_outlined, color: Colors.grey.shade600, size: 48),
     );
   }
 }

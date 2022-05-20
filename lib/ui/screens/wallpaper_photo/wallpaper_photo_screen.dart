@@ -33,7 +33,7 @@ class _WallpaperPhotoScreenState extends State<WallpaperPhotoScreen> {
   void _handleTakePhoto(BuildContext context, String wonderName) async {
     final boundary = _containerKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
     if (boundary != null) {
-      appLogic.saveWallpaper(context, boundary, name: '${wonderName}_wallpaper');
+      appLogic.saveWallpaper(this, boundary, name: '${wonderName}_wallpaper');
     }
   }
 

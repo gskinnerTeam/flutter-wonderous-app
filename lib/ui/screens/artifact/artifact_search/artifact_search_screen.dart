@@ -74,7 +74,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
     // tone down the orange just a bit:
     vizController.color = Color.lerp(context.colors.accent1, context.colors.black, 0.2)!;
     Widget content = GestureDetector(
-      onTap: () => WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus(),
+      onTap: () => WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

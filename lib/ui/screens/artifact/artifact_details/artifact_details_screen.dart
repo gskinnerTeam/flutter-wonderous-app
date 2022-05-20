@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:image_fade/image_fade.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/string_utils.dart';
@@ -7,7 +8,6 @@ import 'package:wonders/ui/common/compass_divider.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/modals/fullscreen_url_img_viewer.dart';
-import 'package:wonders/ui/common/utils/page_routes.dart';
 
 part 'widgets/_header.dart';
 part 'widgets/_content.dart';

@@ -1,4 +1,3 @@
-import 'package:reactives/reactives.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
@@ -11,7 +10,7 @@ class FullscreenVideoPage extends StatefulWidget {
   State<FullscreenVideoPage> createState() => _FullscreenVideoPageState();
 }
 
-class _FullscreenVideoPageState extends State<FullscreenVideoPage> with ReactiveHostMixin {
+class _FullscreenVideoPageState extends State<FullscreenVideoPage> {
   late final _controller = YoutubePlayerController(
     initialVideoId: widget.id,
     params: const YoutubePlayerParams(autoPlay: true, startAt: Duration(seconds: 1)),

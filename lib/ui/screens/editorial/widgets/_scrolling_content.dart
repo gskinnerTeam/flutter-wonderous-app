@@ -131,7 +131,7 @@ class _ScrollingContent extends StatelessWidget {
 
 /// Helper widget to provide hz padding to multiple widgets. Keeps the layout of the scrolling content cleaner.
 class _ContentSection extends StatelessWidget {
-  _ContentSection(this.children, {Key? key}) : super(key: key);
+  const _ContentSection(this.children, {Key? key}) : super(key: key);
   final List<Widget> children;
 
   @override

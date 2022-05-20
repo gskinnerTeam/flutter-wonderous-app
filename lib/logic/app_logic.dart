@@ -53,23 +53,26 @@ class AppLogic {
   }
 
   /// Walks user through flow to save a Wonder Poster to their gallery
-  Future<void> saveWallpaper(BuildContext context, RenderRepaintBoundary boundary, {required String name}) async {
+  Future<void> saveWallpaper(State state, RenderRepaintBoundary boundary, {required String name}) async {
     // Time to create an image!
     Uint8List? pngBytes = await _getPngFromBoundary(boundary);
-    if (pngBytes != null) {
+    final context = state.context, mounted = state.mounted;
+    if (pngBytes != null && mounted) {
       bool? result = await showModal(context,
           child: OkCancelModal(
             msg: 'Save this poster to your photo gallery?',
           ));
-      if (result == true) {
+      if (result == true && mounted) {
         showModal(context, child: LoadingModal(msg: 'Saving Image. Please wait...'));
         if (PlatformInfo.isMobile) {
           await ImageGallerySaver.saveImage(pngBytes, quality: 95, name: name);
         } else {
           await Future.delayed(500.ms);
         }
-        Navigator.pop(context);
-        showModal(context, child: OkModal(msg: 'Save complete!'));
+        if (state.mounted) {
+          Navigator.pop(context);
+          showModal(context, child: OkModal(msg: 'Save complete!'));
+        }
       }
     }
   }

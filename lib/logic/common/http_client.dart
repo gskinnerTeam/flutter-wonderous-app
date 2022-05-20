@@ -32,12 +32,12 @@ class HttpClient {
     HttpResponse? response;
 
     if (urlParams != null) {
-      Map<String, String> _urlParams = {};
+      Map<String, String> urlParams = {};
       urlParams.forEach((key, value) {
-        _urlParams[key] = value.toString();
+        urlParams[key] = value.toString();
       });
 
-      url += RestUtils.encodeParams(_urlParams);
+      url += RestUtils.encodeParams(urlParams);
     }
 
     response = await HttpClient.get(url, headers: headers);

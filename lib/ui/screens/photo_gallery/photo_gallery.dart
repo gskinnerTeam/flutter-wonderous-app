@@ -6,10 +6,8 @@ import 'package:wonders/logic/data/unsplash_photo_data.dart';
 import 'package:wonders/ui/common/animated_motion_blur.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
-import 'package:wonders/ui/common/controls/simple_header.dart';
 import 'package:wonders/ui/common/hidden_collectible.dart';
 import 'package:wonders/ui/common/unsplash_photo.dart';
-import 'package:wonders/ui/common/utils/page_routes.dart';
 
 part 'widgets/_animated_cutout_overlay.dart';
 part 'widgets/_fullscreen_unsplash_photo_viewer.dart';
@@ -215,7 +213,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                           duration: context.times.med,
                           curve: Curves.easeOut,
                           tween: Tween(begin: 1, end: selected ? 1.15 : 1),
-                          builder: (_, value, child) => Transform.scale(child: child, scale: value),
+                          builder: (_, value, child) => Transform.scale(scale: value, child: child),
                           child: UnsplashPhoto(
                             imgUrl,
                             fit: BoxFit.cover,
