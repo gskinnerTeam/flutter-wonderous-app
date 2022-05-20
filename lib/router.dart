@@ -68,7 +68,7 @@ final appRouter = GoRouter(
       return ArtifactDetailsScreen(artifactId: s.params['id']!);
     }),
     AppRoute('/collection', (s) {
-      return CollectionScreen(fromId: s.queryParams['id']);
+      return CollectionScreen(fromId: s.queryParams['id'] ?? '');
     }),
     AppRoute('/maps/:type', (s) {
       return FullscreenMapsViewer(type: _parseWonderType(s.params['type']!));

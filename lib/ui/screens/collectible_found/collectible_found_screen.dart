@@ -154,10 +154,16 @@ class CollectibleFoundScreen extends StatelessWidget {
         text: 'view in my collection',
         isSecondary: true,
         expand: true,
-        onPressed: () {
-          context.push(ScreenPaths.collection(collectible.id));
-        },
+        onPressed: () => _handleViewCollectionPressed(context),
       ),
-    ).animate().show(delay: t * 4).move(begin: Offset(0, context.insets.md), duration: t * 3, curve: Curves.easeOutExpo);
+    )
+        .animate()
+        .show(delay: t * 4)
+        .move(begin: Offset(0, context.insets.md), duration: t * 3, curve: Curves.easeOutExpo);
+  }
+
+  void _handleViewCollectionPressed(BuildContext context) {
+    Navigator.pop(context);
+    context.push(ScreenPaths.collection(collectible.id));
   }
 }
