@@ -3,15 +3,15 @@ import 'package:flutter/widgets.dart';
 import '../animate_effects.dart';
 
 /// Effect that calls a callback function with the current animation value.
-/// See also: [CustomEffect].
+/// See also: [CustomEffect] and [CallbackEffect].
 @immutable
 class ListenEffect extends Effect<double> {
-  final Function(double) callback;
-  final bool clamp;
-
   const ListenEffect(this.callback,
       {Duration? delay, Duration? duration, Curve? curve, double? begin, double? end, this.clamp = true})
       : super(delay: delay, duration: duration, curve: curve, begin: begin ?? 0.0, end: end ?? 1.0);
+
+  final Function(double) callback;
+  final bool clamp;
 
   @override
   Widget build(BuildContext context, Widget child, AnimationController controller, EffectEntry entry) {

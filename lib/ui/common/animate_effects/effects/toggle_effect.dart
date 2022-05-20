@@ -2,11 +2,11 @@ import 'package:flutter/widgets.dart';
 
 import '../animate_effects.dart';
 
-/// Custom effect that allows you to toggle the behavior of a builder function based on whether
-/// it has passed it's `delay`.
+/// Effect that allows you to toggle the behavior of a builder function based on whether
+/// the time is before (`true`) or after (`false`) the effect's `delay`.
 /// 
 ///     Animate().toggle(delay: 500.ms, builder: (_, value, __) =>
-///       Text('${value ? "Before" : "After"}'));
+///       Text('${value ? "Before Delay" : "After Delay"}'));
 /// 
 /// This is also useful for triggering animation in "Animated" widgets.
 /// 
@@ -16,13 +16,13 @@ import '../animate_effects.dart';
 /// The child of `Animate` is passed through to the builder in the `child` param.
 @immutable
 class ToggleEffect extends Effect<void> {
-  final ToggleEffectBuilder builder;
-
   const ToggleEffect({required this.builder, Duration? delay}) : super(delay: delay, duration: Duration.zero);
+
+  final ToggleEffectBuilder builder;
 
   @override
   Widget build(BuildContext context, Widget child, AnimationController controller, EffectEntry entry) {
-    double ratio = entry.begin.inMilliseconds / (controller.duration?.inMilliseconds ?? 0);
+    double ratio = getBeginRatio(controller, entry);
 
     return AnimatedBuilder(
       animation: controller,

@@ -4,7 +4,8 @@ import '../animate_effects.dart';
 
 // TODO: GDS: possibly add other properties of visibility as params?
 
-/// Effect that toggles the visibility of the target. Defaults to `begin=false, end=true`.
+/// Effect that toggles the visibility of the target (via [Visibility]).
+/// Defaults to `begin=false, end=true`.
 /// The `maintain` parameter is assigned to the [Visibility] properties 'maintainSize`,
 /// `maintainAnimation`, `maintainState`, and `maintainSemantics`.
 @immutable
@@ -22,7 +23,7 @@ class VisibilityEffect extends Effect<bool> {
   @override
   Widget build(BuildContext context, Widget child, AnimationController controller, EffectEntry entry) {
     // instead of setting up an animation, we can optimize a bit to calculate the callback time once:
-    double ratio = entry.begin.inMilliseconds / (controller.duration?.inMilliseconds ?? 0);
+    double ratio = getBeginRatio(controller, entry);
 
     return AnimatedBuilder(
       animation: controller,

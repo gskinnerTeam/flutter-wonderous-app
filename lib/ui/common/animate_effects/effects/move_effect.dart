@@ -2,6 +2,8 @@ import 'package:flutter/widgets.dart';
 
 import '../animate_effects.dart';
 
+// TODO: GDS: possibly add transformHitTest as a param?
+
 /// Effect that moves the target (via [Transform.translate]) between the specified begin and end offsets.
 /// Defaults to `begin=Offset(0, -16), end=Offset.zero`.
 @immutable

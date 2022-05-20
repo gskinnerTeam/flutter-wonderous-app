@@ -1,6 +1,8 @@
 // collects effect classes for easy import.
 export 'effect.dart';
+
 export 'blur_effect.dart';
+export 'callback_effect.dart';
 export 'custom_effect.dart';
 export 'fade_effect.dart';
 export 'listen_effect.dart';

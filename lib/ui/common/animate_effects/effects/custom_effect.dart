@@ -12,10 +12,10 @@ import '../animate_effects.dart';
 /// that extends [Effect] and utilizes [AnimatedPadding].
 @immutable
 class CustomEffect extends Effect<double> {
-  final CustomEffectBuilder builder;
-
   const CustomEffect({required this.builder, Duration? delay, Duration? duration, Curve? curve, double? begin, double? end})
       : super(delay: delay, duration: duration, curve: curve, begin: begin ?? 0.0, end: end ?? 1.0);
+
+  final CustomEffectBuilder builder;
 
   @override
   Widget build(BuildContext context, Widget child, AnimationController controller, EffectEntry entry) {

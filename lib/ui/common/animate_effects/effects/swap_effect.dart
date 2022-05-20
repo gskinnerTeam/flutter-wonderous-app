@@ -6,22 +6,24 @@ import '../animate_effects.dart';
 /// effects. For example, this would fade out `foo`, swap it for `Bar()` (including discarding the `fadeOut` effect) and
 /// fade it in.
 /// 
-///     foo.animate().fadeOut(duration: 500.ms).swap(
-///       delay: 500.ms,
-///       builder: () => Bar().fadeIn(),
-///     )
+///     foo.animate()
+///       .fadeOut(duration: 500.ms)
+///       .swap(
+///         delay: 500.ms, // after the fadeOut ends
+///         builder: () => Bar().fadeIn(),
+///       )
 /// 
 /// It uses a builder so that the effect can be reused, but note that the builder is only called once.
 @immutable
 class SwapEffect extends Effect<void> {
-  final WidgetBuilder builder;
-
   const SwapEffect({required this.builder, Duration? delay}) : super(delay: delay, duration: Duration.zero);
+
+  final WidgetBuilder builder;
 
   @override
   Widget build(BuildContext context, Widget child, AnimationController controller, EffectEntry entry) {
     // instead of setting up an animation, we can optimize a bit to calculate the callback time once:
-    double ratio = entry.begin.inMilliseconds / (controller.duration?.inMilliseconds ?? 0);
+    double ratio = getBeginRatio(controller, entry);
     Widget endChild = builder(context);
 
     return AnimatedBuilder(
