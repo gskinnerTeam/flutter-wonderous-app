@@ -30,6 +30,12 @@ class AppLogic {
     // Load any bitmaps the views might need
     await AppBitmaps.init();
 
+    //
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
     // Settings load
     await settingsLogic.load();
     unawaited(settingsLogic.scheduleSave()); // test save calls on each boot
