@@ -83,7 +83,7 @@ class ChristRedeemerIllustration extends StatelessWidget {
               scale: 1 + config.zoom * .1,
               child: BottomLeft(
                 child: FractionallySizedBox(
-                  widthFactor: 1.3,
+                  widthFactor: 1.7,
                   child: FractionalTranslation(
                     translation: Offset(-.26, 0),
                     child: Image.asset('$assetPath/foreground-left.png', opacity: anim),
@@ -95,7 +95,7 @@ class ChristRedeemerIllustration extends StatelessWidget {
               scale: 1 + config.zoom * .1,
               child: BottomRight(
                 child: FractionallySizedBox(
-                  widthFactor: 1.3,
+                  widthFactor: 1.7,
                   child: FractionalTranslation(
                     translation: Offset(.33, .2),
                     child: Image.asset('$assetPath/foreground-right.png', opacity: anim),

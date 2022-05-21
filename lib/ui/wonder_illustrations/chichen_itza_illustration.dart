@@ -27,9 +27,7 @@ class ChichenItzaIllustration extends StatelessWidget {
         ),
       ),
       Align(
-        alignment: Alignment(0, config.shortMode ? 1 : 0),
-        child: FractionalTranslation(
-          translation: Offset(.7, config.shortMode ? .1 : -.1),
+        alignment: Alignment(config.shortMode ? .25 : .7, config.shortMode ? 1 : -.15),
           child: WonderHero(
             config,
             'chichen-sun',
@@ -37,14 +35,13 @@ class ChichenItzaIllustration extends StatelessWidget {
               translation: Offset(0, -.2 * anim.value),
               child: Image.asset(
                 '$_assetPath/sun.png',
-                width: config.shortMode ? 120 : 200,
+                width: config.shortMode ? 100 : 200,
                 cacheWidth: context.widthPx.round() * 2,
                 opacity: anim,
               ),
             ),
           ),
         ),
-      ),
     ];
   }
 
@@ -56,7 +53,7 @@ class ChichenItzaIllustration extends StatelessWidget {
             child: Transform.scale(
               scale: 1 + config.zoom * .2,
               child: FractionallySizedBox(
-                widthFactor: config.shortMode ? 1.3 : 2,
+                widthFactor: config.shortMode ? 1.3 : 2.6,
                 child: Image.asset('$_assetPath/chichen.png', opacity: anim, fit: BoxFit.cover),
               ),
             )),

@@ -32,16 +32,20 @@ class ColosseumIllustration extends StatelessWidget {
         ),
       ),
       Align(
-        alignment: config.shortMode ? Alignment.center : Alignment(-.5, -.7),
+        alignment: config.shortMode ? Alignment(-.3, 1) : Alignment(-.5, -.4),
         child: WonderHero(
           config,
           'colosseum-sun',
-          child: Transform.scale(
-            scale: config.shortMode ? .75 : 1,
-            child: Image.asset(
-              '$assetPath/sun.png',
-              cacheWidth: context.widthPx.round() * 2,
-              opacity: anim,
+          child: FractionalTranslation(
+            translation: Offset(0, -.5 * anim.value),
+
+            child: Transform.scale(
+              scale: config.shortMode ? .75 : 1,
+              child: Image.asset(
+                '$assetPath/sun.png',
+                cacheWidth: context.widthPx.round() * 2,
+                opacity: anim,
+              ),
             ),
           ),
         ),
@@ -61,12 +65,12 @@ class ColosseumIllustration extends StatelessWidget {
           ],
           Center(
             child: FractionalTranslation(
-              translation: Offset(0, config.shortMode ? .1 : 0),
+              translation: Offset(0, config.shortMode ? .1 : -.15),
               child: WonderHero(
                 config,
                 'colosseum-mg',
                 child: Transform.scale(
-                  scale: config.shortMode ? .85 : 1.3 + config.zoom * .2,
+                  scale: config.shortMode ? .85 : 1.55 + config.zoom * .2,
                   child: Image.asset('$assetPath/colosseum.png', opacity: anim, fit: BoxFit.cover),
                 ),
               ),
@@ -77,40 +81,43 @@ class ColosseumIllustration extends StatelessWidget {
     ];
   }
 
-  List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
-    final curvedAnim = Curves.easeOut.transform(anim.value);
-    return [
-      Transform.scale(
-        scale: 1 + -.1 * (1 - curvedAnim),
-        child: Stack(
-          children: [
-            Transform.scale(
-              scale: 1 + config.zoom * .2,
-              child: BottomLeft(
-                child: FractionallySizedBox(
-                  widthFactor: .6,
+    List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
+      final curvedAnim = Curves.easeOut.transform(anim.value);
+      return [
+        Stack(children: [
+          BottomLeft(
+            child: FractionallySizedBox(
+            widthFactor: .625,
+            child:FractionalTranslation(
+                translation: Offset(-.2 * (1 - curvedAnim), 0),
+                child: Transform.scale(
+                  scale: 1 + config.zoom * .3,
                   child: FractionalTranslation(
                     translation: Offset(-.1, .1),
-                    child: Image.asset('$assetPath/foreground-left.png', opacity: anim, fit: BoxFit.cover),
+                    child: Image.asset('$assetPath/foreground-left.png',
+                        opacity: anim, fit: BoxFit.cover),
                   ),
                 ),
               ),
             ),
-            Transform.scale(
-              scale: 1 + config.zoom * .16,
-              child: BottomRight(
-                child: FractionallySizedBox(
-                  widthFactor: .7,
-                  child: FractionalTranslation(
-                    translation: Offset(.3, .2),
-                    child: Image.asset('$assetPath/foreground-right.png', opacity: anim, fit: BoxFit.cover),
+          ),
+          BottomRight(
+            child: FractionallySizedBox(
+              widthFactor: .725,
+              child:FractionalTranslation(
+                  translation: Offset(.2 * (1 - curvedAnim), 0),
+                  child: Transform.scale(
+                    scale: 1 + config.zoom * .3,
+                    child: FractionalTranslation(
+                      translation: Offset(.3, .2),
+                      child: Image.asset('$assetPath/foreground-right.png',
+                          opacity: anim, fit: BoxFit.cover),
+                    ),
                   ),
                 ),
-              ),
             ),
-          ],
-        ),
-      )
-    ];
+          ),
+        ])
+      ];
   }
 }

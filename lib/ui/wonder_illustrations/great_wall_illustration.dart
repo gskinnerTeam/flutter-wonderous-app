@@ -34,17 +34,20 @@ class GreatWallIllustration extends StatelessWidget {
         ),
       ),
       Align(
-        alignment: config.shortMode ? Alignment.center : Alignment(-.5, -.7),
+        alignment: config.shortMode ? Alignment(-.5, -.5) : Alignment(-.45, -.63),
         child: WonderHero(
           config,
           'great-wall-sun',
-          child: Transform.scale(
-            scale: config.shortMode ? .75 : 1,
-            child: Image.asset(
-              '$assetPath/sun.png',
-              cacheWidth: context.widthPx.round() * 2,
-              opacity: anim,
-            ),
+          child: FractionalTranslation(
+            translation: Offset(0, -.5 * anim.value),
+            child: Transform.scale(
+              scale: config.shortMode ? .75 : 1,
+                  child: Image.asset(
+                  '$assetPath/sun.png',
+                  cacheWidth: context.widthPx.round() * 2,
+                  opacity: anim,
+                ),
+              ),
           ),
         ),
       ),
@@ -54,7 +57,7 @@ class GreatWallIllustration extends StatelessWidget {
   List<Widget> _buildMg(BuildContext context, Animation<double> anim) => [
         Center(
           child: FractionalTranslation(
-            translation: Offset(0, config.shortMode ? .1 : 0),
+            translation: Offset(0, config.shortMode ? .1 : -.1),
             child: WonderHero(
               config,
               'great-wall-mg',
@@ -75,8 +78,8 @@ class GreatWallIllustration extends StatelessWidget {
     return [
       Stack(children: [
         BottomLeft(
-          child: Transform.translate(
-            offset: Offset(20, 20) * (1 - curvedAnim),
+          child:FractionalTranslation(
+            translation: Offset(-.2 * (1 - curvedAnim), 0),
             child: Transform.scale(
               scale: 1 + config.zoom * .3,
               child: FractionalTranslation(
@@ -88,8 +91,8 @@ class GreatWallIllustration extends StatelessWidget {
           ),
         ),
         BottomRight(
-          child: Transform.translate(
-            offset: Offset((1 - curvedAnim) * 20, (1 - curvedAnim) * 30),
+          child:FractionalTranslation(
+            translation: Offset(.2 * (1 - curvedAnim), 0),
             child: Transform.scale(
               scale: 1.5 + config.zoom * .1,
               child: FractionalTranslation(

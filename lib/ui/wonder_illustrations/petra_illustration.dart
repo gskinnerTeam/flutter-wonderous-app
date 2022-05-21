@@ -33,13 +33,17 @@ class PetraIllustration extends StatelessWidget {
         ),
       ),
       Align(
-        alignment: Alignment(-.5, -.7),
+        alignment: Alignment(-.3, config.shortMode ? -1.5 : -1.25),
         child: WonderHero(
           config,
-          'petra-sun',
-          child: Image.asset(
-            '$assetPath/moon.png',
-            opacity: anim,
+          'petra-moon',
+          child: FractionalTranslation(
+            translation: Offset(0, .5 * anim.value),
+
+            child: Image.asset(
+              '$assetPath/moon.png',
+              opacity: anim,
+            ),
           ),
         ),
       ),
@@ -47,16 +51,15 @@ class PetraIllustration extends StatelessWidget {
   }
 
   List<Widget> _buildMg(BuildContext context, Animation<double> anim) => [
-        Align(
-          alignment: config.shortMode ? Alignment.bottomCenter : Alignment.center,
+        FractionalTranslation(
+          translation: Offset(0, config.shortMode ? 0.1 : 0.15),
           child: WonderHero(
             config,
             'petra-mg',
             child: Transform.scale(
-              scale: 1 + config.zoom * .2,
+              scale: 1 + config.zoom * .05,
               child: FractionallySizedBox(
-                widthFactor: config.shortMode ? 1 : 1.5,
-                //scale: (config.shortMode ? 1 : 1.5) + .2 * config.zoom,
+                widthFactor: config.shortMode ? 1 : 2,
                 child: Image.asset(
                   '$assetPath/petra.png',
                   fit: BoxFit.cover,
@@ -71,37 +74,32 @@ class PetraIllustration extends StatelessWidget {
   List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
     final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
-      Transform.translate(
-        offset: Offset(0, 30) * (1 - curvedAnim),
-        child: Stack(
-          children: [
-            Transform.scale(
-              scale: 1 + config.zoom * .2,
-              child: BottomLeft(
-                child: FractionallySizedBox(
-                  widthFactor: 1,
-                  child: FractionalTranslation(
-                    translation: Offset(-.2, 0),
-                    child: Image.asset('$assetPath/foreground-left.png', opacity: anim, fit: BoxFit.cover),
-                  ),
-                ),
-              ),
+    Stack(children: [
+      BottomLeft(
+        child:FractionalTranslation(
+          translation: Offset(-.3 * (1 - curvedAnim), 0),
+          child: Transform.scale(
+            scale: 1.1 + config.zoom * .2,
+            child: FractionalTranslation(
+              translation: Offset(-.2, -.12),
+              child: Image.asset('$assetPath/foreground-left.png', opacity: anim, fit: BoxFit.cover),
             ),
-            Transform.scale(
-              scale: 1 + config.zoom * .1,
-              child: BottomRight(
-                child: FractionallySizedBox(
-                  widthFactor: .7,
-                  child: FractionalTranslation(
-                    translation: Offset(.4 + config.zoom * .1, -0),
-                    child: Image.asset('$assetPath/foreground-right.png', opacity: anim, fit: BoxFit.cover),
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
-      )
+      ),
+      BottomRight(
+        child:FractionalTranslation(
+          translation: Offset(.3 * (1 - curvedAnim), 0),
+          child: Transform.scale(
+            scale: 1 + config.zoom * .4,
+            child: FractionalTranslation(
+              translation: Offset(.4, -.08),
+              child: Image.asset('$assetPath/foreground-right.png', opacity: anim, fit: BoxFit.cover),
+            ),
+          ),
+        ),
+      ),
+    ])
     ];
   }
 }

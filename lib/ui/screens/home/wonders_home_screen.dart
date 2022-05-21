@@ -177,9 +177,9 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
                         child: Column(
                           children: [
                             /// Page indicator
-                            IgnorePointer(
-                              child: DiagonalTextPageIndicator(current: _wonderIndex + 1, total: _numWonders),
-                            ),
+                            // IgnorePointer(
+                            //   child: DiagonalTextPageIndicator(current: _wonderIndex + 1, total: _numWonders),
+                            // ),
                             Gap(context.insets.md),
                             AppPageIndicator(
                               count: _numWonders,

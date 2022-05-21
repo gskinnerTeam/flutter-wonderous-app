@@ -34,7 +34,6 @@ class TajMahalIllustration extends StatelessWidget {
           ImagePaths.roller1,
           opacity: anim.drive(Tween(begin: 0, end: .3)),
           color: _bgColor,
-          scale: 2,
         ),
       ),
       // Sun
