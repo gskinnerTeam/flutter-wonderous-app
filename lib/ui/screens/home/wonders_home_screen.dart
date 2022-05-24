@@ -4,6 +4,7 @@ import 'package:wonders/ui/common/app_page_indicator.dart';
 import 'package:wonders/ui/common/controls/diagonal_text_page_indicator.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/themed_text.dart';
+import 'package:wonders/ui/fade_from_color.dart';
 import 'package:wonders/ui/screens/home_menu/home_menu.dart';
 import 'package:wonders/ui/wonder_illustrations/common/animated_clouds.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration.dart';
@@ -12,16 +13,16 @@ import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_confi
 part '_vertical_swipe_controller.dart';
 part 'widgets/_animated_arrow_button.dart';
 
-class WondersHomeScreen extends StatefulWidget with GetItStatefulWidgetMixin {
-  WondersHomeScreen({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget with GetItStatefulWidgetMixin {
+  HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<WondersHomeScreen> createState() => _WondersHomeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
 /// Shows a horizontally scrollable list PageView sandwiched between Foreground and Background layers
 /// arranged in a parallax style.
-class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
   late final _pageController = PageController(
     viewportFraction: 1,
     initialPage: _numWonders * 9999, // allow 'infinite' scrolling by starting at a very high page
@@ -157,56 +158,58 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
               child: RepaintBoundary(
                 // Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
                 key: ValueKey(_wonderIndex),
-                child: OverflowBox(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(width: double.infinity),
-                      Gap(context.insets.lg * 3),
+                child: FadeFromColor(
+                  child: OverflowBox(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(width: double.infinity),
+                        Gap(context.insets.lg * 3),
 
-                      /// Settings Btn
-                      Opacity(
-                        opacity: 0, // TODO: Remove this btn before launch, its for testing settings only
-                        child: AppBtn.from(
-                            text: 'Settings', onPressed: _handleSettingsPressed, padding: EdgeInsets.all(30)),
-                      ),
-                      const Spacer(),
+                        /// Settings Btn
+                        Opacity(
+                          opacity: 0, // TODO: Remove this btn before launch, its for testing settings only
+                          child: AppBtn.from(
+                              text: 'Settings', onPressed: _handleSettingsPressed, padding: EdgeInsets.all(30)),
+                        ),
+                        const Spacer(),
 
-                      /// Title Content
-                      LightText(
-                        child: Column(
+                        /// Title Content
+                        LightText(
+                          child: Column(
+                            children: [
+                              /// Page indicator
+                              IgnorePointer(
+                                child: DiagonalTextPageIndicator(current: _wonderIndex + 1, total: _numWonders),
+                              ),
+                              Gap(context.insets.md),
+                              AppPageIndicator(
+                                count: _numWonders,
+                                controller: _pageController,
+                                color: context.colors.white,
+                                dotSize: 8,
+                                onDotPressed: _handlePageIndicatorDotPressed,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Gap(context.insets.sm),
+
+                        /// Animated arrow and background
+                        Stack(
                           children: [
-                            /// Page indicator
-                            IgnorePointer(
-                              child: DiagonalTextPageIndicator(current: _wonderIndex + 1, total: _numWonders),
+                            /// Expanding rounded rect that grows in height as user swipes up
+                            Positioned.fill(
+                              child: _buildSwipeableArrowBg(),
                             ),
-                            Gap(context.insets.md),
-                            AppPageIndicator(
-                              count: _numWonders,
-                              controller: _pageController,
-                              color: context.colors.white,
-                              dotSize: 8,
-                              onDotPressed: _handlePageIndicatorDotPressed,
-                            ),
+
+                            /// Arrow Btn that fades in and out
+                            _AnimatedArrowButton(onTap: _showDetailsPage),
                           ],
                         ),
-                      ),
-                      Gap(context.insets.sm),
-
-                      /// Animated arrow and background
-                      Stack(
-                        children: [
-                          /// Expanding rounded rect that grows in height as user swipes up
-                          Positioned.fill(
-                            child: _buildSwipeableArrowBg(),
-                          ),
-
-                          /// Arrow Btn that fades in and out
-                          _AnimatedArrowButton(onTap: _showDetailsPage),
-                        ],
-                      ),
-                      Gap(context.insets.md),
-                    ],
+                        Gap(context.insets.md),
+                      ],
+                    ),
                   ),
                 ),
               ),

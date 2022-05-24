@@ -29,7 +29,7 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
 
   WonderType? get scrollTargetWonder {
     String? id = widget.fromId;
-    if (id == null || _states[id] != CollectibleState.discovered) {
+    if (_states[id] != CollectibleState.discovered) {
       id = _states.keys.firstWhereOrNull((id) => _states[id] == CollectibleState.discovered);
     }
     return collectiblesLogic.fromId(id)?.wonder;
