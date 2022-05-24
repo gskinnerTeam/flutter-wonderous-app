@@ -27,7 +27,6 @@ class _PhotoGalleryState extends State<PhotoGallery> {
   static const int _gridSize = 5;
   // Index starts in the middle of the grid (eg, 25 items, index will start at 13)
   int _index = ((_gridSize * _gridSize) / 2).round();
-  late int _prevIndex = _index;
   Offset _lastSwipeDir = Offset.zero;
   final double _scale = .65;
   bool _skipNextOffsetTween = false;
@@ -54,7 +53,6 @@ class _PhotoGalleryState extends State<PhotoGallery> {
   }
 
   void _setIndex(int value) {
-    _prevIndex = _index;
     setState(() => _index = value);
   }
 
@@ -155,7 +153,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                     // Detect swipes in order to change index
                     child: EightWaySwipeDetector(
                       onSwipe: _handleSwipe,
-                      threshold: 10 + 100 * settingsLogic.swipeThreshold.value,
+                      threshold: 30,
                       // A tween animation builder moves from image to image based on current offset
                       child: TweenAnimationBuilder<Offset>(
                         tween: Tween(begin: gridOffset, end: gridOffset),
@@ -186,7 +184,6 @@ class _PhotoGalleryState extends State<PhotoGallery> {
         valueListenable: collectiblesLogic.statesById,
         builder: (_, __, ___) {
           bool selected = index == _index;
-          bool wasSelected = index == _prevIndex;
           collectiblesLogic.forWonder(widget.wonderType)[1];
           final imgUrl = _photoIds.value[index];
           bool showCollectible = index == _getCollectibleIndex() && collectiblesLogic.isLost(widget.wonderType, 1);
@@ -204,7 +201,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                       swipeDuration,
                       animationKey: ValueKey(_index),
                       blurStrength: 15,
-                      enabled: settingsLogic.enableMotionBlur.value && (selected || wasSelected),
+                      enabled: false,
                       dir: _lastSwipeDir,
                       child: SizedBox(
                         width: imgSize.width,
