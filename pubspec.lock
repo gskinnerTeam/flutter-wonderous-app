@@ -668,15 +668,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.11.1"
-  performance:
-    dependency: "direct main"
-    description:
-      path: performance
-      ref: e7c27813319ca14c4ca8c03a105bc6da21d8cf2c
-      resolved-ref: e7c27813319ca14c4ca8c03a105bc6da21d8cf2c
-      url: "https://github.com/creativecreatorormaybenot/performance.git"
-    source: git
-    version: "0.1.1"
   petitparser:
     dependency: transitive
     description:
