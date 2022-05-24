@@ -36,11 +36,6 @@ dependencies:
   loading_indicator: ^3.0.3
   modal_bottom_sheet: ^2.0.0
   path_provider: ^2.0.10
-  performance:
-    git:
-      url: https://github.com/creativecreatorormaybenot/performance.git
-      ref: e7c27813319ca14c4ca8c03a105bc6da21d8cf2c
-      path: performance/
   provider: ^6.0.2
   rnd: ^0.2.0
   screenshot: ^1.2.3
