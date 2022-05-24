@@ -18,10 +18,10 @@ class AppPageIndicator extends StatelessWidget {
       count: count,
       onDotClicked: onDotPressed,
       effect: ExpandingDotsEffect(
-          dotWidth: dotSize ?? 4,
-          dotHeight: dotSize ?? 4,
+          dotWidth: dotSize ?? 6,
+          dotHeight: dotSize ?? 6,
           paintStyle: PaintingStyle.fill,
-          strokeWidth: (dotSize ?? 4) / 2,
+          strokeWidth: (dotSize ?? 6) / 2,
           dotColor: color ?? context.colors.accent1,
           activeDotColor: color ?? context.colors.accent1,
           expansionFactor: 2),
