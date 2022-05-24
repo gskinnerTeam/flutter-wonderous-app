@@ -70,6 +70,8 @@ flutter:
 
   assets:
     - assets/images/_common/
+    - assets/images/_common/icons/
+    - assets/images/_common/texture/
     - assets/images/chichen_itza/
     - assets/images/christ_the_redeemer/
     - assets/images/colosseum/
@@ -78,7 +80,6 @@ flutter:
     - assets/images/petra/
     - assets/images/pyramids/
     - assets/images/taj_mahal/
-    - assets/images/_common/texture/
     - assets/images/collectibles/
 
   fonts:

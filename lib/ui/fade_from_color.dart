@@ -1,10 +1,11 @@
 import 'package:wonders/common_libs.dart';
 
 class FadeFromColor extends StatefulWidget {
-  const FadeFromColor({Key? key, this.color, required this.child}) : super(key: key);
+  const FadeFromColor({Key? key, this.color, required this.child, this.delay}) : super(key: key);
 
   final Widget child;
   final Color? color;
+  final Duration? delay;
 
   @override
   State<FadeFromColor> createState() => _FadeFromColorState();
@@ -22,12 +23,10 @@ class _FadeFromColorState extends State<FadeFromColor> {
     if (_hideOverlay) return widget.child;
     return Stack(
       children: [
-        widget.child,
-        Animate(
-          effects: const [FadeEffect(begin: 1, end: 0)],
-          onComplete: _handleFadeComplete,
-          child: ColoredBox(color: widget.color ?? context.colors.black),
-        )
+        //widget.child,
+        ColoredBox(color: widget.color ?? context.colors.black)
+            .animate(onComplete: _handleFadeComplete)
+            .fadeOut(delay: widget.delay)
       ],
     );
   }

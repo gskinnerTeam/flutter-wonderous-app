@@ -24,6 +24,7 @@ class ImagePaths {
   static String ribbonEnd = '$common/ribbon-end.png';
 
   static String textures = '$common/texture';
+  static String icons = '$common/icons';
   static String speckles = '$textures/speckles-white.png';
   static String roller1 = '$textures/roller-1-white.png';
   static String roller2 = '$textures/roller-2-white.png';

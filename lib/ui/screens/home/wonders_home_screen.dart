@@ -158,65 +158,63 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               child: RepaintBoundary(
                 // Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
                 key: ValueKey(_wonderIndex),
-                child: FadeFromColor(
-                  child: OverflowBox(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(width: double.infinity),
-                        Gap(context.insets.lg * 3),
+                child: OverflowBox(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(width: double.infinity),
+                      Gap(context.insets.lg * 3),
 
-                        /// Settings Btn
-                        Opacity(
-                          opacity: 0, // TODO: Remove this btn before launch, its for testing settings only
-                          child: AppBtn.from(
-                              text: 'Settings', onPressed: _handleSettingsPressed, padding: EdgeInsets.all(30)),
-                        ),
-                        const Spacer(),
+                      /// Settings Btn
+                      Opacity(
+                        opacity: 0, // TODO: Remove this btn before launch, its for testing settings only
+                        child: AppBtn.from(
+                            text: 'Settings', onPressed: _handleSettingsPressed, padding: EdgeInsets.all(30)),
+                      ),
+                      const Spacer(),
 
-                        /// Title Content
-                        LightText(
-                          child: Column(
-                            children: [
-                              /// Page indicator
-                              IgnorePointer(
-                                child: DiagonalTextPageIndicator(current: _wonderIndex + 1, total: _numWonders),
-                              ),
-                              Gap(context.insets.md),
-                              AppPageIndicator(
-                                count: _numWonders,
-                                controller: _pageController,
-                                color: context.colors.white,
-                                dotSize: 8,
-                                onDotPressed: _handlePageIndicatorDotPressed,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Gap(context.insets.sm),
-
-                        /// Animated arrow and background
-                        Stack(
+                      /// Title Content
+                      LightText(
+                        child: Column(
                           children: [
-                            /// Expanding rounded rect that grows in height as user swipes up
-                            Positioned.fill(
-                              child: _buildSwipeableArrowBg(),
+                            /// Page indicator
+                            IgnorePointer(
+                              child: DiagonalTextPageIndicator(current: _wonderIndex + 1, total: _numWonders),
                             ),
-
-                            /// Arrow Btn that fades in and out
-                            _AnimatedArrowButton(onTap: _showDetailsPage),
+                            Gap(context.insets.md),
+                            AppPageIndicator(
+                              count: _numWonders,
+                              controller: _pageController,
+                              color: context.colors.white,
+                              dotSize: 8,
+                              onDotPressed: _handlePageIndicatorDotPressed,
+                            ),
                           ],
                         ),
-                        Gap(context.insets.md),
-                      ],
-                    ),
+                      ),
+                      Gap(context.insets.sm),
+
+                      /// Animated arrow and background
+                      Stack(
+                        children: [
+                          /// Expanding rounded rect that grows in height as user swipes up
+                          Positioned.fill(
+                            child: _buildSwipeableArrowBg(),
+                          ),
+
+                          /// Arrow Btn that fades in and out
+                          _AnimatedArrowButton(onTap: _showDetailsPage),
+                        ],
+                      ),
+                      Gap(context.insets.md),
+                    ],
                   ),
                 ),
               ),
             ),
           ]),
         ],
-      ),
+      ).animate().fadeIn(),
     );
   }
 
