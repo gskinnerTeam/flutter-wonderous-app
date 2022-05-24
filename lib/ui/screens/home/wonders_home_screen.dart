@@ -4,7 +4,6 @@ import 'package:wonders/ui/common/app_page_indicator.dart';
 import 'package:wonders/ui/common/controls/diagonal_text_page_indicator.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/themed_text.dart';
-import 'package:wonders/ui/fade_from_color.dart';
 import 'package:wonders/ui/screens/home_menu/home_menu.dart';
 import 'package:wonders/ui/wonder_illustrations/common/animated_clouds.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration.dart';

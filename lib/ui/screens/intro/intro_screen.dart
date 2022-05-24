@@ -2,7 +2,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/app_page_indicator.dart';
 import 'package:wonders/ui/common/themed_text.dart';
-import 'package:wonders/ui/fade_from_color.dart';
 
 class IntroScreen extends StatefulWidget {
   const IntroScreen({Key? key}) : super(key: key);
