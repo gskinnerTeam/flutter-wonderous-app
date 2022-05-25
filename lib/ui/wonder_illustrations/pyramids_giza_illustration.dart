@@ -58,7 +58,7 @@ class PyramidsGizaIllustration extends StatelessWidget {
               scale: 1 + config.zoom * .1,
               child: FractionallySizedBox(
                 widthFactor: config.shortMode ? 1 : 1.94,
-                child: Image.asset('$assetPath/pyramids.png', opacity: anim),
+                child: Image.asset('$assetPath/pyramids.png', fit: BoxFit.cover, opacity: anim),
               ),
             )),
       ),
@@ -66,62 +66,37 @@ class PyramidsGizaIllustration extends StatelessWidget {
   }
 
   List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
+    final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
       Transform.scale(
         scale: 1 + config.zoom * .2,
-        child: BottomCenter(
-          child: FractionallySizedBox(
-            widthFactor: 1.2,
-            child: FractionalTranslation(
-                translation: Offset(0, -1.2),
-                child: Image.asset('$assetPath/foreground-back.png', opacity: anim, fit: BoxFit.cover)),
-          ),
-        ),
+        child: Transform.translate(
+        offset: Offset(0, 10 * (1 - curvedAnim)),
+          child: BottomCenter(
+                child: FractionallySizedBox(
+                  widthFactor: 1.2,
+                  child: FractionalTranslation(
+                      translation: Offset(0, -1.2),
+                      child: Image.asset('$assetPath/foreground-back.png', opacity: anim, fit: BoxFit.cover)),
+                ),
+              ),
+            ),
       ),
       Transform.scale(
         scale: 1 + config.zoom * .4,
-        child: BottomCenter(
-          child: FractionallySizedBox(
-            widthFactor: 1.52,
-            child: FractionalTranslation(
-              translation: Offset(0, 0.1),
-              child: Image.asset('$assetPath/foreground-front.png', opacity: anim, fit: BoxFit.cover),
+        child: Transform.translate(
+        offset: Offset(0, 30 * (1 - curvedAnim)),
+            child: BottomCenter(
+              child: FractionallySizedBox(
+                widthFactor: 1.52,
+                child: FractionalTranslation(
+                  translation: Offset(0, 0.1),
+                  child: Image.asset('$assetPath/foreground-front.png', opacity: anim, fit: BoxFit.cover),
+                ),
+              ),
             ),
           ),
-        ),
-      )
-      //
-      // Transform.scale(
-      //   scale: 1 + -.1 * (1 - curvedAnim),
-      //   child: Stack(
-      //     children: [
-      //       Transform.scale(
-      //         scale: 1 + config.zoom * .2,
-      //         child: BottomLeft(
-      //           child: FractionallySizedBox(
-      //             widthFactor: .6,
-      //             child: FractionalTranslation(
-      //               translation: Offset(-.1, .1),
-      //               child: Image.asset('$assetPath/foreground-back.png', opacity: anim, fit: BoxFit.cover),
-      //             ),
-      //           ),
-      //         ),
-      //       ),
-      //       Transform.scale(
-      //         scale: 1 + config.zoom * .16,
-      //         child: BottomRight(
-      //           child: FractionallySizedBox(
-      //             widthFactor: .7,
-      //             child: FractionalTranslation(
-      //               translation: Offset(.3, .2),
-      //               child: Image.asset('$assetPath/foreground-front.png', opacity: anim, fit: BoxFit.cover),
-      //             ),
-      //           ),
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // )
+      ),
     ];
   }
 }

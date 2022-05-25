@@ -87,7 +87,7 @@ class ColosseumIllustration extends StatelessWidget {
         Stack(children: [
           BottomLeft(
             child: FractionallySizedBox(
-            widthFactor: .625,
+            heightFactor: .56,
             child:FractionalTranslation(
                 translation: Offset(-.2 * (1 - curvedAnim), 0),
                 child: Transform.scale(
@@ -103,7 +103,7 @@ class ColosseumIllustration extends StatelessWidget {
           ),
           BottomRight(
             child: FractionallySizedBox(
-              widthFactor: .725,
+              heightFactor: .56,
               child:FractionalTranslation(
                   translation: Offset(.2 * (1 - curvedAnim), 0),
                   child: Transform.scale(

@@ -77,27 +77,27 @@ class GreatWallIllustration extends StatelessWidget {
     final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
       Stack(children: [
-        BottomLeft(
-          child:FractionalTranslation(
-            translation: Offset(-.2 * (1 - curvedAnim), 0),
-            child: Transform.scale(
-              scale: 1 + config.zoom * .3,
-              child: FractionalTranslation(
-                translation: Offset(-.26, 0),
-                child: Image.asset('$assetPath/foreground-left.png',
-                    opacity: anim, cacheWidth: context.widthPx.round() * 3),
-              ),
-            ),
-          ),
-        ),
         BottomRight(
           child:FractionalTranslation(
             translation: Offset(.2 * (1 - curvedAnim), 0),
             child: Transform.scale(
               scale: 1.5 + config.zoom * .1,
               child: FractionalTranslation(
-                translation: Offset(.46, -.2),
+                translation: Offset(.46, -.22),
                 child: Image.asset('$assetPath/foreground-right.png',
+                    opacity: anim, cacheWidth: context.widthPx.round() * 3),
+              ),
+            ),
+          ),
+        ),
+        BottomLeft(
+          child:FractionalTranslation(
+            translation: Offset(-.2 * (1 - curvedAnim), 0),
+            child: Transform.scale(
+              scale: 1 + config.zoom * .3,
+              child: FractionalTranslation(
+                translation: Offset(-.3, -.01),
+                child: Image.asset('$assetPath/foreground-left.png',
                     opacity: anim, cacheWidth: context.widthPx.round() * 3),
               ),
             ),
