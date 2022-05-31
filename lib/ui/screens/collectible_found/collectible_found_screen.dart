@@ -1,7 +1,7 @@
 import 'package:image_fade/image_fade.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
-import 'package:wonders/ui/common/particles/particle_field.dart';
+import 'package:particle_field/particle_field.dart';
 
 part 'widgets/_animated_ribbon.dart';
 part 'widgets/_celebration_particles.dart';

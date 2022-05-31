@@ -13,6 +13,8 @@ class _CelebrationParticles extends StatelessWidget {
     return Positioned.fill(
       child: RepaintBoundary(
         child: ParticleField(
+          blendMode: BlendMode.dstIn,
+          
           spriteSheet: SpriteSheet(
             image: AssetImage(ImagePaths.particle),
             frameWidth: 21,

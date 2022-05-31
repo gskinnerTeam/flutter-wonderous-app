@@ -23,4 +23,4 @@ export 'package:wonders/styles/styles.dart';
 export 'package:wonders/ui/common/controls/buttons.dart';
 export 'package:wonders/ui/common/controls/circle_buttons.dart';
 export 'package:wonders/ui/common/controls/scroll_decorator.dart';
-export 'package:wonders/ui/common/animate_effects/animate_effects.dart';
+export 'package:flutter_animate/flutter_animate.dart';

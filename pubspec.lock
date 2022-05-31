@@ -258,6 +258,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_animate:
+    dependency: "direct main"
+    description:
+      name: flutter_animate
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1"
   flutter_circular_text:
     dependency: "direct main"
     description:
@@ -591,6 +598,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.2"
+  particle_field:
+    dependency: "direct main"
+    description:
+      name: particle_field
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1+1"
   path:
     dependency: transitive
     description:
