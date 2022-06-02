@@ -111,8 +111,14 @@ class _IntroScreenState extends State<IntroScreen> {
                         child: AnimatedOpacity(
                           opacity: page == 2 ? 0 : 1,
                           duration: context.times.fast,
-                          child:
-                              Text('Swipe left to continue', style: context.textStyles.bodySmall.copyWith(height: 3)),
+                          child: Semantics(
+                            onTapHint: 'Navigate',
+                            onTap: () {
+                              var current = _pageController.page!.round();
+                              _pageController.animateToPage(current + 1, duration: const Duration(milliseconds: 250), curve: Curves.easeIn);
+                            },
+                            child: Text('Swipe left to continue', style: context.textStyles.bodySmall.copyWith(height: 3)),
+                          ),
                         ),
                       ),
                       CenterRight(
@@ -144,13 +150,19 @@ class _Page extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      SizedBox(height: _IntroScreenState._imageHeight, width: _IntroScreenState._imageHeight),
-      Gap(context.insets.lg),
-      Text(title, style: context.textStyles.wonderTitle.copyWith(fontSize: 24)),
-      Gap(context.insets.sm),
-      Text(desc, style: context.textStyles.body),
-    ]);
+    return Semantics(
+      // Reads content as it changes without the user focus on it.
+      liveRegion: true,
+      child: Column(
+        children: [
+          SizedBox(height: _IntroScreenState._imageHeight, width: _IntroScreenState._imageHeight),
+          Gap(context.insets.lg),
+          Text(title, style: context.textStyles.wonderTitle.copyWith(fontSize: 24)),
+          Gap(context.insets.sm),
+          Text(desc, style: context.textStyles.body),
+        ],
+      ),
+    );
   }
 }
 
