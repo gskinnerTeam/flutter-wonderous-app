@@ -157,7 +157,7 @@ class _ButtonDecoratorState extends State<_ButtonDecorator> {
         behavior: HitTestBehavior.translucent,
         child: Opacity(
           opacity: _isDown ? .7 : 1,
-          child: widget.child,
+          child: ExcludeSemantics(child: widget.child),
         ),
       ),
     );
