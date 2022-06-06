@@ -14,7 +14,7 @@ class SimpleHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: isTransparent ? Colors.transparent : context.colors.greyStrong,
+      color: isTransparent ? Colors.transparent : $styles.colors.greyStrong,
       child: SafeArea(
         bottom: false,
         child: Row(children: [
@@ -23,23 +23,23 @@ class SimpleHeader extends StatelessWidget {
             fit: FlexFit.tight,
             child: Column(
               children: [
-                if (!showBackBtn) Gap(context.insets.xs),
+                if (!showBackBtn) Gap($styles.insets.xs),
                 Text(
                   title.toUpperCase(),
                   textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
-                  style: context.textStyles.h4.copyWith(color: context.colors.offWhite),
+                  style: $styles.text.h4.copyWith(color: $styles.colors.offWhite),
                 ),
                 if (subtitle != null)
                   Text(
                     subtitle!.toUpperCase(),
                     textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
-                    style: context.textStyles.title1.copyWith(color: context.colors.accent1),
+                    style: $styles.text.title1.copyWith(color: $styles.colors.accent1),
                   ),
-                if (!showBackBtn) Gap(context.insets.md),
+                if (!showBackBtn) Gap($styles.insets.md),
               ],
             ),
           ),
-          if (showBackBtn) Container(width: context.insets.lg * 2, alignment: Alignment.centerLeft, child: child),
+          if (showBackBtn) Container(width: $styles.insets.lg * 2, alignment: Alignment.centerLeft, child: child),
         ]),
       ),
     );

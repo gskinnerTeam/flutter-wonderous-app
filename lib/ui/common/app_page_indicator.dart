@@ -22,8 +22,8 @@ class AppPageIndicator extends StatelessWidget {
           dotHeight: dotSize ?? 6,
           paintStyle: PaintingStyle.fill,
           strokeWidth: (dotSize ?? 6) / 2,
-          dotColor: color ?? context.colors.accent1,
-          activeDotColor: color ?? context.colors.accent1,
+          dotColor: color ?? $styles.colors.accent1,
+          activeDotColor: color ?? $styles.colors.accent1,
           expansionFactor: 2),
     );
   }

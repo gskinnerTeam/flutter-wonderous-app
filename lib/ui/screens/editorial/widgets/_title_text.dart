@@ -7,14 +7,14 @@ class _TitleText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => DefaultTextColor(
-        color: context.colors.offWhite,
+        color: $styles.colors.offWhite,
         child: Column(
           children: [
-            Gap(context.insets.md),
+            Gap($styles.insets.md),
             Gap(30),
             SeparatedRow(
-              padding: EdgeInsets.symmetric(horizontal: context.insets.sm),
-              separatorBuilder: () => Gap(context.insets.sm),
+              padding: EdgeInsets.symmetric(horizontal: $styles.insets.sm),
+              separatorBuilder: () => Gap($styles.insets.sm),
               children: [
                 Expanded(
                   child: Divider(
@@ -23,7 +23,7 @@ class _TitleText extends StatelessWidget {
                 ),
                 Text(
                   data.subTitle.toUpperCase(),
-                  style: context.textStyles.title2,
+                  style: $styles.text.title2,
                 ).animate().fade(delay: 100.ms),
                 Expanded(
                   child: Divider(
@@ -32,33 +32,33 @@ class _TitleText extends StatelessWidget {
                 ),
               ],
             ),
-            Gap(context.insets.md),
+            Gap($styles.insets.md),
             WonderTitleText(data),
-            Gap(context.insets.xs),
+            Gap($styles.insets.xs),
             Text(
               data.regionTitle.toUpperCase(),
-              style: context.textStyles.title1,
+              style: $styles.text.title1,
               textAlign: TextAlign.center,
             ),
-            Gap(context.insets.md),
+            Gap($styles.insets.md),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: context.insets.md),
+              padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
               child: AnimatedBuilder(
                 animation: scroller,
                 builder: (_, __) => CompassDivider(
                   isExpanded: scroller.position.pixels <= 0,
                   linesColor: data.type.fgColor,
-                  compassColor: context.colors.offWhite,
+                  compassColor: $styles.colors.offWhite,
                 ),
               ),
             ),
-            Gap(context.insets.sm),
+            Gap($styles.insets.sm),
             Text(
               '${StringUtils.formatYr(data.startYr)} - ${StringUtils.formatYr(data.endYr)}',
-              style: context.textStyles.h4,
+              style: $styles.text.h4,
               textAlign: TextAlign.center,
             ),
-            Gap(context.insets.sm),
+            Gap($styles.insets.sm),
           ],
         ),
       );

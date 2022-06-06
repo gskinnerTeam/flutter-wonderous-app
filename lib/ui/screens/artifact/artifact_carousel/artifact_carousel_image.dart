@@ -127,7 +127,7 @@ class _ImagePreview extends StatelessWidget {
           // Add an outer border with the rounded ends.
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,
-            border: Border.all(color: context.colors.offWhite, width: borderWidth),
+            border: Border.all(color: $styles.colors.offWhite, width: borderWidth),
             borderRadius: BorderRadius.all(Radius.circular(999)),
           ),
 
@@ -136,10 +136,9 @@ class _ImagePreview extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(999),
               child: ImageFade(
-                image: image,
-                fit: BoxFit.cover,
-                placeholder: ColoredBox(color: context.colors.greyMedium.withOpacity(0.75))
-              ),
+                  image: image,
+                  fit: BoxFit.cover,
+                  placeholder: ColoredBox(color: $styles.colors.greyMedium.withOpacity(0.75))),
             ),
           ),
         ),

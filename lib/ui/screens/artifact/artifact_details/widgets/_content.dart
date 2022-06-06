@@ -7,35 +7,31 @@ class _Content extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: context.insets.lg),
+      padding: EdgeInsets.symmetric(horizontal: $styles.insets.lg),
       child: Column(
         children: [
-          Gap(context.insets.xl),
-
+          Gap($styles.insets.xl),
           if (data.culture.isNotEmpty) ...[
             Text(
               data.culture.toUpperCase(),
-              style: context.textStyles.titleFont.copyWith(color: context.colors.accent1),
+              style: $styles.text.titleFont.copyWith(color: $styles.colors.accent1),
             ).animate().fade(delay: 150.ms, duration: 600.ms),
-            Gap(context.insets.xs),
+            Gap($styles.insets.xs),
           ],
-
           Text(
             data.title,
             textAlign: TextAlign.center,
-            style: context.textStyles.h2.copyWith(color: context.colors.offWhite, height: 1.2),
+            style: $styles.text.h2.copyWith(color: $styles.colors.offWhite, height: 1.2),
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
           ).animate().fade(delay: 250.ms, duration: 600.ms),
-
-          Gap(context.insets.lg),
-
-          Animate().toggle(delay: 500.ms, builder: (_, value, __) {
-            return CompassDivider(isExpanded: !value, duration: context.times.med);
-          }),
-
-          Gap(context.insets.lg),
-
+          Gap($styles.insets.lg),
+          Animate().toggle(
+              delay: 500.ms,
+              builder: (_, value, __) {
+                return CompassDivider(isExpanded: !value, duration: $styles.times.med);
+              }),
+          Gap($styles.insets.lg),
           ...[
             _InfoRow('Date', data.date),
             _InfoRow('Period', data.period),
@@ -45,10 +41,9 @@ class _Content extends StatelessWidget {
             _InfoRow('Classification', data.classification),
           ]
               .animate(interval: 100.ms)
-              .fade(delay: 600.ms, duration: context.times.med)
+              .fade(delay: 600.ms, duration: $styles.times.med)
               .slide(begin: Offset(0.2, 0), curve: Curves.easeOut),
-          
-          Gap(context.insets.offset),
+          Gap($styles.insets.offset),
         ],
       ),
     );
@@ -64,18 +59,18 @@ class _InfoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: context.insets.sm),
+      padding: EdgeInsets.only(bottom: $styles.insets.sm),
       child: Row(children: [
         Expanded(
           child: Text(
             StringUtils.isEmpty(label) ? '---' : label.toUpperCase(),
-            style: context.textStyles.titleFont.copyWith(color: context.colors.accent2),
+            style: $styles.text.titleFont.copyWith(color: $styles.colors.accent2),
           ),
         ),
         Expanded(
           child: Text(
             StringUtils.isEmpty(value) ? '---' : value,
-            style: context.textStyles.body.copyWith(color: context.colors.offWhite),
+            style: $styles.text.body.copyWith(color: $styles.colors.offWhite),
           ),
         ),
       ]),

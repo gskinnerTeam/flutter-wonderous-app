@@ -45,7 +45,7 @@ class _BottomScrubber extends StatelessWidget {
         children: [
           /// Timeline background
           Padding(
-            padding: EdgeInsets.all(context.insets.sm),
+            padding: EdgeInsets.all($styles.insets.sm),
             child: WondersTimelineBuilder(
               crossAxisGap: 4,
               selectedWonders: [
@@ -95,7 +95,7 @@ class _BottomScrubber extends StatelessWidget {
   }
 
   Container _buildOutlineBox(BuildContext context, Alignment alignment) {
-    final borderColor = context.colors.white;
+    final borderColor = $styles.colors.white;
     return Container(
       decoration: BoxDecoration(border: Border.all(color: borderColor)),
       child: Align(alignment: alignment, child: DashedLine(vertical: true)),

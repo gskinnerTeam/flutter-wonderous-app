@@ -93,7 +93,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
       return NotificationListener<ScrollUpdateNotification>(
         onNotification: _checkPointerIsDown,
         child: ColoredBox(
-          color: context.colors.offWhite,
+          color: $styles.colors.offWhite,
           child: Stack(
             children: [
               /// Background
@@ -164,7 +164,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                         widget.data.type,
                         scrollPos: _scrollPos,
                         sectionIndex: _sectionIndex,
-                      ).animate().fade(duration: context.times.med, delay: context.times.pageTransition),
+                      ).animate().fade(duration: $styles.times.med, delay: $styles.times.pageTransition),
                     ),
                   ),
 
@@ -184,7 +184,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
 
                   /// Bottom padding
                   SliverToBoxAdapter(
-                    child: Container(height: 150, color: context.colors.offWhite),
+                    child: Container(height: 150, color: $styles.colors.offWhite),
                   ),
                 ],
               ),
@@ -195,7 +195,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                   builder: (_, child) {
                     return AnimatedOpacity(
                       opacity: _scrollPos.value > 0 ? 0 : 1,
-                      duration: context.times.med,
+                      duration: $styles.times.med,
                       child: child,
                     );
                   },

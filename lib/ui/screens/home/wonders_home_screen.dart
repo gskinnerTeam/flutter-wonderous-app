@@ -141,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             /// Menu Btn
             TopLeft(
               child: AnimatedOpacity(
-                duration: context.times.fast,
+                duration: $styles.times.fast,
                 opacity: _isMenuOpen ? 0 : 1,
                 child: CircleIconBtn(
                   icon: Icons.menu,
@@ -153,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
             /// Floating controls / UI
             AnimatedSwitcher(
-              duration: context.times.fast,
+              duration: $styles.times.fast,
               child: RepaintBoundary(
                 // Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
                 key: ValueKey(_wonderIndex),
@@ -162,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       SizedBox(width: double.infinity),
-                      Gap(context.insets.lg * 3),
+                      Gap($styles.insets.lg * 3),
 
                       /// Settings Btn
                       Opacity(
@@ -180,18 +180,18 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                             IgnorePointer(
                               child: DiagonalTextPageIndicator(current: _wonderIndex + 1, total: _numWonders),
                             ),
-                            Gap(context.insets.md),
+                            Gap($styles.insets.md),
                             AppPageIndicator(
                               count: _numWonders,
                               controller: _pageController,
-                              color: context.colors.white,
+                              color: $styles.colors.white,
                               dotSize: 8,
                               onDotPressed: _handlePageIndicatorDotPressed,
                             ),
                           ],
                         ),
                       ),
-                      Gap(context.insets.sm),
+                      Gap($styles.insets.sm),
 
                       /// Animated arrow and background
                       Stack(
@@ -205,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           _AnimatedArrowButton(onTap: _showDetailsPage),
                         ],
                       ),
-                      Gap(context.insets.md),
+                      Gap($styles.insets.md),
                     ],
                   ),
                 ),
@@ -261,7 +261,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         );
       },
       child: VtGradient(
-        [context.colors.white.withOpacity(0), context.colors.white.withOpacity(1)],
+        [$styles.colors.white.withOpacity(0), $styles.colors.white.withOpacity(1)],
         const [.3, 1],
         borderRadius: BorderRadius.circular(99),
       ),

@@ -63,11 +63,11 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
                   Expanded(
                     child: _buildScrollingArea(vtPadding, size, context, constraints),
                   ),
-                  Gap(context.insets.xs),
+                  Gap($styles.insets.xs),
 
                   /// Era Text (classical, modern etc)
                   _buildAnimatedEraText(context),
-                  Gap(context.insets.xs),
+                  Gap($styles.insets.xs),
                 ],
               ),
 
@@ -92,9 +92,9 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
         animation: controller.scroller,
         builder: (_, __) {
           String era = StringUtils.getEra(controller.calculateYearFromScrollPos());
-          final style = context.text.body.copyWith(color: context.colors.offWhite);
+          final style = $styles.text.body.copyWith(color: $styles.colors.offWhite);
           return AnimatedSwitcher(
-            duration: context.times.fast,
+            duration: $styles.times.fast,
             child: Text(era, key: ValueKey(era), style: style).animate(key: ValueKey(era)).slide(begin: Offset(0, .2)),
           );
         });
@@ -134,7 +134,7 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
                 /// individual timeline sections
                 Positioned.fill(
                   left: 100,
-                  right: context.insets.sm,
+                  right: $styles.insets.sm,
                   child: WondersTimelineBuilder(
                       axis: Axis.vertical,
                       crossAxisGap: max(6, (constraints.maxWidth - (120 * 3)) / 2),

@@ -16,7 +16,7 @@ class CompassDivider extends StatelessWidget {
         duration: duration,
         tween: Tween(begin: 0, end: isExpanded ? 1 : 0),
         curve: Curves.easeOut,
-        child: Divider(height: 1, thickness: .5, color: linesColor ?? context.colors.accent2),
+        child: Divider(height: 1, thickness: .5, color: linesColor ?? $styles.colors.accent2),
         builder: (_, value, child) {
           return Transform.scale(
             scaleX: value,
@@ -29,7 +29,7 @@ class CompassDivider extends StatelessWidget {
 
     return Row(children: [
       Expanded(child: buildAnimatedDivider()),
-      Gap(context.insets.sm),
+      Gap($styles.insets.sm),
       TweenAnimationBuilder<double>(
         duration: duration,
         tween: Tween(begin: 0, end: isExpanded ? .5 : 0),
@@ -43,10 +43,10 @@ class CompassDivider extends StatelessWidget {
             width: 32,
             child: SvgPicture.asset(
               SvgPaths.compassFull,
-              color: compassColor ?? context.colors.accent2,
+              color: compassColor ?? $styles.colors.accent2,
             )),
       ),
-      Gap(context.insets.sm),
+      Gap($styles.insets.sm),
       Expanded(child: buildAnimatedDivider(alignLeft: true)),
     ]);
   }

@@ -75,7 +75,7 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
     if (scrollWonder != null) _scrollKey = GlobalKey();
 
     return ColoredBox(
-      color: context.colors.greyStrong,
+      color: $styles.colors.greyStrong,
       child: Stack(children: [
         Positioned.fill(
           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [

@@ -72,22 +72,22 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
   @override
   Widget build(BuildContext context) {
     // tone down the orange just a bit:
-    vizController.color = Color.lerp(context.colors.accent1, context.colors.black, 0.2)!;
+    vizController.color = Color.lerp($styles.colors.accent1, $styles.colors.black, 0.2)!;
     Widget content = GestureDetector(
       onTap: () => WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SimpleHeader('Browse Artifacts', subtitle: wonder.title),
-          Gap(context.insets.xs),
+          Gap($styles.insets.xs),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: context.insets.sm),
+            padding: EdgeInsets.symmetric(horizontal: $styles.insets.sm),
             child: _SearchInput(onSubmit: _handleSearchSubmitted, wonder: wonder),
           ),
-          Gap(context.insets.sm),
+          Gap($styles.insets.sm),
           Container(
-            color: context.colors.black,
-            padding: EdgeInsets.all(context.insets.xs * 1.5),
+            color: $styles.colors.black,
+            padding: EdgeInsets.all($styles.insets.xs * 1.5),
             child: _buildStatusText(context),
           ),
           Expanded(
@@ -105,7 +105,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
     );
 
     return Stack(children: [
-      Positioned.fill(child: ColoredBox(color: context.colors.greyStrong, child: content)),
+      Positioned.fill(child: ColoredBox(color: $styles.colors.greyStrong, child: content)),
       Positioned.fill(
         child: RepaintBoundary(
           child: ExpandingTimeRangeSelector(
@@ -122,7 +122,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
   }
 
   Widget _buildStatusText(BuildContext context) {
-    final TextStyle statusStyle = context.textStyles.body.copyWith(color: context.colors.accent1);
+    final TextStyle statusStyle = $styles.text.body.copyWith(color: $styles.colors.accent1);
     if (_searchResults.isEmpty) {
       return Text(
         'No artifacts found',
@@ -132,7 +132,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
       );
     }
     return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Gap(context.insets.sm),
+      Gap($styles.insets.sm),
       Text(
         '${_searchResults.length} artifacts found, ${_filteredResults.length} in ',
         textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
@@ -146,21 +146,21 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
           style: statusStyle.copyWith(decoration: TextDecoration.underline),
         ),
       ),
-      Gap(context.insets.sm),
+      Gap($styles.insets.sm),
     ]);
   }
 
   Widget _buildEmptyIndicator(BuildContext context) {
     String text = 'Adjust your ${_searchResults.isEmpty ? 'search terms' : 'timeframe'}';
     IconData icon = _searchResults.isEmpty ? Icons.search_outlined : Icons.edit_calendar_outlined;
-    Color color = context.colors.greyMedium;
+    Color color = $styles.colors.greyMedium;
     Widget widget = Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Spacer(),
-        Icon(icon, size: context.insets.xl, color: color.withOpacity(0.5)),
-        Gap(context.insets.xs),
-        Text(text, style: context.textStyles.body.copyWith(color: color)),
+        Icon(icon, size: $styles.insets.xl, color: color.withOpacity(0.5)),
+        Gap($styles.insets.xs),
+        Text(text, style: $styles.text.body.copyWith(color: color)),
         Spacer(
           flex: 3,
         ),
