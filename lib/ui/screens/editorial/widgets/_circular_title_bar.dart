@@ -22,7 +22,7 @@ class _CircularTitleBar extends StatelessWidget {
         child: Stack(
           children: [
             // Bg
-            BottomCenter(child: Container(height: barSize - barTopPadding, color: context.colors.offWhite)),
+            BottomCenter(child: Container(height: barSize - barTopPadding, color: $styles.colors.offWhite)),
 
             ClipRect(
               child: OverflowBox(
@@ -38,7 +38,7 @@ class _CircularTitleBar extends StatelessWidget {
                 child: Image.asset('${ImagePaths.common}/${icons[index]}')
                     .animate(key: ValueKey(index))
                     .fade()
-                    .scale(begin: .5, curve: Curves.easeOutBack, duration: context.times.med),
+                    .scale(begin: .5, curve: Curves.easeOutBack, duration: $styles.times.med),
               ),
             ),
           ],
@@ -68,7 +68,7 @@ class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with S
   String get newTitle => widget.titles[widget.index];
   late final _anim = AnimationController(
     vsync: this,
-    duration: context.times.fast,
+    duration: $styles.times.fast,
   )..forward();
 
   bool get isAnimStopped => _anim.value == 0 || _anim.value == _anim.upperBound;
@@ -99,7 +99,7 @@ class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with S
       builder: (_, __) => Transform.rotate(
         angle: Curves.easeInOut.transform(_anim.value) * pi,
         child: Container(
-          decoration: BoxDecoration(shape: BoxShape.circle, color: context.colors.offWhite),
+          decoration: BoxDecoration(shape: BoxShape.circle, color: $styles.colors.offWhite),
           alignment: Alignment.center,
           child: Padding(
             padding: const EdgeInsets.all(24),
@@ -128,7 +128,7 @@ class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with S
   }
 
   CircularText _buildCircularText(String title) {
-    final textStyle = context.textStyles.h1.copyWith(fontSize: 24, color: context.colors.accent1);
+    final textStyle = $styles.text.h1.copyWith(fontSize: 24, color: $styles.colors.accent1);
     return CircularText(
       radius: 125,
       position: CircularTextPosition.inside,

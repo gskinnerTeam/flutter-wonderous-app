@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
@@ -26,7 +27,6 @@ class AppLogic {
   Future<void> bootstrap() async {
     // Default error handler
     FlutterError.onError = _handleFlutterError;
-
     // Load any bitmaps the views might need
     await AppBitmaps.init();
 
@@ -45,13 +45,14 @@ class AppLogic {
 
     // Load initial view and flag bootStrap as complete
     isBootstrapComplete = true;
-    appRouter.go(ScreenPaths.home);
+    if (kReleaseMode && settingsLogic.hasCompletedOnboarding.value) {
+      appRouter.go(ScreenPaths.home);
+    } else {
+      appRouter.go(ScreenPaths.intro);
+    }
   }
 
-  Future<Image?> takeScreenshot(RenderRepaintBoundary boundary) async {
-    return null;
-  }
-
+  /// TODO: Move all the wallpaper stuff to some WallPaperLogic class?
   /// Walks user through flow to save a Wonder Poster to their gallery
   Future<void> saveWallpaper(State state, RenderRepaintBoundary boundary, {required String name}) async {
     // Time to create an image!
@@ -106,7 +107,7 @@ class AppLogic {
 
   Future<T?> showFullscreenDialogRoute<T>(BuildContext context, Widget child) async {
     return await Navigator.of(context).push<T>(
-      PageRoutes.dialog<T>(child, context.read<AppStyle>().times.pageTransition),
+      PageRoutes.dialog<T>(child, $styles.times.pageTransition),
     );
   }
 }

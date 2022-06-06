@@ -18,7 +18,7 @@ class ArtifactCarouselBg extends StatelessWidget {
         Positioned.fill(
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
-            child: Container(color: context.colors.greyMedium.withOpacity(0.6)),
+            child: Container(color: $styles.colors.greyMedium.withOpacity(0.6)),
           ),
         ),
       ]),

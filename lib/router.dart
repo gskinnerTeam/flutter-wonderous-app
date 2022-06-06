@@ -8,7 +8,7 @@ import 'package:wonders/ui/screens/artifact/artifact_details/artifact_details_sc
 import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_screen.dart';
 import 'package:wonders/ui/screens/collection/collection_screen.dart';
 import 'package:wonders/ui/screens/home/wonders_home_screen.dart';
-import 'package:wonders/ui/screens/settings/settings_screen.dart';
+import 'package:wonders/ui/screens/intro/intro_screen.dart';
 import 'package:wonders/ui/screens/splash/splash_screen.dart';
 import 'package:wonders/ui/screens/timeline/timeline_screen.dart';
 import 'package:wonders/ui/screens/wallpaper_photo/wallpaper_photo_screen.dart';
@@ -16,6 +16,7 @@ import 'package:wonders/ui/screens/wonder_details/wonders_details_screen.dart';
 
 class ScreenPaths {
   static String splash = '/';
+  static String intro = '/welcome';
   static String home = '/home';
   static String settings = '/settings';
   static String wonderDetails(WonderType type) => '/wonder/${type.name}';
@@ -47,8 +48,8 @@ final appRouter = GoRouter(
   navigatorBuilder: (_, __, child) => WondersAppScaffold(child: child),
   routes: [
     AppRoute(ScreenPaths.splash, (_) => SplashScreen()),
-    AppRoute(ScreenPaths.home, (_) => WondersHomeScreen()),
-    AppRoute(ScreenPaths.settings, (_) => SettingsScreen()),
+    AppRoute(ScreenPaths.home, (_) => HomeScreen()),
+    AppRoute(ScreenPaths.intro, (_) => IntroScreen()),
     AppRoute('/wonder/:type', (s) {
       return WonderDetailsScreen(type: _parseWonderType(s.params['type']!));
     }, useFade: true),
@@ -68,7 +69,7 @@ final appRouter = GoRouter(
       return ArtifactDetailsScreen(artifactId: s.params['id']!);
     }),
     AppRoute('/collection', (s) {
-      return CollectionScreen(fromId: s.queryParams['id']);
+      return CollectionScreen(fromId: s.queryParams['id'] ?? '');
     }),
     AppRoute('/maps/:type', (s) {
       return FullscreenMapsViewer(type: _parseWonderType(s.params['type']!));

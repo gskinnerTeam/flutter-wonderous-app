@@ -12,16 +12,16 @@ import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_confi
 part '_vertical_swipe_controller.dart';
 part 'widgets/_animated_arrow_button.dart';
 
-class WondersHomeScreen extends StatefulWidget with GetItStatefulWidgetMixin {
-  WondersHomeScreen({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget with GetItStatefulWidgetMixin {
+  HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<WondersHomeScreen> createState() => _WondersHomeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
 /// Shows a horizontally scrollable list PageView sandwiched between Foreground and Background layers
 /// arranged in a parallax style.
-class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
   late final _pageController = PageController(
     viewportFraction: 1,
     initialPage: _numWonders * 9999, // allow 'infinite' scrolling by starting at a very high page
@@ -141,7 +141,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
             /// Menu Btn
             TopLeft(
               child: AnimatedOpacity(
-                duration: context.times.fast,
+                duration: $styles.times.fast,
                 opacity: _isMenuOpen ? 0 : 1,
                 child: CircleIconBtn(
                   icon: Icons.menu,
@@ -153,7 +153,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
 
             /// Floating controls / UI
             AnimatedSwitcher(
-              duration: context.times.fast,
+              duration: $styles.times.fast,
               child: RepaintBoundary(
                 // Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
                 key: ValueKey(_wonderIndex),
@@ -162,7 +162,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       SizedBox(width: double.infinity),
-                      Gap(context.insets.lg * 3),
+                      Gap($styles.insets.lg * 3),
 
                       /// Settings Btn
                       Opacity(
@@ -177,21 +177,22 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
                         child: Column(
                           children: [
                             /// Page indicator
-                            // IgnorePointer(
-                            //   child: DiagonalTextPageIndicator(current: _wonderIndex + 1, total: _numWonders),
-                            // ),
-                            Gap(context.insets.md),
+                            IgnorePointer(
+                              child: DiagonalTextPageIndicator(current: _wonderIndex + 1, total: _numWonders),
+                            ),
+                            Gap($styles.insets.md),
+
                             AppPageIndicator(
                               count: _numWonders,
                               controller: _pageController,
-                              color: context.colors.white,
+                              color: $styles.colors.white,
                               dotSize: 8,
                               onDotPressed: _handlePageIndicatorDotPressed,
                             ),
                           ],
                         ),
                       ),
-                      Gap(context.insets.sm),
+                      Gap($styles.insets.sm),
 
                       /// Animated arrow and background
                       Stack(
@@ -205,7 +206,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
                           _AnimatedArrowButton(onTap: _showDetailsPage),
                         ],
                       ),
-                      Gap(context.insets.md),
+                      Gap($styles.insets.md),
                     ],
                   ),
                 ),
@@ -213,7 +214,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
             ),
           ]),
         ],
-      ),
+      ).animate().fadeIn(),
     );
   }
 
@@ -261,7 +262,7 @@ class _WondersHomeScreenState extends State<WondersHomeScreen> with SingleTicker
         );
       },
       child: VtGradient(
-        [context.colors.white.withOpacity(0), context.colors.white.withOpacity(1)],
+        [$styles.colors.white.withOpacity(0), $styles.colors.white.withOpacity(1)],
         const [.3, 1],
         borderRadius: BorderRadius.circular(99),
       ),

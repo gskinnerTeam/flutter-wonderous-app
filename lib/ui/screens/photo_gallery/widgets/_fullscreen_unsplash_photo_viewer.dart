@@ -20,7 +20,7 @@ class _FullScreenUnsplashPhotoViewerState extends State<_FullScreenUnsplashPhoto
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: context.colors.black,
+      color: $styles.colors.black,
       child: Stack(
         children: [
           InteractiveViewer(

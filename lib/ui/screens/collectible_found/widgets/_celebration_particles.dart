@@ -7,18 +7,18 @@ class _CelebrationParticles extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color color = context.colors.accent1;
+    final Color color = $styles.colors.accent1;
     int particleCount = 1200;
 
     return Positioned.fill(
       child: RepaintBoundary(
         child: ParticleField(
+          blendMode: BlendMode.dstIn,
           spriteSheet: SpriteSheet(
             image: AssetImage(ImagePaths.particle),
             frameWidth: 21,
             scale: 0.75,
           ),
-          
           onTick: (controller, elapsed, size) {
             List<Particle> particles = controller.particles;
 

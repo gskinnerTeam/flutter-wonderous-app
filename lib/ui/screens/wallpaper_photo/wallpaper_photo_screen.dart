@@ -107,7 +107,7 @@ class _WallpaperPhotoScreenState extends State<WallpaperPhotoScreen> {
             if (_showTitleText)
               BottomCenter(
                 child: Transform.translate(
-                  offset: Offset(0.0, -context.insets.xl * 2),
+                  offset: Offset(0.0, -$styles.insets.xl * 2),
                   child: WonderTitleText(wonderData, enableShadows: true),
                 ),
               ),
@@ -124,7 +124,7 @@ class _WallpaperPhotoScreenState extends State<WallpaperPhotoScreen> {
       TopCenter(
         child: SafeArea(
           child: Padding(
-            padding: EdgeInsets.all(context.insets.md),
+            padding: EdgeInsets.all($styles.insets.md),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,8 +132,8 @@ class _WallpaperPhotoScreenState extends State<WallpaperPhotoScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: BackBtn.close(
-                    bgColor: context.colors.offWhite,
-                    iconColor: context.colors.black,
+                    bgColor: $styles.colors.offWhite,
+                    iconColor: $styles.colors.black,
                   ),
                 ),
                 Expanded(child: Container()),
@@ -141,8 +141,8 @@ class _WallpaperPhotoScreenState extends State<WallpaperPhotoScreen> {
                   padding: const EdgeInsets.only(top: 10.0, bottom: 10.0, right: 16.0),
                   child: CircleIconBtn(
                     icon: Icons.share,
-                    bgColor: context.colors.offWhite,
-                    color: context.colors.black,
+                    bgColor: $styles.colors.offWhite,
+                    color: $styles.colors.black,
                     onPressed: () => _handleSharePhoto(context, wonderData.title),
                     semanticLabel: 'share photo',
                     size: 44,
@@ -164,7 +164,7 @@ class _WallpaperPhotoScreenState extends State<WallpaperPhotoScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             SimpleCheckbox(active: _showTitleText, label: 'Show Title', onToggled: _handleTextToggle),
-            Gap(context.insets.xl),
+            Gap($styles.insets.xl),
           ],
         ),
       ),

@@ -27,11 +27,10 @@ class _PhotoGalleryState extends State<PhotoGallery> {
   static const int _gridSize = 5;
   // Index starts in the middle of the grid (eg, 25 items, index will start at 13)
   int _index = ((_gridSize * _gridSize) / 2).round();
-  late int _prevIndex = _index;
   Offset _lastSwipeDir = Offset.zero;
   final double _scale = .65;
   bool _skipNextOffsetTween = false;
-  late Duration swipeDuration = context.times.med * .4;
+  late Duration swipeDuration = $styles.times.med * .4;
   final _photoIds = ValueNotifier<List<String>>([]);
   int get _imgCount => pow(_gridSize, 2).round();
 
@@ -54,7 +53,6 @@ class _PhotoGalleryState extends State<PhotoGallery> {
   }
 
   void _setIndex(int value) {
-    _prevIndex = _index;
     setState(() => _index = value);
   }
 
@@ -128,7 +126,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
           }
           Size imgSize = (widget.imageSize ?? Size(context.widthPx * .7, context.heightPx * .6)) * _scale;
           // Get transform offset for the current _index
-          final padding = context.insets.sm;
+          final padding = $styles.insets.sm;
           var gridOffset = _calculateCurrentOffset(padding, imgSize);
           // For some reason we need to add in half of the top-padding when this view does not use a safeArea.
           // TODO: Try and figure out why we need to incorporate top padding here, it's counter-intuitive. Maybe GridView or another of the material components is doing something we don't want?
@@ -155,7 +153,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                     // Detect swipes in order to change index
                     child: EightWaySwipeDetector(
                       onSwipe: _handleSwipe,
-                      threshold: 10 + 100 * settingsLogic.swipeThreshold.value,
+                      threshold: 30,
                       // A tween animation builder moves from image to image based on current offset
                       child: TweenAnimationBuilder<Offset>(
                         tween: Tween(begin: gridOffset, end: gridOffset),
@@ -186,7 +184,6 @@ class _PhotoGalleryState extends State<PhotoGallery> {
         valueListenable: collectiblesLogic.statesById,
         builder: (_, __, ___) {
           bool selected = index == _index;
-          bool wasSelected = index == _prevIndex;
           collectiblesLogic.forWonder(widget.wonderType)[1];
           final imgUrl = _photoIds.value[index];
           bool showCollectible = index == _getCollectibleIndex() && collectiblesLogic.isLost(widget.wonderType, 1);
@@ -204,13 +201,13 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                       swipeDuration,
                       animationKey: ValueKey(_index),
                       blurStrength: 15,
-                      enabled: settingsLogic.enableMotionBlur.value && (selected || wasSelected),
+                      enabled: false,
                       dir: _lastSwipeDir,
                       child: SizedBox(
                         width: imgSize.width,
                         height: imgSize.height,
                         child: TweenAnimationBuilder<double>(
-                          duration: context.times.med,
+                          duration: $styles.times.med,
                           curve: Curves.easeOut,
                           tween: Tween(begin: 1, end: selected ? 1.15 : 1),
                           builder: (_, value, child) => Transform.scale(scale: value, child: child),

@@ -12,12 +12,12 @@ class WonderTitleText extends StatelessWidget {
   final bool enableShadows;
   @override
   Widget build(BuildContext context) {
-    var textStyle = context.textStyles.wonderTitle.copyWith(
-      color: context.colors.offWhite,
+    var textStyle = $styles.text.wonderTitle.copyWith(
+      color: $styles.colors.offWhite,
     );
     bool smallText = [WonderType.christRedeemer, WonderType.colosseum].contains(data.type);
     if (smallText) {
-      textStyle = textStyle.copyWith(fontSize: 48 * context.style.scale);
+      textStyle = textStyle.copyWith(fontSize: 48);
     }
 
     // First, get a list like: ['the\n', 'great wall']
@@ -40,7 +40,7 @@ class WonderTitleText extends StatelessWidget {
       );
     }
 
-    List<Shadow> shadows = enableShadows ? context.shadows.text : [];
+    List<Shadow> shadows = enableShadows ? $styles.shadows.text : [];
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(

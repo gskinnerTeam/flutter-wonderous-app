@@ -1,7 +1,7 @@
 import 'package:image_fade/image_fade.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
-import 'package:wonders/ui/common/particles/particle_field.dart';
+import 'package:particle_field/particle_field.dart';
 
 part 'widgets/_animated_ribbon.dart';
 part 'widgets/_celebration_particles.dart';
@@ -18,14 +18,14 @@ class CollectibleFoundScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepaintBoundary(
       child: _buildIntro(context).animate().swap(
-            delay: context.times.fast * 3.5,
+            delay: $styles.times.fast * 3.5,
             builder: (_) => _buildDetail(context),
           ),
     );
   }
 
   Widget _buildIntro(BuildContext context) {
-    Duration t = context.times.fast;
+    Duration t = $styles.times.fast;
     return Stack(children: [
       Animate().custom(duration: t * 5, builder: (context, ratio, _) => _buildGradient(context, ratio, 0)),
 
@@ -47,7 +47,7 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   Widget _buildDetail(BuildContext context) {
-    Duration t = context.times.fast;
+    Duration t = $styles.times.fast;
     return Stack(key: ValueKey('detail'), children: [
       Animate().custom(duration: t, builder: (context, ratio, _) => _buildGradient(context, 1, ratio)),
       _CelebrationParticles(fadeMs: (t * 6).inMilliseconds),
@@ -61,10 +61,9 @@ class CollectibleFoundScreen extends StatelessWidget {
           Spacer(flex: 2),
           _buildRibbon(context),
           Spacer(flex: 2),
-          _buildTitle(context, collectible.title, context.textStyles.h2, context.colors.offWhite, t * 1.5),
-          Gap(context.insets.xs),
-          _buildTitle(
-              context, collectible.subtitle.toUpperCase(), context.textStyles.title2, context.colors.accent1, t * 2),
+          _buildTitle(context, collectible.title, $styles.text.h2, $styles.colors.offWhite, t * 1.5),
+          Gap($styles.insets.xs),
+          _buildTitle(context, collectible.subtitle.toUpperCase(), $styles.text.title2, $styles.colors.accent1, t * 2),
           Spacer(flex: 2),
           _buildCollectionButton(context),
         ]),
@@ -77,8 +76,8 @@ class CollectibleFoundScreen extends StatelessWidget {
     // used by both intro and detail animations to ensure they share a mid-point.
     ratioIn = Curves.easeOutExpo.transform(ratioIn);
     final double opacity = 0.9 * (ratioIn * 0.8 + ratioOut * 0.2);
-    final Color light = context.colors.offWhite;
-    final Color dark = context.colors.black;
+    final Color light = $styles.colors.offWhite;
+    final Color dark = $styles.colors.black;
 
     // final state is a solid fill, so optimize that case:
     if (ratioOut == 1) return Container(color: dark.withOpacity(opacity));
@@ -94,24 +93,24 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   Widget _buildImage(BuildContext context) {
-    Duration t = context.times.fast;
+    Duration t = $styles.times.fast;
     // build an image with animated shadows and scaling
     return ImageFade(image: imageProvider, duration: t * 0.5)
         .animate()
         .custom(
           duration: t * 6,
           builder: (_, ratio, child) => Container(
-            padding: EdgeInsets.all(context.insets.xxs),
-            margin: EdgeInsets.symmetric(horizontal: context.insets.xl),
-            decoration: BoxDecoration(color: context.colors.offWhite, boxShadow: [
+            padding: EdgeInsets.all($styles.insets.xxs),
+            margin: EdgeInsets.symmetric(horizontal: $styles.insets.xl),
+            decoration: BoxDecoration(color: $styles.colors.offWhite, boxShadow: [
               BoxShadow(
-                color: context.colors.accent1.withOpacity(ratio * 0.75),
-                blurRadius: context.insets.xl * 2,
+                color: $styles.colors.accent1.withOpacity(ratio * 0.75),
+                blurRadius: $styles.insets.xl * 2,
               ),
               BoxShadow(
-                color: context.colors.black.withOpacity(ratio * 0.75),
-                offset: Offset(0, context.insets.xxs),
-                blurRadius: context.insets.sm,
+                color: $styles.colors.black.withOpacity(ratio * 0.75),
+                offset: Offset(0, $styles.insets.xxs),
+                blurRadius: $styles.insets.sm,
               ),
             ]),
             child: child,
@@ -121,17 +120,17 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   Widget _buildRibbon(BuildContext context) {
-    Duration t = context.times.fast;
+    Duration t = $styles.times.fast;
     return _AnimatedRibbon('Artifact Discovered'.toUpperCase())
         .animate()
         .scale(begin: 0.3, duration: t * 2, curve: Curves.easeOutExpo, alignment: Alignment(0, -1));
   }
 
   Widget _buildTitle(BuildContext context, String text, TextStyle style, Color color, Duration delay) {
-    Duration t = context.times.fast;
+    Duration t = $styles.times.fast;
     // because this is a performance-sensitive screen, we are fading in the text by adjusting color:
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: context.insets.lg),
+      padding: EdgeInsets.symmetric(horizontal: $styles.insets.lg),
       child: Animate().custom(
         delay: delay,
         duration: t * 2,
@@ -147,17 +146,23 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   Widget _buildCollectionButton(BuildContext context) {
-    Duration t = context.times.fast;
+    Duration t = $styles.times.fast;
     return Container(
-      padding: EdgeInsets.all(context.insets.lg),
+      padding: EdgeInsets.all($styles.insets.lg),
       child: AppBtn.from(
         text: 'view in my collection',
         isSecondary: true,
         expand: true,
-        onPressed: () {
-          context.push(ScreenPaths.collection(collectible.id));
-        },
+        onPressed: () => _handleViewCollectionPressed(context),
       ),
-    ).animate().show(delay: t * 4).move(begin: Offset(0, context.insets.md), duration: t * 3, curve: Curves.easeOutExpo);
+    )
+        .animate()
+        .show(delay: t * 4)
+        .move(begin: Offset(0, $styles.insets.md), duration: t * 3, curve: Curves.easeOutExpo);
+  }
+
+  void _handleViewCollectionPressed(BuildContext context) {
+    Navigator.pop(context);
+    context.push(ScreenPaths.collection(collectible.id));
   }
 }

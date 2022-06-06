@@ -24,7 +24,7 @@ class GreatWallIllustration extends StatelessWidget {
 
   List<Widget> _buildBg(BuildContext context, Animation<double> anim) {
     return [
-      FadeColorTransition(animation: anim, color: context.colors.shift(fgColor, .15)),
+      FadeColorTransition(animation: anim, color: $styles.colors.shift(fgColor, .15)),
       Positioned.fill(
         child: IllustrationTexture(
           ImagePaths.roller2,

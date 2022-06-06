@@ -21,13 +21,13 @@ class _AnimatedRibbon extends StatelessWidget {
       ),
       Container(
         height: height,
-        color: context.colors.accent1,
-        padding: EdgeInsets.symmetric(horizontal: context.insets.sm),
+        color: $styles.colors.accent1,
+        padding: EdgeInsets.symmetric(horizontal: $styles.insets.sm),
         margin: EdgeInsets.only(bottom: 10),
         // this aligns the text vertically, without expanding the container:
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [Text(text, textAlign: TextAlign.center, style: context.textStyles.title1)],
+          children: [Text(text, textAlign: TextAlign.center, style: $styles.text.title1)],
         ),
       ),
     ]);
@@ -37,6 +37,8 @@ class _AnimatedRibbon extends StatelessWidget {
     Widget end = Image.asset(ImagePaths.ribbonEnd, height: height);
     if (flip) end = Transform.scale(scaleX: -1, child: end);
     double m = flip ? 1 : -1;
-    return end.animate().move(begin: Offset(m * 8, 2), end: Offset(m * 32, 10), duration: 400.ms, curve: Curves.easeOut);
+    return end
+        .animate()
+        .move(begin: Offset(m * 8, 2), end: Offset(m * 32, 10), duration: 400.ms, curve: Curves.easeOut);
   }
 }

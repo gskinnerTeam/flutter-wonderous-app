@@ -19,7 +19,7 @@ class CircleBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double sz = size ?? context.insets.xl;
+    double sz = size ?? $styles.insets.xl;
     return AppBtn(
       onPressed: onPressed,
       semanticLabel: semanticLabel,
@@ -56,15 +56,15 @@ class CircleIconBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color defaultColor = context.colors.greyStrong;
-    Color iconColor = color ?? context.colors.offWhite;
+    Color defaultColor = $styles.colors.greyStrong;
+    Color iconColor = color ?? $styles.colors.offWhite;
     return CircleBtn(
       onPressed: onPressed,
       border: border,
       size: size,
       bgColor: bgColor ?? defaultColor,
       semanticLabel: semanticLabel,
-      child: Icon(icon, size: iconSize ?? context.insets.md, color: iconColor),
+      child: Icon(icon, size: iconSize ?? $styles.insets.md, color: iconColor),
     );
   }
 
@@ -120,7 +120,7 @@ class _SafeAreaWithPadding extends StatelessWidget {
     return SafeArea(
       bottom: false,
       child: Padding(
-        padding: EdgeInsets.all(context.insets.sm),
+        padding: EdgeInsets.all($styles.insets.sm),
         child: child,
       ),
     );

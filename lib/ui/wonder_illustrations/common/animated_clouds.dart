@@ -86,10 +86,6 @@ class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProvid
       );
     }
 
-    // Respect the settings to enable/disable clouds
-    bool enableClouds = watchX((SettingsLogic s) => s.enableClouds);
-    if (!enableClouds) return SizedBox.shrink();
-    //
     return RepaintBoundary(
       child: ClipRect(
         child: OverflowBox(

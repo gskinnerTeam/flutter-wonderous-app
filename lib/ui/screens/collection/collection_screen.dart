@@ -15,9 +15,9 @@ part 'widgets/_collection_list.dart';
 part 'widgets/_collection_footer.dart';
 
 class CollectionScreen extends StatefulWidget with GetItStatefulWidgetMixin {
-  CollectionScreen({this.fromId, Key? key}) : super(key: key);
+  CollectionScreen({required this.fromId, Key? key}) : super(key: key);
 
-  final String? fromId;
+  final String fromId;
 
   @override
   State<CollectionScreen> createState() => _CollectionScreenState();
@@ -27,20 +27,20 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
   Map<String, int> _states = collectiblesLogic.statesById.value;
   GlobalKey? _scrollKey;
 
-  @override
-  void initState() {
-    super.initState();
-    if (widget.fromId != null && _states[widget.fromId] == CollectibleState.discovered) {
-      scheduleMicrotask(() => _scrollToTarget(false));
-    }
-  }
-
   WonderType? get scrollTargetWonder {
     String? id = widget.fromId;
-    if (id == null || _states[id] != CollectibleState.discovered) {
+    if (_states[id] != CollectibleState.discovered) {
       id = _states.keys.firstWhereOrNull((id) => _states[id] == CollectibleState.discovered);
     }
     return collectiblesLogic.fromId(id)?.wonder;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.fromId.isNotEmpty && _states[widget.fromId] == CollectibleState.discovered) {
+      scheduleMicrotask(() => _scrollToTarget(false));
+    }
   }
 
   void _scrollToTarget([bool animate = true]) {
@@ -52,6 +52,14 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
   void _showDetails(BuildContext context, CollectibleData collectible) {
     context.push(ScreenPaths.artifact(collectible.artifactId));
     Future.delayed(300.ms).then((_) => collectiblesLogic.updateState(collectible.id, CollectibleState.explored));
+  }
+
+  void _handleReset() async {
+    String msg = 'Are you sure you want to reset your collection?';
+    final result = await showModal(context, child: OkCancelModal(msg: msg));
+    if (result == true) {
+      collectiblesLogic.reset();
+    }
   }
 
   @override
@@ -67,19 +75,11 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
     if (scrollWonder != null) _scrollKey = GlobalKey();
 
     return ColoredBox(
-      color: context.colors.greyStrong,
+      color: $styles.colors.greyStrong,
       child: Stack(children: [
         Positioned.fill(
           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            SimpleHeader(
-              'Collection',
-              onBack: widget.fromId == null
-                  ? null
-                  : () {
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                    },
-            ),
+            SimpleHeader('Collection'),
             _NewlyDiscoveredRow(count: discovered, onPressed: _scrollToTarget),
             _CollectionList(
               states: _states,
@@ -97,10 +97,5 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
         ),
       ]),
     );
-  }
-
-  void _handleReset() async {
-    String msg = 'Are you sure you want to reset your collection?';
-    if (await showModal(context, child: OkCancelModal(msg: msg)) == true) collectiblesLogic.reset();
   }
 }
