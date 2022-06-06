@@ -54,20 +54,17 @@ class PetraIllustration extends StatelessWidget {
         Center(
           child: FractionalTranslation(
             translation: Offset(0, config.shortMode ? 0.2 : -.1),
-            child: WonderHero(
-              config,
-              'petra-mg',
-              child: Transform.scale(
-                scale: 1 + config.zoom * .75,
-                child: FractionallySizedBox(
-                  heightFactor: config.shortMode ? 0.55 : 0.66, //might need to be based on height.
-                  widthFactor: 2,
-                  child: Image.asset(
-                    '$assetPath/petra.png',
-                    fit: BoxFit.contain,
-                    opacity: anim,
-                  ),
-                ),
+            child: Transform.scale(
+              scale: 1 + config.zoom * .75,
+              child: FractionallySizedBox(
+                heightFactor: config.shortMode ? 0.55 : 0.66,
+                widthFactor: 2,
+                child: WonderHero(config, 'petra-mg',
+                    child: Image.asset(
+                      '$assetPath/petra.png',
+                      fit: BoxFit.contain,
+                      opacity: anim,
+                    )),
               ),
             ),
           ),
@@ -87,8 +84,7 @@ class PetraIllustration extends StatelessWidget {
                 scale: 1.1 + config.zoom * .2,
                 child: FractionalTranslation(
                   translation: Offset(-.35, -.07),
-                  child: Image.asset('$assetPath/foreground-left.png',
-                      opacity: anim, fit: BoxFit.contain),
+                  child: Image.asset('$assetPath/foreground-left.png', opacity: anim, fit: BoxFit.contain),
                 ),
               ),
             ),
@@ -103,8 +99,7 @@ class PetraIllustration extends StatelessWidget {
                 scale: 1 + config.zoom * .4,
                 child: FractionalTranslation(
                   translation: Offset(.4, -.03),
-                  child: Image.asset('$assetPath/foreground-right.png',
-                      opacity: anim, fit: BoxFit.contain),
+                  child: Image.asset('$assetPath/foreground-right.png', opacity: anim, fit: BoxFit.contain),
                 ),
               ),
             ),

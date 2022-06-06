@@ -38,13 +38,13 @@ class PyramidsGizaIllustration extends StatelessWidget {
           child: WonderHero(
             config,
             'pyramids-moon',
-              child: FractionalTranslation(
-                translation: Offset(0, -.5 * anim.value),
-                child: Transform.scale(
-                  scale: config.shortMode ? 0.8 : 1.2,
-                  child: Image.asset('$assetPath/moon.png', opacity: anim),
-                ),
+            child: FractionalTranslation(
+              translation: Offset(0, -.5 * anim.value),
+              child: Transform.scale(
+                scale: config.shortMode ? 0.8 : 1.2,
+                child: Image.asset('$assetPath/moon.png', opacity: anim),
               ),
+            ),
           )),
     ];
   }
@@ -71,31 +71,31 @@ class PyramidsGizaIllustration extends StatelessWidget {
       Transform.scale(
         scale: 1 + config.zoom * .2,
         child: Transform.translate(
-        offset: Offset(0, 10 * (1 - curvedAnim)),
+          offset: Offset(0, 10 * (1 - curvedAnim)),
           child: BottomCenter(
-                child: FractionallySizedBox(
-                  widthFactor: 1.2,
-                  child: FractionalTranslation(
-                      translation: Offset(0, -1.2),
-                      child: Image.asset('$assetPath/foreground-back.png', opacity: anim, fit: BoxFit.cover)),
-                ),
-              ),
+            child: FractionallySizedBox(
+              widthFactor: 1.2,
+              child: FractionalTranslation(
+                  translation: Offset(0, -1.2),
+                  child: Image.asset('$assetPath/foreground-back.png', opacity: anim, fit: BoxFit.cover)),
             ),
+          ),
+        ),
       ),
       Transform.scale(
         scale: 1 + config.zoom * .4,
         child: Transform.translate(
-        offset: Offset(0, 30 * (1 - curvedAnim)),
-            child: BottomCenter(
-              child: FractionallySizedBox(
-                widthFactor: 1.52,
-                child: FractionalTranslation(
-                  translation: Offset(0, 0.1),
-                  child: Image.asset('$assetPath/foreground-front.png', opacity: anim, fit: BoxFit.cover),
-                ),
+          offset: Offset(0, 30 * (1 - curvedAnim)),
+          child: BottomCenter(
+            child: FractionallySizedBox(
+              widthFactor: 1.52,
+              child: FractionalTranslation(
+                translation: Offset(0, 0.1),
+                child: Image.asset('$assetPath/foreground-front.png', opacity: anim, fit: BoxFit.cover),
               ),
             ),
           ),
+        ),
       ),
     ];
   }

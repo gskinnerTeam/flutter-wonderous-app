@@ -34,12 +34,12 @@ class ChristRedeemerIllustration extends StatelessWidget {
       ),
       Align(
         alignment: config.shortMode ? Alignment(.5, -1.5) : Alignment(.5, -.75),
-        child: WonderHero(
-          config,
-          'christ-sun',
-          child: FractionalTranslation(
+        child: FractionalTranslation(
           translation: Offset(0, .5 * anim.value),
-              child: Transform.scale(
+          child: WonderHero(
+            config,
+            'christ-sun',
+            child: Transform.scale(
               scale: config.shortMode ? 1.4 : 1.6,
               child: Image.asset(
                 '$assetPath/sun.png',
@@ -80,39 +80,39 @@ class ChristRedeemerIllustration extends StatelessWidget {
     final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
       Stack(
-          children: [
-            Transform.scale(
-              scale: 1 + config.zoom * .15,
-              child:FractionalTranslation(
-                translation: Offset(-.2 * (1 - curvedAnim), 0),
-                child: BottomLeft(
-                  child: FractionallySizedBox(
-                    widthFactor: 1.5,
-                    child: FractionalTranslation(
-                      translation: Offset(-.25, .03),
-                      child: Image.asset('$assetPath/foreground-left.png', opacity: anim, fit: BoxFit.cover),
-                    ),
+        children: [
+          Transform.scale(
+            scale: 1 + config.zoom * .15,
+            child: FractionalTranslation(
+              translation: Offset(-.2 * (1 - curvedAnim), 0),
+              child: BottomLeft(
+                child: FractionallySizedBox(
+                  widthFactor: 1.5,
+                  child: FractionalTranslation(
+                    translation: Offset(-.25, .03),
+                    child: Image.asset('$assetPath/foreground-left.png', opacity: anim, fit: BoxFit.cover),
                   ),
                 ),
               ),
             ),
-            Transform.scale(
-              scale: 1 + config.zoom * .3,
-              child:FractionalTranslation(
-                translation: Offset(.2 * (1 - curvedAnim), 0),
-                child: BottomRight(
-                  child: FractionallySizedBox(
-                    widthFactor: 1.5,
-                    child: FractionalTranslation(
-                      translation: Offset(.3, .2),
-                      child: Image.asset('$assetPath/foreground-right.png', opacity: anim, fit: BoxFit.cover),
-                    ),
+          ),
+          Transform.scale(
+            scale: 1 + config.zoom * .3,
+            child: FractionalTranslation(
+              translation: Offset(.2 * (1 - curvedAnim), 0),
+              child: BottomRight(
+                child: FractionallySizedBox(
+                  widthFactor: 1.5,
+                  child: FractionalTranslation(
+                    translation: Offset(.3, .2),
+                    child: Image.asset('$assetPath/foreground-right.png', opacity: anim, fit: BoxFit.cover),
                   ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
     ];
   }
 }

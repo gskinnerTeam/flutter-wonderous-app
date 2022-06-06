@@ -56,19 +56,17 @@ class TajMahalIllustration extends StatelessWidget {
           alignment: Alignment(0, config.shortMode ? 1 : -.15),
           child: FractionallySizedBox(
             widthFactor: config.shortMode ? 1 : 1.7,
-            child: Stack(
-              children: [
-                Image.asset('$assetPath/taj-mahal.png', opacity: anim, fit: BoxFit.cover),
-                if (!config.shortMode)
-                  FractionalTranslation(
-                    translation: Offset(0, 1.33),
-                    child: Transform.scale(
-                      scale: 1,
-                      child: Image.asset('$assetPath/pool.png', opacity: anim, fit: BoxFit.cover),
-                    ),
-                  ),
-              ],
-            ),
+            child: WonderHero(config, 'taj-mg',
+                child: Stack(
+                  children: [
+                    Image.asset('$assetPath/taj-mahal.png', opacity: anim, fit: BoxFit.cover),
+                    if (!config.shortMode)
+                      FractionalTranslation(
+                        translation: Offset(0, 1.33),
+                        child: Image.asset('$assetPath/pool.png', opacity: anim, fit: BoxFit.cover),
+                      ),
+                  ],
+                )),
           ),
         ),
       )

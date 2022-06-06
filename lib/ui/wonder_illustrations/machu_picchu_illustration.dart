@@ -40,8 +40,7 @@ class MachuPicchuIllustration extends StatelessWidget {
           'machu-sun',
           child: FractionalTranslation(
             translation: Offset(0, -.5 * anim.value),
-
-              child: Transform.scale(
+            child: Transform.scale(
               scale: config.shortMode ? .75 : 1,
               child: Image.asset(
                 '$assetPath/sun.png',
@@ -83,24 +82,24 @@ class MachuPicchuIllustration extends StatelessWidget {
               scale: 1 + config.zoom * .05,
               child: FractionallySizedBox(
                 widthFactor: 1.5,
-                  child: FractionalTranslation(
-                    translation: Offset(0, .1),
-                    child: Image.asset('$assetPath/foreground-back.png', opacity: anim),
-                  ),
+                child: FractionalTranslation(
+                  translation: Offset(0, .1),
+                  child: Image.asset('$assetPath/foreground-back.png', opacity: anim),
+                ),
               ),
             ),
           ),
           BottomLeft(
-          child:FractionalTranslation(
-          translation: Offset(-.2 * (1 - curvedAnim), 0),
-          child: Transform.scale(
+            child: FractionalTranslation(
+              translation: Offset(-.2 * (1 - curvedAnim), 0),
+              child: Transform.scale(
                 scale: 1 + config.zoom * .25,
                 child: FractionallySizedBox(
                   widthFactor: 1.5,
-                    child: FractionalTranslation(
+                  child: FractionalTranslation(
                     translation: Offset(-.3, .4),
                     child: Image.asset('$assetPath/foreground-front.png', opacity: anim),
-                    ),
+                  ),
                 ),
               ),
             ),

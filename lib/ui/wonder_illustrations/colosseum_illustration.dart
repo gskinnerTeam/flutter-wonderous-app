@@ -38,7 +38,6 @@ class ColosseumIllustration extends StatelessWidget {
           'colosseum-sun',
           child: FractionalTranslation(
             translation: Offset(0, -.5 * anim.value),
-
             child: Transform.scale(
               scale: config.shortMode ? .75 : 1,
               child: Image.asset(
@@ -66,11 +65,11 @@ class ColosseumIllustration extends StatelessWidget {
           Center(
             child: FractionalTranslation(
               translation: Offset(0, config.shortMode ? .1 : -.15),
-              child: WonderHero(
-                config,
-                'colosseum-mg',
-                child: Transform.scale(
-                  scale: config.shortMode ? .85 : 1.55 + config.zoom * .2,
+              child: Transform.scale(
+                scale: config.shortMode ? .85 : 1.55 + config.zoom * .2,
+                child: WonderHero(
+                  config,
+                  'colosseum-mg',
                   child: Image.asset('$assetPath/colosseum.png', opacity: anim, fit: BoxFit.cover),
                 ),
               ),
@@ -81,43 +80,41 @@ class ColosseumIllustration extends StatelessWidget {
     ];
   }
 
-    List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
-      final curvedAnim = Curves.easeOut.transform(anim.value);
-      return [
-        Stack(children: [
-          BottomLeft(
-            child: FractionallySizedBox(
+  List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
+    final curvedAnim = Curves.easeOut.transform(anim.value);
+    return [
+      Stack(children: [
+        BottomLeft(
+          child: FractionallySizedBox(
             heightFactor: .56,
-            child:FractionalTranslation(
-                translation: Offset(-.2 * (1 - curvedAnim), 0),
-                child: Transform.scale(
-                  scale: 1 + config.zoom * .3,
-                  child: FractionalTranslation(
-                    translation: Offset(-.1, .1),
-                    child: Image.asset('$assetPath/foreground-left.png',
-                        opacity: anim, fit: BoxFit.cover),
-                  ),
+            child: FractionalTranslation(
+              translation: Offset(-.2 * (1 - curvedAnim), 0),
+              child: Transform.scale(
+                scale: 1 + config.zoom * .3,
+                child: FractionalTranslation(
+                  translation: Offset(-.1, .1),
+                  child: Image.asset('$assetPath/foreground-left.png', opacity: anim, fit: BoxFit.cover),
                 ),
               ),
             ),
           ),
-          BottomRight(
-            child: FractionallySizedBox(
-              heightFactor: .56,
-              child:FractionalTranslation(
-                  translation: Offset(.2 * (1 - curvedAnim), 0),
-                  child: Transform.scale(
-                    scale: 1 + config.zoom * .3,
-                    child: FractionalTranslation(
-                      translation: Offset(.3, .2),
-                      child: Image.asset('$assetPath/foreground-right.png',
-                          opacity: anim, fit: BoxFit.cover),
-                    ),
-                  ),
+        ),
+        BottomRight(
+          child: FractionallySizedBox(
+            heightFactor: .56,
+            child: FractionalTranslation(
+              translation: Offset(.2 * (1 - curvedAnim), 0),
+              child: Transform.scale(
+                scale: 1 + config.zoom * .3,
+                child: FractionalTranslation(
+                  translation: Offset(.3, .2),
+                  child: Image.asset('$assetPath/foreground-right.png', opacity: anim, fit: BoxFit.cover),
                 ),
+              ),
             ),
           ),
-        ])
-      ];
+        ),
+      ])
+    ];
   }
 }
