@@ -26,7 +26,7 @@ class HomeMenu extends StatelessWidget {
       children: [
         /// Blur filter
         BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+          filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
           child: Container(
             color: $styles.colors.greyStrong.withOpacity(.5),
           ),

@@ -28,20 +28,24 @@ class ChristRedeemerIllustration extends StatelessWidget {
         child: IllustrationTexture(
           ImagePaths.roller1,
           color: Colors.white,
-          opacity: anim.drive(Tween(begin: 0, end: .5)),
+          flipX: false,
+          opacity: anim.drive(Tween(begin: 0, end: .4)),
         ),
       ),
       Align(
-        alignment: config.shortMode ? Alignment.center : Alignment(.5, -.7),
-        child: WonderHero(
-          config,
-          'christ-sun',
-          child: Transform.scale(
-            scale: config.shortMode ? 1.4 : 1.2,
-            child: Image.asset(
-              '$assetPath/sun.png',
-              cacheWidth: context.widthPx.round() * 2,
-              opacity: anim,
+        alignment: config.shortMode ? Alignment(.5, -1.5) : Alignment(.5, -.75),
+        child: FractionalTranslation(
+          translation: Offset(0, .5 * anim.value),
+          child: WonderHero(
+            config,
+            'christ-sun',
+            child: Transform.scale(
+              scale: config.shortMode ? 1.4 : 1.6,
+              child: Image.asset(
+                '$assetPath/sun.png',
+                cacheWidth: context.widthPx.round() * 2,
+                opacity: anim,
+              ),
             ),
           ),
         ),
@@ -58,11 +62,11 @@ class ChristRedeemerIllustration extends StatelessWidget {
           child: Transform.scale(
             scale: 1 + config.zoom * .2,
             child: FractionalTranslation(
-              translation: Offset(0, config.shortMode ? .5 : .1),
+              translation: Offset(0, config.shortMode ? .5 : .2),
               child: BottomCenter(
                 child: FractionallySizedBox(
-                  heightFactor: config.shortMode ? 1.5 : .8,
-                  child: Image.asset('$assetPath/redeemer.png', opacity: anim, fit: BoxFit.fitHeight),
+                  heightFactor: config.shortMode ? 1.5 : 1.2,
+                  child: Image.asset('$assetPath/redeemer.png', opacity: anim, fit: BoxFit.cover),
                 ),
               ),
             ),
@@ -75,37 +79,40 @@ class ChristRedeemerIllustration extends StatelessWidget {
   List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
     final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
-      Transform.translate(
-        offset: Offset(0, 30) * (1 - curvedAnim),
-        child: Stack(
-          children: [
-            Transform.scale(
-              scale: 1 + config.zoom * .1,
+      Stack(
+        children: [
+          Transform.scale(
+            scale: 1 + config.zoom * .15,
+            child: FractionalTranslation(
+              translation: Offset(-.2 * (1 - curvedAnim), 0),
               child: BottomLeft(
                 child: FractionallySizedBox(
-                  widthFactor: 1.3,
+                  widthFactor: 1.5,
                   child: FractionalTranslation(
-                    translation: Offset(-.26, 0),
-                    child: Image.asset('$assetPath/foreground-left.png', opacity: anim),
+                    translation: Offset(-.25, .03),
+                    child: Image.asset('$assetPath/foreground-left.png', opacity: anim, fit: BoxFit.cover),
                   ),
                 ),
               ),
             ),
-            Transform.scale(
-              scale: 1 + config.zoom * .1,
+          ),
+          Transform.scale(
+            scale: 1 + config.zoom * .3,
+            child: FractionalTranslation(
+              translation: Offset(.2 * (1 - curvedAnim), 0),
               child: BottomRight(
                 child: FractionallySizedBox(
-                  widthFactor: 1.3,
+                  widthFactor: 1.5,
                   child: FractionalTranslation(
-                    translation: Offset(.33, .2),
-                    child: Image.asset('$assetPath/foreground-right.png', opacity: anim),
+                    translation: Offset(.3, .2),
+                    child: Image.asset('$assetPath/foreground-right.png', opacity: anim, fit: BoxFit.cover),
                   ),
                 ),
               ),
             ),
-          ],
-        ),
-      )
+          ),
+        ],
+      ),
     ];
   }
 }

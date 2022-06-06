@@ -181,6 +181,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               child: DiagonalTextPageIndicator(current: _wonderIndex + 1, total: _numWonders),
                             ),
                             Gap($styles.insets.md),
+
                             AppPageIndicator(
                               count: _numWonders,
                               controller: _pageController,

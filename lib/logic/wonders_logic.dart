@@ -11,14 +11,14 @@ import 'package:wonders/logic/data/wonders_data/taj_mahal_data.dart';
 
 class WondersLogic {
   final List<WonderData> all = [
+    pyramidsGizaData,
+    greatWallData,
+    petraData,
+    colosseumData,
     chichenItzaData,
+    machuPicchuData,
     tajMahalData,
     christRedeemerData,
-    colosseumData,
-    greatWallData,
-    machuPicchuData,
-    petraData,
-    pyramidsGizaData,
   ];
 
   final int startYear = -3000;
