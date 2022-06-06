@@ -17,7 +17,7 @@ class TimelineSection extends StatelessWidget {
 
     return Container(
       alignment: Alignment(0, -1 + fraction * 2),
-      padding: EdgeInsets.all(context.insets.xs),
+      padding: EdgeInsets.all($styles.insets.xs),
       decoration: BoxDecoration(color: data.type.fgColor),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(99),

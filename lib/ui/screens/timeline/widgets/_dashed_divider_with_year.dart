@@ -19,14 +19,14 @@ class _DashedDividerWithYear extends StatelessWidget {
               children: [
                 Text(
                   '${roundedYr.abs()}',
-                  style: context.text.h2.copyWith(color: context.colors.white, shadows: context.shadows.text),
+                  style: $styles.text.h2.copyWith(color: $styles.colors.white, shadows: $styles.shadows.text),
                 ),
-                Gap(context.insets.xs),
+                Gap($styles.insets.xs),
                 Text(
                   StringUtils.getYrSuffix(roundedYr),
-                  style: context.text.body.copyWith(
+                  style: $styles.text.body.copyWith(
                     color: Colors.white,
-                    shadows: context.shadows.textStrong,
+                    shadows: $styles.shadows.textStrong,
                   ),
                 ),
               ],

@@ -2,7 +2,7 @@ import 'package:wonders/common_libs.dart';
 
 /// Shared methods across button types
 Widget _buildIcon(BuildContext context, IconData icon, {required bool isSecondary, required double? size}) =>
-    Icon(icon, color: isSecondary ? context.colors.black : context.colors.offWhite, size: size ?? 18);
+    Icon(icon, color: isSecondary ? $styles.colors.black : $styles.colors.offWhite, size: size ?? 18);
 
 /// The core button that drives all other buttons.
 class AppBtn extends StatelessWidget {
@@ -45,13 +45,13 @@ class AppBtn extends StatelessWidget {
       Text? txt = text == null
           ? null
           : Text(text.toUpperCase(),
-              style: context.textStyles.btn, textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false));
+              style: $styles.text.btn, textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false));
       Widget? icn = icon == null ? null : _buildIcon(context, icon, isSecondary: isSecondary, size: iconSize);
       if (txt != null && icn != null) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
-          children: [txt, Gap(context.insets.xs), icn],
+          children: [txt, Gap($styles.insets.xs), icn],
         );
       } else {
         return (txt ?? icn)!;
@@ -96,8 +96,8 @@ class AppBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color defaultColor = isSecondary ? context.colors.white : context.colors.greyStrong;
-    Color textColor = isSecondary ? context.colors.black : context.colors.white;
+    Color defaultColor = isSecondary ? $styles.colors.white : $styles.colors.greyStrong;
+    Color textColor = isSecondary ? $styles.colors.black : $styles.colors.white;
     BorderSide side = border ?? BorderSide.none;
 
     Widget content = _builder?.call(context) ?? child ?? SizedBox.shrink();
@@ -112,8 +112,8 @@ class AppBtn extends StatelessWidget {
         backgroundColor: bgColor ?? defaultColor,
         shape: circular
             ? CircleBorder(side: side)
-            : RoundedRectangleBorder(side: side, borderRadius: BorderRadius.circular(context.corners.md)),
-        padding: padding ?? EdgeInsets.all(context.insets.md),
+            : RoundedRectangleBorder(side: side, borderRadius: BorderRadius.circular($styles.corners.md)),
+        padding: padding ?? EdgeInsets.all($styles.insets.md),
       ),
       child: DefaultTextStyle(
         style: DefaultTextStyle.of(context).style.copyWith(color: textColor),
@@ -148,6 +148,7 @@ class _ButtonDecoratorState extends State<_ButtonDecorator> {
       button: true,
       container: true,
       child: GestureDetector(
+        excludeFromSemantics: true,
         onTapDown: (_) {
           HapticFeedback.mediumImpact();
           setState(() => _isDown = true);

@@ -9,19 +9,19 @@ class _ResultTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Widget content = Container(
-      color: context.colors.black,
+      color: $styles.colors.black,
       width: double.infinity,
       child: ImageFade(
         key: ValueKey(data.id),
         image: NetworkImage(data.imageUrl),
-        duration: context.times.fast,
+        duration: $styles.times.fast,
         syncDuration: 0.ms,
         fit: BoxFit.cover,
         errorBuilder: (ctx, __) => Center(
           child: Icon(
             Icons.image_not_supported,
-            color: ctx.colors.greyStrong,
-            size: ctx.insets.xl,
+            color: $styles.colors.greyStrong,
+            size: $styles.insets.xl,
           ),
         ),
       ),
@@ -30,7 +30,7 @@ class _ResultTile extends StatelessWidget {
     return AspectRatio(
       aspectRatio: (data.aspectRatio == 0) ? (data.id % 10) / 15 + 0.6 : max(0.5, data.aspectRatio),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(context.insets.xs),
+        borderRadius: BorderRadius.circular($styles.insets.xs),
         child: AppBtn.basic(
           semanticLabel: data.title,
           onPressed: () => onPressed(data),

@@ -20,31 +20,31 @@ class _ScrollingContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Text buildText(String value) => Text(_fixNewlines(value), style: context.textStyles.body);
+    Text buildText(String value) => Text(_fixNewlines(value), style: $styles.text.body);
 
     DropCapText buildDropCapText(String value) {
-      final dropStyle = context.text.dropCase;
-      final bodyStyle = context.text.body;
+      final dropStyle = $styles.text.dropCase;
+      final bodyStyle = $styles.text.body;
       final dropChar = value.substring(0, 1);
       final dropCapSize = StringUtils.measure(dropChar, dropStyle);
       return DropCapText(
         _fixNewlines(value).substring(1),
         dropCap: DropCap(
           width: dropCapSize.width,
-          height: context.textStyles.body.fontSize! * context.textStyles.body.height! * 2,
+          height: $styles.text.body.fontSize! * $styles.text.body.height! * 2,
           child: Transform.translate(
             offset: Offset(0, bodyStyle.fontSize! * (bodyStyle.height! - 1) - 2),
             child: Text(value.substring(0, 1),
-                style: context.textStyles.dropCase.copyWith(
-                  color: context.colors.accent1,
+                style: $styles.text.dropCase.copyWith(
+                  color: $styles.colors.accent1,
                   height: 1,
                 )),
           ),
         ),
-        style: context.textStyles.body,
+        style: $styles.text.body,
         dropCapPadding: EdgeInsets.only(top: 0, right: 6, bottom: 0),
-        dropCapStyle: context.textStyles.dropCase.copyWith(
-          color: context.colors.accent1,
+        dropCapStyle: $styles.text.dropCase.copyWith(
+          color: $styles.colors.accent1,
           height: 1,
         ),
       );
@@ -73,10 +73,10 @@ class _ScrollingContent extends StatelessWidget {
     }
 
     return Container(
-      color: context.colors.offWhite,
-      padding: EdgeInsets.symmetric(vertical: context.insets.md),
+      color: $styles.colors.offWhite,
+      padding: EdgeInsets.symmetric(vertical: $styles.insets.md),
       child: SeparatedColumn(
-        separatorBuilder: () => Gap(context.insets.md),
+        separatorBuilder: () => Gap($styles.insets.md),
         children: [
           _ContentSection([
             buildHiddenCollectible(slot: 0),
@@ -104,7 +104,7 @@ class _ScrollingContent extends StatelessWidget {
 
           _ContentSection([
             /// Callout2
-            Gap(context.insets.xs),
+            Gap($styles.insets.xs),
             _Callout(text: data.callout2),
 
             /// Construction 2
@@ -136,8 +136,8 @@ class _ContentSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: EdgeInsets.symmetric(horizontal: context.insets.md),
-        child: SeparatedColumn(separatorBuilder: () => Gap(context.insets.md), children: children),
+        padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
+        child: SeparatedColumn(separatorBuilder: () => Gap($styles.insets.md), children: children),
       );
 }
 
@@ -160,10 +160,10 @@ class _YouTubeThumbnail extends StatelessWidget {
             onPressed: handlePressed,
             child: ImageFade(image: NetworkImage(imageUrl), fit: BoxFit.cover),
           ),
-          Gap(context.insets.xs),
+          Gap($styles.insets.xs),
           Padding(
-              padding: EdgeInsets.symmetric(horizontal: context.insets.md),
-              child: Text(caption, style: context.text.caption)),
+              padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
+              child: Text(caption, style: $styles.text.caption)),
         ],
       ),
     );
@@ -190,7 +190,7 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
         SizedBox(
           height: widget.height,
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(context.corners.md),
+            borderRadius: BorderRadius.circular($styles.corners.md),
             child: AppBtn.basic(
               semanticLabel: 'Open fullscreen maps view',
               onPressed: handlePressed,
@@ -213,10 +213,10 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
             ),
           ),
         ),
-        Gap(context.insets.xs),
+        Gap($styles.insets.xs),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: context.insets.md),
-          child: Text(widget.data.mapCaption, style: context.text.caption),
+          padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
+          child: Text(widget.data.mapCaption, style: $styles.text.caption),
         ),
       ],
     );

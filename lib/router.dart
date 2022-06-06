@@ -8,12 +8,11 @@ import 'package:wonders/ui/screens/artifact/artifact_details/artifact_details_sc
 import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_screen.dart';
 import 'package:wonders/ui/screens/collection/collection_screen.dart';
 import 'package:wonders/ui/screens/home/wonders_home_screen.dart';
+import 'package:wonders/ui/screens/intro/intro_screen.dart';
 import 'package:wonders/ui/screens/splash/splash_screen.dart';
 import 'package:wonders/ui/screens/timeline/timeline_screen.dart';
 import 'package:wonders/ui/screens/wallpaper_photo/wallpaper_photo_screen.dart';
 import 'package:wonders/ui/screens/wonder_details/wonders_details_screen.dart';
-
-import 'ui/screens/intro/intro_screen.dart';
 
 class ScreenPaths {
   static String splash = '/';

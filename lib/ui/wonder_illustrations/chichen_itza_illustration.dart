@@ -8,7 +8,7 @@ import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_confi
 class ChichenItzaIllustration extends StatelessWidget {
   ChichenItzaIllustration({Key? key, required this.config}) : super(key: key);
   final WonderIllustrationConfig config;
-  final _assetPath = WonderType.chichenItza.assetPath;
+  final assetPath = WonderType.chichenItza.assetPath;
   final fgColor = WonderType.chichenItza.fgColor;
   @override
   Widget build(BuildContext context) {
@@ -22,42 +22,39 @@ class ChichenItzaIllustration extends StatelessWidget {
         child: IllustrationTexture(
           ImagePaths.roller2,
           color: Colors.white,
-          opacity: anim.drive(Tween(begin: 0, end: .3)),
+          opacity: anim.drive(Tween(begin: 0, end: .5)),
           flipY: true,
         ),
       ),
       Align(
-        alignment: Alignment(0, config.shortMode ? 1 : 0),
-        child: FractionalTranslation(
-          translation: Offset(.7, config.shortMode ? .1 : -.1),
+        alignment: Alignment(config.shortMode ? .25 : .7, config.shortMode ? 1 : -.15),
           child: WonderHero(
             config,
             'chichen-sun',
             child: FractionalTranslation(
               translation: Offset(0, -.2 * anim.value),
               child: Image.asset(
-                '$_assetPath/sun.png',
-                width: config.shortMode ? 120 : 200,
+                '$assetPath/sun.png',
+                width: config.shortMode ? 100 : 200,
                 cacheWidth: context.widthPx.round() * 2,
                 opacity: anim,
               ),
             ),
           ),
         ),
-      ),
     ];
   }
 
   List<Widget> _buildMg(BuildContext context, Animation<double> anim) {
     return [
       Align(
-        alignment: Alignment(0, config.shortMode ? 1 : 0),
+        alignment: Alignment(0, config.shortMode ? 1 : -.15),
         child: WonderHero(config, 'chichen-mg',
             child: Transform.scale(
               scale: 1 + config.zoom * .2,
               child: FractionallySizedBox(
-                widthFactor: config.shortMode ? 1.3 : 2,
-                child: Image.asset('$_assetPath/chichen.png', opacity: anim, fit: BoxFit.cover),
+                widthFactor: config.shortMode ? 1.3 : 2.6,
+                child: Image.asset('$assetPath/chichen.png', opacity: anim, fit: BoxFit.cover),
               ),
             )),
       ),
@@ -67,37 +64,70 @@ class ChichenItzaIllustration extends StatelessWidget {
   List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
     final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
-      Transform.translate(
-        offset: Offset(0, 30) * (1 - curvedAnim),
-        child: Stack(
+     Stack(
           children: [
             Transform.scale(
               scale: 1 + config.zoom * .2,
+              child:FractionalTranslation(
+              translation: Offset(-.2 * (1 - curvedAnim), 0),
               child: BottomLeft(
-                child: FractionallySizedBox(
-                  widthFactor: 1,
-                  child: FractionalTranslation(
-                    translation: Offset(-.5, 0),
-                    child: Image.asset('$_assetPath/foreground-left.png', opacity: anim, fit: BoxFit.cover),
+                  child: FractionallySizedBox(
+                    heightFactor: .5,
+                    child: FractionalTranslation(
+                      translation: Offset(-.4, 0),
+                      child: Image.asset('$assetPath/foreground-left.png', opacity: anim, fit: BoxFit.cover),
+                    ),
                   ),
                 ),
               ),
             ),
             Transform.scale(
               scale: 1 + config.zoom * .1,
-              child: BottomRight(
-                child: FractionallySizedBox(
-                  widthFactor: .7,
-                  child: FractionalTranslation(
-                    translation: Offset(.47, -.2),
-                    child: Image.asset('$_assetPath/foreground-right.png', opacity: anim, fit: BoxFit.cover),
+              child:FractionalTranslation(
+                translation: Offset(.2 * (1 - curvedAnim), 0),
+                child: BottomRight(
+                  child: FractionallySizedBox(
+                    heightFactor: .33,
+                    child: FractionalTranslation(
+                      translation: Offset(.5, -.32),
+                      child: Image.asset('$assetPath/foreground-right.png', opacity: anim, fit: BoxFit.cover),
+                    ),
                   ),
                 ),
               ),
             ),
-          ],
-        ),
-      )
+          Transform.scale(
+            scale: 1 + config.zoom * .15,
+            child:FractionalTranslation(
+              translation: Offset(-.2 * (1 - curvedAnim), 0),
+              child: TopLeft(
+                child: FractionallySizedBox(
+                  heightFactor: .55,
+                  child: FractionalTranslation(
+                    translation: Offset(-.3, -.45),
+                    child: Image.asset('$assetPath/top-left.png', opacity: anim, fit: BoxFit.cover),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Transform.scale(
+            scale: 1 + config.zoom * .3,
+            child:FractionalTranslation(
+              translation: Offset(.2 * (1 - curvedAnim), 0),
+              child: TopRight(
+                child: FractionallySizedBox(
+                  heightFactor: .65,
+                  child: FractionalTranslation(
+                    translation: Offset(.45, -.35),
+                    child: Image.asset('$assetPath/top-right.png', opacity: anim, fit: BoxFit.cover),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     ];
   }
 }

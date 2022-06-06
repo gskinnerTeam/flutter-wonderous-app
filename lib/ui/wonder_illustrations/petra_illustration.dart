@@ -29,17 +29,21 @@ class PetraIllustration extends StatelessWidget {
         child: IllustrationTexture(
           ImagePaths.roller1,
           color: Colors.white,
-          opacity: anim.drive(Tween(begin: 0, end: .2)),
+          flipX: true,
+          opacity: anim.drive(Tween(begin: 0, end: .25)),
         ),
       ),
       Align(
-        alignment: Alignment(-.5, -.7),
+        alignment: Alignment(-.3, config.shortMode ? -1.5 : -1.23),
         child: WonderHero(
           config,
-          'petra-sun',
-          child: Image.asset(
-            '$assetPath/moon.png',
-            opacity: anim,
+          'petra-moon',
+          child: FractionalTranslation(
+            translation: Offset(0, .5 * anim.value),
+            child: Image.asset(
+              '$assetPath/moon.png',
+              opacity: anim,
+            ),
           ),
         ),
       ),
@@ -47,61 +51,61 @@ class PetraIllustration extends StatelessWidget {
   }
 
   List<Widget> _buildMg(BuildContext context, Animation<double> anim) => [
-        Align(
-          alignment: config.shortMode ? Alignment.bottomCenter : Alignment.center,
-          child: WonderHero(
-            config,
-            'petra-mg',
+        Center(
+          child: FractionalTranslation(
+            translation: Offset(0, config.shortMode ? 0.2 : -.1),
             child: Transform.scale(
-              scale: 1 + config.zoom * .2,
+              scale: 1 + config.zoom * .75,
               child: FractionallySizedBox(
-                widthFactor: config.shortMode ? 1 : 1.5,
-                //scale: (config.shortMode ? 1 : 1.5) + .2 * config.zoom,
-                child: Image.asset(
-                  '$assetPath/petra.png',
-                  fit: BoxFit.cover,
-                  opacity: anim,
-                ),
+                heightFactor: config.shortMode ? 0.55 : 0.66,
+                widthFactor: 2,
+                child: WonderHero(config, 'petra-mg',
+                    child: Image.asset(
+                      '$assetPath/petra.png',
+                      fit: BoxFit.contain,
+                      opacity: anim,
+                    )),
               ),
             ),
           ),
-        )
+        ),
       ];
 
   List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
     final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
-      Transform.translate(
-        offset: Offset(0, 30) * (1 - curvedAnim),
-        child: Stack(
-          children: [
-            Transform.scale(
-              scale: 1 + config.zoom * .2,
-              child: BottomLeft(
-                child: FractionallySizedBox(
-                  widthFactor: 1,
-                  child: FractionalTranslation(
-                    translation: Offset(-.2, 0),
-                    child: Image.asset('$assetPath/foreground-left.png', opacity: anim, fit: BoxFit.cover),
-                  ),
+      Stack(children: [
+        CenterLeft(
+          child: FractionallySizedBox(
+            widthFactor: .63,
+            child: FractionalTranslation(
+              translation: Offset(-.3 * (1 - curvedAnim), 0),
+              child: Transform.scale(
+                scale: 1.1 + config.zoom * .2,
+                child: FractionalTranslation(
+                  translation: Offset(-.35, -.07),
+                  child: Image.asset('$assetPath/foreground-left.png', opacity: anim, fit: BoxFit.contain),
                 ),
               ),
             ),
-            Transform.scale(
-              scale: 1 + config.zoom * .1,
-              child: BottomRight(
-                child: FractionallySizedBox(
-                  widthFactor: .7,
-                  child: FractionalTranslation(
-                    translation: Offset(.4 + config.zoom * .1, -0),
-                    child: Image.asset('$assetPath/foreground-right.png', opacity: anim, fit: BoxFit.cover),
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
-      )
+        CenterRight(
+          child: FractionallySizedBox(
+            widthFactor: .72,
+            child: FractionalTranslation(
+              translation: Offset(.3 * (1 - curvedAnim), 0),
+              child: Transform.scale(
+                scale: 1 + config.zoom * .4,
+                child: FractionalTranslation(
+                  translation: Offset(.4, -.03),
+                  child: Image.asset('$assetPath/foreground-right.png', opacity: anim, fit: BoxFit.contain),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ])
     ];
   }
 }

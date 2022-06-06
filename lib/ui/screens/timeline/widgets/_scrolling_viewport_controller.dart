@@ -47,7 +47,7 @@ class _ScrollingViewportController extends ChangeNotifier {
     double newMaxScroll = calculateContentHeight();
     final newPos = newMaxScroll * yrRatio;
     if (animate) {
-      scroller.animateTo(newPos, duration: state.context.times.med, curve: Curves.easeOut);
+      scroller.animateTo(newPos, duration: $styles.times.med, curve: Curves.easeOut);
     } else {
       scroller.jumpTo(newPos);
     }

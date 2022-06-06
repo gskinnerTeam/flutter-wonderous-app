@@ -30,20 +30,23 @@ class MachuPicchuIllustration extends StatelessWidget {
           ImagePaths.roller1,
           flipX: true,
           color: Colors.white,
-          opacity: anim.drive(Tween(begin: 0, end: .5)),
+          opacity: anim.drive(Tween(begin: 0, end: .7)),
         ),
       ),
       Align(
-        alignment: config.shortMode ? Alignment.center : Alignment(-.5, -.7),
+        alignment: config.shortMode ? Alignment.center : Alignment(.75, -.6),
         child: WonderHero(
           config,
           'machu-sun',
-          child: Transform.scale(
-            scale: config.shortMode ? .75 : 1,
-            child: Image.asset(
-              '$assetPath/sun.png',
-              cacheWidth: context.widthPx.round() * 2,
-              opacity: anim,
+          child: FractionalTranslation(
+            translation: Offset(0, -.5 * anim.value),
+            child: Transform.scale(
+              scale: config.shortMode ? .75 : 1,
+              child: Image.asset(
+                '$assetPath/sun.png',
+                cacheWidth: context.widthPx.round() * 2,
+                opacity: anim,
+              ),
             ),
           ),
         ),
@@ -57,7 +60,8 @@ class MachuPicchuIllustration extends StatelessWidget {
             config,
             'machu-mg',
             child: Transform.scale(
-              scale: config.shortMode ? 1.5 : 2.5 + config.zoom * .2,
+              scale: config.shortMode ? 1.2 : 2.5 + config.zoom * .2,
+              alignment: Alignment(config.shortMode ? 0 : .15, config.shortMode ? -0.6 : .3),
               child: Image.asset(
                 '$assetPath/machu-picchu.png',
                 opacity: anim,
@@ -76,18 +80,27 @@ class MachuPicchuIllustration extends StatelessWidget {
           BottomRight(
             child: Transform.scale(
               scale: 1 + config.zoom * .05,
-              child: FractionalTranslation(
-                translation: Offset(0, 0),
-                child: Image.asset('$assetPath/foreground-back.png', opacity: anim),
+              child: FractionallySizedBox(
+                widthFactor: 1.5,
+                child: FractionalTranslation(
+                  translation: Offset(0, .1),
+                  child: Image.asset('$assetPath/foreground-back.png', opacity: anim),
+                ),
               ),
             ),
           ),
           BottomLeft(
-            child: Transform.scale(
-              scale: 1 + config.zoom * .2,
-              child: FractionalTranslation(
-                translation: Offset(-.35, .3),
-                child: Image.asset('$assetPath/foreground-front.png', opacity: anim),
+            child: FractionalTranslation(
+              translation: Offset(-.2 * (1 - curvedAnim), 0),
+              child: Transform.scale(
+                scale: 1 + config.zoom * .25,
+                child: FractionallySizedBox(
+                  widthFactor: 1.5,
+                  child: FractionalTranslation(
+                    translation: Offset(-.3, .4),
+                    child: Image.asset('$assetPath/foreground-front.png', opacity: anim),
+                  ),
+                ),
               ),
             ),
           ),

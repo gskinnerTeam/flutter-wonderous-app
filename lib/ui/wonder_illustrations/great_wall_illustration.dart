@@ -24,7 +24,7 @@ class GreatWallIllustration extends StatelessWidget {
 
   List<Widget> _buildBg(BuildContext context, Animation<double> anim) {
     return [
-      FadeColorTransition(animation: anim, color: context.colors.shift(fgColor, .15)),
+      FadeColorTransition(animation: anim, color: $styles.colors.shift(fgColor, .15)),
       Positioned.fill(
         child: IllustrationTexture(
           ImagePaths.roller2,
@@ -34,17 +34,20 @@ class GreatWallIllustration extends StatelessWidget {
         ),
       ),
       Align(
-        alignment: config.shortMode ? Alignment.center : Alignment(-.5, -.7),
+        alignment: config.shortMode ? Alignment(-.5, -.5) : Alignment(-.45, -.63),
         child: WonderHero(
           config,
           'great-wall-sun',
-          child: Transform.scale(
-            scale: config.shortMode ? .75 : 1,
-            child: Image.asset(
-              '$assetPath/sun.png',
-              cacheWidth: context.widthPx.round() * 2,
-              opacity: anim,
-            ),
+          child: FractionalTranslation(
+            translation: Offset(0, -.5 * anim.value),
+            child: Transform.scale(
+              scale: config.shortMode ? .75 : 1,
+                  child: Image.asset(
+                  '$assetPath/sun.png',
+                  cacheWidth: context.widthPx.round() * 2,
+                  opacity: anim,
+                ),
+              ),
           ),
         ),
       ),
@@ -54,7 +57,7 @@ class GreatWallIllustration extends StatelessWidget {
   List<Widget> _buildMg(BuildContext context, Animation<double> anim) => [
         Center(
           child: FractionalTranslation(
-            translation: Offset(0, config.shortMode ? .1 : 0),
+            translation: Offset(0, config.shortMode ? .1 : -.1),
             child: WonderHero(
               config,
               'great-wall-mg',
@@ -74,27 +77,27 @@ class GreatWallIllustration extends StatelessWidget {
     final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
       Stack(children: [
-        BottomLeft(
-          child: Transform.translate(
-            offset: Offset(20, 20) * (1 - curvedAnim),
+        BottomRight(
+          child:FractionalTranslation(
+            translation: Offset(.2 * (1 - curvedAnim), 0),
             child: Transform.scale(
-              scale: 1 + config.zoom * .3,
+              scale: 1.5 + config.zoom * .1,
               child: FractionalTranslation(
-                translation: Offset(-.26, 0),
-                child: Image.asset('$assetPath/foreground-left.png',
+                translation: Offset(.46, -.22),
+                child: Image.asset('$assetPath/foreground-right.png',
                     opacity: anim, cacheWidth: context.widthPx.round() * 3),
               ),
             ),
           ),
         ),
-        BottomRight(
-          child: Transform.translate(
-            offset: Offset((1 - curvedAnim) * 20, (1 - curvedAnim) * 30),
+        BottomLeft(
+          child:FractionalTranslation(
+            translation: Offset(-.2 * (1 - curvedAnim), 0),
             child: Transform.scale(
-              scale: 1.5 + config.zoom * .1,
+              scale: 1 + config.zoom * .3,
               child: FractionalTranslation(
-                translation: Offset(.46, -.2),
-                child: Image.asset('$assetPath/foreground-right.png',
+                translation: Offset(-.3, -.01),
+                child: Image.asset('$assetPath/foreground-left.png',
                     opacity: anim, cacheWidth: context.widthPx.round() * 3),
               ),
             ),

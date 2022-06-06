@@ -43,29 +43,29 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
 
   @override
   Widget build(BuildContext context) {
-    final double pad = context.insets.sm;
+    final double pad = $styles.insets.sm;
     final bool isOpen = widget.panelController.value;
     return LayoutBuilder(builder: (_, constraints) {
       return Stack(
         children: [
           BottomCenter(
             child: AnimatedPadding(
-              duration: context.times.fast,
+              duration: $styles.times.fast,
               curve: Curves.easeOut,
-              padding: isOpen ? EdgeInsets.zero : EdgeInsets.symmetric(vertical: context.insets.md),
+              padding: isOpen ? EdgeInsets.zero : EdgeInsets.symmetric(vertical: $styles.insets.md),
               child: AppBtn.basic(
                 semanticLabel: 'time range selector',
                 onPressed: widget.panelController.toggle,
                 child: OpeningCard(
                   isOpen: isOpen,
-                  padding: EdgeInsets.symmetric(horizontal: pad, vertical: context.insets.xs),
+                  padding: EdgeInsets.symmetric(horizontal: pad, vertical: $styles.insets.xs),
                   background: Container(
                     decoration: BoxDecoration(
-                      color: context.colors.black.withOpacity(0.85),
-                      borderRadius: BorderRadius.circular(context.corners.md),
+                      color: $styles.colors.black.withOpacity(0.85),
+                      borderRadius: BorderRadius.circular($styles.corners.md),
                       boxShadow: [
                         BoxShadow(
-                          color: context.colors.black.withOpacity(0.5),
+                          color: $styles.colors.black.withOpacity(0.5),
                           offset: Offset(0, 4),
                           blurRadius: 4,
                         )
@@ -106,12 +106,12 @@ class _ClosedTimeRange extends StatelessWidget {
     final String text = '${StringUtils.formatYr(startYear.round())} - ${StringUtils.formatYr(endYear.round())}';
 
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: context.insets.xs),
+      padding: EdgeInsets.symmetric(vertical: $styles.insets.xs),
       child: Row(
         children: [
-          Text(text, style: context.textStyles.titleFont.copyWith(color: context.colors.offWhite)),
-          Gap(context.insets.xs),
-          Icon(Icons.edit_calendar_outlined, color: context.colors.accent1, size: context.insets.md),
+          Text(text, style: $styles.text.titleFont.copyWith(color: $styles.colors.offWhite)),
+          Gap($styles.insets.xs),
+          Icon(Icons.edit_calendar_outlined, color: $styles.colors.accent1, size: $styles.insets.md),
         ],
       ),
     );
@@ -135,10 +135,10 @@ class _OpenedTimeRange extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> timelineGrid = List.generate(5, (_) => Container(width: 1, color: context.colors.black));
+    List<Widget> timelineGrid = List.generate(5, (_) => Container(width: 1, color: $styles.colors.black));
 
-    final headingTextStyle = context.textStyles.title1.copyWith(color: context.colors.offWhite, fontSize: 18);
-    final captionTextStyle = context.text.bodySmall.copyWith(color: context.colors.greyMedium);
+    final headingTextStyle = $styles.text.title1.copyWith(color: $styles.colors.offWhite, fontSize: 18);
+    final captionTextStyle = $styles.text.bodySmall.copyWith(color: $styles.colors.greyMedium);
 
     final startYr = startYear.round(), endYr = endYear.round();
 
@@ -147,36 +147,36 @@ class _OpenedTimeRange extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Gap(context.insets.lg),
+            Gap($styles.insets.lg),
             Spacer(),
             Text(startYr.abs().toString(), style: headingTextStyle),
-            Gap(context.insets.xxs),
+            Gap($styles.insets.xxs),
             Text(StringUtils.getYrSuffix(startYr), style: captionTextStyle),
-            Gap(context.insets.xs),
+            Gap($styles.insets.xs),
             Text('—', style: captionTextStyle),
-            Gap(context.insets.xs),
+            Gap($styles.insets.xs),
             Text(endYr.abs().toString(), style: headingTextStyle),
-            Gap(context.insets.xxs),
+            Gap($styles.insets.xxs),
             Text(StringUtils.getYrSuffix(endYr.round()), style: captionTextStyle),
             Spacer(),
             SizedBox(
-              width: context.insets.lg,
-              child: Icon(Icons.close, color: context.colors.caption, size: 20),
+              width: $styles.insets.lg,
+              child: Icon(Icons.close, color: $styles.colors.caption, size: 20),
             ),
           ],
         ),
 
-        Gap(context.insets.xs * 1.5),
+        Gap($styles.insets.xs * 1.5),
 
         // Timeframe slider
         SizedBox(
-          height: context.insets.lg * 2,
+          height: $styles.insets.lg * 2,
           child: Stack(children: [
             // grid lines:
             Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(context.corners.md),
-                color: Color.lerp(context.colors.black, Colors.black, 0.2),
+                borderRadius: BorderRadius.circular($styles.corners.md),
+                color: Color.lerp($styles.colors.black, Colors.black, 0.2),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -202,7 +202,7 @@ class _OpenedTimeRange extends StatelessWidget {
                   selectedWonders: [wonder.type],
                   timelineBuilder: (_, __, sel) => Container(
                     decoration: BoxDecoration(
-                      color: context.colors.offWhite.withOpacity(sel ? 0.75 : 0.25),
+                      color: $styles.colors.offWhite.withOpacity(sel ? 0.75 : 0.25),
                       borderRadius: BorderRadius.circular(999),
                     ),
                   ),
@@ -225,7 +225,7 @@ class _OpenedTimeRange extends StatelessWidget {
           ]),
         ),
 
-        Gap(context.insets.sm),
+        Gap($styles.insets.sm),
       ],
     );
   }

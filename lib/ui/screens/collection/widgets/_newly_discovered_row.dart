@@ -16,13 +16,13 @@ class _NewlyDiscoveredRow extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         height: 40,
-        color: context.colors.black,
-        padding: EdgeInsets.symmetric(vertical: context.insets.xs),
+        color: $styles.colors.black,
+        padding: EdgeInsets.symmetric(vertical: $styles.insets.xs),
         child: Text(
           '$count new item${count == 1 ? '' : 's'} to explore',
           textAlign: TextAlign.center,
           textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
-          style: context.textStyles.bodySmallBold.copyWith(color: context.colors.accent1),
+          style: $styles.text.bodySmallBold.copyWith(color: $styles.colors.accent1),
         ),
       ),
     );

@@ -10,22 +10,22 @@ class _Header extends StatelessWidget {
       children: [
         BottomCenter(
           child: Transform.translate(
-            offset: Offset(0, context.insets.xl - 1),
+            offset: Offset(0, $styles.insets.xl - 1),
             child: VtGradient(
-              [context.colors.greyStrong, context.colors.greyStrong.withOpacity(0)],
+              [$styles.colors.greyStrong, $styles.colors.greyStrong.withOpacity(0)],
               const [0, 1],
-              height: context.insets.xl,
+              height: $styles.insets.xl,
             ),
           ),
         ),
         Container(
-          color: context.colors.black,
+          color: $styles.colors.black,
           alignment: Alignment.center,
           child: TextButton(
             onPressed: () => _handleImagePressed(context),
             child: SafeArea(
               bottom: false,
-              minimum: EdgeInsets.symmetric(vertical: context.insets.sm),
+              minimum: EdgeInsets.symmetric(vertical: $styles.insets.sm),
               child: ImageFade(
                 image: NetworkImage(data.image),
                 fit: BoxFit.cover,

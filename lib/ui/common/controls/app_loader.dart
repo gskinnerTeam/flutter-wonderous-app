@@ -9,6 +9,6 @@ class AppLoader extends StatelessWidget {
   Widget build(BuildContext context) => SizedBox(
         width: 40,
         height: 40,
-        child: LoadingIndicator(colors: [color ?? context.colors.accent1], indicatorType: Indicator.ballRotateChase),
+        child: LoadingIndicator(colors: [color ?? $styles.colors.accent1], indicatorType: Indicator.ballRotateChase),
       );
 }

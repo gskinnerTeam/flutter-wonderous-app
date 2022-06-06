@@ -1,58 +1,114 @@
+// ignore_for_file: library_private_types_in_public_api
+
+import 'dart:ui';
+
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/styles/corners.dart';
-import 'package:wonders/styles/insets.dart';
-import 'package:wonders/styles/shadows.dart';
-import 'package:wonders/styles/text.dart';
-import 'package:wonders/styles/times.dart';
 
 export 'colors.dart';
 
-class AppStyle {
-  AppStyle({required this.screenSize}) {
-    scale = _calculateScale(screenSize);
-    //debugPrint('appStyle.scale=$scale');
-  }
+final $styles = AppStyle();
 
+@immutable
+class AppStyle {
   /// The current theme colors for the app
   final AppColors colors = AppColors();
 
   /// Rounded edge corner radii
-  late final AppCorners corners = AppCorners();
+  late final _Corners corners = _Corners();
 
-  late final AppShadows shadows = AppShadows();
+  late final _Shadows shadows = _Shadows();
 
   /// Padding and margin values
-  late final AppInsets insets = AppInsets(scale);
+  late final _Insets insets = _Insets();
 
   /// Text styles
-  late final AppTextStyles text = AppTextStyles(scale);
+  late final _Text text = _Text();
 
   /// Animation Durations
-  final AppTimes times = AppTimes();
+  final _Times times = _Times();
+}
 
-  /// The app screen size, from which we can calculate padding and text scaling values.
-  late final Size screenSize;
+@immutable
+class _Text {
+  final TextStyle titleFont = TextStyle(fontFamily: 'Tenor');
+  final TextStyle quoteFont = TextStyle(fontFamily: 'Cinzel');
+  final TextStyle wonderTitleFont = TextStyle(fontFamily: 'Yeseva');
+  final TextStyle contentFont = TextStyle(fontFamily: 'Raleway', fontFeatures: const [
+    FontFeature.enable('dlig'),
+    FontFeature.enable('kern'),
+  ]);
 
-  /// Scale values allows us to generally adjust font sizes and padding values for different form factors
-  /// eg, -10% on very small phones, or +25% on larger touch devices.
-  late final double scale;
+  late final TextStyle dropCase = copy(quoteFont, sizePx: 56, heightPx: 20);
 
-  /// Scale text down a little on smaller devices, and up slightly on larger ones
-  double _calculateScale(Size size) {
-    return 1;
-    // if (PlatformInfo.isDesktop) return 1;
-    // final diagonalPx = (size.shortestSide + size.longestSide) / 2;
-    // return .85 + diagonalPx / 3000;
+  late final TextStyle wonderTitle = copy(wonderTitleFont, sizePx: 64, heightPx: 56);
+
+  late final TextStyle h1 = copy(titleFont, sizePx: 64, heightPx: 62);
+  late final TextStyle h2 = copy(titleFont, sizePx: 32, heightPx: 46);
+  late final TextStyle h3 = copy(titleFont, sizePx: 24, heightPx: 36, weight: FontWeight.w600);
+  late final TextStyle h4 = copy(titleFont, sizePx: 14, heightPx: 23, spacingPc: 5, weight: FontWeight.w600);
+
+  late final TextStyle title1 = copy(titleFont, sizePx: 16, heightPx: 26, spacingPc: 5);
+  late final TextStyle title2 = copy(titleFont, sizePx: 14, heightPx: 16.38);
+
+  late final TextStyle body = copy(contentFont, sizePx: 16, heightPx: 27);
+  late final TextStyle bodyBold = copy(contentFont, sizePx: 16, heightPx: 26, weight: FontWeight.w600);
+  late final TextStyle bodySmall = copy(contentFont, sizePx: 14, heightPx: 23);
+  late final TextStyle bodySmallBold = copy(contentFont, sizePx: 14, heightPx: 23, weight: FontWeight.w600);
+
+  late final TextStyle quote1 = copy(quoteFont, sizePx: 36, heightPx: 40, weight: FontWeight.w600, spacingPc: -3);
+  late final TextStyle quote2 = copy(quoteFont, sizePx: 21, heightPx: 32, weight: FontWeight.w400);
+  late final TextStyle quote2Sub = copy(body, sizePx: 16, heightPx: 40, weight: FontWeight.w400);
+
+  late final TextStyle caption =
+      copy(contentFont, sizePx: 12, heightPx: 18, weight: FontWeight.w500).copyWith(fontStyle: FontStyle.italic);
+
+  late final TextStyle callout =
+      copy(contentFont, sizePx: 16, heightPx: 26, weight: FontWeight.w600).copyWith(fontStyle: FontStyle.italic);
+  late final TextStyle btn = copy(titleFont, sizePx: 12, weight: FontWeight.w600, heightPx: 13.2);
+
+  TextStyle copy(TextStyle style, {required double sizePx, double? heightPx, double? spacingPc, FontWeight? weight}) {
+    return style.copyWith(
+        fontSize: sizePx,
+        height: heightPx != null ? (heightPx / sizePx) : style.height,
+        letterSpacing: spacingPc != null ? sizePx * spacingPc * 0.01 : style.letterSpacing,
+        fontWeight: weight);
   }
 }
 
-extension StyleContextExtension on BuildContext {
-  AppStyle get style => watch<AppStyle>();
-  AppInsets get insets => style.insets;
-  AppShadows get shadows => style.shadows;
-  AppTextStyles get textStyles => style.text;
-  AppColors get colors => style.colors;
-  AppTimes get times => style.times;
-  AppTextStyles get text => style.text;
-  AppCorners get corners => style.corners;
+//TODO: See if we can consolidate more times throughout the codebase
+@immutable
+class _Times {
+  final Duration fast = Duration(milliseconds: 300);
+  final Duration med = Duration(milliseconds: 600);
+  final Duration slow = Duration(milliseconds: 900);
+  final Duration pageTransition = Duration(milliseconds: 200);
+}
+
+@immutable
+class _Corners {
+  late final double sm = 4;
+  late final double md = 8;
+  late final double lg = 32;
+}
+
+@immutable
+class _Insets {
+  late final double xxs = 4;
+  late final double xs = 8;
+  late final double sm = 16;
+  late final double md = 24;
+  late final double lg = 32;
+  late final double xl = 48;
+  late final double xxl = 56;
+  late final double offset = 80;
+}
+
+@immutable
+class _Shadows {
+  final text = [
+    Shadow(color: Colors.black.withOpacity(.6), offset: Offset(0, 2), blurRadius: 2),
+  ];
+  final textStrong = [
+    Shadow(color: Colors.black.withOpacity(.6), offset: Offset(0, 4), blurRadius: 6),
+  ];
 }

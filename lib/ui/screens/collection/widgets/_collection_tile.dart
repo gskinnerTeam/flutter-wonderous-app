@@ -25,12 +25,12 @@ class _CollectionTile extends StatelessWidget {
 
   Widget _buildHidden(BuildContext context, CollectibleData collectible) {
     return Container(
-      color: context.colors.black,
+      color: $styles.colors.black,
       child: Center(
         child: FractionallySizedBox(
           widthFactor: 0.6,
           heightFactor: 0.6,
-          child: Image(image: collectible.icon, color: context.colors.greyStrong),
+          child: Image(image: collectible.icon, color: $styles.colors.greyStrong),
         ),
       ),
     );
@@ -42,14 +42,14 @@ class _CollectionTile extends StatelessWidget {
       width: double.infinity,
       height: double.infinity,
       decoration: BoxDecoration(
-        color: context.colors.black,
-        border: isNew ? Border.all(color: context.colors.accent1, width: 3) : null,
+        color: $styles.colors.black,
+        border: isNew ? Border.all(color: $styles.colors.accent1, width: 3) : null,
         boxShadow:
-            !isNew ? null : [BoxShadow(color: context.colors.accent1.withOpacity(0.6), blurRadius: context.insets.sm)],
+            !isNew ? null : [BoxShadow(color: $styles.colors.accent1.withOpacity(0.6), blurRadius: $styles.insets.sm)],
       ),
       child: ImageFade(
         image: NetworkImage(collectible.imageUrlSmall),
-        duration: context.times.fast,
+        duration: $styles.times.fast,
         alignment: Alignment.center,
         fit: BoxFit.cover,
       ),

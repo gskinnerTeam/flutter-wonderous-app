@@ -37,7 +37,7 @@ class _EventPopupsState extends State<_EventPopups> {
       child: ClipRect(
         child: IgnorePointer(
           child: AnimatedSwitcher(
-            duration: context.times.fast,
+            duration: $styles.times.fast,
             child: evt == null
                 ? SizedBox.shrink()
                 : Animate(
@@ -47,7 +47,7 @@ class _EventPopupsState extends State<_EventPopups> {
                     key: ValueKey(_eventToShow?.year),
                     child: IntrinsicHeight(
                       child: Padding(
-                        padding: EdgeInsets.all(context.insets.md),
+                        padding: EdgeInsets.all($styles.insets.md),
                         child: TimelineEventCard(
                           text: evt.description,
                           year: evt.year,

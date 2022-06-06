@@ -96,7 +96,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     bool small = backdropHeight / _maxElementHeight < .8;
 
     return Container(
-      color: context.colors.greyStrong,
+      color: $styles.colors.greyStrong,
       child: Stack(
         children: [
           // Background Image
@@ -118,7 +118,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                       width: backdropWidth,
                       height: backdropHeight,
                       decoration: BoxDecoration(
-                        color: context.colors.offWhite.withOpacity(0.8),
+                        color: $styles.colors.offWhite.withOpacity(0.8),
                         borderRadius: BorderRadius.vertical(
                           top: Radius.circular(999),
                         ),
@@ -167,20 +167,20 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                   // Text content
                   BottomCenter(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: context.insets.xl),
+                      padding: EdgeInsets.symmetric(horizontal: $styles.insets.xl),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Gap(context.insets.md),
+                          Gap($styles.insets.md),
                           // Text Content
                           _buildTextContent(context, backdropWidth, small),
                           // Selection indicator
                           AppPageIndicator(count: _highlightedArtifactIds.length, controller: _controller),
                           // Big ol' button
-                          Gap(small ? context.insets.md : context.insets.xl),
+                          Gap(small ? $styles.insets.md : $styles.insets.xl),
                           _buildBrowseBtn(context),
-                          Gap(small ? context.insets.md : context.insets.lg),
+                          Gap(small ? $styles.insets.md : $styles.insets.lg),
                         ],
                       ),
                     ),
@@ -198,7 +198,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     return IgnorePointer(
       child: Container(
         width: width,
-        padding: EdgeInsets.symmetric(horizontal: context.insets.sm),
+        padding: EdgeInsets.symmetric(horizontal: $styles.insets.sm),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -207,8 +207,8 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
               padding: EdgeInsets.symmetric(horizontal: width * 0.1),
               child: Text(
                 (_loadedArtifacts.isEmpty ? 'Just a moment...' : _currentArtifact?.culture ?? '').toUpperCase(),
-                style: context.textStyles.titleFont.copyWith(
-                  color: context.colors.greyStrong,
+                style: $styles.text.titleFont.copyWith(
+                  color: $styles.colors.greyStrong,
                   fontSize: 14,
                   height: 1.2,
                 ),
@@ -219,7 +219,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
             ),
             // Note; title's line height is 14px more than its size,
             // so adding that to the gap should be padding enough.
-            Gap(context.insets.xxs),
+            Gap($styles.insets.xxs),
 
             _loadedArtifacts.isEmpty
                 ? AppLoader()
@@ -236,25 +236,25 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                             child: Text(
                               (_currentArtifact?.title ?? ''),
                               overflow: TextOverflow.ellipsis,
-                              style: context.textStyles.h2.copyWith(color: context.colors.black, height: 1.2),
+                              style: $styles.text.h2.copyWith(color: $styles.colors.black, height: 1.2),
                               textAlign: TextAlign.center,
                               maxLines: 2,
                             ),
                           ),
                         ),
-                        Gap(context.insets.xxs),
+                        Gap($styles.insets.xxs),
 
                         // Time frame
                         Text(
                           _currentArtifact?.date ?? '',
-                          style: context.textStyles.body.copyWith(color: context.colors.greyStrong),
+                          style: $styles.text.body.copyWith(color: $styles.colors.greyStrong),
                           textAlign: TextAlign.center,
                         ),
                       ],
                     ),
                   ),
 
-            Gap(small ? context.insets.sm : context.insets.lg),
+            Gap(small ? $styles.insets.sm : $styles.insets.lg),
           ],
         ),
       ),

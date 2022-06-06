@@ -10,12 +10,12 @@ class _Callout extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(color: context.colors.accent1, width: 1),
-          Gap(context.insets.sm),
+          Container(color: $styles.colors.accent1, width: 1),
+          Gap($styles.insets.sm),
           Expanded(
             child: Text(
               text,
-              style: context.text.callout,
+              style: $styles.text.callout,
             ),
           )
         ],

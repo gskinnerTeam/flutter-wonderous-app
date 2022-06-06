@@ -26,7 +26,7 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: context.colors.greyStrong,
+      color: $styles.colors.greyStrong,
       child: FutureBuilder<ArtifactData?>(
         future: _future,
         builder: (_, snapshot) {

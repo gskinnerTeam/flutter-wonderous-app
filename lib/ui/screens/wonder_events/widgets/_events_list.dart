@@ -54,7 +54,7 @@ class _EventsListState extends State<_EventsList> {
                       filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
                       child: IgnorePointer(
                         child: Container(
-                          color: context.colors.greyStrong.withOpacity(min(1, scrollAmt * 2) * .5),
+                          color: $styles.colors.greyStrong.withOpacity(min(1, scrollAmt * 2) * .5),
                         ),
                       ),
                     ),
@@ -74,7 +74,7 @@ class _EventsListState extends State<_EventsList> {
       return Container(
         width: 35,
         height: 5,
-        decoration: BoxDecoration(color: context.colors.greyMedium, borderRadius: BorderRadius.circular(99)),
+        decoration: BoxDecoration(color: $styles.colors.greyMedium, borderRadius: BorderRadius.circular(99)),
       );
     }
 
@@ -86,7 +86,7 @@ class _EventsListState extends State<_EventsList> {
       listItems.add(
         TimelineEventCard(year: e.key, text: e.value)
             .animate()
-            .fade(delay: delay, duration: context.times.med * 1.5)
+            .fade(delay: delay, duration: $styles.times.med * 1.5)
             .slide(begin: Offset(0, 1), curve: Curves.easeOutBack),
       );
     }
@@ -97,26 +97,26 @@ class _EventsListState extends State<_EventsList> {
           IgnorePointer(child: Gap(WonderEvents._topHeight)),
           Container(
             decoration: BoxDecoration(
-              color: context.colors.white,
-              borderRadius: BorderRadius.circular(context.corners.md),
+              color: $styles.colors.white,
+              borderRadius: BorderRadius.circular($styles.corners.md),
             ),
-            padding: EdgeInsets.symmetric(horizontal: context.insets.md),
+            padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
             child: Column(
               children: [
-                Gap(context.insets.xs),
+                Gap($styles.insets.xs),
                 buildHandle(),
-                Gap(context.insets.sm),
+                Gap($styles.insets.sm),
                 ...listItems,
-                Gap(context.insets.lg),
+                Gap($styles.insets.lg),
                 AppBtn.from(
                   text: 'Open global timeline',
                   expand: true,
                   onPressed: _handleGlobalTimelinePressed,
                   semanticLabel: 'Open global timeline',
                 ),
-                Gap(context.insets.xl),
+                Gap($styles.insets.xl),
                 CompassDivider(isExpanded: true),
-                Gap(context.insets.md),
+                Gap($styles.insets.md),
                 HiddenCollectible(widget.data.type, index: 2, size: 150),
                 Gap(150),
               ],

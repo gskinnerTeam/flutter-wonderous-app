@@ -33,17 +33,17 @@ class _IntroScreenState extends State<IntroScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTextColor(
-      color: context.colors.offWhite,
+      color: $styles.colors.offWhite,
       child: Container(
-        padding: EdgeInsets.all(context.insets.xxl),
-        color: context.colors.black,
+        padding: EdgeInsets.all($styles.insets.xxl),
+        color: $styles.colors.black,
         child: Column(
           children: [
             Spacer(),
 
             /// Logo
             _WonderousLogo(),
-            Gap(context.insets.sm),
+            Gap($styles.insets.sm),
 
             /// Text + Image
             /// Set in a stack with a PageView on the bottom, and a masked image on top.
@@ -86,7 +86,7 @@ class _IntroScreenState extends State<IntroScreen> {
                           child = _Page3Image();
                         }
                         return AnimatedSwitcher(
-                          duration: context.times.med,
+                          duration: $styles.times.med,
                           child: child,
                         );
                       },
@@ -95,10 +95,10 @@ class _IntroScreenState extends State<IntroScreen> {
                 ),
               ],
             ),
-            Gap(context.insets.xl),
+            Gap($styles.insets.xl),
 
             /// Page Indicator
-            AppPageIndicator(count: 3, controller: _pageController, color: context.colors.offWhite),
+            AppPageIndicator(count: 3, controller: _pageController, color: $styles.colors.offWhite),
             Spacer(),
 
             /// Bottom text / button
@@ -110,18 +110,25 @@ class _IntroScreenState extends State<IntroScreen> {
                       Center(
                         child: AnimatedOpacity(
                           opacity: page == 2 ? 0 : 1,
-                          duration: context.times.fast,
-                          child:
-                              Text('Swipe left to continue', style: context.textStyles.bodySmall.copyWith(height: 3)),
+                          duration: $styles.times.fast,
+                          child: Semantics(
+                            onTapHint: 'Navigate',
+                            onTap: () {
+                              var current = _pageController.page!.round();
+                              _pageController.animateToPage(current + 1,
+                                  duration: const Duration(milliseconds: 250), curve: Curves.easeIn);
+                            },
+                            child: Text('Swipe left to continue', style: $styles.text.bodySmall.copyWith(height: 3)),
+                          ),
                         ),
                       ),
                       CenterRight(
                         child: AnimatedOpacity(
                           opacity: page == 2 ? 1 : 0,
-                          duration: context.times.fast,
+                          duration: $styles.times.fast,
                           child: CircleIconBtn(
                             icon: Icons.chevron_right,
-                            bgColor: context.colors.accent1,
+                            bgColor: $styles.colors.accent1,
                             onPressed: _handleIntroCompletePressed,
                             semanticLabel: 'Enter the app',
                           ),
@@ -144,13 +151,19 @@ class _Page extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      SizedBox(height: _IntroScreenState._imageHeight, width: _IntroScreenState._imageHeight),
-      Gap(context.insets.lg),
-      Text(title, style: context.textStyles.wonderTitle.copyWith(fontSize: 24)),
-      Gap(context.insets.sm),
-      Text(desc, style: context.textStyles.body),
-    ]);
+    return Semantics(
+      // Reads content as it changes without the user focus on it.
+      liveRegion: true,
+      child: Column(
+        children: [
+          SizedBox(height: _IntroScreenState._imageHeight, width: _IntroScreenState._imageHeight),
+          Gap($styles.insets.lg),
+          Text(title, style: $styles.text.wonderTitle.copyWith(fontSize: 24)),
+          Gap($styles.insets.sm),
+          Text(desc, style: $styles.text.body),
+        ],
+      ),
+    );
   }
 }
 
@@ -161,13 +174,13 @@ class _WonderousLogo extends StatelessWidget {
       children: [
         SvgPicture.asset(
           SvgPaths.compassSimple,
-          color: context.colors.offWhite,
+          color: $styles.colors.offWhite,
           height: 48,
         ),
-        Gap(context.insets.xs),
+        Gap($styles.insets.xs),
         Text(
           'Wonderous',
-          style: context.textStyles.wonderTitle.copyWith(fontSize: 32, color: context.colors.offWhite),
+          style: $styles.text.wonderTitle.copyWith(fontSize: 32, color: $styles.colors.offWhite),
         )
       ],
     );

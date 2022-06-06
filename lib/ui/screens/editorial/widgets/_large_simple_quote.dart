@@ -8,14 +8,14 @@ class _LargeSimpleQuote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: context.insets.lg, vertical: context.insets.xl),
+      padding: EdgeInsets.symmetric(horizontal: $styles.insets.lg, vertical: $styles.insets.xl),
       child: Column(children: [
         FractionalTranslation(
           translation: Offset(0, .5),
           child: Text(
             '“',
-            style: context.text.quote1.copyWith(
-              color: context.colors.accent1,
+            style: $styles.text.quote1.copyWith(
+              color: $styles.colors.accent1,
               fontSize: 90,
               height: .7,
             ),
@@ -23,13 +23,13 @@ class _LargeSimpleQuote extends StatelessWidget {
         ),
         Text(
           text,
-          style: context.text.quote2,
+          style: $styles.text.quote2,
           textAlign: TextAlign.center,
         ),
-        Gap(context.insets.md),
+        Gap($styles.insets.md),
         Text(
           '- $author',
-          style: context.text.quote2Sub.copyWith(color: context.colors.accent1),
+          style: $styles.text.quote2Sub.copyWith(color: $styles.colors.accent1),
         ),
       ]),
     );

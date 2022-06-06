@@ -32,7 +32,7 @@ class _YearMarkers extends StatelessWidget {
         return SizedBox(
           width: 100,
           child: AnimatedSwitcher(
-            duration: context.times.med,
+            duration: $styles.times.med,
             child: Stack(
               key: ValueKey(interval),
               children: markers.map((yr) {
@@ -57,7 +57,7 @@ class _YearMarker extends StatelessWidget {
       alignment: Alignment(0, -1 + offset * 2),
       child: FractionalTranslation(
         translation: Offset(0, 0),
-        child: Text('${yr.abs()}', style: context.text.body.copyWith(color: Colors.white, height: 1)),
+        child: Text('${yr.abs()}', style: $styles.text.body.copyWith(color: Colors.white, height: 1)),
       ),
     );
   }

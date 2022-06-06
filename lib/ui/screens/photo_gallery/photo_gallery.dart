@@ -30,7 +30,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
   Offset _lastSwipeDir = Offset.zero;
   final double _scale = .65;
   bool _skipNextOffsetTween = false;
-  late Duration swipeDuration = context.times.med * .4;
+  late Duration swipeDuration = $styles.times.med * .4;
   final _photoIds = ValueNotifier<List<String>>([]);
   int get _imgCount => pow(_gridSize, 2).round();
 
@@ -126,7 +126,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
           }
           Size imgSize = (widget.imageSize ?? Size(context.widthPx * .7, context.heightPx * .6)) * _scale;
           // Get transform offset for the current _index
-          final padding = context.insets.sm;
+          final padding = $styles.insets.sm;
           var gridOffset = _calculateCurrentOffset(padding, imgSize);
           // For some reason we need to add in half of the top-padding when this view does not use a safeArea.
           // TODO: Try and figure out why we need to incorporate top padding here, it's counter-intuitive. Maybe GridView or another of the material components is doing something we don't want?
@@ -207,7 +207,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                         width: imgSize.width,
                         height: imgSize.height,
                         child: TweenAnimationBuilder<double>(
-                          duration: context.times.med,
+                          duration: $styles.times.med,
                           curve: Curves.easeOut,
                           tween: Tween(begin: 1, end: selected ? 1.15 : 1),
                           builder: (_, value, child) => Transform.scale(scale: value, child: child),

@@ -34,21 +34,4 @@ There are various python scripts in the `/py` folder. Including:
 - `icon-builder.py` - Generate icons from /assets/marketing/icon.xxx
 
 ### App Styling
-See the `AppStyles` class for a full list of available styles. 
-
-Use shortcuts to access the various style categories:
-- `context.colors`
-- `context.insets`
-- `context.textStyles`
-- `context.times`
-```dart
-// Colors
-backgroundColor: context.colors.bg,
-// Times
-duration: context.times.fast
-// TextStyles
-style: context.textStyles.body1
-// etc...
-```
-
-Note: Style extensions are only safe to use from within `build()` methods because they call providers `context.watch` internally. Use `context.read<AppStyle>()` if you need to access it outside of build (eg, `initState`).
+Styles can be access using the '$styles' variable which is a global instance.

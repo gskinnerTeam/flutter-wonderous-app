@@ -13,18 +13,20 @@ class AppPageIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SmoothPageIndicator(
-      controller: controller,
-      count: count,
-      onDotClicked: onDotPressed,
-      effect: ExpandingDotsEffect(
-          dotWidth: dotSize ?? 6,
-          dotHeight: dotSize ?? 6,
-          paintStyle: PaintingStyle.fill,
-          strokeWidth: (dotSize ?? 6) / 2,
-          dotColor: color ?? context.colors.accent1,
-          activeDotColor: color ?? context.colors.accent1,
-          expansionFactor: 2),
+    return ExcludeSemantics(
+      child: SmoothPageIndicator(
+        controller: controller,
+        count: count,
+        onDotClicked: onDotPressed,
+        effect: ExpandingDotsEffect(
+            dotWidth: dotSize ?? 6,
+            dotHeight: dotSize ?? 6,
+            paintStyle: PaintingStyle.fill,
+            strokeWidth: (dotSize ?? 6) / 2,
+            dotColor: color ?? $styles.colors.accent1,
+            activeDotColor: color ?? $styles.colors.accent1,
+            expansionFactor: 2),
+      ),
     );
   }
 }
