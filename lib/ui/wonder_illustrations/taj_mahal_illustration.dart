@@ -9,9 +9,9 @@ class TajMahalIllustration extends StatelessWidget {
   TajMahalIllustration({Key? key, required this.config}) : super(key: key);
   final WonderIllustrationConfig config;
 
-  final _fgColor = WonderType.tajMahal.fgColor;
-  final _bgColor = WonderType.tajMahal.bgColor;
-  final _assetPath = WonderType.tajMahal.assetPath;
+  final fgColor = WonderType.tajMahal.fgColor;
+  final bgColor = WonderType.tajMahal.bgColor;
+  final assetPath = WonderType.tajMahal.assetPath;
 
   @override
   Widget build(BuildContext context) {
@@ -27,22 +27,22 @@ class TajMahalIllustration extends StatelessWidget {
     final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
       // Bg color
-      FadeColorTransition(color: _fgColor, animation: anim),
+      FadeColorTransition(color: fgColor, animation: anim),
       // Noise texture
       Positioned.fill(
         child: IllustrationTexture(
           ImagePaths.roller1,
-          opacity: anim.drive(Tween(begin: 0, end: .3)),
-          color: _bgColor,
-          scale: 2,
+          flipY: true,
+          opacity: anim.drive(Tween(begin: 0, end: 1)),
+          color: bgColor,
         ),
       ),
       // Sun
       Align(
-        alignment: config.shortMode ? Alignment.topLeft : Alignment(-.8, -.8),
+        alignment: config.shortMode ? Alignment(-1.25, -2.8) : Alignment(-1.25, -1.15),
         child: FractionalTranslation(
           translation: Offset(-.2 + curvedAnim * .2, .4 - curvedAnim * .2),
-          child: WonderHero(config, 'taj-sun', child: Image.asset('$_assetPath/sun.png', opacity: anim)),
+          child: WonderHero(config, 'taj-sun', child: Image.asset('$assetPath/sun.png', opacity: anim)),
         ),
       )
     ];
@@ -53,22 +53,20 @@ class TajMahalIllustration extends StatelessWidget {
       Transform.scale(
         scale: 1 + config.zoom * .1,
         child: Align(
-          alignment: Alignment(0, config.shortMode ? 1 : 0),
+          alignment: Alignment(0, config.shortMode ? 1 : -.15),
           child: FractionallySizedBox(
-            widthFactor: config.shortMode ? 1 : 1.5,
-            child: Stack(
-              children: [
-                Image.asset('$_assetPath/taj-mahal.png', opacity: anim, fit: BoxFit.cover),
-                if (!config.shortMode)
-                  FractionalTranslation(
-                    translation: Offset(0, 1.45),
-                    child: Transform.scale(
-                      scale: 1.3,
-                      child: Image.asset('$_assetPath/pool.png', opacity: anim, fit: BoxFit.cover),
-                    ),
-                  ),
-              ],
-            ),
+            widthFactor: config.shortMode ? 1 : 1.7,
+            child: WonderHero(config, 'taj-mg',
+                child: Stack(
+                  children: [
+                    Image.asset('$assetPath/taj-mahal.png', opacity: anim, fit: BoxFit.cover),
+                    if (!config.shortMode)
+                      FractionalTranslation(
+                        translation: Offset(0, 1.33),
+                        child: Image.asset('$assetPath/pool.png', opacity: anim, fit: BoxFit.cover),
+                      ),
+                  ],
+                )),
           ),
         ),
       )
@@ -86,10 +84,10 @@ class TajMahalIllustration extends StatelessWidget {
               translation: Offset(-.2 * (1 - curvedAnim), 0),
               child: BottomLeft(
                 child: FractionallySizedBox(
-                  widthFactor: .7,
+                  heightFactor: .6,
                   child: FractionalTranslation(
-                    translation: Offset(-.3, 0),
-                    child: Image.asset('$_assetPath/foreground-left.png', opacity: anim, fit: BoxFit.cover),
+                    translation: Offset(-.4, -.04),
+                    child: Image.asset('$assetPath/foreground-left.png', opacity: anim, fit: BoxFit.cover),
                   ),
                 ),
               ),
@@ -98,10 +96,10 @@ class TajMahalIllustration extends StatelessWidget {
               translation: Offset(.2 * (1 - curvedAnim), 0),
               child: BottomRight(
                 child: FractionallySizedBox(
-                  widthFactor: .7,
+                  heightFactor: .6,
                   child: FractionalTranslation(
-                    translation: Offset(.3, 0),
-                    child: Image.asset('$_assetPath/foreground-right.png', opacity: anim, fit: BoxFit.cover),
+                    translation: Offset(.4, -.04),
+                    child: Image.asset('$assetPath/foreground-right.png', opacity: anim, fit: BoxFit.cover),
                   ),
                 ),
               ),

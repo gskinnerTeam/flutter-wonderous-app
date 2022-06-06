@@ -26,34 +26,34 @@ class HomeMenu extends StatelessWidget {
       children: [
         /// Blur filter
         BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+          filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
           child: Container(
-            color: context.colors.greyStrong.withOpacity(.5),
+            color: $styles.colors.greyStrong.withOpacity(.5),
           ),
         ),
 
         /// Back btn
         BackBtn.close(
           bgColor: Colors.transparent,
-          iconColor: context.colors.offWhite,
+          iconColor: $styles.colors.offWhite,
         ).safe(),
 
         /// Content
         Positioned.fill(
           child: SafeArea(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: context.insets.lg),
+              padding: EdgeInsets.symmetric(horizontal: $styles.insets.lg),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Spacer(flex: 3),
                   _buildIconGrid(context)
                       .animate()
-                      .fade(duration: context.times.fast * 1.5)
+                      .fade(duration: $styles.times.fast * 1.5)
                       .scale(begin: .8, curve: Curves.easeOut),
                   Spacer(flex: 2),
                   _buildBottomBtns(context),
-                  Gap(context.insets.xl),
+                  Gap($styles.insets.xl),
                 ],
               ),
             ),
@@ -69,16 +69,16 @@ class HomeMenu extends StatelessWidget {
       crossAxisCount: 3,
       clipBehavior: Clip.none,
       shrinkWrap: true,
-      crossAxisSpacing: context.insets.sm,
-      mainAxisSpacing: context.insets.sm,
+      crossAxisSpacing: $styles.insets.sm,
+      mainAxisSpacing: $styles.insets.sm,
       children: [
         _buildGridBtn(context, wondersLogic.all[0]),
         _buildGridBtn(context, wondersLogic.all[1]),
         _buildGridBtn(context, wondersLogic.all[2]),
         _buildGridBtn(context, wondersLogic.all[3]),
         Padding(
-          padding: EdgeInsets.all(context.insets.sm),
-          child: SvgPicture.asset(SvgPaths.compassFull, color: context.colors.offWhite),
+          padding: EdgeInsets.all($styles.insets.sm),
+          child: SvgPicture.asset(SvgPaths.compassFull, color: $styles.colors.offWhite),
         ),
         _buildGridBtn(context, wondersLogic.all[4]),
         _buildGridBtn(context, wondersLogic.all[5]),
@@ -91,8 +91,8 @@ class HomeMenu extends StatelessWidget {
   Widget _buildBottomBtns(BuildContext context) {
     return SeparatedColumn(
       separatorBuilder: () => Divider(thickness: 1.5, height: 1).animate().scale(
-            duration: context.times.slow,
-            delay: context.times.pageTransition + 200.ms,
+            duration: $styles.times.slow,
+            delay: $styles.times.pageTransition + 200.ms,
             curve: Curves.easeOutBack,
           ),
       children: [
@@ -101,7 +101,7 @@ class HomeMenu extends StatelessWidget {
         _MenuTextBtn(label: 'About this app', onPressed: _handleAboutPressed),
       ]
           .animate(interval: 80.ms)
-          .fade(delay: context.times.pageTransition + 100.ms)
+          .fade(delay: $styles.times.pageTransition + 100.ms)
           .slide(begin: Offset(0, .1), curve: Curves.easeOut),
     );
   }
@@ -112,7 +112,7 @@ class HomeMenu extends StatelessWidget {
       aspectRatio: 1,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(context.corners.md),
+          borderRadius: BorderRadius.circular($styles.corners.md),
           boxShadow: !isSelected
               ? null
               : [
@@ -125,9 +125,9 @@ class HomeMenu extends StatelessWidget {
                 ],
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(context.corners.md),
+          borderRadius: BorderRadius.circular($styles.corners.md),
           child: AppBtn(
-            border: !isSelected ? null : BorderSide(color: context.colors.offWhite, width: 5),
+            border: !isSelected ? null : BorderSide(color: $styles.colors.offWhite, width: 5),
             bgColor: btnData.type.fgColor,
             onPressed: () => _handleWonderPressed(context, btnData),
             padding: EdgeInsets.zero,
@@ -149,11 +149,11 @@ class _MenuTextBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBtn(
       expand: true,
-      padding: EdgeInsets.symmetric(vertical: context.insets.sm),
+      padding: EdgeInsets.symmetric(vertical: $styles.insets.sm),
       onPressed: onPressed,
       bgColor: Colors.transparent,
       semanticLabel: label,
-      child: Text(label, style: context.text.bodyBold),
+      child: Text(label, style: $styles.text.bodyBold),
     );
   }
 }

@@ -25,7 +25,7 @@ class WonderEvents extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (_, constraints) {
       return Container(
-        color: context.colors.greyStrong,
+        color: $styles.colors.greyStrong,
         child: SafeArea(
           bottom: false,
           child: Stack(

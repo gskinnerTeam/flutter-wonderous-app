@@ -9,7 +9,7 @@ class FullscreenUrlImgViewer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: context.colors.greyStrong,
+      color: $styles.colors.greyStrong,
       child: Stack(
         children: [
           Positioned.fill(

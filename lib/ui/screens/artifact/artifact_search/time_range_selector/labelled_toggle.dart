@@ -15,21 +15,21 @@ class LabelledToggle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // The relative widths of the text itself.
-    double offWidth = StringUtils.measure(optionOff, context.textStyles.btn).width;
-    double onWidth = StringUtils.measure(optionOn, context.textStyles.btn).width;
+    double offWidth = StringUtils.measure(optionOff, $styles.text.btn).width;
+    double onWidth = StringUtils.measure(optionOn, $styles.text.btn).width;
 
     // Get the width of the row with text and padding.
-    double maxWidth = offWidth + onWidth + context.insets.xl + context.insets.sm * 4;
+    double maxWidth = offWidth + onWidth + $styles.insets.xl + $styles.insets.sm * 4;
 
     // Manual height.
-    double maxHeight = context.insets.xl;
+    double maxHeight = $styles.insets.xl;
 
     // Colors and styles for the labels.
-    TextStyle textOffColor = context.textStyles.btn.copyWith(
-      color: isOn ? context.colors.body : context.colors.offWhite,
+    TextStyle textOffColor = $styles.text.btn.copyWith(
+      color: isOn ? $styles.colors.body : $styles.colors.offWhite,
     );
     TextStyle textOnColor = textOffColor.copyWith(
-      color: isOn ? context.colors.offWhite : context.colors.body,
+      color: isOn ? $styles.colors.offWhite : $styles.colors.body,
     );
 
     BoxDecoration circleDec = BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(maxHeight)));
@@ -48,24 +48,24 @@ class LabelledToggle extends StatelessWidget {
                 width: double.infinity,
                 height: constraints.maxHeight,
                 decoration: circleDec.copyWith(
-                  color: context.colors.black.withOpacity(0.1),
+                  color: $styles.colors.black.withOpacity(0.1),
                 ),
               ),
 
               // Switch BG
               Padding(
-                padding: EdgeInsets.all(context.insets.xxs),
+                padding: EdgeInsets.all($styles.insets.xxs),
                 child: AnimatedAlign(
-                  duration: context.times.fast,
+                  duration: $styles.times.fast,
                   curve: Curves.easeInOut,
                   alignment: isOn ? Alignment.centerRight : Alignment.centerLeft,
                   child: AnimatedContainer(
-                    duration: context.times.fast,
+                    duration: $styles.times.fast,
                     curve: Curves.easeInOut,
                     width: isOn
-                        ? onWidth + context.insets.sm * 3 + context.insets.xs
-                        : offWidth + context.insets.sm * 3 + context.insets.xs,
-                    decoration: circleDec.copyWith(color: context.colors.greyStrong),
+                        ? onWidth + $styles.insets.sm * 3 + $styles.insets.xs
+                        : offWidth + $styles.insets.sm * 3 + $styles.insets.xs,
+                    decoration: circleDec.copyWith(color: $styles.colors.greyStrong),
                   ),
                 ),
               ),
@@ -73,26 +73,26 @@ class LabelledToggle extends StatelessWidget {
               // Inner text
               Center(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: context.insets.sm),
+                  padding: EdgeInsets.symmetric(vertical: $styles.insets.sm),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Gap(context.insets.sm),
+                      Gap($styles.insets.sm),
                       Flexible(
                         child: Text(
                           optionOff,
                           style: textOffColor,
                         ),
                       ),
-                      Gap(context.insets.xl),
+                      Gap($styles.insets.xl),
                       Flexible(
                         child: Text(
                           optionOn,
                           style: textOnColor,
                         ),
                       ),
-                      Gap(context.insets.sm),
+                      Gap($styles.insets.sm),
                     ],
                   ),
                 ),

@@ -45,8 +45,7 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
     appLogic.showFullscreenDialogRoute(context, screen);
 
     // wait to update the state, to ensure the hero works properly:
-    final times = context.read<AppStyle>().times;
-    await Future.delayed(times.pageTransition);
+    await Future.delayed($styles.times.pageTransition);
     collectiblesLogic.updateState(collectible.id, CollectibleState.discovered);
   }
 }

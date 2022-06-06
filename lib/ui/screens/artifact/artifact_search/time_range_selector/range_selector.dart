@@ -89,9 +89,9 @@ class _RangeSelectorState extends State<RangeSelector> {
               dragWidth: dragWidth,
               child: Container(
                 decoration: BoxDecoration(
-                  color: context.colors.offWhite.withOpacity(0),
+                  color: $styles.colors.offWhite.withOpacity(0),
                   border: Border.symmetric(
-                    horizontal: BorderSide(color: context.colors.white.withOpacity(0.75), width: 2),
+                    horizontal: BorderSide(color: $styles.colors.white.withOpacity(0.75), width: 2),
                   ),
                 ),
               ),
@@ -114,13 +114,13 @@ class _RangeSelectorState extends State<RangeSelector> {
           alignment: Alignment.center,
           width: RangeSelector.handleWidth,
           decoration: BoxDecoration(
-            color: context.colors.white.withOpacity(0.75),
+            color: $styles.colors.white.withOpacity(0.75),
             borderRadius: BorderRadius.only(
-              topRight: Radius.circular(context.corners.md),
-              bottomRight: Radius.circular(context.corners.md),
+              topRight: Radius.circular($styles.corners.md),
+              bottomRight: Radius.circular($styles.corners.md),
             ),
           ),
-          child: Icon(Icons.chevron_right, color: context.colors.greyStrong, size: RangeSelector.handleWidth),
+          child: Icon(Icons.chevron_right, color: $styles.colors.greyStrong, size: RangeSelector.handleWidth),
         ),
       ),
     );

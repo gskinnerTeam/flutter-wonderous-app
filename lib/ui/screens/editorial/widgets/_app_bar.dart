@@ -47,7 +47,7 @@ class _AppBar extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           AnimatedSwitcher(
-            duration: context.times.fast,
+            duration: $styles.times.fast,
             switchInCurve: Curves.easeIn,
             child: Stack(
               key: ValueKey(showOverlay),
@@ -75,7 +75,7 @@ class _AppBar extends StatelessWidget {
                   ClipRect(
                     child: ColoredBox(
                       color: wonderType.bgColor.withOpacity(.8),
-                    ).animate().fade(duration: context.times.fast),
+                    ).animate().fade(duration: $styles.times.fast),
                   ),
                 ],
               ],

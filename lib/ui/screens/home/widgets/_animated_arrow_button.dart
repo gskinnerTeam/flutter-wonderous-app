@@ -18,7 +18,7 @@ class _AnimatedArrowButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Duration duration = context.times.med;
+    final Duration duration = $styles.times.med;
     return AppBtn.basic(
       semanticLabel: 'arrow button',
       onPressed: onTap,
@@ -32,7 +32,7 @@ class _AnimatedArrowButton extends StatelessWidget {
           ],
           child: Transform.rotate(
             angle: pi * .5,
-            child: Icon(Icons.chevron_right, size: 42, color: context.colors.white),
+            child: Icon(Icons.chevron_right, size: 42, color: $styles.colors.white),
           ),
         ),
       ),

@@ -11,25 +11,25 @@ class _CollectionFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(children: [
       Transform.translate(
-        offset: Offset(0, -context.insets.xl),
+        offset: Offset(0, -$styles.insets.xl),
         child: VtGradient(
-          [context.colors.greyStrong.withOpacity(0), context.colors.greyStrong],
+          [$styles.colors.greyStrong.withOpacity(0), $styles.colors.greyStrong],
           const [0, 1],
-          height: context.insets.xl,
+          height: $styles.insets.xl,
         ),
       ),
       Container(
-        padding: EdgeInsets.symmetric(horizontal: context.insets.md, vertical: context.insets.sm),
-        color: context.colors.greyStrong,
+        padding: EdgeInsets.symmetric(horizontal: $styles.insets.md, vertical: $styles.insets.sm),
+        color: $styles.colors.greyStrong,
         child: SafeArea(
           top: false,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _buildProgressRow(context),
-              Gap(context.insets.sm),
+              Gap($styles.insets.sm),
               _buildProgressBar(context),
-              Gap(context.insets.sm),
+              Gap($styles.insets.sm),
             ],
           ),
         ),
@@ -41,12 +41,12 @@ class _CollectionFooter extends StatelessWidget {
     return Row(children: [
       Text(
         '${(count / total * 100).round()}% discovered',
-        style: context.textStyles.body.copyWith(color: context.colors.accent1),
+        style: $styles.text.body.copyWith(color: $styles.colors.accent1),
       ),
       Spacer(),
       Text(
         '$count of $total',
-        style: context.textStyles.body.copyWith(color: context.colors.offWhite),
+        style: $styles.text.body.copyWith(color: $styles.colors.offWhite),
       )
     ]);
   }
@@ -54,14 +54,14 @@ class _CollectionFooter extends StatelessWidget {
   Widget _buildProgressBar(BuildContext context) {
     return RepaintBoundary(
       child: Container(
-        height: context.insets.xs,
+        height: $styles.insets.xs,
         decoration: BoxDecoration(
-          color: context.colors.white.withOpacity(0.25),
+          color: $styles.colors.white.withOpacity(0.25),
           borderRadius: BorderRadius.circular(1000),
         ),
         child: Container(
           decoration: BoxDecoration(
-            color: context.colors.accent1,
+            color: $styles.colors.accent1,
             borderRadius: BorderRadius.circular(1000),
           ),
         ).animate().fade(duration: 1500.ms, curve: Curves.easeOutExpo).custom(

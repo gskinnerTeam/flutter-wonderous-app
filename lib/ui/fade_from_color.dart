@@ -24,7 +24,7 @@ class _FadeFromColorState extends State<FadeFromColor> {
     return Stack(
       children: [
         //widget.child,
-        ColoredBox(color: widget.color ?? context.colors.black)
+        ColoredBox(color: widget.color ?? $styles.colors.black)
             .animate(onComplete: _handleFadeComplete)
             .fadeOut(delay: widget.delay)
       ],

@@ -10,8 +10,8 @@ class _TopContent extends StatelessWidget {
       height: WonderEvents._topHeight,
       child: LightText(
         child: SeparatedColumn(
-          separatorBuilder: () => Gap(context.insets.xs * 1.5),
-          padding: EdgeInsets.only(top: context.insets.md, bottom: context.insets.sm),
+          separatorBuilder: () => Gap($styles.insets.xs * 1.5),
+          padding: EdgeInsets.only(top: $styles.insets.md, bottom: $styles.insets.sm),
           children: [
             /// Text and image in a stack
             Expanded(
@@ -37,8 +37,8 @@ class _TopContent extends StatelessWidget {
                     return Container(
                       decoration: BoxDecoration(
                         color: isSelected ? data.type.fgColor : Colors.transparent,
-                        border: Border.all(color: isSelected ? Colors.transparent : context.colors.greyMedium),
-                        borderRadius: BorderRadius.circular(context.corners.md),
+                        border: Border.all(color: isSelected ? Colors.transparent : $styles.colors.greyMedium),
+                        borderRadius: BorderRadius.circular($styles.corners.md),
                       ),
                     );
                   }),
@@ -76,28 +76,28 @@ class _TopContent extends StatelessWidget {
 
   Widget _buildEraTextRow(BuildContext context) {
     return SeparatedRow(
-      separatorBuilder: () => Gap(context.insets.sm),
+      separatorBuilder: () => Gap($styles.insets.sm),
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
           '${data.startYr}  to  ${data.endYr}',
-          style: context.text.body.copyWith(color: context.colors.accent2),
+          style: $styles.text.body.copyWith(color: $styles.colors.accent2),
         ),
         _buildDot(context),
         Text(
           StringUtils.getEra(data.startYr),
-          style: context.text.body.copyWith(color: context.colors.accent2),
+          style: $styles.text.body.copyWith(color: $styles.colors.accent2),
         ),
       ],
-    ).animate().fade(delay: context.times.pageTransition);
+    ).animate().fade(delay: $styles.times.pageTransition);
   }
 
   Container _buildDot(BuildContext context) {
     return Container(
       width: 4,
       height: 4,
-      decoration: BoxDecoration(color: context.colors.accent2, borderRadius: BorderRadius.circular(99)),
+      decoration: BoxDecoration(color: $styles.colors.accent2, borderRadius: BorderRadius.circular(99)),
     );
   }
 }

@@ -26,9 +26,9 @@ class _CollectionList extends StatelessWidget {
     for (int i = 0; i < wonders.length; i++) {
       WonderData data = wonders[i];
       children.add(_buildCategoryTitle(context, data, data.type == scrollWonder ? scrollKey : null));
-      children.add(Gap(context.insets.md));
+      children.add(Gap($styles.insets.md));
       children.add(_buildCollectibleRow(context, data.type, states));
-      children.add(Gap(context.insets.xl));
+      children.add(Gap($styles.insets.xl));
     }
 
     children.add(_buildResetBtn(context));
@@ -38,8 +38,12 @@ class _CollectionList extends StatelessWidget {
         child: ScrollDecorator.shadow(
           builder: (controller) => ListView(
             controller: controller,
-            padding: EdgeInsets.all(context.insets.md).copyWith(bottom: context.insets.offset * 2.5),
-            children: [Column(children: children,)],
+            padding: EdgeInsets.all($styles.insets.md).copyWith(bottom: $styles.insets.offset * 2.5),
+            children: [
+              Column(
+                children: children,
+              )
+            ],
           ),
         ),
       ),
@@ -51,18 +55,18 @@ class _CollectionList extends StatelessWidget {
       data.title.toUpperCase(),
       textAlign: TextAlign.left,
       key: key,
-      style: context.textStyles.title1.copyWith(color: context.colors.offWhite),
+      style: $styles.text.title1.copyWith(color: $styles.colors.offWhite),
     );
   }
 
   Widget _buildCollectibleRow(BuildContext context, WonderType wonder, Map<String, int> states) {
-    final double height = context.insets.lg * 6;
+    final double height = $styles.insets.lg * 6;
     List<CollectibleData> list = collectiblesLogic.forWonder(wonder);
-    if (list.isEmpty) return Container(height: height, color: context.colors.black);
+    if (list.isEmpty) return Container(height: height, color: $styles.colors.black);
 
     List<Widget> children = [];
     for (int i = 0; i < list.length; i++) {
-      if (i > 0) children.add(Gap(context.insets.md));
+      if (i > 0) children.add(Gap($styles.insets.md));
       CollectibleData collectible = list[i];
       int state = states[collectible.id] ?? CollectibleState.lost;
       children.add(Flexible(
@@ -84,6 +88,6 @@ class _CollectionList extends StatelessWidget {
       isSecondary: true,
       expand: true,
     );
-    return AnimatedOpacity(opacity: onReset == null ? 0.25 : 1, duration: context.times.fast, child: btn);
+    return AnimatedOpacity(opacity: onReset == null ? 0.25 : 1, duration: $styles.times.fast, child: btn);
   }
 }

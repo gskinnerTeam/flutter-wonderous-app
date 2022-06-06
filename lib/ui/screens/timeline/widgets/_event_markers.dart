@@ -92,12 +92,12 @@ class _EventMarker extends StatelessWidget {
         width: isSelected ? 6 : 2,
         height: isSelected ? 6 : 2,
         curve: Curves.easeOutBack,
-        duration: context.times.med,
+        duration: $styles.times.med,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(99),
-          color: context.colors.accent1,
+          color: $styles.colors.accent1,
           boxShadow: [
-            BoxShadow(color: context.colors.accent1.withOpacity(isSelected ? .5 : 0), spreadRadius: 3, blurRadius: 3),
+            BoxShadow(color: $styles.colors.accent1.withOpacity(isSelected ? .5 : 0), spreadRadius: 3, blurRadius: 3),
           ],
         ),
       ),

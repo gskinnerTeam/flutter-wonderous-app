@@ -16,7 +16,7 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
 
     /// A single piece of quote text, this widget has one on top, and one on bottom
     Widget buildText(String value, {required bool top, bool isAuthor = false}) {
-      var quoteStyle = context.textStyles.quote1;
+      var quoteStyle = $styles.text.quote1;
       quoteStyle = quoteStyle.copyWith(
         // letterSpacing: isAuthor ? quoteStyle.letterSpacing : -4,
         color: Color(0xFF444444).withOpacity(1),

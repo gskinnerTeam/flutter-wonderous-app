@@ -22,7 +22,7 @@ class WondersTimelineBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gap = crossAxisGap ?? context.insets.xs;
+    final gap = crossAxisGap ?? $styles.insets.xs;
     // Depending on axis, we put all the wonders in a hz row, or vt column
     Widget wrapFlex(List<Widget> c) {
       c = c.map<Widget>((w) => Expanded(child: w)).toList();
@@ -103,9 +103,9 @@ class _DefaultTrackEntry extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: isSelected ? context.colors.accent2 : Colors.transparent,
+        color: isSelected ? $styles.colors.accent2 : Colors.transparent,
         borderRadius: BorderRadius.circular(99),
-        border: Border.all(color: context.colors.accent2),
+        border: Border.all(color: $styles.colors.accent2),
       ),
     );
   }

@@ -3,9 +3,12 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 
 Future<bool?> showModal(BuildContext context, {required Widget child}) async {
-  var colors = context.read<AppStyle>().colors;
   return await showMaterialModalBottomSheet(
-          expand: false, context: context, backgroundColor: colors.greyStrong, builder: (_) => child) ??
+        expand: false,
+        context: context,
+        backgroundColor: $styles.colors.greyStrong,
+        builder: (_) => child,
+      ) ??
       false;
 }
 
@@ -58,7 +61,7 @@ class OkCancelModal extends StatelessWidget {
       msg: msg,
       buttons: [
         AppBtn.from(text: 'Ok', expand: true, isSecondary: true, onPressed: () => Navigator.of(context).pop(true)),
-        Gap(context.insets.xs),
+        Gap($styles.insets.xs),
         AppBtn.from(text: 'Cancel', expand: true, onPressed: () => Navigator.of(context).pop(false)),
       ],
       child: child,
@@ -78,16 +81,16 @@ class _BaseContentModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(context.insets.lg),
+      padding: EdgeInsets.all($styles.insets.lg),
       child: LightText(
         child: SeparatedColumn(
           mainAxisSize: MainAxisSize.min,
-          separatorBuilder: () => Gap(context.insets.md),
+          separatorBuilder: () => Gap($styles.insets.md),
           children: [
-            if (title != null) Text(title!, style: context.textStyles.h2),
+            if (title != null) Text(title!, style: $styles.text.h2),
             if (child != null) child!,
-            if (msg != null) Text(msg!, style: context.textStyles.body),
-            Gap(context.insets.md),
+            if (msg != null) Text(msg!, style: $styles.text.body),
+            Gap($styles.insets.md),
             Column(children: buttons.map((e) => e).toList())
           ],
         ),
