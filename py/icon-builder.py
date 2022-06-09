@@ -1,4 +1,4 @@
 #!/usr/bin/python
 import os
-cmd = "flutter pub run flutter_launcher_icons:main";
+cmd = "flutter pub get && flutter pub run icons_launcher:create";
 os.system(cmd);

@@ -53,7 +53,7 @@ dependencies:
 dev_dependencies:
   build_runner: ^2.1.11
   copy_with_extension_gen: ^4.0.1
-  flutter_launcher_icons: ^0.9.2
+  icons_launcher: ^1.1.9
   flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
@@ -62,9 +62,9 @@ dev_dependencies:
   json_serializable: ^6.2.0
 
 flutter_icons:
-  android: "launcher_icon"
   ios: true
-  image_path: "assets/marketing/icon.png"
+  android: true
+  image_path: "assets/marketing/app-icon-1024.png"
 
 flutter:
 

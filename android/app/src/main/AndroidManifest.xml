@@ -1,8 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gskinner.flutter.wonders">
    <application
+        android:label="Wonderous"
         android:requestLegacyExternalStorage="true"
-        android:icon="@mipmap/launcher_icon">
+        android:icon="@mipmap/ic_launcher">
 
        <meta-data android:name="com.google.android.geo.API_KEY"
            android:value="AIzaSyDectGpXKc04T6U5MyccC7L5DVl0xbUFY4"/>
