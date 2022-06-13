@@ -27,7 +27,8 @@ class _IntroScreenState extends State<IntroScreen> {
   }
 
   void _handlePageChanged() {
-    _currentPage.value = _pageController.page?.round() ?? 0;
+    int newPage = _pageController.page?.round() ?? 0;
+    _currentPage.value = newPage;
   }
 
   @override
