@@ -7,31 +7,33 @@ class _LargeSimpleQuote extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: $styles.insets.lg, vertical: $styles.insets.xl),
-      child: Column(children: [
-        FractionalTranslation(
-          translation: Offset(0, .5),
-          child: Text(
-            '“',
-            style: $styles.text.quote1.copyWith(
-              color: $styles.colors.accent1,
-              fontSize: 90,
-              height: .7,
+    return MergeSemantics(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: $styles.insets.lg, vertical: $styles.insets.xl),
+        child: Column(children: [
+          FractionalTranslation(
+            translation: Offset(0, .5),
+            child: Text(
+              '“',
+              style: $styles.text.quote1.copyWith(
+                color: $styles.colors.accent1,
+                fontSize: 90,
+                height: .7,
+              ),
             ),
           ),
-        ),
-        Text(
-          text,
-          style: $styles.text.quote2,
-          textAlign: TextAlign.center,
-        ),
-        Gap($styles.insets.md),
-        Text(
-          '- $author',
-          style: $styles.text.quote2Sub.copyWith(color: $styles.colors.accent1),
-        ),
-      ]),
+          Text(
+            text,
+            style: $styles.text.quote2,
+            textAlign: TextAlign.center,
+          ),
+          Gap($styles.insets.md),
+          Text(
+            '- $author',
+            style: $styles.text.quote2Sub.copyWith(color: $styles.colors.accent1),
+          ),
+        ]),
+      ),
     );
   }
 }

@@ -21,10 +21,14 @@ class _TitleText extends StatelessWidget {
                     color: data.type.fgColor,
                   ).animate().scale(curve: Curves.easeOut, delay: 500.ms),
                 ),
-                Text(
-                  data.subTitle.toUpperCase(),
-                  style: $styles.text.title2,
-                ).animate().fade(delay: 100.ms),
+                Semantics(
+                  header: true,
+                  sortKey: OrdinalSortKey(1),
+                  child: Text(
+                    data.subTitle.toUpperCase(),
+                    style: $styles.text.title2,
+                  ).animate().fade(delay: 100.ms),
+                ),
                 Expanded(
                   child: Divider(
                     color: data.type.fgColor,
@@ -33,7 +37,7 @@ class _TitleText extends StatelessWidget {
               ],
             ),
             Gap($styles.insets.md),
-            WonderTitleText(data),
+            Semantics(sortKey: OrdinalSortKey(0), child: WonderTitleText(data)),
             Gap($styles.insets.xs),
             Text(
               data.regionTitle.toUpperCase(),

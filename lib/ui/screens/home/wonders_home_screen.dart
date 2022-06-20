@@ -1,3 +1,4 @@
+import 'package:flutter/rendering.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/app_page_indicator.dart';
@@ -225,7 +226,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         isShowing: _isSelected(wonderType),
         zoom: .05 * swipeAmt,
       );
-      return WonderIllustration(wonderType, config: config);
+      return Semantics(
+        liveRegion: true,
+        hint: currentWonder.title,
+        child: WonderIllustration(wonderType, config: config),
+      );
     });
   }
 

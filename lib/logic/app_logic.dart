@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
@@ -12,6 +13,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/ui/common/utils/page_routes.dart';
 import 'package:wonders/ui/modals/app_modals.dart';
+import 'package:wonders/ui/spikes/accessibility_spike.dart';
 
 class AppLogic {
   /// Indicates to the rest of the app that bootstrap has not completed.
@@ -45,7 +47,8 @@ class AppLogic {
 
     // Load initial view and flag bootStrap as complete
     isBootstrapComplete = true;
-    if (kReleaseMode && settingsLogic.hasCompletedOnboarding.value) {
+
+    if (settingsLogic.hasCompletedOnboarding.value) {
       appRouter.go(ScreenPaths.home);
     } else {
       appRouter.go(ScreenPaths.intro);

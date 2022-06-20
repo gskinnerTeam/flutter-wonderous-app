@@ -20,7 +20,7 @@ class _AnimatedArrowButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final Duration duration = $styles.times.med;
     return AppBtn.basic(
-      semanticLabel: 'arrow button',
+      semanticLabel: 'Swipe down or tap for more information on this wonder.',
       onPressed: onTap,
       child: SizedBox(
         height: 80,

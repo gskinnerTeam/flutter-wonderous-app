@@ -21,47 +21,49 @@ class _SlidingImageStack extends StatelessWidget {
       );
     }
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: SizedBox(
-        width: totalSize.width,
-        height: totalSize.height,
-        child: ValueListenableBuilder(
-          valueListenable: scrollPos,
-          builder: (context, value, child) {
-            double pctVisible = 0;
-            final yPos = ContextUtils.getGlobalPos(context)?.dy;
-            final height = ContextUtils.getSize(context)?.height;
-            if (yPos != null && height != null) {
-              final amtVisible = context.heightPx - yPos;
-              pctVisible = (amtVisible / height).clamp(0, 3);
-            }
-            return Stack(
-              children: [
-                TopRight(
-                  child: FractionalTranslation(
-                    translation: Offset(0, -.1 + .2 * pctVisible),
-                    child: _buildPhoto(
-                      .73,
-                      type.photo3,
-                      Alignment(0, -.3 + .6 * pctVisible),
+    return ExcludeSemantics(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SizedBox(
+          width: totalSize.width,
+          height: totalSize.height,
+          child: ValueListenableBuilder(
+            valueListenable: scrollPos,
+            builder: (context, value, child) {
+              double pctVisible = 0;
+              final yPos = ContextUtils.getGlobalPos(context)?.dy;
+              final height = ContextUtils.getSize(context)?.height;
+              if (yPos != null && height != null) {
+                final amtVisible = context.heightPx - yPos;
+                pctVisible = (amtVisible / height).clamp(0, 3);
+              }
+              return Stack(
+                children: [
+                  TopRight(
+                    child: FractionalTranslation(
+                      translation: Offset(0, -.1 + .2 * pctVisible),
+                      child: _buildPhoto(
+                        .73,
+                        type.photo3,
+                        Alignment(0, -.3 + .6 * pctVisible),
+                      ),
                     ),
                   ),
-                ),
-                BottomLeft(
-                  child: FractionalTranslation(
-                    translation: Offset(0, -.4 * pctVisible),
-                    child: _buildPhoto(
-                      .45,
-                      type.photo4,
-                      Alignment(0, .3 - .6 * pctVisible),
-                      top: false,
+                  BottomLeft(
+                    child: FractionalTranslation(
+                      translation: Offset(0, -.4 * pctVisible),
+                      child: _buildPhoto(
+                        .45,
+                        type.photo4,
+                        Alignment(0, .3 - .6 * pctVisible),
+                        top: false,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            );
-          },
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

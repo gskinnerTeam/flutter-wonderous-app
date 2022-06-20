@@ -22,30 +22,33 @@ class _ScrollingContent extends StatelessWidget {
   Widget build(BuildContext context) {
     Text buildText(String value) => Text(_fixNewlines(value), style: $styles.text.body);
 
-    DropCapText buildDropCapText(String value) {
+    Widget buildDropCapText(String value) {
       final dropStyle = $styles.text.dropCase;
       final bodyStyle = $styles.text.body;
       final dropChar = value.substring(0, 1);
       final dropCapSize = StringUtils.measure(dropChar, dropStyle);
-      return DropCapText(
-        _fixNewlines(value).substring(1),
-        dropCap: DropCap(
-          width: dropCapSize.width,
-          height: $styles.text.body.fontSize! * $styles.text.body.height! * 2,
-          child: Transform.translate(
-            offset: Offset(0, bodyStyle.fontSize! * (bodyStyle.height! - 1) - 2),
-            child: Text(value.substring(0, 1),
-                style: $styles.text.dropCase.copyWith(
-                  color: $styles.colors.accent1,
-                  height: 1,
-                )),
+      return Semantics(
+        label: value,
+        child: DropCapText(
+          _fixNewlines(value).substring(1),
+          dropCap: DropCap(
+            width: dropCapSize.width,
+            height: $styles.text.body.fontSize! * $styles.text.body.height! * 2,
+            child: Transform.translate(
+              offset: Offset(0, bodyStyle.fontSize! * (bodyStyle.height! - 1) - 2),
+              child: Text(value.substring(0, 1),
+                  style: $styles.text.dropCase.copyWith(
+                    color: $styles.colors.accent1,
+                    height: 1,
+                  )),
+            ),
           ),
-        ),
-        style: $styles.text.body,
-        dropCapPadding: EdgeInsets.only(top: 0, right: 6, bottom: 0),
-        dropCapStyle: $styles.text.dropCase.copyWith(
-          color: $styles.colors.accent1,
-          height: 1,
+          style: $styles.text.body,
+          dropCapPadding: EdgeInsets.only(top: 0, right: 6, bottom: 0),
+          dropCapStyle: $styles.text.dropCase.copyWith(
+            color: $styles.colors.accent1,
+            height: 1,
+          ),
         ),
       );
     }
@@ -151,20 +154,22 @@ class _YouTubeThumbnail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void handlePressed() => context.push(ScreenPaths.video(id));
-    return ConstrainedBox(
-      constraints: BoxConstraints(maxWidth: 400),
-      child: Column(
-        children: [
-          AppBtn.basic(
-            semanticLabel: 'Youtube thumbnail',
-            onPressed: handlePressed,
-            child: ImageFade(image: NetworkImage(imageUrl), fit: BoxFit.cover),
-          ),
-          Gap($styles.insets.xs),
-          Padding(
-              padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
-              child: Text(caption, style: $styles.text.caption)),
-        ],
+    return MergeSemantics(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: 400),
+        child: Column(
+          children: [
+            AppBtn.basic(
+              semanticLabel: 'Youtube thumbnail',
+              onPressed: handlePressed,
+              child: ImageFade(image: NetworkImage(imageUrl), fit: BoxFit.cover),
+            ),
+            Gap($styles.insets.xs),
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
+                child: Text(caption, style: $styles.text.caption)),
+          ],
+        ),
       ),
     );
   }
@@ -185,40 +190,45 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
   @override
   Widget build(BuildContext context) {
     void handlePressed() => context.push(ScreenPaths.maps(widget.data.type));
-    return Column(
-      children: [
-        SizedBox(
-          height: widget.height,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular($styles.corners.md),
-            child: AppBtn.basic(
-              semanticLabel: 'Open fullscreen maps view',
-              onPressed: handlePressed,
+    return MergeSemantics(
+      child: Column(
+        children: [
+          SizedBox(
+            height: widget.height,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular($styles.corners.md),
+              child: AppBtn.basic(
+                semanticLabel: 'Open fullscreen maps view',
+                onPressed: handlePressed,
 
-              /// To prevent the map widget from absorbing the onPressed action, use a Stack + IgnorePointer + a transparent Container
-              child: Stack(
-                children: [
-                  Positioned.fill(child: ColoredBox(color: Colors.transparent)),
-                  IgnorePointer(
-                    child: GoogleMap(
-                      markers: {getMapsMarker(startPos.target)},
-                      zoomControlsEnabled: false,
-                      mapType: MapType.normal,
-                      mapToolbarEnabled: false,
-                      initialCameraPosition: startPos,
+                /// To prevent the map widget from absorbing the onPressed action, use a Stack + IgnorePointer + a transparent Container
+                child: Stack(
+                  children: [
+                    Positioned.fill(child: ColoredBox(color: Colors.transparent)),
+                    IgnorePointer(
+                      child: GoogleMap(
+                        markers: {getMapsMarker(startPos.target)},
+                        zoomControlsEnabled: false,
+                        mapType: MapType.normal,
+                        mapToolbarEnabled: false,
+                        initialCameraPosition: startPos,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        Gap($styles.insets.xs),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
-          child: Text(widget.data.mapCaption, style: $styles.text.caption),
-        ),
-      ],
+          Gap($styles.insets.xs),
+          Semantics(
+            sortKey: OrdinalSortKey(0),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
+              child: Text(widget.data.mapCaption, style: $styles.text.caption),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
