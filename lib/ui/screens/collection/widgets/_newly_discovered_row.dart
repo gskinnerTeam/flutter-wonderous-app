@@ -11,7 +11,7 @@ class _NewlyDiscoveredRow extends StatelessWidget {
   Widget build(BuildContext context) {
     if (count == 0) return SizedBox.shrink();
     return AppBtn.basic(
-      semanticLabel: 'Scroll to new item',
+      semanticLabel: '$count new item${count == 1 ? '' : 's'} to explore. Scroll to new item.',
       onPressed: onPressed,
       child: Container(
         alignment: Alignment.center,
