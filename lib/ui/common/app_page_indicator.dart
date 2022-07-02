@@ -3,13 +3,20 @@ import 'package:wonders/common_libs.dart';
 
 class AppPageIndicator extends StatefulWidget {
   const AppPageIndicator(
-      {Key? key, required this.count, required this.controller, this.onDotPressed, this.color, this.dotSize})
+      {Key? key,
+      required this.count,
+      required this.controller,
+      this.onDotPressed,
+      this.color,
+      this.dotSize,
+      this.semanticPageTitle = 'page'})
       : super(key: key);
   final int count;
   final PageController controller;
   final void Function(int index)? onDotPressed;
   final Color? color;
   final double? dotSize;
+  final String semanticPageTitle;
 
   @override
   State<AppPageIndicator> createState() => _AppPageIndicatorState();
@@ -32,7 +39,8 @@ class _AppPageIndicatorState extends State<AppPageIndicator> {
     return ValueListenableBuilder<int>(
       valueListenable: _currentPage,
       builder: (_, value, child) => Semantics(
-        label: 'Page ${value + 1} of ${widget.count}. Swipe horizontally to change pages',
+        label:
+            '${widget.semanticPageTitle} ${value % (widget.count) + 1} of ${widget.count}. Swipe horizontally to change ${widget.semanticPageTitle}s',
         child: child,
       ),
       child: SmoothPageIndicator(

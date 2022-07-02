@@ -176,7 +176,11 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                           // Text Content
                           _buildTextContent(context, backdropWidth, small),
                           // Selection indicator
-                          AppPageIndicator(count: _highlightedArtifactIds.length, controller: _controller),
+                          AppPageIndicator(
+                            count: _highlightedArtifactIds.length,
+                            controller: _controller,
+                            semanticPageTitle: 'artifact',
+                          ),
                           // Big ol' button
                           Gap(small ? $styles.insets.md : $styles.insets.xl),
                           _buildBrowseBtn(context),
