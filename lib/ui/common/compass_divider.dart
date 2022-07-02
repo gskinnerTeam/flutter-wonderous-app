@@ -8,10 +8,11 @@ class CompassDivider extends StatelessWidget {
   final Duration? duration;
   final Color? linesColor;
   final Color? compassColor;
+
   @override
   Widget build(BuildContext context) {
     Duration duration = this.duration ?? 1500.ms;
-    Widget buildAnimatedDivider({bool alignLeft = false}) {
+    Widget buildHzAnimatedDivider({bool alignLeft = false}) {
       return TweenAnimationBuilder<double>(
         duration: duration,
         tween: Tween(begin: 0, end: isExpanded ? 1 : 0),
@@ -27,27 +28,29 @@ class CompassDivider extends StatelessWidget {
       );
     }
 
-    return Row(children: [
-      Expanded(child: buildAnimatedDivider()),
-      Gap($styles.insets.sm),
-      TweenAnimationBuilder<double>(
-        duration: duration,
-        tween: Tween(begin: 0, end: isExpanded ? .5 : 0),
-        curve: Curves.easeOutBack,
-        builder: (_, value, child) => Transform.rotate(
-          angle: value * pi * 2,
-          child: child,
+    return Row(
+      children: [
+        Expanded(child: buildHzAnimatedDivider()),
+        Gap($styles.insets.sm),
+        TweenAnimationBuilder<double>(
+          duration: duration,
+          tween: Tween(begin: 0, end: isExpanded ? .5 : 0),
+          curve: Curves.easeOutBack,
+          builder: (_, value, child) => Transform.rotate(
+            angle: value * pi * 2,
+            child: child,
+          ),
+          child: SizedBox(
+              height: 32,
+              width: 32,
+              child: SvgPicture.asset(
+                SvgPaths.compassFull,
+                color: compassColor ?? $styles.colors.accent2,
+              )),
         ),
-        child: SizedBox(
-            height: 32,
-            width: 32,
-            child: SvgPicture.asset(
-              SvgPaths.compassFull,
-              color: compassColor ?? $styles.colors.accent2,
-            )),
-      ),
-      Gap($styles.insets.sm),
-      Expanded(child: buildAnimatedDivider(alignLeft: true)),
-    ]);
+        Gap($styles.insets.sm),
+        Expanded(child: buildHzAnimatedDivider(alignLeft: true)),
+      ],
+    );
   }
 }
