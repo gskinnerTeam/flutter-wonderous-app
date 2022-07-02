@@ -58,7 +58,7 @@ class WonderDetailsTabMenu extends StatelessWidget {
                 ),
               ),
 
-              // Home btn, animates into view
+              // Home btn
               TweenAnimationBuilder<double>(
                 duration: $styles.times.fast,
                 tween: Tween(begin: 0, end: showHomeBtn ? 1 : 0),
@@ -133,37 +133,44 @@ class _TabBtn extends StatelessWidget {
             color: $styles.colors.accent1,
           ),
         );
+    final MaterialLocalizations localizations = MaterialLocalizations.of(context);
 
     return Expanded(
-      child: AppBtn.basic(
-        padding: EdgeInsets.symmetric(vertical: $styles.insets.md),
-        onPressed: () => tabController.index = index,
-        semanticLabel: label,
-        child: ExcludeSemantics(
-          child: Stack(
-            children: [
-              /// Image icon
-              Image.asset(
-                '${ImagePaths.common}/tab-$iconImg${selected ? '-active' : ''}.png',
-                height: 32,
-                width: 32,
-                color: selected ? null : color,
-              ),
+      child: MergeSemantics(
+        child: Semantics(
+          selected: selected,
+          label: localizations.tabLabel(tabIndex: index + 1, tabCount: tabController.length),
+          child: ExcludeSemantics(
+            child: AppBtn.basic(
+              padding: EdgeInsets.symmetric(vertical: $styles.insets.md),
+              onPressed: () => tabController.index = index,
+              semanticLabel: label,
+              child: Stack(
+                children: [
+                  /// Image icon
+                  Image.asset(
+                    '${ImagePaths.common}/tab-$iconImg${selected ? '-active' : ''}.png',
+                    height: 32,
+                    width: 32,
+                    color: selected ? null : color,
+                  ),
 
-              /// Dot, shows when selected
-              Positioned.fill(
-                child: BottomCenter(
-                  child: buildDot()
-                      .animate(key: ValueKey(selected))
-                      .fade(begin: selected ? 0 : 1, end: selected ? 1 : 0)
-                      .move(
-                          curve: selected ? Curves.easeOutBack : Curves.easeIn,
-                          duration: $styles.times.med,
-                          begin: Offset(0, selected ? 30 : 5),
-                          end: Offset(0, selected ? 5 : 30)),
-                ),
-              )
-            ],
+                  /// Dot, shows when selected
+                  Positioned.fill(
+                    child: BottomCenter(
+                      child: buildDot()
+                          .animate(key: ValueKey(selected))
+                          .fade(begin: selected ? 0 : 1, end: selected ? 1 : 0)
+                          .move(
+                              curve: selected ? Curves.easeOutBack : Curves.easeIn,
+                              duration: $styles.times.med,
+                              begin: Offset(0, selected ? 30 : 5),
+                              end: Offset(0, selected ? 5 : 30)),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
         ),
       ),
