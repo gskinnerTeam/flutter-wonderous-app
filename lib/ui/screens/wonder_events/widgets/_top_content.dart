@@ -8,69 +8,75 @@ class _TopContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: WonderEvents._topHeight,
-      child: LightText(
-        child: SeparatedColumn(
-          separatorBuilder: () => Gap($styles.insets.xs * 1.5),
-          padding: EdgeInsets.only(top: $styles.insets.md, bottom: $styles.insets.sm),
-          children: [
-            /// Text and image in a stack
-            Expanded(
-              child: Stack(children: [
-                /// Image with fade on btm
-                Center(
-                  child: _buildImageWithFade(context),
+      child: MergeSemantics(
+        child: LightText(
+          child: SeparatedColumn(
+            separatorBuilder: () => Gap($styles.insets.xs * 1.5),
+            padding: EdgeInsets.only(top: $styles.insets.md, bottom: $styles.insets.sm),
+            children: [
+              /// Text and image in a stack
+              Expanded(
+                child: Stack(children: [
+                  /// Image with fade on btm
+                  Center(
+                    child: _buildImageWithFade(context),
+                  ),
+
+                  /// Title text
+                  BottomCenter(
+                    child: WonderTitleText(data),
+                  )
+                ]),
+              ),
+
+              /// Bottom timeline
+              ExcludeSemantics(
+                child: SizedBox(
+                  height: 50,
+                  child: WondersTimelineBuilder(
+                      selectedWonders: [data.type],
+                      timelineBuilder: (_, data, isSelected) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: isSelected ? data.type.fgColor : Colors.transparent,
+                            border: Border.all(color: isSelected ? Colors.transparent : $styles.colors.greyMedium),
+                            borderRadius: BorderRadius.circular($styles.corners.md),
+                          ),
+                        );
+                      }),
                 ),
-
-                /// Title text
-                BottomCenter(
-                  child: WonderTitleText(data),
-                )
-              ]),
-            ),
-
-            /// Bottom timeline
-            SizedBox(
-              height: 50,
-              child: WondersTimelineBuilder(
-                  selectedWonders: [data.type],
-                  timelineBuilder: (_, data, isSelected) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: isSelected ? data.type.fgColor : Colors.transparent,
-                        border: Border.all(color: isSelected ? Colors.transparent : $styles.colors.greyMedium),
-                        borderRadius: BorderRadius.circular($styles.corners.md),
-                      ),
-                    );
-                  }),
-            ),
-            _buildEraTextRow(context)
-          ],
+              ),
+              _buildEraTextRow(context)
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Stack _buildImageWithFade(BuildContext context) {
-    return Stack(
-      children: [
-        /// Image
-        ClipPath(
-          clipper: CurvedTopClipper(),
-          child: Image.asset(
-            data.type.flattened,
-            width: 200,
-            fit: BoxFit.cover,
-            alignment: Alignment(0, -.5),
+  Widget _buildImageWithFade(BuildContext context) {
+    return ExcludeSemantics(
+      child: Stack(
+        children: [
+          /// Image
+          ClipPath(
+            clipper: CurvedTopClipper(),
+            child: Image.asset(
+              data.type.flattened,
+              width: 200,
+              fit: BoxFit.cover,
+              alignment: Alignment(0, -.5),
+            ),
           ),
-        ),
 
-        /// Vertical gradient on btm
-        Positioned.fill(
-          child: BottomCenter(
-            child: ListOverscollGradient(bottomUp: true),
-          ),
-        )
-      ],
+          /// Vertical gradient on btm
+          Positioned.fill(
+            child: BottomCenter(
+              child: ListOverscollGradient(bottomUp: true),
+            ),
+          )
+        ],
+      ),
     );
   }
 
