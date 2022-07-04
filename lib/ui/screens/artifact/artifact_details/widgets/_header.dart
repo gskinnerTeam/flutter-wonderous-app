@@ -21,7 +21,8 @@ class _Header extends StatelessWidget {
         Container(
           color: $styles.colors.black,
           alignment: Alignment.center,
-          child: TextButton(
+          child: AppBtn.basic(
+            semanticLabel: '${data.title} image',
             onPressed: () => _handleImagePressed(context),
             child: SafeArea(
               bottom: false,

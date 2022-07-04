@@ -5,17 +5,17 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/highlights_data.dart';
 
 class ArtifactCarouselImage extends StatelessWidget {
-  const ArtifactCarouselImage(
-      {Key? key,
-      required this.index,
-      required this.currentPage,
-      required this.artifact,
-      required this.viewportFraction,
-      required this.bottomPadding,
-      required this.maxWidth,
-      required this.maxHeight,
-      required this.onPressed})
-      : super(key: key);
+  const ArtifactCarouselImage({
+    Key? key,
+    required this.index,
+    required this.currentPage,
+    required this.artifact,
+    required this.viewportFraction,
+    required this.bottomPadding,
+    required this.maxWidth,
+    required this.maxHeight,
+    required this.onPressed,
+  }) : super(key: key);
   final HighlightsData artifact;
   final int index;
   final double currentPage;
@@ -28,7 +28,7 @@ class ArtifactCarouselImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBtn.basic(
-      semanticLabel: 'carousel',
+      semanticLabel: '${artifact.title} ${artifact.date}',
       onPressed: onPressed,
       child: _ImagePreview(
         image: NetworkImage(artifact.imageUrlSmall),
