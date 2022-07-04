@@ -1,10 +1,8 @@
-import 'package:wonders/logic/common/string_utils.dart';
-
 class RestUtils {
   static String encodeParams(Map<String, String> params) {
     var s = '';
     params.forEach((key, value) {
-      if (!StringUtils.isEmpty(value) && value != 'null') {
+      if (value.isNotEmpty && value != 'null') {
         var urlEncode = Uri.encodeComponent(value);
         s += '${s == '' ? '?' : '&'}$key=$urlEncode';
       }
