@@ -52,8 +52,8 @@ class WonderDetailsTabMenu extends StatelessWidget {
                         height: 0),
                     _TabBtn(0, tabController, iconImg: 'editorial', label: 'information', color: iconColor),
                     _TabBtn(1, tabController, iconImg: 'photos', label: 'images', color: iconColor),
-                    _TabBtn(2, tabController, iconImg: 'artifacts', label: 'artifact search', color: iconColor),
-                    _TabBtn(3, tabController, iconImg: 'timeline', label: 'timeline', color: iconColor),
+                    _TabBtn(2, tabController, iconImg: 'artifacts', label: 'artifacts', color: iconColor),
+                    _TabBtn(3, tabController, iconImg: 'timeline', label: 'events', color: iconColor),
                   ],
                 ),
               ),
@@ -134,12 +134,14 @@ class _TabBtn extends StatelessWidget {
           ),
         );
     final MaterialLocalizations localizations = MaterialLocalizations.of(context);
-
+    final iconImgPath = '${ImagePaths.common}/tab-$iconImg${selected ? '-active' : ''}.png';
+    String tabLabel = localizations.tabLabel(tabIndex: index + 1, tabCount: tabController.length);
+    tabLabel += ': $label';
     return Expanded(
       child: MergeSemantics(
         child: Semantics(
           selected: selected,
-          label: localizations.tabLabel(tabIndex: index + 1, tabCount: tabController.length),
+          label: tabLabel,
           child: ExcludeSemantics(
             child: AppBtn.basic(
               padding: EdgeInsets.symmetric(vertical: $styles.insets.md),
@@ -148,12 +150,7 @@ class _TabBtn extends StatelessWidget {
               child: Stack(
                 children: [
                   /// Image icon
-                  Image.asset(
-                    '${ImagePaths.common}/tab-$iconImg${selected ? '-active' : ''}.png',
-                    height: 32,
-                    width: 32,
-                    color: selected ? null : color,
-                  ),
+                  Image.asset(iconImgPath, height: 32, width: 32, color: selected ? null : color),
 
                   /// Dot, shows when selected
                   Positioned.fill(
