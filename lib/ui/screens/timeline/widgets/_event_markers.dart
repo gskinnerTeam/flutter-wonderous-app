@@ -53,6 +53,7 @@ class _EventMarkersState extends State<_EventMarkers> {
   @override
   Widget build(BuildContext context) {
     return IgnorePointer(
+      ignoringSemantics: false,
       child: LayoutBuilder(builder: (_, constraints) {
         /// Figure out which event is "selected"
         _updateSelectedEvent(constraints.maxHeight);
@@ -60,7 +61,8 @@ class _EventMarkersState extends State<_EventMarkers> {
         /// Create a marker for each event
         List<Widget> markers = timelineLogic.events.map((event) {
           final offsetY = _calculateOffsetY(event.year);
-          return _EventMarker(offsetY, isSelected: event == selectedEvent);
+          return _EventMarker(offsetY,
+              isSelected: event == selectedEvent, semanticLabel: '${event.year}: ${event.description}');
         }).toList();
 
         /// Stack of fractionally positioned markers
@@ -80,25 +82,34 @@ class _EventMarkersState extends State<_EventMarkers> {
 /// A dot that represents a single global event.
 /// Animated to a selected state which is is larger in size.
 class _EventMarker extends StatelessWidget {
-  const _EventMarker(this.offset, {Key? key, required this.isSelected}) : super(key: key);
+  const _EventMarker(
+    this.offset, {
+    Key? key,
+    required this.isSelected,
+    required this.semanticLabel,
+  }) : super(key: key);
   final double offset;
   final bool isSelected;
+  final String semanticLabel;
 
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment(0, -1 + offset * 2),
-      child: AnimatedContainer(
-        width: isSelected ? 6 : 2,
-        height: isSelected ? 6 : 2,
-        curve: Curves.easeOutBack,
-        duration: $styles.times.med,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(99),
-          color: $styles.colors.accent1,
-          boxShadow: [
-            BoxShadow(color: $styles.colors.accent1.withOpacity(isSelected ? .5 : 0), spreadRadius: 3, blurRadius: 3),
-          ],
+      child: Semantics(
+        label: semanticLabel,
+        child: AnimatedContainer(
+          width: isSelected ? 6 : 2,
+          height: isSelected ? 6 : 2,
+          curve: Curves.easeOutBack,
+          duration: $styles.times.med,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(99),
+            color: $styles.colors.accent1,
+            boxShadow: [
+              BoxShadow(color: $styles.colors.accent1.withOpacity(isSelected ? .5 : 0), spreadRadius: 3, blurRadius: 3),
+            ],
+          ),
         ),
       ),
     );

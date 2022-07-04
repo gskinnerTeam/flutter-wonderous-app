@@ -2,8 +2,9 @@ part of '../wonders_home_screen.dart';
 
 /// An arrow that fades out, then fades back in and slides down, ending in it's original position with full opacity.
 class _AnimatedArrowButton extends StatelessWidget {
-  _AnimatedArrowButton({Key? key, required this.onTap}) : super(key: key);
+  _AnimatedArrowButton({Key? key, required this.onTap, required this.semanticTitle}) : super(key: key);
 
+  final String semanticTitle;
   final VoidCallback onTap;
 
   final _fadeOutIn = TweenSequence<double>([
@@ -20,7 +21,7 @@ class _AnimatedArrowButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final Duration duration = $styles.times.med;
     return AppBtn.basic(
-      semanticLabel: 'Swipe down or tap for more information on this wonder.',
+      semanticLabel: 'Swipe down or double tap to explore details about $semanticTitle.',
       onPressed: onTap,
       child: SizedBox(
         height: 80,
