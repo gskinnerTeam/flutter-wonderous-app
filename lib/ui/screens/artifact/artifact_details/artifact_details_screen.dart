@@ -32,7 +32,9 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
         future: _future,
         builder: (_, snapshot) {
           final data = snapshot.data;
-          if (data == null) return AppLoadError(label: 'Unable to find info for artifact ${widget.artifactId} ');
+          if (snapshot.hasData && data == null) {
+            return AppLoadError(label: 'Unable to find info for artifact ${widget.artifactId} ');
+          }
 
           return Stack(children: [
             /// Content
@@ -46,7 +48,7 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
                         leading: SizedBox.shrink(),
                         expandedHeight: context.heightPx * .5,
                         collapsedHeight: context.heightPx * .35,
-                        flexibleSpace: _Header(data: data),
+                        flexibleSpace: _Header(data: data!),
                       ),
                       SliverToBoxAdapter(child: _Content(data: data)),
                     ],

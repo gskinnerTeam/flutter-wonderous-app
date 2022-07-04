@@ -35,17 +35,23 @@ class _Content extends StatelessWidget {
                 return CompassDivider(isExpanded: !value, duration: $styles.times.med);
               }),
           Gap($styles.insets.lg),
-          ...[
-            _InfoRow('Date', data.date),
-            _InfoRow('Period', data.period),
-            _InfoRow('Geography', data.country),
-            _InfoRow('Medium', data.medium),
-            _InfoRow('Dimension', data.dimension),
-            _InfoRow('Classification', data.classification),
-          ]
-              .animate(interval: 100.ms)
-              .fade(delay: 600.ms, duration: $styles.times.med)
-              .slide(begin: Offset(0.2, 0), curve: Curves.easeOut),
+          MergeSemantics(
+            child: Column(
+              children: [
+                ...[
+                  _InfoRow('Date', data.date),
+                  _InfoRow('Period', data.period),
+                  _InfoRow('Geography', data.country),
+                  _InfoRow('Medium', data.medium),
+                  _InfoRow('Dimension', data.dimension),
+                  _InfoRow('Classification', data.classification),
+                ]
+                    .animate(interval: 100.ms)
+                    .fade(delay: 600.ms, duration: $styles.times.med)
+                    .slide(begin: Offset(0.2, 0), curve: Curves.easeOut),
+              ],
+            ),
+          ),
           Gap($styles.insets.offset),
         ],
       ),
