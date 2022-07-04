@@ -21,22 +21,27 @@ class SimpleHeader extends StatelessWidget {
           if (showBackBtn) BackBtn(onPressed: onBack).safe(),
           Flexible(
             fit: FlexFit.tight,
-            child: Column(
-              children: [
-                if (!showBackBtn) Gap($styles.insets.xs),
-                Text(
-                  title.toUpperCase(),
-                  textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
-                  style: $styles.text.h4.copyWith(color: $styles.colors.offWhite),
+            child: MergeSemantics(
+              child: Semantics(
+                header: true,
+                child: Column(
+                  children: [
+                    if (!showBackBtn) Gap($styles.insets.xs),
+                    Text(
+                      title.toUpperCase(),
+                      textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+                      style: $styles.text.h4.copyWith(color: $styles.colors.offWhite),
+                    ),
+                    if (subtitle != null)
+                      Text(
+                        subtitle!.toUpperCase(),
+                        textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+                        style: $styles.text.title1.copyWith(color: $styles.colors.accent1),
+                      ),
+                    if (!showBackBtn) Gap($styles.insets.md),
+                  ],
                 ),
-                if (subtitle != null)
-                  Text(
-                    subtitle!.toUpperCase(),
-                    textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
-                    style: $styles.text.title1.copyWith(color: $styles.colors.accent1),
-                  ),
-                if (!showBackBtn) Gap($styles.insets.md),
-              ],
+              ),
             ),
           ),
           if (showBackBtn) Container(width: $styles.insets.lg * 2, alignment: Alignment.centerLeft, child: child),
