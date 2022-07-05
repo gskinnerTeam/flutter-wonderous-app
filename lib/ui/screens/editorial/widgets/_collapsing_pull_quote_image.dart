@@ -41,44 +41,46 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
           collapseAmt = (collapseStartPx - max(collapseEndPx, yPos)) / (collapseStartPx - collapseEndPx);
         }
         // The sized boxes in the column collapse to a zero height, allowing the quotes to naturally sit over top of the image
-        return Padding(
-          padding: EdgeInsets.symmetric(vertical: outerPadding * (1 - collapseAmt)),
-          child: Stack(
-            children: [
-              /// Main image
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(
-                    height: imgHeight,
-                    width: 400,
-                    // Clip the image with an curved top
-                    child: Stack(
-                      children: [
-                        ClipPath(
-                          clipper: CurvedTopClipper(),
-                          child: _buildImage(collapseAmt),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-
-              /// Collapsing text
-              Positioned.fill(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+        return MergeSemantics(
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: outerPadding * (1 - collapseAmt)),
+            child: Stack(
+              children: [
+                /// Main image
+                Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    buildText(data.pullQuote1Top, top: true),
-                    buildText(data.pullQuote1Bottom, top: false),
-                    if (data.pullQuote1Author.isNotEmpty) ...[
-                      buildText('- ${data.pullQuote1Author}', top: false, isAuthor: true),
-                    ],
+                    SizedBox(
+                      height: imgHeight,
+                      width: 400,
+                      // Clip the image with an curved top
+                      child: Stack(
+                        children: [
+                          ClipPath(
+                            clipper: CurvedTopClipper(),
+                            child: _buildImage(collapseAmt),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-              )
-            ],
+
+                /// Collapsing text
+                Positioned.fill(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      buildText(data.pullQuote1Top, top: true),
+                      buildText(data.pullQuote1Bottom, top: false),
+                      if (data.pullQuote1Author.isNotEmpty) ...[
+                        buildText('- ${data.pullQuote1Author}', top: false, isAuthor: true),
+                      ],
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         );
       },

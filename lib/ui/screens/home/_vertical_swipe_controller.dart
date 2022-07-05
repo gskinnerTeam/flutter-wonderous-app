@@ -54,9 +54,7 @@ class _VerticalSwipeController {
 
   /// Utility method to wrap a gesture detector and wire up the required handlers.
   Widget wrapGestureDetector(Widget child, {Key? key}) => Semantics(
-        container: true,
-        button: true,
-        label: 'swipe controller',
+        button: false,
         child: GestureDetector(
             key: key,
             onTapDown: (_) {

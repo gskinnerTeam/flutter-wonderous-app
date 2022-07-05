@@ -43,7 +43,10 @@ class _IntroScreenState extends State<IntroScreen> {
             Spacer(),
 
             /// Logo
-            _WonderousLogo(),
+            Semantics(
+              header: true,
+              child: _WonderousLogo(),
+            ),
             Gap($styles.insets.sm),
 
             /// Text + Image
@@ -80,11 +83,11 @@ class _IntroScreenState extends State<IntroScreen> {
                       builder: (_, value, __) {
                         late Widget child;
                         if (value == 0) {
-                          child = _Page1Image();
+                          child = _PageImage(img: 'camel', mask: '1');
                         } else if (value == 1) {
-                          child = _Page2Image();
+                          child = _PageImage(img: 'petra', mask: '2');
                         } else {
-                          child = _Page3Image();
+                          child = _PageImage(img: 'statue', mask: '3');
                         }
                         return AnimatedSwitcher(
                           duration: $styles.times.med,
@@ -153,7 +156,6 @@ class _Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      // Reads content as it changes without the user focus on it.
       liveRegion: true,
       child: Column(
         children: [
@@ -173,10 +175,12 @@ class _WonderousLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SvgPicture.asset(
-          SvgPaths.compassSimple,
-          color: $styles.colors.offWhite,
-          height: 48,
+        ExcludeSemantics(
+          child: SvgPicture.asset(
+            SvgPaths.compassSimple,
+            color: $styles.colors.offWhite,
+            height: 48,
+          ),
         ),
         Gap($styles.insets.xs),
         Text(
@@ -188,66 +192,26 @@ class _WonderousLogo extends StatelessWidget {
   }
 }
 
-class _Page1Image extends StatelessWidget {
-  const _Page1Image({Key? key}) : super(key: key);
+class _PageImage extends StatelessWidget {
+  const _PageImage({Key? key, required this.img, required this.mask}) : super(key: key);
+
+  final String img;
+  final String mask;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         SizedBox.expand(
           child: Image.asset(
-            '${ImagePaths.common}/intro-camel.jpg',
+            '${ImagePaths.common}/intro-$img.jpg',
             fit: BoxFit.cover,
             alignment: Alignment.centerRight,
           ),
         ),
         Positioned.fill(
             child: Image.asset(
-          '${ImagePaths.common}/intro-mask-1.png',
-          fit: BoxFit.fill,
-        )),
-      ],
-    );
-  }
-}
-
-class _Page2Image extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        SizedBox.expand(
-          child: Image.asset(
-            '${ImagePaths.common}/intro-petra.jpg',
-            fit: BoxFit.cover,
-            alignment: Alignment.topCenter,
-          ),
-        ),
-        Positioned.fill(
-            child: Image.asset(
-          '${ImagePaths.common}/intro-mask-2.png',
-          fit: BoxFit.fill,
-        )),
-      ],
-    );
-  }
-}
-
-class _Page3Image extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        SizedBox.expand(
-          child: Image.asset(
-            '${ImagePaths.common}/intro-statue.jpg',
-            fit: BoxFit.cover,
-            alignment: Alignment.bottomCenter,
-          ),
-        ),
-        Positioned.fill(
-            child: Image.asset(
-          '${ImagePaths.common}/intro-mask-3.png',
+          '${ImagePaths.common}/intro-mask-$mask.png',
           fit: BoxFit.fill,
         )),
       ],

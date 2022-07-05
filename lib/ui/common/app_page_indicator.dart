@@ -1,30 +1,59 @@
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:wonders/common_libs.dart';
 
-class AppPageIndicator extends StatelessWidget {
+class AppPageIndicator extends StatefulWidget {
   const AppPageIndicator(
-      {Key? key, required this.count, required this.controller, this.onDotPressed, this.color, this.dotSize})
+      {Key? key,
+      required this.count,
+      required this.controller,
+      this.onDotPressed,
+      this.color,
+      this.dotSize,
+      this.semanticPageTitle = 'page'})
       : super(key: key);
   final int count;
   final PageController controller;
   final void Function(int index)? onDotPressed;
   final Color? color;
   final double? dotSize;
+  final String semanticPageTitle;
+
+  @override
+  State<AppPageIndicator> createState() => _AppPageIndicatorState();
+}
+
+class _AppPageIndicatorState extends State<AppPageIndicator> {
+  final _currentPage = ValueNotifier(0);
+
+  @override
+  void initState() {
+    widget.controller.addListener(_handlePageChanged);
+  }
+
+  void _handlePageChanged() {
+    _currentPage.value = widget.controller.page?.round() ?? 0;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ExcludeSemantics(
+    return ValueListenableBuilder<int>(
+      valueListenable: _currentPage,
+      builder: (_, value, child) => Semantics(
+        label:
+            '${widget.semanticPageTitle} ${value % (widget.count) + 1} of ${widget.count}. Swipe horizontally to change ${widget.semanticPageTitle}s',
+        child: child,
+      ),
       child: SmoothPageIndicator(
-        controller: controller,
-        count: count,
-        onDotClicked: onDotPressed,
+        controller: widget.controller,
+        count: widget.count,
+        onDotClicked: widget.onDotPressed,
         effect: ExpandingDotsEffect(
-            dotWidth: dotSize ?? 6,
-            dotHeight: dotSize ?? 6,
+            dotWidth: widget.dotSize ?? 6,
+            dotHeight: widget.dotSize ?? 6,
             paintStyle: PaintingStyle.fill,
-            strokeWidth: (dotSize ?? 6) / 2,
-            dotColor: color ?? $styles.colors.accent1,
-            activeDotColor: color ?? $styles.colors.accent1,
+            strokeWidth: (widget.dotSize ?? 6) / 2,
+            dotColor: widget.color ?? $styles.colors.accent1,
+            activeDotColor: widget.color ?? $styles.colors.accent1,
             expansionFactor: 2),
       ),
     );

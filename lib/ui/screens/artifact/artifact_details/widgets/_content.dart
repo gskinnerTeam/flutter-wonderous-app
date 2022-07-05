@@ -18,13 +18,16 @@ class _Content extends StatelessWidget {
             ).animate().fade(delay: 150.ms, duration: 600.ms),
             Gap($styles.insets.xs),
           ],
-          Text(
-            data.title,
-            textAlign: TextAlign.center,
-            style: $styles.text.h2.copyWith(color: $styles.colors.offWhite, height: 1.2),
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-          ).animate().fade(delay: 250.ms, duration: 600.ms),
+          Semantics(
+            header: true,
+            child: Text(
+              data.title,
+              textAlign: TextAlign.center,
+              style: $styles.text.h2.copyWith(color: $styles.colors.offWhite, height: 1.2),
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ).animate().fade(delay: 250.ms, duration: 600.ms),
+          ),
           Gap($styles.insets.lg),
           Animate().toggle(
               delay: 500.ms,
@@ -32,17 +35,23 @@ class _Content extends StatelessWidget {
                 return CompassDivider(isExpanded: !value, duration: $styles.times.med);
               }),
           Gap($styles.insets.lg),
-          ...[
-            _InfoRow('Date', data.date),
-            _InfoRow('Period', data.period),
-            _InfoRow('Geography', data.country),
-            _InfoRow('Medium', data.medium),
-            _InfoRow('Dimension', data.dimension),
-            _InfoRow('Classification', data.classification),
-          ]
-              .animate(interval: 100.ms)
-              .fade(delay: 600.ms, duration: $styles.times.med)
-              .slide(begin: Offset(0.2, 0), curve: Curves.easeOut),
+          MergeSemantics(
+            child: Column(
+              children: [
+                ...[
+                  _InfoRow('Date', data.date),
+                  _InfoRow('Period', data.period),
+                  _InfoRow('Geography', data.country),
+                  _InfoRow('Medium', data.medium),
+                  _InfoRow('Dimension', data.dimension),
+                  _InfoRow('Classification', data.classification),
+                ]
+                    .animate(interval: 100.ms)
+                    .fade(delay: 600.ms, duration: $styles.times.med)
+                    .slide(begin: Offset(0.2, 0), curve: Curves.easeOut),
+              ],
+            ),
+          ),
           Gap($styles.insets.offset),
         ],
       ),
@@ -58,22 +67,27 @@ class _InfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: $styles.insets.sm),
-      child: Row(children: [
-        Expanded(
-          child: Text(
-            StringUtils.isEmpty(label) ? '---' : label.toUpperCase(),
-            style: $styles.text.titleFont.copyWith(color: $styles.colors.accent2),
-          ),
+    return ExcludeSemantics(
+      excluding: value.isEmpty,
+      child: MergeSemantics(
+        child: Padding(
+          padding: EdgeInsets.only(bottom: $styles.insets.sm),
+          child: Row(children: [
+            Expanded(
+              child: Text(
+                value.isEmpty ? '---' : label.toUpperCase(),
+                style: $styles.text.titleFont.copyWith(color: $styles.colors.accent2),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                value.isEmpty ? '---' : value,
+                style: $styles.text.body.copyWith(color: $styles.colors.offWhite),
+              ),
+            ),
+          ]),
         ),
-        Expanded(
-          child: Text(
-            StringUtils.isEmpty(value) ? '---' : value,
-            style: $styles.text.body.copyWith(color: $styles.colors.offWhite),
-          ),
-        ),
-      ]),
+      ),
     );
   }
 }

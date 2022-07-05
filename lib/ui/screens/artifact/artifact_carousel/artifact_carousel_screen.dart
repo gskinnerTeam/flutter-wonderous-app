@@ -135,31 +135,36 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                           clipBehavior: Clip.none,
                           onPageChanged: _changeArtifactIndex,
                           itemBuilder: (context, index) {
-                            return ArtifactCarouselImage(
-                              index: index,
-                              currentPage: _currentPage,
-                              artifact: _loadedArtifacts[index % _loadedArtifacts.length],
-                              viewportFraction: _pageViewportFraction,
-                              bottomPadding: backdropHeight,
-                              maxWidth: backdropWidth,
-                              maxHeight: backdropHeight,
-                              onPressed: () => _handleArtifactTap(index),
+                            return ExcludeSemantics(
+                              excluding: index != _currentPage.round(),
+                              child: ArtifactCarouselImage(
+                                index: index,
+                                currentPage: _currentPage,
+                                artifact: _loadedArtifacts[index % _loadedArtifacts.length],
+                                viewportFraction: _pageViewportFraction,
+                                bottomPadding: backdropHeight,
+                                maxWidth: backdropWidth,
+                                maxHeight: backdropHeight,
+                                onPressed: () => _handleArtifactTap(index),
+                              ),
                             );
                           },
                         ),
 
                   // Prev tap button
                   CenterLeft(
-                    child: GestureDetector(
-                      onTap: () => _handlePageJump(-1),
+                    child: AppBtn.basic(
+                      semanticLabel: 'Previous artifact',
+                      onPressed: () => _handlePageJump(-1),
                       child: Container(width: context.widthPx / 6, height: context.heightPx, color: Colors.transparent),
                     ),
                   ),
 
                   // Next tap button
                   CenterRight(
-                    child: GestureDetector(
-                      onTap: () => _handlePageJump(1),
+                    child: AppBtn.basic(
+                      semanticLabel: 'Next artifact',
+                      onPressed: () => _handlePageJump(1),
                       child: Container(width: context.widthPx / 6, height: context.heightPx, color: Colors.transparent),
                     ),
                   ),
@@ -176,7 +181,11 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                           // Text Content
                           _buildTextContent(context, backdropWidth, small),
                           // Selection indicator
-                          AppPageIndicator(count: _highlightedArtifactIds.length, controller: _controller),
+                          AppPageIndicator(
+                            count: _highlightedArtifactIds.length,
+                            controller: _controller,
+                            semanticPageTitle: 'artifact',
+                          ),
                           // Big ol' button
                           Gap(small ? $styles.insets.md : $styles.insets.xl),
                           _buildBrowseBtn(context),

@@ -52,13 +52,13 @@ class WonderDetailsTabMenu extends StatelessWidget {
                         height: 0),
                     _TabBtn(0, tabController, iconImg: 'editorial', label: 'information', color: iconColor),
                     _TabBtn(1, tabController, iconImg: 'photos', label: 'images', color: iconColor),
-                    _TabBtn(2, tabController, iconImg: 'artifacts', label: 'artifact search', color: iconColor),
-                    _TabBtn(3, tabController, iconImg: 'timeline', label: 'timeline', color: iconColor),
+                    _TabBtn(2, tabController, iconImg: 'artifacts', label: 'artifacts', color: iconColor),
+                    _TabBtn(3, tabController, iconImg: 'timeline', label: 'events', color: iconColor),
                   ],
                 ),
               ),
 
-              // Home btn, animates into view
+              // Home btn
               TweenAnimationBuilder<double>(
                 duration: $styles.times.fast,
                 tween: Tween(begin: 0, end: showHomeBtn ? 1 : 0),
@@ -133,37 +133,41 @@ class _TabBtn extends StatelessWidget {
             color: $styles.colors.accent1,
           ),
         );
-
+    final MaterialLocalizations localizations = MaterialLocalizations.of(context);
+    final iconImgPath = '${ImagePaths.common}/tab-$iconImg${selected ? '-active' : ''}.png';
+    String tabLabel = localizations.tabLabel(tabIndex: index + 1, tabCount: tabController.length);
+    tabLabel += ': $label';
     return Expanded(
-      child: AppBtn.basic(
-        padding: EdgeInsets.symmetric(vertical: $styles.insets.md),
-        onPressed: () => tabController.index = index,
-        semanticLabel: label,
-        child: ExcludeSemantics(
-          child: Stack(
-            children: [
-              /// Image icon
-              Image.asset(
-                '${ImagePaths.common}/tab-$iconImg${selected ? '-active' : ''}.png',
-                height: 32,
-                width: 32,
-                color: selected ? null : color,
-              ),
+      child: MergeSemantics(
+        child: Semantics(
+          selected: selected,
+          label: tabLabel,
+          child: ExcludeSemantics(
+            child: AppBtn.basic(
+              padding: EdgeInsets.symmetric(vertical: $styles.insets.md),
+              onPressed: () => tabController.index = index,
+              semanticLabel: label,
+              child: Stack(
+                children: [
+                  /// Image icon
+                  Image.asset(iconImgPath, height: 32, width: 32, color: selected ? null : color),
 
-              /// Dot, shows when selected
-              Positioned.fill(
-                child: BottomCenter(
-                  child: buildDot()
-                      .animate(key: ValueKey(selected))
-                      .fade(begin: selected ? 0 : 1, end: selected ? 1 : 0)
-                      .move(
-                          curve: selected ? Curves.easeOutBack : Curves.easeIn,
-                          duration: $styles.times.med,
-                          begin: Offset(0, selected ? 30 : 5),
-                          end: Offset(0, selected ? 5 : 30)),
-                ),
-              )
-            ],
+                  /// Dot, shows when selected
+                  Positioned.fill(
+                    child: BottomCenter(
+                      child: buildDot()
+                          .animate(key: ValueKey(selected))
+                          .fade(begin: selected ? 0 : 1, end: selected ? 1 : 0)
+                          .move(
+                              curve: selected ? Curves.easeOutBack : Curves.easeIn,
+                              duration: $styles.times.med,
+                              begin: Offset(0, selected ? 30 : 5),
+                              end: Offset(0, selected ? 5 : 30)),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
         ),
       ),

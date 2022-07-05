@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/rendering.dart';
 import 'package:image_fade/image_fade.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/string_utils.dart';
@@ -30,36 +31,32 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
       child: FutureBuilder<ArtifactData?>(
         future: _future,
         builder: (_, snapshot) {
-          if (snapshot.hasData == false) return _buildPreloadScreen(context);
           final data = snapshot.data;
-          if (data == null) return AppLoadError(label: 'Unable to find info for artifact ${widget.artifactId} ');
+          if (snapshot.hasData && data == null) {
+            return AppLoadError(label: 'Unable to find info for artifact ${widget.artifactId} ');
+          }
 
           return Stack(children: [
             /// Content
-            CustomScrollView(
-              slivers: [
-                SliverAppBar(
-                  pinned: true,
-                  elevation: 0,
-                  leading: SizedBox.shrink(),
-                  expandedHeight: context.heightPx * .5,
-                  collapsedHeight: context.heightPx * .35,
-                  flexibleSpace: _Header(data: data),
-                ),
-                SliverToBoxAdapter(child: _Content(data: data)),
-              ],
-            ),
+            !snapshot.hasData
+                ? Center(child: AppLoader())
+                : CustomScrollView(
+                    slivers: [
+                      SliverAppBar(
+                        pinned: true,
+                        elevation: 0,
+                        leading: SizedBox.shrink(),
+                        expandedHeight: context.heightPx * .5,
+                        collapsedHeight: context.heightPx * .35,
+                        flexibleSpace: _Header(data: data!),
+                      ),
+                      SliverToBoxAdapter(child: _Content(data: data)),
+                    ],
+                  ),
             BackBtn().safe(),
           ]);
         },
       ),
     );
-  }
-
-  Widget _buildPreloadScreen(BuildContext context) {
-    return Stack(children: [
-      BackBtn().safe(),
-      Center(child: AppLoader()),
-    ]);
   }
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/rendering.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/app_page_indicator.dart';
@@ -138,19 +139,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               child: _buildSwipeableBgGradient(currentWonder.type.bgColor.withOpacity(.5)),
             ),
 
-            /// Menu Btn
-            TopLeft(
-              child: AnimatedOpacity(
-                duration: $styles.times.fast,
-                opacity: _isMenuOpen ? 0 : 1,
-                child: CircleIconBtn(
-                  icon: Icons.menu,
-                  onPressed: _handleOpenMenuPressed,
-                  semanticLabel: 'Open main menu',
-                ).safe(),
-              ),
-            ),
-
             /// Floating controls / UI
             AnimatedSwitcher(
               duration: $styles.times.fast,
@@ -162,14 +150,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       SizedBox(width: double.infinity),
-                      Gap($styles.insets.lg * 3),
-
-                      /// Settings Btn
-                      Opacity(
-                        opacity: 0, // TODO: Remove this btn before launch, its for testing settings only
-                        child: AppBtn.from(
-                            text: 'Settings', onPressed: _handleSettingsPressed, padding: EdgeInsets.all(30)),
-                      ),
                       const Spacer(),
 
                       /// Title Content
@@ -188,6 +168,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               color: $styles.colors.white,
                               dotSize: 8,
                               onDotPressed: _handlePageIndicatorDotPressed,
+                              semanticPageTitle: 'wonder',
                             ),
                           ],
                         ),
@@ -203,11 +184,29 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           ),
 
                           /// Arrow Btn that fades in and out
-                          _AnimatedArrowButton(onTap: _showDetailsPage),
+                          _AnimatedArrowButton(onTap: _showDetailsPage, semanticTitle: currentWonder.title),
                         ],
                       ),
                       Gap($styles.insets.md),
                     ],
+                  ),
+                ),
+              ),
+            ),
+
+            /// Menu Btn
+            TopLeft(
+              child: AnimatedOpacity(
+                duration: $styles.times.fast,
+                opacity: _isMenuOpen ? 0 : 1,
+                child: MergeSemantics(
+                  child: Semantics(
+                    sortKey: OrdinalSortKey(0),
+                    child: CircleIconBtn(
+                      icon: Icons.menu,
+                      onPressed: _handleOpenMenuPressed,
+                      semanticLabel: 'Open main menu',
+                    ).safe(),
                   ),
                 ),
               ),
@@ -219,13 +218,18 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   }
 
   Widget _buildMgChild(_, index) {
-    final wonderType = _wonders[index % _wonders.length].type;
+    final wonder = _wonders[index % _wonders.length];
+    final wonderType = wonder.type;
     return _swipeController.buildListener(builder: (swipeAmt, _, child) {
       final config = WonderIllustrationConfig.mg(
         isShowing: _isSelected(wonderType),
         zoom: .05 * swipeAmt,
       );
-      return WonderIllustration(wonderType, config: config);
+      return Semantics(
+        liveRegion: true,
+        label: wonder.title,
+        child: ExcludeSemantics(child: WonderIllustration(wonderType, config: config)),
+      );
     });
   }
 

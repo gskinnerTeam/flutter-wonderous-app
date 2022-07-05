@@ -36,14 +36,12 @@ class _CollectionList extends StatelessWidget {
     return Flexible(
       child: RepaintBoundary(
         child: ScrollDecorator.shadow(
-          builder: (controller) => ListView(
+          builder: (controller) => SingleChildScrollView(
             controller: controller,
             padding: EdgeInsets.all($styles.insets.md).copyWith(bottom: $styles.insets.offset * 2.5),
-            children: [
-              Column(
-                children: children,
-              )
-            ],
+            child: Column(
+              children: children,
+            ),
           ),
         ),
       ),

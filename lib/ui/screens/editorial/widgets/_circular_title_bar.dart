@@ -107,19 +107,22 @@ class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with S
             // Each time index is changed, the stack is rotated 180 degrees.
             // When the animation completes, the rotation snaps back to 0 and the titles also swap position
             // This creates the effect of a new title always rolling in, with the old rolling out
-            child: Stack(
-              children: [
-                Transform.rotate(
-                  angle: _anim.isCompleted ? pi : 0,
-                  child: _buildCircularText(_anim.isCompleted ? newTitle : oldTitle),
-                ),
-                if (!_anim.isCompleted) ...[
+            child: Semantics(
+              label: newTitle,
+              child: Stack(
+                children: [
                   Transform.rotate(
-                    angle: _anim.isCompleted ? 0 : pi,
-                    child: _buildCircularText(_anim.isCompleted ? oldTitle : newTitle),
+                    angle: _anim.isCompleted ? pi : 0,
+                    child: _buildCircularText(_anim.isCompleted ? newTitle : oldTitle),
                   ),
-                ]
-              ],
+                  if (!_anim.isCompleted) ...[
+                    Transform.rotate(
+                      angle: _anim.isCompleted ? 0 : pi,
+                      child: _buildCircularText(_anim.isCompleted ? oldTitle : newTitle),
+                    ),
+                  ]
+                ],
+              ),
             ),
           ),
         ),

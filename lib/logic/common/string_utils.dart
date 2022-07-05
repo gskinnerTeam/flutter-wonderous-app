@@ -41,7 +41,7 @@ class StringUtils {
 
   /// Gracefully handles null values, and skips the suffix when null
   static String safeGet(String value, [String? suffix]) {
-    return value + (!StringUtils.isEmpty(value) ? suffix ?? '' : '');
+    return value + (value.isNotEmpty ? suffix ?? '' : '');
   }
 
   static String formatYr(int yr) {

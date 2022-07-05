@@ -131,23 +131,26 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
         textAlign: TextAlign.center,
       );
     }
-    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Gap($styles.insets.sm),
-      Text(
-        '${_searchResults.length} artifacts found, ${_filteredResults.length} in ',
-        textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
-        style: statusStyle,
-      ),
-      GestureDetector(
-        onTap: () => panelController.toggle(),
-        child: Text(
-          'timeframe',
+    return MergeSemantics(
+      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Gap($styles.insets.sm),
+        Text(
+          '${_searchResults.length} artifacts found, ${_filteredResults.length} in ',
           textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
-          style: statusStyle.copyWith(decoration: TextDecoration.underline),
+          style: statusStyle,
         ),
-      ),
-      Gap($styles.insets.sm),
-    ]);
+        AppBtn.basic(
+          semanticLabel: 'Toggle Timeframe',
+          onPressed: () => panelController.toggle(),
+          child: Text(
+            'timeframe',
+            textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+            style: statusStyle.copyWith(decoration: TextDecoration.underline),
+          ),
+        ),
+        Gap($styles.insets.sm),
+      ]),
+    );
   }
 
   Widget _buildEmptyIndicator(BuildContext context) {
