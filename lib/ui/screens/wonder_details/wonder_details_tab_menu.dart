@@ -3,9 +3,11 @@ import 'package:wonders/common_libs.dart';
 class WonderDetailsTabMenu extends StatelessWidget {
   static double bottomPadding = 0;
   static double buttonInset = 12;
+
   const WonderDetailsTabMenu(
       {Key? key, required this.tabController, this.showBg = false, required this.wonderType, required this.showHomeBtn})
       : super(key: key);
+
   final TabController tabController;
   final bool showBg;
   final WonderType wonderType;
@@ -89,18 +91,26 @@ class WonderDetailsTabMenu extends StatelessWidget {
 
 class _WonderHomeBtn extends StatelessWidget {
   const _WonderHomeBtn({Key? key, required this.size, required this.wonderType}) : super(key: key);
+
   final double size;
   final WonderType wonderType;
+
   @override
   Widget build(BuildContext context) {
+    const double borderSize = 6;
     return CircleBtn(
       onPressed: () => Navigator.of(context).pop(),
-      bgColor: wonderType.fgColor,
-      border: BorderSide(color: $styles.colors.offWhite, width: 6),
+      bgColor: $styles.colors.offWhite,
       semanticLabel: 'back to wonder selection',
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(99),
-        child: SizedBox(width: size, height: size, child: Image.asset(wonderType.homeBtn)),
+      child: Container(
+        width: size - borderSize * 2,
+        height: size - borderSize * 2,
+        margin: EdgeInsets.all(borderSize),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(99),
+          color: wonderType.fgColor,
+          image: DecorationImage(image: AssetImage(wonderType.homeBtn)),
+        ),
       ),
     );
   }
@@ -115,6 +125,7 @@ class _TabBtn extends StatelessWidget {
     required this.color,
     required this.label,
   }) : super(key: key);
+
   final int index;
   final TabController tabController;
   final String iconImg;
