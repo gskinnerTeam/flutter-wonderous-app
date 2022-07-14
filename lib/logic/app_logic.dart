@@ -20,11 +20,8 @@ class AppLogic {
     // Load any bitmaps the views might need
     await AppBitmaps.init();
 
-    //
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
+    // Default to only allowing portrait mode
+    setDeviceOrientation(Axis.vertical);
 
     // Settings load
     await settingsLogic.load();
@@ -41,6 +38,23 @@ class AppLogic {
     } else {
       appRouter.go(ScreenPaths.intro);
     }
+  }
+
+  void setDeviceOrientation(Axis? axis) {
+    final orientations = <DeviceOrientation>[];
+    if (axis == null || axis == Axis.vertical) {
+      orientations.addAll([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
+    }
+    if (axis == null || axis == Axis.horizontal) {
+      orientations.addAll([
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.landscapeRight,
+      ]);
+    }
+    SystemChrome.setPreferredOrientations(orientations);
   }
 
   void _handleFlutterError(FlutterErrorDetails details) {

@@ -17,6 +17,18 @@ class _FullscreenVideoPageState extends State<FullscreenVideoPage> {
   )..play();
 
   @override
+  void initState() {
+    super.initState();
+    appLogic.setDeviceOrientation(null);
+  }
+
+  @override
+  void dispose() {
+    appLogic.setDeviceOrientation(Axis.vertical);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double aspect = context.isLandscape ? MediaQuery.of(context).size.aspectRatio : 9 / 9;
     return Scaffold(
