@@ -3,6 +3,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 
+/// TODO: SB - Do another pass on this screen for responsiveness. It has issues fitting vertically on small screens.
 class IntroScreen extends StatefulWidget {
   const IntroScreen({Key? key}) : super(key: key);
 
@@ -56,7 +57,7 @@ class _IntroScreenState extends State<IntroScreen> {
             Stack(
               children: [
                 SizedBox(
-                  height: 400,
+                  height: 440,
                   child: PageView(
                     controller: _pageController,
                     children: const [
@@ -158,6 +159,7 @@ class _Page extends StatelessWidget {
     return Semantics(
       liveRegion: true,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(height: _IntroScreenState._imageHeight, width: _IntroScreenState._imageHeight),
           Gap($styles.insets.lg),
