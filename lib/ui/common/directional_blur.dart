@@ -21,6 +21,7 @@ class DirectionalBlur extends StatelessWidget {
       angle: -rotation,
       child: ImageFiltered(
         imageFilter: ImageFilter.blur(sigmaX: blurAmount, tileMode: TileMode.clamp),
+        enabled: blurAmount != 0,
         child: Transform.rotate(angle: rotation, child: child),
       ),
     );
