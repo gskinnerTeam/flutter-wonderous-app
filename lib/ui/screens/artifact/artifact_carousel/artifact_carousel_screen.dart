@@ -3,8 +3,8 @@ import 'dart:math' as math;
 
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/highlights_data.dart';
-import 'package:wonders/ui/common/app_page_indicator.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
+import 'package:wonders/ui/common/controls/app_page_indicator.dart';
 import 'package:wonders/ui/common/controls/simple_header.dart';
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_bg.dart';
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_image.dart';

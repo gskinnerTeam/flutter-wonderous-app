@@ -13,9 +13,9 @@ class _EventMarkers extends StatefulWidget {
 }
 
 class _EventMarkersState extends State<_EventMarkers> {
-  int get startYr => wondersLogic.startYear;
+  int get startYr => wondersLogic.timelineStartYear;
 
-  int get endYr => wondersLogic.endYear;
+  int get endYr => wondersLogic.timelineEndYear;
 
   late final int _totalYrs = endYr - startYr;
 

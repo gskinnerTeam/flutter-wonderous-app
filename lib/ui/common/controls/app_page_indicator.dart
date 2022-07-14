@@ -27,6 +27,7 @@ class _AppPageIndicatorState extends State<AppPageIndicator> {
 
   @override
   void initState() {
+    super.initState();
     widget.controller.addListener(_handlePageChanged);
   }
 
@@ -40,7 +41,7 @@ class _AppPageIndicatorState extends State<AppPageIndicator> {
       valueListenable: _currentPage,
       builder: (_, value, child) => Semantics(
         label:
-            '${widget.semanticPageTitle} ${value % (widget.count) + 1} of ${widget.count}. Swipe horizontally to change ${widget.semanticPageTitle}s',
+            '${widget.semanticPageTitle} ${value % (widget.count) + 1} of ${widget.count}. Swipe horizontally with 3 fingers to change ${widget.semanticPageTitle}s',
         child: child,
       ),
       child: SmoothPageIndicator(

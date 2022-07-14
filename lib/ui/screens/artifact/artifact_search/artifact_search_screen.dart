@@ -29,8 +29,8 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
   late final PanelController panelController = PanelController(false);
   late final SearchVizController vizController = SearchVizController(
     _searchResults,
-    minYear: wondersLogic.startYear,
-    maxYear: wondersLogic.endYear,
+    minYear: wondersLogic.timelineStartYear,
+    maxYear: wondersLogic.timelineEndYear,
   );
   late double _startYear = wonder.artifactStartYr * 1.0, _endYear = wonder.artifactEndYr * 1.0;
 

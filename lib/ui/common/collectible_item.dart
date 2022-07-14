@@ -22,8 +22,8 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
     // Use an OpeningCard to let the collectible smoothly collapse its size once it has been found
     return OpeningCard(
       isOpen: isLost,
-      // SB: In order for the collapse animation to run properly, we must return a non-zero height or width. Not sure why :)
-      closedBuilder: (_) => SizedBox(width: .01, height: 0),
+      // Note: In order for the collapse animation to run properly, we must return a non-zero height or width.
+      closedBuilder: (_) => SizedBox(width: 1, height: 0),
       openBuilder: (_) => AppBtn.basic(
         semanticLabel: 'collectible item',
         onPressed: () => _handleTap(context),

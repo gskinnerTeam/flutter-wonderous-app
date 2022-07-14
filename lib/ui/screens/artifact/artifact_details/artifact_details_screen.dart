@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/rendering.dart';
 import 'package:image_fade/image_fade.dart';
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/ui/common/app_loading_error.dart';
 import 'package:wonders/ui/common/compass_divider.dart';

@@ -8,11 +8,9 @@ class WonderHero extends StatelessWidget {
   final Widget child;
   final String tag;
 
-  /// TODO: Need to disable heroes when not visible... VisibilityDetector?
   @override
   Widget build(BuildContext context) => config.enableHero
       ? Hero(
-          /// TODO: See how to apply RectTween to all heroes?
           createRectTween: (begin, end) => RectTween(begin: begin!, end: end!),
           tag: tag,
           child: child,

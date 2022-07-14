@@ -49,7 +49,6 @@ class StringUtils {
     return '${yr.abs()} ${getYrSuffix(yr)}';
   }
 
-  // TODO: Do pass, make sure we're calling getYrSuffix and getEra everywhere it should be
   static String getYrSuffix(int yr) => yr < 0 ? 'BCE' : 'CE';
 
   static String getEra(int yr) {

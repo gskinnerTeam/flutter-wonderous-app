@@ -214,8 +214,8 @@ class _OpenedTimeRange extends StatelessWidget {
             Positioned.fill(
               child: RangeSelector(
                 key: ValueKey('RangeSelectorIsWonderTime'),
-                min: wondersLogic.startYear * 1.0,
-                max: wondersLogic.endYear * 1.0,
+                min: wondersLogic.timelineStartYear * 1.0,
+                max: wondersLogic.timelineEndYear * 1.0,
                 minDelta: 500,
                 start: startYear,
                 end: endYear,

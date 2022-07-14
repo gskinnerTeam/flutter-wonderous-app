@@ -147,7 +147,7 @@ class _TabBtn extends StatelessWidget {
     final MaterialLocalizations localizations = MaterialLocalizations.of(context);
     final iconImgPath = '${ImagePaths.common}/tab-$iconImg${selected ? '-active' : ''}.png';
     String tabLabel = localizations.tabLabel(tabIndex: index + 1, tabCount: tabController.length);
-    tabLabel += ': $label';
+    tabLabel = '$label: $tabLabel';
     return Expanded(
       child: MergeSemantics(
         child: Semantics(

@@ -102,9 +102,7 @@ class _ScrollingContent extends StatelessWidget {
             buildDropCapText(data.constructionInfo1),
             buildHiddenCollectible(slot: 2),
           ]),
-
           _YouTubeThumbnail(id: data.videoId, caption: data.videoCaption),
-
           _ContentSection([
             /// Callout2
             Gap($styles.insets.xs),
@@ -120,11 +118,7 @@ class _ScrollingContent extends StatelessWidget {
             _LargeSimpleQuote(text: data.pullQuote2, author: data.pullQuote2Author),
             buildText(data.locationInfo2),
           ]),
-
-          // SB: Disable maps thumbnail in debug mode, as it pollutes the logs too much in the android simulator
-          //if (kReleaseMode) ...[
           _MapsThumbnail(data, height: 200),
-          //],
           _ContentSection([buildHiddenCollectible(slot: 3)]),
         ],
       ),
