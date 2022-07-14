@@ -40,11 +40,11 @@ class WondersTimelineBuilder extends StatelessWidget {
             (t) {
               final data = wondersLogic.getData(t);
               // To keep the math simple, first figure out a multiplier we can use to convert yrs to pixels.
-              int totalYrs = wondersLogic.endYear - wondersLogic.startYear;
+              int totalYrs = wondersLogic.timelineEndYear - wondersLogic.timelineStartYear;
               double pxToYrRatio = totalYrs / ((isHz ? constraints.maxWidth : constraints.maxHeight));
               // Now we just need to calculate year spans, and then convert them to pixels for the start/end position in the Stack
               int wonderYrs = data.endYr - data.startYr;
-              int yrsFromStart = data.startYr - wondersLogic.startYear;
+              int yrsFromStart = data.startYr - wondersLogic.timelineStartYear;
               double startPx = yrsFromStart / pxToYrRatio;
               double sizePx = wonderYrs / pxToYrRatio;
               if (sizePx < minSize) {

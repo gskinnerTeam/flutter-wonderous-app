@@ -75,7 +75,6 @@ class _Text {
   }
 }
 
-//TODO: See if we can consolidate more times throughout the codebase
 @immutable
 class _Times {
   final Duration fast = Duration(milliseconds: 300);

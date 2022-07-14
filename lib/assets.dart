@@ -2,6 +2,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/platform_info.dart';
 
+/// Loads bitmap assets into memory that may be required later
 class AppBitmaps {
   static late final BitmapDescriptor mapMarker;
 
@@ -13,7 +14,7 @@ class AppBitmaps {
   }
 }
 
-/// Consolidate common paths used across the app
+/// Consolidates raster image paths used across the app
 class ImagePaths {
   static String root = 'assets/images';
   static String common = 'assets/images/_common';
@@ -30,7 +31,7 @@ class ImagePaths {
   static String roller2 = '$textures/roller-2-white.png';
 }
 
-/// Place Svg paths in their own class, to hint to the views to use an SvgPicture to render
+/// Consolidates SCG image paths in their own class, hints to the UI to use an SvgPicture to render
 class SvgPaths {
   static String compassFull = '${ImagePaths.common}/compass-full.svg';
   static String compassSimple = '${ImagePaths.common}/compass-simple.svg';

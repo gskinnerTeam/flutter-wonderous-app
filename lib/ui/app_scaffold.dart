@@ -8,7 +8,6 @@ class WondersAppScaffold extends StatelessWidget with GetItMixin {
   @override
   Widget build(BuildContext context) {
     Animate.defaultDuration = $styles.times.fast;
-    // Pass our custom style down to the tree with provider and inject a themData to style existing Material components.
     return Stack(
       children: [
         Theme(
@@ -16,7 +15,7 @@ class WondersAppScaffold extends StatelessWidget with GetItMixin {
           // Provide a default texts style to allow Hero's to render text properly
           child: DefaultTextStyle(
             style: $styles.text.body,
-            //Custom scroll behavior to make responsive testing easier on desktop
+            // Use a custom scroll behavior across entire app
             child: ScrollConfiguration(
               behavior: AppScrollBehavior(),
               child: child,

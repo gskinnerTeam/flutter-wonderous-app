@@ -5,8 +5,9 @@ import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/logic/met_api_service.dart';
 
 class MetAPILogic {
-  MetAPIService get service => GetIt.I.get<MetAPIService>();
   final HashMap<String, ArtifactData?> _artifactCache = HashMap();
+
+  MetAPIService get service => GetIt.I.get<MetAPIService>();
 
   /// Returns artifact data by ID. Returns null if artifact cannot be found. */
   Future<ArtifactData?> getArtifactByID(String id) async {

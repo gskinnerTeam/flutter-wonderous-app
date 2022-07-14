@@ -31,7 +31,6 @@ class _BottomScrubber extends StatelessWidget {
     if (scroller == null) return SizedBox.shrink();
     void _handleScrubberPan(DragUpdateDetails details) {
       if (!scroller.hasClients) return;
-      // TODO: This drag multiplier is close... but not exactly right.
       double dragMultiplier = (scroller.position.maxScrollExtent + timelineMinSize) / context.widthPx;
       double newPos = scroller.position.pixels + details.delta.dx * dragMultiplier;
       scroller.position.jumpTo(newPos.clamp(0, scroller.position.maxScrollExtent));

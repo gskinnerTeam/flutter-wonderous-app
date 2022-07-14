@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
@@ -9,8 +11,8 @@ import 'package:http/http.dart' as http;
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
 
-final int minYear = wondersLogic.startYear;
-final int maxYear = wondersLogic.endYear;
+final int minYear = wondersLogic.timelineStartYear;
+final int maxYear = wondersLogic.timelineEndYear;
 const int maxRequests = 32;
 
 class ArtifactSearchHelper extends StatefulWidget {
@@ -215,8 +217,6 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
   Future<void> _completeIds() async {
     _log('- Created ${entries.length} entries');
 
-    // TODO: maybe randomize instead?
-    //entries.sort((SearchData a, SearchData b) => a.year - b.year);
     entries.shuffle();
 
     // build output:

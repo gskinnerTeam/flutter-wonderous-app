@@ -4,6 +4,7 @@ import 'package:wonders/logic/met_api_logic.dart';
 import 'package:wonders/logic/met_api_service.dart';
 import 'package:wonders/logic/timeline_logic.dart';
 import 'package:wonders/logic/unsplash_logic.dart';
+import 'package:wonders/logic/wallpaper_logic.dart';
 import 'package:wonders/logic/wonders_logic.dart';
 
 void main() {
@@ -12,6 +13,7 @@ void main() {
   appLogic.bootstrap();
 }
 
+/// Creates an app using the [MaterialApp.router] constructor and the `appRouter` which is an instance of [GoRouter]
 class WondersApp extends StatelessWidget {
   const WondersApp({Key? key}) : super(key: key);
   @override
@@ -51,3 +53,4 @@ SettingsLogic get settingsLogic => GetIt.I.get<SettingsLogic>();
 UnsplashLogic get unsplashLogic => GetIt.I.get<UnsplashLogic>();
 MetAPILogic get metAPILogic => GetIt.I.get<MetAPILogic>();
 CollectiblesLogic get collectiblesLogic => GetIt.I.get<CollectiblesLogic>();
+WallPaperLogic get wallpaperLogic => GetIt.I.get<WallPaperLogic>();

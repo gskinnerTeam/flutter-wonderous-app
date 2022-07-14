@@ -1,7 +1,7 @@
 import 'package:flutter/rendering.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
-import 'package:wonders/ui/common/app_page_indicator.dart';
+import 'package:wonders/ui/common/controls/app_page_indicator.dart';
 import 'package:wonders/ui/common/controls/diagonal_text_page_indicator.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/themed_text.dart';
@@ -52,8 +52,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   bool _isSelected(WonderType t) => t == currentWonder.type;
 
   void _handlePageViewChanged(v) => setState(() => _wonderIndex = v % _numWonders);
-
-  void _handleSettingsPressed() => context.push(ScreenPaths.settings);
 
   void _handleOpenMenuPressed() async {
     setState(() => _isMenuOpen = true);

@@ -46,7 +46,6 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
       controller._constraints = constraints;
       double vtPadding = constraints.maxHeight / 2;
       double size = controller.calculateContentHeight();
-      // TODO: Figure out what to do for semantics w/ pinch and zoom + scroll
       return GestureDetector(
         // Handle pinch to zoom
         onScaleUpdate: controller._handleScaleUpdate,

@@ -14,6 +14,7 @@ import 'package:wonders/ui/screens/timeline/timeline_screen.dart';
 import 'package:wonders/ui/screens/wallpaper_photo/wallpaper_photo_screen.dart';
 import 'package:wonders/ui/screens/wonder_details/wonders_details_screen.dart';
 
+/// Shared paths / urls used across the app
 class ScreenPaths {
   static String splash = '/';
   static String intro = '/welcome';
@@ -30,19 +31,7 @@ class ScreenPaths {
   static String wallpaperPhoto(WonderType type) => '/wallpaperPhoto/${type.name}';
 }
 
-String? _handleRedirect(GoRouterState state) {
-  // Prevent anyone from navigating away from `/` if app is starting up.
-  if (!appLogic.isBootstrapComplete && state.location != ScreenPaths.splash) {
-    return ScreenPaths.splash;
-  }
-  debugPrint('Navigate to: ${state.location}');
-  return null; // do nothing
-}
-
-WonderType _parseWonderType(String value) => _tryParseWonderType(value) ?? WonderType.chichenItza;
-
-WonderType? _tryParseWonderType(String value) => WonderType.values.asNameMap()[value];
-
+/// Routing table, matches string paths to UI Screens
 final appRouter = GoRouter(
   redirect: _handleRedirect,
   navigatorBuilder: (_, __, child) => WondersAppScaffold(child: child),
@@ -88,34 +77,34 @@ class AppRoute extends GoRoute {
           path: path,
           routes: routes,
           pageBuilder: (context, state) {
-            return buildAppPage(
-              context: context,
-              state: state,
-              useFade: useFade,
-              child: Scaffold(
-                body: builder(state),
-                resizeToAvoidBottomInset: false,
-              ),
+            final pageContent = Scaffold(
+              body: builder(state),
+              resizeToAvoidBottomInset: false,
             );
+            if (useFade) {
+              return CustomTransitionPage(
+                key: state.pageKey,
+                child: pageContent,
+                transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                  return FadeTransition(opacity: animation, child: child);
+                },
+              );
+            }
+            return CupertinoPage(child: pageContent);
           },
         );
   final bool useFade;
 }
 
-Page<T> buildAppPage<T>({
-  required BuildContext context,
-  required GoRouterState state,
-  required Widget child,
-  required bool useFade,
-}) {
-  if (useFade) {
-    return CustomTransitionPage<T>(
-      key: state.pageKey,
-      child: child,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return FadeTransition(opacity: animation, child: child);
-      },
-    );
+String? _handleRedirect(GoRouterState state) {
+  // Prevent anyone from navigating away from `/` if app is starting up.
+  if (!appLogic.isBootstrapComplete && state.location != ScreenPaths.splash) {
+    return ScreenPaths.splash;
   }
-  return CupertinoPage(child: child);
+  debugPrint('Navigate to: ${state.location}');
+  return null; // do nothing
 }
+
+WonderType _parseWonderType(String value) => _tryParseWonderType(value) ?? WonderType.chichenItza;
+
+WonderType? _tryParseWonderType(String value) => WonderType.values.asNameMap()[value];
