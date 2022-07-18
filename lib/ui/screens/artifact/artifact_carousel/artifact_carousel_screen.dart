@@ -7,6 +7,8 @@ import 'package:wonders/ui/common/controls/simple_header.dart';
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_bg.dart';
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_image.dart';
 
+// TODO: review accessibility. Ex. should the "page" tap be a button so we can attach a semantic label?
+
 class ArtifactCarouselScreen extends StatefulWidget {
   final WonderType type;
   const ArtifactCarouselScreen({Key? key, required this.type}) : super(key: key);
@@ -42,9 +44,12 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     super.dispose();
   }
 
-  void _handlePageJump([int offset = 1]) {
-    final int index = _controller.page!.round() + offset;
-    _controller.animateToPage(index, duration: $styles.times.fast, curve: Curves.easeOut);
+  void _handlePageBtn(int delta) {
+    _controller.animateToPage(
+      currentOffset.round() + delta,
+      duration: $styles.times.fast,
+      curve: Curves.easeOut,
+    );
   }
 
   void _handleArtifactTap(int index) {
@@ -52,20 +57,29 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     context.push(ScreenPaths.artifact(data.artifactId));
   }
 
-  void _handleSearchButtonTap() => context.push(ScreenPaths.search(widget.type));
+  void _handleSearchButtonTap() {
+    context.push(ScreenPaths.search(widget.type));
+  }
+
+  double get currentOffset {
+    bool inited = _controller.hasClients && _controller.position.haveDimensions;
+    return inited ? _controller.page! : _controller.initialPage * 1.0;
+  }
+
+  int get currentIndex => currentOffset.round() % _artifacts.length;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: $styles.colors.greyStrong, child: AnimatedBuilder(animation: _controller, builder: _screenBuilder));
+      color: $styles.colors.greyStrong,
+      child: AnimatedBuilder(animation: _controller, builder: _screenBuilder),
+    );
   }
 
   Widget _screenBuilder(BuildContext context, _) {
     final double backdropWidth = math.min(context.widthPx, _maxElementWidth);
     final double backdropHeight = math.min(context.heightPx * 0.65, _maxElementHeight);
     final bool small = backdropHeight / _maxElementHeight < 0.7;
-    final double currentOffset = _controller.hasClients ? _controller.page! : _controller.initialPage * 1.0;
-    final int currentIndex = currentOffset.round() % _artifacts.length;
     final HighlightData artifact = _artifacts[currentIndex];
 
     return Stack(children: [
@@ -106,24 +120,8 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
               },
             ),
 
-            // TODO: are these needed vs just tapping the items? They block the drag interaction. Maybe for accessibility?
-            // Prev tap button
-            CenterLeft(
-              child: AppBtn.basic(
-                semanticLabel: 'Previous artifact',
-                onPressed: () => _handlePageJump(-1),
-                child: Container(width: context.widthPx / 6, height: context.heightPx, color: Colors.transparent),
-              ),
-            ),
-
-            // Next tap button
-            CenterRight(
-              child: AppBtn.basic(
-                semanticLabel: 'Next artifact',
-                onPressed: () => _handlePageJump(1),
-                child: Container(width: context.widthPx / 6, height: context.heightPx, color: Colors.transparent),
-              ),
-            ),
+            Positioned.fill(right: context.widthPx * 0.75, child: _buildPageBtn(-1, 'Previous artifact')),
+            Positioned.fill(left: context.widthPx * 0.75, child: _buildPageBtn(1, 'Next artifact')),
 
             // Text content
             BottomCenter(
@@ -152,6 +150,20 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
         )
       ]),
     ]);
+  }
+
+  Widget _buildPageBtn(int offset, String label) {
+    return Semantics(
+      label: label,
+      button: true,
+      container: true,
+      child: GestureDetector(
+        excludeFromSemantics: true,
+        onTapDown: (_) => HapticFeedback.mediumImpact(),
+        onTapUp: (_) => _handlePageBtn(offset),
+        behavior: HitTestBehavior.translucent,
+      ),
+    );
   }
 
   Widget _buildContent(BuildContext context, HighlightData artifact, double width, bool small) {
