@@ -2,7 +2,7 @@ import 'dart:math' as math;
 
 import 'package:image_fade/image_fade.dart';
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/data/highlights_data.dart';
+import 'package:wonders/logic/data/highlight_data.dart';
 
 class ArtifactCarouselImage extends StatelessWidget {
   const ArtifactCarouselImage({
@@ -10,16 +10,14 @@ class ArtifactCarouselImage extends StatelessWidget {
     required this.index,
     required this.currentPage,
     required this.artifact,
-    required this.viewportFraction,
     required this.bottomPadding,
     required this.maxWidth,
     required this.maxHeight,
     required this.onPressed,
   }) : super(key: key);
-  final HighlightsData artifact;
+  final HighlightData artifact;
   final int index;
   final double currentPage;
-  final double viewportFraction;
   final double bottomPadding;
   final double maxWidth;
   final double maxHeight;
@@ -32,7 +30,6 @@ class ArtifactCarouselImage extends StatelessWidget {
       onPressed: onPressed,
       child: _ImagePreview(
         image: NetworkImage(artifact.imageUrlSmall),
-        viewportFraction: viewportFraction,
         bottomPadding: bottomPadding,
         maxWidth: maxWidth,
         maxHeight: maxHeight,
@@ -49,12 +46,10 @@ class _ImagePreview extends StatelessWidget {
       required this.offsetAmt,
       required this.bottomPadding,
       required this.maxWidth,
-      required this.maxHeight,
-      required this.viewportFraction})
+      required this.maxHeight})
       : super(key: key);
   final ImageProvider image;
   final double offsetAmt;
-  final double viewportFraction;
   final double bottomPadding;
   final double maxWidth;
   final double maxHeight;
@@ -136,9 +131,10 @@ class _ImagePreview extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(999),
               child: ImageFade(
-                  image: image,
-                  fit: BoxFit.cover,
-                  placeholder: ColoredBox(color: $styles.colors.greyMedium.withOpacity(0.75))),
+                image: image,
+                fit: BoxFit.cover,
+                placeholder: ColoredBox(color: $styles.colors.greyMedium.withOpacity(0.75)),
+              ),
             ),
           ),
         ),
