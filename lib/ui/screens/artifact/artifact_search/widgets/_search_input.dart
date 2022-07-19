@@ -32,6 +32,9 @@ class _SearchInput extends StatelessWidget {
   }
 
   Widget _buildSuggestionsView(BuildContext context, onSelected, Iterable<String> results, BoxConstraints constraints) {
+    List<Widget> items = results.map((str) => _buildSuggestion(context, str, () => onSelected(str))).toList();
+    items.insert(0, _buildSuggestionTitle(context));
+
     return TopLeft(
       child: Container(
         margin: EdgeInsets.only(top: $styles.insets.xxs),
@@ -48,7 +51,7 @@ class _SearchInput extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.all($styles.insets.xs),
           decoration: BoxDecoration(
-            color: $styles.colors.offWhite.withOpacity(0.9),
+            color: $styles.colors.offWhite.withOpacity(0.92),
             borderRadius: BorderRadius.circular($styles.insets.xs),
           ),
           child: ConstrainedBox(
@@ -56,9 +59,25 @@ class _SearchInput extends StatelessWidget {
             child: ListView(
               padding: EdgeInsets.all($styles.insets.xs),
               shrinkWrap: true,
-              children: results.map((str) => _buildSuggestion(context, str, () => onSelected(str))).toList(),
+              children: items,
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSuggestionTitle(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all($styles.insets.xs).copyWith(top: 0),
+      margin: EdgeInsets.only(bottom: $styles.insets.xxs),
+      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: $styles.colors.greyStrong.withOpacity(0.1)))),
+      child: CenterLeft(
+        child: Text(
+          'Suggestions'.toUpperCase(),
+          overflow: TextOverflow.ellipsis,
+          textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+          style: $styles.text.title2.copyWith(color: $styles.colors.black),
         ),
       ),
     );
