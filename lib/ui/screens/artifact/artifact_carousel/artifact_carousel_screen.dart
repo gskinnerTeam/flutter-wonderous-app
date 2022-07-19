@@ -160,8 +160,10 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
       container: true,
       child: GestureDetector(
         excludeFromSemantics: true,
-        onTapDown: (_) => HapticFeedback.mediumImpact(),
-        onTapUp: (_) => _handlePageBtn(offset),
+        onTapUp: (_) {
+          HapticFeedback.mediumImpact();
+          _handlePageBtn(offset);
+        },
         behavior: HitTestBehavior.translucent,
       ),
     );

@@ -149,11 +149,11 @@ class _ButtonDecoratorState extends State<_ButtonDecorator> {
       container: true,
       child: GestureDetector(
         excludeFromSemantics: true,
-        onTapDown: (_) {
+        onTapDown: (_) => setState(() => _isDown = true),
+        onTapUp: (_) {
           HapticFeedback.mediumImpact();
-          setState(() => _isDown = true);
+          setState(() => _isDown = false);
         },
-        onTapUp: (_) => setState(() => _isDown = false),
         onTapCancel: () => setState(() => _isDown = false),
         behavior: HitTestBehavior.translucent,
         child: Opacity(

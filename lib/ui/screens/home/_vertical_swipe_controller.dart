@@ -30,6 +30,7 @@ class _VerticalSwipeController {
       if (value != swipeAmt.value) {
         swipeAmt.value = value;
         if (swipeAmt.value == 1) {
+          HapticFeedback.heavyImpact();
           onSwipeComplete();
         }
       }
@@ -58,7 +59,6 @@ class _VerticalSwipeController {
         child: GestureDetector(
             key: key,
             onTapDown: (_) {
-              HapticFeedback.mediumImpact();
               handleTapDown();
             },
             onTapUp: (_) => handleTapCancelled(),
