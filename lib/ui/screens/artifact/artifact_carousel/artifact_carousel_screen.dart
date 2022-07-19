@@ -8,6 +8,7 @@ import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_image.dart';
 
 // TODO: review accessibility. Ex. should the "page" tap be a button so we can attach a semantic label?
+// TODO: fix weird issue when resizing the window (low priority)
 
 class ArtifactCarouselScreen extends StatefulWidget {
   final WonderType type;

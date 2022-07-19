@@ -75,13 +75,13 @@ class _InfoRow extends StatelessWidget {
           child: Row(children: [
             Expanded(
               child: Text(
-                value.isEmpty ? '---' : label.toUpperCase(),
+                label.toUpperCase(),
                 style: $styles.text.titleFont.copyWith(color: $styles.colors.accent2),
               ),
             ),
             Expanded(
               child: Text(
-                value.isEmpty ? '---' : value,
+                value.isEmpty ? '--' : value,
                 style: $styles.text.body.copyWith(color: $styles.colors.offWhite),
               ),
             ),
