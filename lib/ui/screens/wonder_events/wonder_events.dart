@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:wonders/_tools/localization_helper.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';

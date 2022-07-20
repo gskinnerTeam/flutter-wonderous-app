@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:wonders/_tools/localization_helper.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 
@@ -96,9 +97,9 @@ class HomeMenu extends StatelessWidget {
             curve: Curves.easeOutBack,
           ),
       children: [
-        _MenuTextBtn(label: 'Explore the timeline', onPressed: () => _handleTimelinePressed(context)),
-        _MenuTextBtn(label: 'View your collection', onPressed: () => _handleCollectionPressed(context)),
-        _MenuTextBtn(label: 'About this app', onPressed: _handleAboutPressed),
+        _MenuTextBtn(label: LocalizationHelper.instance.homeMenuButtonExplore, onPressed: () => _handleTimelinePressed(context)),
+        _MenuTextBtn(label: LocalizationHelper.instance.homeMenuButtonView, onPressed: () => _handleCollectionPressed(context)),
+        _MenuTextBtn(label: LocalizationHelper.instance.homeMenuButtonAbout, onPressed: _handleAboutPressed),
       ]
           .animate(interval: 80.ms)
           .fade(delay: $styles.times.pageTransition + 100.ms)

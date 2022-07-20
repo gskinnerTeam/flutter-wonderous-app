@@ -40,16 +40,14 @@ class _ResultsGrid extends StatelessWidget {
         if (isEnglish || value) return SizedBox();
         return AppBtn.basic(
           onPressed: () => settingsLogic.hasDismissedSearchMessage.value = true,
-          semanticLabel: 'dismiss message',
+          semanticLabel: LocalizationHelper.instance.resultsSemanticDismiss,
           child: Container(
             color: $styles.colors.offWhite.withOpacity(0.1),
             padding: EdgeInsets.all($styles.insets.sm),
             child: Row(
               children: [
                 Flexible(
-                  child: Text(AppLocalizations.of(context)?.resultsPopupEnglishContent ??
-                    'This content is provided by the Metropolitan Museum of Art Collection API, and is only available in English.',
-                  ),
+                  child: Text(LocalizationHelper.instance.resultsPopupEnglishContent),
                 ),
                 Icon(
                   Icons.close,

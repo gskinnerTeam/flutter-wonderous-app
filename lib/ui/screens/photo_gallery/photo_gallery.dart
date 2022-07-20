@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:wonders/_tools/localization_helper.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/unsplash_photo_data.dart';
 import 'package:wonders/ui/common/animated_motion_blur.dart';
@@ -188,7 +189,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
           final imgUrl = _photoIds.value[index];
           bool showCollectible = index == _getCollectibleIndex() && collectiblesLogic.isLost(widget.wonderType, 1);
           return AppBtn.basic(
-            semanticLabel: 'collectible!',
+            semanticLabel: LocalizationHelper.instance.photoGallerySemanticCollectible,
             onPressed: () {
               if (showCollectible && selected) return;
               _handleImageTapped(index);

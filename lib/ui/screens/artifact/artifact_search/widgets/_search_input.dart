@@ -74,7 +74,7 @@ class _SearchInput extends StatelessWidget {
       decoration: BoxDecoration(border: Border(bottom: BorderSide(color: $styles.colors.greyStrong.withOpacity(0.1)))),
       child: CenterLeft(
         child: Text(
-          'Suggestions'.toUpperCase(),
+          LocalizationHelper.instance.searchInputTitleSuggestions.toUpperCase(),
           overflow: TextOverflow.ellipsis,
           textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
           style: $styles.text.title2.copyWith(color: $styles.colors.black),
@@ -127,7 +127,7 @@ class _SearchInput extends StatelessWidget {
               prefixStyle: TextStyle(color: captionColor),
               focusedBorder: OutlineInputBorder(borderSide: BorderSide.none),
               enabledBorder: UnderlineInputBorder(borderSide: BorderSide.none),
-              hintText: 'Search (ex. type or material)',
+              hintText: LocalizationHelper.instance.searchInputHintSearch,
             ),
           ),
         ),
@@ -142,7 +142,7 @@ class _SearchInput extends StatelessWidget {
                 bgColor: $styles.colors.caption,
                 color: $styles.colors.white,
                 icon: Icons.clear,
-                semanticLabel: 'clear search',
+                semanticLabel: LocalizationHelper.instance.searchInputSemanticClear,
                 size: $styles.insets.lg,
                 iconSize: $styles.insets.sm,
                 onPressed: () {

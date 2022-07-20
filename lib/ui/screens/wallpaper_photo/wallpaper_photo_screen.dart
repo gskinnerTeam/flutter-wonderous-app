@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/rendering.dart';
+import 'package:wonders/_tools/localization_helper.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/controls/checkbox.dart';
@@ -144,14 +145,14 @@ class _WallpaperPhotoScreenState extends State<WallpaperPhotoScreen> {
                     bgColor: $styles.colors.offWhite,
                     color: $styles.colors.black,
                     onPressed: () => _handleSharePhoto(context, wonderData.title),
-                    semanticLabel: 'share photo',
+                    semanticLabel: LocalizationHelper.instance.wallpaperSemanticSharePhoto,
                     size: 44,
                   ),
                 ),
                 CircleIconBtn(
                   icon: Icons.file_download_outlined,
                   onPressed: () => _handleTakePhoto(context, wonderData.title),
-                  semanticLabel: 'take photo',
+                  semanticLabel: LocalizationHelper.instance.wallpaperSemanticTakePhoto,
                   size: 64,
                 ),
               ],
@@ -163,7 +164,7 @@ class _WallpaperPhotoScreenState extends State<WallpaperPhotoScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SimpleCheckbox(active: _showTitleText, label: 'Show Title', onToggled: _handleTextToggle),
+            SimpleCheckbox(active: _showTitleText, label: LocalizationHelper.instance.wallpaperCheckboxShowTitle, onToggled: _handleTextToggle),
             Gap($styles.insets.xl),
           ],
         ),

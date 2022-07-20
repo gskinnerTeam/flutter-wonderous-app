@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:image_fade/image_fade.dart';
+import 'package:wonders/_tools/localization_helper.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/ui/common/app_loading_error.dart';
@@ -31,7 +32,7 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
         builder: (_, snapshot) {
           final data = snapshot.data;
           if (snapshot.hasData && data == null) {
-            return AppLoadError(label: 'Unable to find info for artifact ${widget.artifactId} ');
+            return AppLoadError(label: LocalizationHelper.instance.artifactDetailsErrorNotFound.supplant({'{artifactId}': widget.artifactId}));
           }
 
           return Stack(children: [

@@ -1,4 +1,5 @@
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:wonders/_tools/localization_helper.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
 import 'package:wonders/ui/common/themed_text.dart';
@@ -60,18 +61,18 @@ class _IntroScreenState extends State<IntroScreen> {
                   height: 440,
                   child: PageView(
                     controller: _pageController,
-                    children: const [
+                    children: [
                       _Page(
-                        title: 'Journey to the past',
-                        desc: 'Navigate the intersection of time, art, and culture.',
+                        title: LocalizationHelper.instance.introTitleJourney,
+                        desc: LocalizationHelper.instance.introDescriptionNavigate,
                       ),
                       _Page(
-                        title: 'Explore places',
-                        desc: 'Uncover remarkable human-made structures from around the world',
+                        title: LocalizationHelper.instance.introTitleExplore,
+                        desc: LocalizationHelper.instance.introDescriptionUncover,
                       ),
                       _Page(
-                        title: 'Discover artifacts',
-                        desc: 'Learn about cultures throughout time by examining things they left behind.',
+                        title: LocalizationHelper.instance.introTitleDiscover,
+                        desc: LocalizationHelper.instance.introDescriptionLearn,
                       ),
                     ],
                   ),
@@ -117,13 +118,13 @@ class _IntroScreenState extends State<IntroScreen> {
                           opacity: page == 2 ? 0 : 1,
                           duration: $styles.times.fast,
                           child: Semantics(
-                            onTapHint: 'Navigate',
+                            onTapHint: LocalizationHelper.instance.introSemanticNavigate,
                             onTap: () {
                               var current = _pageController.page!.round();
                               _pageController.animateToPage(current + 1,
                                   duration: const Duration(milliseconds: 250), curve: Curves.easeIn);
                             },
-                            child: Text('Swipe left to continue', style: $styles.text.bodySmall.copyWith(height: 3)),
+                            child: Text(LocalizationHelper.instance.introSemanticSwipeLeft, style: $styles.text.bodySmall.copyWith(height: 3)),
                           ),
                         ),
                       ),
@@ -135,7 +136,7 @@ class _IntroScreenState extends State<IntroScreen> {
                             icon: Icons.chevron_right,
                             bgColor: $styles.colors.accent1,
                             onPressed: _handleIntroCompletePressed,
-                            semanticLabel: 'Enter the app',
+                            semanticLabel: LocalizationHelper.instance.introSemanticEnterApp,
                           ),
                         ),
                       ),
@@ -186,7 +187,7 @@ class _WonderousLogo extends StatelessWidget {
         ),
         Gap($styles.insets.xs),
         Text(
-          'Wonderous',
+          LocalizationHelper.instance.introSemanticWonderous,
           style: $styles.text.wonderTitle.copyWith(fontSize: 32, color: $styles.colors.offWhite),
         )
       ],

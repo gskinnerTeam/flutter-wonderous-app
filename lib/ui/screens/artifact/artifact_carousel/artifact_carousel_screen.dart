@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:wonders/_tools/localization_helper.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/highlight_data.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
@@ -86,7 +87,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     return Stack(children: [
       Positioned.fill(child: ArtifactCarouselBg(url: artifact.imageUrl)),
       Column(children: [
-        SimpleHeader('ARTIFACTS', showBackBtn: false, isTransparent: true),
+        SimpleHeader(LocalizationHelper.instance.artifactsTitleArtifacts, showBackBtn: false, isTransparent: true),
         Expanded(
           child: Stack(children: [
             // White arch, covering bottom half:
@@ -121,8 +122,8 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
               },
             ),
 
-            Positioned.fill(right: context.widthPx * 0.75, child: _buildPageBtn(-1, 'Previous artifact')),
-            Positioned.fill(left: context.widthPx * 0.75, child: _buildPageBtn(1, 'Next artifact')),
+            Positioned.fill(right: context.widthPx * 0.75, child: _buildPageBtn(-1, LocalizationHelper.instance.artifactsSemanticsPrevious)),
+            Positioned.fill(left: context.widthPx * 0.75, child: _buildPageBtn(1, LocalizationHelper.instance.artifactsSemanticsNext)),
 
             // Text content
             BottomCenter(
@@ -137,7 +138,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                     _buildContent(context, artifact, backdropWidth, small),
                     Gap(small ? $styles.insets.md : $styles.insets.xl),
                     AppBtn.from(
-                      text: 'Browse all artifacts',
+                      text: LocalizationHelper.instance.artifactsButtonBrowse,
                       icon: Icons.search,
                       expand: true,
                       onPressed: _handleSearchButtonTap,
@@ -212,7 +213,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
               ],
             ).animate(key: ValueKey(artifact.artifactId)).fadeIn(),
             Gap(small ? $styles.insets.sm : $styles.insets.lg),
-            AppPageIndicator(count: _artifacts.length, controller: _controller, semanticPageTitle: 'artifact'),
+            AppPageIndicator(count: _artifacts.length, controller: _controller, semanticPageTitle: LocalizationHelper.instance.artifactsSemanticArtifact),
           ],
         ),
       ),

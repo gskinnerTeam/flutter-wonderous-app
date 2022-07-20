@@ -1,3 +1,4 @@
+import 'package:wonders/_tools/localization_helper.dart';
 import 'package:wonders/common_libs.dart';
 
 class StringUtils {
@@ -49,13 +50,13 @@ class StringUtils {
     return '${yr.abs()} ${getYrSuffix(yr)}';
   }
 
-  static String getYrSuffix(int yr) => yr < 0 ? 'BCE' : 'CE';
+  static String getYrSuffix(int yr) => yr < 0 ? LocalizationHelper.instance.yearBCE : LocalizationHelper.instance.yearCE;
 
   static String getEra(int yr) {
-    if (yr <= -600) return 'Prehistory';
-    if (yr <= 476) return 'Classical Era';
-    if (yr <= 1450) return 'Early Modern Era';
-    return 'Modern Era';
+    if (yr <= -600) return LocalizationHelper.instance.eraPrehistory;
+    if (yr <= 476) return LocalizationHelper.instance.eraClassical;
+    if (yr <= 1450) return LocalizationHelper.instance.eraEarlyModern;
+    return LocalizationHelper.instance.eraModern;
   }
 
   static String capitalize(String value) {

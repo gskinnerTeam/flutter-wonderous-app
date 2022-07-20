@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:image_fade/image_fade.dart';
+import 'package:wonders/_tools/localization_helper.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/collectibles_logic.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
@@ -55,7 +56,7 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
   }
 
   void _handleReset() async {
-    String msg = 'Are you sure you want to reset your collection?';
+    String msg = LocalizationHelper.instance.collectionPopupResetConfirm;
     final result = await showModal(context, child: OkCancelModal(msg: msg));
     if (result == true) {
       collectiblesLogic.reset();
@@ -79,7 +80,7 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
       child: Stack(children: [
         Positioned.fill(
           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            SimpleHeader('Collection'),
+            SimpleHeader(LocalizationHelper.instance.collectionTitleCollection),
             _NewlyDiscoveredRow(count: discovered, onPressed: _scrollToTarget),
             _CollectionList(
               states: _states,

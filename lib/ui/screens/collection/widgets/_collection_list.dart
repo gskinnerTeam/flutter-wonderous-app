@@ -82,7 +82,7 @@ class _CollectionList extends StatelessWidget {
   Widget _buildResetBtn(BuildContext context) {
     Widget btn = AppBtn.from(
       onPressed: onReset ?? () {},
-      text: 'Reset Collection',
+      text: LocalizationHelper.instance.collectionButtonReset,
       isSecondary: true,
       expand: true,
     );
