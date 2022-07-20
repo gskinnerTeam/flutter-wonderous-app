@@ -1,3 +1,4 @@
+import 'package:wonders/_tools/localization_helper.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
@@ -8,51 +9,34 @@ final pyramidsGizaData = WonderData(
   searchData: _searchData, // included as a part from ./search/
   searchSuggestions: _searchSuggestions, // included as a part from ./search/
   type: WonderType.pyramidsGiza,
-  title: 'Pyramids of Giza',
-  subTitle: 'The ancient wonder',
-  regionTitle: 'Cairo, Egypt',
+  title: LocalizationHelper.instance.pyramidsGizaTitle,
+  subTitle: LocalizationHelper.instance.pyramidsGizaSubTitle,
+  regionTitle: LocalizationHelper.instance.pyramidsGizaRegionTitle,
   videoId: 'lJKX3Y7Vqvs',
   startYr: -2600,
   endYr: -2500,
   artifactStartYr: -2800,
   artifactEndYr: -2300,
-  artifactCulture: 'Egyptian',
-  artifactGeolocation: 'Egypt',
+  artifactCulture: LocalizationHelper.instance.pyramidsGizaArtifactCulture,
+  artifactGeolocation: LocalizationHelper.instance.pyramidsGizaArtifactGeolocation,
   lat: 29.976111,
   lng: 31.132778,
   unsplashCollectionId: 'CSEvB5Tza9E',
-  pullQuote1Top: 'The Tallest Structures on Earth',
-  pullQuote1Bottom: 'Until the Advent of Modern Skyscrapers',
+  pullQuote1Top: LocalizationHelper.instance.pyramidsGizaPullQuote1Top,
+  pullQuote1Bottom: LocalizationHelper.instance.pyramidsGizaPullQuote1Bottom,
   pullQuote1Author: '',
-  pullQuote2: 'From the heights of these pyramids, forty centuries look down on us.',
-  pullQuote2Author: 'Napoleon Bonaparte',
-  callout1:
-      'It is theorized the pyramid not only served as a tomb for the pharaoh, but also as a storage pit for various items he would need in the afterlife.',
-  callout2:
-      'The Great Pyramid consists of an estimated 2.3 million blocks. Approximately 5.5 million tonnes of limestone, 8,000 tonnes of granite, and 500,000 tonnes of mortar were used in the construction.',
-  videoCaption:
-      '“The Great Pyramids of Giza | Egypt’s Ancient Mysteries | National Geographic UK.” Youtube, uploaded by National Geographic UK.',
-  mapCaption: 'Map showing location of Giza Pyramids in Greater Cairo, Egypt.',
-  historyInfo1:
-      '''The Giza pyramid complex, also called the Giza necropolis, is the site on the Giza Plateau in Greater Cairo, Egypt that includes the Great Pyramid of Giza, the Pyramid of Khafre, and the Pyramid of Menkaure, along with their associated pyramid complexes and the Great Sphinx of Giza. All were built during the Fourth Dynasty of the Old Kingdom of Ancient Egypt, between 2600 and 2500 BCE.
-''',
-  historyInfo2:
-      '''The pyramids of Giza and others are thought to have been constructed to house the remains of the deceased pharaohs who ruled over Ancient Egypt. A portion of the pharaoh's spirit called his ka was believed to remain with his corpse. Proper care of the remains was necessary in order for the former Pharaoh to perform his new duties as king of the dead.
-''',
-  constructionInfo1:
-      '''Most construction theories are based on the idea that the pyramids were built by moving huge stones from a quarry and dragging and lifting them into place. In building the pyramids, the architects might have developed their techniques over time.
-They would select a site on a relatively flat area of bedrock — not sand — which provided a stable foundation. After carefully surveying the site and laying down the first level of stones, they constructed the pyramids in horizontal levels, one on top of the other.
-''',
-  constructionInfo2:
-      '''For the Great Pyramid, most of the stone for the interior seems to have been quarried immediately to the south of the construction site. The smooth exterior of the pyramid was made of a fine grade of white limestone that was quarried across the Nile.
-To ensure that the pyramid remained symmetrical, the exterior casing stones all had to be equal in height and width. Workers might have marked all the blocks to indicate the angle of the pyramid wall and trimmed the surfaces carefully so that the blocks fit together. During construction, the outer surface of the stone was smooth limestone; excess stone has eroded as time has passed.
-''',
-  locationInfo1:
-      '''The site is at the edges of the Western Desert, approximately 5.6 miles (9 km) west of the Nile River in the city of Giza, and about 8 miles (13 km) southwest of the city center of Cairo.
-''',
-  locationInfo2:
-      '''Currently, the pyramids are located in the northwestern side of the Western Desert, and it is considered to be one of the best recognizable and the most visited tourist attractions of the planet.
-''',
+  pullQuote2: LocalizationHelper.instance.pyramidsGizaPullQuote2,
+  pullQuote2Author: LocalizationHelper.instance.pyramidsGizaPullQuote2Author,
+  callout1: LocalizationHelper.instance.pyramidsGizaCallout1,
+  callout2: LocalizationHelper.instance.pyramidsGizaCallout2,
+  videoCaption: LocalizationHelper.instance.pyramidsGizaVideoCaption,
+  mapCaption: LocalizationHelper.instance.pyramidsGizaMapCaption,
+  historyInfo1: LocalizationHelper.instance.pyramidsGizaHistoryInfo1,
+  historyInfo2: LocalizationHelper.instance.pyramidsGizaHistoryInfo2,
+  constructionInfo1: LocalizationHelper.instance.pyramidsGizaConstructionInfo1,
+  constructionInfo2: LocalizationHelper.instance.pyramidsGizaConstructionInfo2,
+  locationInfo1: LocalizationHelper.instance.pyramidsGizaLocationInfo1,
+  locationInfo2: LocalizationHelper.instance.pyramidsGizaLocationInfo2,
   highlightArtifacts: const [
     '543864',
     '546488',
@@ -66,16 +50,12 @@ To ensure that the pyramid remained symmetrical, the exterior casing stones all 
     '543896',
     '545728',
   ],
-  events: const {
-    -2575: 'Construction of the 3 pyramids began for three kings of the 4th dynasty; Khufu, Khafre, and Menkaure.',
-    -2465:
-        'Construction began on the smaller surrounding structures called Mastabas for royalty of the 5th and 6th dynasties.',
-    -443:
-        'Greek Author Herodotus speculated that the pyramids were built in the span of 20 years with over 100,000 slave labourers. This assumption would last for over 1500 years',
-    1925:
-        'Tomb of Queen Hetepheres was discovered, containing furniture and jewelry. One of the last remaining treasure-filled tombs after many years of looting and plundering.',
-    1979: 'Designated a UNESCO World Heritage Site to prevent any more unauthorized plundering and vandalism.',
-    1990:
-        'Discovery of labouror’s districts suggest that the workers building the pyramids were not slaves, and an ingenious building method proved a relatively small work-force was required to build such immense structures.',
+  events: {
+    -2575: LocalizationHelper.instance.pyramidsGiza2575bce,
+    -2465: LocalizationHelper.instance.pyramidsGiza2465bce,
+    -443: LocalizationHelper.instance.pyramidsGiza443bce,
+    1925: LocalizationHelper.instance.pyramidsGiza1925ce,
+    1979: LocalizationHelper.instance.pyramidsGiza1979ce,
+    1990: LocalizationHelper.instance.pyramidsGiza1990ce,
   },
 );

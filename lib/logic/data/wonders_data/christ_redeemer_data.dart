@@ -1,3 +1,4 @@
+import 'package:wonders/_tools/localization_helper.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
@@ -8,51 +9,34 @@ final christRedeemerData = WonderData(
   searchData: _searchData, // included as a part from ./search/
   searchSuggestions: _searchSuggestions, // included as a part from ./search/
   type: WonderType.christRedeemer,
-  title: 'Christ the Redeemer',
-  subTitle: 'A symbol of peace',
-  regionTitle: 'Rio de Janeiro, Brazil',
+  title: LocalizationHelper.instance.christRedeemerTitle,
+  subTitle: LocalizationHelper.instance.christRedeemerSubTitle,
+  regionTitle: LocalizationHelper.instance.christRedeemerRegionTitle,
   videoId: 'k_615AauSds',
   startYr: 1922,
   endYr: 1931,
   artifactStartYr: 1600,
   artifactEndYr: 2100,
   artifactCulture: '',
-  artifactGeolocation: 'Brazil',
+  artifactGeolocation: LocalizationHelper.instance.christRedeemerArtifactGeolocation,
   lat: -22.95238891944396,
   lng: -43.21045520611561,
   unsplashCollectionId: 'dPgX5iK8Ufo',
-  pullQuote1Top: 'A Perfect Union Between',
-  pullQuote1Bottom: 'Nature and Architecture',
+  pullQuote1Top: LocalizationHelper.instance.christRedeemerPullQuote1Top,
+  pullQuote1Bottom: LocalizationHelper.instance.christRedeemerPullQuote1Bottom,
   pullQuote1Author: '',
-  pullQuote2:
-      'The statue looms large on the landscape, but it hides as much as it reveals about the diverse religious life of Brazilians.',
-  pullQuote2Author: 'Thomas Tweed',
-  callout1: 'The statue of Christ the Redeemer with open arms, a symbol of peace, was chosen.',
-  callout2:
-      'Construction took nine years, from 1922 to 1931, and cost the equivalent of US\$250,000 (equivalent to \$3,600,000 in 2020) and the monument opened on October 12, 1931.',
-  videoCaption:
-      '“The Majestic Statue of Christ the Redeemer - Seven Wonders of the Modern World - See U in History.” Youtube, uploaded by See U in History / Mythology.',
-  mapCaption: 'Map showing location of Christ the Redeemer in Rio de Janeiro, Brazil.',
-  historyInfo1:
-      '''The placement of a Christian monument on Mount Corcovado was first suggested in the mid-1850s to honor Princess Isabel, regent of Brazil and the daughter of Emperor Pedro II, but the project was not approved.
-In 1889 the country became a republic, and owing to the separation of church and state the proposed statue was dismissed.
-''',
-  historyInfo2:
-      '''The Catholic Circle of Rio made a second proposal for a landmark statue on the mountain in 1920. The group organized an event called Semana do Monumento ("Monument Week") to attract donations and collect signatures to support the building of the statue. The organization was motivated by what they perceived as "Godlessness" in the society.
-The designs considered for the "Statue of the Christ" included a representation of the Christian cross, a statue of Jesus with a globe in his hands, and a pedestal symbolizing the world.
-''',
-  constructionInfo1:
-      '''Artist Carlos Oswald and local engineer Heitor da Silva Costa designed the statue. French sculptor Paul Landowski created the work. In 1922, Landowski commissioned fellow Parisian Romanian sculptor Gheorghe Leonida, who studied sculpture at the Fine Arts Conservatory in Bucharest and in Italy.
-''',
-  constructionInfo2:
-      '''A group of engineers and technicians studied Landowski's submissions and felt building the structure of reinforced concrete instead of steel was more suitable for the cross-shaped statue. The concrete making up the base was supplied from Limhamn, Sweden. The outer layers are soapstone, chosen for its enduring qualities and ease of use.
-''',
-  locationInfo1:
-      '''Corcovado, which means "hunchback" in Portuguese, is a mountain in central Rio de Janeiro, Brazil. It is a 2,329 foot (710 m) granite peak located in the Tijuca Forest, a national park.
-''',
-  locationInfo2:
-      '''Corcovado hill lies just west of the city center but is wholly within the city limits and visible from great distances.
-''',
+  pullQuote2: LocalizationHelper.instance.christRedeemerPullQuote2,
+  pullQuote2Author: LocalizationHelper.instance.christRedeemerPullQuote2Author,
+  callout1: LocalizationHelper.instance.christRedeemerCallout1,
+  callout2: LocalizationHelper.instance.christRedeemerCallout2,
+  videoCaption: LocalizationHelper.instance.christRedeemerVideoCaption,
+  mapCaption: LocalizationHelper.instance.christRedeemerMapCaption,
+  historyInfo1: LocalizationHelper.instance.christRedeemerHistoryInfo1,
+  historyInfo2: LocalizationHelper.instance.christRedeemerHistoryInfo2,
+  constructionInfo1: LocalizationHelper.instance.christRedeemerConstructionInfo1,
+  constructionInfo2: LocalizationHelper.instance.christRedeemerConstructionInfo2,
+  locationInfo1: LocalizationHelper.instance.christRedeemerLocationInfo1,
+  locationInfo2: LocalizationHelper.instance.christRedeemerLocationInfo2,
   highlightArtifacts: const [
     '501319',
     '764815',
@@ -65,16 +49,12 @@ The designs considered for the "Statue of the Christ" included a representation 
     '157985',
     '227759',
   ],
-  events: const {
-    1850:
-        'Plans for the statue were first proposed by Pedro Maria Boss upon Mount Corcovado. This was never approved, however.',
-    1921:
-        'A new plan was proposed by the Roman Catholic archdiocese, and after the citizens of Rio de Janeiro petitioned the president, it was finally approved.',
-    1922: 'The foundation of the statue was ceremoniously laid out to commemorate Brazil’s independence from Portugal.',
-    1926:
-        'Construction officially began after the initial design was chosen via a competition and amended by Brazilian artists and engineers.',
-    1931: 'Construction of the statue was completed, standing 98’ tall with a 92’ wide arm span.',
-    2006:
-        'A chapel was consecrated at the statue’s base to Our Lady of Aparecida to mark the statue’s 75th anniversary.',
+  events: {
+    1850: LocalizationHelper.instance.christRedeemer1850ce,
+    1921: LocalizationHelper.instance.christRedeemer1921ce,
+    1922: LocalizationHelper.instance.christRedeemer1922ce,
+    1926: LocalizationHelper.instance.christRedeemer1926ce,
+    1931: LocalizationHelper.instance.christRedeemer1931ce,
+    2006: LocalizationHelper.instance.christRedeemer2006ce,
   },
 );
