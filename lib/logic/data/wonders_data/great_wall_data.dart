@@ -1,3 +1,4 @@
+import 'package:wonders/_tools/localization_helper.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
@@ -8,50 +9,34 @@ final greatWallData = WonderData(
   searchData: _searchData, // included as a part from ./search/
   searchSuggestions: _searchSuggestions, // included as a part from ./search/
   type: WonderType.greatWall,
-  title: 'The Great Wall',
-  subTitle: 'Longest structure on Earth',
-  regionTitle: 'China',
+  title: LocalizationHelper.instance.greatWallTitle,
+  subTitle: LocalizationHelper.instance.greatWallSubTitle,
+  regionTitle: LocalizationHelper.instance.greatWallRegionTitle,
   videoId: 'do1Go22Wu8o',
   startYr: -700,
   endYr: 1644,
   artifactStartYr: -700,
   artifactEndYr: 1650,
-  artifactCulture: 'Chinese',
-  artifactGeolocation: 'China',
+  artifactCulture: LocalizationHelper.instance.greatWallArtifactCulture,
+  artifactGeolocation: LocalizationHelper.instance.greatWallArtifactGeolocation,
   lat: 40.43199751120627,
   lng: 116.57040708482984,
   unsplashCollectionId: 'Kg_h04xvZEo',
-  pullQuote1Top: 'The Longest Man-Made',
-  pullQuote1Bottom: 'Structure in the World',
-  pullQuote1Author: '',
-  pullQuote2: 'Religion is not a bridge between God and Man; it is a Great Wall of China between them.',
-  pullQuote2Author: 'Mehmet Murat Ildan',
-  callout1: 'The best-known sections of the wall were built by the Ming dynasty (1368-1644).',
-  callout2:
-      'During the Ming dynasty, however, bricks were heavily used in many areas of the wall, as were materials such as tiles, lime, and stone.',
-  videoCaption:
-      '“See China’s Iconic Great Wall From Above | National Geographic.” Youtube, uploaded by National Geographic.',
-  mapCaption: 'Map showing location of Great Wall of China in northern China.',
-  historyInfo1:
-      '''The Great Wall of China is a series of fortifications that were built across the historical northern borders of ancient Chinese states and Imperial China as protection against various nomadic groups from the Eurasian Steppe. The total length of all sections ever built is over 13,000 miles.
-''',
-  historyInfo2:
-      '''Several walls were built from as early as the 7th century BCE, with selective stretches later joined together by Qin Shi Huang (220-206  BCE), the first emperor of China. Little of the Qin wall remains.
-Later on, many successive dynasties built and maintained multiple stretches of border walls.
-''',
-  constructionInfo1:
-      '''Transporting the large quantity of materials required for construction was difficult, so builders always tried to use local resources. Stones from the mountains were used over mountain ranges, while rammed earth was used for construction in the plains. Most of the ancient walls have eroded away over the centuries.
-''',
-  constructionInfo2:
-      '''Stones cut into rectangular shapes were used for the foundation, inner and outer brims, and gateways of the wall. 
-Under the rule of the Qing dynasty, China's borders extended beyond the walls and Mongolia was annexed into the empire, so construction was discontinued.
-''',
-  locationInfo1:
-      '''The frontier walls built by different dynasties have multiple courses. Collectively, they stretch from Liaodong in the east to Lop Lake in the west, from the present-day Sino-Russian border in the north to Tao River in the south; along an arc that roughly delineates the edge of the Mongolian steppe.
-''',
-  locationInfo2:
-      '''Apart from defense, other purposes of the Great Wall have included border controls, allowing the imposition of duties on goods transported along the Silk Road, regulation or encouragement of trade and the control of immigration and emigration.
-''',
+  pullQuote1Top: LocalizationHelper.instance.greatWallPullQuote1Top,
+  pullQuote1Bottom: LocalizationHelper.instance.greatWallPullQuote1Bottom,
+  pullQuote1Author: '', //No key because it doesn't generate for empty values
+  pullQuote2: LocalizationHelper.instance.greatWallPullQuote2,
+  pullQuote2Author: LocalizationHelper.instance.greatWallPullQuote2Author,
+  callout1: LocalizationHelper.instance.greatWallCallout1,
+  callout2: LocalizationHelper.instance.greatWallCallout2,
+  videoCaption: LocalizationHelper.instance.greatWallVideoCaption,
+  mapCaption: LocalizationHelper.instance.greatWallMapCaption,
+  historyInfo1: LocalizationHelper.instance.greatWallHistoryInfo1, 
+  historyInfo2: LocalizationHelper.instance.greatWallHistoryInfo2,
+  constructionInfo1: LocalizationHelper.instance.greatWallConstructionInfo1,
+  constructionInfo2: LocalizationHelper.instance.greatWallConstructionInfo2,
+  locationInfo1: LocalizationHelper.instance.greatWallLocationInfo1,
+  locationInfo2: LocalizationHelper.instance.greatWallLocationInfo2,
   highlightArtifacts: const [
     '79091',
     '781812',
@@ -65,18 +50,12 @@ Under the rule of the Qing dynasty, China's borders extended beyond the walls an
     '39666',
     '39735',
   ],
-  events: const {
-    -700:
-        'First landmark of the Great Wall began originally as a square wall surrounding the state of Chu. Over the years, additional walls would be built and added to it to expand and connect territory.',
-    -214:
-        'The first Qin Emperor unifies China and links the wall of the surrounding states of Qin, Yan, and Zhao into the Great Wall of China, taking 10 years to build with hundreds of thousands of laborers.',
-    -121:
-        'A 20-year construction project was started by the Han emperor to build east and west sections of the wall, including beacons, towers, and castles. Not just for defense, but also to control trade routes like the Silk Road.',
-    556:
-        'The Bei Qi kingdom also launched several construction projects, utilizing over 1.8 million workers to repair and extend sections of the wall, adding to its length and even building a second inner wall around Shanxi.',
-    618:
-        'The Great Wall was repaired during the Sui Dynasty and used to defend against Tujue attacks. Before and after the Sui Dynasty, the wall saw very little use and fell into disrepair.',
-    1487:
-        'Hongzhi Emperor split the walls into north and south lines, eventually shaping it into how it is today. Since then, it has gradually fallen into disrepair and remains mostly unused.',
+  events: {
+    -700: LocalizationHelper.instance.greatWall700bce,
+    -214: LocalizationHelper.instance.greatWall214bce,
+    -121: LocalizationHelper.instance.greatWall121bce,
+    556: LocalizationHelper.instance.greatWall556ce,
+    618: LocalizationHelper.instance.greatWall618ce,
+    1487: LocalizationHelper.instance.greatWall1487ce,
   },
 );

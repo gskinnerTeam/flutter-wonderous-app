@@ -1,3 +1,6 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:wonders/_tools/localization_helper.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/collectibles_logic.dart';
 import 'package:wonders/logic/met_api_logic.dart';
@@ -6,6 +9,7 @@ import 'package:wonders/logic/timeline_logic.dart';
 import 'package:wonders/logic/unsplash_logic.dart';
 import 'package:wonders/logic/wallpaper_logic.dart';
 import 'package:wonders/logic/wonders_logic.dart';
+import 'package:intl/intl_standalone.dart';
 
 void main() {
   registerSingletons();
@@ -18,10 +22,39 @@ class WondersApp extends StatelessWidget {
   const WondersApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        routerDelegate: appRouter.routerDelegate,
-        routeInformationParser: appRouter.routeInformationParser);
+    return FutureBuilder<String>(
+      future: findSystemLocale(),
+      builder: (_, localeSnapshot) {
+        if (localeSnapshot.hasData) {
+          final locale = Locale(localeSnapshot.data!.split('_')[0]);
+          // final locale = Locale('en');
+          // final locale = Locale('zh');
+
+          return FutureBuilder(
+            future: LocalizationHelper.load(locale),
+            builder: (_, snapshot) {
+              if (snapshot.hasData) {
+                return MaterialApp.router(
+                  locale: locale,
+                  debugShowCheckedModeBanner: false,
+                  routerDelegate: appRouter.routerDelegate,
+                  routeInformationParser: appRouter.routeInformationParser,
+                  localizationsDelegates: const [
+                    AppLocalizations.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                  ],
+                  supportedLocales: AppLocalizations.supportedLocales,
+                );
+              }
+              return CircularProgressIndicator();
+            },
+          );
+        }
+        return CircularProgressIndicator();
+      },
+    );
   }
 }
 

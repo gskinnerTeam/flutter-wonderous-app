@@ -1,14 +1,14 @@
 part of '../editorial_screen.dart';
 
 class _AppBar extends StatelessWidget {
-  const _AppBar(this.wonderType, {Key? key, required this.sectionIndex, required this.scrollPos}) : super(key: key);
+  _AppBar(this.wonderType, {Key? key, required this.sectionIndex, required this.scrollPos}) : super(key: key);
   final WonderType wonderType;
   final ValueNotifier<int> sectionIndex;
   final ValueNotifier<double> scrollPos;
-  final _titleValues = const [
-    'Facts and History',
-    'Construction',
-    'Location Info',
+  final _titleValues = [
+    LocalizationHelper.instance.appBarTitleFactsHistory,
+    LocalizationHelper.instance.appBarTitleConstruction,
+    LocalizationHelper.instance.appBarTitleLocation,
   ];
 
   final _iconValues = const [
