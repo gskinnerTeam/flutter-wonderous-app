@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:image_fade/image_fade.dart';
 import 'package:wonders/common_libs.dart';

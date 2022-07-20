@@ -15,7 +15,7 @@ class _ResultsGrid extends StatelessWidget {
           clipBehavior: Clip.hardEdge,
           shrinkWrap: true,
           slivers: [
-            SliverToBoxAdapter(child: _buildLanguageMessage()),
+            SliverToBoxAdapter(child: _buildLanguageMessage(context)),
             SliverPadding(
               padding: EdgeInsets.all($styles.insets.sm).copyWith(bottom: $styles.insets.offset),
               sliver: SliverMasonryGrid.count(
@@ -32,13 +32,12 @@ class _ResultsGrid extends StatelessWidget {
     );
   }
 
-  Widget _buildLanguageMessage() {
-    // TODO: wire up the check for English.
-    bool isEnglish = false;
+  Widget _buildLanguageMessage(BuildContext context) {
+    bool isEnglish = Localizations.localeOf(context).languageCode == 'en';
     return ValueListenableBuilder<bool>(
       valueListenable: settingsLogic.hasDismissedSearchMessage,
       builder: (_, value, __) {
-        //if (isEnglish || value) return SizedBox();
+        if (isEnglish || value) return SizedBox();
         return AppBtn.basic(
           onPressed: () => settingsLogic.hasDismissedSearchMessage.value = true,
           semanticLabel: 'dismiss message',
@@ -48,7 +47,7 @@ class _ResultsGrid extends StatelessWidget {
             child: Row(
               children: [
                 Flexible(
-                  child: Text(
+                  child: Text(AppLocalizations.of(context)?.resultsPopupEnglishContent ??
                     'This content is provided by the Metropolitan Museum of Art Collection API, and is only available in English.',
                   ),
                 ),

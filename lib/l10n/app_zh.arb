@@ -2,7 +2,7 @@
     "appBarTitleFactsHistory": "事实和历史",
 	"appBarTitleConstruction": "建造",
 	"appBarTitleLocation": "位置信息",
-	"titleLabelDate": "{fromDate} 至 {toDate}",
+	"titleLabelDate": "{fromDate} 至 {endDate}",
 	"greatWallTitle": "长城",
 	"greatWallSubTitle": "地球上最长的结构",
 	"greatWallRegionTitle": "中国",
@@ -28,6 +28,11 @@
 	"greatWall556ce": "北齐王国还启动了多个建设项目，动用了超过 180 万工人修复和扩建部分墙体，增加了其长度，甚至在山西周围建造了第二座内墙。",
 	"greatWall618ce": "长城在隋朝修葺，用来防御突厥进攻。 隋朝前后，城墙很少使用，年久失修。",
 	"greatWall1487ce": "弘治帝将城墙分为南北两线，最终塑造成今天的样子。 从那时起，它逐渐年久失修，并且大部分未使用。",
-	"greatWallCollectible1Title": "廉颇、林相如传"
+	"greatWallCollectible1Title": "廉颇、林相如传",
+	"greatWallCollectible1Icon": "滚动",
+	"greatWallCollectible2Title": "有龙的罐子",
+	"greatWallCollectible2Icon": "花瓶",
+	"greatWallCollectible3Title": "牡丹和蝴蝶面板",
+	"greatWallCollectible3Icon": "纺织品"
 }
   
