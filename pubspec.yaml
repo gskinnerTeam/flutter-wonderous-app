@@ -1,6 +1,6 @@
 name: wonders
 description: Explore the famous wonders of the world.
-publish_to: 'none'
+publish_to: "none"
 version: 1.4.0
 
 environment:
@@ -11,7 +11,7 @@ dependencies:
     sdk: flutter
 
   flutter_localizations:
-    sdk: flutter      
+    sdk: flutter
 
   collection: ^1.15.0
   copy_with_extension: ^4.0.0
@@ -68,7 +68,6 @@ flutter_icons:
   image_path: "assets/marketing/app-icon-1024.png"
 
 flutter:
-
   uses-material-design: true
 
   generate: true
@@ -88,25 +87,28 @@ flutter:
     - assets/images/collectibles/
 
   fonts:
-   - family: Cinzel
-     fonts:
-       - asset: assets/fonts/CinzelDecorative-Regular.ttf
-       - asset: assets/fonts/CinzelDecorative-Black.ttf
-       - asset: assets/fonts/CinzelDecorative-Bold.ttf
-   - family: Yeseva
-     fonts:
-       - asset: assets/fonts/YesevaOne-Regular.ttf
-   - family: Tenor
-     fonts:
-       - asset: assets/fonts/TenorSans-Regular.ttf
-   - family: Raleway
-     fonts:
-       - asset: assets/fonts/Raleway-Regular.ttf
-       - asset: assets/fonts/Raleway-Italic.ttf
-         style: italic
-       - asset: assets/fonts/Raleway-Medium.ttf
-         weight: 500
-       - asset: assets/fonts/Raleway-Bold.ttf
-         weight: 700
-       - asset: assets/fonts/Raleway-ExtraBold.ttf
-         weight: 800
+    - family: Cinzel
+      fonts:
+        - asset: assets/fonts/CinzelDecorative-Regular.ttf
+        - asset: assets/fonts/CinzelDecorative-Black.ttf
+        - asset: assets/fonts/CinzelDecorative-Bold.ttf
+    - family: Yeseva
+      fonts:
+        - asset: assets/fonts/YesevaOne-Regular.ttf
+    - family: Tenor
+      fonts:
+        - asset: assets/fonts/TenorSans-Regular.ttf
+    - family: Raleway
+      fonts:
+        - asset: assets/fonts/Raleway-Regular.ttf
+        - asset: assets/fonts/Raleway-Italic.ttf
+          style: italic
+        - asset: assets/fonts/Raleway-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Raleway-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Raleway-ExtraBold.ttf
+          weight: 800
+    - family: MaShanZheng
+      fonts:
+        - asset: assets/fonts/MaShanZheng-Regular.ttf
