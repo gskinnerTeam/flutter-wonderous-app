@@ -39,6 +39,8 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
         if (yPos != null && yPos < collapseStartPx) {
           // Get a normalized value, 0 - 1, representing the current amount of collapse.
           collapseAmt = (collapseStartPx - max(collapseEndPx, yPos)) / (collapseStartPx - collapseEndPx);
+        } else if (yPos == null) {
+          collapseAmt = 1.0;
         }
         // The sized boxes in the column collapse to a zero height, allowing the quotes to naturally sit over top of the image
         return MergeSemantics(
