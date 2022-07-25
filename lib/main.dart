@@ -9,7 +9,6 @@ import 'package:wonders/logic/timeline_logic.dart';
 import 'package:wonders/logic/unsplash_logic.dart';
 import 'package:wonders/logic/wallpaper_logic.dart';
 import 'package:wonders/logic/wonders_logic.dart';
-import 'package:intl/intl_standalone.dart';
 
 void main() {
   registerSingletons();
@@ -22,37 +21,21 @@ class WondersApp extends StatelessWidget {
   const WondersApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<String>(
-      future: findSystemLocale(),
-      builder: (_, localeSnapshot) {
-        if (localeSnapshot.hasData) {
-          final locale = Locale(localeSnapshot.data!.split('_')[0]);
-          // final locale = Locale('en');
-          // final locale = Locale('zh');
-
-          return FutureBuilder(
-            future: LocalizationHelper.load(locale),
-            builder: (_, snapshot) {
-              if (snapshot.hasData) {
-                return MaterialApp.router(
-                  locale: locale,
-                  debugShowCheckedModeBanner: false,
-                  routerDelegate: appRouter.routerDelegate,
-                  routeInformationParser: appRouter.routeInformationParser,
-                  localizationsDelegates: const [
-                    AppLocalizations.delegate,
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                    GlobalCupertinoLocalizations.delegate,
-                  ],
-                  supportedLocales: AppLocalizations.supportedLocales,
-                );
-              }
-              return CircularProgressIndicator();
-            },
-          );
-        }
-        return CircularProgressIndicator();
+    return LocalizationBuilder(
+      builder: (Locale locale) {
+        return MaterialApp.router(
+          locale: locale,
+          debugShowCheckedModeBanner: false,
+          routerDelegate: appRouter.routerDelegate,
+          routeInformationParser: appRouter.routeInformationParser,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: AppLocalizations.supportedLocales,
+        );
       },
     );
   }

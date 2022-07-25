@@ -1,4 +1,5 @@
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl_standalone.dart';
 import 'package:wonders/common_libs.dart';
 
 //LocalizationHelper exists to work around need for BuildContext ( used with AppLocalizations.of(BuildContext context) )
@@ -15,6 +16,37 @@ class LocalizationHelper {
   static Future<AppLocalizations> load(Locale locale) async {
     _instance = await AppLocalizations.delegate.load(locale);
     return _instance!;
+  }
+}
+
+//Widget for wrapping main app and call LocalizationHelper.load() after findSystemLocale() call
+class LocalizationBuilder extends StatelessWidget {
+  const LocalizationBuilder({Key? key, required this.builder}) : super(key: key);
+
+  final Widget Function(Locale locale) builder;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<String>(
+      future: findSystemLocale(),
+      builder: (_, localeSnapshot) {
+        if (localeSnapshot.hasData) {
+          final locale = Locale(localeSnapshot.data!.split('_')[0]);
+          // final locale = Locale('zh');
+
+          return FutureBuilder(
+            future: LocalizationHelper.load(locale),
+            builder: (_, snapshot) {
+              if (snapshot.hasData) {
+                return builder(locale);
+              }
+              return CircularProgressIndicator();
+            },
+          );
+        }
+        return CircularProgressIndicator();
+      },
+    );
   }
 }
 
