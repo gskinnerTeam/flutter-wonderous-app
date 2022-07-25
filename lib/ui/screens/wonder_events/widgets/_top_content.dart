@@ -87,7 +87,10 @@ class _TopContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          '${data.startYr}  to  ${data.endYr}',
+          LocalizationHelper.instance.titleLabelDate.supplant({
+            '{fromDate}': data.startYr.toString(),
+            '{endDate}': data.endYr.toString(),
+          }),
           style: $styles.text.body.copyWith(color: $styles.colors.accent2),
         ),
         _buildDot(context),

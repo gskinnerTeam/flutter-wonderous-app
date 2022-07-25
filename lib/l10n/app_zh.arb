@@ -63,6 +63,8 @@
 	"eraEarlyModern": "近代早期",
 	"eraModern": "现代",
 	"yearBCE": "公元前",
+	"yearCE": "年",
+	"timelineLabelConstruction": "{title}开工",
 	"timelineTitleGlobalTimeline": "全球时间表",
 	"wallpaperSemanticSharePhoto": "分享图片",
 	"wallpaperSemanticTakePhoto": "拍照",

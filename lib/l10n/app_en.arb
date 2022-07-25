@@ -65,6 +65,7 @@
 	"eraModern": "Modern Era",
 	"yearBCE": "BCE",
 	"yearCE": "CE",
+	"timelineLabelConstruction": "Construction of {title} begins.",
 	"timelineTitleGlobalTimeline": "Global Timeline",
 	"wallpaperSemanticSharePhoto": "share photo",
 	"wallpaperSemanticTakePhoto": "take photo",
