@@ -56,7 +56,7 @@ packages:
       name: build_config
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "1.1.0"
   build_daemon:
     dependency: transitive
     description:
@@ -77,7 +77,7 @@ packages:
       name: build_runner
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.11"
+    version: "2.2.0"
   build_runner_core:
     dependency: transitive
     description:
@@ -250,7 +250,7 @@ packages:
       name: flutter_animate
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.1"
+    version: "0.3.0+1"
   flutter_circular_text:
     dependency: "direct main"
     description:
@@ -297,7 +297,7 @@ packages:
       name: flutter_svg
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "1.1.1+1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -492,14 +492,14 @@ packages:
       name: json_annotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.5.0"
+    version: "4.6.0"
   json_serializable:
     dependency: "direct dev"
     description:
       name: json_serializable
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.2.0"
+    version: "6.3.1"
   lints:
     dependency: transitive
     description:
