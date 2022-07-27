@@ -1,3 +1,4 @@
+import 'package:wonders/_tools/localization_helper.dart';
 import 'package:wonders/common_libs.dart';
 
 class EightWaySwipeDetector extends StatefulWidget {
@@ -61,7 +62,7 @@ class _EightWaySwipeDetectorState extends State<EightWaySwipeDetector> {
     return Semantics(
       container: true,
       button: true,
-      label: 'eight-way swipe detector',
+      label: LocalizationHelper.instance.eightWaySemanticSwipeDetector,
       child: GestureDetector(
           behavior: HitTestBehavior.translucent,
           onPanStart: _handleSwipeStart,

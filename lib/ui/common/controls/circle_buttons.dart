@@ -1,3 +1,4 @@
+import 'package:wonders/_tools/localization_helper.dart';
 import 'package:wonders/common_libs.dart';
 
 class CircleBtn extends StatelessWidget {
@@ -81,12 +82,12 @@ class BackBtn extends StatelessWidget {
     this.iconColor,
   }) : super(key: key);
 
-  const BackBtn.close({Key? key, VoidCallback? onPressed, Color? bgColor, Color? iconColor})
+  BackBtn.close({Key? key, VoidCallback? onPressed, Color? bgColor, Color? iconColor})
       : this(
             key: key,
             icon: Icons.close,
             onPressed: onPressed,
-            semanticLabel: 'close',
+            semanticLabel: LocalizationHelper.instance.circleButtonsSemanticClose,
             bgColor: bgColor,
             iconColor: iconColor);
 
@@ -103,7 +104,7 @@ class BackBtn extends StatelessWidget {
       bgColor: bgColor,
       color: iconColor,
       onPressed: onPressed ?? () => Navigator.pop(context),
-      semanticLabel: semanticLabel ?? 'back',
+      semanticLabel: semanticLabel ?? LocalizationHelper.instance.circleButtonsSemanticBack,
     );
   }
 
