@@ -250,7 +250,7 @@ packages:
       name: flutter_animate
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.1"
+    version: "0.3.0+1"
   flutter_circular_text:
     dependency: "direct main"
     description:
