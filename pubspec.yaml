@@ -16,7 +16,7 @@ dependencies:
   equatable: ^2.0.3
   extra_alignments: ^1.0.0+1
   flextras: ^0.0.2
-  flutter_animate: ^0.1.1
+  flutter_animate: ^0.3.0+1
   flutter_circular_text: ^0.3.1
   flutter_inappwebview: ^5.4.3
   flutter_staggered_grid_view: ^0.6.1
@@ -35,7 +35,7 @@ dependencies:
   loading_indicator: ^3.0.3
   modal_bottom_sheet: ^2.0.0
   particle_field: ^0.0.1
-  path_provider: ^2.0.10
+  path_provider: ^2.0.11
   provider: ^6.0.2
   rnd: ^0.2.0
   screenshot: ^1.2.3
@@ -48,7 +48,7 @@ dependencies:
   youtube_player_iframe: ^2.3.0
 
 dev_dependencies:
-  build_runner: ^2.1.11
+  build_runner: ^2.2.0
   copy_with_extension_gen: ^4.0.1
   icons_launcher: ^2.0.1
   flutter_lints: ^2.0.1
