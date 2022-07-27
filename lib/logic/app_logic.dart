@@ -27,12 +27,13 @@ class AppLogic {
     await settingsLogic.load();
     unawaited(settingsLogic.scheduleSave()); // test save calls on each boot
 
-    // Collectibles
+    // Collectibles init
     await collectiblesLogic.load();
 
-    // Load initial view and flag bootStrap as complete
+    // flag bootStrap as complete
     isBootstrapComplete = true;
 
+    // load initial view (replace splash screen)
     if (settingsLogic.hasCompletedOnboarding.value) {
       appRouter.go(ScreenPaths.home);
     } else {
