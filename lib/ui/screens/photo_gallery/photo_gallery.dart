@@ -188,7 +188,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
           final imgUrl = _photoIds.value[index];
           bool showCollectible = index == _getCollectibleIndex() && collectiblesLogic.isLost(widget.wonderType, 1);
           return AppBtn.basic(
-            semanticLabel: localizationsLogic.instance.photoGallerySemanticCollectible,
+            semanticLabel: $strings.photoGallerySemanticCollectible,
             onPressed: () {
               if (showCollectible && selected) return;
               _handleImageTapped(index);

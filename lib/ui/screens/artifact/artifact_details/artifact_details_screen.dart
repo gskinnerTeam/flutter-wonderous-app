@@ -32,7 +32,7 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
         builder: (_, snapshot) {
           final data = snapshot.data;
           if (snapshot.hasData && data == null) {
-            return AppLoadError(label: StringUtils.supplant(localizationsLogic.instance.artifactDetailsErrorNotFound, {'{artifactId}': widget.artifactId}));
+            return AppLoadError(label: StringUtils.supplant($strings.artifactDetailsErrorNotFound, {'{artifactId}': widget.artifactId}));
           }
 
           return Stack(children: [

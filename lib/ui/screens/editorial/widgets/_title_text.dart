@@ -62,7 +62,7 @@ class _TitleText extends StatelessWidget {
               Gap($styles.insets.sm),
               Text(
                 StringUtils.supplant(
-                  localizationsLogic.instance.titleLabelDate,
+                  $strings.titleLabelDate,
                   {
                     '{fromDate}': StringUtils.formatYr(data.startYr),
                     '{endDate}': StringUtils.formatYr(data.endYr),

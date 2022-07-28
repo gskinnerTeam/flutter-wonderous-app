@@ -13,7 +13,7 @@ class _NewlyDiscoveredRow extends StatelessWidget {
 
     return AppBtn.basic(
       semanticLabel: StringUtils.supplant(
-        localizationsLogic.instance.newlyDiscoveredSemanticNew,
+        $strings.newlyDiscoveredSemanticNew,
         {'{count}': count.toString(), '{plural}': count == 1 ? '' : 's'},
       ),
       onPressed: onPressed,
@@ -24,7 +24,7 @@ class _NewlyDiscoveredRow extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: $styles.insets.xs),
         child: Text(
           StringUtils.supplant(
-            localizationsLogic.instance.newlyDiscoveredLabelNew,
+            $strings.newlyDiscoveredLabelNew,
             {'{count}': count.toString(), '{plural}': count == 1 ? '' : 's'},
           ),
           textAlign: TextAlign.center,

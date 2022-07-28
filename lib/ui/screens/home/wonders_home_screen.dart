@@ -167,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               color: $styles.colors.white,
                               dotSize: 8,
                               onDotPressed: _handlePageIndicatorDotPressed,
-                              semanticPageTitle: localizationsLogic.instance.homeSemanticWonder,
+                              semanticPageTitle: $strings.homeSemanticWonder,
                             ),
                           ],
                         ),
@@ -204,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     child: CircleIconBtn(
                       icon: Icons.menu,
                       onPressed: _handleOpenMenuPressed,
-                      semanticLabel: localizationsLogic.instance.homeSemanticOpenMain,
+                      semanticLabel: $strings.homeSemanticOpenMain,
                     ).safe(),
                   ),
                 ),

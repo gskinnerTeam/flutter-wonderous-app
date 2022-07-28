@@ -121,7 +121,7 @@ class CollectibleFoundScreen extends StatelessWidget {
 
   Widget _buildRibbon(BuildContext context) {
     Duration t = $styles.times.fast;
-    return _AnimatedRibbon(localizationsLogic.instance.collectibleFoundTitleArtifactDiscovered.toUpperCase())
+    return _AnimatedRibbon($strings.collectibleFoundTitleArtifactDiscovered.toUpperCase())
         .animate()
         .scale(begin: 0.3, duration: t * 2, curve: Curves.easeOutExpo, alignment: Alignment(0, -1));
   }
@@ -150,7 +150,7 @@ class CollectibleFoundScreen extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all($styles.insets.lg),
       child: AppBtn.from(
-        text: localizationsLogic.instance.collectibleFoundButtonViewCollection,
+        text: $strings.collectibleFoundButtonViewCollection,
         isSecondary: true,
         expand: true,
         onPressed: () => _handleViewCollectionPressed(context),

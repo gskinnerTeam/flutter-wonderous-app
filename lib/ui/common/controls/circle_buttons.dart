@@ -86,7 +86,7 @@ class BackBtn extends StatelessWidget {
             key: key,
             icon: Icons.close,
             onPressed: onPressed,
-            semanticLabel: localizationsLogic.instance.circleButtonsSemanticClose,
+            semanticLabel: $strings.circleButtonsSemanticClose,
             bgColor: bgColor,
             iconColor: iconColor);
 
@@ -103,7 +103,7 @@ class BackBtn extends StatelessWidget {
       bgColor: bgColor,
       color: iconColor,
       onPressed: onPressed ?? () => Navigator.pop(context),
-      semanticLabel: semanticLabel ?? localizationsLogic.instance.circleButtonsSemanticBack,
+      semanticLabel: semanticLabel ?? $strings.circleButtonsSemanticBack,
     );
   }
 

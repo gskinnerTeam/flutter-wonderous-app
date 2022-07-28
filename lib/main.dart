@@ -68,4 +68,5 @@ UnsplashLogic get unsplashLogic => GetIt.I.get<UnsplashLogic>();
 MetAPILogic get metAPILogic => GetIt.I.get<MetAPILogic>();
 CollectiblesLogic get collectiblesLogic => GetIt.I.get<CollectiblesLogic>();
 WallPaperLogic get wallpaperLogic => GetIt.I.get<WallPaperLogic>();
-LocalizationsLogic get localizationsLogic => GetIt.I.get<LocalizationsLogic>();
+LocalizationsLogic get localeLogic => GetIt.I.get<LocalizationsLogic>();
+AppLocalizations get $strings => localeLogic.strings;

@@ -88,7 +88,7 @@ class _TopContent extends StatelessWidget {
       children: [
         Text(
           StringUtils.supplant(
-            localizationsLogic.instance.titleLabelDate,
+            $strings.titleLabelDate,
             {
               '{fromDate}': data.startYr.toString(),
               '{endDate}': data.endYr.toString(),

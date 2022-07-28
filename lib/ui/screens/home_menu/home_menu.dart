@@ -96,9 +96,9 @@ class HomeMenu extends StatelessWidget {
             curve: Curves.easeOutBack,
           ),
       children: [
-        _MenuTextBtn(label: localizationsLogic.instance.homeMenuButtonExplore, onPressed: () => _handleTimelinePressed(context)),
-        _MenuTextBtn(label: localizationsLogic.instance.homeMenuButtonView, onPressed: () => _handleCollectionPressed(context)),
-        _MenuTextBtn(label: localizationsLogic.instance.homeMenuButtonAbout, onPressed: _handleAboutPressed),
+        _MenuTextBtn(label: $strings.homeMenuButtonExplore, onPressed: () => _handleTimelinePressed(context)),
+        _MenuTextBtn(label: $strings.homeMenuButtonView, onPressed: () => _handleCollectionPressed(context)),
+        _MenuTextBtn(label: $strings.homeMenuButtonAbout, onPressed: _handleAboutPressed),
       ]
           .animate(interval: 80.ms)
           .fade(delay: $styles.times.pageTransition + 100.ms)

@@ -24,7 +24,7 @@ class AppLogic {
     setDeviceOrientation(Axis.vertical);
 
     // Localizations load
-    await localizationsLogic.load();
+    await localeLogic.load();
 
     // Data load
     await wondersLogic.load();

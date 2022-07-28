@@ -54,7 +54,7 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
               curve: Curves.easeOut,
               padding: isOpen ? EdgeInsets.zero : EdgeInsets.symmetric(vertical: $styles.insets.md),
               child: AppBtn.basic(
-                semanticLabel: localizationsLogic.instance.expandingTimeSelectorSemanticSelector,
+                semanticLabel: $strings.expandingTimeSelectorSemanticSelector,
                 onPressed: widget.panelController.toggle,
                 child: OpeningCard(
                   isOpen: isOpen,

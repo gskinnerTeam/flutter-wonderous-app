@@ -49,14 +49,13 @@ class StringUtils {
     return '${yr.abs()} ${getYrSuffix(yr)}';
   }
 
-  static String getYrSuffix(int yr) =>
-      yr < 0 ? localizationsLogic.instance.yearBCE : localizationsLogic.instance.yearCE;
+  static String getYrSuffix(int yr) => yr < 0 ? $strings.yearBCE : $strings.yearCE;
 
   static String getEra(int yr) {
-    if (yr <= -600) return localizationsLogic.instance.eraPrehistory;
-    if (yr <= 476) return localizationsLogic.instance.eraClassical;
-    if (yr <= 1450) return localizationsLogic.instance.eraEarlyModern;
-    return localizationsLogic.instance.eraModern;
+    if (yr <= -600) return $strings.eraPrehistory;
+    if (yr <= 476) return $strings.eraClassical;
+    if (yr <= 1450) return $strings.eraEarlyModern;
+    return $strings.eraModern;
   }
 
   static String capitalize(String value) {

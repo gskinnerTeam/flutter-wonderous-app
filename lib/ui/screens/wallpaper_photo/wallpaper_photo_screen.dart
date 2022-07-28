@@ -144,14 +144,14 @@ class _WallpaperPhotoScreenState extends State<WallpaperPhotoScreen> {
                     bgColor: $styles.colors.offWhite,
                     color: $styles.colors.black,
                     onPressed: () => _handleSharePhoto(context, wonderData.title),
-                    semanticLabel: localizationsLogic.instance.wallpaperSemanticSharePhoto,
+                    semanticLabel: $strings.wallpaperSemanticSharePhoto,
                     size: 44,
                   ),
                 ),
                 CircleIconBtn(
                   icon: Icons.file_download_outlined,
                   onPressed: () => _handleTakePhoto(context, wonderData.title),
-                  semanticLabel: localizationsLogic.instance.wallpaperSemanticTakePhoto,
+                  semanticLabel: $strings.wallpaperSemanticTakePhoto,
                   size: 64,
                 ),
               ],
@@ -163,7 +163,7 @@ class _WallpaperPhotoScreenState extends State<WallpaperPhotoScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SimpleCheckbox(active: _showTitleText, label: localizationsLogic.instance.wallpaperCheckboxShowTitle, onToggled: _handleTextToggle),
+            SimpleCheckbox(active: _showTitleText, label: $strings.wallpaperCheckboxShowTitle, onToggled: _handleTextToggle),
             Gap($styles.insets.xl),
           ],
         ),

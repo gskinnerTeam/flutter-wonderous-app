@@ -62,16 +62,16 @@ class _IntroScreenState extends State<IntroScreen> {
                     controller: _pageController,
                     children: [
                       _Page(
-                        title: localizationsLogic.instance.introTitleJourney,
-                        desc: localizationsLogic.instance.introDescriptionNavigate,
+                        title: $strings.introTitleJourney,
+                        desc: $strings.introDescriptionNavigate,
                       ),
                       _Page(
-                        title: localizationsLogic.instance.introTitleExplore,
-                        desc: localizationsLogic.instance.introDescriptionUncover,
+                        title: $strings.introTitleExplore,
+                        desc: $strings.introDescriptionUncover,
                       ),
                       _Page(
-                        title: localizationsLogic.instance.introTitleDiscover,
-                        desc: localizationsLogic.instance.introDescriptionLearn,
+                        title: $strings.introTitleDiscover,
+                        desc: $strings.introDescriptionLearn,
                       ),
                     ],
                   ),
@@ -117,13 +117,13 @@ class _IntroScreenState extends State<IntroScreen> {
                           opacity: page == 2 ? 0 : 1,
                           duration: $styles.times.fast,
                           child: Semantics(
-                            onTapHint: localizationsLogic.instance.introSemanticNavigate,
+                            onTapHint: $strings.introSemanticNavigate,
                             onTap: () {
                               var current = _pageController.page!.round();
                               _pageController.animateToPage(current + 1,
                                   duration: const Duration(milliseconds: 250), curve: Curves.easeIn);
                             },
-                            child: Text(localizationsLogic.instance.introSemanticSwipeLeft, style: $styles.text.bodySmall.copyWith(height: 3)),
+                            child: Text($strings.introSemanticSwipeLeft, style: $styles.text.bodySmall.copyWith(height: 3)),
                           ),
                         ),
                       ),
@@ -135,7 +135,7 @@ class _IntroScreenState extends State<IntroScreen> {
                             icon: Icons.chevron_right,
                             bgColor: $styles.colors.accent1,
                             onPressed: _handleIntroCompletePressed,
-                            semanticLabel: localizationsLogic.instance.introSemanticEnterApp,
+                            semanticLabel: $strings.introSemanticEnterApp,
                           ),
                         ),
                       ),
@@ -186,7 +186,7 @@ class _WonderousLogo extends StatelessWidget {
         ),
         Gap($styles.insets.xs),
         Text(
-          localizationsLogic.instance.introSemanticWonderous,
+          $strings.introSemanticWonderous,
           style: $styles.text.wonderTitle.copyWith(fontSize: 32, color: $styles.colors.offWhite),
         )
       ],

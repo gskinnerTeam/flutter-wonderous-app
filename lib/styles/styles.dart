@@ -51,9 +51,9 @@ class _Text {
   };
 
   TextStyle _getFontForLocale(Map<String, TextStyle> fonts) {
-    if (localizationsLogic.isLoaded) {
+    if (localeLogic.isLoaded) {
       return fonts.entries
-          .firstWhere((x) => x.key == localizationsLogic.instance.localeName, orElse: () => fonts.entries.first)
+          .firstWhere((x) => x.key == $strings.localeName, orElse: () => fonts.entries.first)
           .value;
     } else {
       return fonts.entries.first.value;

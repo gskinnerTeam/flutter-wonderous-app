@@ -61,7 +61,7 @@ class _EightWaySwipeDetectorState extends State<EightWaySwipeDetector> {
     return Semantics(
       container: true,
       button: true,
-      label: localizationsLogic.instance.eightWaySemanticSwipeDetector,
+      label: $strings.eightWaySemanticSwipeDetector,
       child: GestureDetector(
           behavior: HitTestBehavior.translucent,
           onPanStart: _handleSwipeStart,

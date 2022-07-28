@@ -12,7 +12,7 @@ class TimelineLogic {
       events.add(
         TimelineEvent(
           w.startYr,
-          StringUtils.supplant(localizationsLogic.instance.timelineLabelConstruction, {'{title}': w.title}),
+          StringUtils.supplant($strings.timelineLabelConstruction, {'{title}': w.title}),
         ),
       );
     }

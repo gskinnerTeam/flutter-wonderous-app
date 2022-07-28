@@ -79,7 +79,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SimpleHeader(localizationsLogic.instance.artifactsSearchTitleBrowse, subtitle: wonder.title),
+          SimpleHeader($strings.artifactsSearchTitleBrowse, subtitle: wonder.title),
           Gap($styles.insets.xs),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: $styles.insets.sm),
@@ -126,7 +126,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
     final TextStyle statusStyle = $styles.text.body.copyWith(color: $styles.colors.accent1);
     if (_searchResults.isEmpty) {
       return Text(
-        localizationsLogic.instance.artifactsSearchLabelNotFound,
+        $strings.artifactsSearchLabelNotFound,
         textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
         style: statusStyle,
         textAlign: TextAlign.center,
@@ -137,7 +137,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
         Gap($styles.insets.sm),
         Text(
           StringUtils.supplant(
-            localizationsLogic.instance.artifactsSearchLabelFound,
+            $strings.artifactsSearchLabelFound,
             {
               '{numFound}': _searchResults.length.toString(),
               '{numResults}': _filteredResults.length.toString(),
@@ -147,10 +147,10 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
           style: statusStyle,
         ),
         AppBtn.basic(
-          semanticLabel: localizationsLogic.instance.artifactsSearchButtonToggle,
+          semanticLabel: $strings.artifactsSearchButtonToggle,
           onPressed: () => panelController.toggle(),
           child: Text(
-            localizationsLogic.instance.artifactsSearchSemanticTimeframe,
+            $strings.artifactsSearchSemanticTimeframe,
             textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
             style: statusStyle.copyWith(decoration: TextDecoration.underline),
           ),
@@ -161,7 +161,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
   }
 
   Widget _buildEmptyIndicator(BuildContext context) {
-    final strings = localizationsLogic.instance;
+    final strings = $strings;
     String text =
         '${strings.artifactsSearchLabelAdjust} ${_searchResults.isEmpty ? strings.artifactsSearchLabelSearch : strings.artifactsSearchLabelTimeframe}';
     IconData icon = _searchResults.isEmpty ? Icons.search_outlined : Icons.edit_calendar_outlined;

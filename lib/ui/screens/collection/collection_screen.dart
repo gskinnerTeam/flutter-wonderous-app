@@ -56,7 +56,7 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
   }
 
   void _handleReset() async {
-    String msg = localizationsLogic.instance.collectionPopupResetConfirm;
+    String msg = $strings.collectionPopupResetConfirm;
     final result = await showModal(context, child: OkCancelModal(msg: msg));
     if (result == true) {
       collectiblesLogic.reset();
@@ -80,7 +80,7 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
       child: Stack(children: [
         Positioned.fill(
           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            SimpleHeader(localizationsLogic.instance.collectionTitleCollection),
+            SimpleHeader($strings.collectionTitleCollection),
             _NewlyDiscoveredRow(count: discovered, onPressed: _scrollToTarget),
             _CollectionList(
               states: _states,

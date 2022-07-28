@@ -5,10 +5,10 @@ import 'package:intl/intl_standalone.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LocalizationsLogic {
-  AppLocalizations? _instance;
-  AppLocalizations get instance => _instance!;
+  AppLocalizations? _strings;
+  AppLocalizations get strings => _strings!;
 
-  bool get isLoaded => _instance != null;
+  bool get isLoaded => _strings != null;
 
   Future<void> load() async {
     final localeCode = await findSystemLocale();
@@ -16,6 +16,6 @@ class LocalizationsLogic {
     if (kDebugMode) {
       locale = Locale('zh');
     }
-    _instance = await AppLocalizations.delegate.load(locale);
+    _strings = await AppLocalizations.delegate.load(locale);
   }
 }
