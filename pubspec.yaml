@@ -35,7 +35,7 @@ dependencies:
   loading_indicator: ^3.0.3
   modal_bottom_sheet: ^2.1.0
   particle_field: ^0.0.1
-  path_provider: ^2.0.10
+  path_provider: ^2.0.11
   provider: ^6.0.2
   rnd: ^0.2.0
   screenshot: ^1.2.3
