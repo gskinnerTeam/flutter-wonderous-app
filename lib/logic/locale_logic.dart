@@ -14,7 +14,8 @@ class LocaleLogic {
     final localeCode = await findSystemLocale();
     Locale locale = Locale(localeCode.split('_')[0]);
     if (kDebugMode) {
-      locale = Locale('zh');
+      // Uncomment for testing in chinese
+      // locale = Locale('zh');
     }
     _strings = await AppLocalizations.delegate.load(locale);
   }

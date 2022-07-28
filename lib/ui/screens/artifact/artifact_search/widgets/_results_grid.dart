@@ -33,7 +33,7 @@ class _ResultsGrid extends StatelessWidget {
   }
 
   Widget _buildLanguageMessage(BuildContext context) {
-    bool isEnglish = Localizations.localeOf(context).languageCode == 'en';
+    bool isEnglish = localeLogic.strings.localeName == 'en';
     return ValueListenableBuilder<bool>(
       valueListenable: settingsLogic.hasDismissedSearchMessage,
       builder: (_, value, __) {
