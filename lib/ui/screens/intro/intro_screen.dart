@@ -3,7 +3,6 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 
-/// TODO: SB - Do another pass on this screen for responsiveness. It has issues fitting vertically on small screens.
 class IntroScreen extends StatefulWidget {
   const IntroScreen({Key? key}) : super(key: key);
 
@@ -12,9 +11,19 @@ class IntroScreen extends StatefulWidget {
 }
 
 class _IntroScreenState extends State<IntroScreen> {
-  static const double _imageHeight = 264;
+  static const double _imageSize = 264;
+  static const double _logoHeight = 126;
+  static const double _textHeight = 172;
+  static const double _pageIndicatorHeight = 48;
+
+  static List<_PageData> pageData = [
+    _PageData($strings.introTitleJourney, $strings.introDescriptionNavigate, 'camel', '1'),
+    _PageData($strings.introTitleExplore, $strings.introDescriptionUncover, 'petra', '2'),
+    _PageData($strings.introTitleDiscover, $strings.introDescriptionLearn, 'statue', '3'),
+  ];
+
   late final PageController _pageController = PageController()..addListener(_handlePageChanged);
-  final _currentPage = ValueNotifier(0);
+  final ValueNotifier<int> _currentPage = ValueNotifier(0);
 
   @override
   void dispose() {
@@ -34,140 +43,160 @@ class _IntroScreenState extends State<IntroScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // This view uses a full screen PageView to enable swipe navigation.
+    // However, we only want the title / description to actually swipe,
+    // so we stack a PageView with that content over top of all the other
+    // content, and line up their layouts.
+
+    final List<Widget> pages = pageData.map((e) => _Page(data: e)).toList();
+
+    final Widget content = Stack(children: [
+      Column(children: [
+        Spacer(),
+
+        // logo:
+        Semantics(
+          header: true,
+          child: Container(
+            height: _logoHeight,
+            alignment: Alignment.center,
+            child: _WonderousLogo(),
+          ),
+        ),
+
+        // masked image:
+        SizedBox(
+          height: _imageSize,
+          width: _imageSize,
+          child: ValueListenableBuilder<int>(
+            valueListenable: _currentPage,
+            builder: (_, value, __) {
+              return AnimatedSwitcher(
+                duration: $styles.times.slow,
+                child: KeyedSubtree(
+                  key: ValueKey(value), // so AnimatedSwitcher sees it as a different child.
+                  child: _PageImage(data: pageData[value]),
+                ),
+              );
+            },
+          ),
+        ),
+
+        // placeholder gap for text:
+        Gap(_IntroScreenState._textHeight),
+
+        // page indicator & nav text:
+        _buildPageIndicator(context),
+
+        Spacer(flex: 2),
+      ]),
+
+      // page view with title & description:
+      PageView(
+        controller: _pageController,
+        children: pages,
+      ),
+
+      // finish button:
+      Positioned(
+        right: $styles.insets.lg,
+        bottom: $styles.insets.lg,
+        child: _buildFinishBtn(context),
+      ),
+    ]);
+
     return DefaultTextColor(
       color: $styles.colors.offWhite,
       child: Container(
-        padding: EdgeInsets.all($styles.insets.xxl),
         color: $styles.colors.black,
-        child: Column(
-          children: [
-            Spacer(),
-
-            /// Logo
-            Semantics(
-              header: true,
-              child: _WonderousLogo(),
-            ),
-            Gap($styles.insets.sm),
-
-            /// Text + Image
-            /// Set in a stack with a PageView on the bottom, and a masked image on top.
-            /// Each page in the PageView has an empty gap at the top, which lines up with the masked image.
-            /// The masked image cross fades as pages are changed.
-            Stack(
-              children: [
-                SizedBox(
-                  height: 440,
-                  child: PageView(
-                    controller: _pageController,
-                    children: [
-                      _Page(
-                        title: $strings.introTitleJourney,
-                        desc: $strings.introDescriptionNavigate,
-                      ),
-                      _Page(
-                        title: $strings.introTitleExplore,
-                        desc: $strings.introDescriptionUncover,
-                      ),
-                      _Page(
-                        title: $strings.introTitleDiscover,
-                        desc: $strings.introDescriptionLearn,
-                      ),
-                    ],
-                  ),
-                ),
-                IgnorePointer(
-                  child: SizedBox(
-                    height: _imageHeight,
-                    child: ValueListenableBuilder(
-                      valueListenable: _currentPage,
-                      builder: (_, value, __) {
-                        late Widget child;
-                        if (value == 0) {
-                          child = _PageImage(img: 'camel', mask: '1');
-                        } else if (value == 1) {
-                          child = _PageImage(img: 'petra', mask: '2');
-                        } else {
-                          child = _PageImage(img: 'statue', mask: '3');
-                        }
-                        return AnimatedSwitcher(
-                          duration: $styles.times.med,
-                          child: child,
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Gap($styles.insets.xl),
-
-            /// Page Indicator
-            AppPageIndicator(count: 3, controller: _pageController, color: $styles.colors.offWhite),
-            Spacer(),
-
-            /// Bottom text / button
-            ValueListenableBuilder(
-                valueListenable: _currentPage,
-                builder: (_, page, __) {
-                  return Stack(
-                    children: [
-                      Center(
-                        child: AnimatedOpacity(
-                          opacity: page == 2 ? 0 : 1,
-                          duration: $styles.times.fast,
-                          child: Semantics(
-                            onTapHint: $strings.introSemanticNavigate,
-                            onTap: () {
-                              var current = _pageController.page!.round();
-                              _pageController.animateToPage(current + 1,
-                                  duration: const Duration(milliseconds: 250), curve: Curves.easeIn);
-                            },
-                            child: Text($strings.introSemanticSwipeLeft, style: $styles.text.bodySmall.copyWith(height: 3)),
-                          ),
-                        ),
-                      ),
-                      CenterRight(
-                        child: AnimatedOpacity(
-                          opacity: page == 2 ? 1 : 0,
-                          duration: $styles.times.fast,
-                          child: CircleIconBtn(
-                            icon: Icons.chevron_right,
-                            bgColor: $styles.colors.accent1,
-                            onPressed: _handleIntroCompletePressed,
-                            semanticLabel: $strings.introSemanticEnterApp,
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                }),
-          ],
-        ).animate().fadeIn(delay: 500.ms),
+        child: SafeArea(child: content.animate().fadeIn(delay: 500.ms)),
       ),
+    );
+  }
+
+  Widget _buildFinishBtn(BuildContext context) {
+    return ValueListenableBuilder<int>(
+      valueListenable: _currentPage,
+      builder: (_, pageIndex, __) {
+        return AnimatedOpacity(
+          opacity: pageIndex == pageData.length - 1 ? 1 : 0,
+          duration: $styles.times.fast,
+          child: CircleIconBtn(
+            icon: Icons.chevron_right,
+            bgColor: $styles.colors.accent1,
+            onPressed: _handleIntroCompletePressed,
+            semanticLabel: $strings.introSemanticEnterApp,
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildPageIndicator(BuildContext context) {
+    return SizedBox(
+      height: _pageIndicatorHeight,
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        AppPageIndicator(count: pageData.length, controller: _pageController, color: $styles.colors.offWhite),
+        Gap($styles.insets.xs),
+        ValueListenableBuilder(
+          valueListenable: _currentPage,
+          builder: (_, pageIndex, __) {
+            return AnimatedOpacity(
+              opacity: pageIndex == pageData.length - 1 ? 0 : 1,
+              duration: $styles.times.fast,
+              child: Semantics(
+                onTapHint: $strings.introSemanticNavigate,
+                onTap: () {
+                  final int current = _pageController.page!.round();
+                  _pageController.animateToPage(current + 1, duration: 250.ms, curve: Curves.easeIn);
+                },
+                child: Text($strings.introSemanticSwipeLeft, style: $styles.text.bodySmall),
+              ),
+            );
+          },
+        ),
+      ]),
     );
   }
 }
 
-class _Page extends StatelessWidget {
-  const _Page({Key? key, required this.title, required this.desc}) : super(key: key);
+@immutable
+class _PageData {
+  const _PageData(this.title, this.desc, this.img, this.mask);
+
   final String title;
   final String desc;
+  final String img;
+  final String mask;
+}
+
+class _Page extends StatelessWidget {
+  const _Page({Key? key, required this.data}) : super(key: key);
+
+  final _PageData data;
 
   @override
   Widget build(BuildContext context) {
     return Semantics(
       liveRegion: true,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(height: _IntroScreenState._imageHeight, width: _IntroScreenState._imageHeight),
-          Gap($styles.insets.lg),
-          Text(title, style: $styles.text.wonderTitle.copyWith(fontSize: 24)),
-          Gap($styles.insets.sm),
-          Text(desc, style: $styles.text.body),
-        ],
-      ),
+      child: Column(children: [
+        Spacer(),
+        Gap(_IntroScreenState._imageSize + _IntroScreenState._logoHeight),
+        SizedBox(
+          height: _IntroScreenState._textHeight,
+          width: _IntroScreenState._imageSize,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(data.title, style: $styles.text.wonderTitle.copyWith(fontSize: 24)),
+              Gap($styles.insets.sm),
+              Text(data.desc, style: $styles.text.body),
+            ],
+          ),
+        ),
+        Gap(_IntroScreenState._pageIndicatorHeight),
+        Spacer(flex: 2),
+      ]),
     );
   }
 }
@@ -176,13 +205,10 @@ class _WonderousLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ExcludeSemantics(
-          child: SvgPicture.asset(
-            SvgPaths.compassSimple,
-            color: $styles.colors.offWhite,
-            height: 48,
-          ),
+          child: SvgPicture.asset(SvgPaths.compassSimple, color: $styles.colors.offWhite, height: 48),
         ),
         Gap($styles.insets.xs),
         Text(
@@ -195,10 +221,9 @@ class _WonderousLogo extends StatelessWidget {
 }
 
 class _PageImage extends StatelessWidget {
-  const _PageImage({Key? key, required this.img, required this.mask}) : super(key: key);
+  const _PageImage({Key? key, required this.data}) : super(key: key);
 
-  final String img;
-  final String mask;
+  final _PageData data;
 
   @override
   Widget build(BuildContext context) {
@@ -206,14 +231,14 @@ class _PageImage extends StatelessWidget {
       children: [
         SizedBox.expand(
           child: Image.asset(
-            '${ImagePaths.common}/intro-$img.jpg',
+            '${ImagePaths.common}/intro-${data.img}.jpg',
             fit: BoxFit.cover,
             alignment: Alignment.centerRight,
           ),
         ),
         Positioned.fill(
             child: Image.asset(
-          '${ImagePaths.common}/intro-mask-$mask.png',
+          '${ImagePaths.common}/intro-mask-${data.mask}.png',
           fit: BoxFit.fill,
         )),
       ],
