@@ -31,7 +31,7 @@ dependencies:
   image_fade: ^0.6.1
   image_gallery_saver: ^1.7.1
   internet_connection_checker: ^0.0.1+3
-  json_annotation: ^4.5.0
+  json_annotation: ^4.6.0
   loading_indicator: ^3.0.3
   modal_bottom_sheet: ^2.1.0
   particle_field: ^0.0.1
