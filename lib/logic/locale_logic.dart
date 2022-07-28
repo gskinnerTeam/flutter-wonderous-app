@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:intl/intl_standalone.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class LocalizationsLogic {
+class LocaleLogic {
   AppLocalizations? _strings;
   AppLocalizations get strings => _strings!;
 

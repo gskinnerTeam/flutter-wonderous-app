@@ -2,7 +2,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/collectibles_logic.dart';
-import 'package:wonders/logic/localizations_logic.dart';
+import 'package:wonders/logic/locale_logic.dart';
 import 'package:wonders/logic/met_api_logic.dart';
 import 'package:wonders/logic/met_api_service.dart';
 import 'package:wonders/logic/timeline_logic.dart';
@@ -55,7 +55,7 @@ void registerSingletons() {
   // Collectibles
   GetIt.I.registerLazySingleton<CollectiblesLogic>(() => CollectiblesLogic());
   // Localizations
-  GetIt.I.registerLazySingleton<LocalizationsLogic>(() => LocalizationsLogic());
+  GetIt.I.registerLazySingleton<LocaleLogic>(() => LocaleLogic());
 }
 
 /// Add syntax sugar for quickly accessing the main logical controllers in the app
@@ -68,5 +68,5 @@ UnsplashLogic get unsplashLogic => GetIt.I.get<UnsplashLogic>();
 MetAPILogic get metAPILogic => GetIt.I.get<MetAPILogic>();
 CollectiblesLogic get collectiblesLogic => GetIt.I.get<CollectiblesLogic>();
 WallPaperLogic get wallpaperLogic => GetIt.I.get<WallPaperLogic>();
-LocalizationsLogic get localeLogic => GetIt.I.get<LocalizationsLogic>();
+LocaleLogic get localeLogic => GetIt.I.get<LocaleLogic>();
 AppLocalizations get $strings => localeLogic.strings;
