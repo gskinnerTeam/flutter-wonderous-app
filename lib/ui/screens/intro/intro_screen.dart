@@ -13,8 +13,8 @@ class IntroScreen extends StatefulWidget {
 class _IntroScreenState extends State<IntroScreen> {
   static const double _imageSize = 264;
   static const double _logoHeight = 126;
-  static const double _textHeight = 172;
-  static const double _pageIndicatorHeight = 48;
+  static const double _textHeight = 155;
+  static const double _pageIndicatorHeight = 55;
 
   static const List<_PageData> pageData = [
     _PageData('Journey to the past', 'Navigate the intersection of time, art, and culture.', 'camel', '1'),
@@ -86,8 +86,12 @@ class _IntroScreenState extends State<IntroScreen> {
         // placeholder gap for text:
         Gap(_IntroScreenState._textHeight),
 
-        // page indicator & nav text:
-        _buildPageIndicator(context),
+        // page indicator:
+        Container(
+          height: _pageIndicatorHeight,
+          alignment: Alignment(0.0, -0.75),
+          child: AppPageIndicator(count: pageData.length, controller: _pageController, color: $styles.colors.offWhite),
+        ),
 
         Spacer(flex: 2),
       ]),
@@ -103,6 +107,14 @@ class _IntroScreenState extends State<IntroScreen> {
         right: $styles.insets.lg,
         bottom: $styles.insets.lg,
         child: _buildFinishBtn(context),
+      ),
+
+      // nav help text:
+      BottomCenter(
+        child: Padding(
+          padding: EdgeInsets.only(bottom: $styles.insets.lg),
+          child: _buildNavText(context),
+        ),
       ),
     ]);
 
@@ -133,30 +145,23 @@ class _IntroScreenState extends State<IntroScreen> {
     );
   }
 
-  Widget _buildPageIndicator(BuildContext context) {
-    return SizedBox(
-      height: _pageIndicatorHeight,
-      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        AppPageIndicator(count: pageData.length, controller: _pageController, color: $styles.colors.offWhite),
-        Gap($styles.insets.xs),
-        ValueListenableBuilder(
-          valueListenable: _currentPage,
-          builder: (_, pageIndex, __) {
-            return AnimatedOpacity(
-              opacity: pageIndex == pageData.length - 1 ? 0 : 1,
-              duration: $styles.times.fast,
-              child: Semantics(
-                onTapHint: 'Navigate',
-                onTap: () {
-                  final int current = _pageController.page!.round();
-                  _pageController.animateToPage(current + 1, duration: 250.ms, curve: Curves.easeIn);
-                },
-                child: Text('Swipe left to continue', style: $styles.text.bodySmall),
-              ),
-            );
-          },
-        ),
-      ]),
+  Widget _buildNavText(BuildContext context) {
+    return ValueListenableBuilder(
+      valueListenable: _currentPage,
+      builder: (_, pageIndex, __) {
+        return AnimatedOpacity(
+          opacity: pageIndex == pageData.length - 1 ? 0 : 1,
+          duration: $styles.times.fast,
+          child: Semantics(
+            onTapHint: 'Navigate',
+            onTap: () {
+              final int current = _pageController.page!.round();
+              _pageController.animateToPage(current + 1, duration: 250.ms, curve: Curves.easeIn);
+            },
+            child: Text('Swipe left to continue', style: $styles.text.bodySmall),
+          ),
+        );
+      },
     );
   }
 }
@@ -185,13 +190,13 @@ class _Page extends StatelessWidget {
         Gap(_IntroScreenState._imageSize + _IntroScreenState._logoHeight),
         SizedBox(
           height: _IntroScreenState._textHeight,
-          width: _IntroScreenState._imageSize,
+          width: _IntroScreenState._imageSize + $styles.insets.md,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(data.title, style: $styles.text.wonderTitle.copyWith(fontSize: 24)),
               Gap($styles.insets.sm),
-              Text(data.desc, style: $styles.text.body),
+              Text(data.desc, style: $styles.text.body, textAlign: TextAlign.center),
             ],
           ),
         ),
