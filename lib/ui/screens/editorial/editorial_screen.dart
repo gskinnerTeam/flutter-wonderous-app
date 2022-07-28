@@ -128,7 +128,6 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
               CustomScrollView(
                 primary: false,
                 controller: _scroller,
-                cacheExtent: 100,
                 slivers: [
                   /// Invisible padding at the top of the list, so the illustration shows through the btm
                   SliverToBoxAdapter(
@@ -170,14 +169,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                   ),
 
                   /// Editorial content (text and images)
-                  SliverToBoxAdapter(
-                    child: ValueListenableBuilder<bool>(
-                      // Hide content based on _showBottomListContent, helping to lighten the initial page load.
-                      valueListenable: _showBottomListContent,
-                      builder: (_, value, child) => value ? child! : SizedBox(height: 1000),
-                      child: _ScrollingContent(widget.data, scrollPos: _scrollPos, sectionNotifier: _sectionIndex),
-                    ),
-                  ),
+                  _ScrollingContent(widget.data, scrollPos: _scrollPos, sectionNotifier: _sectionIndex),
 
                   SliverList(
                     delegate: SliverChildListDelegate.fixed([]),

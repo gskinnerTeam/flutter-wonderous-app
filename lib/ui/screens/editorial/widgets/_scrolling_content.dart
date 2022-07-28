@@ -75,52 +75,57 @@ class _ScrollingContent extends StatelessWidget {
       );
     }
 
-    return Container(
+    return SliverBackgroundColor(
       color: $styles.colors.offWhite,
-      padding: EdgeInsets.symmetric(vertical: $styles.insets.md),
-      child: SeparatedColumn(
-        separatorBuilder: () => Gap($styles.insets.md),
-        children: [
-          _ContentSection([
-            buildHiddenCollectible(slot: 0),
+      sliver: SliverPadding(
+        padding: EdgeInsets.symmetric(vertical: $styles.insets.md),
+        sliver: SliverList(
+          delegate: SliverChildListDelegate([
+            _ContentSection([
+              buildHiddenCollectible(slot: 0),
 
-            /// History 1
-            buildDropCapText(data.historyInfo1),
+              /// History 1
+              buildDropCapText(data.historyInfo1),
 
-            /// Quote1
-            _CollapsingPullQuoteImage(data: data, scrollPos: scrollPos),
-            buildHiddenCollectible(slot: 1),
+              /// Quote1
+              _CollapsingPullQuoteImage(data: data, scrollPos: scrollPos),
+              buildHiddenCollectible(slot: 1),
 
-            /// Callout1
-            _Callout(text: data.callout1),
+              /// Callout1
+              _Callout(text: data.callout1),
 
-            /// History 2
-            buildText(data.historyInfo2),
-            _SectionDivider(scrollPos, sectionNotifier, index: 1),
+              /// History 2
+              buildText(data.historyInfo2),
+              _SectionDivider(scrollPos, sectionNotifier, index: 1),
 
-            /// Construction 1
-            buildDropCapText(data.constructionInfo1),
-            buildHiddenCollectible(slot: 2),
+              /// Construction 1
+              buildDropCapText(data.constructionInfo1),
+              buildHiddenCollectible(slot: 2),
+            ]),
+            Gap($styles.insets.md),
+            _YouTubeThumbnail(id: data.videoId, caption: data.videoCaption),
+             Gap($styles.insets.md),
+            _ContentSection([
+              /// Callout2
+              Gap($styles.insets.xs),
+              _Callout(text: data.callout2),
+
+              /// Construction 2
+              buildText(data.constructionInfo2),
+              _SlidingImageStack(scrollPos: scrollPos, type: data.type),
+              _SectionDivider(scrollPos, sectionNotifier, index: 2),
+
+              /// Location
+              buildDropCapText(data.locationInfo1),
+              _LargeSimpleQuote(text: data.pullQuote2, author: data.pullQuote2Author),
+              buildText(data.locationInfo2),
+            ]),
+             Gap($styles.insets.md),
+            _MapsThumbnail(data, height: 200),
+             Gap($styles.insets.md),
+            _ContentSection([buildHiddenCollectible(slot: 3)]),
           ]),
-          _YouTubeThumbnail(id: data.videoId, caption: data.videoCaption),
-          _ContentSection([
-            /// Callout2
-            Gap($styles.insets.xs),
-            _Callout(text: data.callout2),
-
-            /// Construction 2
-            buildText(data.constructionInfo2),
-            _SlidingImageStack(scrollPos: scrollPos, type: data.type),
-            _SectionDivider(scrollPos, sectionNotifier, index: 2),
-
-            /// Location
-            buildDropCapText(data.locationInfo1),
-            _LargeSimpleQuote(text: data.pullQuote2, author: data.pullQuote2Author),
-            buildText(data.locationInfo2),
-          ]),
-          _MapsThumbnail(data, height: 200),
-          _ContentSection([buildHiddenCollectible(slot: 3)]),
-        ],
+        ),
       ),
     );
   }
@@ -224,5 +229,52 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
         ],
       ),
     );
+  }
+}
+
+class SliverBackgroundColor extends SingleChildRenderObjectWidget {
+  const SliverBackgroundColor({
+    Key? key,
+    required this.color,
+    Widget? sliver,
+  }) : super(key: key, child: sliver);
+
+
+  final Color color;
+
+  @override
+  RenderSliverBackgroundColor createRenderObject(BuildContext context) {
+    return RenderSliverBackgroundColor(
+      color,
+    );
+  }
+
+  @override
+  void updateRenderObject(BuildContext context, RenderSliverBackgroundColor renderObject) {
+    renderObject.color = color;
+  }
+}
+
+class RenderSliverBackgroundColor extends RenderProxySliver {
+  RenderSliverBackgroundColor(this._color);
+
+  Color get color => _color;
+  Color _color;
+  set color(Color value) {
+    if (value == color) {
+      return;
+    }
+    _color = color;
+    markNeedsPaint();
+  }
+
+  @override
+  void paint(PaintingContext context, Offset offset) {
+    if (child != null && child!.geometry!.visible) {
+      final SliverPhysicalParentData childParentData = child!.parentData! as SliverPhysicalParentData;
+      final Rect childRect = offset + childParentData.paintOffset & Size(constraints.crossAxisExtent, child!.geometry!.paintExtent);
+      context.canvas.drawRect(childRect, Paint()..style = PaintingStyle.fill ..color = color);
+      context.paintChild(child!, offset + childParentData.paintOffset);
+    }
   }
 }
