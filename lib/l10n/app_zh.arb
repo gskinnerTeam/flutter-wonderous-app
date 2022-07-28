@@ -1,5 +1,5 @@
 {
-    "app Name": "Wonderous",
+    "appName": "Wonderous",
 	"animatedArrowSemanticSwipe": "向下滑动或双击查看关于{title}的详细信息。",
 	"appBarTitleFactsHistory": "历史与细节",
 	"appBarTitleConstruction": "建造",

@@ -1,5 +1,5 @@
 {
-    "app Name": "Wonderous",
+    "appName": "Wonderous",
 	"animatedArrowSemanticSwipe": "Swipe down or double tap to explore details about {title}.",
 	"appBarTitleFactsHistory": "Facts and History",
 	"appBarTitleConstruction": "Construction",
