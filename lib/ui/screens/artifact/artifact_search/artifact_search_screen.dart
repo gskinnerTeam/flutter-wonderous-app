@@ -1,6 +1,7 @@
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:image_fade/image_fade.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
 import 'package:wonders/ui/common/controls/simple_header.dart';
@@ -78,7 +79,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SimpleHeader('Browse Artifacts', subtitle: wonder.title),
+          SimpleHeader($strings.artifactsSearchTitleBrowse, subtitle: wonder.title),
           Gap($styles.insets.xs),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: $styles.insets.sm),
@@ -125,7 +126,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
     final TextStyle statusStyle = $styles.text.body.copyWith(color: $styles.colors.accent1);
     if (_searchResults.isEmpty) {
       return Text(
-        'No artifacts found',
+        $strings.artifactsSearchLabelNotFound,
         textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
         style: statusStyle,
         textAlign: TextAlign.center,
@@ -135,15 +136,21 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Gap($styles.insets.sm),
         Text(
-          '${_searchResults.length} artifacts found, ${_filteredResults.length} in ',
+          StringUtils.supplant(
+            $strings.artifactsSearchLabelFound,
+            {
+              '{numFound}': _searchResults.length.toString(),
+              '{numResults}': _filteredResults.length.toString(),
+            },
+          ),
           textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
           style: statusStyle,
         ),
         AppBtn.basic(
-          semanticLabel: 'Toggle Timeframe',
+          semanticLabel: $strings.artifactsSearchButtonToggle,
           onPressed: () => panelController.toggle(),
           child: Text(
-            'timeframe',
+            $strings.artifactsSearchSemanticTimeframe,
             textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
             style: statusStyle.copyWith(decoration: TextDecoration.underline),
           ),
@@ -154,7 +161,9 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
   }
 
   Widget _buildEmptyIndicator(BuildContext context) {
-    String text = 'Adjust your ${_searchResults.isEmpty ? 'search terms' : 'timeframe'}';
+    final strings = $strings;
+    String text =
+        '${strings.artifactsSearchLabelAdjust} ${_searchResults.isEmpty ? strings.artifactsSearchLabelSearch : strings.artifactsSearchLabelTimeframe}';
     IconData icon = _searchResults.isEmpty ? Icons.search_outlined : Icons.edit_calendar_outlined;
     Color color = $styles.colors.greyMedium;
     Widget widget = Column(

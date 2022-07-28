@@ -10,8 +10,12 @@ class _NewlyDiscoveredRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (count == 0) return SizedBox.shrink();
+
     return AppBtn.basic(
-      semanticLabel: '$count new item${count == 1 ? '' : 's'} to explore. Scroll to new item.',
+      semanticLabel: StringUtils.supplant(
+        $strings.newlyDiscoveredSemanticNew,
+        {'{count}': count.toString(), '{plural}': count == 1 ? '' : 's'},
+      ),
       onPressed: onPressed,
       child: Container(
         alignment: Alignment.center,
@@ -19,7 +23,10 @@ class _NewlyDiscoveredRow extends StatelessWidget {
         color: $styles.colors.black,
         padding: EdgeInsets.symmetric(vertical: $styles.insets.xs),
         child: Text(
-          '$count new item${count == 1 ? '' : 's'} to explore',
+          StringUtils.supplant(
+            $strings.newlyDiscoveredLabelNew,
+            {'{count}': count.toString(), '{plural}': count == 1 ? '' : 's'},
+          ),
           textAlign: TextAlign.center,
           textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
           style: $styles.text.bodySmallBold.copyWith(color: $styles.colors.accent1),

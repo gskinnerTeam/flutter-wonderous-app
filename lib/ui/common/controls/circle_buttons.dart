@@ -81,12 +81,12 @@ class BackBtn extends StatelessWidget {
     this.iconColor,
   }) : super(key: key);
 
-  const BackBtn.close({Key? key, VoidCallback? onPressed, Color? bgColor, Color? iconColor})
+  BackBtn.close({Key? key, VoidCallback? onPressed, Color? bgColor, Color? iconColor})
       : this(
             key: key,
             icon: Icons.close,
             onPressed: onPressed,
-            semanticLabel: 'close',
+            semanticLabel: $strings.circleButtonsSemanticClose,
             bgColor: bgColor,
             iconColor: iconColor);
 
@@ -103,7 +103,7 @@ class BackBtn extends StatelessWidget {
       bgColor: bgColor,
       color: iconColor,
       onPressed: onPressed ?? () => Navigator.pop(context),
-      semanticLabel: semanticLabel ?? 'back',
+      semanticLabel: semanticLabel ?? $strings.circleButtonsSemanticBack,
     );
   }
 

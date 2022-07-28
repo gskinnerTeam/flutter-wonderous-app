@@ -1,5 +1,8 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/collectibles_logic.dart';
+import 'package:wonders/logic/locale_logic.dart';
 import 'package:wonders/logic/met_api_logic.dart';
 import 'package:wonders/logic/met_api_service.dart';
 import 'package:wonders/logic/timeline_logic.dart';
@@ -19,10 +22,18 @@ class WondersApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        routerDelegate: appRouter.routerDelegate,
-        routeInformationProvider: appRouter.routeInformationProvider,
-        routeInformationParser: appRouter.routeInformationParser);
+      debugShowCheckedModeBanner: false,
+      routerDelegate: appRouter.routerDelegate,
+      routeInformationProvider: appRouter.routeInformationProvider,
+      routeInformationParser: appRouter.routeInformationParser,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
+    );
   }
 }
 
@@ -43,6 +54,8 @@ void registerSingletons() {
   GetIt.I.registerLazySingleton<UnsplashLogic>(() => UnsplashLogic());
   // Collectibles
   GetIt.I.registerLazySingleton<CollectiblesLogic>(() => CollectiblesLogic());
+  // Localizations
+  GetIt.I.registerLazySingleton<LocaleLogic>(() => LocaleLogic());
 }
 
 /// Add syntax sugar for quickly accessing the main logical controllers in the app
@@ -55,3 +68,5 @@ UnsplashLogic get unsplashLogic => GetIt.I.get<UnsplashLogic>();
 MetAPILogic get metAPILogic => GetIt.I.get<MetAPILogic>();
 CollectiblesLogic get collectiblesLogic => GetIt.I.get<CollectiblesLogic>();
 WallPaperLogic get wallpaperLogic => GetIt.I.get<WallPaperLogic>();
+LocaleLogic get localeLogic => GetIt.I.get<LocaleLogic>();
+AppLocalizations get $strings => localeLogic.strings;

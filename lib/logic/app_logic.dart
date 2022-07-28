@@ -23,6 +23,13 @@ class AppLogic {
     // Default to only allowing portrait mode
     setDeviceOrientation(Axis.vertical);
 
+    // Localizations load
+    await localeLogic.load();
+
+    // Data load
+    await wondersLogic.load();
+    await timelineLogic.load();
+
     // Settings load
     await settingsLogic.load();
     unawaited(settingsLogic.scheduleSave()); // test save calls on each boot

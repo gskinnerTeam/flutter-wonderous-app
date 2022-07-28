@@ -16,11 +16,10 @@ class _IntroScreenState extends State<IntroScreen> {
   static const double _textHeight = 155;
   static const double _pageIndicatorHeight = 55;
 
-  static const List<_PageData> pageData = [
-    _PageData('Journey to the past', 'Navigate the intersection of time, art, and culture.', 'camel', '1'),
-    _PageData('Explore places', 'Uncover remarkable human-made structures from around the world', 'petra', '2'),
-    _PageData('Discover artifacts', 'Learn about cultures throughout time by examining things they left behind.',
-        'statue', '3'),
+  static List<_PageData> pageData = [
+    _PageData($strings.introTitleJourney, $strings.introDescriptionNavigate, 'camel', '1'),
+    _PageData($strings.introTitleExplore, $strings.introDescriptionUncover, 'petra', '2'),
+    _PageData($strings.introTitleDiscover, $strings.introDescriptionLearn, 'statue', '3'),
   ];
 
   late final PageController _pageController = PageController()..addListener(_handlePageChanged);
@@ -138,7 +137,7 @@ class _IntroScreenState extends State<IntroScreen> {
             icon: Icons.chevron_right,
             bgColor: $styles.colors.accent1,
             onPressed: _handleIntroCompletePressed,
-            semanticLabel: 'Enter the app',
+            semanticLabel: $strings.introSemanticEnterApp,
           ),
         );
       },
@@ -153,12 +152,12 @@ class _IntroScreenState extends State<IntroScreen> {
           opacity: pageIndex == pageData.length - 1 ? 0 : 1,
           duration: $styles.times.fast,
           child: Semantics(
-            onTapHint: 'Navigate',
+            onTapHint: $strings.introSemanticNavigate,
             onTap: () {
               final int current = _pageController.page!.round();
               _pageController.animateToPage(current + 1, duration: 250.ms, curve: Curves.easeIn);
             },
-            child: Text('Swipe left to continue', style: $styles.text.bodySmall),
+            child: Text($strings.introSemanticSwipeLeft, style: $styles.text.bodySmall),
           ),
         );
       },
@@ -218,7 +217,7 @@ class _WonderousLogo extends StatelessWidget {
         ),
         Gap($styles.insets.xs),
         Text(
-          'Wonderous',
+          $strings.introSemanticWonderous,
           style: $styles.text.wonderTitle.copyWith(fontSize: 32, color: $styles.colors.offWhite),
         )
       ],

@@ -35,7 +35,7 @@ class LabelledToggle extends StatelessWidget {
     BoxDecoration circleDec = BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(maxHeight)));
     return AppBtn.basic(
       onPressed: onClick,
-      semanticLabel: 'toggle',
+      semanticLabel: $strings.labelledToggleSemanticToggle,
       child: LayoutBuilder(
         builder: (context, constraints) => Container(
           width: maxWidth,

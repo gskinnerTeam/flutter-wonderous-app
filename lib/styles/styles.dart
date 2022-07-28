@@ -30,13 +30,40 @@ class AppStyle {
 
 @immutable
 class _Text {
-  final TextStyle titleFont = TextStyle(fontFamily: 'Tenor');
-  final TextStyle quoteFont = TextStyle(fontFamily: 'Cinzel');
-  final TextStyle wonderTitleFont = TextStyle(fontFamily: 'Yeseva');
-  final TextStyle contentFont = TextStyle(fontFamily: 'Raleway', fontFeatures: const [
-    FontFeature.enable('dlig'),
-    FontFeature.enable('kern'),
-  ]);
+  final Map<String, TextStyle> _titleFonts = {
+    'en': TextStyle(fontFamily: 'Tenor'),
+  };
+
+  final Map<String, TextStyle> _quoteFonts = {
+    'en': TextStyle(fontFamily: 'Cinzel'),
+    'zh': TextStyle(fontFamily: 'MaShanZheng'),
+  };
+
+  final Map<String, TextStyle> _wonderTitleFonts = {
+    'en': TextStyle(fontFamily: 'Yeseva'),
+  };
+
+  final Map<String, TextStyle> _contentFonts = {
+    'en': TextStyle(fontFamily: 'Raleway', fontFeatures: const [
+      FontFeature.enable('dlig'),
+      FontFeature.enable('kern'),
+    ]),
+  };
+
+  TextStyle _getFontForLocale(Map<String, TextStyle> fonts) {
+    if (localeLogic.isLoaded) {
+      return fonts.entries
+          .firstWhere((x) => x.key == $strings.localeName, orElse: () => fonts.entries.first)
+          .value;
+    } else {
+      return fonts.entries.first.value;
+    }
+  }
+
+  TextStyle get titleFont => _getFontForLocale(_titleFonts);
+  TextStyle get quoteFont => _getFontForLocale(_quoteFonts);
+  TextStyle get wonderTitleFont => _getFontForLocale(_wonderTitleFonts);
+  TextStyle get contentFont => _getFontForLocale(_contentFonts);
 
   late final TextStyle dropCase = copy(quoteFont, sizePx: 56, heightPx: 20);
 

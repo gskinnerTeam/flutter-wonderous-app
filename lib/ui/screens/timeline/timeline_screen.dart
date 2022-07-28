@@ -48,7 +48,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
           padding: EdgeInsets.only(bottom: 0),
           child: Column(
             children: [
-              SimpleHeader('Global Timeline'),
+              SimpleHeader($strings.timelineTitleGlobalTimeline),
 
               /// Vertically scrolling timeline, manages a ScrollController.
               Expanded(

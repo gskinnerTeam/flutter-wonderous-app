@@ -22,7 +22,7 @@ class _Header extends StatelessWidget {
           color: $styles.colors.black,
           alignment: Alignment.center,
           child: AppBtn.basic(
-            semanticLabel: 'thumbnail image',
+            semanticLabel: $strings.artifactDetailsSemanticThumbnail,
             onPressed: () => _handleImagePressed(context),
             child: SafeArea(
               bottom: false,

@@ -1,6 +1,6 @@
 name: wonders
 description: Explore the famous wonders of the world.
-publish_to: 'none'
+publish_to: "none"
 version: 1.4.0
 
 environment:
@@ -8,6 +8,9 @@ environment:
 
 dependencies:
   flutter:
+    sdk: flutter
+
+  flutter_localizations:
     sdk: flutter
 
   collection: ^1.15.0
@@ -31,6 +34,7 @@ dependencies:
   image_fade: ^0.6.1
   image_gallery_saver: ^1.7.1
   internet_connection_checker: ^0.0.1+3
+  intl: ^0.17.0
   json_annotation: ^4.6.0
   loading_indicator: ^3.0.3
   modal_bottom_sheet: ^2.1.0
@@ -64,8 +68,9 @@ flutter_icons:
   image_path: "assets/marketing/app-icon-1024.png"
 
 flutter:
-
   uses-material-design: true
+
+  generate: true
 
   assets:
     - assets/images/_common/
@@ -82,25 +87,28 @@ flutter:
     - assets/images/collectibles/
 
   fonts:
-   - family: Cinzel
-     fonts:
-       - asset: assets/fonts/CinzelDecorative-Regular.ttf
-       - asset: assets/fonts/CinzelDecorative-Black.ttf
-       - asset: assets/fonts/CinzelDecorative-Bold.ttf
-   - family: Yeseva
-     fonts:
-       - asset: assets/fonts/YesevaOne-Regular.ttf
-   - family: Tenor
-     fonts:
-       - asset: assets/fonts/TenorSans-Regular.ttf
-   - family: Raleway
-     fonts:
-       - asset: assets/fonts/Raleway-Regular.ttf
-       - asset: assets/fonts/Raleway-Italic.ttf
-         style: italic
-       - asset: assets/fonts/Raleway-Medium.ttf
-         weight: 500
-       - asset: assets/fonts/Raleway-Bold.ttf
-         weight: 700
-       - asset: assets/fonts/Raleway-ExtraBold.ttf
-         weight: 800
+    - family: Cinzel
+      fonts:
+        - asset: assets/fonts/CinzelDecorative-Regular.ttf
+        - asset: assets/fonts/CinzelDecorative-Black.ttf
+        - asset: assets/fonts/CinzelDecorative-Bold.ttf
+    - family: Yeseva
+      fonts:
+        - asset: assets/fonts/YesevaOne-Regular.ttf
+    - family: Tenor
+      fonts:
+        - asset: assets/fonts/TenorSans-Regular.ttf
+    - family: Raleway
+      fonts:
+        - asset: assets/fonts/Raleway-Regular.ttf
+        - asset: assets/fonts/Raleway-Italic.ttf
+          style: italic
+        - asset: assets/fonts/Raleway-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Raleway-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Raleway-ExtraBold.ttf
+          weight: 800
+    - family: MaShanZheng
+      fonts:
+        - asset: assets/fonts/MaShanZheng-Regular.ttf

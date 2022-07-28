@@ -49,16 +49,26 @@ class StringUtils {
     return '${yr.abs()} ${getYrSuffix(yr)}';
   }
 
-  static String getYrSuffix(int yr) => yr < 0 ? 'BCE' : 'CE';
+  static String getYrSuffix(int yr) => yr < 0 ? $strings.yearBCE : $strings.yearCE;
 
   static String getEra(int yr) {
-    if (yr <= -600) return 'Prehistory';
-    if (yr <= 476) return 'Classical Era';
-    if (yr <= 1450) return 'Early Modern Era';
-    return 'Modern Era';
+    if (yr <= -600) return $strings.eraPrehistory;
+    if (yr <= 476) return $strings.eraClassical;
+    if (yr <= 1450) return $strings.eraEarlyModern;
+    return $strings.eraModern;
   }
 
   static String capitalize(String value) {
     return '${value[0].toUpperCase()}${value.substring(1).toLowerCase()}';
+  }
+
+  static String supplant(String value, Map<String, String> supplants) {
+    return value.replaceAllMapped(RegExp(r'\{\w+\}'), (match) {
+      final placeholder = match.group(0) ?? '';
+      if (supplants.containsKey(placeholder)) {
+        return supplants[placeholder]!;
+      }
+      return placeholder;
+    });
   }
 }
