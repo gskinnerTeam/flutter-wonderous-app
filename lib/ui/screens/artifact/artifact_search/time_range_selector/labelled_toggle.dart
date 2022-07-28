@@ -1,4 +1,3 @@
-import 'package:wonders/_tools/localization_helper.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/string_utils.dart';
 
@@ -36,7 +35,7 @@ class LabelledToggle extends StatelessWidget {
     BoxDecoration circleDec = BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(maxHeight)));
     return AppBtn.basic(
       onPressed: onClick,
-      semanticLabel: LocalizationHelper.instance.labelledToggleSemanticToggle,
+      semanticLabel: localizationsLogic.instance.labelledToggleSemanticToggle,
       child: LayoutBuilder(
         builder: (context, constraints) => Container(
           width: maxWidth,

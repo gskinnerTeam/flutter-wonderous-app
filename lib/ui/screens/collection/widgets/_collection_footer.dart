@@ -40,14 +40,16 @@ class _CollectionFooter extends StatelessWidget {
   Widget _buildProgressRow(BuildContext context) {
     return Row(children: [
       Text(
-        LocalizationHelper.instance.collectionLabelDiscovered.supplant(
+        StringUtils.supplant(
+          localizationsLogic.instance.collectionLabelDiscovered,
           {'{percentage}': (count / total * 100).round().toString()},
         ),
         style: $styles.text.body.copyWith(color: $styles.colors.accent1),
       ),
       Spacer(),
       Text(
-        LocalizationHelper.instance.collectionLabelCount.supplant(
+        StringUtils.supplant(
+          localizationsLogic.instance.collectionLabelCount,
           {'{count}': count.toString(), '{total}': total.toString()},
         ),
         style: $styles.text.body.copyWith(color: $styles.colors.offWhite),

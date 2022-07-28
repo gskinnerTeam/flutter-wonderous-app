@@ -1,5 +1,4 @@
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:wonders/_tools/localization_helper.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
 import 'package:wonders/ui/common/themed_text.dart';
@@ -63,16 +62,16 @@ class _IntroScreenState extends State<IntroScreen> {
                     controller: _pageController,
                     children: [
                       _Page(
-                        title: LocalizationHelper.instance.introTitleJourney,
-                        desc: LocalizationHelper.instance.introDescriptionNavigate,
+                        title: localizationsLogic.instance.introTitleJourney,
+                        desc: localizationsLogic.instance.introDescriptionNavigate,
                       ),
                       _Page(
-                        title: LocalizationHelper.instance.introTitleExplore,
-                        desc: LocalizationHelper.instance.introDescriptionUncover,
+                        title: localizationsLogic.instance.introTitleExplore,
+                        desc: localizationsLogic.instance.introDescriptionUncover,
                       ),
                       _Page(
-                        title: LocalizationHelper.instance.introTitleDiscover,
-                        desc: LocalizationHelper.instance.introDescriptionLearn,
+                        title: localizationsLogic.instance.introTitleDiscover,
+                        desc: localizationsLogic.instance.introDescriptionLearn,
                       ),
                     ],
                   ),
@@ -118,13 +117,13 @@ class _IntroScreenState extends State<IntroScreen> {
                           opacity: page == 2 ? 0 : 1,
                           duration: $styles.times.fast,
                           child: Semantics(
-                            onTapHint: LocalizationHelper.instance.introSemanticNavigate,
+                            onTapHint: localizationsLogic.instance.introSemanticNavigate,
                             onTap: () {
                               var current = _pageController.page!.round();
                               _pageController.animateToPage(current + 1,
                                   duration: const Duration(milliseconds: 250), curve: Curves.easeIn);
                             },
-                            child: Text(LocalizationHelper.instance.introSemanticSwipeLeft, style: $styles.text.bodySmall.copyWith(height: 3)),
+                            child: Text(localizationsLogic.instance.introSemanticSwipeLeft, style: $styles.text.bodySmall.copyWith(height: 3)),
                           ),
                         ),
                       ),
@@ -136,7 +135,7 @@ class _IntroScreenState extends State<IntroScreen> {
                             icon: Icons.chevron_right,
                             bgColor: $styles.colors.accent1,
                             onPressed: _handleIntroCompletePressed,
-                            semanticLabel: LocalizationHelper.instance.introSemanticEnterApp,
+                            semanticLabel: localizationsLogic.instance.introSemanticEnterApp,
                           ),
                         ),
                       ),
@@ -187,7 +186,7 @@ class _WonderousLogo extends StatelessWidget {
         ),
         Gap($styles.insets.xs),
         Text(
-          LocalizationHelper.instance.introSemanticWonderous,
+          localizationsLogic.instance.introSemanticWonderous,
           style: $styles.text.wonderTitle.copyWith(fontSize: 32, color: $styles.colors.offWhite),
         )
       ],

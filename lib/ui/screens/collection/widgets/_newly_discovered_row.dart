@@ -10,8 +10,12 @@ class _NewlyDiscoveredRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (count == 0) return SizedBox.shrink();
+
     return AppBtn.basic(
-      semanticLabel: LocalizationHelper.instance.newlyDiscoveredSemanticNew.supplant({'{count}': count.toString(), '{plural}': count == 1 ? '' : 's'}),
+      semanticLabel: StringUtils.supplant(
+        localizationsLogic.instance.newlyDiscoveredSemanticNew,
+        {'{count}': count.toString(), '{plural}': count == 1 ? '' : 's'},
+      ),
       onPressed: onPressed,
       child: Container(
         alignment: Alignment.center,
@@ -19,7 +23,10 @@ class _NewlyDiscoveredRow extends StatelessWidget {
         color: $styles.colors.black,
         padding: EdgeInsets.symmetric(vertical: $styles.insets.xs),
         child: Text(
-          LocalizationHelper.instance.newlyDiscoveredLabelNew.supplant({'{count}': count.toString(), '{plural}': count == 1 ? '' : 's'}),
+          StringUtils.supplant(
+            localizationsLogic.instance.newlyDiscoveredLabelNew,
+            {'{count}': count.toString(), '{plural}': count == 1 ? '' : 's'},
+          ),
           textAlign: TextAlign.center,
           textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
           style: $styles.text.bodySmallBold.copyWith(color: $styles.colors.accent1),

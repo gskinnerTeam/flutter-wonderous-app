@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:wonders/_tools/localization_helper.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/debouncer.dart';
 import 'package:wonders/logic/common/string_utils.dart';
@@ -49,7 +48,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
           padding: EdgeInsets.only(bottom: 0),
           child: Column(
             children: [
-              SimpleHeader(LocalizationHelper.instance.timelineTitleGlobalTimeline),
+              SimpleHeader(localizationsLogic.instance.timelineTitleGlobalTimeline),
 
               /// Vertically scrolling timeline, manages a ScrollController.
               Expanded(

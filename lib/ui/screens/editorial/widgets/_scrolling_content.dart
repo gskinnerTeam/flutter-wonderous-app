@@ -154,7 +154,7 @@ class _YouTubeThumbnail extends StatelessWidget {
         child: Column(
           children: [
             AppBtn.basic(
-              semanticLabel: LocalizationHelper.instance.scrollingContentSemanticYoutube,
+              semanticLabel: localizationsLogic.instance.scrollingContentSemanticYoutube,
               onPressed: handlePressed,
               child: ImageFade(image: NetworkImage(imageUrl), fit: BoxFit.cover),
             ),
@@ -192,7 +192,7 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular($styles.corners.md),
               child: AppBtn.basic(
-                semanticLabel: LocalizationHelper.instance.scrollingContentSemanticOpen,
+                semanticLabel: localizationsLogic.instance.scrollingContentSemanticOpen,
                 onPressed: handlePressed,
 
                 /// To prevent the map widget from absorbing the onPressed action, use a Stack + IgnorePointer + a transparent Container

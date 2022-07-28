@@ -1,4 +1,3 @@
-import 'package:wonders/_tools/localization_helper.dart';
 import 'package:wonders/common_libs.dart';
 
 class StringUtils {
@@ -50,16 +49,27 @@ class StringUtils {
     return '${yr.abs()} ${getYrSuffix(yr)}';
   }
 
-  static String getYrSuffix(int yr) => yr < 0 ? LocalizationHelper.instance.yearBCE : LocalizationHelper.instance.yearCE;
+  static String getYrSuffix(int yr) =>
+      yr < 0 ? localizationsLogic.instance.yearBCE : localizationsLogic.instance.yearCE;
 
   static String getEra(int yr) {
-    if (yr <= -600) return LocalizationHelper.instance.eraPrehistory;
-    if (yr <= 476) return LocalizationHelper.instance.eraClassical;
-    if (yr <= 1450) return LocalizationHelper.instance.eraEarlyModern;
-    return LocalizationHelper.instance.eraModern;
+    if (yr <= -600) return localizationsLogic.instance.eraPrehistory;
+    if (yr <= 476) return localizationsLogic.instance.eraClassical;
+    if (yr <= 1450) return localizationsLogic.instance.eraEarlyModern;
+    return localizationsLogic.instance.eraModern;
   }
 
   static String capitalize(String value) {
     return '${value[0].toUpperCase()}${value.substring(1).toLowerCase()}';
+  }
+
+  static String supplant(String value, Map<String, String> supplants) {
+    return value.replaceAllMapped(RegExp(r'\{\w+\}'), (match) {
+      final placeholder = match.group(0) ?? '';
+      if (supplants.containsKey(placeholder)) {
+        return supplants[placeholder]!;
+      }
+      return placeholder;
+    });
   }
 }

@@ -2,7 +2,6 @@
 
 import 'dart:ui';
 
-import 'package:wonders/_tools/localization_helper.dart';
 import 'package:wonders/common_libs.dart';
 
 export 'colors.dart';
@@ -52,9 +51,13 @@ class _Text {
   };
 
   TextStyle _getFontForLocale(Map<String, TextStyle> fonts) {
-    return fonts.entries
-        .firstWhere((x) => x.key == LocalizationHelper.instance.localeName, orElse: () => fonts.entries.first)
-        .value;
+    if (localizationsLogic.isLoaded) {
+      return fonts.entries
+          .firstWhere((x) => x.key == localizationsLogic.instance.localeName, orElse: () => fonts.entries.first)
+          .value;
+    } else {
+      return fonts.entries.first.value;
+    }
   }
 
   TextStyle get titleFont => _getFontForLocale(_titleFonts);

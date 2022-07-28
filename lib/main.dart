@@ -1,8 +1,8 @@
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:wonders/_tools/localization_helper.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/collectibles_logic.dart';
+import 'package:wonders/logic/localizations_logic.dart';
 import 'package:wonders/logic/met_api_logic.dart';
 import 'package:wonders/logic/met_api_service.dart';
 import 'package:wonders/logic/timeline_logic.dart';
@@ -21,22 +21,17 @@ class WondersApp extends StatelessWidget {
   const WondersApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return LocalizationBuilder(
-      builder: (Locale locale) {
-        return MaterialApp.router(
-          locale: locale,
-          debugShowCheckedModeBanner: false,
-          routerDelegate: appRouter.routerDelegate,
-          routeInformationParser: appRouter.routeInformationParser,
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: AppLocalizations.supportedLocales,
-        );
-      },
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      routerDelegate: appRouter.routerDelegate,
+      routeInformationParser: appRouter.routeInformationParser,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }
@@ -58,6 +53,8 @@ void registerSingletons() {
   GetIt.I.registerLazySingleton<UnsplashLogic>(() => UnsplashLogic());
   // Collectibles
   GetIt.I.registerLazySingleton<CollectiblesLogic>(() => CollectiblesLogic());
+  // Localizations
+  GetIt.I.registerLazySingleton<LocalizationsLogic>(() => LocalizationsLogic());
 }
 
 /// Add syntax sugar for quickly accessing the main logical controllers in the app
@@ -70,3 +67,4 @@ UnsplashLogic get unsplashLogic => GetIt.I.get<UnsplashLogic>();
 MetAPILogic get metAPILogic => GetIt.I.get<MetAPILogic>();
 CollectiblesLogic get collectiblesLogic => GetIt.I.get<CollectiblesLogic>();
 WallPaperLogic get wallpaperLogic => GetIt.I.get<WallPaperLogic>();
+LocalizationsLogic get localizationsLogic => GetIt.I.get<LocalizationsLogic>();

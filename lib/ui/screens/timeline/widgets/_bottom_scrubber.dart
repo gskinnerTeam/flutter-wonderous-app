@@ -69,7 +69,7 @@ class _BottomScrubber extends StatelessWidget {
                   container: true,
                   slider: true,
                   button: true,
-                  label: LocalizationHelper.instance.bottomScrubberSemanticScrubber,
+                  label: localizationsLogic.instance.bottomScrubberSemanticScrubber,
                   child: GestureDetector(
                     behavior: HitTestBehavior.translucent,
                     onPanUpdate: _handleScrubberPan,

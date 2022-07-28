@@ -61,8 +61,12 @@ class _TitleText extends StatelessWidget {
               ),
               Gap($styles.insets.sm),
               Text(
-                LocalizationHelper.instance.titleLabelDate.supplant(
-                  {'{fromDate}': StringUtils.formatYr(data.startYr), '{endDate}': StringUtils.formatYr(data.endYr)},
+                StringUtils.supplant(
+                  localizationsLogic.instance.titleLabelDate,
+                  {
+                    '{fromDate}': StringUtils.formatYr(data.startYr),
+                    '{endDate}': StringUtils.formatYr(data.endYr),
+                  },
                 ),
                 style: $styles.text.h4,
                 textAlign: TextAlign.center,

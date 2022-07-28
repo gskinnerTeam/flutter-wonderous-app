@@ -1,4 +1,3 @@
-import 'package:wonders/_tools/localization_helper.dart';
 import 'package:wonders/common_libs.dart';
 
 class WonderDetailsTabMenu extends StatelessWidget {
@@ -53,10 +52,10 @@ class WonderDetailsTabMenu extends StatelessWidget {
                         duration: $styles.times.fast,
                         width: showHomeBtn ? homeBtnSize : 0,
                         height: 0),
-                    _TabBtn(0, tabController, iconImg: 'editorial', label: LocalizationHelper.instance.wonderDetailsTabLabelInformation, color: iconColor),
-                    _TabBtn(1, tabController, iconImg: 'photos', label: LocalizationHelper.instance.wonderDetailsTabLabelImages, color: iconColor),
-                    _TabBtn(2, tabController, iconImg: 'artifacts', label: LocalizationHelper.instance.wonderDetailsTabLabelArtifacts, color: iconColor),
-                    _TabBtn(3, tabController, iconImg: 'timeline', label: LocalizationHelper.instance.wonderDetailsTabLabelEvents, color: iconColor),
+                    _TabBtn(0, tabController, iconImg: 'editorial', label: localizationsLogic.instance.wonderDetailsTabLabelInformation, color: iconColor),
+                    _TabBtn(1, tabController, iconImg: 'photos', label: localizationsLogic.instance.wonderDetailsTabLabelImages, color: iconColor),
+                    _TabBtn(2, tabController, iconImg: 'artifacts', label: localizationsLogic.instance.wonderDetailsTabLabelArtifacts, color: iconColor),
+                    _TabBtn(3, tabController, iconImg: 'timeline', label: localizationsLogic.instance.wonderDetailsTabLabelEvents, color: iconColor),
                   ],
                 ),
               ),
@@ -102,7 +101,7 @@ class _WonderHomeBtn extends StatelessWidget {
     return CircleBtn(
       onPressed: () => Navigator.of(context).pop(),
       bgColor: $styles.colors.offWhite,
-      semanticLabel: LocalizationHelper.instance.wonderDetailsTabSemanticBack,
+      semanticLabel: localizationsLogic.instance.wonderDetailsTabSemanticBack,
       child: Container(
         width: size - borderSize * 2,
         height: size - borderSize * 2,

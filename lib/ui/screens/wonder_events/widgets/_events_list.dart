@@ -109,10 +109,10 @@ class _EventsListState extends State<_EventsList> {
                 ...listItems,
                 Gap($styles.insets.lg),
                 AppBtn.from(
-                  text: LocalizationHelper.instance.eventsListButtonOpenGlobal,
+                  text: localizationsLogic.instance.eventsListButtonOpenGlobal,
                   expand: true,
                   onPressed: _handleGlobalTimelinePressed,
-                  semanticLabel: LocalizationHelper.instance.eventsListButtonOpenGlobal,
+                  semanticLabel: localizationsLogic.instance.eventsListButtonOpenGlobal,
                 ),
                 Gap($styles.insets.xl),
                 CompassDivider(isExpanded: true),

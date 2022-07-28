@@ -1,5 +1,4 @@
 import 'package:image_fade/image_fade.dart';
-import 'package:wonders/_tools/localization_helper.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:particle_field/particle_field.dart';
@@ -122,7 +121,7 @@ class CollectibleFoundScreen extends StatelessWidget {
 
   Widget _buildRibbon(BuildContext context) {
     Duration t = $styles.times.fast;
-    return _AnimatedRibbon(LocalizationHelper.instance.collectibleFoundTitleArtifactDiscovered.toUpperCase())
+    return _AnimatedRibbon(localizationsLogic.instance.collectibleFoundTitleArtifactDiscovered.toUpperCase())
         .animate()
         .scale(begin: 0.3, duration: t * 2, curve: Curves.easeOutExpo, alignment: Alignment(0, -1));
   }
@@ -151,7 +150,7 @@ class CollectibleFoundScreen extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all($styles.insets.lg),
       child: AppBtn.from(
-        text: LocalizationHelper.instance.collectibleFoundButtonViewCollection,
+        text: localizationsLogic.instance.collectibleFoundButtonViewCollection,
         isSecondary: true,
         expand: true,
         onPressed: () => _handleViewCollectionPressed(context),

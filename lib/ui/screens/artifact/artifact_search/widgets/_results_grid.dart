@@ -40,14 +40,14 @@ class _ResultsGrid extends StatelessWidget {
         if (isEnglish || value) return SizedBox();
         return AppBtn.basic(
           onPressed: () => settingsLogic.hasDismissedSearchMessage.value = true,
-          semanticLabel: LocalizationHelper.instance.resultsSemanticDismiss,
+          semanticLabel: localizationsLogic.instance.resultsSemanticDismiss,
           child: Container(
             color: $styles.colors.offWhite.withOpacity(0.1),
             padding: EdgeInsets.all($styles.insets.sm),
             child: Row(
               children: [
                 Flexible(
-                  child: Text(LocalizationHelper.instance.resultsPopupEnglishContent),
+                  child: Text(localizationsLogic.instance.resultsPopupEnglishContent),
                 ),
                 Icon(
                   Icons.close,

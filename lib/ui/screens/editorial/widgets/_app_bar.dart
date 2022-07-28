@@ -6,9 +6,9 @@ class _AppBar extends StatelessWidget {
   final ValueNotifier<int> sectionIndex;
   final ValueNotifier<double> scrollPos;
   final _titleValues = [
-    LocalizationHelper.instance.appBarTitleFactsHistory,
-    LocalizationHelper.instance.appBarTitleConstruction,
-    LocalizationHelper.instance.appBarTitleLocation,
+    localizationsLogic.instance.appBarTitleFactsHistory,
+    localizationsLogic.instance.appBarTitleConstruction,
+    localizationsLogic.instance.appBarTitleLocation,
   ];
 
   final _iconValues = const [

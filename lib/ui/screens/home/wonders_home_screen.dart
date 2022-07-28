@@ -1,6 +1,6 @@
 import 'package:flutter/rendering.dart';
-import 'package:wonders/_tools/localization_helper.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
 import 'package:wonders/ui/common/controls/diagonal_text_page_indicator.dart';
@@ -167,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               color: $styles.colors.white,
                               dotSize: 8,
                               onDotPressed: _handlePageIndicatorDotPressed,
-                              semanticPageTitle: LocalizationHelper.instance.homeSemanticWonder,
+                              semanticPageTitle: localizationsLogic.instance.homeSemanticWonder,
                             ),
                           ],
                         ),
@@ -204,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     child: CircleIconBtn(
                       icon: Icons.menu,
                       onPressed: _handleOpenMenuPressed,
-                      semanticLabel: LocalizationHelper.instance.homeSemanticOpenMain,
+                      semanticLabel: localizationsLogic.instance.homeSemanticOpenMain,
                     ).safe(),
                   ),
                 ),

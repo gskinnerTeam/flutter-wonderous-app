@@ -39,12 +39,12 @@ class _Content extends StatelessWidget {
             child: Column(
               children: [
                 ...[
-                  _InfoRow(LocalizationHelper.instance.artifactDetailsLabelDate, data.date),
-                  _InfoRow(LocalizationHelper.instance.artifactDetailsLabelPeriod, data.period),
-                  _InfoRow(LocalizationHelper.instance.artifactDetailsLabelGeography, data.country),
-                  _InfoRow(LocalizationHelper.instance.artifactDetailsLabelMedium, data.medium),
-                  _InfoRow(LocalizationHelper.instance.artifactDetailsLabelDimension, data.dimension),
-                  _InfoRow(LocalizationHelper.instance.artifactDetailsLabelClassification, data.classification),
+                  _InfoRow(localizationsLogic.instance.artifactDetailsLabelDate, data.date),
+                  _InfoRow(localizationsLogic.instance.artifactDetailsLabelPeriod, data.period),
+                  _InfoRow(localizationsLogic.instance.artifactDetailsLabelGeography, data.country),
+                  _InfoRow(localizationsLogic.instance.artifactDetailsLabelMedium, data.medium),
+                  _InfoRow(localizationsLogic.instance.artifactDetailsLabelDimension, data.dimension),
+                  _InfoRow(localizationsLogic.instance.artifactDetailsLabelClassification, data.classification),
                 ]
                     .animate(interval: 100.ms)
                     .fade(delay: 600.ms, duration: $styles.times.med)

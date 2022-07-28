@@ -1,4 +1,3 @@
-import 'package:wonders/_tools/localization_helper.dart';
 import 'package:wonders/common_libs.dart';
 
 class CircleBtn extends StatelessWidget {
@@ -87,7 +86,7 @@ class BackBtn extends StatelessWidget {
             key: key,
             icon: Icons.close,
             onPressed: onPressed,
-            semanticLabel: LocalizationHelper.instance.circleButtonsSemanticClose,
+            semanticLabel: localizationsLogic.instance.circleButtonsSemanticClose,
             bgColor: bgColor,
             iconColor: iconColor);
 
@@ -104,7 +103,7 @@ class BackBtn extends StatelessWidget {
       bgColor: bgColor,
       color: iconColor,
       onPressed: onPressed ?? () => Navigator.pop(context),
-      semanticLabel: semanticLabel ?? LocalizationHelper.instance.circleButtonsSemanticBack,
+      semanticLabel: semanticLabel ?? localizationsLogic.instance.circleButtonsSemanticBack,
     );
   }
 

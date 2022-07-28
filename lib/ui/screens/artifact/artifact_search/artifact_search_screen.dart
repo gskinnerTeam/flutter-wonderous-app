@@ -1,7 +1,7 @@
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:image_fade/image_fade.dart';
-import 'package:wonders/_tools/localization_helper.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
 import 'package:wonders/ui/common/controls/simple_header.dart';
@@ -79,7 +79,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SimpleHeader(LocalizationHelper.instance.artifactsSearchTitleBrowse, subtitle: wonder.title),
+          SimpleHeader(localizationsLogic.instance.artifactsSearchTitleBrowse, subtitle: wonder.title),
           Gap($styles.insets.xs),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: $styles.insets.sm),
@@ -126,7 +126,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
     final TextStyle statusStyle = $styles.text.body.copyWith(color: $styles.colors.accent1);
     if (_searchResults.isEmpty) {
       return Text(
-        LocalizationHelper.instance.artifactsSearchLabelNotFound,
+        localizationsLogic.instance.artifactsSearchLabelNotFound,
         textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
         style: statusStyle,
         textAlign: TextAlign.center,
@@ -136,15 +136,21 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Gap($styles.insets.sm),
         Text(
-          LocalizationHelper.instance.artifactsSearchLabelFound.supplant({'{numFound}': _searchResults.length.toString(), '{numResults}': _filteredResults.length.toString()}),
+          StringUtils.supplant(
+            localizationsLogic.instance.artifactsSearchLabelFound,
+            {
+              '{numFound}': _searchResults.length.toString(),
+              '{numResults}': _filteredResults.length.toString(),
+            },
+          ),
           textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
           style: statusStyle,
         ),
         AppBtn.basic(
-          semanticLabel: LocalizationHelper.instance.artifactsSearchButtonToggle,
+          semanticLabel: localizationsLogic.instance.artifactsSearchButtonToggle,
           onPressed: () => panelController.toggle(),
           child: Text(
-            LocalizationHelper.instance.artifactsSearchSemanticTimeframe,
+            localizationsLogic.instance.artifactsSearchSemanticTimeframe,
             textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
             style: statusStyle.copyWith(decoration: TextDecoration.underline),
           ),
@@ -155,8 +161,9 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
   }
 
   Widget _buildEmptyIndicator(BuildContext context) {
-    final strings = LocalizationHelper.instance;
-    String text = '${strings.artifactsSearchLabelAdjust} ${_searchResults.isEmpty ? strings.artifactsSearchLabelSearch : strings.artifactsSearchLabelTimeframe}';
+    final strings = localizationsLogic.instance;
+    String text =
+        '${strings.artifactsSearchLabelAdjust} ${_searchResults.isEmpty ? strings.artifactsSearchLabelSearch : strings.artifactsSearchLabelTimeframe}';
     IconData icon = _searchResults.isEmpty ? Icons.search_outlined : Icons.edit_calendar_outlined;
     Color color = $styles.colors.greyMedium;
     Widget widget = Column(

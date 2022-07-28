@@ -21,7 +21,10 @@ class _AnimatedArrowButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final Duration duration = $styles.times.med;
     return AppBtn.basic(
-      semanticLabel: LocalizationHelper.instance.animatedArrowSemanticSwipe.supplant({'{title}': semanticTitle}),
+      semanticLabel: StringUtils.supplant(
+        localizationsLogic.instance.animatedArrowSemanticSwipe,
+        {'{title}': semanticTitle},
+      ),
       onPressed: onTap,
       child: SizedBox(
         height: 80,

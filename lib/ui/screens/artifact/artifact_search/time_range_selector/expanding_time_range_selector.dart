@@ -1,4 +1,3 @@
-import 'package:wonders/_tools/localization_helper.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
@@ -55,7 +54,7 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
               curve: Curves.easeOut,
               padding: isOpen ? EdgeInsets.zero : EdgeInsets.symmetric(vertical: $styles.insets.md),
               child: AppBtn.basic(
-                semanticLabel: LocalizationHelper.instance.expandingTimeSelectorSemanticSelector,
+                semanticLabel: localizationsLogic.instance.expandingTimeSelectorSemanticSelector,
                 onPressed: widget.panelController.toggle,
                 child: OpeningCard(
                   isOpen: isOpen,
