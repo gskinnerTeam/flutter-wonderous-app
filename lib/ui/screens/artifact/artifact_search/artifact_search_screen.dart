@@ -27,7 +27,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
   String _query = '';
 
   late final WonderData wonder = wondersLogic.getData(widget.type);
-  late final PanelController panelController = PanelController(false);
+  late final PanelController panelController = PanelController(true);
   late final SearchVizController vizController = SearchVizController(
     _searchResults,
     minYear: wondersLogic.timelineStartYear,
