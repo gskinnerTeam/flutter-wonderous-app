@@ -17,7 +17,7 @@ class _ResultsGrid extends StatelessWidget {
           slivers: [
             SliverToBoxAdapter(child: _buildLanguageMessage(context)),
             SliverPadding(
-              padding: EdgeInsets.all($styles.insets.sm).copyWith(bottom: $styles.insets.offset),
+              padding: EdgeInsets.all($styles.insets.sm).copyWith(bottom: $styles.insets.offset * 1.5),
               sliver: SliverMasonryGrid.count(
                 crossAxisCount: 2,
                 mainAxisSpacing: $styles.insets.sm,
