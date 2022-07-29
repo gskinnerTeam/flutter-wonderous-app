@@ -53,43 +53,51 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
               duration: $styles.times.fast,
               curve: Curves.easeOut,
               padding: isOpen ? EdgeInsets.zero : EdgeInsets.symmetric(vertical: $styles.insets.md),
-              child: AppBtn.basic(
-                semanticLabel: $strings.expandingTimeSelectorSemanticSelector,
-                onPressed: widget.panelController.toggle,
-                child: OpeningCard(
-                  isOpen: isOpen,
-                  padding: EdgeInsets.symmetric(horizontal: pad, vertical: $styles.insets.xs),
-                  background: Container(
-                    decoration: BoxDecoration(
-                      color: $styles.colors.black.withOpacity(0.85),
-                      borderRadius: BorderRadius.circular($styles.corners.md),
-                      boxShadow: [
-                        BoxShadow(
-                          color: $styles.colors.black.withOpacity(0.5),
-                          offset: Offset(0, 4),
-                          blurRadius: 4,
-                        )
-                      ],
-                    ),
-                  ),
-                  closedBuilder: (_) => _ClosedTimeRange(startYear: widget.startYear, endYear: widget.endYear),
-                  openBuilder: (_) => SizedBox(
-                    width: constraints.maxWidth - pad * 2,
-                    child: _OpenedTimeRange(
-                      startYear: widget.startYear,
-                      endYear: widget.endYear,
-                      onChange: widget.onChanged,
-                      wonder: widget.wonder,
-                      painter: _painter,
-                    ),
+              child: _buildPanelBtn(OpeningCard(
+                isOpen: isOpen,
+                padding: EdgeInsets.symmetric(horizontal: pad, vertical: $styles.insets.xs),
+                background: Container(
+                  decoration: BoxDecoration(
+                    color: $styles.colors.black.withOpacity(0.85),
+                    borderRadius: BorderRadius.circular($styles.corners.md),
+                    boxShadow: [
+                      BoxShadow(
+                        color: $styles.colors.black.withOpacity(0.5),
+                        offset: Offset(0, 4),
+                        blurRadius: 4,
+                      )
+                    ],
                   ),
                 ),
-              ),
+                closedBuilder: (_) => _ClosedTimeRange(startYear: widget.startYear, endYear: widget.endYear),
+                openBuilder: (_) => SizedBox(
+                  width: constraints.maxWidth - pad * 2,
+                  child: _OpenedTimeRange(
+                    startYear: widget.startYear,
+                    endYear: widget.endYear,
+                    onChange: widget.onChanged,
+                    wonder: widget.wonder,
+                    painter: _painter,
+                    onClose: widget.panelController.toggle,
+                  ),
+                ),
+              )),
             ),
           ),
         ],
       );
     });
+  }
+
+  Widget _buildPanelBtn(Widget child) {
+    return GestureDetector(
+      excludeFromSemantics: true,
+      onTapUp: (_) {
+        HapticFeedback.mediumImpact();
+        widget.panelController.toggle();
+      },
+      child: child,
+    );
   }
 }
 
@@ -126,12 +134,14 @@ class _OpenedTimeRange extends StatelessWidget {
     required this.endYear,
     required this.wonder,
     required this.painter,
+    required this.onClose,
   }) : super(key: key);
   final double startYear;
   final double endYear;
   final void Function(double start, double end) onChange;
   final WonderData wonder;
   final TimeRangePainter painter;
+  final void Function() onClose;
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +157,7 @@ class _OpenedTimeRange extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Gap($styles.insets.lg),
+            Gap($styles.insets.xl),
             Spacer(),
             Text(startYr.abs().toString(), style: headingTextStyle),
             Gap($styles.insets.xxs),
@@ -160,8 +170,15 @@ class _OpenedTimeRange extends StatelessWidget {
             Text(StringUtils.getYrSuffix(endYr.round()), style: captionTextStyle),
             Spacer(),
             SizedBox(
-              width: $styles.insets.lg,
-              child: Icon(Icons.close, color: $styles.colors.caption, size: 20),
+              width: $styles.insets.xl,
+              child: AppBtn.from(
+                onPressed: onClose,
+                semanticLabel: $strings.expandingTimeSelectorSemanticSelector,
+                icon: Icons.close,
+                iconSize: 20,
+                padding: EdgeInsets.symmetric(vertical: $styles.insets.xxs),
+                bgColor: Colors.transparent,
+              ),
             ),
           ],
         ),
