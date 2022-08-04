@@ -20,21 +20,29 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
     final states = watchX((CollectiblesLogic c) => c.statesById);
     bool isLost = states[collectible.id] == CollectibleState.lost;
     // Use an OpeningCard to let the collectible smoothly collapse its size once it has been found
-    return OpeningCard(
-      isOpen: isLost,
-      // Note: In order for the collapse animation to run properly, we must return a non-zero height or width.
-      closedBuilder: (_) => SizedBox(width: 1, height: 0),
-      openBuilder: (_) => AppBtn.basic(
-        semanticLabel: 'collectible item',
-        onPressed: () => _handleTap(context),
-        child: Hero(
-          tag: 'collectible_icon_${collectible.id}',
-          child: Image(
-            image: collectible.icon,
-            width: size,
-            height: size,
-            fit: BoxFit.contain,
-          ),
+    return RepaintBoundary(
+      child: OpeningCard(
+        isOpen: isLost,
+        // Note: In order for the collapse animation to run properly, we must return a non-zero height or width.
+        closedBuilder: (_) => SizedBox(width: 1, height: 0),
+        openBuilder: (_) => AppBtn.basic(
+          semanticLabel: 'collectible item',
+          onPressed: () => _handleTap(context),
+          child: Hero(
+            tag: 'collectible_icon_${collectible.id}',
+            child: Image(
+              image: collectible.icon,
+              width: size,
+              height: size,
+              fit: BoxFit.contain,
+            ),
+          )
+              .animate(onInit: (controller) => controller.repeat())
+              .shimmer(delay: 4000.ms, duration: $styles.times.med * 3)
+              .shake(curve: Curves.easeInOutCubic, hz: 4)
+              .scale(begin: 1.0, end: 1.1, duration: $styles.times.med)
+              .then(delay: $styles.times.med)
+              .scale(begin: 1.0, end: 1 / 1.1),
         ),
       ),
     );
