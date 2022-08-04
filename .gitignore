@@ -3,6 +3,7 @@
 *.log
 *.pyc
 *.swp
+desktop.ini
 .DS_Store
 .atom/
 .buildlog/
