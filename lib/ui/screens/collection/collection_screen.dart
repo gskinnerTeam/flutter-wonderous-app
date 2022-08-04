@@ -8,7 +8,7 @@ import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/controls/simple_header.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
-import 'package:wonders/ui/modals/app_modals.dart';
+import 'package:wonders/ui/common/modals/app_modals.dart';
 
 part 'widgets/_collection_tile.dart';
 part 'widgets/_newly_discovered_row.dart';

@@ -9,7 +9,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/platform_info.dart';
-import 'package:wonders/ui/modals/app_modals.dart';
+import 'package:wonders/ui/common/modals/app_modals.dart';
 
 class WallPaperLogic {
   /// Walks user through flow to save a Wonder Poster to their gallery
