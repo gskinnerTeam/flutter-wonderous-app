@@ -104,7 +104,7 @@ class _ScrollingContent extends StatelessWidget {
             ]),
             Gap($styles.insets.md),
             _YouTubeThumbnail(id: data.videoId, caption: data.videoCaption),
-             Gap($styles.insets.md),
+            Gap($styles.insets.md),
             _ContentSection([
               /// Callout2
               Gap($styles.insets.xs),
@@ -120,9 +120,9 @@ class _ScrollingContent extends StatelessWidget {
               _LargeSimpleQuote(text: data.pullQuote2, author: data.pullQuote2Author),
               buildText(data.locationInfo2),
             ]),
-             Gap($styles.insets.md),
+            Gap($styles.insets.md),
             _MapsThumbnail(data, height: 200),
-             Gap($styles.insets.md),
+            Gap($styles.insets.md),
             _ContentSection([buildHiddenCollectible(slot: 3)]),
           ]),
         ),
@@ -161,7 +161,25 @@ class _YouTubeThumbnail extends StatelessWidget {
             AppBtn.basic(
               semanticLabel: $strings.scrollingContentSemanticYoutube,
               onPressed: handlePressed,
-              child: ImageFade(image: NetworkImage(imageUrl), fit: BoxFit.cover),
+              child: Stack(children: [
+                ImageFade(image: NetworkImage(imageUrl), fit: BoxFit.cover),
+                Positioned.fill(
+                  child: Center(
+                    child: Container(
+                      padding: EdgeInsets.all($styles.insets.xs),
+                      decoration: BoxDecoration(
+                        color: $styles.colors.black.withOpacity(0.66),
+                        borderRadius: BorderRadius.circular(999),
+                      ),
+                      child: Icon(
+                        Icons.play_arrow,
+                        color: $styles.colors.white,
+                        size: $styles.insets.xl,
+                      ),
+                    ),
+                  ),
+                ),
+              ]),
             ),
             Gap($styles.insets.xs),
             Padding(
@@ -239,7 +257,6 @@ class SliverBackgroundColor extends SingleChildRenderObjectWidget {
     Widget? sliver,
   }) : super(key: key, child: sliver);
 
-
   final Color color;
 
   @override
@@ -272,8 +289,13 @@ class RenderSliverBackgroundColor extends RenderProxySliver {
   void paint(PaintingContext context, Offset offset) {
     if (child != null && child!.geometry!.visible) {
       final SliverPhysicalParentData childParentData = child!.parentData! as SliverPhysicalParentData;
-      final Rect childRect = offset + childParentData.paintOffset & Size(constraints.crossAxisExtent, child!.geometry!.paintExtent);
-      context.canvas.drawRect(childRect, Paint()..style = PaintingStyle.fill ..color = color);
+      final Rect childRect =
+          offset + childParentData.paintOffset & Size(constraints.crossAxisExtent, child!.geometry!.paintExtent);
+      context.canvas.drawRect(
+          childRect,
+          Paint()
+            ..style = PaintingStyle.fill
+            ..color = color);
       context.paintChild(child!, offset + childParentData.paintOffset);
     }
   }
