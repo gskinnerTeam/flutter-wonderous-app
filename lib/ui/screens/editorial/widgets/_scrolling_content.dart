@@ -23,28 +23,32 @@ class _ScrollingContent extends StatelessWidget {
     Text buildText(String value) => Text(_fixNewlines(value), style: $styles.text.body);
 
     Widget buildDropCapText(String value) {
-      final dropStyle = $styles.text.dropCase;
-      final bodyStyle = $styles.text.body;
-      final dropChar = value.substring(0, 1);
-      final dropCapSize = StringUtils.measure(dropChar, dropStyle);
+      final TextStyle dropStyle = $styles.text.dropCase;
+      final TextStyle bodyStyle = $styles.text.body;
+      final String dropChar = value.substring(0, 1);
+      final double dropCapWidth = StringUtils.measure(dropChar, dropStyle).width;
+
       return Semantics(
         label: value,
         child: DropCapText(
           _fixNewlines(value).substring(1),
           dropCap: DropCap(
-            width: dropCapSize.width,
+            width: dropCapWidth,
             height: $styles.text.body.fontSize! * $styles.text.body.height! * 2,
             child: Transform.translate(
               offset: Offset(0, bodyStyle.fontSize! * (bodyStyle.height! - 1) - 2),
-              child: Text(value.substring(0, 1),
-                  style: $styles.text.dropCase.copyWith(
-                    color: $styles.colors.accent1,
-                    height: 1,
-                  )),
+              child: Text(
+                dropChar,
+                overflow: TextOverflow.visible,
+                style: $styles.text.dropCase.copyWith(
+                  color: $styles.colors.accent1,
+                  height: 1,
+                ),
+              ),
             ),
           ),
           style: $styles.text.body,
-          dropCapPadding: EdgeInsets.only(top: 0, right: 6, bottom: 0),
+          dropCapPadding: EdgeInsets.only(right: 6),
           dropCapStyle: $styles.text.dropCase.copyWith(
             color: $styles.colors.accent1,
             height: 1,
