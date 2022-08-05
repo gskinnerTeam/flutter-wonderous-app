@@ -24,7 +24,7 @@ class _Content extends StatelessWidget {
               data.title,
               textAlign: TextAlign.center,
               style: $styles.text.h2.copyWith(color: $styles.colors.offWhite, height: 1.2),
-              maxLines: 3,
+              maxLines: 5,
               overflow: TextOverflow.ellipsis,
             ).animate().fade(delay: 250.ms, duration: 600.ms),
           ),
