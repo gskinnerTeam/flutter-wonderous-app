@@ -75,7 +75,7 @@ class CollectibleFoundScreen extends StatelessWidget {
   Widget _buildGradient(BuildContext context, double ratioIn, double ratioOut) {
     // used by both intro and detail animations to ensure they share a mid-point.
     ratioIn = Curves.easeOutExpo.transform(ratioIn);
-    final double opacity = 0.9 * (ratioIn * 0.8 + ratioOut * 0.2);
+    final double opacity = 1.0 * (ratioIn * 0.8 + ratioOut * 0.2);
     final Color light = $styles.colors.offWhite;
     final Color dark = $styles.colors.black;
 
