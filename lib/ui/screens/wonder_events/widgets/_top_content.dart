@@ -38,8 +38,8 @@ class _TopContent extends StatelessWidget {
                       timelineBuilder: (_, data, isSelected) {
                         return Container(
                           decoration: BoxDecoration(
-                            color: isSelected ? data.type.fgColor : Colors.transparent,
-                            border: Border.all(color: isSelected ? Colors.transparent : $styles.colors.greyMedium),
+                            color: isSelected ? _fixLuminence(data.type.fgColor) : Colors.transparent,
+                            border: Border.all(color: $styles.colors.greyMedium),
                             borderRadius: BorderRadius.circular($styles.corners.md),
                           ),
                         );
@@ -52,6 +52,13 @@ class _TopContent extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Color _fixLuminence(Color color, [double luminence = 0.35]) {
+    double d = luminence - color.computeLuminance();
+    if (d <= 0) return color;
+    int r = color.red, g = color.green, b = color.blue;
+    return Color.fromARGB(255, (r + (255 - r) * d).toInt(), (g + (255 - g) * d).toInt(), (b + (255 - b) * d).toInt());
   }
 
   Widget _buildImageWithFade(BuildContext context) {
