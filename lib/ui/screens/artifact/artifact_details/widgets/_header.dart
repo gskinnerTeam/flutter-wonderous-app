@@ -41,6 +41,6 @@ class _Header extends StatelessWidget {
   }
 
   void _handleImagePressed(BuildContext context) {
-    Navigator.push(context, CupertinoPageRoute(builder: (_) => FullscreenUrlImgViewer(url: data.image)));
+    Navigator.push(context, CupertinoPageRoute(builder: (_) => FullscreenUrlImgViewer(urls: [data.image])));
   }
 }
