@@ -153,7 +153,7 @@ class _MenuTextBtn extends StatelessWidget {
       onPressed: onPressed,
       bgColor: Colors.transparent,
       semanticLabel: label,
-      child: Text(label, style: $styles.text.bodyBold),
+      child: Text(label, style: $styles.text.bodyBold.copyWith(height: 1)),
     );
   }
 }
