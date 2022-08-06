@@ -18,7 +18,7 @@ class WonderDetailsTabMenu extends StatelessWidget {
     Color iconColor = showBg ? $styles.colors.black : $styles.colors.white;
     const double homeBtnSize = 70;
     // Use SafeArea padding if its more than the default padding.
-    bottomPadding = max(context.mq.padding.bottom, $styles.insets.xs);
+    bottomPadding = context.mq.padding.bottom;
     return Stack(
       children: [
         //Background
@@ -41,23 +41,25 @@ class WonderDetailsTabMenu extends StatelessWidget {
           child: Stack(
             children: [
               // Main tab btns + animated gap
-              Padding(
-                padding: EdgeInsets.only(top: buttonInset),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    // Holds a gap for the Home button which pushed the other icons to the side
-                    AnimatedContainer(
-                        curve: Curves.easeOut,
-                        duration: $styles.times.fast,
-                        width: showHomeBtn ? homeBtnSize : 0,
-                        height: 0),
-                    _TabBtn(0, tabController, iconImg: 'editorial', label: $strings.wonderDetailsTabLabelInformation, color: iconColor),
-                    _TabBtn(1, tabController, iconImg: 'photos', label: $strings.wonderDetailsTabLabelImages, color: iconColor),
-                    _TabBtn(2, tabController, iconImg: 'artifacts', label: $strings.wonderDetailsTabLabelArtifacts, color: iconColor),
-                    _TabBtn(3, tabController, iconImg: 'timeline', label: $strings.wonderDetailsTabLabelEvents, color: iconColor),
-                  ],
-                ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  // Holds a gap for the Home button which pushed the other icons to the side
+                  AnimatedContainer(
+                    curve: Curves.easeOut,
+                    duration: $styles.times.fast,
+                    width: showHomeBtn ? homeBtnSize : 0,
+                    height: 0,
+                  ),
+                  _TabBtn(0, tabController,
+                      iconImg: 'editorial', label: $strings.wonderDetailsTabLabelInformation, color: iconColor),
+                  _TabBtn(1, tabController,
+                      iconImg: 'photos', label: $strings.wonderDetailsTabLabelImages, color: iconColor),
+                  _TabBtn(2, tabController,
+                      iconImg: 'artifacts', label: $strings.wonderDetailsTabLabelArtifacts, color: iconColor),
+                  _TabBtn(3, tabController,
+                      iconImg: 'timeline', label: $strings.wonderDetailsTabLabelEvents, color: iconColor),
+                ],
               ),
 
               // Home btn
@@ -136,14 +138,6 @@ class _TabBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     bool selected = tabController.index == index;
 
-    Widget buildDot([double size = 4]) => Container(
-          width: size,
-          height: size,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(99),
-            color: $styles.colors.accent1,
-          ),
-        );
     final MaterialLocalizations localizations = MaterialLocalizations.of(context);
     final iconImgPath = '${ImagePaths.common}/tab-$iconImg${selected ? '-active' : ''}.png';
     String tabLabel = localizations.tabLabel(tabIndex: index + 1, tabCount: tabController.length);
@@ -162,20 +156,19 @@ class _TabBtn extends StatelessWidget {
                 children: [
                   /// Image icon
                   Image.asset(iconImgPath, height: 32, width: 32, color: selected ? null : color),
-
-                  /// Dot, shows when selected
-                  Positioned.fill(
-                    child: BottomCenter(
-                      child: buildDot()
-                          .animate(key: ValueKey(selected))
-                          .fade(begin: selected ? 0 : 1, end: selected ? 1 : 0)
-                          .move(
-                              curve: selected ? Curves.easeOutBack : Curves.easeIn,
-                              duration: $styles.times.med,
-                              begin: Offset(0, selected ? 30 : 5),
-                              end: Offset(0, selected ? 5 : 30)),
+                  if (selected)
+                    Positioned.fill(
+                      child: BottomCenter(
+                        child: Transform.translate(
+                          offset: Offset(0, 4),
+                          child: Animate().custom(
+                            curve: Curves.easeOutCubic,
+                            end: 24,
+                            builder: (_, v, __) => Container(height: 3, width: v, color: $styles.colors.accent1),
+                          ),
+                        ),
+                      ),
                     ),
-                  )
                 ],
               ),
             ),
