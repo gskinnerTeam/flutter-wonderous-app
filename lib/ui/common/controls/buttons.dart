@@ -127,7 +127,7 @@ class AppBtn extends StatelessWidget {
 
 /// //////////////////////////////////////////////////
 /// _ButtonDecorator
-/// Applies the "add-on" behaviours common to all app buttons: press effect, semantics, haptics.
+/// Applies the "add-on" behaviours common to all app buttons: press effect & semantics.
 /// //////////////////////////////////////////////////
 class _ButtonDecorator extends StatefulWidget {
   const _ButtonDecorator(this.child, this.semanticLabel, {Key? key}) : super(key: key);
@@ -150,10 +150,7 @@ class _ButtonDecoratorState extends State<_ButtonDecorator> {
       child: GestureDetector(
         excludeFromSemantics: true,
         onTapDown: (_) => setState(() => _isDown = true),
-        onTapUp: (_) {
-          HapticFeedback.mediumImpact();
-          setState(() => _isDown = false);
-        },
+        onTapUp: (_) => setState(() => _isDown = false),
         onTapCancel: () => setState(() => _isDown = false),
         behavior: HitTestBehavior.translucent,
         child: Opacity(

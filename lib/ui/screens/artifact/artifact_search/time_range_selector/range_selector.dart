@@ -41,7 +41,6 @@ class _RangeSelectorState extends State<RangeSelector> {
   double get _delta => widget.max - widget.min;
 
   void _handleStartDrag(DragDownDetails d) {
-    HapticFeedback.mediumImpact();
     if (widget.isLocked) return;
     _initStart = _start;
     _initEnd = _end;

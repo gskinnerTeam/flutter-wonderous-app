@@ -92,10 +92,7 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
   Widget _buildPanelBtn(Widget child) {
     return GestureDetector(
       excludeFromSemantics: true,
-      onTapUp: (_) {
-        HapticFeedback.mediumImpact();
-        widget.panelController.toggle();
-      },
+      onTapUp: (_) => widget.panelController.toggle(),
       child: child,
     );
   }
