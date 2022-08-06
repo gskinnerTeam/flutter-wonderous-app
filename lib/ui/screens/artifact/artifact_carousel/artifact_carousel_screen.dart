@@ -127,7 +127,8 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
               },
             ),
 
-            Positioned.fill(right: context.widthPx * 0.75, child: _buildPageBtn(-1, $strings.artifactsSemanticsPrevious)),
+            Positioned.fill(
+                right: context.widthPx * 0.75, child: _buildPageBtn(-1, $strings.artifactsSemanticsPrevious)),
             Positioned.fill(left: context.widthPx * 0.75, child: _buildPageBtn(1, $strings.artifactsSemanticsNext)),
 
             // Text content
@@ -141,14 +142,13 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                   children: [
                     Gap($styles.insets.md),
                     _buildContent(context, artifact, backdropWidth, small),
-                    Gap(small ? $styles.insets.md : $styles.insets.xl),
+                    Gap(small ? $styles.insets.md : $styles.insets.lg),
                     AppBtn.from(
-                      text: $strings.artifactsButtonBrowse,
-                      icon: Icons.search,
-                      expand: true,
-                      onPressed: _handleSearchTap,
-                      padding: EdgeInsets.all($styles.insets.sm)
-                    ),
+                        text: $strings.artifactsButtonBrowse,
+                        icon: Icons.search,
+                        expand: true,
+                        onPressed: _handleSearchTap,
+                        padding: EdgeInsets.all($styles.insets.sm)),
                     Gap(small ? $styles.insets.md : $styles.insets.lg),
                   ],
                 ),
@@ -181,23 +181,6 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (!small) ExcludeSemantics(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: width * 0.1),
-              child: Text(
-                artifact.culture.toUpperCase(),
-                style: $styles.text.titleFont.copyWith(
-                  color: $styles.colors.greyStrong,
-                  fontSize: 14,
-                  height: 1.2,
-                ),
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ),
-          Gap($styles.insets.xxs),
           ExcludeSemantics(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -210,16 +193,21 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                     overflow: TextOverflow.ellipsis,
                     style: $styles.text.h2.copyWith(color: $styles.colors.black, height: 1.2),
                     textAlign: TextAlign.center,
-                    maxLines: 2,
+                    maxLines: small ? 2 : 3,
                   ),
                 ),
                 Gap($styles.insets.xxs),
-                Text(artifact.date, style: $styles.text.body, textAlign: TextAlign.center),
+                Text(
+                  artifact.date.isEmpty ? '--' : artifact.date,
+                  style: $styles.text.body,
+                  textAlign: TextAlign.center,
+                ),
               ],
             ).animate(key: ValueKey(artifact.artifactId)).fadeIn(),
           ),
-          Gap(small ? $styles.insets.sm : $styles.insets.lg),
-          AppPageIndicator(count: _artifacts.length, controller: _controller, semanticPageTitle: $strings.artifactsSemanticArtifact),
+          Gap(small ? $styles.insets.sm : $styles.insets.md),
+          AppPageIndicator(
+              count: _artifacts.length, controller: _controller, semanticPageTitle: $strings.artifactsSemanticArtifact),
         ],
       ),
     );
