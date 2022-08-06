@@ -3,9 +3,10 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
 
 class FullscreenUrlImgViewer extends StatefulWidget {
-  const FullscreenUrlImgViewer({Key? key, required this.urls, this.index = 0}) : super(key: key);
+  const FullscreenUrlImgViewer({Key? key, required this.urls, this.index = 0, this.onClose}) : super(key: key);
   final List<String> urls;
   final int index;
+  final Function(int)? onClose;
 
   @override
   State<FullscreenUrlImgViewer> createState() => _FullscreenUrlImgViewerState();
@@ -48,7 +49,9 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
       child: Stack(
         children: [
           Positioned.fill(child: content),
-          BackBtn.close().safe(),
+          BackBtn.close(
+            onPressed: widget.onClose == null ? null : () => widget.onClose!(controller.page!.round()),
+          ).safe(),
         ],
       ),
     );
