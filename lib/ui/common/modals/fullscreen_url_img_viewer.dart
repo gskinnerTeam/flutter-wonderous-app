@@ -50,7 +50,10 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
         children: [
           Positioned.fill(child: content),
           BackBtn.close(
-            onPressed: widget.onClose == null ? null : () => widget.onClose!(controller.page!.round()),
+            onPressed: () {
+              widget.onClose?.call(controller.page!.round());
+              Navigator.pop(context);
+            }
           ).safe(),
         ],
       ),
