@@ -87,6 +87,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
       Positioned.fill(child: ArtifactCarouselBg(url: artifact.imageUrl)),
       Column(children: [
         SimpleHeader($strings.artifactsTitleArtifacts, showBackBtn: false, isTransparent: true),
+        Gap($styles.insets.xs),
         Expanded(
           child: Stack(children: [
             // White arch, covering bottom half:
@@ -146,6 +147,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                       icon: Icons.search,
                       expand: true,
                       onPressed: _handleSearchTap,
+                      padding: EdgeInsets.all($styles.insets.sm)
                     ),
                     Gap(small ? $styles.insets.md : $styles.insets.lg),
                   ],
@@ -179,7 +181,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ExcludeSemantics(
+          if (!small) ExcludeSemantics(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: width * 0.1),
               child: Text(
@@ -201,7 +203,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  height: small ? 84 : 120,
+                  height: small ? 90 : 120,
                   alignment: Alignment.center,
                   child: Text(
                     artifact.title,
