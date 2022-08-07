@@ -28,7 +28,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
   // Index starts in the middle of the grid (eg, 25 items, index will start at 13)
   int _index = ((_gridSize * _gridSize) / 2).round();
   Offset _lastSwipeDir = Offset.zero;
-  final double _scale = .65;
+  final double _scale = .9;
   bool _skipNextOffsetTween = false;
   late Duration swipeDuration = $styles.times.med * .4;
   final _photoIds = ValueNotifier<List<String>>([]);
