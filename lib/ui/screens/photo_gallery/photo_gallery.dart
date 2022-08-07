@@ -7,10 +7,10 @@ import 'package:wonders/ui/common/animated_motion_blur.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
 import 'package:wonders/ui/common/hidden_collectible.dart';
+import 'package:wonders/ui/common/modals/fullscreen_url_img_viewer.dart';
 import 'package:wonders/ui/common/unsplash_photo.dart';
 
 part 'widgets/_animated_cutout_overlay.dart';
-part 'widgets/_fullscreen_unsplash_photo_viewer.dart';
 
 class PhotoGallery extends StatefulWidget {
   const PhotoGallery({Key? key, this.imageSize, required this.collectionId, required this.wonderType})
@@ -104,11 +104,17 @@ class _PhotoGalleryState extends State<PhotoGallery> {
 
   Future<void> _handleImageTapped(int index) async {
     if (_index == index) {
-      String? newId = await Navigator.push(
+      int? newIndex = await Navigator.push(
         context,
-        CupertinoPageRoute(builder: (_) => _FullScreenUnsplashPhotoViewer(_photoIds.value[index], _photoIds.value)),
+        CupertinoPageRoute(builder: (_) {
+          final urls = _photoIds.value.map((e) {
+            return UnsplashPhotoData.getSelfHostedUrl(e, UnsplashPhotoSize.med);
+          }).toList();
+          return FullscreenUrlImgViewer(urls: urls, index: _index);
+        }),
       );
-      if (newId != null) {
+      if (newIndex != null) {
+        final newId = _photoIds.value[newIndex];
         _setIndex(_photoIds.value.indexOf(newId));
       }
     } else {
