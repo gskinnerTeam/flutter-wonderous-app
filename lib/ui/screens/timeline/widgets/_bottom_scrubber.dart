@@ -29,7 +29,7 @@ class _BottomScrubber extends StatelessWidget {
 
     /// It might take a frame until we receive a valid scroller
     if (scroller == null) return SizedBox.shrink();
-    void _handleScrubberPan(DragUpdateDetails details) {
+    void handleScrubberPan(DragUpdateDetails details) {
       if (!scroller.hasClients) return;
       double dragMultiplier = (scroller.position.maxScrollExtent + timelineMinSize) / context.widthPx;
       double newPos = scroller.position.pixels + details.delta.dx * dragMultiplier;
@@ -72,7 +72,7 @@ class _BottomScrubber extends StatelessWidget {
                   label: $strings.bottomScrubberSemanticScrubber,
                   child: GestureDetector(
                     behavior: HitTestBehavior.translucent,
-                    onPanUpdate: _handleScrubberPan,
+                    onPanUpdate: handleScrubberPan,
 
                     /// Scrub area
                     child: Align(
