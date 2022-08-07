@@ -124,7 +124,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
           if (value.isEmpty) {
             return Center(child: AppLoader());
           }
-          Size imgSize = (widget.imageSize ?? Size(context.widthPx * .7, context.heightPx * .6)) * _scale;
+          Size imgSize = (widget.imageSize ?? Size(context.widthPx * .9, context.heightPx * .7)) * _scale;
           // Get transform offset for the current _index
           final padding = $styles.insets.sm;
           var gridOffset = _calculateCurrentOffset(padding, imgSize);
