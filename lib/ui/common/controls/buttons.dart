@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:wonders/common_libs.dart';
 
 /// Shared methods across button types
@@ -127,7 +128,7 @@ class AppBtn extends StatelessWidget {
 
 /// //////////////////////////////////////////////////
 /// _ButtonDecorator
-/// Applies the "add-on" behaviours common to all app buttons: press effect & semantics.
+/// Applies the "add-on" behaviours common to all app buttons: press effect, semantics, haptics.
 /// //////////////////////////////////////////////////
 class _ButtonDecorator extends StatefulWidget {
   const _ButtonDecorator(this.child, this.semanticLabel, {Key? key}) : super(key: key);
@@ -150,7 +151,10 @@ class _ButtonDecoratorState extends State<_ButtonDecorator> {
       child: GestureDetector(
         excludeFromSemantics: true,
         onTapDown: (_) => setState(() => _isDown = true),
-        onTapUp: (_) => setState(() => _isDown = false),
+        onTapUp: (_) {
+          if (defaultTargetPlatform == TargetPlatform.android) HapticFeedback.lightImpact();
+          setState(() => _isDown = false);
+        },
         onTapCancel: () => setState(() => _isDown = false),
         behavior: HitTestBehavior.translucent,
         child: Opacity(
