@@ -52,7 +52,8 @@ class _PhotoGalleryState extends State<PhotoGallery> {
     setState(() => _photoIds.value = ids ?? []);
   }
 
-  void _setIndex(int value) {
+  void _setIndex(int value, {bool skipAnimation = false}) {
+    _skipNextOffsetTween = skipAnimation;
     setState(() => _index = value);
   }
 
@@ -115,7 +116,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
       );
       if (newIndex != null) {
         final newId = _photoIds.value[newIndex];
-        _setIndex(_photoIds.value.indexOf(newId));
+        _setIndex(_photoIds.value.indexOf(newId), skipAnimation: true);
       }
     } else {
       _setIndex(index);
@@ -138,7 +139,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
           // TODO: Try and figure out why we need to incorporate top padding here, it's counter-intuitive. Maybe GridView or another of the material components is doing something we don't want?
           gridOffset += Offset(0, -context.mq.padding.top / 2);
           final offsetTweenDuration = _skipNextOffsetTween ? Duration.zero : swipeDuration;
-          _skipNextOffsetTween = false;
+          final cutoutTweenDuration = _skipNextOffsetTween ? Duration.zero : swipeDuration * .5;
           // Layout
           return Stack(
             children: [
@@ -147,7 +148,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                 animationKey: ValueKey(_index),
                 cutoutSize: imgSize,
                 swipeDir: _lastSwipeDir,
-                duration: swipeDuration * .5,
+                duration: cutoutTweenDuration,
                 opacity: _scale == 1 ? .7 : .5,
                 child: SafeArea(
                   bottom: false,
@@ -191,6 +192,10 @@ class _PhotoGalleryState extends State<PhotoGallery> {
         builder: (_, __, ___) {
           bool selected = index == _index;
           collectiblesLogic.forWonder(widget.wonderType)[1];
+
+          /// Optimization, to improve the initial UX, all images will load the selected index for 1 second, then switch to the correct urls.
+          /// This will give the first image a 1 second head start and give it the best chance of finishing first.
+          /// TODO SB: It would be nice if this used the preload API instead, but we were never able to
           final imgUrl = _photoIds.value[index];
           bool showCollectible = index == _getCollectibleIndex() && collectiblesLogic.isLost(widget.wonderType, 1);
           return AppBtn.basic(
