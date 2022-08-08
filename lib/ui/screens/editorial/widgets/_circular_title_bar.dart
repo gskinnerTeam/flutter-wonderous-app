@@ -68,7 +68,7 @@ class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with S
   String get newTitle => widget.titles[widget.index];
   late final _anim = AnimationController(
     vsync: this,
-    duration: $styles.times.fast,
+    duration: $styles.times.med,
   )..forward();
 
   bool get isAnimStopped => _anim.value == 0 || _anim.value == _anim.upperBound;
@@ -96,37 +96,40 @@ class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with S
   Widget build(_) {
     return AnimatedBuilder(
       animation: _anim,
-      builder: (_, __) => Transform.rotate(
-        angle: Curves.easeInOut.transform(_anim.value) * pi,
-        child: Container(
-          decoration: BoxDecoration(shape: BoxShape.circle, color: $styles.colors.offWhite),
-          alignment: Alignment.center,
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            // 2 circles that are counter rotated / opposite (one on top, one on bottom)
-            // Each time index is changed, the stack is rotated 180 degrees.
-            // When the animation completes, the rotation snaps back to 0 and the titles also swap position
-            // This creates the effect of a new title always rolling in, with the old rolling out
-            child: Semantics(
-              label: newTitle,
-              child: Stack(
-                children: [
-                  Transform.rotate(
-                    angle: _anim.isCompleted ? pi : 0,
-                    child: _buildCircularText(_anim.isCompleted ? newTitle : oldTitle),
-                  ),
-                  if (!_anim.isCompleted) ...[
+      builder: (_, __) {
+        var rot = _prevIndex > widget.index ? -pi : pi;
+        return Transform.rotate(
+          angle: Curves.easeInOut.transform(_anim.value) * rot,
+          child: Container(
+            decoration: BoxDecoration(shape: BoxShape.circle, color: $styles.colors.offWhite),
+            alignment: Alignment.center,
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              // 2 circles that are counter rotated / opposite (one on top, one on bottom)
+              // Each time index is changed, the stack is rotated 180 degrees.
+              // When the animation completes, the rotation snaps back to 0 and the titles also swap position
+              // This creates the effect of a new title always rolling in, with the old rolling out
+              child: Semantics(
+                label: newTitle,
+                child: Stack(
+                  children: [
                     Transform.rotate(
-                      angle: _anim.isCompleted ? 0 : pi,
-                      child: _buildCircularText(_anim.isCompleted ? oldTitle : newTitle),
+                      angle: _anim.isCompleted ? rot : 0,
+                      child: _buildCircularText(_anim.isCompleted ? newTitle : oldTitle),
                     ),
-                  ]
-                ],
+                    if (!_anim.isCompleted) ...[
+                      Transform.rotate(
+                        angle: _anim.isCompleted ? 0 : rot,
+                        child: _buildCircularText(_anim.isCompleted ? oldTitle : newTitle),
+                      ),
+                    ]
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
