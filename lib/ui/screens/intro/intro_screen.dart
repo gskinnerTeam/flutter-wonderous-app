@@ -2,6 +2,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
 import 'package:wonders/ui/common/themed_text.dart';
+import 'package:wonders/ui/common/utils/haptic.dart';
 
 class IntroScreen extends StatefulWidget {
   const IntroScreen({Key? key}) : super(key: key);
@@ -99,6 +100,7 @@ class _IntroScreenState extends State<IntroScreen> {
       PageView(
         controller: _pageController,
         children: pages,
+        onPageChanged: (_) => Haptic.lightImpact(),
       ),
 
       // finish button:

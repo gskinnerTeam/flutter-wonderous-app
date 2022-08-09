@@ -8,6 +8,7 @@ import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
 import 'package:wonders/ui/common/hidden_collectible.dart';
 import 'package:wonders/ui/common/unsplash_photo.dart';
+import 'package:wonders/ui/common/utils/haptic.dart';
 
 part 'widgets/_animated_cutout_overlay.dart';
 part 'widgets/_fullscreen_unsplash_photo_viewer.dart';
@@ -99,6 +100,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
     if (dir.dx < 0 && newIndex % _gridSize == 0) return; // prevent right-swipe when at right side
     if (dir.dx > 0 && newIndex % _gridSize == _gridSize - 1) return; // prevent left-swipe when at left side
     _lastSwipeDir = dir;
+    Haptic.lightImpact();
     _setIndex(newIndex);
   }
 
