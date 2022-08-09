@@ -1,16 +1,18 @@
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/string_utils.dart';
 
 class AppPageIndicator extends StatefulWidget {
-  const AppPageIndicator(
+  AppPageIndicator(
       {Key? key,
       required this.count,
       required this.controller,
       this.onDotPressed,
       this.color,
       this.dotSize,
-      this.semanticPageTitle = 'page'})
-      : super(key: key);
+      String? semanticPageTitle})
+      : semanticPageTitle = semanticPageTitle ?? $strings.appPageDefaultTitlePage,
+        super(key: key);
   final int count;
   final PageController controller;
   final void Function(int index)? onDotPressed;
@@ -40,8 +42,11 @@ class _AppPageIndicatorState extends State<AppPageIndicator> {
     return ValueListenableBuilder<int>(
       valueListenable: _currentPage,
       builder: (_, value, child) => Semantics(
-        label:
-            '${widget.semanticPageTitle} ${value % (widget.count) + 1} of ${widget.count}. Swipe horizontally with 3 fingers to change ${widget.semanticPageTitle}s',
+        label: StringUtils.supplant($strings.appPageSemanticSwipe, {
+          '{pageTitle}': widget.semanticPageTitle,
+          '{count}': (value % (widget.count) + 1).toString(),
+          '{total}': widget.count.toString(),
+        }),
         child: child,
       ),
       child: SmoothPageIndicator(

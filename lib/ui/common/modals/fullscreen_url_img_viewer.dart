@@ -39,7 +39,7 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
     );
 
     content = Semantics(
-      label: 'full screen image, no description available', // TODO: translate.
+      label: $strings.fullscreenImageViewerSemanticFull,
       container: true,
       image: true,
       child: ExcludeSemantics(child: content),
