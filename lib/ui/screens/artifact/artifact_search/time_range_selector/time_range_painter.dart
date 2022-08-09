@@ -2,12 +2,9 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_screen.dart';
 
-/// Visualizes .
-
 class TimeRangePainter extends CustomPainter {
   final SearchVizController controller;
 
-  // ParticleField is a ChangeNotifier, so we can use it as the repaint notifier.
   TimeRangePainter({
     required this.controller,
   }) : super(repaint: controller);
