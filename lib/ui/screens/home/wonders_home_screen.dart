@@ -53,7 +53,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   bool _isSelected(WonderType t) => t == currentWonder.type;
 
-  void _handlePageViewChanged(v) => setState(() => _wonderIndex = v % _numWonders);
+  void _handlePageViewChanged(v) {
+    setState(() => _wonderIndex = v % _numWonders);
+    Haptic.lightImpact();
+  }
 
   void _handleOpenMenuPressed() async {
     setState(() => _isMenuOpen = true);

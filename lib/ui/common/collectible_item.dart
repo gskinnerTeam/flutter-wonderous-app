@@ -2,6 +2,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/collectibles_logic.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:wonders/ui/common/cards/opening_card.dart';
+import 'package:wonders/ui/common/utils/haptic.dart';
 import 'package:wonders/ui/screens/collectible_found/collectible_found_screen.dart';
 
 class CollectibleItem extends StatelessWidget with GetItMixin {
@@ -28,6 +29,7 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
         openBuilder: (_) => AppBtn.basic(
           semanticLabel: 'collectible item',
           onPressed: () => _handleTap(context),
+          hapticFeedback: false,
           child: Hero(
             tag: 'collectible_icon_${collectible.id}',
             child: Image(
@@ -51,6 +53,7 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
   void _handleTap(BuildContext context) async {
     final screen = CollectibleFoundScreen(collectible: collectible, imageProvider: _imageProvider);
     appLogic.showFullscreenDialogRoute(context, screen);
+    Haptic.mediumImpact();
 
     // wait to update the state, to ensure the hero works properly:
     await Future.delayed($styles.times.pageTransition);
