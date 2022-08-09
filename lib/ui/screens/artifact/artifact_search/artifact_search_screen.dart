@@ -151,7 +151,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
         AppBtn.basic(
           semanticLabel: $strings.artifactsSearchButtonToggle,
           onPressed: () => panelController.toggle(),
-          hapticFeedback: false, // handled when panelController changes.
+          enableFeedback: false, // handled when panelController changes.
           child: Text(
             $strings.artifactsSearchSemanticTimeframe,
             textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),

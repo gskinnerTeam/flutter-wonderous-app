@@ -29,7 +29,7 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
         openBuilder: (_) => AppBtn.basic(
           semanticLabel: 'collectible item',
           onPressed: () => _handleTap(context),
-          hapticFeedback: false,
+          enableFeedback: false,
           child: Hero(
             tag: 'collectible_icon_${collectible.id}',
             child: Image(

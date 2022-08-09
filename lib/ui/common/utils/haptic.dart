@@ -10,8 +10,7 @@ class Haptic {
 
   static void buttonPress() {
     // Android/Fuchsia expect haptics on all button presses, iOS does not.
-    if (defaultTargetPlatform != TargetPlatform.android && defaultTargetPlatform != TargetPlatform.fuchsia) return;
-    lightImpact();
+    if (defaultTargetPlatform != TargetPlatform.android || defaultTargetPlatform != TargetPlatform.fuchsia) lightImpact();
   }
 
   static Future<void> lightImpact() {

@@ -14,7 +14,7 @@ class AppBtn extends StatelessWidget {
     Key? key,
     required this.onPressed,
     required this.semanticLabel,
-    this.hapticFeedback = true,
+    this.enableFeedback = true,
     this.child,
     this.padding,
     this.expand = false,
@@ -29,7 +29,7 @@ class AppBtn extends StatelessWidget {
   AppBtn.from({
     Key? key,
     required this.onPressed,
-    this.hapticFeedback = true,
+    this.enableFeedback = true,
     this.padding,
     this.expand = false,
     this.isSecondary = false,
@@ -69,7 +69,7 @@ class AppBtn extends StatelessWidget {
     Key? key,
     required this.onPressed,
     required this.semanticLabel,
-    this.hapticFeedback = true,
+    this.enableFeedback = true,
     this.child,
     this.padding = EdgeInsets.zero,
     this.isSecondary = false,
@@ -84,7 +84,7 @@ class AppBtn extends StatelessWidget {
   // interaction:
   final VoidCallback onPressed;
   late final String semanticLabel;
-  final bool hapticFeedback;
+  final bool enableFeedback;
 
   // content:
   late final Widget? child;
@@ -111,10 +111,7 @@ class AppBtn extends StatelessWidget {
     if (expand) content = Center(child: content);
 
     Widget button = TextButton(
-      onPressed: () {
-        if (hapticFeedback) Haptic.buttonPress();
-        onPressed();
-      },
+      onPressed: () => onPressed(),
       style: TextButton.styleFrom(
         minimumSize: minimumSize ?? Size.zero,
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -124,6 +121,7 @@ class AppBtn extends StatelessWidget {
             ? CircleBorder(side: side)
             : RoundedRectangleBorder(side: side, borderRadius: BorderRadius.circular($styles.corners.md)),
         padding: padding ?? EdgeInsets.all($styles.insets.md),
+        enableFeedback: enableFeedback,
       ),
       child: DefaultTextStyle(
         style: DefaultTextStyle.of(context).style.copyWith(color: textColor),
@@ -174,5 +172,41 @@ class _ButtonPressEffectState extends State<_ButtonPressEffect> {
         child: ExcludeSemantics(child: widget.child),
       ),
     );
+  }
+}
+
+class BasicBtn extends StatelessWidget {
+  const BasicBtn({
+    required this.onPressed,
+    required this.semanticLabel,
+    this.behavior = HitTestBehavior.translucent,
+    this.child,
+    Key? key,
+  }) : super(key: key);
+
+  final VoidCallback onPressed;
+  final String? semanticLabel;
+  final HitTestBehavior behavior;
+  final Widget? child;
+
+  @override
+  Widget build(BuildContext context) {
+    Widget button = GestureDetector(
+      excludeFromSemantics: true,
+      onTapUp: (_) {
+        onPressed();
+      },
+      behavior: behavior,
+      child: child,
+    );
+
+    // add semantics:
+    if (semanticLabel == null) {
+      button = ExcludeSemantics(child: button);
+    } else {
+      button = Semantics(label: semanticLabel, button: true, container: true, child: button);
+    }
+
+    return button;
   }
 }

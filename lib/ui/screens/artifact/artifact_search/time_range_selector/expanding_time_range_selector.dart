@@ -171,7 +171,7 @@ class _OpenedTimeRange extends StatelessWidget {
               child: AppBtn.from(
                 onPressed: onClose,
                 semanticLabel: $strings.expandingTimeSelectorSemanticSelector,
-                hapticFeedback: false, // handled when panelController changes.
+                enableFeedback: false, // handled when panelController changes.
                 icon: Icons.close,
                 iconSize: 20,
                 padding: EdgeInsets.symmetric(vertical: $styles.insets.xxs),
