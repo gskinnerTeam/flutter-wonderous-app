@@ -30,7 +30,7 @@ class _VerticalSwipeController {
       if (value != swipeAmt.value) {
         swipeAmt.value = value;
         if (swipeAmt.value == 1) {
-          HapticFeedback.heavyImpact();
+          Haptic.heavyImpact();
           onSwipeComplete();
         }
       }

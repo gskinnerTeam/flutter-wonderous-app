@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:wonders/common_libs.dart';
 
+import '../utils/haptic.dart';
+
 /// Shared methods across button types
 Widget _buildIcon(BuildContext context, IconData icon, {required bool isSecondary, required double? size}) =>
     Icon(icon, color: isSecondary ? $styles.colors.black : $styles.colors.offWhite, size: size ?? 18);
@@ -105,7 +107,10 @@ class AppBtn extends StatelessWidget {
     if (expand) content = Center(child: content);
 
     Widget button = TextButton(
-      onPressed: onPressed,
+      onPressed: () {
+        Haptic.buttonPress();
+        onPressed();
+      },
       style: TextButton.styleFrom(
         minimumSize: minimumSize ?? Size.zero,
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -122,45 +127,47 @@ class AppBtn extends StatelessWidget {
       ),
     );
 
-    return _ButtonDecorator(button, semanticLabel);
+    // add press effect:
+    button = _ButtonPressEffect(button);
+
+    // add semantics:
+    button = Semantics(
+      label: semanticLabel,
+      button: true,
+      container: true,
+      child: button,
+    );
+
+    return button;
   }
 }
 
 /// //////////////////////////////////////////////////
 /// _ButtonDecorator
-/// Applies the "add-on" behaviours common to all app buttons: press effect, semantics, haptics.
+/// Add a transparency-based press effect to buttons.
 /// //////////////////////////////////////////////////
-class _ButtonDecorator extends StatefulWidget {
-  const _ButtonDecorator(this.child, this.semanticLabel, {Key? key}) : super(key: key);
+class _ButtonPressEffect extends StatefulWidget {
+  const _ButtonPressEffect(this.child, {Key? key}) : super(key: key);
   final Widget child;
-  final String semanticLabel;
 
   @override
-  State<_ButtonDecorator> createState() => _ButtonDecoratorState();
+  State<_ButtonPressEffect> createState() => _ButtonPressEffectState();
 }
 
-class _ButtonDecoratorState extends State<_ButtonDecorator> {
+class _ButtonPressEffectState extends State<_ButtonPressEffect> {
   bool _isDown = false;
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      label: widget.semanticLabel,
-      button: true,
-      container: true,
-      child: GestureDetector(
-        excludeFromSemantics: true,
-        onTapDown: (_) => setState(() => _isDown = true),
-        onTapUp: (_) {
-          if (defaultTargetPlatform == TargetPlatform.android) HapticFeedback.lightImpact();
-          setState(() => _isDown = false);
-        },
-        onTapCancel: () => setState(() => _isDown = false),
-        behavior: HitTestBehavior.translucent,
-        child: Opacity(
-          opacity: _isDown ? .7 : 1,
-          child: ExcludeSemantics(child: widget.child),
-        ),
+    return GestureDetector(
+      excludeFromSemantics: true,
+      onTapDown: (_) => setState(() => _isDown = true),
+      onTapUp: (_) => setState(() => _isDown = false), // not called, TextButton swallows this.
+      onTapCancel: () => setState(() => _isDown = false),
+      behavior: HitTestBehavior.translucent,
+      child: Opacity(
+        opacity: _isDown ? 0.7 : 1,
+        child: ExcludeSemantics(child: widget.child),
       ),
     );
   }
