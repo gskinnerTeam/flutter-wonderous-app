@@ -7,6 +7,7 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textScale = MediaQuery.of(context).textScaleFactor;
     // Start transitioning when we are halfway up the screen
     final collapseStartPx = context.heightPx * 1;
     final collapseEndPx = context.heightPx * .35;
@@ -17,8 +18,10 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
     /// A single piece of quote text, this widget has one on top, and one on bottom
     Widget buildText(String value, {required bool top, bool isAuthor = false}) {
       var quoteStyle = $styles.text.quote1;
+      var quoteSize = quoteStyle.fontSize;
       quoteStyle = quoteStyle.copyWith(
         color: $styles.colors.caption,
+        fontSize: (quoteSize ??= 36) / textScale, //dynamic font size for more consistent quote layout
       );
       if (isAuthor) {
         quoteStyle = quoteStyle.copyWith(fontSize: 20, fontWeight: FontWeight.w600);
@@ -27,7 +30,7 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
           offset: Offset(0, (imgHeight / 2 + outerPadding * .25) * (1 - collapseAmt) * (top ? -1 : 1)),
           child: BlendMask(
             blendModes: const [BlendMode.colorBurn],
-            child: Text(value, style: quoteStyle, textAlign: TextAlign.center, overflow: TextOverflow.visible, softWrap: true),
+            child: Text(value, style: quoteStyle, textAlign: TextAlign.center),
           ));
     }
 
@@ -54,8 +57,8 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
                   decoration: BoxDecoration(
                     border: Border.all(color: $styles.colors.accent2),
                     borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(999),
-                      topLeft: Radius.circular(999),
+                      topRight: Radius.circular(context.widthPx/2),
+                      topLeft: Radius.circular(context.widthPx/2),
                     ),
                   ),
                 ),
@@ -95,12 +98,7 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        if (data.pullQuote1Author.isNotEmpty) ...[
-                          // Balance spacing when author is present
-                          Container (
-                            margin: const EdgeInsets.only(top: 32),
-                          )
-                        ],
+                        SizedBox(height: 32), // push down vertical centre
                         buildText(data.pullQuote1Top, top: true),
                         buildText(data.pullQuote1Bottom, top: false),
                         if (data.pullQuote1Author.isNotEmpty) ...[
