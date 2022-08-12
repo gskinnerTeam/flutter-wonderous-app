@@ -45,14 +45,14 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
   Widget build(BuildContext context) {
     final double pad = $styles.insets.sm;
     final bool isOpen = widget.panelController.value;
+    double safeBottom = max($styles.insets.md, MediaQuery.of(context).padding.bottom);
     return LayoutBuilder(builder: (_, constraints) {
       return Stack(
         children: [
           BottomCenter(
             child: AnimatedPadding(
               duration: $styles.times.fast,
-              curve: Curves.easeOut,
-              padding: isOpen ? EdgeInsets.zero : EdgeInsets.symmetric(vertical: $styles.insets.md),
+              padding: isOpen ? EdgeInsets.zero : EdgeInsets.only(bottom: safeBottom + $styles.insets.xxs),
               child: _buildPanelBtn(OpeningCard(
                 isOpen: isOpen,
                 padding: EdgeInsets.symmetric(horizontal: pad, vertical: $styles.insets.xs),
@@ -142,6 +142,7 @@ class _OpenedTimeRange extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double safeBottom = max($styles.insets.sm, MediaQuery.of(context).padding.bottom);
     List<Widget> timelineGrid = List.generate(5, (_) => Container(width: 1, color: $styles.colors.black));
 
     final headingTextStyle = $styles.text.title1.copyWith(color: $styles.colors.offWhite, fontSize: 18);
@@ -240,7 +241,7 @@ class _OpenedTimeRange extends StatelessWidget {
           ]),
         ),
 
-        Gap($styles.insets.sm),
+        Gap(safeBottom),
       ],
     );
   }
