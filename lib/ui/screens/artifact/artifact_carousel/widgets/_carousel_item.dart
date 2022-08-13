@@ -63,7 +63,7 @@ class _ImagePreview extends StatelessWidget {
     const double borderWidth = 1.0;
 
     // Base scale units that we can treat like pixels.
-    double baseWidthScale = 1 / context.widthPx;
+    double baseWidthScale = 1 / maxWidth;
     double baseHeightScale = 1 / context.heightPx;
 
     // Size of the pages themselves.
@@ -78,24 +78,15 @@ class _ImagePreview extends StatelessWidget {
     double midPageScaleUp = (1 - math.min(1, pageOffset.abs())) * mainPageScaleFactor;
     double midPageScaleUpY = (1 - math.min(1, pageOffset.abs())) * mainPageScaleFactorY;
 
-    // Calculate the offset positions of the side elements.
-    double xOffsetPad = (context.widthPx - maxWidth);
-    // Use cube of pageOffset to create a loop-around effect.
-    double xOffsetFactor = pageOffset;
     // Use absolute value of offset so images always move down.
     double yOffsetFactor = pageOffset.abs();
 
     if (pageOffset >= -1 && pageOffset <= 1) {
       // Create an offset factor using sin/cos to ease.
-      xOffsetFactor = pageOffset - math.sin(pageOffset * math.pi) / 3;
       yOffsetFactor = 1 - math.cos(pageOffset * math.pi / 2.0).abs();
-    } else {
-      // Apply an opacity to elements beyond -1 to 1 offset to create a fadeout.
-      xOffsetFactor = pageOffset * pageOffset * (pageOffset < 0 ? -1 : 1);
     }
 
     // Multiply the offset factors with the width/height scale to convert them to fractionals.
-    double xOffset = xOffsetFactor * (baseWidthScale * xOffsetPad);
     double yOffset = yOffsetFactor * ((baseHeightScale / 2) * (maxWidth / 2));
 
     // Apply a vertical offset based on the bottom padding provided. This includes half the element width.
@@ -104,32 +95,37 @@ class _ImagePreview extends StatelessWidget {
     double widthFactor = pageWidth + midPageScaleUp;
     double heightFactor = pageHeight + midPageScaleUp + midPageScaleUpY;
 
+    double opacity = max(0, 1 - max(0, pageOffset.abs() - 1) * 2);
+
     // Scale box for sizing. Uses both the element scale and the element Y scale.
     return FractionalTranslation(
       // Move the pages around before scaling, as scaling will directly affect their translation.
-      translation: Offset(xOffset, yOffset - bottomPadding),
+      translation: Offset(0, yOffset - bottomPadding),
       child: FractionallySizedBox(
         // Scale the elements according to whether they are on the sides or middle.
         alignment: Alignment.bottomCenter,
         widthFactor: widthFactor,
         heightFactor: heightFactor,
         // Translation box for positioning.
-        child: Container(
-          // Add an outer border with the rounded ends.
-          decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            border: Border.all(color: $styles.colors.offWhite, width: borderWidth),
-            borderRadius: BorderRadius.all(Radius.circular(999)),
-          ),
+        child: Opacity(
+          opacity: opacity,
+          child: Container(
+            // Add an outer border with the rounded ends.
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              border: Border.all(color: $styles.colors.offWhite, width: borderWidth),
+              borderRadius: BorderRadius.all(Radius.circular(999)),
+            ),
 
-          child: Padding(
-            padding: EdgeInsets.all(borderPadding),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(999),
-              child: ImageFade(
-                image: image,
-                fit: BoxFit.cover,
-                placeholder: ColoredBox(color: $styles.colors.greyMedium.withOpacity(0.75)),
+            child: Padding(
+              padding: EdgeInsets.all(borderPadding),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(999),
+                child: ImageFade(
+                  image: image,
+                  fit: BoxFit.cover,
+                  placeholder: ColoredBox(color: $styles.colors.greyMedium.withOpacity(0.75)),
+                ),
               ),
             ),
           ),
