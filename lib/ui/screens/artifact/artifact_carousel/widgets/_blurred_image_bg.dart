@@ -15,7 +15,7 @@ class _BlurredImageBg extends StatelessWidget {
         Positioned.fill(
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-            child: Container(color: $styles.colors.greyMedium.withOpacity(0.6)),
+            child: Container(color: $styles.colors.black.withOpacity(0.6)),
           ),
         ),
       ]),
