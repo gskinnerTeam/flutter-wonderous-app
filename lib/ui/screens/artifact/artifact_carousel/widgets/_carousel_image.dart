@@ -1,11 +1,7 @@
-import 'dart:math' as math;
+part of '../artifact_carousel_screen.dart';
 
-import 'package:image_fade/image_fade.dart';
-import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/data/highlight_data.dart';
-
-class ArtifactCarouselImage extends StatelessWidget {
-  const ArtifactCarouselImage({
+class _CarouselItem extends StatelessWidget {
+  const _CarouselItem({
     Key? key,
     required this.index,
     required this.currentPage,

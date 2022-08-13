@@ -1,11 +1,13 @@
 import 'dart:math' as math;
+import 'dart:ui';
 
+import 'package:image_fade/image_fade.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/highlight_data.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
 import 'package:wonders/ui/common/controls/simple_header.dart';
-import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_bg.dart';
-import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_image.dart';
+part 'widgets/_blurred_image_bg.dart';
+part 'widgets/_carousel_image.dart';
 
 // TODO: review accessibility. Ex. should the "page" tap be a button so we can attach a semantic label?
 // TODO: fix weird issue when resizing the window (low priority)
@@ -84,7 +86,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     final HighlightData artifact = _artifacts[_currentIndex];
 
     return Stack(children: [
-      Positioned.fill(child: ArtifactCarouselBg(url: artifact.imageUrl)),
+      Positioned.fill(child: _BlurredImageBg(url: artifact.imageUrl)),
       Column(children: [
         SimpleHeader($strings.artifactsTitleArtifacts, showBackBtn: false, isTransparent: true),
         Gap($styles.insets.xs),
@@ -113,7 +115,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                   child: Semantics(
                     // Reads content as it changes without the user focus on it.
                     liveRegion: true,
-                    child: ArtifactCarouselImage(
+                    child: _CarouselItem(
                       index: index,
                       currentPage: _currentOffset,
                       artifact: _artifacts[index % _artifacts.length],
