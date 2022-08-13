@@ -10,7 +10,6 @@ part 'widgets/_blurred_image_bg.dart';
 part 'widgets/_carousel_item.dart';
 
 // TODO: review accessibility. Ex. should the "page" tap be a button so we can attach a semantic label?
-// TODO: fix weird issue when resizing the window (low priority)
 
 class ArtifactCarouselScreen extends StatefulWidget {
   final WonderType type;
@@ -55,17 +54,18 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     super.dispose();
   }
 
-  void _handlePageTap(int delta) {
-    _controller.animateToPage(
-      _currentOffset.round() + delta,
-      duration: $styles.times.fast,
-      curve: Curves.easeOut,
-    );
-  }
-
   void _handleArtifactTap(int index) {
-    HighlightData data = _artifacts[index % _artifacts.length];
-    context.push(ScreenPaths.artifact(data.artifactId));
+    int delta = index - _currentOffset.round();
+    if (delta == 0) {
+      HighlightData data = _artifacts[index % _artifacts.length];
+      context.push(ScreenPaths.artifact(data.artifactId));
+    } else {
+      _controller.animateToPage(
+        _currentOffset.round() + delta,
+        duration: $styles.times.fast,
+        curve: Curves.easeOut,
+      );
+    }
   }
 
   void _handleSearchTap() {
@@ -137,10 +137,6 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
               ),
             ),
 
-            Positioned.fill(
-                right: context.widthPx * 0.75, child: _buildPageBtn(-1, $strings.artifactsSemanticsPrevious)),
-            Positioned.fill(left: context.widthPx * 0.75, child: _buildPageBtn(1, $strings.artifactsSemanticsNext)),
-
             // Text content
             BottomCenter(
               child: Container(
@@ -169,19 +165,6 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
         )
       ]),
     ]);
-  }
-
-  Widget _buildPageBtn(int offset, String label) {
-    return Semantics(
-      label: label,
-      button: true,
-      container: true,
-      child: GestureDetector(
-        excludeFromSemantics: true,
-        onTapUp: (_) => _handlePageTap(offset),
-        behavior: HitTestBehavior.translucent,
-      ),
-    );
   }
 
   Widget _buildContent(BuildContext context, HighlightData artifact, double width, bool small) {
