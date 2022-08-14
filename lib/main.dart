@@ -26,6 +26,7 @@ class WondersApp extends StatelessWidget {
       routerDelegate: appRouter.routerDelegate,
       routeInformationProvider: appRouter.routeInformationProvider,
       routeInformationParser: appRouter.routeInformationParser,
+      theme: ThemeData(fontFamily: $styles.text.body.fontFamily),
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

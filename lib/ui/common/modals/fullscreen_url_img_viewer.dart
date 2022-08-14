@@ -4,36 +4,37 @@ import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:wonders/ui/common/utils/haptic.dart';
 
 class FullscreenUrlImgViewer extends StatefulWidget {
-  const FullscreenUrlImgViewer({Key? key, required this.urls, this.index = 0, this.onClose}) : super(key: key);
+  const FullscreenUrlImgViewer({Key? key, required this.urls, this.index = 0}) : super(key: key);
   final List<String> urls;
   final int index;
-  final Function(int)? onClose;
 
   @override
   State<FullscreenUrlImgViewer> createState() => _FullscreenUrlImgViewerState();
 }
 
 class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
-  final ValueNotifier<bool> isZoomed = ValueNotifier(false);
-  late final PageController controller = PageController(initialPage: widget.index);
+  final _isZoomed = ValueNotifier(false);
+  late final _controller = PageController(initialPage: widget.index);
 
   @override
   void dispose() {
-    controller.dispose();
+    _controller.dispose();
     super.dispose();
   }
+
+  void _handleBackPressed() => Navigator.pop(context, _controller.page!.round());
 
   @override
   Widget build(BuildContext context) {
     Widget content = AnimatedBuilder(
-      animation: isZoomed,
+      animation: _isZoomed,
       builder: (_, __) {
-        final bool enableSwipe = !isZoomed.value && widget.urls.length > 1;
+        final bool enableSwipe = !_isZoomed.value && widget.urls.length > 1;
         return PageView.builder(
           physics: enableSwipe ? PageScrollPhysics() : NeverScrollableScrollPhysics(),
-          controller: controller,
+          controller: _controller,
           itemCount: widget.urls.length,
-          itemBuilder: (_, index) => _Viewer(widget.urls[index], isZoomed),
+          itemBuilder: (_, index) => _Viewer(widget.urls[index], _isZoomed),
           onPageChanged: (_) => Haptic.lightImpact(),
         );
       },
@@ -51,12 +52,7 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
       child: Stack(
         children: [
           Positioned.fill(child: content),
-          BackBtn.close(
-            onPressed: () {
-              widget.onClose?.call(controller.page!.round());
-              Navigator.pop(context);
-            }
-          ).safe(),
+          BackBtn.close(onPressed: _handleBackPressed).safe(),
         ],
       ),
     );
@@ -74,19 +70,19 @@ class _Viewer extends StatefulWidget {
 }
 
 class _ViewerState extends State<_Viewer> {
-  final TransformationController controller = TransformationController();
+  final _controller = TransformationController();
 
   @override
   void dispose() {
-    controller.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return InteractiveViewer(
-      transformationController: controller,
-      onInteractionEnd: (_) => widget.isZoomed.value = controller.value.getMaxScaleOnAxis() > 1,
+      transformationController: _controller,
+      onInteractionEnd: (_) => widget.isZoomed.value = _controller.value.getMaxScaleOnAxis() > 1,
       minScale: 1,
       maxScale: 5,
       child: Hero(

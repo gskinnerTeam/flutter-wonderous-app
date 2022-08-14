@@ -1,11 +1,8 @@
-import 'dart:ui';
-
-import 'package:image_fade/image_fade.dart';
-import 'package:wonders/common_libs.dart';
+part of '../artifact_carousel_screen.dart';
 
 /// Blurry image background for the Artifact Highlights view. Contains horizontal and vertical gradients that stack overtop the blended image.
-class ArtifactCarouselBg extends StatelessWidget {
-  const ArtifactCarouselBg({Key? key, this.url}) : super(key: key);
+class _BlurredImageBg extends StatelessWidget {
+  const _BlurredImageBg({Key? key, this.url}) : super(key: key);
   final String? url;
 
   @override
@@ -18,7 +15,7 @@ class ArtifactCarouselBg extends StatelessWidget {
         Positioned.fill(
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-            child: Container(color: $styles.colors.greyMedium.withOpacity(0.6)),
+            child: Container(color: $styles.colors.black.withOpacity(0.6)),
           ),
         ),
       ]),
