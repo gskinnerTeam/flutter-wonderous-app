@@ -1,7 +1,4 @@
-import 'package:flutter/foundation.dart';
 import 'package:wonders/common_libs.dart';
-
-import '../utils/haptic.dart';
 
 /// Shared methods across button types
 Widget _buildIcon(BuildContext context, IconData icon, {required bool isSecondary, required double? size}) =>

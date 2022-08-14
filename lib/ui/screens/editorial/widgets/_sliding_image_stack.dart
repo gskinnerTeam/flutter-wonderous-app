@@ -2,14 +2,14 @@ part of '../editorial_screen.dart';
 
 class _SlidingImageStack extends StatelessWidget {
   const _SlidingImageStack({Key? key, required this.scrollPos, required this.type}) : super(key: key);
-  
+
   final ValueNotifier<double> scrollPos;
   final WonderType type;
 
   @override
   Widget build(BuildContext context) {
     final totalSize = Size(280, 400);
-    Container _buildPhoto(double scale, String url, Alignment align, {bool top = true}) {
+    Container buildPhoto(double scale, String url, Alignment align, {bool top = true}) {
       return Container(
         width: totalSize.width * scale,
         height: totalSize.height * scale,
@@ -44,15 +44,15 @@ class _SlidingImageStack extends StatelessWidget {
                   Center(
                     child: FractionalTranslation(
                       translation: Offset(0, 0.05 * pctVisible),
-                      child: Transform (
+                      child: Transform(
                         alignment: Alignment.center, //origin: Offset(100, 100)
                         transform: Matrix4.rotationZ(0.9),
-                        child: Container (
-                          width: context.widthPx/1.75,
+                        child: Container(
+                          width: context.widthPx / 1.75,
                           height: context.widthPx,
-                          decoration:  BoxDecoration(
-                            borderRadius:  BorderRadius.all( Radius.elliptical(200, 300)),
-                            border:  Border.all(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.elliptical(200, 300)),
+                            border: Border.all(
                               color: $styles.colors.accent2,
                               width: 1,
                             ),
@@ -74,7 +74,7 @@ class _SlidingImageStack extends StatelessWidget {
                   BottomLeft(
                     child: FractionalTranslation(
                       translation: Offset(0, -.14 * pctVisible),
-                      child: _buildPhoto(
+                      child: buildPhoto(
                         .45,
                         type.photo4,
                         Alignment(0, .3 - .6 * pctVisible),

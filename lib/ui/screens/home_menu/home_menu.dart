@@ -12,7 +12,7 @@ class HomeMenu extends StatelessWidget {
   final WonderData data;
 
   void _handleAboutPressed(BuildContext context) {
-    TextSpan _buildSpan(String text, {VoidCallback? onTap}) {
+    TextSpan buildSpan(String text, {VoidCallback? onTap}) {
       final tapRecognizer = onTap != null ? TapGestureRecognizer() : null;
       tapRecognizer?.onTap = onTap;
       final style = onTap == null ? null : TextStyle(fontWeight: FontWeight.bold, color: $styles.colors.accent1);
@@ -32,18 +32,18 @@ class HomeMenu extends StatelessWidget {
           text: TextSpan(
             style: $styles.text.body.copyWith(color: Colors.black),
             children: [
-              _buildSpan('Wonderous is a visual showcase of eight wonders of the world. Built with '),
-              _buildSpan('Flutter', onTap: () => handleTap('https://flutter.dev')),
-              _buildSpan('  by the team at '),
-              _buildSpan('gskinner', onTap: () => handleTap('https://gskinner.com/flutter')),
-              _buildSpan('.\n\n'),
-              _buildSpan('Learn more at '),
-              _buildSpan('wonderous.app', onTap: () => handleTap('https://wonderous.app')),
-              _buildSpan('.\n\n'),
-              _buildSpan('To see the source code for this app, please visit the '),
-              _buildSpan('Wonderous github repo',
+              buildSpan('Wonderous is a visual showcase of eight wonders of the world. Built with '),
+              buildSpan('Flutter', onTap: () => handleTap('https://flutter.dev')),
+              buildSpan('  by the team at '),
+              buildSpan('gskinner', onTap: () => handleTap('https://gskinner.com/flutter')),
+              buildSpan('.\n\n'),
+              buildSpan('Learn more at '),
+              buildSpan('wonderous.app', onTap: () => handleTap('https://wonderous.app')),
+              buildSpan('.\n\n'),
+              buildSpan('To see the source code for this app, please visit the '),
+              buildSpan('Wonderous github repo',
                   onTap: () => handleTap('https://github.com/gskinnerTeam/flutter-wonders-app')),
-              _buildSpan('.'),
+              buildSpan('.'),
             ],
           ),
         ),
