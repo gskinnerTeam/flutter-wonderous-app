@@ -7,11 +7,11 @@ import 'package:wonders/ui/common/animated_motion_blur.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
 import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
 import 'package:wonders/ui/common/hidden_collectible.dart';
+import 'package:wonders/ui/common/modals/fullscreen_url_img_viewer.dart';
 import 'package:wonders/ui/common/unsplash_photo.dart';
 import 'package:wonders/ui/common/utils/haptic.dart';
 
 part 'widgets/_animated_cutout_overlay.dart';
-part 'widgets/_fullscreen_unsplash_photo_viewer.dart';
 
 class PhotoGallery extends StatefulWidget {
   const PhotoGallery({Key? key, this.imageSize, required this.collectionId, required this.wonderType})
@@ -29,7 +29,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
   // Index starts in the middle of the grid (eg, 25 items, index will start at 13)
   int _index = ((_gridSize * _gridSize) / 2).round();
   Offset _lastSwipeDir = Offset.zero;
-  final double _scale = .65;
+  final double _scale = .9;
   bool _skipNextOffsetTween = false;
   late Duration swipeDuration = $styles.times.med * .4;
   final _photoIds = ValueNotifier<List<String>>([]);
@@ -53,7 +53,8 @@ class _PhotoGalleryState extends State<PhotoGallery> {
     setState(() => _photoIds.value = ids ?? []);
   }
 
-  void _setIndex(int value) {
+  void _setIndex(int value, {bool skipAnimation = false}) {
+    _skipNextOffsetTween = skipAnimation;
     setState(() => _index = value);
   }
 
@@ -106,12 +107,18 @@ class _PhotoGalleryState extends State<PhotoGallery> {
 
   Future<void> _handleImageTapped(int index) async {
     if (_index == index) {
-      String? newId = await Navigator.push(
+      int? newIndex = await Navigator.push(
         context,
-        CupertinoPageRoute(builder: (_) => _FullScreenUnsplashPhotoViewer(_photoIds.value[index], _photoIds.value)),
+        CupertinoPageRoute(builder: (_) {
+          final urls = _photoIds.value.map((e) {
+            return UnsplashPhotoData.getSelfHostedUrl(e, UnsplashPhotoSize.med);
+          }).toList();
+          return FullscreenUrlImgViewer(urls: urls, index: _index);
+        }),
       );
-      if (newId != null) {
-        _setIndex(_photoIds.value.indexOf(newId));
+      if (newIndex != null) {
+        final newId = _photoIds.value[newIndex];
+        _setIndex(_photoIds.value.indexOf(newId), skipAnimation: true);
       }
     } else {
       _setIndex(index);
@@ -126,7 +133,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
           if (value.isEmpty) {
             return Center(child: AppLoader());
           }
-          Size imgSize = (widget.imageSize ?? Size(context.widthPx * .7, context.heightPx * .6)) * _scale;
+          Size imgSize = (widget.imageSize ?? Size(context.widthPx * .9, context.heightPx * .7)) * _scale;
           // Get transform offset for the current _index
           final padding = $styles.insets.sm;
           var gridOffset = _calculateCurrentOffset(padding, imgSize);
@@ -134,7 +141,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
           // TODO: Try and figure out why we need to incorporate top padding here, it's counter-intuitive. Maybe GridView or another of the material components is doing something we don't want?
           gridOffset += Offset(0, -context.mq.padding.top / 2);
           final offsetTweenDuration = _skipNextOffsetTween ? Duration.zero : swipeDuration;
-          _skipNextOffsetTween = false;
+          final cutoutTweenDuration = _skipNextOffsetTween ? Duration.zero : swipeDuration * .5;
           // Layout
           return Stack(
             children: [
@@ -143,7 +150,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                 animationKey: ValueKey(_index),
                 cutoutSize: imgSize,
                 swipeDir: _lastSwipeDir,
-                duration: swipeDuration * .5,
+                duration: cutoutTweenDuration,
                 opacity: _scale == 1 ? .7 : .5,
                 child: SafeArea(
                   bottom: false,
@@ -187,6 +194,10 @@ class _PhotoGalleryState extends State<PhotoGallery> {
         builder: (_, __, ___) {
           bool selected = index == _index;
           collectiblesLogic.forWonder(widget.wonderType)[1];
+
+          /// Optimization, to improve the initial UX, all images will load the selected index for 1 second, then switch to the correct urls.
+          /// This will give the first image a 1 second head start and give it the best chance of finishing first.
+          /// TODO SB: It would be nice if this used the preload API instead, but we were never able to
           final imgUrl = _photoIds.value[index];
           bool showCollectible = index == _getCollectibleIndex() && collectiblesLogic.isLost(widget.wonderType, 1);
           return AppBtn.basic(
