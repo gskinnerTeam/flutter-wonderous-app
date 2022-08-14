@@ -1,12 +1,10 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
-import 'package:wonders/ui/common/modals/fullscreen_web_view.dart';
+import 'package:wonders/ui/screens/home_menu/about_dialog_content.dart';
 
 class HomeMenu extends StatelessWidget {
   const HomeMenu({Key? key, required this.data}) : super(key: key);
@@ -14,65 +12,12 @@ class HomeMenu extends StatelessWidget {
 
   void _handleAboutPressed(BuildContext context) async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-
-    void handleTap(String url) => Navigator.push(context, CupertinoPageRoute(builder: (_) => FullscreenWebView(url)));
-
-    List<TextSpan> buildSpan(String text, {Map<String, List<String>>? linkSupplants}) {
-      if (linkSupplants?.isNotEmpty ?? false) {
-        final r = RegExp(r'\{\w+\}');
-        final matches = r.allMatches(text);
-        final a = text.split(r);
-
-        final supplantKeys = matches.map((x) => x.group(0));
-        final sortedEntries = supplantKeys.map((x) => linkSupplants?.entries.firstWhere((e) => e.key == x));
-
-        final spans = <TextSpan>[];
-        for (var i = 0; i < a.length; i++) {
-          spans.add(TextSpan(text: a[i]));
-          if (i < sortedEntries.length) {
-            final label = sortedEntries.elementAt(i)!.value[0];
-            final link = sortedEntries.elementAt(i)!.value[1];
-            spans.add(TextSpan(
-              text: label,
-              recognizer: TapGestureRecognizer()..onTap = () => handleTap(link),
-              style: TextStyle(fontWeight: FontWeight.bold, color: $styles.colors.accent1),
-            ));
-          }
-        }
-        return spans;
-      } else {
-        return [TextSpan(text: text)];
-      }
-    }
-
     showAboutDialog(
       context: context,
       applicationName: $strings.appName,
       applicationVersion: packageInfo.version,
       applicationLegalese: '© 2022 gskinner',
-      children: [
-        Gap($styles.insets.sm),
-        RichText(
-          text: TextSpan(
-            style: $styles.text.body.copyWith(color: Colors.black),
-            children: [
-              ...buildSpan($strings.homeMenuAboutWonderous),
-              ...buildSpan($strings.homeMenuAboutBuilt, linkSupplants: {
-                '{flutterUrl}': [$strings.homeMenuAboutFlutter, 'https://flutter.dev'],
-                '{gskinnerUrl}': [$strings.homeMenuAboutGskinner, 'https://gskinner.com/flutter'],
-              }),
-              ...buildSpan('\n\n'),
-              ...buildSpan($strings.homeMenuAboutLearn, linkSupplants: {
-                '{wonderousUrl}': [$strings.homeMenuAboutApp, 'https://wonderous.app'],
-              }),
-              ...buildSpan('\n\n'),
-              ...buildSpan($strings.homeMenuAboutSource, linkSupplants: {
-                '{githubUrl}': [$strings.homeMenuAboutRepo, 'https://github.com/gskinnerTeam/flutter-wonders-app'],
-              }),
-            ],
-          ),
-        ),
-      ],
+      children: [AboutDialogContent()],
       applicationIcon: Image.asset(ImagePaths.appIcon, fit: BoxFit.cover, width: 64),
     );
   }
