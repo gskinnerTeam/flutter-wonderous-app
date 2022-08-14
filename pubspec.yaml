@@ -38,6 +38,7 @@ dependencies:
   json_annotation: ^4.6.0
   loading_indicator: ^3.0.3
   modal_bottom_sheet: ^2.1.0
+  package_info_plus: ^1.4.3+1
   particle_field: ^0.0.1
   path_provider: ^2.0.11
   provider: ^6.0.2

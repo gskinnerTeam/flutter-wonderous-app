@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/modals/fullscreen_web_view.dart';
@@ -11,7 +12,7 @@ class HomeMenu extends StatelessWidget {
   const HomeMenu({Key? key, required this.data}) : super(key: key);
   final WonderData data;
 
-  void _handleAboutPressed(BuildContext context) {
+  void _handleAboutPressed(BuildContext context) async {
     TextSpan buildSpan(String text, {VoidCallback? onTap}) {
       final tapRecognizer = onTap != null ? TapGestureRecognizer() : null;
       tapRecognizer?.onTap = onTap;
@@ -20,11 +21,12 @@ class HomeMenu extends StatelessWidget {
     }
 
     void handleTap(String url) => Navigator.push(context, CupertinoPageRoute(builder: (_) => FullscreenWebView(url)));
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
     showAboutDialog(
       context: context,
       applicationName: $strings.appName,
-      applicationVersion: '1.1.1',
+      applicationVersion: packageInfo.version,
       applicationLegalese: '© 2022 gskinner',
       children: [
         Gap($styles.insets.sm),
