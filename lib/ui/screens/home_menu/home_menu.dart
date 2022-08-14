@@ -1,24 +1,62 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
+import 'package:wonders/ui/common/modals/fullscreen_web_view.dart';
 
 class HomeMenu extends StatelessWidget {
   const HomeMenu({Key? key, required this.data}) : super(key: key);
   final WonderData data;
 
-  void _handleAboutPressed() {}
+  void _handleAboutPressed(BuildContext context) {
+    TextSpan _buildSpan(String text, {VoidCallback? onTap}) {
+      final tapRecognizer = onTap != null ? TapGestureRecognizer() : null;
+      tapRecognizer?.onTap = onTap;
+      final style = onTap == null ? null : TextStyle(fontWeight: FontWeight.bold, color: $styles.colors.accent1);
+      return TextSpan(text: text, style: style, recognizer: tapRecognizer);
+    }
 
-  void _handleCollectionPressed(BuildContext context) => context.push(
-        ScreenPaths.collection(''),
-      );
+    void handleTap(String url) => Navigator.push(context, CupertinoPageRoute(builder: (_) => FullscreenWebView(url)));
+
+    showAboutDialog(
+      context: context,
+      applicationName: $strings.appName,
+      applicationVersion: '1.1.1',
+      applicationLegalese: '© 2022 gskinner',
+      children: [
+        Gap($styles.insets.sm),
+        RichText(
+          text: TextSpan(
+            style: $styles.text.body.copyWith(color: Colors.black),
+            children: [
+              _buildSpan('Wonderous is a visual showcase of eight wonders of the world. Built with '),
+              _buildSpan('Flutter', onTap: () => handleTap('https://flutter.dev')),
+              _buildSpan('  by the team at '),
+              _buildSpan('gskinner', onTap: () => handleTap('https://gskinner.com/flutter')),
+              _buildSpan('.\n\n'),
+              _buildSpan('Learn more at '),
+              _buildSpan('wonderous.app', onTap: () => handleTap('https://wonderous.app')),
+              _buildSpan('.\n\n'),
+              _buildSpan('To see the source code for this app, please visit the '),
+              _buildSpan('Wonderous github repo',
+                  onTap: () => handleTap('https://github.com/gskinnerTeam/flutter-wonders-app')),
+              _buildSpan('.'),
+            ],
+          ),
+        ),
+      ],
+      applicationIcon: Image.asset(ImagePaths.appIcon, fit: BoxFit.cover, width: 64),
+    );
+  }
+
+  void _handleCollectionPressed(BuildContext context) => context.push(ScreenPaths.collection(''));
 
   void _handleTimelinePressed(BuildContext context) => context.push(ScreenPaths.timeline(data.type));
 
-  void _handleWonderPressed(BuildContext context, WonderData data) {
-    Navigator.pop(context, data.type);
-  }
+  void _handleWonderPressed(BuildContext context, WonderData data) => Navigator.pop(context, data.type);
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +136,7 @@ class HomeMenu extends StatelessWidget {
       children: [
         _MenuTextBtn(label: $strings.homeMenuButtonExplore, onPressed: () => _handleTimelinePressed(context)),
         _MenuTextBtn(label: $strings.homeMenuButtonView, onPressed: () => _handleCollectionPressed(context)),
-        _MenuTextBtn(label: $strings.homeMenuButtonAbout, onPressed: _handleAboutPressed),
+        _MenuTextBtn(label: $strings.homeMenuButtonAbout, onPressed: () => _handleAboutPressed(context)),
       ]
           .animate(interval: 80.ms)
           .fade(delay: $styles.times.pageTransition + 100.ms)
