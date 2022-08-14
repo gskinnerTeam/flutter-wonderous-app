@@ -7,7 +7,7 @@ class _SlidingImageStack extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final totalSize = Size(280, 360);
-    Container _buildPhoto(double scale, String url, Alignment align, {bool top = true}) {
+    Container buildPhoto(double scale, String url, Alignment align, {bool top = true}) {
       return Container(
         width: totalSize.width * scale,
         height: totalSize.height * scale,
@@ -42,7 +42,7 @@ class _SlidingImageStack extends StatelessWidget {
                   TopRight(
                     child: FractionalTranslation(
                       translation: Offset(0, -.1 + .2 * pctVisible),
-                      child: _buildPhoto(
+                      child: buildPhoto(
                         .73,
                         type.photo3,
                         Alignment(0, -.3 + .6 * pctVisible),
@@ -52,7 +52,7 @@ class _SlidingImageStack extends StatelessWidget {
                   BottomLeft(
                     child: FractionalTranslation(
                       translation: Offset(0, -.4 * pctVisible),
-                      child: _buildPhoto(
+                      child: buildPhoto(
                         .45,
                         type.photo4,
                         Alignment(0, .3 - .6 * pctVisible),
