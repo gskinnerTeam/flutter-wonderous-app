@@ -15,6 +15,7 @@ class _ResultTile extends StatelessWidget {
         key: ValueKey(data.id),
         image: NetworkImage(data.imageUrl),
         fit: BoxFit.cover,
+        scale: 0.5,
       ),
     );
 

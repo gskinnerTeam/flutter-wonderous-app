@@ -94,7 +94,7 @@ class CollectibleFoundScreen extends StatelessWidget {
   Widget _buildImage(BuildContext context) {
     Duration t = $styles.times.fast;
     // build an image with animated shadows and scaling
-    return AppImage(image: imageProvider)
+    return AppImage(image: imageProvider, scale: 1.0)
         .animate()
         .custom(
           duration: t * 6,

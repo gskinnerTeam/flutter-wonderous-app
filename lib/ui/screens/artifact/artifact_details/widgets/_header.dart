@@ -32,6 +32,7 @@ class _Header extends StatelessWidget {
                 fit: BoxFit.cover,
                 alignment: Alignment.topCenter,
                 distractor: true,
+                scale: 1.0,
               ),
             ),
           ),

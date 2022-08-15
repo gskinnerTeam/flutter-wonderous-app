@@ -50,6 +50,7 @@ class _CollectionTile extends StatelessWidget {
       child: AppImage(
         image: NetworkImage(collectible.imageUrlSmall),
         fit: BoxFit.cover,
+        scale: 0.5,
       ),
     );
 

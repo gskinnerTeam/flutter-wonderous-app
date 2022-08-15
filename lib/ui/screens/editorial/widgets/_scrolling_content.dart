@@ -166,7 +166,7 @@ class _YouTubeThumbnail extends StatelessWidget {
               semanticLabel: $strings.scrollingContentSemanticYoutube,
               onPressed: handlePressed,
               child: Stack(children: [
-                AppImage(image: NetworkImage(imageUrl), fit: BoxFit.cover),
+                AppImage(image: NetworkImage(imageUrl), fit: BoxFit.cover, scale: 1.0),
                 Positioned.fill(
                   child: Center(
                     child: Container(

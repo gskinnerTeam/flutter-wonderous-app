@@ -11,7 +11,13 @@ class _BlurredImageBg extends StatelessWidget {
       scale: 1.25,
       alignment: Alignment(0, 0.8),
       child: Stack(children: [
-        Positioned.fill(child: AppImage(image: url == null ? null : NetworkImage(url!), fit: BoxFit.cover)),
+        Positioned.fill(
+          child: AppImage(
+            image: url == null ? null : NetworkImage(url!),
+            fit: BoxFit.cover,
+            scale: 0.5,
+          ),
+        ),
         Positioned.fill(
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),

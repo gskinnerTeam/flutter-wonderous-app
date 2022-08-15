@@ -12,6 +12,7 @@ class AppImage extends StatelessWidget {
     this.distractor = false,
     this.progress = false,
     this.color,
+    this.scale,
   }) : super(key: key);
 
   final ImageProvider? image;
@@ -21,11 +22,12 @@ class AppImage extends StatelessWidget {
   final bool distractor;
   final bool progress;
   final Color? color;
+  final double? scale;
 
   @override
   Widget build(BuildContext context) {
     return ImageFade(
-      image: image,
+      image: capImageSize(image, context),
       fit: fit,
       alignment: alignment,
       duration: duration ?? $styles.times.fast,
@@ -48,5 +50,12 @@ class AppImage extends StatelessWidget {
         }),
       ),
     );
+  }
+
+  ImageProvider? capImageSize(ImageProvider? image, BuildContext context) {
+    if (image == null || scale == null) return image;
+    final MediaQueryData mq = MediaQuery.of(context);
+    final Size screenSize = mq.size * mq.devicePixelRatio * scale!;
+    return ResizeImage(image, width: screenSize.width.round());
   }
 }

@@ -123,7 +123,7 @@ class _ImagePreview extends StatelessWidget {
                 borderRadius: BorderRadius.circular(999),
                 child: ColoredBox(
                   color: $styles.colors.greyMedium,
-                  child: AppImage(image: image, fit: BoxFit.cover),
+                  child: AppImage(image: image, fit: BoxFit.cover, scale: 0.5),
                 ),
               ),
             ),
