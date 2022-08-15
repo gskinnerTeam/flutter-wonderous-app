@@ -13,15 +13,37 @@ class HomeMenu extends StatelessWidget {
   final WonderData data;
 
   void _handleAboutPressed(BuildContext context) async {
-    TextSpan buildSpan(String text, {VoidCallback? onTap}) {
-      final tapRecognizer = onTap != null ? TapGestureRecognizer() : null;
-      tapRecognizer?.onTap = onTap;
-      final style = onTap == null ? null : TextStyle(fontWeight: FontWeight.bold, color: $styles.colors.accent1);
-      return TextSpan(text: text, style: style, recognizer: tapRecognizer);
-    }
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
     void handleTap(String url) => Navigator.push(context, CupertinoPageRoute(builder: (_) => FullscreenWebView(url)));
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+    List<TextSpan> buildSpan(String text, {Map<String, List<String>>? linkSupplants}) {
+      if (linkSupplants?.isNotEmpty ?? false) {
+        final r = RegExp(r'\{\w+\}');
+        final matches = r.allMatches(text);
+        final a = text.split(r);
+
+        final supplantKeys = matches.map((x) => x.group(0));
+        final sortedEntries = supplantKeys.map((x) => linkSupplants?.entries.firstWhere((e) => e.key == x));
+
+        final spans = <TextSpan>[];
+        for (var i = 0; i < a.length; i++) {
+          spans.add(TextSpan(text: a[i]));
+          if (i < sortedEntries.length) {
+            final label = sortedEntries.elementAt(i)!.value[0];
+            final link = sortedEntries.elementAt(i)!.value[1];
+            spans.add(TextSpan(
+              text: label,
+              recognizer: TapGestureRecognizer()..onTap = () => handleTap(link),
+              style: TextStyle(fontWeight: FontWeight.bold, color: $styles.colors.accent1),
+            ));
+          }
+        }
+        return spans;
+      } else {
+        return [TextSpan(text: text)];
+      }
+    }
 
     showAboutDialog(
       context: context,
@@ -34,18 +56,19 @@ class HomeMenu extends StatelessWidget {
           text: TextSpan(
             style: $styles.text.body.copyWith(color: Colors.black),
             children: [
-              buildSpan('Wonderous is a visual showcase of eight wonders of the world. Built with '),
-              buildSpan('Flutter', onTap: () => handleTap('https://flutter.dev')),
-              buildSpan('  by the team at '),
-              buildSpan('gskinner', onTap: () => handleTap('https://gskinner.com/flutter')),
-              buildSpan('.\n\n'),
-              buildSpan('Learn more at '),
-              buildSpan('wonderous.app', onTap: () => handleTap('https://wonderous.app')),
-              buildSpan('.\n\n'),
-              buildSpan('To see the source code for this app, please visit the '),
-              buildSpan('Wonderous github repo',
-                  onTap: () => handleTap('https://github.com/gskinnerTeam/flutter-wonders-app')),
-              buildSpan('.'),
+              ...buildSpan($strings.homeMenuAboutWonderous),
+              ...buildSpan($strings.homeMenuAboutBuilt, linkSupplants: {
+                '{flutterUrl}': [$strings.homeMenuAboutFlutter, 'https://flutter.dev'],
+                '{gskinnerUrl}': [$strings.homeMenuAboutGskinner, 'https://gskinner.com/flutter'],
+              }),
+              ...buildSpan('\n\n'),
+              ...buildSpan($strings.homeMenuAboutLearn, linkSupplants: {
+                '{wonderousUrl}': [$strings.homeMenuAboutApp, 'https://wonderous.app'],
+              }),
+              ...buildSpan('\n\n'),
+              ...buildSpan($strings.homeMenuAboutSource, linkSupplants: {
+                '{githubUrl}': [$strings.homeMenuAboutRepo, 'https://github.com/gskinnerTeam/flutter-wonders-app'],
+              }),
             ],
           ),
         ),

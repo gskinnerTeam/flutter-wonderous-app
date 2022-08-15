@@ -41,7 +41,7 @@ class OkModal extends StatelessWidget {
       title: title,
       msg: msg,
       buttons: [
-        AppBtn.from(text: 'Ok', expand: true, isSecondary: true, onPressed: () => Navigator.of(context).pop(true)),
+        AppBtn.from(text: $strings.appModalsButtonOk, expand: true, isSecondary: true, onPressed: () => Navigator.of(context).pop(true)),
       ],
       child: child,
     );

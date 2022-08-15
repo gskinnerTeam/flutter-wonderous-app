@@ -27,7 +27,7 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
         // Note: In order for the collapse animation to run properly, we must return a non-zero height or width.
         closedBuilder: (_) => SizedBox(width: 1, height: 0),
         openBuilder: (_) => AppBtn.basic(
-          semanticLabel: 'collectible item',
+          semanticLabel: $strings.collectibleItemSemanticCollectible,
           onPressed: () => _handleTap(context),
           enableFeedback: false,
           child: Hero(
