@@ -4,6 +4,8 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/modals/fullscreen_web_view.dart';
 
 class AboutDialogContent extends StatelessWidget {
+  const AboutDialogContent({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     void handleTap(String url) => Navigator.push(context, CupertinoPageRoute(builder: (_) => FullscreenWebView(url)));
