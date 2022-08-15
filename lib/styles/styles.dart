@@ -72,7 +72,7 @@ class _Text {
   late final TextStyle h1 = copy(titleFont, sizePx: 64, heightPx: 62);
   late final TextStyle h2 = copy(titleFont, sizePx: 32, heightPx: 46);
   late final TextStyle h3 = copy(titleFont, sizePx: 24, heightPx: 36, weight: FontWeight.w600);
-  late final TextStyle h4 = copy(titleFont, sizePx: 14, heightPx: 23, spacingPc: 5, weight: FontWeight.w600);
+  late final TextStyle h4 = copy(contentFont, sizePx: 14, heightPx: 23, spacingPc: 5, weight: FontWeight.w600);
 
   late final TextStyle title1 = copy(titleFont, sizePx: 16, heightPx: 26, spacingPc: 5);
   late final TextStyle title2 = copy(titleFont, sizePx: 14, heightPx: 16.38);

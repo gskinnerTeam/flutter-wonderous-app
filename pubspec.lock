@@ -15,6 +15,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.1.0"
+  analyzer_plugin:
+    dependency: transitive
+    description:
+      name: analyzer_plugin
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.10.0"
+  ansicolor:
+    dependency: transitive
+    description:
+      name: ansicolor
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   archive:
     dependency: transitive
     description:
@@ -105,7 +119,7 @@ packages:
       name: characters
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.1"
+    version: "1.2.0"
   charcode:
     dependency: transitive
     description:
@@ -176,6 +190,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.17.1"
+  dart_code_metrics:
+    dependency: "direct dev"
+    description:
+      name: dart_code_metrics
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.17.0"
   dart_style:
     dependency: transitive
     description:

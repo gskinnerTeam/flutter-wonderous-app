@@ -6,6 +6,7 @@ import 'package:wonders/ui/common/controls/app_page_indicator.dart';
 import 'package:wonders/ui/common/controls/diagonal_text_page_indicator.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/themed_text.dart';
+import 'package:wonders/ui/common/utils/haptic.dart';
 import 'package:wonders/ui/screens/home_menu/home_menu.dart';
 import 'package:wonders/ui/wonder_illustrations/common/animated_clouds.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration.dart';
@@ -52,7 +53,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   bool _isSelected(WonderType t) => t == currentWonder.type;
 
-  void _handlePageViewChanged(v) => setState(() => _wonderIndex = v % _numWonders);
+  void _handlePageViewChanged(v) {
+    setState(() => _wonderIndex = v % _numWonders);
+    Haptic.lightImpact();
+  }
 
   void _handleOpenMenuPressed() async {
     setState(() => _isMenuOpen = true);

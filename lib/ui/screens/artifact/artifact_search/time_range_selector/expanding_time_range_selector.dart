@@ -7,8 +7,6 @@ import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_scre
 import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/range_selector.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/time_range_painter.dart';
 
-/// TODO: GDS: Clean code up.
-
 // Expandable timerange selector component that further refines Artifact Search based on date range.
 class ExpandingTimeRangeSelector extends StatefulWidget {
   const ExpandingTimeRangeSelector({
@@ -45,14 +43,14 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
   Widget build(BuildContext context) {
     final double pad = $styles.insets.sm;
     final bool isOpen = widget.panelController.value;
+    double safeBottom = max($styles.insets.md, MediaQuery.of(context).padding.bottom);
     return LayoutBuilder(builder: (_, constraints) {
       return Stack(
         children: [
           BottomCenter(
             child: AnimatedPadding(
               duration: $styles.times.fast,
-              curve: Curves.easeOut,
-              padding: isOpen ? EdgeInsets.zero : EdgeInsets.symmetric(vertical: $styles.insets.md),
+              padding: isOpen ? EdgeInsets.zero : EdgeInsets.only(bottom: safeBottom + $styles.insets.xxs),
               child: _buildPanelBtn(OpeningCard(
                 isOpen: isOpen,
                 padding: EdgeInsets.symmetric(horizontal: pad, vertical: $styles.insets.xs),
@@ -142,6 +140,7 @@ class _OpenedTimeRange extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double safeBottom = max($styles.insets.sm, MediaQuery.of(context).padding.bottom);
     List<Widget> timelineGrid = List.generate(5, (_) => Container(width: 1, color: $styles.colors.black));
 
     final headingTextStyle = $styles.text.title1.copyWith(color: $styles.colors.offWhite, fontSize: 18);
@@ -171,6 +170,7 @@ class _OpenedTimeRange extends StatelessWidget {
               child: AppBtn.from(
                 onPressed: onClose,
                 semanticLabel: $strings.expandingTimeSelectorSemanticSelector,
+                enableFeedback: false, // handled when panelController changes.
                 icon: Icons.close,
                 iconSize: 20,
                 padding: EdgeInsets.symmetric(vertical: $styles.insets.xxs),
@@ -239,7 +239,7 @@ class _OpenedTimeRange extends StatelessWidget {
           ]),
         ),
 
-        Gap($styles.insets.sm),
+        Gap(safeBottom),
       ],
     );
   }

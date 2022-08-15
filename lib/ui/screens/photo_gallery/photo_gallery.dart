@@ -9,6 +9,7 @@ import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
 import 'package:wonders/ui/common/hidden_collectible.dart';
 import 'package:wonders/ui/common/modals/fullscreen_url_img_viewer.dart';
 import 'package:wonders/ui/common/unsplash_photo.dart';
+import 'package:wonders/ui/common/utils/haptic.dart';
 
 part 'widgets/_animated_cutout_overlay.dart';
 
@@ -28,7 +29,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
   // Index starts in the middle of the grid (eg, 25 items, index will start at 13)
   int _index = ((_gridSize * _gridSize) / 2).round();
   Offset _lastSwipeDir = Offset.zero;
-  final double _scale = .9;
+  final double _scale = 1;
   bool _skipNextOffsetTween = false;
   late Duration swipeDuration = $styles.times.med * .4;
   final _photoIds = ValueNotifier<List<String>>([]);
@@ -100,6 +101,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
     if (dir.dx < 0 && newIndex % _gridSize == 0) return; // prevent right-swipe when at right side
     if (dir.dx > 0 && newIndex % _gridSize == _gridSize - 1) return; // prevent left-swipe when at left side
     _lastSwipeDir = dir;
+    Haptic.lightImpact();
     _setIndex(newIndex);
   }
 
@@ -131,9 +133,11 @@ class _PhotoGalleryState extends State<PhotoGallery> {
           if (value.isEmpty) {
             return Center(child: AppLoader());
           }
-          Size imgSize = (widget.imageSize ?? Size(context.widthPx * .9, context.heightPx * .7)) * _scale;
+
+          Size imgSize = (widget.imageSize ?? Size(context.widthPx * .66, context.heightPx * .5)) * _scale;
           // Get transform offset for the current _index
-          final padding = $styles.insets.sm;
+          final padding = $styles.insets.md;
+
           var gridOffset = _calculateCurrentOffset(padding, imgSize);
           // For some reason we need to add in half of the top-padding when this view does not use a safeArea.
           // TODO: Try and figure out why we need to incorporate top padding here, it's counter-intuitive. Maybe GridView or another of the material components is doing something we don't want?
@@ -207,7 +211,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
             child: showCollectible
                 ? HiddenCollectible(widget.wonderType, index: 1, size: 100)
                 : ClipRRect(
-                    borderRadius: BorderRadius.circular(6),
+                    borderRadius: BorderRadius.circular(8),
                     child: AnimatedMotionBlur(
                       swipeDuration,
                       animationKey: ValueKey(_index),

@@ -5,6 +5,7 @@ import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
 import 'package:wonders/ui/common/controls/simple_header.dart';
+import 'package:wonders/ui/common/utils/haptic.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/expanding_time_range_selector.dart';
 
 part 'widgets/_result_tile.dart';
@@ -38,6 +39,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
   @override
   void initState() {
     _search();
+    panelController.addListener(() { Haptic.lightImpact(); });
     super.initState();
   }
 
@@ -149,6 +151,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
         AppBtn.basic(
           semanticLabel: $strings.artifactsSearchButtonToggle,
           onPressed: () => panelController.toggle(),
+          enableFeedback: false, // handled when panelController changes.
           child: Text(
             $strings.artifactsSearchSemanticTimeframe,
             textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),

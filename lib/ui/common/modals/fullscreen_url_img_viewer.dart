@@ -1,6 +1,7 @@
 import 'package:image_fade/image_fade.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/controls/app_loader.dart';
+import 'package:wonders/ui/common/utils/haptic.dart';
 
 class FullscreenUrlImgViewer extends StatefulWidget {
   const FullscreenUrlImgViewer({Key? key, required this.urls, this.index = 0}) : super(key: key);
@@ -34,6 +35,7 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
           controller: _controller,
           itemCount: widget.urls.length,
           itemBuilder: (_, index) => _Viewer(widget.urls[index], _isZoomed),
+          onPageChanged: (_) => Haptic.lightImpact(),
         );
       },
     );

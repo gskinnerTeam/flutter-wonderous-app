@@ -11,6 +11,7 @@ class AppBtn extends StatelessWidget {
     Key? key,
     required this.onPressed,
     required this.semanticLabel,
+    this.enableFeedback = true,
     this.child,
     this.padding,
     this.expand = false,
@@ -25,6 +26,7 @@ class AppBtn extends StatelessWidget {
   AppBtn.from({
     Key? key,
     required this.onPressed,
+    this.enableFeedback = true,
     this.padding,
     this.expand = false,
     this.isSecondary = false,
@@ -64,6 +66,7 @@ class AppBtn extends StatelessWidget {
     Key? key,
     required this.onPressed,
     required this.semanticLabel,
+    this.enableFeedback = true,
     this.child,
     this.padding = EdgeInsets.zero,
     this.isSecondary = false,
@@ -78,6 +81,7 @@ class AppBtn extends StatelessWidget {
   // interaction:
   final VoidCallback onPressed;
   late final String semanticLabel;
+  final bool enableFeedback;
 
   // content:
   late final Widget? child;
@@ -104,7 +108,7 @@ class AppBtn extends StatelessWidget {
     if (expand) content = Center(child: content);
 
     Widget button = TextButton(
-      onPressed: onPressed,
+      onPressed: () => onPressed(),
       style: TextButton.styleFrom(
         minimumSize: minimumSize ?? Size.zero,
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -114,6 +118,7 @@ class AppBtn extends StatelessWidget {
             ? CircleBorder(side: side)
             : RoundedRectangleBorder(side: side, borderRadius: BorderRadius.circular($styles.corners.md)),
         padding: padding ?? EdgeInsets.all($styles.insets.md),
+        enableFeedback: enableFeedback,
       ),
       child: DefaultTextStyle(
         style: DefaultTextStyle.of(context).style.copyWith(color: textColor),
@@ -121,43 +126,82 @@ class AppBtn extends StatelessWidget {
       ),
     );
 
-    return _ButtonDecorator(button, semanticLabel);
+    // add press effect:
+    button = _ButtonPressEffect(button);
+
+    // add semantics:
+    button = Semantics(
+      label: semanticLabel,
+      button: true,
+      container: true,
+      child: button,
+    );
+
+    return button;
   }
 }
 
 /// //////////////////////////////////////////////////
 /// _ButtonDecorator
-/// Applies the "add-on" behaviours common to all app buttons: press effect & semantics.
+/// Add a transparency-based press effect to buttons.
 /// //////////////////////////////////////////////////
-class _ButtonDecorator extends StatefulWidget {
-  const _ButtonDecorator(this.child, this.semanticLabel, {Key? key}) : super(key: key);
+class _ButtonPressEffect extends StatefulWidget {
+  const _ButtonPressEffect(this.child, {Key? key}) : super(key: key);
   final Widget child;
-  final String semanticLabel;
 
   @override
-  State<_ButtonDecorator> createState() => _ButtonDecoratorState();
+  State<_ButtonPressEffect> createState() => _ButtonPressEffectState();
 }
 
-class _ButtonDecoratorState extends State<_ButtonDecorator> {
+class _ButtonPressEffectState extends State<_ButtonPressEffect> {
   bool _isDown = false;
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      label: widget.semanticLabel,
-      button: true,
-      container: true,
-      child: GestureDetector(
-        excludeFromSemantics: true,
-        onTapDown: (_) => setState(() => _isDown = true),
-        onTapUp: (_) => setState(() => _isDown = false),
-        onTapCancel: () => setState(() => _isDown = false),
-        behavior: HitTestBehavior.translucent,
-        child: Opacity(
-          opacity: _isDown ? .7 : 1,
-          child: ExcludeSemantics(child: widget.child),
-        ),
+    return GestureDetector(
+      excludeFromSemantics: true,
+      onTapDown: (_) => setState(() => _isDown = true),
+      onTapUp: (_) => setState(() => _isDown = false), // not called, TextButton swallows this.
+      onTapCancel: () => setState(() => _isDown = false),
+      behavior: HitTestBehavior.translucent,
+      child: Opacity(
+        opacity: _isDown ? 0.7 : 1,
+        child: ExcludeSemantics(child: widget.child),
       ),
     );
+  }
+}
+
+// TODO: this is currently unused, and can probably be removed:
+// This is a very simple button for elements that don't require button UI (states, focus, etc)
+// For example panel backgrounds.
+class BasicBtn extends StatelessWidget {
+  const BasicBtn({
+    required this.onPressed,
+    required this.semanticLabel,
+    this.behavior = HitTestBehavior.opaque,
+    this.enableFeedback = true,
+    this.child,
+    Key? key,
+  }) : super(key: key);
+
+  final VoidCallback onPressed;
+  final String? semanticLabel;
+  final HitTestBehavior behavior;
+  final bool enableFeedback;
+  final Widget? child;
+
+  @override
+  Widget build(BuildContext context) {
+    Widget button = GestureDetector(
+      excludeFromSemantics: true,
+      onTap: enableFeedback ? Feedback.wrapForTap(onPressed, context) : onPressed,
+      behavior: behavior,
+      child: child,
+    );
+
+    if (semanticLabel != null) button = Semantics(label: semanticLabel, button: true, container: true, child: button);
+
+    return button;
   }
 }

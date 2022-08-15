@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/modals/fullscreen_web_view.dart';
@@ -11,10 +12,12 @@ class HomeMenu extends StatelessWidget {
   const HomeMenu({Key? key, required this.data}) : super(key: key);
   final WonderData data;
 
-  void _handleAboutPressed(BuildContext context) {
+  void _handleAboutPressed(BuildContext context) async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
     void handleTap(String url) => Navigator.push(context, CupertinoPageRoute(builder: (_) => FullscreenWebView(url)));
 
-    List<TextSpan> _buildSpan(String text, {Map<String, List<String>>? linkSupplants}) {
+    List<TextSpan> buildSpan(String text, {Map<String, List<String>>? linkSupplants}) {
       if (linkSupplants?.isNotEmpty ?? false) {
         final r = RegExp(r'\{\w+\}');
         final matches = r.allMatches(text);
@@ -45,7 +48,7 @@ class HomeMenu extends StatelessWidget {
     showAboutDialog(
       context: context,
       applicationName: $strings.appName,
-      applicationVersion: '1.1.1',
+      applicationVersion: packageInfo.version,
       applicationLegalese: '© 2022 gskinner',
       children: [
         Gap($styles.insets.sm),
@@ -53,17 +56,17 @@ class HomeMenu extends StatelessWidget {
           text: TextSpan(
             style: $styles.text.body.copyWith(color: Colors.black),
             children: [
-              ..._buildSpan($strings.homeMenuAboutWonderous),
-              ..._buildSpan($strings.homeMenuAboutBuilt, linkSupplants: {
+              ...buildSpan($strings.homeMenuAboutWonderous),
+              ...buildSpan($strings.homeMenuAboutBuilt, linkSupplants: {
                 '{flutterUrl}': [$strings.homeMenuAboutFlutter, 'https://flutter.dev'],
                 '{gskinnerUrl}': [$strings.homeMenuAboutGskinner, 'https://gskinner.com/flutter'],
               }),
-              ..._buildSpan('\n\n'),
-              ..._buildSpan($strings.homeMenuAboutLearn, linkSupplants: {
+              ...buildSpan('\n\n'),
+              ...buildSpan($strings.homeMenuAboutLearn, linkSupplants: {
                 '{wonderousUrl}': [$strings.homeMenuAboutApp, 'https://wonderous.app'],
               }),
-              ..._buildSpan('\n\n'),
-              ..._buildSpan($strings.homeMenuAboutSource, linkSupplants: {
+              ...buildSpan('\n\n'),
+              ...buildSpan($strings.homeMenuAboutSource, linkSupplants: {
                 '{githubUrl}': [$strings.homeMenuAboutRepo, 'https://github.com/gskinnerTeam/flutter-wonders-app'],
               }),
             ],

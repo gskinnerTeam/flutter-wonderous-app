@@ -17,7 +17,6 @@ class WondersLogic {
 
   Future<void> load() async {
     all = [
-      PyramidsGizaData(),
       GreatWallData(),
       PetraData(),
       ColosseumData(),
@@ -25,6 +24,7 @@ class WondersLogic {
       MachuPicchuData(),
       TajMahalData(),
       ChristRedeemerData(),
+      PyramidsGizaData(),
     ];
   }
 

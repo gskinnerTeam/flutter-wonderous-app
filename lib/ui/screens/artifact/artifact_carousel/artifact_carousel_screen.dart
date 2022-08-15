@@ -1,14 +1,15 @@
 import 'dart:math' as math;
+import 'dart:ui';
 
+import 'package:image_fade/image_fade.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/highlight_data.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
 import 'package:wonders/ui/common/controls/simple_header.dart';
-import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_bg.dart';
-import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_image.dart';
+part 'widgets/_blurred_image_bg.dart';
+part 'widgets/_carousel_item.dart';
 
 // TODO: review accessibility. Ex. should the "page" tap be a button so we can attach a semantic label?
-// TODO: fix weird issue when resizing the window (low priority)
 
 class ArtifactCarouselScreen extends StatefulWidget {
   final WonderType type;
@@ -20,8 +21,9 @@ class ArtifactCarouselScreen extends StatefulWidget {
 
 class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   // Used to cap white background dimensions.
-  static const double _maxElementWidth = 375;
-  static const double _maxElementHeight = 700;
+  static const double _maxElementWidth = 440;
+  static const double _partialElementWidth = 0.9;
+  static const double _maxElementHeight = 640;
 
   // Locally store loaded artifacts.
   late List<HighlightData> _artifacts;
@@ -52,17 +54,18 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     super.dispose();
   }
 
-  void _handlePageTap(int delta) {
-    _controller.animateToPage(
-      _currentOffset.round() + delta,
-      duration: $styles.times.fast,
-      curve: Curves.easeOut,
-    );
-  }
-
   void _handleArtifactTap(int index) {
-    HighlightData data = _artifacts[index % _artifacts.length];
-    context.push(ScreenPaths.artifact(data.artifactId));
+    int delta = index - _currentOffset.round();
+    if (delta == 0) {
+      HighlightData data = _artifacts[index % _artifacts.length];
+      context.push(ScreenPaths.artifact(data.artifactId));
+    } else {
+      _controller.animateToPage(
+        _currentOffset.round() + delta,
+        duration: $styles.times.fast,
+        curve: Curves.easeOut,
+      );
+    }
   }
 
   void _handleSearchTap() {
@@ -78,13 +81,14 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   }
 
   Widget _buildScreen(BuildContext context, _) {
-    final double backdropWidth = math.min(context.widthPx, _maxElementWidth);
+    final double w = context.widthPx;
+    final double backdropWidth = w <= _maxElementWidth ? w : min(w * _partialElementWidth, _maxElementWidth);
     final double backdropHeight = math.min(context.heightPx * 0.65, _maxElementHeight);
     final bool small = backdropHeight / _maxElementHeight < 0.7;
     final HighlightData artifact = _artifacts[_currentIndex];
 
     return Stack(children: [
-      Positioned.fill(child: ArtifactCarouselBg(url: artifact.imageUrl)),
+      Positioned.fill(child: _BlurredImageBg(url: artifact.imageUrl)),
       Column(children: [
         SimpleHeader($strings.artifactsTitleArtifacts, showBackBtn: false, isTransparent: true),
         Gap($styles.insets.xs),
@@ -103,33 +107,35 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
             ),
 
             // Carousel:
-            PageView.builder(
-              controller: _controller,
-              clipBehavior: Clip.none,
-              itemBuilder: (context, index) {
-                bool isCurrentIndex = index % _artifacts.length == _currentIndex;
-                return ExcludeSemantics(
-                  excluding: isCurrentIndex == false,
-                  child: Semantics(
-                    // Reads content as it changes without the user focus on it.
-                    liveRegion: true,
-                    child: ArtifactCarouselImage(
-                      index: index,
-                      currentPage: _currentOffset,
-                      artifact: _artifacts[index % _artifacts.length],
-                      bottomPadding: backdropHeight,
-                      maxWidth: backdropWidth,
-                      maxHeight: backdropHeight,
-                      onPressed: () => _handleArtifactTap(index),
-                    ),
-                  ),
-                );
-              },
+            Center(
+              child: SizedBox(
+                width: backdropWidth,
+                child: PageView.builder(
+                  key: ValueKey('pageview'),
+                  controller: _controller,
+                  clipBehavior: Clip.none,
+                  itemBuilder: (context, index) {
+                    bool isCurrentIndex = index % _artifacts.length == _currentIndex;
+                    return ExcludeSemantics(
+                      excluding: isCurrentIndex == false,
+                      child: Semantics(
+                        // Reads content as it changes without the user focus on it.
+                        liveRegion: true,
+                        child: _CarouselItem(
+                          index: index,
+                          currentPage: _currentOffset,
+                          artifact: _artifacts[index % _artifacts.length],
+                          bottomPadding: backdropHeight,
+                          maxWidth: backdropWidth,
+                          maxHeight: backdropHeight,
+                          onPressed: () => _handleArtifactTap(index),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
             ),
-
-            Positioned.fill(
-                right: context.widthPx * 0.75, child: _buildPageBtn(-1, $strings.artifactsSemanticsPrevious)),
-            Positioned.fill(left: context.widthPx * 0.75, child: _buildPageBtn(1, $strings.artifactsSemanticsNext)),
 
             // Text content
             BottomCenter(
@@ -144,11 +150,12 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                     _buildContent(context, artifact, backdropWidth, small),
                     Gap(small ? $styles.insets.md : $styles.insets.lg),
                     AppBtn.from(
-                        text: $strings.artifactsButtonBrowse,
-                        icon: Icons.search,
-                        expand: true,
-                        onPressed: _handleSearchTap,
-                        padding: EdgeInsets.all($styles.insets.sm)),
+                      text: $strings.artifactsButtonBrowse,
+                      icon: Icons.search,
+                      expand: true,
+                      onPressed: _handleSearchTap,
+                      padding: EdgeInsets.all($styles.insets.sm),
+                    ),
                     Gap(small ? $styles.insets.md : $styles.insets.lg),
                   ],
                 ),
@@ -160,19 +167,6 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     ]);
   }
 
-  Widget _buildPageBtn(int offset, String label) {
-    return Semantics(
-      label: label,
-      button: true,
-      container: true,
-      child: GestureDetector(
-        excludeFromSemantics: true,
-        onTapUp: (_) => _handlePageTap(offset),
-        behavior: HitTestBehavior.translucent,
-      ),
-    );
-  }
-
   Widget _buildContent(BuildContext context, HighlightData artifact, double width, bool small) {
     return Container(
       width: width,
@@ -181,29 +175,31 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ExcludeSemantics(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  height: small ? 90 : 120,
-                  alignment: Alignment.center,
-                  child: Text(
-                    artifact.title,
-                    overflow: TextOverflow.ellipsis,
-                    style: $styles.text.h2.copyWith(color: $styles.colors.black, height: 1.2),
-                    textAlign: TextAlign.center,
-                    maxLines: small ? 2 : 3,
+          IgnorePointer(
+            child: ExcludeSemantics(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    height: small ? 90 : 120,
+                    alignment: Alignment.center,
+                    child: Text(
+                      artifact.title,
+                      overflow: TextOverflow.ellipsis,
+                      style: $styles.text.h2.copyWith(color: $styles.colors.black, height: 1.2),
+                      textAlign: TextAlign.center,
+                      maxLines: small ? 2 : 3,
+                    ),
                   ),
-                ),
-                Gap($styles.insets.xxs),
-                Text(
-                  artifact.date.isEmpty ? '--' : artifact.date,
-                  style: $styles.text.body,
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ).animate(key: ValueKey(artifact.artifactId)).fadeIn(),
+                  Gap($styles.insets.xxs),
+                  Text(
+                    artifact.date.isEmpty ? '--' : artifact.date,
+                    style: $styles.text.body,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ).animate(key: ValueKey(artifact.artifactId)).fadeIn(),
+            ),
           ),
           Gap(small ? $styles.insets.sm : $styles.insets.md),
           AppPageIndicator(
