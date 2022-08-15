@@ -16,8 +16,9 @@ class _BlurredImageBg extends StatelessWidget {
           imageFilter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
           child: AppImage(
             image: url == null ? null : NetworkImage(url!),
+            syncDuration: $styles.times.fast,
             fit: BoxFit.cover,
-            scale: 0.5,
+            // TODO: cross fading doesn't work well with `scale: 0.5`
           ),
         ),
       ),

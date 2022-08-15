@@ -9,6 +9,7 @@ class AppImage extends StatelessWidget {
     this.fit = BoxFit.scaleDown,
     this.alignment = Alignment.center,
     this.duration,
+    this.syncDuration,
     this.distractor = false,
     this.progress = false,
     this.color,
@@ -19,6 +20,7 @@ class AppImage extends StatelessWidget {
   final BoxFit fit;
   final Alignment alignment;
   final Duration? duration;
+  final Duration? syncDuration;
   final bool distractor;
   final bool progress;
   final Color? color;
@@ -31,7 +33,7 @@ class AppImage extends StatelessWidget {
       fit: fit,
       alignment: alignment,
       duration: duration ?? $styles.times.fast,
-      syncDuration: 0.ms,
+      syncDuration: syncDuration ?? 0.ms,
       loadingBuilder: (_, value, ___) {
         if (!distractor && !progress) return SizedBox();
         return Center(child: AppLoadingIndicator(value: progress ? value : null, color: color));
