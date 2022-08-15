@@ -172,11 +172,15 @@ class _ButtonPressEffectState extends State<_ButtonPressEffect> {
   }
 }
 
+// TODO: this is currently unused, and can probably be removed:
+// This is a very simple button for elements that don't require button UI (states, focus, etc)
+// For example panel backgrounds.
 class BasicBtn extends StatelessWidget {
   const BasicBtn({
     required this.onPressed,
     required this.semanticLabel,
-    this.behavior = HitTestBehavior.translucent,
+    this.behavior = HitTestBehavior.opaque,
+    this.enableFeedback = true,
     this.child,
     Key? key,
   }) : super(key: key);
@@ -184,25 +188,19 @@ class BasicBtn extends StatelessWidget {
   final VoidCallback onPressed;
   final String? semanticLabel;
   final HitTestBehavior behavior;
+  final bool enableFeedback;
   final Widget? child;
 
   @override
   Widget build(BuildContext context) {
     Widget button = GestureDetector(
       excludeFromSemantics: true,
-      onTapUp: (_) {
-        onPressed();
-      },
+      onTap: enableFeedback ? Feedback.wrapForTap(onPressed, context) : onPressed,
       behavior: behavior,
       child: child,
     );
 
-    // add semantics:
-    if (semanticLabel == null) {
-      button = ExcludeSemantics(child: button);
-    } else {
-      button = Semantics(label: semanticLabel, button: true, container: true, child: button);
-    }
+    if (semanticLabel != null) button = Semantics(label: semanticLabel, button: true, container: true, child: button);
 
     return button;
   }

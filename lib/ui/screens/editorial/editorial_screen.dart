@@ -33,8 +33,6 @@ part 'widgets/_top_illustration.dart';
 part 'widgets/_callout.dart';
 part 'widgets/_large_simple_quote.dart';
 
-// TODO: GDS: add list shadow
-
 class WonderEditorialScreen extends StatefulWidget {
   const WonderEditorialScreen(this.data, {Key? key, required this.onScroll}) : super(key: key);
   final WonderData data;

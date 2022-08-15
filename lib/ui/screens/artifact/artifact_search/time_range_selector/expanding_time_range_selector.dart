@@ -7,8 +7,6 @@ import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_scre
 import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/range_selector.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/time_range_painter.dart';
 
-/// TODO: GDS: Clean code up.
-
 // Expandable timerange selector component that further refines Artifact Search based on date range.
 class ExpandingTimeRangeSelector extends StatefulWidget {
   const ExpandingTimeRangeSelector({

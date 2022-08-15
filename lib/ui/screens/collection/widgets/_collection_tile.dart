@@ -55,8 +55,6 @@ class _CollectionTile extends StatelessWidget {
       ),
     );
 
-    // TODO: GDS: hero is disabled for now, since it doesn't play well with Cupertino transitions or the double nav pop.
-    //if (heroTag != null) content = Hero(tag: heroTag!, child: content);
     return AppBtn.basic(
       semanticLabel: collectible.title,
       onPressed: () => onPressed(collectible),
