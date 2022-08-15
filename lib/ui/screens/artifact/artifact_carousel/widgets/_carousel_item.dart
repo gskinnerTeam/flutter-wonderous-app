@@ -121,10 +121,9 @@ class _ImagePreview extends StatelessWidget {
               padding: EdgeInsets.all(borderPadding),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(999),
-                child: ImageFade(
-                  image: image,
-                  fit: BoxFit.cover,
-                  placeholder: ColoredBox(color: $styles.colors.greyMedium.withOpacity(0.75)),
+                child: ColoredBox(
+                  color: $styles.colors.greyMedium,
+                  child: AppImage(image: image, fit: BoxFit.cover),
                 ),
               ),
             ),

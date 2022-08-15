@@ -27,11 +27,11 @@ class _Header extends StatelessWidget {
             child: SafeArea(
               bottom: false,
               minimum: EdgeInsets.symmetric(vertical: $styles.insets.sm),
-              child: ImageFade(
+              child: AppImage(
                 image: NetworkImage(data.image),
                 fit: BoxFit.cover,
                 alignment: Alignment.topCenter,
-                loadingBuilder: (_, __, ___) => const Center(child: AppLoader()),
+                distractor: true,
               ),
             ),
           ),

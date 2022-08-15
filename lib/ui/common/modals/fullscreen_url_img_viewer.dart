@@ -1,6 +1,6 @@
 import 'package:image_fade/image_fade.dart';
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/common/controls/app_loader.dart';
+import 'package:wonders/ui/common/controls/app_loading_indicator.dart';
 import 'package:wonders/ui/common/utils/haptic.dart';
 
 class FullscreenUrlImgViewer extends StatefulWidget {
@@ -87,11 +87,9 @@ class _ViewerState extends State<_Viewer> {
       maxScale: 5,
       child: Hero(
         tag: widget.url,
-        child: ImageFade(
-          syncDuration: 0.ms,
+        child: AppImage(
           image: NetworkImage(widget.url),
           fit: BoxFit.contain,
-          loadingBuilder: (_, __, ___) => const Center(child: AppLoader()),
         ),
       ),
     );

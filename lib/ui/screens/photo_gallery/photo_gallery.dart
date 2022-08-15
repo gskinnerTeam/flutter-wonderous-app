@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/unsplash_photo_data.dart';
 import 'package:wonders/ui/common/animated_motion_blur.dart';
-import 'package:wonders/ui/common/controls/app_loader.dart';
+import 'package:wonders/ui/common/controls/app_loading_indicator.dart';
 import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
 import 'package:wonders/ui/common/hidden_collectible.dart';
 import 'package:wonders/ui/common/modals/fullscreen_url_img_viewer.dart';
@@ -131,7 +131,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
         valueListenable: _photoIds,
         builder: (_, value, __) {
           if (value.isEmpty) {
-            return Center(child: AppLoader());
+            return Center(child: AppLoadingIndicator());
           }
 
           Size imgSize = (widget.imageSize ?? Size(context.widthPx * .66, context.heightPx * .5)) * _scale;

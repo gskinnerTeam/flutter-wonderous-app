@@ -11,19 +11,10 @@ class _ResultTile extends StatelessWidget {
     final Widget content = Container(
       color: $styles.colors.black,
       width: double.infinity,
-      child: ImageFade(
+      child: AppImage(
         key: ValueKey(data.id),
         image: NetworkImage(data.imageUrl),
-        duration: $styles.times.fast,
-        syncDuration: 0.ms,
         fit: BoxFit.cover,
-        errorBuilder: (ctx, __) => Center(
-          child: Icon(
-            Icons.image_not_supported,
-            color: $styles.colors.greyStrong,
-            size: $styles.insets.xl,
-          ),
-        ),
       ),
     );
 

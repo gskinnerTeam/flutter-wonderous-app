@@ -47,10 +47,8 @@ class _CollectionTile extends StatelessWidget {
         boxShadow:
             !isNew ? null : [BoxShadow(color: $styles.colors.accent1.withOpacity(0.6), blurRadius: $styles.insets.sm)],
       ),
-      child: ImageFade(
+      child: AppImage(
         image: NetworkImage(collectible.imageUrlSmall),
-        duration: $styles.times.fast,
-        alignment: Alignment.center,
         fit: BoxFit.cover,
       ),
     );

@@ -1,4 +1,3 @@
-import 'package:image_fade/image_fade.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:particle_field/particle_field.dart';
@@ -95,7 +94,7 @@ class CollectibleFoundScreen extends StatelessWidget {
   Widget _buildImage(BuildContext context) {
     Duration t = $styles.times.fast;
     // build an image with animated shadows and scaling
-    return ImageFade(image: imageProvider, duration: t * 0.5)
+    return AppImage(image: imageProvider)
         .animate()
         .custom(
           duration: t * 6,

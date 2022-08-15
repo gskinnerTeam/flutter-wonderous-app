@@ -1,5 +1,5 @@
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/common/controls/app_loader.dart';
+import 'package:wonders/ui/common/controls/app_loading_indicator.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class FullscreenVideoPage extends StatefulWidget {
@@ -40,7 +40,7 @@ class _FullscreenVideoPageState extends State<FullscreenVideoPage> {
               aspectRatio: aspect,
               child: Stack(
                 children: [
-                  const Center(child: AppLoader()),
+                  const Center(child: AppLoadingIndicator()),
                   YoutubePlayerIFrame(controller: _controller, aspectRatio: aspect),
                 ],
               ),

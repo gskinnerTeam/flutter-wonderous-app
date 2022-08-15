@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:image_fade/image_fade.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/ui/common/app_loading_error.dart';
 import 'package:wonders/ui/common/compass_divider.dart';
-import 'package:wonders/ui/common/controls/app_loader.dart';
+import 'package:wonders/ui/common/controls/app_loading_indicator.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/modals/fullscreen_url_img_viewer.dart';
 
@@ -38,7 +37,7 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
           return Stack(children: [
             /// Content
             !snapshot.hasData
-                ? Center(child: AppLoader())
+                ? Center(child: AppLoadingIndicator())
                 : CustomScrollView(
                     slivers: [
                       SliverAppBar(

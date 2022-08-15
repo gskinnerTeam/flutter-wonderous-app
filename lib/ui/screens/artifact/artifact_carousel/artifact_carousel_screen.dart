@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 import 'dart:ui';
 
-import 'package:image_fade/image_fade.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/highlight_data.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';

@@ -1,7 +1,5 @@
-import 'package:image_fade/image_fade.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/unsplash_photo_data.dart';
-import 'package:wonders/ui/common/controls/app_loader.dart';
 
 class UnsplashPhoto extends StatelessWidget {
   const UnsplashPhoto(this.id, {Key? key, this.fit = BoxFit.cover, required this.size, this.showCredits = false})
@@ -16,10 +14,10 @@ class UnsplashPhoto extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        ImageFade(
+        AppImage(
           image: NetworkImage(UnsplashPhotoData.getSelfHostedUrl(id, size)),
           fit: fit,
-          loadingBuilder: (_, __, ___) => const Center(child: AppLoader()),
+          progress: true,
         ),
       ],
     );
