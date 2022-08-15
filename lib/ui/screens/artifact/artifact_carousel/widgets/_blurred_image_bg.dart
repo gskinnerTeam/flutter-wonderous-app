@@ -18,7 +18,7 @@ class _BlurredImageBg extends StatelessWidget {
             image: url == null ? null : NetworkImage(url!),
             syncDuration: $styles.times.fast,
             fit: BoxFit.cover,
-            // TODO: cross fading doesn't work well with `scale: 0.5`
+            scale: 0.5,
           ),
         ),
       ),

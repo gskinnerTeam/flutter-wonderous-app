@@ -2,7 +2,7 @@ import 'package:image_fade/image_fade.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/controls/app_loading_indicator.dart';
 
-class AppImage extends StatelessWidget {
+class AppImage extends StatefulWidget {
   const AppImage({
     Key? key,
     required this.image,
@@ -27,16 +27,28 @@ class AppImage extends StatelessWidget {
   final double? scale;
 
   @override
+  State<AppImage> createState() => _AppImageState();
+}
+
+class _AppImageState extends State<AppImage> {
+  ImageProvider? _image;
+  ImageProvider? _oldImage;
+
+  @override
   Widget build(BuildContext context) {
+    if (_oldImage != widget.image) {
+      _oldImage = widget.image;
+      _image = capImageSize(widget.image, context);
+    }
     return ImageFade(
-      image: capImageSize(image, context),
-      fit: fit,
-      alignment: alignment,
-      duration: duration ?? $styles.times.fast,
-      syncDuration: syncDuration ?? 0.ms,
+      image: _image,
+      fit: widget.fit,
+      alignment: widget.alignment,
+      duration: widget.duration ?? $styles.times.fast,
+      syncDuration: widget.syncDuration ?? 0.ms,
       loadingBuilder: (_, value, ___) {
-        if (!distractor && !progress) return SizedBox();
-        return Center(child: AppLoadingIndicator(value: progress ? value : null, color: color));
+        if (!widget.distractor && !widget.progress) return SizedBox();
+        return Center(child: AppLoadingIndicator(value: widget.progress ? value : null, color: widget.color));
       },
       errorBuilder: (_, __) => Container(
         padding: EdgeInsets.all($styles.insets.xs),
@@ -55,9 +67,9 @@ class AppImage extends StatelessWidget {
   }
 
   ImageProvider? capImageSize(ImageProvider? image, BuildContext context) {
-    if (image == null || scale == null) return image;
+    if (image == null || widget.scale == null) return image;
     final MediaQueryData mq = MediaQuery.of(context);
-    final Size screenSize = mq.size * mq.devicePixelRatio * scale!;
+    final Size screenSize = mq.size * mq.devicePixelRatio * widget.scale!;
     return ResizeImage(image, width: screenSize.width.round());
   }
 }

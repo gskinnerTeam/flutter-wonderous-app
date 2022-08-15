@@ -8,7 +8,7 @@ import 'package:wonders/ui/common/controls/simple_header.dart';
 part 'widgets/_blurred_image_bg.dart';
 part 'widgets/_carousel_item.dart';
 
-// TODO: review accessibility. Ex. should the "page" tap be a button so we can attach a semantic label?
+// TODO: review accessibility.
 
 class ArtifactCarouselScreen extends StatefulWidget {
   final WonderType type;
