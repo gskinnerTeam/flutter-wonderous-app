@@ -26,20 +26,20 @@ class HomeMenu extends StatelessWidget {
         final supplantKeys = matches.map((x) => x.group(0));
         final sortedEntries = supplantKeys.map((x) => linkSupplants?.entries.firstWhere((e) => e.key == x));
 
-        List<TextSpan> t = [];
+        final spans = <TextSpan>[];
         for (var i = 0; i < a.length; i++) {
-          t.add(TextSpan(text: a[i]));
+          spans.add(TextSpan(text: a[i]));
           if (i < sortedEntries.length) {
             final label = sortedEntries.elementAt(i)!.value[0];
             final link = sortedEntries.elementAt(i)!.value[1];
-            t.add(TextSpan(
+            spans.add(TextSpan(
               text: label,
               recognizer: TapGestureRecognizer()..onTap = () => handleTap(link),
               style: TextStyle(fontWeight: FontWeight.bold, color: $styles.colors.accent1),
             ));
           }
         }
-        return t;
+        return spans;
       } else {
         return [TextSpan(text: text)];
       }
