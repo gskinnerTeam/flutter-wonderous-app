@@ -31,17 +31,31 @@ class AppImage extends StatefulWidget {
 }
 
 class _AppImageState extends State<AppImage> {
-  ImageProvider? _image;
-  ImageProvider? _oldImage;
+  ImageProvider? _displayImage;
+  ImageProvider? _sourceImage;
+
+  @override
+  void didChangeDependencies() {
+    _updateImage();
+    super.didChangeDependencies();
+  }
+
+  @override
+  void didUpdateWidget(AppImage oldWidget) {
+    _updateImage();
+    super.didUpdateWidget(oldWidget);
+  }
+
+  void _updateImage() {
+    if (widget.image == _sourceImage) return;
+    _sourceImage = widget.image;
+    _displayImage = _capImageSize(_sourceImage);
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (_oldImage != widget.image) {
-      _oldImage = widget.image;
-      _image = capImageSize(widget.image, context);
-    }
     return ImageFade(
-      image: _image,
+      image: _displayImage,
       fit: widget.fit,
       alignment: widget.alignment,
       duration: widget.duration ?? $styles.times.fast,
@@ -66,7 +80,7 @@ class _AppImageState extends State<AppImage> {
     );
   }
 
-  ImageProvider? capImageSize(ImageProvider? image, BuildContext context) {
+  ImageProvider? _capImageSize(ImageProvider? image) {
     if (image == null || widget.scale == null) return image;
     final MediaQueryData mq = MediaQuery.of(context);
     final Size screenSize = mq.size * mq.devicePixelRatio * widget.scale!;
