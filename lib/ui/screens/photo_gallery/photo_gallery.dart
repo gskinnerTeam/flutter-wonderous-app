@@ -195,11 +195,6 @@ class _PhotoGalleryState extends State<PhotoGallery> {
         valueListenable: collectiblesLogic.statesById,
         builder: (_, __, ___) {
           bool selected = index == _index;
-          collectiblesLogic.forWonder(widget.wonderType)[1];
-
-          /// Optimization, to improve the initial UX, all images will load the selected index for 1 second, then switch to the correct urls.
-          /// This will give the first image a 1 second head start and give it the best chance of finishing first.
-          /// TODO SB: It would be nice if this used the preload API instead, but we were never able to
           final imgUrl = _photoIds.value[index];
           bool showCollectible = index == _getCollectibleIndex() && collectiblesLogic.isLost(widget.wonderType, 1);
           return AppBtn.basic(
