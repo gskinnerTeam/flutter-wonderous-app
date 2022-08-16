@@ -233,6 +233,7 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
                         mapType: MapType.normal,
                         mapToolbarEnabled: false,
                         initialCameraPosition: startPos,
+                        myLocationButtonEnabled: false,
                       ),
                     ),
                   ],

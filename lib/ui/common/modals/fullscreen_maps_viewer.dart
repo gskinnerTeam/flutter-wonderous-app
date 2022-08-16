@@ -18,6 +18,7 @@ class FullscreenMapsViewer extends StatelessWidget {
           mapType: MapType.hybrid,
           markers: {getMapsMarker(startPos.target)},
           initialCameraPosition: startPos,
+          myLocationButtonEnabled: false,
         ),
         BackBtn().safe(),
       ],
