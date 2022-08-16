@@ -38,7 +38,9 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
   @override
   void initState() {
     _search();
-    panelController.addListener(() { Haptic.lightImpact(); });
+    panelController.addListener(() {
+      AppHaptics.lightImpact();
+    });
     super.initState();
   }
 

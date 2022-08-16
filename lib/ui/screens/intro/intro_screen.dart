@@ -100,7 +100,7 @@ class _IntroScreenState extends State<IntroScreen> {
       PageView(
         controller: _pageController,
         children: pages,
-        onPageChanged: (_) => Haptic.lightImpact(),
+        onPageChanged: (_) => AppHaptics.lightImpact(),
       ),
 
       // finish button:

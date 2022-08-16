@@ -101,7 +101,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
     if (dir.dx < 0 && newIndex % _gridSize == 0) return; // prevent right-swipe when at right side
     if (dir.dx > 0 && newIndex % _gridSize == _gridSize - 1) return; // prevent left-swipe when at left side
     _lastSwipeDir = dir;
-    Haptic.lightImpact();
+    AppHaptics.lightImpact();
     _setIndex(newIndex);
   }
 
