@@ -1,5 +1,5 @@
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/common/utils/haptic.dart';
+import 'package:wonders/ui/common/utils/app_haptics.dart';
 
 class FullscreenUrlImgViewer extends StatefulWidget {
   const FullscreenUrlImgViewer({Key? key, required this.urls, this.index = 0}) : super(key: key);
@@ -33,7 +33,7 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
           controller: _controller,
           itemCount: widget.urls.length,
           itemBuilder: (_, index) => _Viewer(widget.urls[index], _isZoomed),
-          onPageChanged: (_) => Haptic.lightImpact(),
+          onPageChanged: (_) => AppHaptics.lightImpact(),
         );
       },
     );
@@ -67,7 +67,7 @@ class _Viewer extends StatefulWidget {
   State<_Viewer> createState() => _ViewerState();
 }
 
-class _ViewerState extends State<_Viewer> {
+class _ViewerState extends State<_Viewer> with SingleTickerProviderStateMixin {
   final _controller = TransformationController();
 
   @override
@@ -76,19 +76,25 @@ class _ViewerState extends State<_Viewer> {
     super.dispose();
   }
 
+  /// Reset zoom level to 1 on double-tap
+  void _handleDoubleTap() => _controller.value = Matrix4.identity();
+
   @override
   Widget build(BuildContext context) {
-    return InteractiveViewer(
-      transformationController: _controller,
-      onInteractionEnd: (_) => widget.isZoomed.value = _controller.value.getMaxScaleOnAxis() > 1,
-      minScale: 1,
-      maxScale: 5,
-      child: Hero(
-        tag: widget.url,
-        child: AppImage(
-          image: NetworkImage(widget.url),
-          fit: BoxFit.contain,
-          scale: 2.5,
+    return GestureDetector(
+      onDoubleTap: _handleDoubleTap,
+      child: InteractiveViewer(
+        transformationController: _controller,
+        onInteractionEnd: (_) => widget.isZoomed.value = _controller.value.getMaxScaleOnAxis() > 1,
+        minScale: 1,
+        maxScale: 5,
+        child: Hero(
+          tag: widget.url,
+          child: AppImage(
+            image: NetworkImage(widget.url),
+            fit: BoxFit.contain,
+            scale: 2.5,
+          ),
         ),
       ),
     );
