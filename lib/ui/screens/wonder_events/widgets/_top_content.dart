@@ -4,6 +4,13 @@ class _TopContent extends StatelessWidget {
   const _TopContent({Key? key, required this.data}) : super(key: key);
   final WonderData data;
 
+  Color _fixLuminence(Color color, [double luminence = 0.35]) {
+    double d = luminence - color.computeLuminance();
+    if (d <= 0) return color;
+    int r = color.red, g = color.green, b = color.blue;
+    return Color.fromARGB(255, (r + (255 - r) * d).toInt(), (g + (255 - g) * d).toInt(), (b + (255 - b) * d).toInt());
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -54,13 +61,6 @@ class _TopContent extends StatelessWidget {
     );
   }
 
-  Color _fixLuminence(Color color, [double luminence = 0.35]) {
-    double d = luminence - color.computeLuminance();
-    if (d <= 0) return color;
-    int r = color.red, g = color.green, b = color.blue;
-    return Color.fromARGB(255, (r + (255 - r) * d).toInt(), (g + (255 - g) * d).toInt(), (b + (255 - b) * d).toInt());
-  }
-
   Widget _buildImageWithFade(BuildContext context) {
     return ExcludeSemantics(
       child: Stack(
@@ -79,7 +79,7 @@ class _TopContent extends StatelessWidget {
           /// Vertical gradient on btm
           Positioned.fill(
             child: BottomCenter(
-              child: ListOverscollGradient(bottomUp: true),
+              child: ListOverscollGradient(bottomUp: true, size: 200),
             ),
           )
         ],
@@ -88,6 +88,7 @@ class _TopContent extends StatelessWidget {
   }
 
   Widget _buildEraTextRow(BuildContext context) {
+    final textStyle = $styles.text.body.copyWith(color: $styles.colors.accent2, height: 1);
     return SeparatedRow(
       separatorBuilder: () => Gap($styles.insets.sm),
       mainAxisAlignment: MainAxisAlignment.center,
@@ -97,22 +98,19 @@ class _TopContent extends StatelessWidget {
           StringUtils.supplant(
             $strings.titleLabelDate,
             {
-              '{fromDate}': data.startYr.toString(),
-              '{endDate}': data.endYr.toString(),
+              '{fromDate}': StringUtils.formatYr(data.startYr),
+              '{endDate}': StringUtils.formatYr(data.endYr),
             },
           ),
-          style: $styles.text.body.copyWith(color: $styles.colors.accent2),
+          style: textStyle,
         ),
         _buildDot(context),
-        Text(
-          StringUtils.getEra(data.startYr),
-          style: $styles.text.body.copyWith(color: $styles.colors.accent2),
-        ),
+        Text(StringUtils.getEra(data.startYr), style: textStyle),
       ],
     ).animate().fade(delay: $styles.times.pageTransition);
   }
 
-  Container _buildDot(BuildContext context) {
+  Widget _buildDot(BuildContext context) {
     return Container(
       width: 4,
       height: 4,
