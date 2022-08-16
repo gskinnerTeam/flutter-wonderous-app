@@ -1,5 +1,6 @@
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/collectibles_logic.dart';
 import 'package:wonders/logic/locale_logic.dart';
@@ -10,13 +11,21 @@ import 'package:wonders/logic/unsplash_logic.dart';
 import 'package:wonders/logic/wallpaper_logic.dart';
 import 'package:wonders/logic/wonders_logic.dart';
 
-void main() {
+void main() async {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  // Keep native splash screen up until app is finished bootstrapping
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+  // Start app
   registerSingletons();
   runApp(WondersApp());
-  appLogic.bootstrap();
+  await appLogic.bootstrap();
+
+  // Remove splash screen when bootstrap is complete
+  FlutterNativeSplash.remove();
 }
 
-/// Creates an app using the [MaterialApp.router] constructor and the `appRouter` which is an instance of [GoRouter]
+/// Creates an app using the [MaterialApp.router] constructor and the `appRouter`, an instance of [GoRouter].
 class WondersApp extends StatelessWidget {
   const WondersApp({Key? key}) : super(key: key);
   @override

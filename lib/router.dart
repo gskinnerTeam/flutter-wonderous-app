@@ -9,7 +9,6 @@ import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_scre
 import 'package:wonders/ui/screens/collection/collection_screen.dart';
 import 'package:wonders/ui/screens/home/wonders_home_screen.dart';
 import 'package:wonders/ui/screens/intro/intro_screen.dart';
-import 'package:wonders/ui/screens/splash/splash_screen.dart';
 import 'package:wonders/ui/screens/timeline/timeline_screen.dart';
 import 'package:wonders/ui/screens/wallpaper_photo/wallpaper_photo_screen.dart';
 import 'package:wonders/ui/screens/wonder_details/wonders_details_screen.dart';
@@ -36,7 +35,7 @@ final appRouter = GoRouter(
   redirect: _handleRedirect,
   navigatorBuilder: (_, __, child) => WondersAppScaffold(child: child),
   routes: [
-    AppRoute(ScreenPaths.splash, (_) => SplashScreen()),
+    AppRoute(ScreenPaths.splash, (_) => Container()), // This will be hidden
     AppRoute(ScreenPaths.home, (_) => HomeScreen()),
     AppRoute(ScreenPaths.intro, (_) => IntroScreen()),
     AppRoute('/wonder/:type', (s) {
