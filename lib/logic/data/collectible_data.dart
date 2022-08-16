@@ -41,8 +41,8 @@ List<CollectibleData> collectiblesData = [
     title: 'Pendant',
     wonder: WonderType.chichenItza,
     artifactId: '701645',
-    imageUrl: 'https://images.metmuseum.org/CRDImages/ao/original/DP701440.jpg',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ao/web-large/DP701440.jpg',
+    imageUrl: 'https://images.metmuseum.org/CRDImages/ao/original/DP-25104-001.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ao/web-large/DP-25104-001.jpg',
     iconName: 'jewelry',
   ),
   CollectibleData(
@@ -161,8 +161,8 @@ List<CollectibleData> collectiblesData = [
     title: 'Double Bowl',
     wonder: WonderType.machuPicchu,
     artifactId: '313341',
-    imageUrl: 'https://images.metmuseum.org/CRDImages/ao/original/DP104855.jpg',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ao/web-large/DP104855.jpg',
+    imageUrl: 'https://images.metmuseum.org/CRDImages/ao/original/DP-24356-001.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ao/web-large/DP-24356-001.jpg',
     iconName: 'vase',
   ),
 
