@@ -156,7 +156,7 @@ class CollectibleFoundScreen extends StatelessWidget {
       ),
     )
         .animate()
-        .show(delay: t * 4)
+        .fadeIn(delay: t * 4, duration: 0.ms)
         .move(begin: Offset(0, $styles.insets.md), duration: t * 3, curve: Curves.easeOutExpo);
   }
 
