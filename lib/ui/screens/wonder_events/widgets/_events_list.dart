@@ -43,8 +43,8 @@ class _EventsListState extends State<_EventsList> {
                 double blur = 0;
                 double scrollAmt = 0;
                 if (_scroller.hasClients) {
-                  double blurStart = 100;
-                  scrollAmt = (_scroller.position.pixels - blurStart).clamp(0, 50) / 50;
+                  double blurStart = 50;
+                  scrollAmt = (_scroller.position.pixels - blurStart).clamp(0, 150) / 150;
                   blur = scrollAmt * 10;
                 }
                 // Container provides a underlay which gets darker as the background blurs
