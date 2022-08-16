@@ -1,3 +1,24 @@
+# 1.5.0
+- Polish Items
+  - Home: Moved the the Great Wall to the front of the carousel\
+  - Timeline: Align event cards to top of view
+  - Timeline: Add haptics for event markers (dots on the side)
+  - Editorial: Curved title rotates in the opposite direction when scrolling back to the top
+  - Editorial: Misc tweaks from design team
+  - Photo Gallery: Increased size of selected photo
+  - Maps: Disable 'My Location' button
+  - Fullscreen Videos: Allow landscape orientation
+  - Fullscreen Videos: Change background to black
+  - FullScreen Images: Double-tab to reset zoom to 1
+  - FullScreen Images: Swipe left or right when zoomed out
+  - Artifact Details: Add MET credits to bottom of view
+  - Artifacts: Add animation to hidden collectibles so they are more obvious
+  - Events: Fix year formatting and alignment of spacer dot
+- Add native splash screen with updated logo
+- Reduce memory footprint by scaling down very large images
+- Add `About` screen
+- Adjust haptics across the app
+
 # 1.4.0
 - Additional improvements to accessibility
 - Included cached shaders for increased performance on iOS
