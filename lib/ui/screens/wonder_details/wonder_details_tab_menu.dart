@@ -18,7 +18,7 @@ class WonderDetailsTabMenu extends StatelessWidget {
     Color iconColor = showBg ? $styles.colors.black : $styles.colors.white;
     const double homeBtnSize = 70;
     // Use SafeArea padding if its more than the default padding.
-    bottomPadding = context.mq.padding.bottom;
+    bottomPadding = max(context.mq.padding.bottom, $styles.insets.xs * 1.5);
     return Stack(
       children: [
         //Background
@@ -34,7 +34,7 @@ class WonderDetailsTabMenu extends StatelessWidget {
         ),
         // Buttons
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: $styles.insets.xs).copyWith(bottom: bottomPadding),
+          padding: EdgeInsets.only(left: $styles.insets.sm, right: $styles.insets.xxs, bottom: bottomPadding),
           // TabButtons are a Stack with a row of icon buttons, and an illustrated home button sitting on top.
           // The home buttons shows / hides itself based on `showHomeBtn`
           // The row contains an animated placeholder gap which makes room for the icon as it transitions in.
@@ -149,7 +149,7 @@ class _TabBtn extends StatelessWidget {
           label: tabLabel,
           child: ExcludeSemantics(
             child: AppBtn.basic(
-              padding: EdgeInsets.symmetric(vertical: $styles.insets.md),
+              padding: EdgeInsets.only(top: $styles.insets.md + $styles.insets.xs),
               onPressed: () => tabController.index = index,
               semanticLabel: label,
               child: Stack(
@@ -160,7 +160,7 @@ class _TabBtn extends StatelessWidget {
                     Positioned.fill(
                       child: BottomCenter(
                         child: Transform.translate(
-                          offset: Offset(0, 4),
+                          offset: Offset(0, $styles.insets.xxs),
                           child: Animate().custom(
                             curve: Curves.easeOutCubic,
                             end: 24,
