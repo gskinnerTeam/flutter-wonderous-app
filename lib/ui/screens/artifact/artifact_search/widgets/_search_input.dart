@@ -139,7 +139,7 @@ class _SearchInput extends StatelessWidget {
               child: CircleIconBtn(
                 bgColor: $styles.colors.caption,
                 color: $styles.colors.white,
-                icon: Icons.clear,
+                icon: AppIcons.close,
                 semanticLabel: $strings.searchInputSemanticClear,
                 size: $styles.insets.lg,
                 iconSize: $styles.insets.sm,

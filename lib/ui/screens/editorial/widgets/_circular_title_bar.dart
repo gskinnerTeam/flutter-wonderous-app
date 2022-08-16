@@ -136,7 +136,6 @@ class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with S
   CircularText _buildCircularText(String title) {
     final textStyle = $styles.text.h1.copyWith(fontSize: 24, color: $styles.colors.accent1);
     return CircularText(
-      radius: 125,
       position: CircularTextPosition.inside,
       children: [
         TextItem(

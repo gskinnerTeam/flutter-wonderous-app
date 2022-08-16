@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
+import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/screens/home_menu/about_dialog_content.dart';
 
 class HomeMenu extends StatelessWidget {
@@ -18,7 +19,11 @@ class HomeMenu extends StatelessWidget {
       applicationVersion: packageInfo.version,
       applicationLegalese: '© 2022 gskinner',
       children: [AboutDialogContent()],
-      applicationIcon: Image.asset(ImagePaths.appIcon, fit: BoxFit.cover, width: 64),
+      applicationIcon: Container(
+        color: $styles.colors.black,
+        padding: EdgeInsets.all($styles.insets.sm),
+        child: Image.asset(ImagePaths.appLogo, fit: BoxFit.cover, width: 46),
+      ),
     );
   }
 
@@ -57,7 +62,7 @@ class HomeMenu extends StatelessWidget {
                   Spacer(flex: 3),
                   _buildIconGrid(context)
                       .animate()
-                      .fade(duration: $styles.times.fast * 1.5)
+                      .fade(duration: $styles.times.fast)
                       .scale(begin: .8, curve: Curves.easeOut),
                   Spacer(flex: 2),
                   _buildBottomBtns(context),
@@ -104,12 +109,22 @@ class HomeMenu extends StatelessWidget {
             curve: Curves.easeOutBack,
           ),
       children: [
-        _MenuTextBtn(label: $strings.homeMenuButtonExplore, onPressed: () => _handleTimelinePressed(context)),
-        _MenuTextBtn(label: $strings.homeMenuButtonView, onPressed: () => _handleCollectionPressed(context)),
-        _MenuTextBtn(label: $strings.homeMenuButtonAbout, onPressed: () => _handleAboutPressed(context)),
+        _MenuTextBtn(
+            label: $strings.homeMenuButtonExplore,
+            icon: AppIcons.timeline,
+            onPressed: () => _handleTimelinePressed(context)),
+        _MenuTextBtn(
+            label: $strings.homeMenuButtonView,
+            icon: AppIcons.collection,
+            onPressed: () => _handleCollectionPressed(context)),
+        _MenuTextBtn(
+          label: $strings.homeMenuButtonAbout,
+          icon: AppIcons.info,
+          onPressed: () => _handleAboutPressed(context),
+        ),
       ]
-          .animate(interval: 80.ms)
-          .fade(delay: $styles.times.pageTransition + 100.ms)
+          .animate(interval: 50.ms)
+          .fade(delay: $styles.times.pageTransition + 50.ms)
           .slide(begin: Offset(0, .1), curve: Curves.easeOut),
     );
   }
@@ -149,9 +164,10 @@ class HomeMenu extends StatelessWidget {
 }
 
 class _MenuTextBtn extends StatelessWidget {
-  const _MenuTextBtn({Key? key, required this.label, required this.onPressed}) : super(key: key);
+  const _MenuTextBtn({Key? key, required this.label, required this.onPressed, required this.icon}) : super(key: key);
   final String label;
   final VoidCallback onPressed;
+  final AppIcons icon;
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +177,14 @@ class _MenuTextBtn extends StatelessWidget {
       onPressed: onPressed,
       bgColor: Colors.transparent,
       semanticLabel: label,
-      child: Text(label, style: $styles.text.bodyBold.copyWith(height: 1)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          AppIcon(icon, color: $styles.colors.offWhite),
+          Gap($styles.insets.xs),
+          Text(label, style: $styles.text.bodyBold.copyWith(height: 1)),
+        ],
+      ),
     );
   }
 }

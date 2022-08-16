@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
+import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/checkbox.dart';
 import 'package:wonders/ui/wonder_illustrations/common/animated_clouds.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration.dart';
@@ -140,7 +142,7 @@ class _WallpaperPhotoScreenState extends State<WallpaperPhotoScreen> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10.0, bottom: 10.0, right: 16.0),
                   child: CircleIconBtn(
-                    icon: Icons.share,
+                    icon: defaultTargetPlatform == TargetPlatform.iOS ? AppIcons.share_ios : AppIcons.share_android,
                     bgColor: $styles.colors.offWhite,
                     color: $styles.colors.black,
                     onPressed: () => _handleSharePhoto(context, wonderData.title),
@@ -149,7 +151,7 @@ class _WallpaperPhotoScreenState extends State<WallpaperPhotoScreen> {
                   ),
                 ),
                 CircleIconBtn(
-                  icon: Icons.file_download_outlined,
+                  icon: AppIcons.download,
                   onPressed: () => _handleTakePhoto(context, wonderData.title),
                   semanticLabel: $strings.wallpaperSemanticTakePhoto,
                   size: 64,
@@ -163,7 +165,8 @@ class _WallpaperPhotoScreenState extends State<WallpaperPhotoScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SimpleCheckbox(active: _showTitleText, label: $strings.wallpaperCheckboxShowTitle, onToggled: _handleTextToggle),
+            SimpleCheckbox(
+                active: _showTitleText, label: $strings.wallpaperCheckboxShowTitle, onToggled: _handleTextToggle),
             Gap($styles.insets.xl),
           ],
         ),

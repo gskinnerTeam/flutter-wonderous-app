@@ -7,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
+import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/blend_mask.dart';
 import 'package:wonders/ui/common/compass_divider.dart';
 import 'package:wonders/ui/common/curved_clippers.dart';
@@ -189,7 +190,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                       child: child,
                     );
                   },
-                  child: BackBtn(icon: Icons.arrow_upward).safe()),
+                  child: BackBtn(icon: AppIcons.north).safe()),
             ],
           ),
         ),

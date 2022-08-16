@@ -2,6 +2,7 @@ import 'package:flutter/rendering.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
+import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
 import 'package:wonders/ui/common/controls/diagonal_text_page_indicator.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
@@ -11,7 +12,6 @@ import 'package:wonders/ui/screens/home_menu/home_menu.dart';
 import 'package:wonders/ui/wonder_illustrations/common/animated_clouds.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
-
 part '_vertical_swipe_controller.dart';
 part 'widgets/_animated_arrow_button.dart';
 
@@ -206,7 +206,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   child: Semantics(
                     sortKey: OrdinalSortKey(0),
                     child: CircleIconBtn(
-                      icon: Icons.menu,
+                      icon: AppIcons.menu,
                       onPressed: _handleOpenMenuPressed,
                       semanticLabel: $strings.homeSemanticOpenMain,
                     ).safe(),

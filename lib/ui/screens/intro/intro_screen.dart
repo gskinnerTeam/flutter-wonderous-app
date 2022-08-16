@@ -1,5 +1,6 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
@@ -136,7 +137,7 @@ class _IntroScreenState extends State<IntroScreen> {
           opacity: pageIndex == pageData.length - 1 ? 1 : 0,
           duration: $styles.times.fast,
           child: CircleIconBtn(
-            icon: Icons.chevron_right,
+            icon: AppIcons.prev,
             bgColor: $styles.colors.accent1,
             onPressed: _handleIntroCompletePressed,
             semanticLabel: $strings.introSemanticEnterApp,

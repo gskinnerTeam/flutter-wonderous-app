@@ -1,4 +1,5 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/ui/common/app_icons.dart';
 
 class CircleBtn extends StatelessWidget {
   const CircleBtn({
@@ -10,6 +11,9 @@ class CircleBtn extends StatelessWidget {
     this.size,
     required this.semanticLabel,
   }) : super(key: key);
+
+  static double defaultSize = 48;
+
   final VoidCallback onPressed;
   final Color? bgColor;
   final BorderSide? border;
@@ -19,7 +23,7 @@ class CircleBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double sz = size ?? $styles.insets.xl;
+    double sz = size ?? defaultSize;
     return AppBtn(
       onPressed: onPressed,
       semanticLabel: semanticLabel,
@@ -45,7 +49,11 @@ class CircleIconBtn extends StatelessWidget {
     this.iconSize,
     required this.semanticLabel,
   }) : super(key: key);
-  final IconData icon;
+
+  //TODO: Reduce size if design re-exports icon-images without padding
+  static double defaultSize = 28;
+
+  final AppIcons icon;
   final VoidCallback onPressed;
   final BorderSide? border;
   final Color? bgColor;
@@ -64,7 +72,7 @@ class CircleIconBtn extends StatelessWidget {
       size: size,
       bgColor: bgColor ?? defaultColor,
       semanticLabel: semanticLabel,
-      child: Icon(icon, size: iconSize ?? $styles.insets.md, color: iconColor),
+      child: AppIcon(icon, size: iconSize ?? defaultSize, color: iconColor),
     );
   }
 
@@ -74,28 +82,27 @@ class CircleIconBtn extends StatelessWidget {
 class BackBtn extends StatelessWidget {
   const BackBtn({
     Key? key,
-    this.icon = Icons.arrow_back,
+    this.icon = AppIcons.back,
     this.onPressed,
     this.semanticLabel,
     this.bgColor,
     this.iconColor,
   }) : super(key: key);
 
+  final Color? bgColor;
+  final Color? iconColor;
+  final AppIcons icon;
+  final VoidCallback? onPressed;
+  final String? semanticLabel;
+
   BackBtn.close({Key? key, VoidCallback? onPressed, Color? bgColor, Color? iconColor})
       : this(
             key: key,
-            icon: Icons.close,
+            icon: AppIcons.close,
             onPressed: onPressed,
             semanticLabel: $strings.circleButtonsSemanticClose,
             bgColor: bgColor,
             iconColor: iconColor);
-
-  final Color? bgColor;
-  final Color? iconColor;
-  final IconData icon;
-  final VoidCallback? onPressed;
-  final String? semanticLabel;
-
   @override
   Widget build(BuildContext context) {
     return CircleIconBtn(
