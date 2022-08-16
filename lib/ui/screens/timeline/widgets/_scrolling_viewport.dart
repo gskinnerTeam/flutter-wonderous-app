@@ -37,7 +37,10 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
     super.dispose();
   }
 
-  void _handleEventMarkerChanged(TimelineEvent? event) => _currentEventMarker.value = event;
+  void _handleEventMarkerChanged(TimelineEvent? event) {
+    _currentEventMarker.value = event;
+    AppHaptics.selectionClick();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -164,7 +167,7 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
         ValueListenableBuilder<TimelineEvent?>(
             valueListenable: _currentEventMarker,
             builder: (_, data, __) {
-              return SafeArea(child: _EventPopups(currentEvent: data));
+              return _EventPopups(currentEvent: data);
             })
       ],
     );
