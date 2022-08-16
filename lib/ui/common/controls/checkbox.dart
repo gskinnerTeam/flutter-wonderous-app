@@ -1,5 +1,5 @@
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/common/utils/haptic.dart';
+import 'package:wonders/ui/common/utils/app_haptics.dart';
 
 class SimpleCheckbox extends StatelessWidget {
   const SimpleCheckbox({Key? key, required this.active, required this.onToggled, required this.label})
@@ -26,7 +26,7 @@ class SimpleCheckbox extends StatelessWidget {
               checkColor: $styles.colors.black.withOpacity(0.75),
               activeColor: $styles.colors.white.withOpacity(0.75),
               onChanged: (bool? active) {
-                Haptic.mediumImpact();
+                AppHaptics.mediumImpact();
                 onToggled.call(active);
               }),
         ),

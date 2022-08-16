@@ -11,6 +11,7 @@ import 'package:wonders/ui/common/controls/simple_header.dart';
 import 'package:wonders/ui/common/dashed_line.dart';
 import 'package:wonders/ui/common/list_gradient.dart';
 import 'package:wonders/ui/common/timeline_event_card.dart';
+import 'package:wonders/ui/common/utils/app_haptics.dart';
 import 'package:wonders/ui/common/wonders_timeline_builder.dart';
 
 part 'widgets/_bottom_scrubber.dart';

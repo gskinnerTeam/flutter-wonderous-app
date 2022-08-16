@@ -4,7 +4,7 @@ import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
 import 'package:wonders/ui/common/controls/simple_header.dart';
-import 'package:wonders/ui/common/utils/haptic.dart';
+import 'package:wonders/ui/common/utils/app_haptics.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/expanding_time_range_selector.dart';
 
 part 'widgets/_result_tile.dart';
