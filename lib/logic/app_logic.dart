@@ -27,8 +27,7 @@ class AppLogic {
     await localeLogic.load();
 
     // Data load
-    await wondersLogic.load();
-    await timelineLogic.load();
+    await timelineLogic.init();
 
     // Settings load
     await settingsLogic.load();
