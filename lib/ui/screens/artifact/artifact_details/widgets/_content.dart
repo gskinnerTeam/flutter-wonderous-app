@@ -37,6 +37,7 @@ class _Content extends StatelessWidget {
           Gap($styles.insets.lg),
           MergeSemantics(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ...[
                   _InfoRow($strings.artifactDetailsLabelDate, data.date),
@@ -49,6 +50,9 @@ class _Content extends StatelessWidget {
                     .animate(interval: 100.ms)
                     .fade(delay: 600.ms, duration: $styles.times.med)
                     .slide(begin: Offset(0.2, 0), curve: Curves.easeOut),
+                Gap($styles.insets.md),
+                Text('The Metropolitan Museum of Art, New York',
+                    style: $styles.text.caption.copyWith(color: $styles.colors.accent2)),
               ],
             ),
           ),
