@@ -42,7 +42,7 @@ List<CollectibleData> collectiblesData = [
     wonder: WonderType.chichenItza,
     artifactId: '701645',
     imageUrl: 'https://images.metmuseum.org/CRDImages/ao/original/DP-25104-001.jpg',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ao/web-large/DP-25104-001.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ao/mobile-large/DP-25104-001.jpg',
     iconName: 'jewelry',
   ),
   CollectibleData(
@@ -50,7 +50,7 @@ List<CollectibleData> collectiblesData = [
     wonder: WonderType.chichenItza,
     artifactId: '310555',
     imageUrl: 'https://images.metmuseum.org/CRDImages/ao/original/DP-23474-001.jpg',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ao/web-large/DP-23474-001.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ao/mobile-large/DP-23474-001.jpg',
     iconName: 'jewelry',
   ),
   CollectibleData(
@@ -58,7 +58,7 @@ List<CollectibleData> collectiblesData = [
     wonder: WonderType.chichenItza,
     artifactId: '286467',
     imageUrl: 'https://images.metmuseum.org/CRDImages/ph/original/DP132063.jpg',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ph/web-large/DP132063.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ph/mobile-large/DP132063.jpg',
     iconName: 'picture',
   ),
 
@@ -68,7 +68,7 @@ List<CollectibleData> collectiblesData = [
     wonder: WonderType.christRedeemer,
     artifactId: '501302',
     imageUrl: 'https://images.metmuseum.org/CRDImages/mi/original/MUS550A2.jpg',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/mi/web-large/MUS550A2.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/mi/mobile-large/MUS550A2.jpg',
     iconName: 'statue',
   ),
   CollectibleData(
@@ -76,7 +76,7 @@ List<CollectibleData> collectiblesData = [
     wonder: WonderType.christRedeemer,
     artifactId: '157985',
     imageUrl: 'https://images.metmuseum.org/CRDImages/ci/original/48.60_front_CP4.jpg',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ci/web-large/48.60_front_CP4.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ci/mobile-large/48.60_front_CP4.jpg',
     iconName: 'jewelry',
   ),
   CollectibleData(
@@ -84,7 +84,7 @@ List<CollectibleData> collectiblesData = [
     wonder: WonderType.christRedeemer,
     artifactId: '227759',
     imageUrl: 'https://images.metmuseum.org/CRDImages/ad/original/DP2896.jpg',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ad/web-large/DP2896.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ad/mobile-large/DP2896.jpg',
     iconName: 'textile',
   ),
 
@@ -94,7 +94,7 @@ List<CollectibleData> collectiblesData = [
     wonder: WonderType.colosseum,
     artifactId: '245376',
     imageUrl: 'https://images.metmuseum.org/CRDImages/gr/original/DP124005.jpg',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/gr/web-large/DP124005.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/gr/mobile-large/DP124005.jpg',
     iconName: 'vase',
   ),
   CollectibleData(
@@ -102,7 +102,7 @@ List<CollectibleData> collectiblesData = [
     wonder: WonderType.colosseum,
     artifactId: '256570',
     imageUrl: 'https://images.metmuseum.org/CRDImages/gr/original/DP119236.jpg',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/gr/web-large/DP119236.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/gr/mobile-large/DP119236.jpg',
     iconName: 'statue',
   ),
   CollectibleData(
@@ -110,7 +110,7 @@ List<CollectibleData> collectiblesData = [
     wonder: WonderType.colosseum,
     artifactId: '286136',
     imageUrl: 'https://images.metmuseum.org/CRDImages/ph/original/DP138036.jpg',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ph/web-large/DP138036.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ph/mobile-large/DP138036.jpg',
     iconName: 'picture',
   ),
 
@@ -120,7 +120,7 @@ List<CollectibleData> collectiblesData = [
     wonder: WonderType.greatWall,
     artifactId: '39918',
     imageUrl: 'https://images.metmuseum.org/CRDImages/as/original/DP153769.jpg',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/as/web-large/DP153769.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/as/mobile-large/DP153769.jpg',
     iconName: 'scroll',
   ),
   CollectibleData(
@@ -128,7 +128,7 @@ List<CollectibleData> collectiblesData = [
     wonder: WonderType.greatWall,
     artifactId: '39666',
     imageUrl: 'https://images.metmuseum.org/CRDImages/as/original/DT5083.jpg',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/as/web-large/DT5083.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/as/mobile-large/DT5083.jpg',
     iconName: 'vase',
   ),
   CollectibleData(
@@ -136,7 +136,7 @@ List<CollectibleData> collectiblesData = [
     wonder: WonderType.greatWall,
     artifactId: '39735',
     imageUrl: 'https://images.metmuseum.org/CRDImages/as/original/DT834.jpg',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/as/web-large/DT834.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/as/mobile-large/DT834.jpg',
     iconName: 'textile',
   ),
 
@@ -146,7 +146,7 @@ List<CollectibleData> collectiblesData = [
     wonder: WonderType.machuPicchu,
     artifactId: '308120',
     imageUrl: 'https://images.metmuseum.org/CRDImages/ao/original/ra33.149.100.R.jpg',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ao/web-large/ra33.149.100.R.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ao/mobile-large/ra33.149.100.R.jpg',
     iconName: 'textile',
   ),
   CollectibleData(
@@ -154,7 +154,7 @@ List<CollectibleData> collectiblesData = [
     wonder: WonderType.machuPicchu,
     artifactId: '309960',
     imageUrl: 'https://images.metmuseum.org/CRDImages/ao/original/DP-13440-031.jpg',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ao/web-large/DP-13440-031.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ao/mobile-large/DP-13440-031.jpg',
     iconName: 'statue',
   ),
   CollectibleData(
@@ -162,7 +162,7 @@ List<CollectibleData> collectiblesData = [
     wonder: WonderType.machuPicchu,
     artifactId: '313341',
     imageUrl: 'https://images.metmuseum.org/CRDImages/ao/original/DP-24356-001.jpg',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ao/web-large/DP-24356-001.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ao/mobile-large/DP-24356-001.jpg',
     iconName: 'vase',
   ),
 
@@ -172,7 +172,7 @@ List<CollectibleData> collectiblesData = [
     wonder: WonderType.petra,
     artifactId: '322592',
     imageUrl: 'https://images.metmuseum.org/CRDImages/an/original/DP-14352-001.jpg',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/an/web-large/DP-14352-001.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/an/mobile-large/DP-14352-001.jpg',
     iconName: 'statue',
   ),
   CollectibleData(
@@ -180,7 +180,7 @@ List<CollectibleData> collectiblesData = [
     wonder: WonderType.petra,
     artifactId: '325918',
     imageUrl: 'https://images.metmuseum.org/CRDImages/an/original/hb67_246_37.jpg',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/an/web-large/hb67_246_37.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/an/mobile-large/hb67_246_37.jpg',
     iconName: 'vase',
   ),
   CollectibleData(
@@ -188,7 +188,7 @@ List<CollectibleData> collectiblesData = [
     wonder: WonderType.petra,
     artifactId: '326243',
     imageUrl: 'https://images.metmuseum.org/CRDImages/an/original/DT904.jpg',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/an/web-large/DT904.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/an/mobile-large/DT904.jpg',
     iconName: 'vase',
   ),
 
@@ -198,7 +198,7 @@ List<CollectibleData> collectiblesData = [
     wonder: WonderType.pyramidsGiza,
     artifactId: '546510',
     imageUrl: 'https://images.metmuseum.org/CRDImages/eg/original/09.180.537A_recto_0083.jpg',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/eg/web-large/09.180.537A_recto_0083.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/eg/mobile-large/09.180.537A_recto_0083.jpg',
     iconName: 'scroll',
   ),
   CollectibleData(
@@ -206,7 +206,7 @@ List<CollectibleData> collectiblesData = [
     wonder: WonderType.pyramidsGiza,
     artifactId: '543896',
     imageUrl: 'https://images.metmuseum.org/CRDImages/eg/original/DT11751.jpg',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/eg/web-large/DT11751.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/eg/mobile-large/DT11751.jpg',
     iconName: 'statue',
   ),
   CollectibleData(
@@ -214,7 +214,7 @@ List<CollectibleData> collectiblesData = [
     wonder: WonderType.pyramidsGiza,
     artifactId: '545728',
     imageUrl: 'https://images.metmuseum.org/CRDImages/eg/original/DP327402.jpg',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/eg/web-large/DP327402.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/eg/mobile-large/DP327402.jpg',
     iconName: 'jewelry',
   ),
 
@@ -224,7 +224,7 @@ List<CollectibleData> collectiblesData = [
     wonder: WonderType.tajMahal,
     artifactId: '24907',
     imageUrl: 'https://images.metmuseum.org/CRDImages/aa/original/DP157706.jpg',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/aa/web-large/DP157706.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/aa/mobile-large/DP157706.jpg',
     iconName: 'jewelry',
   ),
   CollectibleData(
@@ -232,7 +232,7 @@ List<CollectibleData> collectiblesData = [
     wonder: WonderType.tajMahal,
     artifactId: '453183',
     imageUrl: 'https://images.metmuseum.org/CRDImages/is/original/DP231353.jpg',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/is/web-large/DP231353.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/is/mobile-large/DP231353.jpg',
     iconName: 'picture',
   ),
   CollectibleData(
@@ -240,7 +240,7 @@ List<CollectibleData> collectiblesData = [
     wonder: WonderType.tajMahal,
     artifactId: '453983',
     imageUrl: 'https://images.metmuseum.org/CRDImages/is/original/DP299944.jpg',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/is/web-large/DP299944.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/is/mobile-large/DP299944.jpg',
     iconName: 'scroll',
   ),
 ];
