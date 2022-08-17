@@ -46,7 +46,13 @@ class StringUtils {
 
   static String formatYr(int yr) {
     if (yr == 0) yr = 1;
-    return '${yr.abs()} ${getYrSuffix(yr)}';
+    return supplant(
+      $strings.yearFormat,
+      {
+        '{date}': yr.abs().toString(),
+        '{era}': getYrSuffix(yr),
+      },
+    );
   }
 
   static String getYrSuffix(int yr) => yr < 0 ? $strings.yearBCE : $strings.yearCE;
