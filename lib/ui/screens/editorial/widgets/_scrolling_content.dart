@@ -27,10 +27,11 @@ class _ScrollingContent extends StatelessWidget {
       final TextStyle bodyStyle = $styles.text.body;
       final String dropChar = value.substring(0, 1);
       final double dropCapWidth = StringUtils.measure(dropChar, dropStyle).width;
-
+      final bool isEnglish = localeLogic.strings.localeName == 'en';
+      
       return Semantics(
         label: value,
-        child: DropCapText(
+        child: isEnglish ? DropCapText(
           _fixNewlines(value).substring(1),
           dropCap: DropCap(
             width: dropCapWidth,
@@ -53,7 +54,7 @@ class _ScrollingContent extends StatelessWidget {
             color: $styles.colors.accent1,
             height: 1,
           ),
-        ),
+        ) : Text(value, style: bodyStyle),
       );
     }
 
