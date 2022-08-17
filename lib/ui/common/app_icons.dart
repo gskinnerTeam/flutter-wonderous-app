@@ -26,7 +26,6 @@ class AppIcon extends StatelessWidget {
 }
 
 enum AppIcons {
-  back,
   close,
   close_large,
   collection,
