@@ -35,7 +35,7 @@ final appRouter = GoRouter(
   redirect: _handleRedirect,
   navigatorBuilder: (_, __, child) => WondersAppScaffold(child: child),
   routes: [
-    AppRoute(ScreenPaths.splash, (_) => Container()), // This will be hidden
+    AppRoute(ScreenPaths.splash, (_) => Container(color: $styles.colors.greyStrong)), // This will be hidden
     AppRoute(ScreenPaths.home, (_) => HomeScreen()),
     AppRoute(ScreenPaths.intro, (_) => IntroScreen()),
     AppRoute('/wonder/:type', (s) {
