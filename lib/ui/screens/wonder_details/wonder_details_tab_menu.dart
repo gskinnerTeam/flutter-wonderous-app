@@ -16,7 +16,7 @@ class WonderDetailsTabMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color iconColor = showBg ? $styles.colors.black : $styles.colors.white;
-    const double homeBtnSize = 70;
+    const double homeBtnSize = 74;
     // Use SafeArea padding if its more than the default padding.
     bottomPadding = max(context.mq.padding.bottom, $styles.insets.xs * 1.5);
     return Stack(
@@ -111,7 +111,7 @@ class _WonderHomeBtn extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(99),
           color: wonderType.fgColor,
-          image: DecorationImage(image: AssetImage(wonderType.homeBtn)),
+          image: DecorationImage(image: AssetImage(wonderType.homeBtn), fit: BoxFit.fill),
         ),
       ),
     );
@@ -149,7 +149,7 @@ class _TabBtn extends StatelessWidget {
           label: tabLabel,
           child: ExcludeSemantics(
             child: AppBtn.basic(
-              padding: EdgeInsets.only(top: $styles.insets.md + $styles.insets.xs),
+              padding: EdgeInsets.only(top: $styles.insets.md + $styles.insets.xs, bottom: $styles.insets.sm),
               onPressed: () => tabController.index = index,
               semanticLabel: label,
               child: Stack(
