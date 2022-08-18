@@ -51,8 +51,10 @@ class _Content extends StatelessWidget {
                     .fade(delay: 600.ms, duration: $styles.times.med)
                     .slide(begin: Offset(0.2, 0), curve: Curves.easeOut),
                 Gap($styles.insets.md),
-                Text('The Metropolitan Museum of Art, New York',
-                    style: $styles.text.caption.copyWith(color: $styles.colors.accent2)),
+                Text(
+                  'The Metropolitan Museum of Art, New York',
+                  style: $styles.text.caption.copyWith(color: $styles.colors.accent2),
+                ),
               ],
             ),
           ),
