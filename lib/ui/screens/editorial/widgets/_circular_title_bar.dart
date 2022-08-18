@@ -10,7 +10,7 @@ class _CircularTitleBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double barSize = 105; // the actual size of this widget
+    double barSize = 100; // the actual size of this widget
     double barTopPadding = 40; // negative space at the top of the bar
     double circleSize = 190; // circle is bigger than bar, and overhangs it
     assert(index >= 0 && index < titles.length, 'Can not find a title for index $index');
@@ -34,11 +34,11 @@ class _CircularTitleBar extends StatelessWidget {
 
             BottomCenter(
               child: Padding(
-                padding: EdgeInsets.only(bottom: 16),
+                padding: EdgeInsets.only(bottom: 20),
                 child: Image.asset('${ImagePaths.common}/${icons[index]}')
                     .animate(key: ValueKey(index))
                     .fade()
-                    .scale(begin: .5, curve: Curves.easeOutBack, duration: $styles.times.med),
+                    .scale(begin: .5, end: 1, curve: Curves.easeOutBack, duration: $styles.times.med),
               ),
             ),
           ],
@@ -104,7 +104,7 @@ class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with S
             decoration: BoxDecoration(shape: BoxShape.circle, color: $styles.colors.offWhite),
             alignment: Alignment.center,
             child: Padding(
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.all(16),
               // 2 circles that are counter rotated / opposite (one on top, one on bottom)
               // Each time index is changed, the stack is rotated 180 degrees.
               // When the animation completes, the rotation snaps back to 0 and the titles also swap position
@@ -133,14 +133,14 @@ class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with S
     );
   }
 
-  CircularText _buildCircularText(String title) {
-    final textStyle = $styles.text.h1.copyWith(fontSize: 24, color: $styles.colors.accent1);
+  Widget _buildCircularText(String title) {
+    final textStyle = $styles.text.monoTitleFont.copyWith(fontSize: 22, color: $styles.colors.accent1);
     return CircularText(
       position: CircularTextPosition.inside,
       children: [
         TextItem(
           text: Text(title.toUpperCase(), style: textStyle),
-          space: 10,
+          space: 9,
           startAngle: -90,
           startAngleAlignment: StartAngleAlignment.center,
           direction: CircularTextDirection.clockwise,
