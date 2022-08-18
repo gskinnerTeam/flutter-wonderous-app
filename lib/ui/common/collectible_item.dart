@@ -42,7 +42,7 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
               .animate(onInit: (controller) => controller.repeat())
               // TODO SB (Aug 17, 2022): Temporarily removed on Jonahs request, due to a bug in Impeller which should be fixed soon. Re-enable when fixed.
               //.shimmer(delay: 4000.ms, duration: $styles.times.med * 3)
-              .shake(curve: Curves.easeInOutCubic, hz: 4)
+              .shake(delay: 4000.ms, duration: $styles.times.med * 3, curve: Curves.easeInOutCubic, hz: 4)
               .scale(begin: 1.0, end: 1.1, duration: $styles.times.med)
               .then(delay: $styles.times.med)
               .scale(begin: 1.0, end: 1 / 1.1),
