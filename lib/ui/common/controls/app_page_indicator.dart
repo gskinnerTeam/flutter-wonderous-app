@@ -49,18 +49,26 @@ class _AppPageIndicatorState extends State<AppPageIndicator> {
         }),
         child: child,
       ),
-      child: SmoothPageIndicator(
-        controller: widget.controller,
-        count: widget.count,
-        onDotClicked: widget.onDotPressed,
-        effect: ExpandingDotsEffect(
-            dotWidth: widget.dotSize ?? 6,
-            dotHeight: widget.dotSize ?? 6,
-            paintStyle: PaintingStyle.fill,
-            strokeWidth: (widget.dotSize ?? 6) / 2,
-            dotColor: widget.color ?? $styles.colors.accent1,
-            activeDotColor: widget.color ?? $styles.colors.accent1,
-            expansionFactor: 2),
+      child: IgnorePointer(
+        ignoringSemantics: false,
+        child: Container(
+          color: Colors.transparent,
+          height: 30,
+          alignment: Alignment.center,
+          child: SmoothPageIndicator(
+            controller: widget.controller,
+            count: widget.count,
+            onDotClicked: widget.onDotPressed,
+            effect: ExpandingDotsEffect(
+                dotWidth: widget.dotSize ?? 6,
+                dotHeight: widget.dotSize ?? 6,
+                paintStyle: PaintingStyle.fill,
+                strokeWidth: (widget.dotSize ?? 6) / 2,
+                dotColor: widget.color ?? $styles.colors.accent1,
+                activeDotColor: widget.color ?? $styles.colors.accent1,
+                expansionFactor: 2),
+          ),
+        ),
       ),
     );
   }
