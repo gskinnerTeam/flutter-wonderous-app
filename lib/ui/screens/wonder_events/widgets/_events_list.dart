@@ -46,8 +46,8 @@ class _EventsListState extends State<_EventsList> {
                   double blurStart = 50;
                   scrollAmt = (_scroller.position.pixels - blurStart).clamp(0, 150) / 150;
                   blur = scrollAmt * 10;
-                  // Reduce blur to 1 decimal of precision to help with shader caching TODO: Remove after switching to impeller
-                  blur = blur.toPrecision(1);
+                  // Reduce blur to 1 decimal of precision to help with shader caching TODO: Remove after switching to impeller)
+                  blur = double.parse(blur.toStringAsFixed(1));
                 }
                 // Container provides a underlay which gets darker as the background blurs
                 return Stack(
