@@ -21,8 +21,13 @@ class HomeMenu extends StatelessWidget {
       children: [AboutDialogContent()],
       applicationIcon: Container(
         color: $styles.colors.black,
-        padding: EdgeInsets.all($styles.insets.sm),
-        child: Image.asset(ImagePaths.appLogo, fit: BoxFit.cover, width: 46),
+        padding: EdgeInsets.all($styles.insets.xs),
+        child: Image.asset(
+          ImagePaths.appLogoPlain,
+          fit: BoxFit.cover,
+          width: 52,
+          filterQuality: FilterQuality.high,
+        ),
       ),
     );
   }
