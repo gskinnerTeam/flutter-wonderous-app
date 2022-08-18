@@ -2,6 +2,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
+import 'package:wonders/ui/common/stacked_page_view_builder.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
 
@@ -15,8 +16,7 @@ class IntroScreen extends StatefulWidget {
 class _IntroScreenState extends State<IntroScreen> {
   static const double _imageSize = 264;
   static const double _logoHeight = 126;
-  static const double _textHeight = 155;
-  static const double _pageIndicatorHeight = 55;
+  static const double _textHeight = 120;
 
   static List<_PageData> pageData = [
     _PageData($strings.introTitleJourney, $strings.introDescriptionNavigate, 'camel', '1'),
@@ -24,104 +24,106 @@ class _IntroScreenState extends State<IntroScreen> {
     _PageData($strings.introTitleDiscover, $strings.introDescriptionLearn, 'statue', '3'),
   ];
 
-  late final PageController _pageController = PageController()..addListener(_handlePageChanged);
   final ValueNotifier<int> _currentPage = ValueNotifier(0);
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
 
   void _handleIntroCompletePressed() {
     context.go(ScreenPaths.home);
     settingsLogic.hasCompletedOnboarding.value = true;
   }
 
-  void _handlePageChanged() {
-    int newPage = _pageController.page?.round() ?? 0;
+  void _handlePageChanged(PageController controller) {
+    int newPage = controller.page?.round() ?? 0;
     _currentPage.value = newPage;
   }
 
   @override
   Widget build(BuildContext context) {
-    // This view uses a full screen PageView to enable swipe navigation.
-    // However, we only want the title / description to actually swipe,
-    // so we stack a PageView with that content over top of all the other
-    // content, and line up their layouts.
+    final Widget content = LayoutBuilder(builder: (context, constraints) {
+      final List<Widget> pages = pageData.map((e) => _Page(data: e, imageHeight: _imageSize)).toList();
+      // This view uses a FullscreenPageViewBuilder to enable swipe navigation on the entire view, while
+      // keeping the content of the PageView to a discrete portion of the UI. This makes layout easier and works better with screen-readers.
+      return StackedPageViewBuilder(
+          pageCount: pages.length,
+          onInit: (controller) => controller.addListener(() => _handlePageChanged(controller)),
+          builder: (context, controller) {
+            return Stack(
+              children: [
+                IgnorePointer(
+                  ignoringSemantics: false,
+                  child: Column(
+                    children: [
+                      Spacer(),
 
-    final List<Widget> pages = pageData.map((e) => _Page(data: e)).toList();
+                      // logo:
+                      Semantics(
+                        header: true,
+                        container: true,
+                        child: Container(
+                          height: _logoHeight,
+                          alignment: Alignment.center,
+                          child: _WonderousLogo(),
+                        ),
+                      ),
 
-    final Widget content = Stack(children: [
-      Column(children: [
-        Spacer(),
+                      SizedBox(
+                        height: _imageSize,
+                        width: _imageSize,
+                        child: ValueListenableBuilder<int>(
+                          valueListenable: _currentPage,
+                          builder: (_, value, __) {
+                            return AnimatedSwitcher(
+                              duration: $styles.times.slow,
+                              child: KeyedSubtree(
+                                key: ValueKey(value), // so AnimatedSwitcher sees it as a different child.
+                                child: _PageImage(data: pageData[value]),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      Gap($styles.insets.sm),
+                      // page view with title & description:
+                      SizedBox(
+                        height: _textHeight,
+                        child: PageView(
+                          controller: controller,
+                          children: pages,
+                          onPageChanged: (_) => AppHaptics.lightImpact(),
+                        ),
+                      ),
 
-        // logo:
-        Semantics(
-          header: true,
-          child: Container(
-            height: _logoHeight,
-            alignment: Alignment.center,
-            child: _WonderousLogo(),
-          ),
-        ),
+                      // page indicator:
+                      AppPageIndicator(
+                        count: pageData.length,
+                        controller: controller,
+                        color: $styles.colors.offWhite,
+                      ),
 
-        // masked image:
-        SizedBox(
-          height: _imageSize,
-          width: _imageSize,
-          child: ValueListenableBuilder<int>(
-            valueListenable: _currentPage,
-            builder: (_, value, __) {
-              return AnimatedSwitcher(
-                duration: $styles.times.slow,
-                child: KeyedSubtree(
-                  key: ValueKey(value), // so AnimatedSwitcher sees it as a different child.
-                  child: _PageImage(data: pageData[value]),
+                      Spacer(flex: 2),
+                    ],
+                  ),
                 ),
-              );
-            },
-          ),
-        ),
 
-        // placeholder gap for text:
-        Gap(_IntroScreenState._textHeight),
+                // finish button:
+                Positioned(
+                  right: $styles.insets.lg,
+                  bottom: $styles.insets.lg,
+                  child: _buildFinishBtn(context),
+                ),
 
-        // page indicator:
-        Container(
-          height: _pageIndicatorHeight,
-          alignment: Alignment(0.0, -0.75),
-          child: AppPageIndicator(count: pageData.length, controller: _pageController, color: $styles.colors.offWhite),
-        ),
+                // nav help text:
+                BottomCenter(
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: $styles.insets.lg),
+                    child: _buildNavText(context, controller),
+                  ),
+                ),
+              ],
+            );
+          });
+    });
 
-        Spacer(flex: 2),
-      ]),
-
-      // page view with title & description:
-      PageView(
-        controller: _pageController,
-        children: pages,
-        onPageChanged: (_) => AppHaptics.lightImpact(),
-      ),
-
-      // finish button:
-      Positioned(
-        right: $styles.insets.lg,
-        bottom: $styles.insets.lg,
-        child: _buildFinishBtn(context),
-      ),
-
-      // nav help text:
-      BottomCenter(
-        child: Padding(
-          padding: EdgeInsets.only(bottom: $styles.insets.lg),
-          child: _buildNavText(context),
-        ),
-      ),
-    ]);
-
-    return DefaultTextColor(
-      color: $styles.colors.offWhite,
+    return LightText(
       child: Container(
         color: $styles.colors.black,
         child: SafeArea(child: content.animate().fadeIn(delay: 500.ms)),
@@ -137,7 +139,7 @@ class _IntroScreenState extends State<IntroScreen> {
           opacity: pageIndex == pageData.length - 1 ? 1 : 0,
           duration: $styles.times.fast,
           child: CircleIconBtn(
-            icon: AppIcons.prev,
+            icon: AppIcons.next_large,
             bgColor: $styles.colors.accent1,
             onPressed: _handleIntroCompletePressed,
             semanticLabel: $strings.introSemanticEnterApp,
@@ -147,7 +149,7 @@ class _IntroScreenState extends State<IntroScreen> {
     );
   }
 
-  Widget _buildNavText(BuildContext context) {
+  Widget _buildNavText(BuildContext context, PageController controller) {
     return ValueListenableBuilder(
       valueListenable: _currentPage,
       builder: (_, pageIndex, __) {
@@ -157,10 +159,13 @@ class _IntroScreenState extends State<IntroScreen> {
           child: Semantics(
             onTapHint: $strings.introSemanticNavigate,
             onTap: () {
-              final int current = _pageController.page!.round();
-              _pageController.animateToPage(current + 1, duration: 250.ms, curve: Curves.easeIn);
+              final int current = controller.page!.round();
+              controller.animateToPage(current + 1, duration: 250.ms, curve: Curves.easeIn);
             },
-            child: Text($strings.introSemanticSwipeLeft, style: $styles.text.bodySmall),
+            child: IgnorePointer(
+              ignoringSemantics: false,
+              child: Text($strings.introSemanticSwipeLeft, style: $styles.text.bodySmall),
+            ),
           ),
         );
       },
@@ -179,32 +184,22 @@ class _PageData {
 }
 
 class _Page extends StatelessWidget {
-  const _Page({Key? key, required this.data}) : super(key: key);
+  const _Page({Key? key, required this.data, required this.imageHeight}) : super(key: key);
 
+  final double imageHeight;
   final _PageData data;
 
   @override
   Widget build(BuildContext context) {
     return Semantics(
       liveRegion: true,
-      child: Column(children: [
-        Spacer(),
-        Gap(_IntroScreenState._imageSize + _IntroScreenState._logoHeight),
-        SizedBox(
-          height: _IntroScreenState._textHeight,
-          width: _IntroScreenState._imageSize + $styles.insets.md,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(data.title, style: $styles.text.wonderTitle.copyWith(fontSize: 24)),
-              Gap($styles.insets.sm),
-              Text(data.desc, style: $styles.text.body, textAlign: TextAlign.center),
-            ],
-          ),
-        ),
-        Gap(_IntroScreenState._pageIndicatorHeight),
-        Spacer(flex: 2),
-      ]),
+      child: Column(
+        children: [
+          Text(data.title, style: $styles.text.wonderTitle.copyWith(fontSize: 24)),
+          Gap($styles.insets.sm),
+          Text(data.desc, style: $styles.text.body, textAlign: TextAlign.center),
+        ],
+      ),
     );
   }
 }
