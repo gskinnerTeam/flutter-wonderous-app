@@ -46,8 +46,6 @@ class _EventsListState extends State<_EventsList> {
                   double blurStart = 50;
                   scrollAmt = (_scroller.position.pixels - blurStart).clamp(0, 150) / 150;
                   blur = scrollAmt * 10;
-                  // Reduce blur to 1 decimal of precision to help ease performance
-                  blur = (blur * 10).ceil().toDouble() * .1;
                   // Disable blur once it is offscreen
                   if (_scroller.position.pixels - blurStart >= 500) {
                     blur = 0;
