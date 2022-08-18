@@ -86,84 +86,88 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     final bool small = backdropHeight / _maxElementHeight < 0.7;
     final HighlightData artifact = _artifacts[_currentIndex];
 
-    return Stack(children: [
-      Positioned.fill(child: _BlurredImageBg(url: artifact.imageUrl)),
-      Column(children: [
-        SimpleHeader($strings.artifactsTitleArtifacts, showBackBtn: false, isTransparent: true),
-        Gap($styles.insets.xs),
-        Expanded(
-          child: Stack(children: [
-            // White arch, covering bottom half:
-            BottomCenter(
-              child: Container(
-                width: backdropWidth,
-                height: backdropHeight,
-                decoration: BoxDecoration(
-                  color: $styles.colors.offWhite.withOpacity(0.8),
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(999)),
-                ),
-              ),
-            ),
-
-            // Carousel:
-            Center(
-              child: SizedBox(
-                width: backdropWidth,
-                child: PageView.builder(
-                  key: ValueKey('pageview'),
-                  controller: _controller,
-                  clipBehavior: Clip.none,
-                  itemBuilder: (context, index) {
-                    bool isCurrentIndex = index % _artifacts.length == _currentIndex;
-                    return ExcludeSemantics(
-                      excluding: isCurrentIndex == false,
-                      child: Semantics(
-                        // Reads content as it changes without the user focus on it.
-                        liveRegion: true,
-                        child: _CarouselItem(
-                          index: index,
-                          currentPage: _currentOffset,
-                          artifact: _artifacts[index % _artifacts.length],
-                          bottomPadding: backdropHeight,
-                          maxWidth: backdropWidth,
-                          maxHeight: backdropHeight,
-                          onPressed: () => _handleArtifactTap(index),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
-
-            // Text content
-            BottomCenter(
-              child: Container(
-                width: backdropWidth,
-                padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Gap($styles.insets.md),
-                    _buildContent(context, artifact, backdropWidth, small),
-                    Gap(small ? $styles.insets.md : $styles.insets.lg),
-                    AppBtn.from(
-                      text: $strings.artifactsButtonBrowse,
-                      icon: Icons.search,
-                      expand: true,
-                      onPressed: _handleSearchTap,
-                      padding: EdgeInsets.all($styles.insets.sm),
+    return Stack(
+      children: [
+        Positioned.fill(child: _BlurredImageBg(url: artifact.imageUrl)),
+        Column(
+          children: [
+            SimpleHeader($strings.artifactsTitleArtifacts, showBackBtn: false, isTransparent: true),
+            Gap($styles.insets.xs),
+            Expanded(
+              child: Stack(children: [
+                // White arch, covering bottom half:
+                BottomCenter(
+                  child: Container(
+                    width: backdropWidth,
+                    height: backdropHeight,
+                    decoration: BoxDecoration(
+                      color: $styles.colors.offWhite.withOpacity(0.8),
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(999)),
                     ),
-                    Gap(small ? $styles.insets.md : $styles.insets.lg),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-          ]),
-        )
-      ]),
-    ]);
+
+                // Carousel:
+                Center(
+                  child: SizedBox(
+                    width: backdropWidth,
+                    child: PageView.builder(
+                      key: ValueKey('pageview'),
+                      controller: _controller,
+                      clipBehavior: Clip.none,
+                      itemBuilder: (context, index) {
+                        bool isCurrentIndex = index % _artifacts.length == _currentIndex;
+                        return ExcludeSemantics(
+                          excluding: isCurrentIndex == false,
+                          child: Semantics(
+                            // Reads content as it changes without the user focus on it.
+                            liveRegion: true,
+                            child: _CarouselItem(
+                              index: index,
+                              currentPage: _currentOffset,
+                              artifact: _artifacts[index % _artifacts.length],
+                              bottomPadding: backdropHeight,
+                              maxWidth: backdropWidth,
+                              maxHeight: backdropHeight,
+                              onPressed: () => _handleArtifactTap(index),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+
+                // Text content
+                BottomCenter(
+                  child: Container(
+                    width: backdropWidth,
+                    padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Gap($styles.insets.md),
+                        _buildContent(context, artifact, backdropWidth, small),
+                        Gap(small ? $styles.insets.md : $styles.insets.lg),
+                        AppBtn.from(
+                          text: $strings.artifactsButtonBrowse,
+                          icon: Icons.search,
+                          expand: true,
+                          onPressed: _handleSearchTap,
+                          padding: EdgeInsets.all($styles.insets.sm),
+                        ),
+                        Gap(small ? $styles.insets.md : $styles.insets.lg),
+                      ],
+                    ),
+                  ),
+                ),
+              ]),
+            )
+          ],
+        ),
+      ],
+    );
   }
 
   Widget _buildContent(BuildContext context, HighlightData artifact, double width, bool small) {
