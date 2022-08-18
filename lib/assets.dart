@@ -31,6 +31,7 @@ class ImagePaths {
   static String roller2 = '$textures/roller-2-white.png';
 
   static String appLogo = '$common/app-logo.png';
+  static String appLogoPlain = '$common/app-logo-plain.png';
 }
 
 /// Consolidates SCG image paths in their own class, hints to the UI to use an SvgPicture to render
