@@ -146,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             AnimatedSwitcher(
               duration: $styles.times.fast,
               child: RepaintBoundary(
-                // Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
+                /// Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
                 key: ValueKey(_wonderIndex),
                 child: OverflowBox(
                   child: Column(
@@ -163,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                             IgnorePointer(
                               child: DiagonalTextPageIndicator(current: _wonderIndex + 1, total: _numWonders),
                             ),
-                            Gap($styles.insets.md),
+                            Gap($styles.insets.sm),
 
                             AppPageIndicator(
                               count: _numWonders,
@@ -176,19 +176,26 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           ],
                         ),
                       ),
-                      Gap($styles.insets.sm),
+                      Gap($styles.insets.xs),
 
                       /// Animated arrow and background
-                      Stack(
-                        children: [
-                          /// Expanding rounded rect that grows in height as user swipes up
-                          Positioned.fill(
-                            child: _buildSwipeableArrowBg(),
-                          ),
+                      /// Wrap in a container that is full-width to make it easier to find for screen readers
+                      MergeSemantics(
+                        child: Container(
+                          width: double.infinity,
+                          alignment: Alignment.center,
+                          child: Stack(
+                            children: [
+                              /// Expanding rounded rect that grows in height as user swipes up
+                              Positioned.fill(
+                                child: _buildSwipeableArrowBg(),
+                              ),
 
-                          /// Arrow Btn that fades in and out
-                          _AnimatedArrowButton(onTap: _showDetailsPage, semanticTitle: currentWonder.title),
-                        ],
+                              /// Arrow Btn that fades in and out
+                              _AnimatedArrowButton(onTap: _showDetailsPage, semanticTitle: currentWonder.title),
+                            ],
+                          ),
+                        ),
                       ),
                       Gap($styles.insets.md),
                     ],
