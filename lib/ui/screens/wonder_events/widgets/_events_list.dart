@@ -46,8 +46,8 @@ class _EventsListState extends State<_EventsList> {
                   double blurStart = 50;
                   scrollAmt = (_scroller.position.pixels - blurStart).clamp(0, 150) / 150;
                   blur = scrollAmt * 10;
-                  // Reduce blur to 1 decimal of precision to help with shader caching TODO: Remove after switching to impeller)
-                  blur = (blur * 10).ceil().toDouble() / 10;
+                  // Reduce blur to 1 decimal of precision to help ease performance
+                  blur = (blur * 10).ceil().toDouble() * .1;
                   // Disable blur once it is offscreen
                   if (_scroller.position.pixels - blurStart >= 500) {
                     blur = 0;
@@ -57,7 +57,7 @@ class _EventsListState extends State<_EventsList> {
                 // Container provides a underlay which gets darker as the background blurs
                 return Stack(
                   children: [
-                    if (blur > 0)
+                    if (blur > 0) ...[
                       BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
                         child: IgnorePointer(
@@ -66,6 +66,7 @@ class _EventsListState extends State<_EventsList> {
                           ),
                         ),
                       ),
+                    ],
                     _buildScrollingList()
                   ],
                 );
