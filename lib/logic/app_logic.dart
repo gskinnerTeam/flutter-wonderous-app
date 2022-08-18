@@ -42,7 +42,7 @@ class AppLogic {
     // flag bootStrap as complete
     isBootstrapComplete = true;
 
-    // load initial view (replace splash screen)
+    // load initial view (replace empty initial view)
     if (settingsLogic.hasCompletedOnboarding.value) {
       appRouter.go(ScreenPaths.home);
     } else {
