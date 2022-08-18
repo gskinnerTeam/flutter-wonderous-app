@@ -82,7 +82,7 @@ class CircleIconBtn extends StatelessWidget {
 class BackBtn extends StatelessWidget {
   const BackBtn({
     Key? key,
-    this.icon = AppIcons.back,
+    this.icon = AppIcons.prev,
     this.onPressed,
     this.semanticLabel,
     this.bgColor,
