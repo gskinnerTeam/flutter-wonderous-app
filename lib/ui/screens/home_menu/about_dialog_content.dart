@@ -38,28 +38,39 @@ class AboutDialogContent extends StatelessWidget {
       }
     }
 
-    return Column(children: [
-      Gap($styles.insets.sm),
-      RichText(
-        text: TextSpan(
-          style: $styles.text.body.copyWith(color: Colors.black),
-          children: [
-            ...buildSpan($strings.homeMenuAboutWonderous),
-            ...buildSpan($strings.homeMenuAboutBuilt, linkSupplants: {
-              '{flutterUrl}': [$strings.homeMenuAboutFlutter, 'https://flutter.dev'],
-              '{gskinnerUrl}': [$strings.homeMenuAboutGskinner, 'https://gskinner.com/flutter'],
-            }),
-            ...buildSpan('\n\n'),
-            ...buildSpan($strings.homeMenuAboutLearn, linkSupplants: {
-              '{wonderousUrl}': [$strings.homeMenuAboutApp, 'https://wonderous.app'],
-            }),
-            ...buildSpan('\n\n'),
-            ...buildSpan($strings.homeMenuAboutSource, linkSupplants: {
-              '{githubUrl}': [$strings.homeMenuAboutRepo, 'https://github.com/gskinnerTeam/flutter-wonders-app'],
-            }),
-          ],
+    return SingleChildScrollView(
+      child: Column(children: [
+        Gap($styles.insets.sm),
+        RichText(
+          text: TextSpan(
+            style: $styles.text.bodySmall.copyWith(color: Colors.black),
+            children: [
+              ...buildSpan($strings.homeMenuAboutWonderous),
+              ...buildSpan($strings.homeMenuAboutBuilt, linkSupplants: {
+                '{flutterUrl}': [$strings.homeMenuAboutFlutter, 'https://flutter.dev'],
+                '{gskinnerUrl}': [$strings.homeMenuAboutGskinner, 'https://gskinner.com/flutter'],
+              }),
+              ...buildSpan('\n\n'),
+              ...buildSpan($strings.homeMenuAboutLearn, linkSupplants: {
+                '{wonderousUrl}': [$strings.homeMenuAboutApp, 'https://wonderous.app'],
+              }),
+              ...buildSpan('\n\n'),
+              ...buildSpan($strings.homeMenuAboutSource, linkSupplants: {
+                '{githubUrl}': [$strings.homeMenuAboutRepo, 'https://github.com/gskinnerTeam/flutter-wonders-app'],
+              }),
+              // TODO @ EC: New strings to add to translations doc
+              ...buildSpan('\n\n'),
+              ...buildSpan('Public-domain artworks from {metUrl}.', linkSupplants: {
+                '{metUrl}': ['The Metropolitan Museum of Art, New York', 'https://metmuseum.github.io/'],
+              }),
+              ...buildSpan('\n\n'),
+              ...buildSpan('Photography from {unsplashUrl},', linkSupplants: {
+                '{unsplashUrl}': ['Unsplash', 'https://unsplash.com/@gskinner/collections'],
+              }),
+            ],
+          ),
         ),
-      ),
-    ]);
+      ]),
+    );
   }
 }
