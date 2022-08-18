@@ -18,6 +18,7 @@ class UnsplashPhoto extends StatelessWidget {
           image: NetworkImage(UnsplashPhotoData.getSelfHostedUrl(id, size)),
           fit: fit,
           progress: true,
+          scale: 1,
         ),
       ],
     );
