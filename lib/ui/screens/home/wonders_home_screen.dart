@@ -12,6 +12,7 @@ import 'package:wonders/ui/screens/home_menu/home_menu.dart';
 import 'package:wonders/ui/wonder_illustrations/common/animated_clouds.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
+
 part '_vertical_swipe_controller.dart';
 part 'widgets/_animated_arrow_button.dart';
 
@@ -109,121 +110,124 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       _fadeInOnNextBuild = false;
     }
     return _swipeController.wrapGestureDetector(
-      Stack(
-        children: [
-          /// Background
-          ..._buildBgChildren(),
+      Container(
+        color: $styles.colors.black,
+        child: Stack(
+          children: [
+            /// Background
+            ..._buildBgChildren(),
 
-          /// Clouds
-          FractionallySizedBox(
-            widthFactor: 1,
-            heightFactor: .5,
-            child: AnimatedClouds(wonderType: currentWonder.type, opacity: 1),
-          ),
-
-          /// Wonders Illustrations
-          PageView.builder(
-            controller: _pageController,
-            onPageChanged: _handlePageViewChanged,
-            itemBuilder: _buildMgChild,
-          ),
-
-          Stack(children: [
-            /// Foreground gradient-1, gets darker when swiping up
-            BottomCenter(
-              child: _buildSwipeableBgGradient(currentWonder.type.bgColor.withOpacity(.5)),
+            /// Clouds
+            FractionallySizedBox(
+              widthFactor: 1,
+              heightFactor: .5,
+              child: AnimatedClouds(wonderType: currentWonder.type, opacity: 1),
             ),
 
-            /// Foreground decorators
-            ..._buildFgChildren(),
-
-            /// Foreground gradient-2, gets darker when swiping up
-            BottomCenter(
-              child: _buildSwipeableBgGradient(currentWonder.type.bgColor.withOpacity(.5)),
+            /// Wonders Illustrations
+            PageView.builder(
+              controller: _pageController,
+              onPageChanged: _handlePageViewChanged,
+              itemBuilder: _buildMgChild,
             ),
 
-            /// Floating controls / UI
-            AnimatedSwitcher(
-              duration: $styles.times.fast,
-              child: RepaintBoundary(
-                /// Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
-                key: ValueKey(_wonderIndex),
-                child: OverflowBox(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(width: double.infinity),
-                      const Spacer(),
+            Stack(children: [
+              /// Foreground gradient-1, gets darker when swiping up
+              BottomCenter(
+                child: _buildSwipeableBgGradient(currentWonder.type.bgColor.withOpacity(.5)),
+              ),
 
-                      /// Title Content
-                      LightText(
-                        child: Column(
-                          children: [
-                            /// Page indicator
-                            IgnorePointer(
-                              child: DiagonalTextPageIndicator(current: _wonderIndex + 1, total: _numWonders),
-                            ),
-                            Gap($styles.insets.sm),
+              /// Foreground decorators
+              ..._buildFgChildren(),
 
-                            AppPageIndicator(
-                              count: _numWonders,
-                              controller: _pageController,
-                              color: $styles.colors.white,
-                              dotSize: 8,
-                              onDotPressed: _handlePageIndicatorDotPressed,
-                              semanticPageTitle: $strings.homeSemanticWonder,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Gap($styles.insets.xs),
+              /// Foreground gradient-2, gets darker when swiping up
+              BottomCenter(
+                child: _buildSwipeableBgGradient(currentWonder.type.bgColor.withOpacity(.5)),
+              ),
 
-                      /// Animated arrow and background
-                      /// Wrap in a container that is full-width to make it easier to find for screen readers
-                      MergeSemantics(
-                        child: Container(
-                          width: double.infinity,
-                          alignment: Alignment.center,
-                          child: Stack(
+              /// Floating controls / UI
+              AnimatedSwitcher(
+                duration: $styles.times.fast,
+                child: RepaintBoundary(
+                  /// Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
+                  key: ValueKey(_wonderIndex),
+                  child: OverflowBox(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(width: double.infinity),
+                        const Spacer(),
+
+                        /// Title Content
+                        LightText(
+                          child: Column(
                             children: [
-                              /// Expanding rounded rect that grows in height as user swipes up
-                              Positioned.fill(
-                                child: _buildSwipeableArrowBg(),
+                              /// Page indicator
+                              IgnorePointer(
+                                child: DiagonalTextPageIndicator(current: _wonderIndex + 1, total: _numWonders),
                               ),
+                              Gap($styles.insets.sm),
 
-                              /// Arrow Btn that fades in and out
-                              _AnimatedArrowButton(onTap: _showDetailsPage, semanticTitle: currentWonder.title),
+                              AppPageIndicator(
+                                count: _numWonders,
+                                controller: _pageController,
+                                color: $styles.colors.white,
+                                dotSize: 8,
+                                onDotPressed: _handlePageIndicatorDotPressed,
+                                semanticPageTitle: $strings.homeSemanticWonder,
+                              ),
                             ],
                           ),
                         ),
-                      ),
-                      Gap($styles.insets.md),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+                        Gap($styles.insets.xs),
 
-            /// Menu Btn
-            TopLeft(
-              child: AnimatedOpacity(
-                duration: $styles.times.fast,
-                opacity: _isMenuOpen ? 0 : 1,
-                child: MergeSemantics(
-                  child: Semantics(
-                    sortKey: OrdinalSortKey(0),
-                    child: CircleIconBtn(
-                      icon: AppIcons.menu,
-                      onPressed: _handleOpenMenuPressed,
-                      semanticLabel: $strings.homeSemanticOpenMain,
-                    ).safe(),
+                        /// Animated arrow and background
+                        /// Wrap in a container that is full-width to make it easier to find for screen readers
+                        MergeSemantics(
+                          child: Container(
+                            width: double.infinity,
+                            alignment: Alignment.center,
+                            child: Stack(
+                              children: [
+                                /// Expanding rounded rect that grows in height as user swipes up
+                                Positioned.fill(
+                                  child: _buildSwipeableArrowBg(),
+                                ),
+
+                                /// Arrow Btn that fades in and out
+                                _AnimatedArrowButton(onTap: _showDetailsPage, semanticTitle: currentWonder.title),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Gap($styles.insets.md),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ]),
-        ],
-      ).animate().fadeIn(),
+
+              /// Menu Btn
+              TopLeft(
+                child: AnimatedOpacity(
+                  duration: $styles.times.fast,
+                  opacity: _isMenuOpen ? 0 : 1,
+                  child: MergeSemantics(
+                    child: Semantics(
+                      sortKey: OrdinalSortKey(0),
+                      child: CircleIconBtn(
+                        icon: AppIcons.menu,
+                        onPressed: _handleOpenMenuPressed,
+                        semanticLabel: $strings.homeSemanticOpenMain,
+                      ).safe(),
+                    ),
+                  ),
+                ),
+              ),
+            ]),
+          ],
+        ).animate().fadeIn(),
+      ),
     );
   }
 
