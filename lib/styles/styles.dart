@@ -34,6 +34,10 @@ class _Text {
     'en': TextStyle(fontFamily: 'Tenor'),
   };
 
+  final Map<String, TextStyle> _monoTitleFonts = {
+    'en': TextStyle(fontFamily: 'B612Mono'),
+  };
+
   final Map<String, TextStyle> _quoteFonts = {
     'en': TextStyle(fontFamily: 'Cinzel'),
     'zh': TextStyle(fontFamily: 'MaShanZheng'),
@@ -52,9 +56,7 @@ class _Text {
 
   TextStyle _getFontForLocale(Map<String, TextStyle> fonts) {
     if (localeLogic.isLoaded) {
-      return fonts.entries
-          .firstWhere((x) => x.key == $strings.localeName, orElse: () => fonts.entries.first)
-          .value;
+      return fonts.entries.firstWhere((x) => x.key == $strings.localeName, orElse: () => fonts.entries.first).value;
     } else {
       return fonts.entries.first.value;
     }
@@ -64,6 +66,7 @@ class _Text {
   TextStyle get quoteFont => _getFontForLocale(_quoteFonts);
   TextStyle get wonderTitleFont => _getFontForLocale(_wonderTitleFonts);
   TextStyle get contentFont => _getFontForLocale(_contentFonts);
+  TextStyle get monoTitleFont => _getFontForLocale(_monoTitleFonts);
 
   late final TextStyle dropCase = copy(quoteFont, sizePx: 56, heightPx: 20);
 
