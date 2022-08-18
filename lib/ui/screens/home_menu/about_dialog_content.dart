@@ -58,14 +58,13 @@ class AboutDialogContent extends StatelessWidget {
               ...buildSpan($strings.homeMenuAboutSource, linkSupplants: {
                 '{githubUrl}': [$strings.homeMenuAboutRepo, 'https://github.com/gskinnerTeam/flutter-wonders-app'],
               }),
-              // TODO @ EC: New strings to add to translations doc
               ...buildSpan('\n\n'),
-              ...buildSpan('Public-domain artworks from {metUrl}.', linkSupplants: {
-                '{metUrl}': ['The Metropolitan Museum of Art, New York', 'https://metmuseum.github.io/'],
+              ...buildSpan($strings.homeMenuAboutPublic, linkSupplants: {
+                '{metUrl}': [$strings.homeMenuAboutMet, 'https://metmuseum.github.io/'],
               }),
               ...buildSpan('\n\n'),
-              ...buildSpan('Photography from {unsplashUrl},', linkSupplants: {
-                '{unsplashUrl}': ['Unsplash', 'https://unsplash.com/@gskinner/collections'],
+              ...buildSpan($strings.homeMenuAboutPhotography, linkSupplants: {
+                '{unsplashUrl}': [$strings.homeMenuAboutUnsplash, 'https://unsplash.com/@gskinner/collections'],
               }),
             ],
           ),
