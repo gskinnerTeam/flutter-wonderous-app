@@ -66,7 +66,11 @@ class WonderDetailsTabMenu extends StatelessWidget {
               TweenAnimationBuilder<double>(
                 duration: $styles.times.fast,
                 tween: Tween(begin: 0, end: showHomeBtn ? 1 : 0),
-                child: _WonderHomeBtn(size: homeBtnSize, wonderType: wonderType),
+                child: _WonderHomeBtn(
+                  size: homeBtnSize,
+                  wonderType: wonderType,
+                  borderSize: showBg ? 6 : 2,
+                ),
                 builder: (_, value, child) {
                   final curvedValue = Curves.easeOut.transform(value);
                   return Transform.scale(
@@ -92,19 +96,22 @@ class WonderDetailsTabMenu extends StatelessWidget {
 }
 
 class _WonderHomeBtn extends StatelessWidget {
-  const _WonderHomeBtn({Key? key, required this.size, required this.wonderType}) : super(key: key);
+  const _WonderHomeBtn({Key? key, required this.size, required this.wonderType, required this.borderSize})
+      : super(key: key);
 
   final double size;
   final WonderType wonderType;
+  final double borderSize;
 
   @override
   Widget build(BuildContext context) {
-    const double borderSize = 6;
     return CircleBtn(
       onPressed: () => Navigator.of(context).pop(),
       bgColor: $styles.colors.offWhite,
       semanticLabel: $strings.wonderDetailsTabSemanticBack,
-      child: Container(
+      child: AnimatedContainer(
+        curve: Curves.easeOut,
+        duration: $styles.times.fast,
         width: size - borderSize * 2,
         height: size - borderSize * 2,
         margin: EdgeInsets.all(borderSize),
