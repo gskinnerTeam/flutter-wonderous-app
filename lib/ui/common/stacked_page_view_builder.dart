@@ -1,10 +1,14 @@
 import 'package:wonders/common_libs.dart';
 
-/// Eases "full screen" scrolling when using PageView component.
-/// Creates a stack with an empty PageView on top to handle scrolling,
-/// then passes a child PageController to the `builder` so a child PageView can
-/// be created to hold the content itself (which may not want to be fullscreen).
-/// The parent PageView will drive the swiping of the child PageView.
+/// Decouples the scrollable area from the size of the PageView itself.
+/// Helps simplify the layout of the underlying view and can create a better UX with screen-readers.
+///
+/// Internally it creates a stack with an invisible PageView on the bottom to handle scrolling,
+/// then passes a child PageController to the `builder` so a nested PageView can
+/// be created to hold the content itself.
+///
+/// Scrolling of the nested PageView will then be driven by the outer one.
+///
 class StackedPageViewBuilder extends StatefulWidget {
   const StackedPageViewBuilder({
     Key? key,
