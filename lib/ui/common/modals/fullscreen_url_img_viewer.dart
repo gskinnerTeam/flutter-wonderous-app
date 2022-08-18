@@ -46,7 +46,7 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
     );
 
     return Container(
-      color: $styles.colors.greyStrong,
+      color: $styles.colors.black,
       child: Stack(
         children: [
           Positioned.fill(child: content),

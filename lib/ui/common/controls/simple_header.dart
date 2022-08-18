@@ -14,7 +14,7 @@ class SimpleHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: isTransparent ? Colors.transparent : $styles.colors.greyStrong,
+      color: isTransparent ? Colors.transparent : $styles.colors.black,
       child: SafeArea(
         bottom: false,
         child: Row(children: [

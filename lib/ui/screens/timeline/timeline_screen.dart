@@ -44,7 +44,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
       const double minSize = 1200;
       const double maxSize = 5500;
       return Container(
-        color: $styles.colors.greyStrong,
+        color: $styles.colors.black,
         child: Padding(
           padding: EdgeInsets.only(bottom: 0),
           child: Column(
@@ -74,7 +74,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                 timelineMinSize: minSize,
                 selectedWonder: widget.type,
               ),
-              Gap($styles.insets.sm),
+              Gap($styles.insets.lg),
             ],
           ),
         ),
