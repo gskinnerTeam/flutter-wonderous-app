@@ -45,7 +45,7 @@ class _EventsListState extends State<_EventsList> {
                 if (_scroller.hasClients) {
                   double blurStart = 50;
                   scrollAmt = (_scroller.position.pixels - blurStart).clamp(0, 150) / 150;
-                  blur = scrollAmt * 10;
+                  blur = scrollAmt * 5;
                   // Disable blur once it is offscreen
                   if (_scroller.position.pixels - blurStart >= 500) {
                     blur = 0;
@@ -60,7 +60,7 @@ class _EventsListState extends State<_EventsList> {
                         filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
                         child: IgnorePointer(
                           child: Container(
-                            color: $styles.colors.greyStrong.withOpacity(min(1, scrollAmt * 2) * .5),
+                            color: $styles.colors.greyStrong.withOpacity(min(1, scrollAmt * 2) * .6),
                           ),
                         ),
                       ),
