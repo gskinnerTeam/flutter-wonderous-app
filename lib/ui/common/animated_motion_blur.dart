@@ -32,7 +32,7 @@ class _AnimatedMotionBlurState extends State<AnimatedMotionBlur> {
     timeDilation = 1;
     return Animate(
       effects: [CustomEffect(builder: _buildBlur, duration: widget.duration, curve: Curves.easeOut)],
-      onInit: (t) => _blur = t,
+      onPlay: (t) => _blur = t,
       child: widget.child,
     );
   }

@@ -263,7 +263,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         );
         return Animate(
             effects: const [FadeEffect()],
-            onInit: _handleFadeAnimInit,
+            onPlay: _handleFadeAnimInit,
             child: IgnorePointer(child: WonderIllustration(e.type, config: config)));
       });
     }).toList();

@@ -18,7 +18,7 @@ class CollectibleFoundScreen extends StatelessWidget {
     return RepaintBoundary(
       child: _buildIntro(context).animate().swap(
             delay: $styles.times.fast * 3.5,
-            builder: (_) => _buildDetail(context),
+            builder: (_, __) => _buildDetail(context),
           ),
     );
   }
@@ -156,8 +156,8 @@ class CollectibleFoundScreen extends StatelessWidget {
       ),
     )
         .animate()
-        .fadeIn(delay: t * 4, duration: 0.ms)
-        .move(begin: Offset(0, $styles.insets.md), duration: t * 3, curve: Curves.easeOutExpo);
+        .show(delay: t * 4)
+        .move(begin: Offset(0, $styles.insets.md), duration: t * 3, curve: Curves.easeOutCubic);
   }
 
   void _handleViewCollectionPressed(BuildContext context) {
