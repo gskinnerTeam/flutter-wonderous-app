@@ -18,10 +18,8 @@ class AppLogic {
     // Default error handler
     FlutterError.onError = _handleFlutterError;
 
-    final futures = <Future>[];
-
     // Load any bitmaps the views might need
-    futures.add(AppBitmaps.init());
+    await AppBitmaps.init();
 
     // Default to only allowing portrait mode
     setDeviceOrientation(Axis.vertical);
@@ -29,15 +27,11 @@ class AppLogic {
     // Localizations load
     await localeLogic.load();
     // Data load
-    futures.add(timelineLogic.init());
+    await timelineLogic.init();
     // Settings load
-    futures.add(settingsLogic.load());
-    unawaited(settingsLogic.scheduleSave()); // sanity check save calls on each boot
+    await settingsLogic.load();
     // Collectibles init
-    futures.add(collectiblesLogic.load());
-
-    // Run all async operations concurrently
-    await Future.wait(futures);
+    await collectiblesLogic.load();
 
     // flag bootStrap as complete
     isBootstrapComplete = true;
