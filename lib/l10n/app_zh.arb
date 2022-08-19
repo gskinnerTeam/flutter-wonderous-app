@@ -87,6 +87,7 @@
 	"yearBCE": "公元前",
 	"yearCE": "公元后",
 	"yearFormat": "{era}{date}年",
+	"year": "年",
 	"timelineLabelConstruction": "{title}的建造开始。",
 	"timelineTitleGlobalTimeline": "世界历史年表",
 	"wallpaperSemanticSharePhoto": "分享照片",

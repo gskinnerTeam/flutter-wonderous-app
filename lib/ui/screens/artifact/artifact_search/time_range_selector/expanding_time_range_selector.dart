@@ -138,6 +138,36 @@ class _OpenedTimeRange extends StatelessWidget {
   final TimeRangePainter painter;
   final void Function() onClose;
 
+  List<Widget> _buildChineseDateLayout(TextStyle headingTextStyle, TextStyle captionTextStyle, int startYr, int endYr) {
+    return [
+      Text(StringUtils.getYrSuffix(startYr), style: captionTextStyle),
+      Gap($styles.insets.xxs),
+      Text(startYr.abs().toString(), style: headingTextStyle),
+      Text($strings.year, style: captionTextStyle),
+      Gap($styles.insets.xs),
+      Text('~', style: captionTextStyle),
+      Gap($styles.insets.xs),
+      Text(StringUtils.getYrSuffix(endYr.round()), style: captionTextStyle),
+      Gap($styles.insets.xxs),
+      Text(endYr.abs().toString(), style: headingTextStyle),
+      Text($strings.year, style: captionTextStyle),
+    ];
+  }
+
+  List<Widget> _buildDefaultDateLayout(TextStyle headingTextStyle, TextStyle captionTextStyle, int startYr, int endYr) {
+    return [
+      Text(startYr.abs().toString(), style: headingTextStyle),
+      Gap($styles.insets.xxs),
+      Text(StringUtils.getYrSuffix(startYr), style: captionTextStyle),
+      Gap($styles.insets.xs),
+      Text('—', style: captionTextStyle),
+      Gap($styles.insets.xs),
+      Text(endYr.abs().toString(), style: headingTextStyle),
+      Gap($styles.insets.xxs),
+      Text(StringUtils.getYrSuffix(endYr.round()), style: captionTextStyle),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     double safeBottom = max($styles.insets.sm, MediaQuery.of(context).padding.bottom);
@@ -155,15 +185,11 @@ class _OpenedTimeRange extends StatelessWidget {
           children: [
             Gap($styles.insets.xl),
             Spacer(),
-            Text(startYr.abs().toString(), style: headingTextStyle),
-            Gap($styles.insets.xxs),
-            Text(StringUtils.getYrSuffix(startYr), style: captionTextStyle),
-            Gap($styles.insets.xs),
-            Text('—', style: captionTextStyle),
-            Gap($styles.insets.xs),
-            Text(endYr.abs().toString(), style: headingTextStyle),
-            Gap($styles.insets.xxs),
-            Text(StringUtils.getYrSuffix(endYr.round()), style: captionTextStyle),
+            if (localeLogic.strings.localeName == 'zh') ...{
+              ..._buildChineseDateLayout(headingTextStyle, captionTextStyle, startYr, endYr),
+            } else ...{
+              ..._buildDefaultDateLayout(headingTextStyle, captionTextStyle, startYr, endYr),
+            },
             Spacer(),
             SizedBox(
               width: $styles.insets.xl,

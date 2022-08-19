@@ -87,6 +87,7 @@
 	"yearBCE": "BCE",
 	"yearCE": "CE",
 	"yearFormat": "{date} {era}",
+	"year": "Year",
 	"timelineLabelConstruction": "Construction of {title} begins.",
 	"timelineTitleGlobalTimeline": "Global Timeline",
 	"wallpaperSemanticSharePhoto": "share photo",
