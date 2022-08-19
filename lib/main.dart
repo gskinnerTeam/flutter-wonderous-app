@@ -1,7 +1,6 @@
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:wonders/_tools/unsplash_download_service.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/collectibles_logic.dart';
 import 'package:wonders/logic/locale_logic.dart';
@@ -24,8 +23,6 @@ void main() async {
 
   // Remove splash screen when bootstrap is complete
   FlutterNativeSplash.remove();
-
-  UnsplashDownloadService.downloadAllCollections();
 }
 
 /// Creates an app using the [MaterialApp.router] constructor and the `appRouter`, an instance of [GoRouter].
