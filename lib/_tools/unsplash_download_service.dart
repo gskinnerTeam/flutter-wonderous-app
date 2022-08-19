@@ -17,13 +17,14 @@ class UnsplashDownloadService {
     final photo = await _unsplash.loadInfo(id);
     int saveCount = 0;
     if (photo != null) {
-      final sizes = [32, 400, 800, 1200, 1600, 2400];
+      final rootDir = await getApplicationDocumentsDirectory();
+      final imagesDir = '${rootDir.path}/unsplash_images';
+      await Directory(imagesDir).create(recursive: true);
+      debugPrint('Downloading image set $id to $imagesDir');
+      final sizes = [32, 400, 800, 2000, 1600, 4000];
       for (var size in sizes) {
         final url = photo.getUnsplashUrl(size);
         final imgResponse = await get(Uri.parse(url));
-        final rootDir = await getApplicationDocumentsDirectory();
-        final imagesDir = '${rootDir.path}/unsplash_images';
-        await Directory(imagesDir).create(recursive: true);
         File file = File('$imagesDir/$id-$size.jpg');
         file.writeAsBytesSync(imgResponse.bodyBytes);
         //print('file saved @ ${file.path}');
@@ -45,7 +46,7 @@ class UnsplashDownloadService {
   }
 
   /// Downloads all images for all collections
-  Future<void> downloadAllCollections() async {
+  static Future<void> downloadAllCollections() async {
     /// Note: intentionally not in parallel so as to not annoy the unsplash servers
     for (var w in _wondersLogic.all) {
       await downloadCollectionImages(w);

@@ -14,22 +14,24 @@ class _DashedDividerWithYear extends StatelessWidget {
         CenterRight(
           child: FractionalTranslation(
             translation: Offset(0, -.5),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  '${roundedYr.abs()}',
-                  style: $styles.text.h2.copyWith(color: $styles.colors.white, shadows: $styles.shadows.text),
-                ),
-                Gap($styles.insets.xs),
-                Text(
-                  StringUtils.getYrSuffix(roundedYr),
-                  style: $styles.text.body.copyWith(
-                    color: Colors.white,
-                    shadows: $styles.shadows.textStrong,
+            child: MergeSemantics(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    '${roundedYr.abs()}',
+                    style: $styles.text.h2.copyWith(color: $styles.colors.white, shadows: $styles.shadows.text),
                   ),
-                ),
-              ],
+                  Gap($styles.insets.xs),
+                  Text(
+                    StringUtils.getYrSuffix(roundedYr),
+                    style: $styles.text.body.copyWith(
+                      color: Colors.white,
+                      shadows: $styles.shadows.textStrong,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         )

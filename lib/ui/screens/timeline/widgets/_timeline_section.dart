@@ -15,16 +15,20 @@ class TimelineSection extends StatelessWidget {
     double fraction = (selectedYr - startYr) / (endYr - startYr);
     fraction = fraction.clamp(0, 1);
 
-    return Container(
-      alignment: Alignment(0, -1 + fraction * 2),
-      padding: EdgeInsets.all($styles.insets.xs),
-      decoration: BoxDecoration(color: data.type.fgColor),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(99),
-        child: BlendMask(
-          blendModes: isSelected ? [] : const [BlendMode.luminosity],
-          opacity: .6,
-          child: _buildWonderImage(),
+    return Semantics(
+      // TODO SB @ EC: Need to localize this (just the yr stuff I think?)
+      label: '${data.title}, ${StringUtils.formatYr(data.startYr)} to ${StringUtils.formatYr(data.endYr)}',
+      child: Container(
+        alignment: Alignment(0, -1 + fraction * 2),
+        padding: EdgeInsets.all($styles.insets.xs),
+        decoration: BoxDecoration(color: data.type.fgColor),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(99),
+          child: BlendMask(
+            blendModes: isSelected ? [] : const [BlendMode.luminosity],
+            opacity: .6,
+            child: _buildWonderImage(),
+          ),
         ),
       ),
     );

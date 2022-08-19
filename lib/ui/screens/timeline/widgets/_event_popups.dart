@@ -36,21 +36,25 @@ class _EventPopupsState extends State<_EventPopups> {
     return TopCenter(
       child: ClipRect(
         child: IgnorePointer(
+          ignoringSemantics: false,
           child: AnimatedSwitcher(
             duration: $styles.times.fast,
             child: evt == null
                 ? SizedBox.shrink()
-                : Animate(
-                    effects: const [
-                      SlideEffect(begin: Offset(0, -.1)),
-                    ],
-                    key: ValueKey(_eventToShow?.year),
-                    child: IntrinsicHeight(
-                      child: Padding(
-                        padding: EdgeInsets.all($styles.insets.md),
-                        child: TimelineEventCard(
-                          text: evt.description,
-                          year: evt.year,
+                : Semantics(
+                    liveRegion: true,
+                    child: Animate(
+                      effects: const [
+                        SlideEffect(begin: Offset(0, -.1)),
+                      ],
+                      key: ValueKey(_eventToShow?.year),
+                      child: IntrinsicHeight(
+                        child: Padding(
+                          padding: EdgeInsets.all($styles.insets.md),
+                          child: TimelineEventCard(
+                            text: evt.description,
+                            year: evt.year,
+                          ),
                         ),
                       ),
                     ),

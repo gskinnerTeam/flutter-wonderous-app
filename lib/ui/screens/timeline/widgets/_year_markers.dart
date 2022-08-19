@@ -14,6 +14,7 @@ class _YearMarkers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IgnorePointer(
+      ignoringSemantics: false,
       child: LayoutBuilder(builder: (_, constraints) {
         int interval = 100;
         if (constraints.maxHeight < 800) {
@@ -53,13 +54,11 @@ class _YearMarker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExcludeSemantics(
-      child: Align(
-        alignment: Alignment(0, -1 + offset * 2),
-        child: FractionalTranslation(
-          translation: Offset(0, 0),
-          child: Text('${yr.abs()}', style: $styles.text.body.copyWith(color: Colors.white, height: 1)),
-        ),
+    return Align(
+      alignment: Alignment(0, -1 + offset * 2),
+      child: FractionalTranslation(
+        translation: Offset(0, 0),
+        child: Text('${yr.abs()}', style: $styles.text.body.copyWith(color: Colors.white, height: 1)),
       ),
     );
   }
