@@ -8,26 +8,24 @@ class _ResultsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepaintBoundary(
-      child: ScrollDecorator.shadow(
-        builder: (controller) => CustomScrollView(
-          controller: controller,
-          clipBehavior: Clip.hardEdge,
-          shrinkWrap: true,
-          slivers: [
-            SliverToBoxAdapter(child: _buildLanguageMessage(context)),
-            SliverPadding(
-              padding: EdgeInsets.all($styles.insets.sm).copyWith(bottom: $styles.insets.offset * 1.5),
-              sliver: SliverMasonryGrid.count(
-                crossAxisCount: 2,
-                mainAxisSpacing: $styles.insets.sm,
-                crossAxisSpacing: $styles.insets.sm,
-                childCount: searchResults.length,
-                itemBuilder: (context, index) => _ResultTile(onPressed: onPressed, data: searchResults[index]),
-              ),
+    return ScrollDecorator.shadow(
+      builder: (controller) => CustomScrollView(
+        controller: controller,
+        scrollBehavior: const ScrollBehavior().copyWith(scrollbars: false),
+        clipBehavior: Clip.hardEdge,
+        slivers: [
+          SliverToBoxAdapter(child: _buildLanguageMessage(context)),
+          SliverPadding(
+            padding: EdgeInsets.all($styles.insets.sm).copyWith(bottom: $styles.insets.offset * 1.5),
+            sliver: SliverMasonryGrid.count(
+              crossAxisCount: 2,
+              mainAxisSpacing: $styles.insets.sm,
+              crossAxisSpacing: $styles.insets.sm,
+              childCount: searchResults.length,
+              itemBuilder: (context, index) => _ResultTile(onPressed: onPressed, data: searchResults[index]),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
