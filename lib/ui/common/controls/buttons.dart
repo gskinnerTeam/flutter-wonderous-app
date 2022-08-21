@@ -12,6 +12,7 @@ class AppBtn extends StatelessWidget {
     required this.onPressed,
     required this.semanticLabel,
     this.enableFeedback = true,
+    this.pressEffect = true,
     this.child,
     this.padding,
     this.expand = false,
@@ -27,6 +28,7 @@ class AppBtn extends StatelessWidget {
     Key? key,
     required this.onPressed,
     this.enableFeedback = true,
+    this.pressEffect = true,
     this.padding,
     this.expand = false,
     this.isSecondary = false,
@@ -67,6 +69,7 @@ class AppBtn extends StatelessWidget {
     required this.onPressed,
     required this.semanticLabel,
     this.enableFeedback = true,
+    this.pressEffect = true,
     this.child,
     this.padding = EdgeInsets.zero,
     this.isSecondary = false,
@@ -97,6 +100,7 @@ class AppBtn extends StatelessWidget {
   final bool isSecondary;
   final BorderSide? border;
   final Color? bgColor;
+  final bool pressEffect;
 
   @override
   Widget build(BuildContext context) {
@@ -132,15 +136,19 @@ class AppBtn extends StatelessWidget {
     );
 
     // add press effect:
-    button = _ButtonPressEffect(button);
+    if (pressEffect) button = _ButtonPressEffect(button);
 
     // add semantics:
-    button = Semantics(
-      label: semanticLabel,
-      button: true,
-      container: true,
-      child: button,
-    );
+    if (semanticLabel.isEmpty) {
+      button = ExcludeSemantics(child: button);
+    } else {
+      button = Semantics(
+        label: semanticLabel,
+        button: true,
+        container: true,
+        child: button,
+      );
+    }
 
     return button;
   }

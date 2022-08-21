@@ -24,6 +24,7 @@ class _CarouselItem extends StatelessWidget {
     return AppBtn.basic(
       semanticLabel: '${artifact.title} ${artifact.date}',
       onPressed: onPressed,
+      pressEffect: false,
       child: _ImagePreview(
         image: NetworkImage(artifact.imageUrlSmall),
         bottomPadding: bottomPadding,
