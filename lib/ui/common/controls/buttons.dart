@@ -107,19 +107,24 @@ class AppBtn extends StatelessWidget {
     Widget content = _builder?.call(context) ?? child ?? SizedBox.shrink();
     if (expand) content = Center(child: content);
 
+    OutlinedBorder shape = circular
+        ? CircleBorder(side: side)
+        : RoundedRectangleBorder(side: side, borderRadius: BorderRadius.circular($styles.corners.md));
+
+    ButtonStyle style = ButtonStyle(
+      minimumSize: ButtonStyleButton.allOrNull<Size>(minimumSize ?? Size.zero),
+      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      splashFactory: NoSplash.splashFactory,
+      backgroundColor: ButtonStyleButton.allOrNull<Color>(bgColor ?? defaultColor),
+      overlayColor: ButtonStyleButton.allOrNull<Color>(Colors.transparent), // disable default press effect
+      shape: ButtonStyleButton.allOrNull<OutlinedBorder>(shape),
+      padding: ButtonStyleButton.allOrNull<EdgeInsetsGeometry>(padding ?? EdgeInsets.all($styles.insets.md)),
+      enableFeedback: enableFeedback,
+    );
+
     Widget button = TextButton(
       onPressed: () => onPressed(),
-      style: TextButton.styleFrom(
-        minimumSize: minimumSize ?? Size.zero,
-        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        splashFactory: NoSplash.splashFactory,
-        backgroundColor: bgColor ?? defaultColor,
-        shape: circular
-            ? CircleBorder(side: side)
-            : RoundedRectangleBorder(side: side, borderRadius: BorderRadius.circular($styles.corners.md)),
-        padding: padding ?? EdgeInsets.all($styles.insets.md),
-        enableFeedback: enableFeedback,
-      ),
+      style: style,
       child: DefaultTextStyle(
         style: DefaultTextStyle.of(context).style.copyWith(color: textColor),
         child: content,
