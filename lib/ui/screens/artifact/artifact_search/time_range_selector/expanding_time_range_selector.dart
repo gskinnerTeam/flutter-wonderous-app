@@ -44,55 +44,49 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
     final double pad = $styles.insets.sm;
     final bool isOpen = widget.panelController.value;
     double safeBottom = max($styles.insets.md, MediaQuery.of(context).padding.bottom);
+
     return LayoutBuilder(builder: (_, constraints) {
-      return Stack(
-        children: [
-          BottomCenter(
-            child: AnimatedPadding(
-              duration: $styles.times.fast,
-              padding: isOpen ? EdgeInsets.zero : EdgeInsets.only(bottom: safeBottom + $styles.insets.xxs),
-              child: _buildPanelBtn(OpeningCard(
-                isOpen: isOpen,
-                padding: EdgeInsets.symmetric(horizontal: pad, vertical: $styles.insets.xs),
-                background: Container(
-                  decoration: BoxDecoration(
-                    color: $styles.colors.black.withOpacity(0.85),
-                    borderRadius: BorderRadius.circular($styles.corners.md),
-                    boxShadow: [
-                      BoxShadow(
-                        color: $styles.colors.black.withOpacity(0.5),
-                        offset: Offset(0, 4),
-                        blurRadius: 4,
-                      )
-                    ],
-                  ),
+      return BottomCenter(
+        child: AnimatedPadding(
+          duration: $styles.times.fast,
+          padding: isOpen ? EdgeInsets.zero : EdgeInsets.only(bottom: safeBottom + $styles.insets.xxs),
+          child: AppBtn.basic(
+            onPressed: () => widget.panelController.toggle(),
+            semanticLabel: '',
+            pressEffect: false,
+            child: OpeningCard(
+              isOpen: isOpen,
+              padding: EdgeInsets.symmetric(horizontal: pad, vertical: $styles.insets.xs),
+              background: Container(
+                decoration: BoxDecoration(
+                  color: $styles.colors.black.withOpacity(0.85),
+                  borderRadius: BorderRadius.circular($styles.corners.md),
+                  boxShadow: [
+                    BoxShadow(
+                      color: $styles.colors.black.withOpacity(0.66),
+                      offset: Offset(0, 4),
+                      blurRadius: 4,
+                    )
+                  ],
                 ),
-                closedBuilder: (_) => _ClosedTimeRange(startYear: widget.startYear, endYear: widget.endYear),
-                openBuilder: (_) => SizedBox(
-                  width: constraints.maxWidth - pad * 2,
-                  child: _OpenedTimeRange(
-                    startYear: widget.startYear,
-                    endYear: widget.endYear,
-                    onChange: widget.onChanged,
-                    wonder: widget.wonder,
-                    painter: _painter,
-                    onClose: widget.panelController.toggle,
-                  ),
+              ),
+              closedBuilder: (_) => _ClosedTimeRange(startYear: widget.startYear, endYear: widget.endYear),
+              openBuilder: (_) => SizedBox(
+                width: constraints.maxWidth - pad * 2,
+                child: _OpenedTimeRange(
+                  startYear: widget.startYear,
+                  endYear: widget.endYear,
+                  onChange: widget.onChanged,
+                  wonder: widget.wonder,
+                  painter: _painter,
+                  onClose: widget.panelController.toggle,
                 ),
-              )),
+              ),
             ),
           ),
-        ],
+        ),
       );
     });
-  }
-
-  Widget _buildPanelBtn(Widget child) {
-    return GestureDetector(
-      excludeFromSemantics: true,
-      onTapUp: (_) => widget.panelController.toggle(),
-      child: child,
-    );
   }
 }
 
