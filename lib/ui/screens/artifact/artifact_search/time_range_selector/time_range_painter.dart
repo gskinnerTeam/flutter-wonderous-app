@@ -27,5 +27,5 @@ class TimeRangePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(oldDelegate) => true;
+  bool shouldRepaint(TimeRangePainter oldDelegate) => true;
 }

@@ -222,7 +222,9 @@ class _OpenedTimeRange extends StatelessWidget {
             Positioned.fill(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: RangeSelector.handleWidth),
-                child: CustomPaint(painter: painter),
+                child: RepaintBoundary(
+                  child: CustomPaint(painter: painter),
+                ),
               ),
             ),
 
