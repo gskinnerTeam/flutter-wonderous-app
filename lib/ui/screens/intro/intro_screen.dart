@@ -81,10 +81,13 @@ class _IntroScreenState extends State<IntroScreen> {
                           },
                         ),
                       ),
+
                       Gap($styles.insets.sm),
+
                       // page view with title & description:
                       SizedBox(
                         height: _textHeight,
+                        width: _imageSize * 1.15,
                         child: PageView(
                           controller: controller,
                           children: pages,
@@ -195,7 +198,7 @@ class _Page extends StatelessWidget {
       liveRegion: true,
       child: Column(
         children: [
-          Text(data.title, style: $styles.text.wonderTitle.copyWith(fontSize: 24)),
+          Text(data.title, textAlign: TextAlign.center, style: $styles.text.wonderTitle.copyWith(fontSize: 24)),
           Gap($styles.insets.sm),
           Text(data.desc, style: $styles.text.body, textAlign: TextAlign.center),
         ],
@@ -240,10 +243,11 @@ class _PageImage extends StatelessWidget {
           ),
         ),
         Positioned.fill(
-            child: Image.asset(
-          '${ImagePaths.common}/intro-mask-${data.mask}.png',
-          fit: BoxFit.fill,
-        )),
+          child: Image.asset(
+            '${ImagePaths.common}/intro-mask-${data.mask}.png',
+            fit: BoxFit.fill,
+          ),
+        ),
       ],
     );
   }
