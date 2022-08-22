@@ -16,8 +16,10 @@ class TimelineSection extends StatelessWidget {
     fraction = fraction.clamp(0, 1);
 
     return Semantics(
-      // TODO SB @ EC: Need to localize this (just the yr stuff I think?)
-      label: '${data.title}, ${StringUtils.formatYr(data.startYr)} to ${StringUtils.formatYr(data.endYr)}',
+      label: '${data.title}, ${StringUtils.supplant($strings.timelineSemanticDate, {
+            '{fromDate}': StringUtils.formatYr(data.startYr),
+            '{endDate}': StringUtils.formatYr(data.endYr),
+          })}',
       child: Container(
         alignment: Alignment(0, -1 + fraction * 2),
         padding: EdgeInsets.all($styles.insets.xs),

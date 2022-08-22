@@ -69,8 +69,7 @@ class _BottomScrubber extends StatelessWidget {
                   container: true,
                   slider: true,
                   button: true,
-                  // TODO SB @ EC: Need to localize these
-                  label: 'Timeline Scrubber, drag horizontally to navigate the timeline.',
+                  label: $strings.bottomScrubberSemanticTimeline,
                   child: GestureDetector(
                     behavior: HitTestBehavior.translucent,
                     onPanUpdate: handleScrubberPan,
