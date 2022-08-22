@@ -1,3 +1,7 @@
+# 1.5.2
+- Update Flutter version
+  - Should fix performance degradation issues (?)
+
 # 1.5.0
 - Enabled Impeller for iOS!
 - Polish Items
