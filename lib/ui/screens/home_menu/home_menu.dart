@@ -1,9 +1,8 @@
-import 'dart:ui';
-
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
+import 'package:wonders/ui/common/app_backdrop.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/screens/home_menu/about_dialog_content.dart';
 
@@ -43,8 +42,7 @@ class HomeMenu extends StatelessWidget {
     return Stack(
       children: [
         /// Blur filter
-        BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+        AppBackdrop(
           child: Container(
             color: $styles.colors.greyStrong.withOpacity(.7),
           ),

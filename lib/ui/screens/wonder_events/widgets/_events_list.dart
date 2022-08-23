@@ -40,30 +40,29 @@ class _EventsListState extends State<_EventsList> {
             AnimatedBuilder(
               animation: _scroller,
               builder: (_, __) {
-                double blur = 0;
-                double scrollAmt = 0;
+                bool showBackdrop = true;
+                double backdropAmt = 0;
                 if (_scroller.hasClients) {
                   double blurStart = 50;
-                  scrollAmt = (_scroller.position.pixels - blurStart).clamp(0, 150) / 150;
-                  blur = scrollAmt * 5;
-                  // Disable blur once it is offscreen
-                  if (_scroller.position.pixels - blurStart >= 500) {
-                    blur = 0;
-                  }
+                  double maxScroll = 150;
+                  double scrollPx = _scroller.position.pixels - blurStart;
+                  // Normalize scroll position to a value between 0 and 1
+                  backdropAmt = (_scroller.position.pixels - blurStart).clamp(0, maxScroll) / maxScroll;
+                  // Disable backdrop once it is offscreen for an easy perf win
+                  showBackdrop = (scrollPx <= 500);
                 }
-
                 // Container provides a underlay which gets darker as the background blurs
                 return Stack(
                   children: [
-                    if (blur > 0) ...[
-                      BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
+                    if (showBackdrop) ...[
+                      AppBackdrop(
+                        strength: backdropAmt,
                         child: IgnorePointer(
                           child: Container(
-                            color: $styles.colors.greyStrong.withOpacity(min(1, scrollAmt * 2) * .6),
+                            color: $styles.colors.greyStrong.withOpacity(0),
                           ),
                         ),
-                      ),
+                      )
                     ],
                     _buildScrollingList()
                   ],
