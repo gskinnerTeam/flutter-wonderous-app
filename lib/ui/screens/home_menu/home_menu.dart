@@ -41,8 +41,9 @@ class HomeMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        /// Blur filter
+        /// Backdrop / Underlay
         AppBackdrop(
+          strength: .5,
           child: Container(
             color: $styles.colors.greyStrong.withOpacity(.7),
           ),

@@ -7,11 +7,11 @@ class AppBackdrop extends StatelessWidget {
   const AppBackdrop({
     Key? key,
     this.strength = 1,
-    required this.child,
+    this.child,
   }) : super(key: key);
 
   final double strength;
-  final Widget child;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
