@@ -56,13 +56,12 @@ class _EventsListState extends State<_EventsList> {
                   children: [
                     if (showBackdrop) ...[
                       AppBackdrop(
-                        strength: backdropAmt,
-                        child: IgnorePointer(
-                          child: Container(
-                            color: $styles.colors.greyStrong.withOpacity(0),
-                          ),
-                        ),
-                      )
+                          strength: backdropAmt,
+                          child: IgnorePointer(
+                            child: Container(
+                              color: $styles.colors.greyStrong.withOpacity(backdropAmt * .6),
+                            ),
+                          )),
                     ],
                     _buildScrollingList()
                   ],
