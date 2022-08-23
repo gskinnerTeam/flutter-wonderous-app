@@ -1,4 +1,4 @@
-[![Codemagic build status](https://api.codemagic.io/apps/622baf8cde572f4898e607ba/622baf8cde572f4898e607b9/status_badge.svg)](https://codemagic.io/apps/622baf8cde572f4898e607ba/622baf8cde572f4898e607b9/latest_build)
+[![Codemagic build status](https://api.codemagic.io/apps/62c5bf4e59f5e09fd24b0994/62c5bf4e59f5e09fd24b0993/status_badge.svg)](https://codemagic.io/apps/62c5bf4e59f5e09fd24b0994/62c5bf4e59f5e09fd24b0993/latest_build)
 # Links & Info
 
 - [Milestones](https://github.com/gskinnerTeam/flutter-wonders-app/milestones?direction=asc&sort=due_date&state=open)
