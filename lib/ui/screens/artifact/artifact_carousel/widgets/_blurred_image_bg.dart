@@ -7,20 +7,23 @@ class _BlurredImageBg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final img = AppImage(
+      image: url == null ? null : NetworkImage(url!),
+      syncDuration: $styles.times.fast,
+      fit: BoxFit.cover,
+      scale: 0.5,
+    );
     return Transform.scale(
       scale: 1.25,
       alignment: Alignment(0, 0.8),
       child: Container(
-        foregroundDecoration: BoxDecoration(color: $styles.colors.black.withOpacity(0.6)),
-        child: ImageFiltered(
-          imageFilter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-          child: AppImage(
-            image: url == null ? null : NetworkImage(url!),
-            syncDuration: $styles.times.fast,
-            fit: BoxFit.cover,
-            scale: 0.5,
-          ),
-        ),
+        foregroundDecoration: BoxDecoration(color: $styles.colors.black.withOpacity(0.8)),
+        child: settingsLogic.useBlurs
+            ? ImageFiltered(
+                imageFilter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+                child: img,
+              )
+            : img,
       ),
     );
   }

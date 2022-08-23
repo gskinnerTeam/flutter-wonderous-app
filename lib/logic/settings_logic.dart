@@ -1,4 +1,4 @@
-import 'package:wonders/common_libs.dart';
+import 'package:flutter/foundation.dart';
 import 'package:wonders/logic/common/save_load_mixin.dart';
 
 class SettingsLogic with ThrottledSaveLoadMixin {
@@ -7,6 +7,8 @@ class SettingsLogic with ThrottledSaveLoadMixin {
 
   late final hasCompletedOnboarding = ValueNotifier<bool>(false)..addListener(scheduleSave);
   late final hasDismissedSearchMessage = ValueNotifier<bool>(false)..addListener(scheduleSave);
+
+  final bool useBlurs = defaultTargetPlatform == TargetPlatform.iOS;
 
   @override
   void copyFromJson(Map<String, dynamic> value) {

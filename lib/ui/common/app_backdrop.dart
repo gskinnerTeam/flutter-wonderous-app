@@ -16,8 +16,7 @@ class AppBackdrop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double normalStrength = clampDouble(strength, 0, 1);
-    bool showBlur = false; // TODO SB: Remove this once we choose the rendering backend. Choose one method or the other.
-    if (showBlur) {
+    if (settingsLogic.useBlurs) {
       return BackdropFilter(
         filter: ImageFilter.blur(sigmaX: normalStrength * 5.0, sigmaY: normalStrength * 5.0),
         child: child,
