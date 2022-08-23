@@ -16,20 +16,20 @@ class TimelineSection extends StatelessWidget {
     fraction = fraction.clamp(0, 1);
 
     return Semantics(
-      label: '${data.title}, ${StringUtils.supplant($strings.timelineSemanticDate, {
-            '{fromDate}': StringUtils.formatYr(data.startYr),
-            '{endDate}': StringUtils.formatYr(data.endYr),
-          })}',
-      child: Container(
-        alignment: Alignment(0, -1 + fraction * 2),
-        padding: EdgeInsets.all($styles.insets.xs),
-        decoration: BoxDecoration(color: data.type.fgColor),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(99),
-          child: BlendMask(
-            blendModes: isSelected ? [] : const [BlendMode.luminosity],
-            opacity: .6,
-            child: _buildWonderImage(),
+      label: '${data.title}, ${StringUtils.formatYr(data.startYr)} to ${StringUtils.formatYr(data.endYr)}',
+      child: IgnorePointer(
+        ignoringSemantics: false,
+        child: Container(
+          alignment: Alignment(0, -1 + fraction * 2),
+          padding: EdgeInsets.all($styles.insets.xs),
+          decoration: BoxDecoration(color: data.type.fgColor),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(99),
+            child: BlendMask(
+              blendModes: isSelected ? [] : const [BlendMode.luminosity],
+              opacity: .6,
+              child: _buildWonderImage(),
+            ),
           ),
         ),
       ),
