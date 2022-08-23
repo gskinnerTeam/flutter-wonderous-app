@@ -40,8 +40,9 @@ class _IntroScreenState extends State<IntroScreen> {
   Widget build(BuildContext context) {
     final Widget content = LayoutBuilder(builder: (context, constraints) {
       final List<Widget> pages = pageData.map((e) => _Page(data: e, imageHeight: _imageSize)).toList();
-      // This view uses a FullscreenPageViewBuilder to enable swipe navigation on the entire view, while
-      // keeping the content of the PageView to a discrete portion of the UI. This makes layout easier and works better with screen-readers.
+
+      /// This view uses a [StackedPageViewBuilder] to enable swipe navigation on the entire view, while
+      /// keeping the content of the PageView to a discrete portion of the UI. This makes layout easier and works better with screen-readers.
       return StackedPageViewBuilder(
           pageCount: pages.length,
           onInit: (controller) => controller.addListener(() => _handlePageChanged(controller)),
