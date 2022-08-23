@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/unsplash_photo_data.dart';
-import 'package:wonders/ui/common/animated_motion_blur.dart';
 import 'package:wonders/ui/common/controls/app_loading_indicator.dart';
 import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
 import 'package:wonders/ui/common/hidden_collectible.dart';
@@ -207,26 +206,19 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                 ? HiddenCollectible(widget.wonderType, index: 1, size: 100)
                 : ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: AnimatedMotionBlur(
-                      swipeDuration,
-                      animationKey: ValueKey(_index),
-                      blurStrength: 15,
-                      enabled: false,
-                      dir: _lastSwipeDir,
-                      child: SizedBox(
-                        width: imgSize.width,
-                        height: imgSize.height,
-                        child: TweenAnimationBuilder<double>(
-                          duration: $styles.times.med,
-                          curve: Curves.easeOut,
-                          tween: Tween(begin: 1, end: selected ? 1.15 : 1),
-                          builder: (_, value, child) => Transform.scale(scale: value, child: child),
-                          child: UnsplashPhoto(
-                            imgUrl,
-                            fit: BoxFit.cover,
-                            size: UnsplashPhotoSize.med,
-                          ).animate().fade(),
-                        ),
+                    child: SizedBox(
+                      width: imgSize.width,
+                      height: imgSize.height,
+                      child: TweenAnimationBuilder<double>(
+                        duration: $styles.times.med,
+                        curve: Curves.easeOut,
+                        tween: Tween(begin: 1, end: selected ? 1.15 : 1),
+                        builder: (_, value, child) => Transform.scale(scale: value, child: child),
+                        child: UnsplashPhoto(
+                          imgUrl,
+                          fit: BoxFit.cover,
+                          size: UnsplashPhotoSize.med,
+                        ).animate().fade(),
                       ),
                     ),
                   ),
