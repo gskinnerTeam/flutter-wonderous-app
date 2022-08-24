@@ -9,8 +9,8 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final textScale = MediaQuery.of(context).textScaleFactor;
     // Start transitioning when we are halfway up the screen
-    final collapseStartPx = context.heightPx * 1;
-    final collapseEndPx = context.heightPx * .35;
+    const collapseStartPx = 800;
+    const collapseEndPx = 1200;
     const double imgHeight = 430;
     const outerPadding = 150;
     double collapseAmt = 0;
@@ -37,13 +37,8 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
     return ValueListenableBuilder<double>(
       valueListenable: scrollPos,
       builder: (context, value, __) {
-        final yPos = ContextUtils.getGlobalPos(context)?.dy;
-        if (yPos != null && yPos < collapseStartPx) {
-          // Get a normalized value, 0 - 1, representing the current amount of collapse.
-          collapseAmt = (collapseStartPx - max(collapseEndPx, yPos)) / (collapseStartPx - collapseEndPx);
-        } else if (yPos == null) {
-          collapseAmt = 1.0;
-        }
+        // Get a normalized value, 0 - 1, representing the current amount of collapse.
+        collapseAmt = 1 - ((collapseEndPx - value) / (collapseEndPx - collapseStartPx)).clamp(0, 1);
         // The sized boxes in the column collapse to a zero height, allowing the quotes to naturally sit over top of the image
         return MergeSemantics(
           child: Padding(
@@ -77,8 +72,7 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
                           Container(
                             alignment: Alignment.topRight,
                             margin: const EdgeInsets.all(12),
-
-                            child:ClipPath(
+                            child: ClipPath(
                               clipper: CurvedTopClipper(),
                               child: _buildImage(collapseAmt),
                             ),

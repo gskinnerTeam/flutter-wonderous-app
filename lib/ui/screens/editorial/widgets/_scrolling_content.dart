@@ -86,15 +86,15 @@ class _ScrollingContent extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: $styles.insets.md),
         sliver: SliverList(
           delegate: SliverChildListDelegate([
-            _ContentSection([
-              buildHiddenCollectible(slot: 0),
+            ..._contentSection([
+              Center(child: buildHiddenCollectible(slot: 0)),
 
               /// History 1
               buildDropCapText(data.historyInfo1),
 
               /// Quote1
               _CollapsingPullQuoteImage(data: data, scrollPos: scrollPos),
-              buildHiddenCollectible(slot: 1),
+              Center(child: buildHiddenCollectible(slot: 1)),
 
               /// Callout1
               _Callout(text: data.callout1),
@@ -105,12 +105,12 @@ class _ScrollingContent extends StatelessWidget {
 
               /// Construction 1
               buildDropCapText(data.constructionInfo1),
-              buildHiddenCollectible(slot: 2),
+              Center(child: buildHiddenCollectible(slot: 2)),
             ]),
             Gap($styles.insets.md),
             _YouTubeThumbnail(id: data.videoId, caption: data.videoCaption),
             Gap($styles.insets.md),
-            _ContentSection([
+            ..._contentSection([
               /// Callout2
               Gap($styles.insets.xs),
               _Callout(text: data.callout2),
@@ -128,24 +128,30 @@ class _ScrollingContent extends StatelessWidget {
             Gap($styles.insets.md),
             _MapsThumbnail(data, height: 200),
             Gap($styles.insets.md),
-            _ContentSection([buildHiddenCollectible(slot: 3)]),
+            ..._contentSection([Center(child: buildHiddenCollectible(slot: 3))]),
           ]),
         ),
       ),
     );
   }
-}
 
-/// Helper widget to provide hz padding to multiple widgets. Keeps the layout of the scrolling content cleaner.
-class _ContentSection extends StatelessWidget {
-  const _ContentSection(this.children, {Key? key}) : super(key: key);
-  final List<Widget> children;
-
-  @override
-  Widget build(BuildContext context) => Padding(
+  /// Helper widget to provide hz padding to multiple widgets. Keeps the layout of the scrolling content cleaner.
+  List<Widget> _contentSection(List<Widget> children) {
+    return <Widget>[
+      for (int i = 0; i < children.length - 1; i++)
+        ...<Widget>[
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
+            child: children[i],
+          ),
+          Gap($styles.insets.md)
+        ],
+      Padding(
         padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
-        child: SeparatedColumn(separatorBuilder: () => Gap($styles.insets.md), children: children),
-      );
+        child: children.last,
+      ),
+    ];
+  }
 }
 
 class _YouTubeThumbnail extends StatelessWidget {
