@@ -58,17 +58,12 @@ class _EightWaySwipeDetectorState extends State<EightWaySwipeDetector> {
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      container: true,
-      button: true,
-      label: $strings.eightWaySemanticSwipeDetector,
-      child: GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onPanStart: _handleSwipeStart,
-          onPanUpdate: _handleSwipeUpdate,
-          onPanCancel: _resetSwipe,
-          onPanEnd: _handleSwipeEnd,
-          child: widget.child),
-    );
+    return GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onPanStart: _handleSwipeStart,
+        onPanUpdate: _handleSwipeUpdate,
+        onPanCancel: _resetSwipe,
+        onPanEnd: _handleSwipeEnd,
+        child: widget.child);
   }
 }

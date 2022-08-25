@@ -60,9 +60,9 @@ class OkCancelModal extends StatelessWidget {
       title: title,
       msg: msg,
       buttons: [
-        AppBtn.from(text: 'Ok', expand: true, isSecondary: true, onPressed: () => Navigator.of(context).pop(true)),
+        AppBtn.from(text: $strings.appModalsButtonOk, expand: true, isSecondary: true, onPressed: () => Navigator.of(context).pop(true)),
         Gap($styles.insets.xs),
-        AppBtn.from(text: 'Cancel', expand: true, onPressed: () => Navigator.of(context).pop(false)),
+        AppBtn.from(text: $strings.appModalsButtonCancel, expand: true, onPressed: () => Navigator.of(context).pop(false)), 
       ],
       child: child,
     );

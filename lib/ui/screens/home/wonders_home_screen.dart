@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     );
     setState(() => _isMenuOpen = false);
     if (pickedWonder != null) {
-      _showPageForIndex(_wonders.indexWhere((w) => w.type == pickedWonder));
+      _setPageIndex(_wonders.indexWhere((w) => w.type == pickedWonder));
     }
   }
 
@@ -76,9 +76,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     controller.value = 1;
   }
 
-  void _handlePageIndicatorDotPressed(int index) => _showPageForIndex(index);
+  void _handlePageIndicatorDotPressed(int index) => _setPageIndex(index);
 
-  void _showPageForIndex(int index) {
+  void _setPageIndex(int index) {
     if (index == _wonderIndex) return;
     // To support infinite scrolling, we can't jump directly to the pressed index. Instead, make it relative to our current position.
     final pos = ((_pageController.page ?? 0) / _numWonders).floor() * _numWonders;
@@ -125,10 +125,19 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             ),
 
             /// Wonders Illustrations
-            PageView.builder(
-              controller: _pageController,
-              onPageChanged: _handlePageViewChanged,
-              itemBuilder: _buildMgChild,
+            MergeSemantics(
+              child: Semantics(
+                header: true,
+                image: true,
+                liveRegion: true,
+                onIncrease: () => _setPageIndex(_wonderIndex + 1),
+                onDecrease: () => _setPageIndex(_wonderIndex - 1),
+                child: PageView.builder(
+                  controller: _pageController,
+                  onPageChanged: _handlePageViewChanged,
+                  itemBuilder: _buildMgChild,
+                ),
+              ),
             ),
 
             Stack(children: [
@@ -149,8 +158,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               AnimatedSwitcher(
                 duration: $styles.times.fast,
                 child: RepaintBoundary(
-                  /// Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
-                  key: ValueKey(_wonderIndex),
                   child: OverflowBox(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -160,23 +167,25 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
                         /// Title Content
                         LightText(
-                          child: Column(
-                            children: [
-                              /// Page indicator
-                              IgnorePointer(
-                                child: DiagonalTextPageIndicator(current: _wonderIndex + 1, total: _numWonders),
-                              ),
-                              Gap($styles.insets.sm),
+                          child: MergeSemantics(
+                            child: Column(
+                              children: [
+                                /// Page indicator
+                                IgnorePointer(
+                                  child: DiagonalTextPageIndicator(current: _wonderIndex + 1, total: _numWonders),
+                                ),
+                                Gap($styles.insets.sm),
 
-                              AppPageIndicator(
-                                count: _numWonders,
-                                controller: _pageController,
-                                color: $styles.colors.white,
-                                dotSize: 8,
-                                onDotPressed: _handlePageIndicatorDotPressed,
-                                semanticPageTitle: $strings.homeSemanticWonder,
-                              ),
-                            ],
+                                AppPageIndicator(
+                                  count: _numWonders,
+                                  controller: _pageController,
+                                  color: $styles.colors.white,
+                                  dotSize: 8,
+                                  onDotPressed: _handlePageIndicatorDotPressed,
+                                  semanticPageTitle: $strings.homeSemanticWonder,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         Gap($styles.insets.xs),
@@ -187,6 +196,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           child: Container(
                             width: double.infinity,
                             alignment: Alignment.center,
+
+                            /// Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
+                            key: ValueKey(_wonderIndex),
                             child: Stack(
                               children: [
                                 /// Expanding rounded rect that grows in height as user swipes up
@@ -234,15 +246,18 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   Widget _buildMgChild(_, index) {
     final wonder = _wonders[index % _wonders.length];
     final wonderType = wonder.type;
+    bool isShowing = _isSelected(wonderType);
     return _swipeController.buildListener(builder: (swipeAmt, _, child) {
       final config = WonderIllustrationConfig.mg(
-        isShowing: _isSelected(wonderType),
+        isShowing: isShowing,
         zoom: .05 * swipeAmt,
       );
-      return Semantics(
-        liveRegion: true,
-        label: wonder.title,
-        child: ExcludeSemantics(child: WonderIllustration(wonderType, config: config)),
+      return ExcludeSemantics(
+        excluding: !isShowing,
+        child: Semantics(
+          label: wonder.title,
+          child: WonderIllustration(wonderType, config: config),
+        ),
       );
     });
   }

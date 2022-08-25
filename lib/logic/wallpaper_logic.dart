@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/rendering.dart';
@@ -20,10 +19,10 @@ class WallPaperLogic {
     if (pngBytes != null && mounted) {
       bool? result = await showModal(context,
           child: OkCancelModal(
-            msg: 'Save this poster to your photo gallery?',
+            msg: $strings.wallpaperModalSave,
           ));
       if (result == true && mounted) {
-        showModal(context, child: LoadingModal(msg: 'Saving Image. Please wait...'));
+        showModal(context, child: LoadingModal(msg: $strings.wallpaperModalSaving));
         if (PlatformInfo.isMobile) {
           await ImageGallerySaver.saveImage(pngBytes, quality: 95, name: name);
         } else {
@@ -31,7 +30,7 @@ class WallPaperLogic {
         }
         if (state.mounted) {
           Navigator.pop(context);
-          showModal(context, child: OkModal(msg: 'Save complete!'));
+          showModal(context, child: OkModal(msg: $strings.wallpaperModalSaveComplete));
         }
       }
     }

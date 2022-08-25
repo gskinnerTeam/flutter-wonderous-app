@@ -8,8 +8,6 @@ import 'package:wonders/ui/common/controls/simple_header.dart';
 part 'widgets/_blurred_image_bg.dart';
 part 'widgets/_carousel_item.dart';
 
-// TODO: review accessibility.
-
 class ArtifactCarouselScreen extends StatefulWidget {
   final WonderType type;
   const ArtifactCarouselScreen({Key? key, required this.type}) : super(key: key);
@@ -112,24 +110,25 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                   child: SizedBox(
                     width: backdropWidth,
                     child: PageView.builder(
-                      key: ValueKey('pageview'),
                       controller: _controller,
                       clipBehavior: Clip.none,
                       itemBuilder: (context, index) {
                         bool isCurrentIndex = index % _artifacts.length == _currentIndex;
                         return ExcludeSemantics(
                           excluding: isCurrentIndex == false,
-                          child: Semantics(
-                            // Reads content as it changes without the user focus on it.
-                            liveRegion: true,
-                            child: _CarouselItem(
-                              index: index,
-                              currentPage: _currentOffset,
-                              artifact: _artifacts[index % _artifacts.length],
-                              bottomPadding: backdropHeight,
-                              maxWidth: backdropWidth,
-                              maxHeight: backdropHeight,
-                              onPressed: () => _handleArtifactTap(index),
+                          child: MergeSemantics(
+                            child: Semantics(
+                              onIncrease: () => _handleArtifactTap(_currentIndex + 1),
+                              onDecrease: () => _handleArtifactTap(_currentIndex - 1),
+                              child: _CarouselItem(
+                                index: index,
+                                currentPage: _currentOffset,
+                                artifact: _artifacts[index % _artifacts.length],
+                                bottomPadding: backdropHeight,
+                                maxWidth: backdropWidth,
+                                maxHeight: backdropHeight,
+                                onPressed: () => _handleArtifactTap(index),
+                              ),
                             ),
                           ),
                         );
@@ -149,13 +148,12 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                       children: [
                         Gap($styles.insets.md),
                         _buildContent(context, artifact, backdropWidth, small),
-                        Gap(small ? $styles.insets.md : $styles.insets.lg),
+                        Gap(small ? $styles.insets.sm : $styles.insets.md),
                         AppBtn.from(
                           text: $strings.artifactsButtonBrowse,
                           icon: Icons.search,
                           expand: true,
                           onPressed: _handleSearchTap,
-                          padding: EdgeInsets.all($styles.insets.sm),
                         ),
                         Gap(small ? $styles.insets.md : $styles.insets.lg),
                       ],
@@ -163,7 +161,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                   ),
                 ),
               ]),
-            )
+            ),
           ],
         ),
       ],
@@ -184,17 +182,17 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
-                    height: small ? 90 : 120,
+                    height: small ? 90 : 110,
                     alignment: Alignment.center,
                     child: Text(
                       artifact.title,
                       overflow: TextOverflow.ellipsis,
                       style: $styles.text.h2.copyWith(color: $styles.colors.black, height: 1.2),
                       textAlign: TextAlign.center,
-                      maxLines: small ? 2 : 3,
+                      maxLines: 2,
                     ),
                   ),
-                  Gap($styles.insets.xxs),
+                  if (!small) Gap($styles.insets.xxs),
                   Text(
                     artifact.date.isEmpty ? '--' : artifact.date,
                     style: $styles.text.body,
@@ -204,9 +202,12 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
               ).animate(key: ValueKey(artifact.artifactId)).fadeIn(),
             ),
           ),
-          Gap(small ? $styles.insets.sm : $styles.insets.md),
+          Gap(small ? $styles.insets.xs : $styles.insets.sm),
           AppPageIndicator(
-              count: _artifacts.length, controller: _controller, semanticPageTitle: $strings.artifactsSemanticArtifact),
+            count: _artifacts.length,
+            controller: _controller,
+            semanticPageTitle: $strings.artifactsSemanticArtifact,
+          ),
         ],
       ),
     );

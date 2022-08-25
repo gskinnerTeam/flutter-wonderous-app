@@ -86,8 +86,8 @@ List<HighlightData> _highlights = [
     wonder: WonderType.chichenItza,
     artifactId: '313256',
     culture: 'Maya',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ao/web-large/DT1254.jpg',
-    imageUrl: 'https://images.metmuseum.org/CRDImages/ao/original/DT1254.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ao/web-large/DP-24340-001.jpg',
+    imageUrl: 'https://images.metmuseum.org/CRDImages/ao/original/DP-24340-001.jpg',
     date: '6th century',
   ),
 
