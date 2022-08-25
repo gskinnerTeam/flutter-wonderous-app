@@ -53,7 +53,7 @@ class _Content extends StatelessWidget {
           ),
           Gap($styles.insets.md),
           Text(
-            'The Metropolitan Museum of Art, New York',
+            $strings.homeMenuAboutMet,
             style: $styles.text.caption.copyWith(color: $styles.colors.accent2),
           ),
           Gap($styles.insets.offset),
