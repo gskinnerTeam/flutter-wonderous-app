@@ -1,3 +1,7 @@
+# 1.5.3
+- Various a11y improvements
+- Uses latest impeller version
+
 # 1.5.2
 - Update Flutter version
   - Should fix performance degradation issues (?)
