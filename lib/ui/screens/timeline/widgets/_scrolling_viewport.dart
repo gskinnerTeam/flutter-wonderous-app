@@ -98,7 +98,11 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
           final style = $styles.text.body.copyWith(color: $styles.colors.offWhite);
           return AnimatedSwitcher(
             duration: $styles.times.fast,
-            child: Text(era, key: ValueKey(era), style: style).animate(key: ValueKey(era)).slide(begin: Offset(0, .2)),
+            child: Semantics(
+                liveRegion: true,
+                child: Text(era, key: ValueKey(era), style: style)
+                    .animate(key: ValueKey(era))
+                    .slide(begin: Offset(0, .2))),
           );
         });
   }
@@ -138,11 +142,13 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
                 Positioned.fill(
                   left: 100,
                   right: $styles.insets.sm,
-                  child: WondersTimelineBuilder(
-                      axis: Axis.vertical,
-                      crossAxisGap: max(6, (constraints.maxWidth - (120 * 3)) / 2),
-                      minSize: _minTimelineSize,
-                      timelineBuilder: (_, data, __) => buildTimelineSection(data)),
+                  child: FocusTraversalGroup(
+                    child: WondersTimelineBuilder(
+                        axis: Axis.vertical,
+                        crossAxisGap: max(6, (constraints.maxWidth - (120 * 3)) / 2),
+                        minSize: _minTimelineSize,
+                        timelineBuilder: (_, data, __) => buildTimelineSection(data)),
+                  ),
                 ),
 
                 /// Event Markers, rebuilds on scroll

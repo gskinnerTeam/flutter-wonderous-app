@@ -68,7 +68,6 @@ class _BottomScrubber extends StatelessWidget {
                 child: Semantics(
                   container: true,
                   slider: true,
-                  button: true,
                   label: $strings.bottomScrubberSemanticTimeline,
                   child: GestureDetector(
                     behavior: HitTestBehavior.translucent,

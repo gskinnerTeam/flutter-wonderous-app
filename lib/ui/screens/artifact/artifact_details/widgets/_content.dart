@@ -35,28 +35,26 @@ class _Content extends StatelessWidget {
                 return CompassDivider(isExpanded: !value, duration: $styles.times.med);
               }),
           Gap($styles.insets.lg),
-          MergeSemantics(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ...[
-                  _InfoRow($strings.artifactDetailsLabelDate, data.date),
-                  _InfoRow($strings.artifactDetailsLabelPeriod, data.period),
-                  _InfoRow($strings.artifactDetailsLabelGeography, data.country),
-                  _InfoRow($strings.artifactDetailsLabelMedium, data.medium),
-                  _InfoRow($strings.artifactDetailsLabelDimension, data.dimension),
-                  _InfoRow($strings.artifactDetailsLabelClassification, data.classification),
-                ]
-                    .animate(interval: 100.ms)
-                    .fade(delay: 600.ms, duration: $styles.times.med)
-                    .slide(begin: Offset(0.2, 0), curve: Curves.easeOut),
-                Gap($styles.insets.md),
-                Text(
-                  'The Metropolitan Museum of Art, New York',
-                  style: $styles.text.caption.copyWith(color: $styles.colors.accent2),
-                ),
-              ],
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ...[
+                _InfoRow($strings.artifactDetailsLabelDate, data.date),
+                _InfoRow($strings.artifactDetailsLabelPeriod, data.period),
+                _InfoRow($strings.artifactDetailsLabelGeography, data.country),
+                _InfoRow($strings.artifactDetailsLabelMedium, data.medium),
+                _InfoRow($strings.artifactDetailsLabelDimension, data.dimension),
+                _InfoRow($strings.artifactDetailsLabelClassification, data.classification),
+              ]
+                  .animate(interval: 100.ms)
+                  .fade(delay: 600.ms, duration: $styles.times.med)
+                  .slide(begin: Offset(0.2, 0), curve: Curves.easeOut),
+            ],
+          ),
+          Gap($styles.insets.md),
+          Text(
+            'The Metropolitan Museum of Art, New York',
+            style: $styles.text.caption.copyWith(color: $styles.colors.accent2),
           ),
           Gap($styles.insets.offset),
         ],

@@ -4,7 +4,7 @@ import 'package:wonders/common_libs.dart';
 /// Helps simplify the layout of the underlying view and can create a better UX with screen-readers.
 ///
 /// Internally it creates a stack with an invisible PageView on the bottom to handle scrolling,
-/// then passes a child PageController to the `builder` so a nested PageView can
+/// then drives a second PageController (follower) which is passed to the `builder` so a nested PageView can
 /// be created to hold the content itself.
 ///
 /// Scrolling of the nested PageView will then be driven by the outer one.
@@ -19,27 +19,27 @@ class StackedPageViewBuilder extends StatefulWidget {
   }) : super(key: key);
   final int initialIndex;
   final int pageCount;
-  final Widget Function(BuildContext builder, PageController controller) builder;
-  final void Function(PageController controller)? onInit;
+  final Widget Function(BuildContext builder, PageController controller, PageController follower) builder;
+  final void Function(PageController controller, PageController follower)? onInit;
   @override
   State<StackedPageViewBuilder> createState() => _StackedPageViewBuilderState();
 }
 
 class _StackedPageViewBuilderState extends State<StackedPageViewBuilder> {
-  late final _parentController = PageController(initialPage: widget.initialIndex);
-  late final _childController = PageController(initialPage: widget.initialIndex);
+  late final _controller = PageController(initialPage: widget.initialIndex);
+  late final _follower = PageController(initialPage: widget.initialIndex);
 
   @override
   void initState() {
     super.initState();
-    _parentController.addListener(_handlePageChanged);
-    widget.onInit?.call(_parentController);
+    _controller.addListener(_handleControllerChanged);
+    widget.onInit?.call(_controller, _follower);
   }
 
   @override
   void dispose() {
-    _parentController.dispose();
-    _childController.dispose();
+    _controller.dispose();
+    _follower.dispose();
     super.dispose();
   }
 
@@ -51,15 +51,15 @@ class _StackedPageViewBuilderState extends State<StackedPageViewBuilder> {
           child: ExcludeSemantics(
             child: PageView.builder(
               itemCount: widget.pageCount,
-              controller: _parentController,
+              controller: _controller,
               itemBuilder: (_, __) => Container(color: Colors.transparent),
             ),
           ),
         ),
-        widget.builder(context, _childController),
+        widget.builder(context, _controller, _follower),
       ],
     );
   }
 
-  void _handlePageChanged() => _childController.jumpTo(_parentController.position.pixels);
+  void _handleControllerChanged() => _follower.jumpTo(_controller.position.pixels);
 }

@@ -16,6 +16,16 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
   final double size;
   late final ImageProvider _imageProvider;
 
+  void _handleTap(BuildContext context) async {
+    final screen = CollectibleFoundScreen(collectible: collectible, imageProvider: _imageProvider);
+    appLogic.showFullscreenDialogRoute(context, screen);
+    AppHaptics.mediumImpact();
+
+    // wait to update the state, to ensure the hero works properly:
+    await Future.delayed($styles.times.pageTransition);
+    collectiblesLogic.updateState(collectible.id, CollectibleState.discovered);
+  }
+
   @override
   Widget build(BuildContext context) {
     final states = watchX((CollectiblesLogic c) => c.statesById);
@@ -49,15 +59,5 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
         ),
       ),
     );
-  }
-
-  void _handleTap(BuildContext context) async {
-    final screen = CollectibleFoundScreen(collectible: collectible, imageProvider: _imageProvider);
-    appLogic.showFullscreenDialogRoute(context, screen);
-    AppHaptics.mediumImpact();
-
-    // wait to update the state, to ensure the hero works properly:
-    await Future.delayed($styles.times.pageTransition);
-    collectiblesLogic.updateState(collectible.id, CollectibleState.discovered);
   }
 }

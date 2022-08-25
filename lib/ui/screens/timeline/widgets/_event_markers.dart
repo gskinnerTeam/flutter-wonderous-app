@@ -66,12 +66,15 @@ class _EventMarkersState extends State<_EventMarkers> {
         }).toList();
 
         /// Stack of fractionally positioned markers
-        return Container(
-          alignment: Alignment.topLeft,
-          padding: EdgeInsets.only(left: 75),
-          child: SizedBox(
-            width: 20,
-            child: Stack(children: markers),
+        return FocusTraversalGroup(
+          policy: WidgetOrderTraversalPolicy(),
+          child: Container(
+            alignment: Alignment.topLeft,
+            padding: EdgeInsets.only(left: 75),
+            child: SizedBox(
+              width: 20,
+              child: Stack(children: markers),
+            ),
           ),
         );
       }),
@@ -98,17 +101,22 @@ class _EventMarker extends StatelessWidget {
       alignment: Alignment(0, -1 + offset * 2),
       child: Semantics(
         label: semanticLabel,
-        child: AnimatedContainer(
-          width: isSelected ? 6 : 2,
-          height: isSelected ? 6 : 2,
-          curve: Curves.easeOutBack,
-          duration: $styles.times.med,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(99),
-            color: $styles.colors.accent1,
-            boxShadow: [
-              BoxShadow(color: $styles.colors.accent1.withOpacity(isSelected ? .5 : 0), spreadRadius: 3, blurRadius: 3),
-            ],
+        child: Container(
+          alignment: Alignment.center,
+          height: 30,
+          child: AnimatedContainer(
+            width: isSelected ? 6 : 2,
+            height: isSelected ? 6 : 2,
+            curve: Curves.easeOutBack,
+            duration: $styles.times.med,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(99),
+              color: $styles.colors.accent1,
+              boxShadow: [
+                BoxShadow(
+                    color: $styles.colors.accent1.withOpacity(isSelected ? .5 : 0), spreadRadius: 3, blurRadius: 3),
+              ],
+            ),
           ),
         ),
       ),
