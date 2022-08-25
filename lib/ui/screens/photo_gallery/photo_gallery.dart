@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/throttler.dart';
 import 'package:wonders/logic/data/unsplash_photo_data.dart';
 import 'package:wonders/ui/common/controls/app_loading_indicator.dart';
 import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
@@ -53,6 +54,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
   }
 
   void _setIndex(int value, {bool skipAnimation = false}) {
+    if (value < 0 || value >= _imgCount) return;
     _skipNextOffsetTween = skipAnimation;
     setState(() => _index = value);
   }
@@ -116,12 +118,15 @@ class _PhotoGalleryState extends State<PhotoGallery> {
         }),
       );
       if (newIndex != null) {
-        final newId = _photoIds.value[newIndex];
-        _setIndex(_photoIds.value.indexOf(newId), skipAnimation: true);
+        _setIndex(newIndex, skipAnimation: true);
       }
     } else {
       _setIndex(index);
     }
+  }
+
+  bool _checkCollectibleIndex(int index) {
+    return index == _getCollectibleIndex() && collectiblesLogic.isLost(widget.wonderType, 1);
   }
 
   @override
@@ -138,12 +143,9 @@ class _PhotoGalleryState extends State<PhotoGallery> {
           final padding = $styles.insets.md;
 
           var gridOffset = _calculateCurrentOffset(padding, imgSize);
-          // For some reason we need to add in half of the top-padding when this view does not use a safeArea.
-          // TODO: Try and figure out why we need to incorporate top padding here, it's counter-intuitive. Maybe GridView or another of the material components is doing something we don't want?
           gridOffset += Offset(0, -context.mq.padding.top / 2);
           final offsetTweenDuration = _skipNextOffsetTween ? Duration.zero : swipeDuration;
           final cutoutTweenDuration = _skipNextOffsetTween ? Duration.zero : swipeDuration * .5;
-          // Layout
           return Stack(
             children: [
               // A overlay with a transparent middle sits on top of everything, animating itself each time index changes
@@ -195,33 +197,51 @@ class _PhotoGalleryState extends State<PhotoGallery> {
         builder: (_, __, ___) {
           bool selected = index == _index;
           final imgUrl = _photoIds.value[index];
-          bool showCollectible = index == _getCollectibleIndex() && collectiblesLogic.isLost(widget.wonderType, 1);
-          return AppBtn.basic(
-            semanticLabel: $strings.photoGallerySemanticCollectible,
-            onPressed: () {
-              if (showCollectible && selected) return;
-              _handleImageTapped(index);
-            },
-            child: showCollectible
-                ? HiddenCollectible(widget.wonderType, index: 1, size: 100)
-                : ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: SizedBox(
-                      width: imgSize.width,
-                      height: imgSize.height,
-                      child: TweenAnimationBuilder<double>(
-                        duration: $styles.times.med,
-                        curve: Curves.easeOut,
-                        tween: Tween(begin: 1, end: selected ? 1.15 : 1),
-                        builder: (_, value, child) => Transform.scale(scale: value, child: child),
-                        child: UnsplashPhoto(
-                          imgUrl,
-                          fit: BoxFit.cover,
-                          size: UnsplashPhotoSize.med,
-                        ).animate().fade(),
+
+          late String semanticLbl;
+          if (_checkCollectibleIndex(index)) {
+            semanticLbl = $strings.collectibleItemSemanticCollectible;
+          } else {
+            // TODO SB @ EC: New localization
+            semanticLbl = !selected
+                ? 'Photo ${index + 1} of $_imgCount. Tap to focus.'
+                : 'Photo ${index + 1} of $_imgCount. Tap to open fullscreen view.';
+          }
+          return MergeSemantics(
+            child: Semantics(
+              focused: selected,
+              image: !_checkCollectibleIndex(index),
+              liveRegion: selected,
+              onIncrease: () => _handleImageTapped(_index + 1),
+              onDecrease: () => _handleImageTapped(_index - 1),
+              child: AppBtn.basic(
+                semanticLabel: semanticLbl,
+                onPressed: () {
+                  if (_checkCollectibleIndex(index) && selected) return;
+                  _handleImageTapped(index);
+                },
+                child: _checkCollectibleIndex(index)
+                    ? HiddenCollectible(widget.wonderType, index: 1, size: 100)
+                    : ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: SizedBox(
+                          width: imgSize.width,
+                          height: imgSize.height,
+                          child: TweenAnimationBuilder<double>(
+                            duration: $styles.times.med,
+                            curve: Curves.easeOut,
+                            tween: Tween(begin: 1, end: selected ? 1.15 : 1),
+                            builder: (_, value, child) => Transform.scale(scale: value, child: child),
+                            child: UnsplashPhoto(
+                              imgUrl,
+                              fit: BoxFit.cover,
+                              size: UnsplashPhotoSize.med,
+                            ).animate().fade(),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
+              ),
+            ),
           );
         });
   }
