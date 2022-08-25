@@ -345,7 +345,7 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
             ),
             Gap(16),
             CheckboxListTile(
-                title: Text('images'), value: checkImages, onChanged: (b) => setState(() => checkImages = b!)),
+                title: Text('check images'), value: checkImages, onChanged: (b) => setState(() => checkImages = b!)),
             Gap(32),
             MaterialButton(onPressed: () => _run(), child: Text('RUN')),
           ]),
