@@ -33,43 +33,50 @@ class _AppPageIndicatorState extends State<AppPageIndicator> {
     widget.controller.addListener(_handlePageChanged);
   }
 
-  void _handlePageChanged() {
-    _currentPage.value = widget.controller.page?.round() ?? 0;
-  }
+  int get _controllerPage => widget.controller.page?.round() ?? 0;
+
+  void _handlePageChanged() => _currentPage.value = _controllerPage;
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<int>(
-      valueListenable: _currentPage,
-      builder: (_, value, child) => Semantics(
-        label: StringUtils.supplant($strings.appPageSemanticSwipe, {
-          '{pageTitle}': widget.semanticPageTitle,
-          '{count}': (value % (widget.count) + 1).toString(),
-          '{total}': widget.count.toString(),
-        }),
-        child: child,
+    return Stack(children: [
+      Container(
+        color: Colors.transparent,
+        height: 30,
+        alignment: Alignment.center,
+        child: ValueListenableBuilder<int>(
+            valueListenable: _currentPage,
+            builder: (_, value, child) {
+              return Semantics(
+                  container: true,
+                  liveRegion: true,
+                  label: StringUtils.supplant($strings.appPageSemanticSwipe, {
+                    '{pageTitle}': widget.semanticPageTitle,
+                    '{count}': (value % (widget.count) + 1).toString(),
+                    '{total}': widget.count.toString(),
+                  }),
+                  child: Container());
+            }),
       ),
-      child: IgnorePointer(
-        ignoringSemantics: false,
-        child: Container(
-          color: Colors.transparent,
-          height: 30,
-          alignment: Alignment.center,
-          child: SmoothPageIndicator(
-            controller: widget.controller,
-            count: widget.count,
-            onDotClicked: widget.onDotPressed,
-            effect: ExpandingDotsEffect(
-                dotWidth: widget.dotSize ?? 6,
-                dotHeight: widget.dotSize ?? 6,
-                paintStyle: PaintingStyle.fill,
-                strokeWidth: (widget.dotSize ?? 6) / 2,
-                dotColor: widget.color ?? $styles.colors.accent1,
-                activeDotColor: widget.color ?? $styles.colors.accent1,
-                expansionFactor: 2),
+      Positioned.fill(
+        child: Center(
+          child: ExcludeSemantics(
+            child: SmoothPageIndicator(
+              controller: widget.controller,
+              count: widget.count,
+              onDotClicked: widget.onDotPressed,
+              effect: ExpandingDotsEffect(
+                  dotWidth: widget.dotSize ?? 6,
+                  dotHeight: widget.dotSize ?? 6,
+                  paintStyle: PaintingStyle.fill,
+                  strokeWidth: (widget.dotSize ?? 6) / 2,
+                  dotColor: widget.color ?? $styles.colors.accent1,
+                  activeDotColor: widget.color ?? $styles.colors.accent1,
+                  expansionFactor: 2),
+            ),
           ),
         ),
       ),
-    );
+    ]);
   }
 }
