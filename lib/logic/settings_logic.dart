@@ -8,7 +8,7 @@ class SettingsLogic with ThrottledSaveLoadMixin {
   late final hasCompletedOnboarding = ValueNotifier<bool>(false)..addListener(scheduleSave);
   late final hasDismissedSearchMessage = ValueNotifier<bool>(false)..addListener(scheduleSave);
 
-  final bool useBlurs = defaultTargetPlatform == TargetPlatform.iOS;
+  final bool useBlurs = defaultTargetPlatform != TargetPlatform.android;
 
   @override
   void copyFromJson(Map<String, dynamic> value) {
