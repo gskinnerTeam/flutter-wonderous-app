@@ -112,24 +112,25 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                   child: SizedBox(
                     width: backdropWidth,
                     child: PageView.builder(
-                      key: ValueKey('pageview'),
                       controller: _controller,
                       clipBehavior: Clip.none,
                       itemBuilder: (context, index) {
                         bool isCurrentIndex = index % _artifacts.length == _currentIndex;
                         return ExcludeSemantics(
                           excluding: isCurrentIndex == false,
-                          child: Semantics(
-                            // Reads content as it changes without the user focus on it.
-                            liveRegion: true,
-                            child: _CarouselItem(
-                              index: index,
-                              currentPage: _currentOffset,
-                              artifact: _artifacts[index % _artifacts.length],
-                              bottomPadding: backdropHeight,
-                              maxWidth: backdropWidth,
-                              maxHeight: backdropHeight,
-                              onPressed: () => _handleArtifactTap(index),
+                          child: MergeSemantics(
+                            child: Semantics(
+                              onIncrease: () => _handleArtifactTap(_currentIndex + 1),
+                              onDecrease: () => _handleArtifactTap(_currentIndex - 1),
+                              child: _CarouselItem(
+                                index: index,
+                                currentPage: _currentOffset,
+                                artifact: _artifacts[index % _artifacts.length],
+                                bottomPadding: backdropHeight,
+                                maxWidth: backdropWidth,
+                                maxHeight: backdropHeight,
+                                onPressed: () => _handleArtifactTap(index),
+                              ),
                             ),
                           ),
                         );
@@ -163,7 +164,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                   ),
                 ),
               ]),
-            )
+            ),
           ],
         ),
       ],
@@ -206,7 +207,10 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
           ),
           Gap(small ? $styles.insets.sm : $styles.insets.md),
           AppPageIndicator(
-              count: _artifacts.length, controller: _controller, semanticPageTitle: $strings.artifactsSemanticArtifact),
+            count: _artifacts.length,
+            controller: _controller,
+            semanticPageTitle: $strings.artifactsSemanticArtifact,
+          ),
         ],
       ),
     );
