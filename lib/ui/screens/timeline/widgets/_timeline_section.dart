@@ -16,7 +16,10 @@ class TimelineSection extends StatelessWidget {
     fraction = fraction.clamp(0, 1);
 
     return Semantics(
-      label: '${data.title}, ${StringUtils.formatYr(data.startYr)} to ${StringUtils.formatYr(data.endYr)}',
+      label: '${data.title}, ${StringUtils.supplant($strings.timelineSemanticDate, {
+            '{fromDate}': StringUtils.formatYr(data.startYr),
+            '{endDate}': StringUtils.formatYr(data.endYr)
+          })}',
       child: IgnorePointer(
         ignoringSemantics: false,
         child: Container(
