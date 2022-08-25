@@ -185,7 +185,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                     height: small ? 90 : 110,
                     alignment: Alignment.center,
                     child: Text(
-                      artifact.title + 'asdfksjahfdksdjhfkjshdf alskhjfaksdjhfkh',
+                      artifact.title,
                       overflow: TextOverflow.ellipsis,
                       style: $styles.text.h2.copyWith(color: $styles.colors.black, height: 1.2),
                       textAlign: TextAlign.center,
