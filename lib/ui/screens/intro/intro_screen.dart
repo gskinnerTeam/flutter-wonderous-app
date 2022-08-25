@@ -36,17 +36,22 @@ class _IntroScreenState extends State<IntroScreen> {
     _currentPage.value = newPage;
   }
 
+  void _handleSemanticSwipe(int dir, PageController controller) {
+    controller.animateToPage((controller.page ?? 0).round() + dir, duration: $styles.times.fast, curve: Curves.easeOut);
+  }
+
   @override
   Widget build(BuildContext context) {
     final Widget content = LayoutBuilder(builder: (context, constraints) {
-      final List<Widget> pages = pageData.map((e) => _Page(data: e, imageHeight: _imageSize)).toList();
-
       /// This view uses a [StackedPageViewBuilder] to enable swipe navigation on the entire view, while
       /// keeping the content of the PageView to a discrete portion of the UI. This makes layout easier and works better with screen-readers.
       return StackedPageViewBuilder(
-          pageCount: pages.length,
-          onInit: (controller) => controller.addListener(() => _handlePageChanged(controller)),
-          builder: (context, controller) {
+          pageCount: pageData.length,
+          onInit: (controller, follower) => follower.addListener(() => _handlePageChanged(follower)),
+          builder: (context, controller, follower) {
+            final List<Widget> pages = pageData.map((e) {
+              return _Page(data: e, imageHeight: _imageSize);
+            }).toList();
             return Stack(
               children: [
                 IgnorePointer(
@@ -66,6 +71,7 @@ class _IntroScreenState extends State<IntroScreen> {
                         ),
                       ),
 
+                      // masked image:
                       SizedBox(
                         height: _imageSize,
                         width: _imageSize,
@@ -89,17 +95,24 @@ class _IntroScreenState extends State<IntroScreen> {
                       SizedBox(
                         height: _textHeight,
                         width: _imageSize * 1.15,
-                        child: PageView(
-                          controller: controller,
-                          children: pages,
-                          onPageChanged: (_) => AppHaptics.lightImpact(),
+                        child: MergeSemantics(
+                          child: Semantics(
+                            liveRegion: true,
+                            onIncrease: () => _handleSemanticSwipe(1, controller),
+                            onDecrease: () => _handleSemanticSwipe(-1, controller),
+                            child: PageView(
+                              controller: follower,
+                              children: pages,
+                              onPageChanged: (_) => AppHaptics.lightImpact(),
+                            ),
+                          ),
                         ),
                       ),
 
                       // page indicator:
                       AppPageIndicator(
                         count: pageData.length,
-                        controller: controller,
+                        controller: follower,
                         color: $styles.colors.offWhite,
                       ),
 
@@ -119,7 +132,7 @@ class _IntroScreenState extends State<IntroScreen> {
                 BottomCenter(
                   child: Padding(
                     padding: EdgeInsets.only(bottom: $styles.insets.lg),
-                    child: _buildNavText(context, controller),
+                    child: _buildNavText(context, follower),
                   ),
                 ),
               ],
@@ -195,15 +208,12 @@ class _Page extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      liveRegion: true,
-      child: Column(
-        children: [
-          Text(data.title, textAlign: TextAlign.center, style: $styles.text.wonderTitle.copyWith(fontSize: 24)),
-          Gap($styles.insets.sm),
-          Text(data.desc, style: $styles.text.body, textAlign: TextAlign.center),
-        ],
-      ),
+    return Column(
+      children: [
+        Text(data.title, textAlign: TextAlign.center, style: $styles.text.wonderTitle.copyWith(fontSize: 24)),
+        Gap($styles.insets.sm),
+        Text(data.desc, style: $styles.text.body, textAlign: TextAlign.center),
+      ],
     );
   }
 }
