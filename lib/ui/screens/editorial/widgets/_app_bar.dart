@@ -61,12 +61,15 @@ class _AppBar extends StatelessWidget {
                     valueListenable: scrollPos,
                     builder: (_, value, child) {
                       double opacity = (.4 + (value / 1500)).clamp(0, 1);
-                      return Opacity(opacity: opacity, child: child);
+                      return ScalingListItem(
+                        scrollPos: scrollPos,
+                        child: Image.asset(
+                          wonderType.photo1,
+                          fit: BoxFit.cover,
+                          opacity: AlwaysStoppedAnimation(opacity),
+                        ),
+                      );
                     },
-                    child: ScalingListItem(
-                      scrollPos: scrollPos,
-                      child: Image.asset(wonderType.photo1, fit: BoxFit.cover),
-                    ),
                   ),
                 ),
 
