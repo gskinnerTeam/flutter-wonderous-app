@@ -125,10 +125,19 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             ),
 
             /// Wonders Illustrations
-            PageView.builder(
-              controller: _pageController,
-              onPageChanged: _handlePageViewChanged,
-              itemBuilder: _buildMgChild,
+            MergeSemantics(
+              child: Semantics(
+                header: true,
+                image: true,
+                liveRegion: true,
+                onIncrease: () => _setPageIndex(_wonderIndex + 1),
+                onDecrease: () => _setPageIndex(_wonderIndex - 1),
+                child: PageView.builder(
+                  controller: _pageController,
+                  onPageChanged: _handlePageViewChanged,
+                  itemBuilder: _buildMgChild,
+                ),
+              ),
             ),
 
             Stack(children: [
@@ -245,15 +254,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       );
       return ExcludeSemantics(
         excluding: !isShowing,
-        child: MergeSemantics(
-          child: Semantics(
-            label: wonder.title,
-            header: true,
-            image: true,
-            onIncrease: () => _setPageIndex(index + 1),
-            onDecrease: () => _setPageIndex(index - 1),
-            child: WonderIllustration(wonderType, config: config),
-          ),
+        child: Semantics(
+          label: wonder.title,
+          child: WonderIllustration(wonderType, config: config),
         ),
       );
     });
