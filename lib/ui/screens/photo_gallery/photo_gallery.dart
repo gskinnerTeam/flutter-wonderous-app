@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/common/throttler.dart';
 import 'package:wonders/logic/data/unsplash_photo_data.dart';
 import 'package:wonders/ui/common/controls/app_loading_indicator.dart';
@@ -202,10 +203,15 @@ class _PhotoGalleryState extends State<PhotoGallery> {
           if (_checkCollectibleIndex(index)) {
             semanticLbl = $strings.collectibleItemSemanticCollectible;
           } else {
-            // TODO SB @ EC: New localization
             semanticLbl = !selected
-                ? 'Photo ${index + 1} of $_imgCount. Tap to focus.'
-                : 'Photo ${index + 1} of $_imgCount. Tap to open fullscreen view.';
+                ? StringUtils.supplant($strings.photoGallerySemanticFocus, {
+                    '{photoIndex}': (index + 1).toString(),
+                    '{photoTotal}': _imgCount.toString(),
+                  })
+                : StringUtils.supplant($strings.photoGallerySemanticFullscreen, {
+                    '{photoIndex}': (index + 1).toString(),
+                    '{photoTotal}': _imgCount.toString(),
+                  });
           }
           return MergeSemantics(
             child: Semantics(
