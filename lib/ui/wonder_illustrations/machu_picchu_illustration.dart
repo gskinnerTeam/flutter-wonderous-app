@@ -35,13 +35,13 @@ class MachuPicchuIllustration extends StatelessWidget {
       ),
       Align(
         alignment: config.shortMode ? Alignment.center : Alignment(.75, -.6),
-        child: WonderHero(
-          config,
-          'machu-sun',
-          child: FractionalTranslation(
-            translation: Offset(0, -.5 * anim.value),
-            child: Transform.scale(
-              scale: config.shortMode ? .75 : 1,
+        child: FractionalTranslation(
+          translation: Offset(0, -.5 * anim.value),
+          child: Transform.scale(
+            scale: config.shortMode ? .75 : 1,
+            child: WonderHero(
+              config,
+              'machu-sun',
               child: Image.asset(
                 '$assetPath/sun.png',
                 cacheWidth: context.widthPx.round() * 2,
@@ -56,14 +56,15 @@ class MachuPicchuIllustration extends StatelessWidget {
 
   List<Widget> _buildMg(BuildContext context, Animation<double> anim) => [
         Center(
-          child: WonderHero(
-            config,
-            'machu-mg',
-            child: Transform.scale(
-              scale: config.shortMode ? 1.2 : 2.5 + config.zoom * .2,
-              alignment: Alignment(config.shortMode ? 0 : .15, config.shortMode ? -0.6 : .3),
+          child: Transform.scale(
+            scale: config.shortMode ? 1.2 : 2.5 + config.zoom * .2,
+            alignment: Alignment(config.shortMode ? 0 : .15, config.shortMode ? -0.6 : .3),
+            child: WonderHero(
+              config,
+              'machu-mg',
               child: Image.asset(
                 '$assetPath/machu-picchu.png',
+                fit: BoxFit.contain,
                 opacity: anim,
               ),
             ),

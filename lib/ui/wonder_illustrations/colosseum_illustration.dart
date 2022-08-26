@@ -33,11 +33,11 @@ class ColosseumIllustration extends StatelessWidget {
       ),
       Align(
         alignment: config.shortMode ? Alignment(-.3, 1) : Alignment(-.5, -.4),
-        child: WonderHero(
-          config,
-          'colosseum-sun',
-          child: FractionalTranslation(
-            translation: Offset(0, -.5 * anim.value),
+        child: FractionalTranslation(
+          translation: Offset(0, -.5 * anim.value),
+          child: WonderHero(
+            config,
+            'colosseum-sun',
             child: Transform.scale(
               scale: config.shortMode ? .75 : 1,
               child: Image.asset(

@@ -35,19 +35,19 @@ class GreatWallIllustration extends StatelessWidget {
       ),
       Align(
         alignment: config.shortMode ? Alignment(-.5, -.5) : Alignment(-.45, -.63),
-        child: WonderHero(
-          config,
-          'great-wall-sun',
-          child: FractionalTranslation(
-            translation: Offset(0, -.5 * anim.value),
+        child: FractionalTranslation(
+          translation: Offset(0, -.5 * anim.value),
+          child: WonderHero(
+            config,
+            'great-wall-sun',
             child: Transform.scale(
               scale: config.shortMode ? .75 : 1,
-                  child: Image.asset(
-                  '$assetPath/sun.png',
-                  cacheWidth: context.widthPx.round() * 2,
-                  opacity: anim,
-                ),
+              child: Image.asset(
+                '$assetPath/sun.png',
+                cacheWidth: context.widthPx.round() * 2,
+                opacity: anim,
               ),
+            ),
           ),
         ),
       ),
@@ -78,7 +78,7 @@ class GreatWallIllustration extends StatelessWidget {
     return [
       Stack(children: [
         BottomRight(
-          child:FractionalTranslation(
+          child: FractionalTranslation(
             translation: Offset(.2 * (1 - curvedAnim), 0),
             child: Transform.scale(
               scale: 1.5 + config.zoom * .1,
@@ -91,7 +91,7 @@ class GreatWallIllustration extends StatelessWidget {
           ),
         ),
         BottomLeft(
-          child:FractionalTranslation(
+          child: FractionalTranslation(
             translation: Offset(-.2 * (1 - curvedAnim), 0),
             child: Transform.scale(
               scale: 1 + config.zoom * .3,

@@ -35,11 +35,11 @@ class PyramidsGizaIllustration extends StatelessWidget {
       ),
       Align(
           alignment: Alignment(.75, config.shortMode ? -.2 : -.5),
-          child: WonderHero(
-            config,
-            'pyramids-moon',
-            child: FractionalTranslation(
-              translation: Offset(0, -.5 * anim.value),
+          child: FractionalTranslation(
+            translation: Offset(0, -.5 * anim.value),
+            child: WonderHero(
+              config,
+              'pyramids-moon',
               child: Transform.scale(
                 scale: config.shortMode ? 0.8 : 1.2,
                 child: Image.asset('$assetPath/moon.png', opacity: anim),
@@ -58,7 +58,7 @@ class PyramidsGizaIllustration extends StatelessWidget {
               scale: 1 + config.zoom * .1,
               child: FractionallySizedBox(
                 widthFactor: config.shortMode ? 1 : 1.94,
-                child: Image.asset('$assetPath/pyramids.png', fit: BoxFit.cover, opacity: anim),
+                child: Image.asset('$assetPath/pyramids.png', fit: BoxFit.contain, opacity: anim),
               ),
             )),
       ),

@@ -35,11 +35,11 @@ class PetraIllustration extends StatelessWidget {
       ),
       Align(
         alignment: Alignment(-.3, config.shortMode ? -1.5 : -1.23),
-        child: WonderHero(
-          config,
-          'petra-moon',
-          child: FractionalTranslation(
-            translation: Offset(0, .5 * anim.value),
+        child: FractionalTranslation(
+          translation: Offset(0, .5 * anim.value),
+          child: WonderHero(
+            config,
+            'petra-moon',
             child: Image.asset(
               '$assetPath/moon.png',
               opacity: anim,

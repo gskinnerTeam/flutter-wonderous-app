@@ -56,17 +56,21 @@ class ChristRedeemerIllustration extends StatelessWidget {
   List<Widget> _buildMg(BuildContext context, Animation<double> anim) {
     return [
       ClipRect(
-        child: WonderHero(
-          config,
-          'christ-mg',
-          child: Transform.scale(
-            scale: 1 + config.zoom * .2,
-            child: FractionalTranslation(
-              translation: Offset(0, config.shortMode ? .5 : .2),
-              child: BottomCenter(
-                child: FractionallySizedBox(
-                  heightFactor: config.shortMode ? 1.5 : 1.2,
-                  child: Image.asset('$assetPath/redeemer.png', opacity: anim, fit: BoxFit.cover),
+        child: Transform.scale(
+          scale: 1 + config.zoom * .2,
+          child: FractionalTranslation(
+            translation: Offset(0, config.shortMode ? .5 : .2),
+            child: BottomCenter(
+              child: FractionallySizedBox(
+                heightFactor: config.shortMode ? 1.5 : 1.2,
+                child: WonderHero(
+                  config,
+                  'christ-mg',
+                  child: Image.asset(
+                    '$assetPath/redeemer.png',
+                    opacity: anim,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
