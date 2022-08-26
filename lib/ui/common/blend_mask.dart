@@ -26,6 +26,8 @@ class RenderBlendMask extends RenderProxyBox {
 
   @override
   void paint(context, offset) {
+    // Complex blend modes can be raster cached incorrectly on the Skia backend.
+    context.setWillChangeHint();
     for (var blend in blendModes) {
       context.canvas.saveLayer(
         offset & size,
