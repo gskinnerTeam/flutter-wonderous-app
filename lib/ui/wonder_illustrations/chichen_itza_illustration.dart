@@ -28,20 +28,20 @@ class ChichenItzaIllustration extends StatelessWidget {
       ),
       Align(
         alignment: Alignment(config.shortMode ? .25 : .7, config.shortMode ? 1 : -.15),
-          child: WonderHero(
-            config,
-            'chichen-sun',
-            child: FractionalTranslation(
-              translation: Offset(0, -.2 * anim.value),
-              child: Image.asset(
-                '$assetPath/sun.png',
-                width: config.shortMode ? 100 : 200,
-                cacheWidth: context.widthPx.round() * 2,
-                opacity: anim,
-              ),
+        child: WonderHero(
+          config,
+          'chichen-sun',
+          child: FractionalTranslation(
+            translation: Offset(0, -.2 * anim.value),
+            child: Image.asset(
+              '$assetPath/sun.png',
+              width: config.shortMode ? 100 : 200,
+              cacheWidth: context.widthPx.round() * 2,
+              opacity: anim,
             ),
           ),
         ),
+      ),
     ];
   }
 
@@ -54,7 +54,7 @@ class ChichenItzaIllustration extends StatelessWidget {
               scale: 1 + config.zoom * .2,
               child: FractionallySizedBox(
                 widthFactor: config.shortMode ? 1.3 : 2.6,
-                child: Image.asset('$assetPath/chichen.png', opacity: anim, fit: BoxFit.cover),
+                child: Image.asset('$assetPath/chichen.png', opacity: anim, fit: BoxFit.contain),
               ),
             )),
       ),
@@ -64,41 +64,41 @@ class ChichenItzaIllustration extends StatelessWidget {
   List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
     final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
-     Stack(
-          children: [
-            Transform.scale(
-              scale: 1 + config.zoom * .2,
-              child:FractionalTranslation(
+      Stack(
+        children: [
+          Transform.scale(
+            scale: 1 + config.zoom * .2,
+            child: FractionalTranslation(
               translation: Offset(-.2 * (1 - curvedAnim), 0),
               child: BottomLeft(
-                  child: FractionallySizedBox(
-                    heightFactor: .5,
-                    child: FractionalTranslation(
-                      translation: Offset(-.4, 0),
-                      child: Image.asset('$assetPath/foreground-left.png', opacity: anim, fit: BoxFit.cover),
-                    ),
+                child: FractionallySizedBox(
+                  heightFactor: .5,
+                  child: FractionalTranslation(
+                    translation: Offset(-.4, 0),
+                    child: Image.asset('$assetPath/foreground-left.png', opacity: anim, fit: BoxFit.cover),
                   ),
                 ),
               ),
             ),
-            Transform.scale(
-              scale: 1 + config.zoom * .1,
-              child:FractionalTranslation(
-                translation: Offset(.2 * (1 - curvedAnim), 0),
-                child: BottomRight(
-                  child: FractionallySizedBox(
-                    heightFactor: .33,
-                    child: FractionalTranslation(
-                      translation: Offset(.5, -.32),
-                      child: Image.asset('$assetPath/foreground-right.png', opacity: anim, fit: BoxFit.cover),
-                    ),
+          ),
+          Transform.scale(
+            scale: 1 + config.zoom * .1,
+            child: FractionalTranslation(
+              translation: Offset(.2 * (1 - curvedAnim), 0),
+              child: BottomRight(
+                child: FractionallySizedBox(
+                  heightFactor: .33,
+                  child: FractionalTranslation(
+                    translation: Offset(.5, -.32),
+                    child: Image.asset('$assetPath/foreground-right.png', opacity: anim, fit: BoxFit.cover),
                   ),
                 ),
               ),
             ),
+          ),
           Transform.scale(
             scale: 1 + config.zoom * .15,
-            child:FractionalTranslation(
+            child: FractionalTranslation(
               translation: Offset(-.2 * (1 - curvedAnim), 0),
               child: TopLeft(
                 child: FractionallySizedBox(
@@ -113,7 +113,7 @@ class ChichenItzaIllustration extends StatelessWidget {
           ),
           Transform.scale(
             scale: 1 + config.zoom * .3,
-            child:FractionalTranslation(
+            child: FractionalTranslation(
               translation: Offset(.2 * (1 - curvedAnim), 0),
               child: TopRight(
                 child: FractionallySizedBox(
