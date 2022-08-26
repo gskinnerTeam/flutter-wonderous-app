@@ -31,31 +31,34 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
     final states = watchX((CollectiblesLogic c) => c.statesById);
     bool isLost = states[collectible.id] == CollectibleState.lost;
     // Use an OpeningCard to let the collectible smoothly collapse its size once it has been found
-    return RepaintBoundary(
-      child: OpeningCard(
-        isOpen: isLost,
-        // Note: In order for the collapse animation to run properly, we must return a non-zero height or width.
-        closedBuilder: (_) => SizedBox(width: 1, height: 0),
-        openBuilder: (_) => AppBtn.basic(
-          semanticLabel: $strings.collectibleItemSemanticCollectible,
-          onPressed: () => _handleTap(context),
-          enableFeedback: false,
-          child: Hero(
-            tag: 'collectible_icon_${collectible.id}',
-            child: Image(
-              image: collectible.icon,
-              width: size,
-              height: size,
-              fit: BoxFit.contain,
+    return SizedBox(
+      height: isLost ? size : null,
+      child: RepaintBoundary(
+        child: OpeningCard(
+          isOpen: isLost,
+          // Note: In order for the collapse animation to run properly, we must return a non-zero height or width.
+          closedBuilder: (_) => SizedBox(width: 1, height: 0),
+          openBuilder: (_) => AppBtn.basic(
+            semanticLabel: $strings.collectibleItemSemanticCollectible,
+            onPressed: () => _handleTap(context),
+            enableFeedback: false,
+            child: Hero(
+              tag: 'collectible_icon_${collectible.id}',
+              child: Image(
+                image: collectible.icon,
+                width: size,
+                height: size,
+                fit: BoxFit.contain,
+              ),
+            )
+                .animate(onPlay: (controller) => controller.repeat())
+                // TODO SB (Aug 17, 2022): Temporarily removed on Jonahs request, due to a bug in Impeller which should be fixed soon. Re-enable when fixed.
+                //.shimmer(delay: 4000.ms, duration: $styles.times.med * 3)
+                .shake(delay: 4000.ms, duration: $styles.times.med * 3, curve: Curves.easeInOutCubic, hz: 4)
+                .scale(begin: 1.0, end: 1.1, duration: $styles.times.med)
+                .then(delay: $styles.times.med)
+                .scale(begin: 1.0, end: 1 / 1.1),
             ),
-          )
-              .animate(onPlay: (controller) => controller.repeat())
-              // TODO SB (Aug 17, 2022): Temporarily removed on Jonahs request, due to a bug in Impeller which should be fixed soon. Re-enable when fixed.
-              //.shimmer(delay: 4000.ms, duration: $styles.times.med * 3)
-              .shake(delay: 4000.ms, duration: $styles.times.med * 3, curve: Curves.easeInOutCubic, hz: 4)
-              .scale(begin: 1.0, end: 1.1, duration: $styles.times.med)
-              .then(delay: $styles.times.med)
-              .scale(begin: 1.0, end: 1 / 1.1),
         ),
       ),
     );

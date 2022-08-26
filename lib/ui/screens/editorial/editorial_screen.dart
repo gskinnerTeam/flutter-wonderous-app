@@ -47,19 +47,8 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
   late final ScrollController _scroller = ScrollController()..addListener(_handleScrollChanged);
   final _scrollPos = ValueNotifier(0.0);
   final _sectionIndex = ValueNotifier(0);
-  final _showBottomListContent = ValueNotifier(false);
   final _scrollToPopThreshold = 70;
   bool _isPointerDown = false;
-
-  @override
-  void initState() {
-    super.initState();
-    // Delay initialization of some scrolling content for a moment, to give the hero time to fly.
-    Future.delayed(500.ms).then((_) {
-      if (!mounted) return;
-      _showBottomListContent.value = true;
-    });
-  }
 
   @override
   void dispose() {
@@ -170,10 +159,6 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
 
                   /// Editorial content (text and images)
                   _ScrollingContent(widget.data, scrollPos: _scrollPos, sectionNotifier: _sectionIndex),
-
-                  SliverList(
-                    delegate: SliverChildListDelegate.fixed([]),
-                  ),
 
                   /// Bottom padding
                   SliverToBoxAdapter(
