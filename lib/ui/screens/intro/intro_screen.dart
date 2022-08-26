@@ -2,7 +2,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
-import 'package:wonders/ui/common/stacked_page_view_builder.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
 
@@ -16,7 +15,8 @@ class IntroScreen extends StatefulWidget {
 class _IntroScreenState extends State<IntroScreen> {
   static const double _imageSize = 264;
   static const double _logoHeight = 126;
-  static const double _textHeight = 120;
+  static const double _textHeight = 155;
+  static const double _pageIndicatorHeight = 55;
 
   static List<_PageData> pageData = [
     _PageData($strings.introTitleJourney, $strings.introDescriptionNavigate, 'camel', '1'),
@@ -24,123 +24,119 @@ class _IntroScreenState extends State<IntroScreen> {
     _PageData($strings.introTitleDiscover, $strings.introDescriptionLearn, 'statue', '3'),
   ];
 
+  late final PageController _pageController = PageController()..addListener(_handlePageChanged);
   final ValueNotifier<int> _currentPage = ValueNotifier(0);
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   void _handleIntroCompletePressed() {
     context.go(ScreenPaths.home);
     settingsLogic.hasCompletedOnboarding.value = true;
   }
 
-  void _handlePageChanged(PageController controller) {
-    int newPage = controller.page?.round() ?? 0;
+  void _handlePageChanged() {
+    int newPage = _pageController.page?.round() ?? 0;
     _currentPage.value = newPage;
   }
 
-  void _handleSemanticSwipe(int dir, PageController controller) {
-    controller.animateToPage((controller.page ?? 0).round() + dir, duration: $styles.times.fast, curve: Curves.easeOut);
+  void _handleSemanticSwipe(int dir) {
+    _pageController.animateToPage((_pageController.page ?? 0).round() + dir,
+        duration: $styles.times.fast, curve: Curves.easeOut);
   }
 
   @override
   Widget build(BuildContext context) {
-    final Widget content = LayoutBuilder(builder: (context, constraints) {
-      /// This view uses a [StackedPageViewBuilder] to enable swipe navigation on the entire view, while
-      /// keeping the content of the PageView to a discrete portion of the UI. This makes layout easier and works better with screen-readers.
-      return StackedPageViewBuilder(
-          pageCount: pageData.length,
-          onInit: (controller, follower) => follower.addListener(() => _handlePageChanged(follower)),
-          builder: (context, controller, follower) {
-            final List<Widget> pages = pageData.map((e) {
-              return _Page(data: e, imageHeight: _imageSize);
-            }).toList();
-            return Stack(
-              children: [
-                IgnorePointer(
-                  ignoringSemantics: false,
-                  child: Column(
-                    children: [
-                      Spacer(),
+    // This view uses a full screen PageView to enable swipe navigation.
+    // However, we only want the title / description to actually swipe,
+    // so we stack a PageView with that content over top of all the other
+    // content, and line up their layouts.
 
-                      // logo:
-                      Semantics(
-                        header: true,
-                        container: true,
-                        child: Container(
-                          height: _logoHeight,
-                          alignment: Alignment.center,
-                          child: _WonderousLogo(),
-                        ),
-                      ),
+    final List<Widget> pages = pageData.map((e) => _Page(data: e)).toList();
 
-                      // masked image:
-                      SizedBox(
-                        height: _imageSize,
-                        width: _imageSize,
-                        child: ValueListenableBuilder<int>(
-                          valueListenable: _currentPage,
-                          builder: (_, value, __) {
-                            return AnimatedSwitcher(
-                              duration: $styles.times.slow,
-                              child: KeyedSubtree(
-                                key: ValueKey(value), // so AnimatedSwitcher sees it as a different child.
-                                child: _PageImage(data: pageData[value]),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
+    final Widget content = Stack(children: [
+      // page view with title & description:
+      MergeSemantics(
+        child: Semantics(
+          onIncrease: () => _handleSemanticSwipe(1),
+          onDecrease: () => _handleSemanticSwipe(-1),
+          child: PageView(
+            controller: _pageController,
+            children: pages,
+            onPageChanged: (_) => AppHaptics.lightImpact(),
+          ),
+        ),
+      ),
 
-                      Gap($styles.insets.sm),
+      IgnorePointer(
+        ignoringSemantics: false,
+        child: Column(children: [
+          Spacer(),
 
-                      // page view with title & description:
-                      SizedBox(
-                        height: _textHeight,
-                        width: _imageSize * 1.15,
-                        child: MergeSemantics(
-                          child: Semantics(
-                            liveRegion: true,
-                            onIncrease: () => _handleSemanticSwipe(1, controller),
-                            onDecrease: () => _handleSemanticSwipe(-1, controller),
-                            child: PageView(
-                              controller: follower,
-                              children: pages,
-                              onPageChanged: (_) => AppHaptics.lightImpact(),
-                            ),
-                          ),
-                        ),
-                      ),
+          // logo:
+          Semantics(
+            header: true,
+            child: Container(
+              height: _logoHeight,
+              alignment: Alignment.center,
+              child: _WonderousLogo(),
+            ),
+          ),
 
-                      // page indicator:
-                      AppPageIndicator(
-                        count: pageData.length,
-                        controller: follower,
-                        color: $styles.colors.offWhite,
-                      ),
-
-                      Spacer(flex: 2),
-                    ],
+          // masked image:
+          SizedBox(
+            height: _imageSize,
+            width: _imageSize,
+            child: ValueListenableBuilder<int>(
+              valueListenable: _currentPage,
+              builder: (_, value, __) {
+                return AnimatedSwitcher(
+                  duration: $styles.times.slow,
+                  child: KeyedSubtree(
+                    key: ValueKey(value), // so AnimatedSwitcher sees it as a different child.
+                    child: _PageImage(data: pageData[value]),
                   ),
-                ),
+                );
+              },
+            ),
+          ),
 
-                // finish button:
-                Positioned(
-                  right: $styles.insets.lg,
-                  bottom: $styles.insets.lg,
-                  child: _buildFinishBtn(context),
-                ),
+          // placeholder gap for text:
+          Gap(_IntroScreenState._textHeight),
 
-                // nav help text:
-                BottomCenter(
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: $styles.insets.lg),
-                    child: _buildNavText(context, follower),
-                  ),
-                ),
-              ],
-            );
-          });
-    });
+          // page indicator:
+          Container(
+            height: _pageIndicatorHeight,
+            alignment: Alignment(0.0, -0.75),
+            child:
+                AppPageIndicator(count: pageData.length, controller: _pageController, color: $styles.colors.offWhite),
+          ),
 
-    return LightText(
+          Spacer(flex: 2),
+        ]),
+      ),
+
+      // finish button:
+      Positioned(
+        right: $styles.insets.lg,
+        bottom: $styles.insets.lg,
+        child: _buildFinishBtn(context),
+      ),
+
+      // nav help text:
+      BottomCenter(
+        child: Padding(
+          padding: EdgeInsets.only(bottom: $styles.insets.lg),
+          child: _buildNavText(context),
+        ),
+      ),
+    ]);
+
+    return DefaultTextColor(
+      color: $styles.colors.offWhite,
       child: Container(
         color: $styles.colors.black,
         child: SafeArea(child: content.animate().fadeIn(delay: 500.ms)),
@@ -166,7 +162,7 @@ class _IntroScreenState extends State<IntroScreen> {
     );
   }
 
-  Widget _buildNavText(BuildContext context, PageController controller) {
+  Widget _buildNavText(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: _currentPage,
       builder: (_, pageIndex, __) {
@@ -176,13 +172,10 @@ class _IntroScreenState extends State<IntroScreen> {
           child: Semantics(
             onTapHint: $strings.introSemanticNavigate,
             onTap: () {
-              final int current = controller.page!.round();
-              controller.animateToPage(current + 1, duration: 250.ms, curve: Curves.easeIn);
+              final int current = _pageController.page!.round();
+              _pageController.animateToPage(current + 1, duration: 250.ms, curve: Curves.easeIn);
             },
-            child: IgnorePointer(
-              ignoringSemantics: false,
-              child: Text($strings.introSemanticSwipeLeft, style: $styles.text.bodySmall),
-            ),
+            child: Text($strings.introSemanticSwipeLeft, style: $styles.text.bodySmall),
           ),
         );
       },
@@ -201,19 +194,32 @@ class _PageData {
 }
 
 class _Page extends StatelessWidget {
-  const _Page({Key? key, required this.data, required this.imageHeight}) : super(key: key);
+  const _Page({Key? key, required this.data}) : super(key: key);
 
-  final double imageHeight;
   final _PageData data;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(data.title, textAlign: TextAlign.center, style: $styles.text.wonderTitle.copyWith(fontSize: 24)),
-        Gap($styles.insets.sm),
-        Text(data.desc, style: $styles.text.body, textAlign: TextAlign.center),
-      ],
+    return Semantics(
+      liveRegion: true,
+      child: Column(children: [
+        Spacer(),
+        Gap(_IntroScreenState._imageSize + _IntroScreenState._logoHeight),
+        SizedBox(
+          height: _IntroScreenState._textHeight,
+          width: _IntroScreenState._imageSize + $styles.insets.md,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(data.title, style: $styles.text.wonderTitle.copyWith(fontSize: 24)),
+              Gap($styles.insets.sm),
+              Text(data.desc, style: $styles.text.body, textAlign: TextAlign.center),
+            ],
+          ),
+        ),
+        Gap(_IntroScreenState._pageIndicatorHeight),
+        Spacer(flex: 2),
+      ]),
     );
   }
 }
@@ -254,11 +260,10 @@ class _PageImage extends StatelessWidget {
           ),
         ),
         Positioned.fill(
-          child: Image.asset(
-            '${ImagePaths.common}/intro-mask-${data.mask}.png',
-            fit: BoxFit.fill,
-          ),
-        ),
+            child: Image.asset(
+          '${ImagePaths.common}/intro-mask-${data.mask}.png',
+          fit: BoxFit.fill,
+        )),
       ],
     );
   }
