@@ -48,15 +48,15 @@ class ChichenItzaIllustration extends StatelessWidget {
   List<Widget> _buildMg(BuildContext context, Animation<double> anim) {
     return [
       Align(
-        alignment: Alignment(0, config.shortMode ? 1 : -.15),
-        child: WonderHero(config, 'chichen-mg',
-            child: Transform.scale(
-              scale: 1 + config.zoom * .2,
-              child: FractionallySizedBox(
-                widthFactor: config.shortMode ? 1.3 : 2.6,
-                child: Image.asset('$assetPath/chichen.png', opacity: anim, fit: BoxFit.contain),
-              ),
-            )),
+        alignment: Alignment(0, config.shortMode ? 1.2 : -.15),
+        child: FractionallySizedBox(
+          widthFactor: config.shortMode ? 1.5 : 2.6,
+          child: WonderHero(
+            config,
+            'chichen-mg',
+            child: Image.asset('$assetPath/chichen.png', opacity: anim, fit: BoxFit.contain),
+          ),
+        ),
       ),
     ];
   }

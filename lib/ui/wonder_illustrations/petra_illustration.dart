@@ -53,18 +53,13 @@ class PetraIllustration extends StatelessWidget {
   List<Widget> _buildMg(BuildContext context, Animation<double> anim) => [
         Center(
           child: FractionalTranslation(
-            translation: Offset(0, config.shortMode ? 0.2 : -.1),
-            child: Transform.scale(
-              scale: 1 + config.zoom * .75,
-              child: FractionallySizedBox(
-                heightFactor: config.shortMode ? 0.55 : 0.66,
-                widthFactor: 2,
-                child: WonderHero(config, 'petra-mg',
-                    child: Image.asset(
-                      '$assetPath/petra.png',
-                      fit: BoxFit.contain,
-                      opacity: anim,
-                    )),
+            translation: Offset(0, config.shortMode ? 0.05 : -.1),
+            child: FractionallySizedBox(
+              widthFactor: config.shortMode ? 1 : 2,
+              child: WonderHero(
+                config,
+                'petra-mg',
+                child: Image.asset('$assetPath/petra.png', fit: BoxFit.contain, opacity: anim),
               ),
             ),
           ),

@@ -40,13 +40,11 @@ class GreatWallIllustration extends StatelessWidget {
           child: WonderHero(
             config,
             'great-wall-sun',
-            child: Transform.scale(
-              scale: config.shortMode ? .75 : 1,
-              child: Image.asset(
-                '$assetPath/sun.png',
-                cacheWidth: context.widthPx.round() * 2,
-                opacity: anim,
-              ),
+            child: Image.asset(
+              '$assetPath/sun.png',
+              cacheWidth: context.widthPx.round() * 2,
+              width: config.shortMode ? 100 : 150,
+              opacity: anim,
             ),
           ),
         ),
@@ -57,19 +55,36 @@ class GreatWallIllustration extends StatelessWidget {
   List<Widget> _buildMg(BuildContext context, Animation<double> anim) => [
         Center(
           child: FractionalTranslation(
-            translation: Offset(0, config.shortMode ? .1 : -.1),
-            child: WonderHero(
-              config,
-              'great-wall-mg',
-              child: Transform.scale(
-                scale: config.shortMode ? .95 : 1.4 + config.zoom * .2,
+            translation: Offset(0, config.shortMode ? .1 * anim.value : 0),
+            child: FractionallySizedBox(
+              widthFactor: config.shortMode ? null : 1.3,
+              child: WonderHero(
+                config,
+                'great-wall-mg',
                 child: Image.asset(
                   '$assetPath/great-wall.png',
                   opacity: anim,
+                  width: config.shortMode ? 300 : 500,
                 ),
               ),
             ),
           ),
+
+          // child: FractionalTranslation(
+          //   translation: Offset(0, 0),
+          //   child: Transform.scale(
+          //     scale: 1, //config.shortMode ? .95 : 1.4 + config.zoom * .2,
+          //     child: WonderHero(
+          //       config,
+          //       'great-wall-mg',
+          //       child: Image.asset(
+          //         '$assetPath/great-wall.png',
+          //         opacity: anim,
+          //         width: 700,
+          //       ),
+          //     ),
+          //   ),
+          // ),
         )
       ];
 
