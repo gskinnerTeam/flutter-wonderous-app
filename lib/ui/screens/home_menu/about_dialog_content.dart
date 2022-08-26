@@ -60,7 +60,10 @@ class AboutDialogContent extends StatelessWidget {
               }),
               ...buildSpan('\n\n'),
               ...buildSpan($strings.homeMenuAboutPublic, linkSupplants: {
-                '{metUrl}': [$strings.homeMenuAboutMet, 'https://metmuseum.github.io/'],
+                '{metUrl}': [
+                  $strings.homeMenuAboutMet,
+                  'https://www.metmuseum.org/about-the-met/policies-and-documents/open-access'
+                ],
               }),
               ...buildSpan('\n\n'),
               ...buildSpan($strings.homeMenuAboutPhotography, linkSupplants: {
