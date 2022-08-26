@@ -9,10 +9,10 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final textScale = MediaQuery.of(context).textScaleFactor;
     // Start transitioning when we are halfway up the screen
-    const collapseStartPx = 800;
-    const collapseEndPx = 1200;
+    const double collapseStartPx = 800;
+    const double collapseEndPx = 1200;
     const double imgHeight = 430;
-    const outerPadding = 150;
+    const double outerPadding = 100;
     double collapseAmt = 0;
 
     /// A single piece of quote text, this widget has one on top, and one on bottom
@@ -42,18 +42,17 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
         // The sized boxes in the column collapse to a zero height, allowing the quotes to naturally sit over top of the image
         return MergeSemantics(
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: outerPadding * (1 - collapseAmt)),
+            padding: EdgeInsets.symmetric(vertical: outerPadding),
             child: Stack(
               children: [
-
                 Container(
                   width: context.widthPx,
                   height: imgHeight,
                   decoration: BoxDecoration(
                     border: Border.all(color: $styles.colors.accent2),
                     borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(context.widthPx/2),
-                      topLeft: Radius.circular(context.widthPx/2),
+                      topRight: Radius.circular(context.widthPx / 2),
+                      topLeft: Radius.circular(context.widthPx / 2),
                     ),
                   ),
                 ),
@@ -61,7 +60,6 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
                 /// Main image
                 Column(
                   mainAxisSize: MainAxisSize.min,
-
                   children: [
                     SizedBox(
                       height: imgHeight,
@@ -77,7 +75,6 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
                               child: _buildImage(collapseAmt),
                             ),
                           ),
-
                         ],
                       ),
                     ),
@@ -86,9 +83,8 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
 
                 /// Collapsing text
                 Positioned.fill(
-                  child: Container (
+                  child: Container(
                     margin: const EdgeInsets.symmetric(horizontal: 24),
-
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -96,19 +92,17 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
                         buildText(data.pullQuote1Top, top: true),
                         buildText(data.pullQuote1Bottom, top: false),
                         if (data.pullQuote1Author.isNotEmpty) ...[
-                          Container (
+                          Container(
                             margin: const EdgeInsets.only(top: 16),
                             child: buildText('- ${data.pullQuote1Author}', top: false, isAuthor: true),
                           )
                         ],
-
                       ],
                     ),
                   ),
                 ),
               ],
             ),
-
           ),
         );
       },
@@ -118,7 +112,6 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
   Stack _buildImage(double collapseAmt) {
     return Stack(
       fit: StackFit.expand,
-
       children: [
         ScalingListItem(
           scrollPos: scrollPos,
