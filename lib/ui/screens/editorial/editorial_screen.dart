@@ -16,6 +16,7 @@ import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/hidden_collectible.dart';
 import 'package:wonders/ui/common/scaling_list_item.dart';
 import 'package:wonders/ui/common/themed_text.dart';
+import 'package:wonders/ui/common/utils/app_haptics.dart';
 import 'package:wonders/ui/common/utils/context_utils.dart';
 import 'package:wonders/ui/wonder_illustrations/common/animated_clouds.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration.dart';
@@ -75,6 +76,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
       if (_isPointerDown) {
         context.pop();
         _scroller.removeListener(_handleScrollChanged);
+        AppHaptics.heavyImpact();
       }
     }
   }
