@@ -27,34 +27,36 @@ class _ScrollingContent extends StatelessWidget {
       final TextStyle bodyStyle = $styles.text.body;
       final String dropChar = value.substring(0, 1);
       final double dropCapWidth = StringUtils.measure(dropChar, dropStyle).width;
-      final bool isEnglish = localeLogic.strings.localeName == 'en';
-      
+      final bool isEnglish = localeLogic.strings.localeName == 'en'; //TODO EC: Helper method for localLogic.isEnglish?
+      final bool skipCaps = !isEnglish || MediaQuery.of(context).accessibleNavigation;
       return Semantics(
         label: value,
-        child: isEnglish ? DropCapText(
-          _fixNewlines(value).substring(1),
-          dropCap: DropCap(
-            width: dropCapWidth,
-            height: $styles.text.body.fontSize! * $styles.text.body.height! * 2,
-            child: Transform.translate(
-              offset: Offset(0, bodyStyle.fontSize! * (bodyStyle.height! - 1) - 2),
-              child: Text(
-                dropChar,
-                overflow: TextOverflow.visible,
-                style: $styles.text.dropCase.copyWith(
+        child: !skipCaps
+            ? DropCapText(
+                _fixNewlines(value).substring(1),
+                dropCap: DropCap(
+                  width: dropCapWidth,
+                  height: $styles.text.body.fontSize! * $styles.text.body.height! * 2,
+                  child: Transform.translate(
+                    offset: Offset(0, bodyStyle.fontSize! * (bodyStyle.height! - 1) - 2),
+                    child: Text(
+                      dropChar,
+                      overflow: TextOverflow.visible,
+                      style: $styles.text.dropCase.copyWith(
+                        color: $styles.colors.accent1,
+                        height: 1,
+                      ),
+                    ),
+                  ),
+                ),
+                style: $styles.text.body,
+                dropCapPadding: EdgeInsets.only(right: 6),
+                dropCapStyle: $styles.text.dropCase.copyWith(
                   color: $styles.colors.accent1,
                   height: 1,
                 ),
-              ),
-            ),
-          ),
-          style: $styles.text.body,
-          dropCapPadding: EdgeInsets.only(right: 6),
-          dropCapStyle: $styles.text.dropCase.copyWith(
-            color: $styles.colors.accent1,
-            height: 1,
-          ),
-        ) : Text(value, style: bodyStyle),
+              )
+            : Text(value, style: bodyStyle),
       );
     }
 
@@ -138,14 +140,13 @@ class _ScrollingContent extends StatelessWidget {
   /// Helper widget to provide hz padding to multiple widgets. Keeps the layout of the scrolling content cleaner.
   List<Widget> _contentSection(List<Widget> children) {
     return <Widget>[
-      for (int i = 0; i < children.length - 1; i++)
-        ...<Widget>[
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
-            child: children[i],
-          ),
-          Gap($styles.insets.md)
-        ],
+      for (int i = 0; i < children.length - 1; i++) ...[
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
+          child: children[i],
+        ),
+        Gap($styles.insets.md)
+      ],
       Padding(
         padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
         child: children.last,
