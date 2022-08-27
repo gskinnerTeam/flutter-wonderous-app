@@ -24,15 +24,15 @@ import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_confi
 import 'package:wonders/ui/wonder_illustrations/common/wonder_title_text.dart';
 
 part 'widgets/_app_bar.dart';
+part 'widgets/_callout.dart';
 part 'widgets/_circular_title_bar.dart';
 part 'widgets/_collapsing_pull_quote_image.dart';
+part 'widgets/_large_simple_quote.dart';
 part 'widgets/_scrolling_content.dart';
 part 'widgets/_section_divider.dart';
 part 'widgets/_sliding_image_stack.dart';
 part 'widgets/_title_text.dart';
 part 'widgets/_top_illustration.dart';
-part 'widgets/_callout.dart';
-part 'widgets/_large_simple_quote.dart';
 
 class WonderEditorialScreen extends StatefulWidget {
   const WonderEditorialScreen(this.data, {Key? key, required this.onScroll}) : super(key: key);
@@ -117,6 +117,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
               CustomScrollView(
                 primary: false,
                 controller: _scroller,
+                cacheExtent: 500,
                 slivers: [
                   /// Invisible padding at the top of the list, so the illustration shows through the btm
                   SliverToBoxAdapter(
