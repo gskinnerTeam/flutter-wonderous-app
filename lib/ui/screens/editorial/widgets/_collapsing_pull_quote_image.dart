@@ -9,14 +9,13 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final textScale = MediaQuery.of(context).textScaleFactor;
     // Start transitioning when we are halfway up the screen
-    const double collapseStartPx = 800;
-    const double collapseEndPx = 1200;
+    final collapseStartPx = context.heightPx * 1;
+    final collapseEndPx = context.heightPx * .35;
     const double imgHeight = 430;
     const double outerPadding = 100;
-    double collapseAmt = 0;
 
     /// A single piece of quote text, this widget has one on top, and one on bottom
-    Widget buildText(String value, {required bool top, bool isAuthor = false}) {
+    Widget buildText(String value, double collapseAmt, {required bool top, bool isAuthor = false}) {
       var quoteStyle = $styles.text.quote1;
       var quoteSize = quoteStyle.fontSize;
       quoteStyle = quoteStyle.copyWith(
@@ -26,8 +25,10 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
       if (isAuthor) {
         quoteStyle = quoteStyle.copyWith(fontSize: 20, fontWeight: FontWeight.w600);
       }
+      double offsetY = (imgHeight / 2 + outerPadding * .25) * (1 - collapseAmt);
+      if (top) offsetY *= -1; // flip?
       return Transform.translate(
-          offset: Offset(0, (imgHeight / 2 + outerPadding * .25) * (1 - collapseAmt) * (top ? -1 : 1)),
+          offset: Offset(0, offsetY),
           child: BlendMask(
             blendModes: const [BlendMode.colorBurn],
             child: Text(value, style: quoteStyle, textAlign: TextAlign.center),
@@ -37,8 +38,13 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
     return ValueListenableBuilder<double>(
       valueListenable: scrollPos,
       builder: (context, value, __) {
-        // Get a normalized value, 0 - 1, representing the current amount of collapse.
-        collapseAmt = 1 - ((collapseEndPx - value) / (collapseEndPx - collapseStartPx)).clamp(0, 1);
+        double collapseAmt = 1.0;
+        final yPos = ContextUtils.getGlobalPos(context)?.dy;
+        if (yPos != null && yPos < collapseStartPx) {
+          // Get a normalized value, 0 - 1, representing the current amount of collapse.
+          collapseAmt = (collapseStartPx - max(collapseEndPx, yPos)) / (collapseStartPx - collapseEndPx);
+        }
+
         // The sized boxes in the column collapse to a zero height, allowing the quotes to naturally sit over top of the image
         return MergeSemantics(
           child: Padding(
@@ -89,12 +95,12 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(height: 32), // push down vertical centre
-                        buildText(data.pullQuote1Top, top: true),
-                        buildText(data.pullQuote1Bottom, top: false),
+                        buildText(data.pullQuote1Top, collapseAmt, top: true),
+                        buildText(data.pullQuote1Bottom, collapseAmt, top: false),
                         if (data.pullQuote1Author.isNotEmpty) ...[
                           Container(
                             margin: const EdgeInsets.only(top: 16),
-                            child: buildText('- ${data.pullQuote1Author}', top: false, isAuthor: true),
+                            child: buildText('- ${data.pullQuote1Author}', collapseAmt, top: false, isAuthor: true),
                           )
                         ],
                       ],
