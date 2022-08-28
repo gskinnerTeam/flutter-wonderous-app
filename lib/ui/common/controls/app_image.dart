@@ -1,5 +1,9 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
 import 'package:image_fade/image_fade.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/retry_image.dart';
 import 'package:wonders/ui/common/controls/app_loading_indicator.dart';
 
 class AppImage extends StatefulWidget {
@@ -49,7 +53,7 @@ class _AppImageState extends State<AppImage> {
   void _updateImage() {
     if (widget.image == _sourceImage) return;
     _sourceImage = widget.image;
-    _displayImage = _capImageSize(_sourceImage);
+    _displayImage = _capImageSize(_addRetry(_sourceImage));
   }
 
   @override
@@ -78,6 +82,10 @@ class _AppImageState extends State<AppImage> {
         }),
       ),
     );
+  }
+
+  ImageProvider? _addRetry(ImageProvider? image) {
+    return image == null ? image : RetryImage(image);
   }
 
   ImageProvider? _capImageSize(ImageProvider? image) {
