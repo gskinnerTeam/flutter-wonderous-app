@@ -72,7 +72,6 @@ class RetryImage extends ImageProvider<Object> {
           return;
         }
         Future<void>.delayed(duration).then((void v) {
-          print('attempting retry #$count: $exception\n --- \n$stackTrace');
           duration *= 2;
           completerToWrap = loader();
           count += 1;
