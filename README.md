@@ -28,7 +28,7 @@ Once Flutter is setup, you can use the latest `master` channel:
  * `flutter run -d android`
 
 # About gskinner
-We exist to build innovative digital experiences for smart clients, and we love how easy Flutter makes that experience. Don't hesitate to stop by our site to learn more about what we do. We'd love to hear from you!
+We exist to build innovative digital experiences for smart clients, and we love how easy Flutter makes that experience. Don't hesitate to [stop by our site](https://gskinner.com/) to learn more about what we do. We'd love to hear from you!
 
 ### License
 
