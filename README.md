@@ -5,7 +5,7 @@ Navigate the intersection of history, art, and culture. Wonderous will educate a
 
 Built by [gskinner](https://gskinner.com/) in partnership with the Flutter team, Wonderous deliberately pushes visual fidelity, effects and transitions to showcase what Flutter is truly capable of on modern mobile hardware.
 
-In addition to forking and reviewing the [MIT licensed](https://github.com/gskinnerTeam/flutter-wonderous-app/blob/master/LICENSE) code available here, you can check out more information on the [Wonderous Showcase Website](https://wonderous.app).
+In addition to forking and reviewing the [MIT licensed](LICENSE) code available here, you can check out more information on the [Wonderous Showcase Website](https://wonderous.app).
 
 
 
@@ -32,6 +32,6 @@ We exist to build innovative digital experiences for smart clients, and we love 
 
 ### License
 
-This application is released under the [MIT license](LICENSE.md). You can use the code for any purpose, including commercial projects.
+This application is released under the [MIT license](LICENSE). You can use the code for any purpose, including commercial projects.
 
 [![license](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
