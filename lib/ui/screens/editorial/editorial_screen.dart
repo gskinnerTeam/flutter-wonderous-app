@@ -47,7 +47,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
   late final ScrollController _scroller = ScrollController()..addListener(_handleScrollChanged);
   final _scrollPos = ValueNotifier(0.0);
   final _sectionIndex = ValueNotifier(0);
-  final _scrollToPopThreshold = 70;
+  final _scrollToPopThreshold = 50;
   bool _isPointerDown = false;
 
   @override
@@ -65,7 +65,6 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
       if (_isPointerDown) {
         context.pop();
         _scroller.removeListener(_handleScrollChanged);
-        AppHaptics.heavyImpact();
       }
     }
   }
