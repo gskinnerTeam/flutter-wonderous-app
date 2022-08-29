@@ -1,3 +1,8 @@
+# 1.7
+- Improve a11y on editorial page
+- Possible fix for unloaded network images
+- Polish home > editorial transition
+
 # 1.6.1
 - Performance improvements
 - Small polish fixes
