@@ -139,7 +139,7 @@ class _ScrollingContent extends StatelessWidget {
 
   /// Helper widget to provide hz padding to multiple widgets. Keeps the layout of the scrolling content cleaner.
   List<Widget> _contentSection(List<Widget> children) {
-    return <Widget>[
+    return [
       for (int i = 0; i < children.length - 1; i++) ...[
         Padding(
           padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
