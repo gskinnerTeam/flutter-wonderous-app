@@ -3,7 +3,7 @@
 
 Navigate the intersection of history, art, and culture. Wonderous will educate and entertain as you uncover information about some of the most famous structures in the world. 
 
-Built by [gskinner](https://gskinner.com/) in partnership with the Flutter team, Wonderous purposefully pushes visual fidelity, effects and transitions to showcase what Flutter is truly capable of.
+Built by [gskinner](https://gskinner.com/) in partnership with the Flutter team, Wonderous deliberately pushes visual fidelity, effects and transitions to showcase what Flutter is truly capable of on modern mobile hardware.
 
 In addition to forking and reviewing the [MIT licensed](https://github.com/gskinnerTeam/flutter-wonderous-app/blob/master/LICENSE) code available here, you can check out more information on the [Wonderous Showcase Website](https://wonderous.app).
 
