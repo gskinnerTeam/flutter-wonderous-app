@@ -17,11 +17,7 @@ class WonderDetailsScreen extends StatefulWidget with GetItStatefulWidgetMixin {
 
 class _WonderDetailsScreenState extends State<WonderDetailsScreen>
     with GetItStateMixin, SingleTickerProviderStateMixin {
-  late final _tabController = TabController(
-    length: 4,
-    vsync: this,
-    initialIndex: AppLogic.enablePersistentTabs ? appLogic.selectedWondersTab.value : 0,
-  )..addListener(_handleTabChanged);
+  late final _tabController = TabController(length: 4, vsync: this)..addListener(_handleTabChanged);
   AnimationController? _fade;
 
   final _detailsHasScrolled = ValueNotifier(false);
@@ -35,8 +31,6 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
 
   void _handleTabChanged() {
     _fade?.forward(from: 0);
-    // Hoist the selected tab up to the app controller, so it will be remembered when we return to this view.
-    appLogic.selectedWondersTab.value = _tabController.index;
     setState(() {});
   }
 

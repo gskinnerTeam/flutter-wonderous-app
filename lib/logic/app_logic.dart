@@ -8,10 +8,6 @@ class AppLogic {
   /// The router will use this to prevent redirects while bootstrapping.
   bool isBootstrapComplete = false;
 
-  /// The currently selected tab on the WonderDetails screen
-  static const enablePersistentTabs = false;
-  final selectedWondersTab = ValueNotifier(0);
-
   /// Initialize the app and all main actors.
   /// Loads settings, sets up services etc.
   Future<void> bootstrap() async {
