@@ -47,8 +47,7 @@ class _AppBar extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           AnimatedSwitcher(
-            duration: $styles.times.fast,
-            switchInCurve: Curves.easeIn,
+            duration: $styles.times.fast * .5,
             child: Stack(
               key: ValueKey(showOverlay),
               fit: StackFit.expand,
