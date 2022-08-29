@@ -1,37 +1,37 @@
 [![Codemagic build status](https://api.codemagic.io/apps/62c5bf4e59f5e09fd24b0994/62c5bf4e59f5e09fd24b0993/status_badge.svg)](https://codemagic.io/apps/62c5bf4e59f5e09fd24b0994/62c5bf4e59f5e09fd24b0993/latest_build)
-# Links & Info
+# Wonderous
 
-- [Milestones](https://github.com/gskinnerTeam/flutter-wonders-app/milestones?direction=asc&sort=due_date&state=open)
-- [Project Boards](https://github.com/orgs/gskinnerTeam/projects/4/views/4)
-  - [Issues for QA](https://github.com/orgs/gskinnerTeam/projects/4/views/6)
-- [Google Drive Folder](https://drive.google.com/drive/folders/1tKwqBFGll87pK-iXon0AwpW36oRDCYAt)
-  - [Wonders Data Folder](https://drive.google.com/drive/folders/1U2Z1axcJh8v65fUiXmJEDJKAdtK1R4WA) 
-    - [Chichen Itza](https://docs.google.com/document/d/1_YDWlRiAFz-8kPvHJo2X5UyNi6jk5YGlBBwe2v5KcN4/edit)
-- [Figma Wireframes](https://www.figma.com/file/814LAO3wAzMNbB7YYPZpnZ/Wireframe)
-- [Time Tracker](https://timetracker.gskinner.com/#c=CD164420-AFD3-4BD6-B60D-BDEB28253846&p=82826D2A-E5E5-4D56-B689-B9DBF169A2D0&t=EAB922B4-2402-49CC-9666-D3FA76A2C33A)
-  - [ Tempo Time Tracker](https://gskinner.atlassian.net/plugins/servlet/ac/io.tempo.jira/tempo-app#!)
+Navigate the intersection of history, art, and culture. Wonderous will educate and entertain as you uncover information about some of the most famous structures in the world. 
 
-# QA Builds
-To access QA builds, send your Apple Id or Google Play email to Jess who will make sure it gets added.
-- iOS, use TestFlight:
-  - https://apps.apple.com/us/app/testflight/id899247664
-- Android, download from play store
-  - https://play.google.com/apps/testing/com.gskinner.flutter.wonders
+Built by [gskinner](https://gskinner.com/) in partnership with the Flutter team, Wonderous purposefully pushes visual fidelity, effects and transitions to showcase what Flutter is truly capable of.
 
-If you can not see the build in TestFlight or GooglePlay, your email address is likely not registered. Ask Jess to check with the developers.
+In addition to forking and reviewing the [MIT licensed](https://github.com/gskinnerTeam/flutter-wonderous-app/blob/master/LICENSE) code available here, you can check out more information on the [Wonderous Showcase Website](https://wonderous.app).
 
-# Dev Info
 
-### Build and Deploy
-Continuous deployment is handled by CodeMagic using the apps@gskinner.com account. 
-- To trigger a build, create a git tag starting with "v" and push to master
-  - Successful builds will be automatically be deployed to TestFlight and Googe Play internal track.
-  - Failed builds will send a slack msg to `#google-flutter4-2022-dev` channel
 
-### Helper Scripts
-There are various python scripts in the `/py` folder. Including:
-- `builder.py` - Generates toJson and copyWith
-- `icon-builder.py` - Generate icons from /assets/marketing/icon.xxx
+# Demo Builds
 
-### App Styling
-Styles can be access using the '$styles' variable which is a global instance.
+To try the app you can download it from your favorite app store:
+* [Google Play](https://play.google.com/store/apps/details?id=com.gskinner.flutter.wonders)
+* [Apple App Store](https://apps.apple.com/us/app/wonderous/id1612491897)
+
+### Installation
+
+If you're new to Flutter the first thing you'll need is to follow the [setup instructions](https://flutter.dev/docs/get-started/install).
+
+Once Flutter is setup, you can use the latest `master` channel:
+ * Run `flutter channel master`
+ * Run `flutter upgrade`
+
+ Once you're on `master` you're ready to run the app:
+ * `flutter run -d ios`
+ * `flutter run -d android`
+
+# About gskinner
+We exist to build innovative digital experiences for smart clients, and we love how easy Flutter makes that experience. Don't hesitate to stop by our site to learn more about what we do. We'd love to hear from you!
+
+### License
+
+This application is released under the [MIT license](LICENSE.md). You can use the code for any purpose, including commercial projects.
+
+[![license](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
