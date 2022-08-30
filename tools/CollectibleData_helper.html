@@ -1,0 +1,143 @@
+<html>
+    <head>
+        <title>Met API Helper Tools</title>
+        <style>
+            textarea {
+                font-family: monospace;
+            }
+        </style>
+    </head>
+    <body>
+        This tool builds the CollectibleData list. Wonders should have a blank line between them. Icon names: camera, jewelry, scroll, vase
+        <br>
+<textarea id="input" rows="15" cols="80">
+chichenItza
+701645, jewelry
+310555, jewelry
+286467, picture
+
+christRedeemer
+501302, statue
+157985, jewelry
+227759, textile
+
+colosseum
+245376, vase
+256570, statue
+286136, picture
+
+greatWall
+39918, scroll
+39666, vase
+39735, textile
+
+machuPicchu
+308120, textile
+309960, statue
+313341, vase
+
+petra
+322592, statue
+325918, vase
+326243, vase
+
+pyramidsGiza
+546510, scroll
+543896, statue
+545728, jewelry
+
+tajMahal
+24907, jewelry
+453183, picture
+453983, scroll
+</textarea>
+        <br>
+        <input type="button" onclick="run();" value="RUN">
+        <br>
+        <textarea id="output" rows="15" cols="80">Output here.</textarea>
+        <script>
+let wonders, wonderIndex, artifactIndex;
+function run() {
+    let wonderStrs = input.value.split('\n\n');
+    wonders = [];
+    for (let i=0; i<wonderStrs.length; i++) {
+        let o = wonders[i] = {};
+        let lineStrs = wonderStrs[i].split('\n');
+        parseInfo(lineStrs[0], o);
+        parseArtifacts(lineStrs.slice(1), o);
+    }
+    wonderIndex = artifactIndex = 0;
+    loadNext();
+}
+
+function parseInfo(str, o) {
+    if (str.trim().length < 1) { return; }
+    let values = str.split(",");
+    o.type = values[0].trim();
+}
+
+function parseArtifacts(strs, o) {
+    let artifacts = [];
+    for (let i=0; i<strs.length; i++) {
+        let values = strs[i].split(",");
+        if (values[1]) { artifacts.push({id: values[0].trim(), icon: values[1].trim()}); }
+    }
+    o.artifacts = artifacts;
+}
+
+function loadNext() {
+    if (wonderIndex >= wonders.length) { return out(); }
+    let wonder = wonders[wonderIndex], artifacts = wonder.artifacts;
+    if (artifactIndex >= artifacts.length) {
+        wonderIndex++;
+        artifactIndex = 0;
+        return loadNext();
+    }
+    output.value = `Loading data for ${wonder.type} artifact #${artifactIndex}`;
+    let id = artifacts[artifactIndex].id;
+    fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`)
+        .then(response => validateResponse(response));
+}
+
+function validateResponse(response) {
+    response.json().then(data => parseArtifactData(data));
+}
+
+function parseArtifactData(data) {
+    let wonder = wonders[wonderIndex], o = wonder.artifacts[artifactIndex];
+    wonder.artifacts[artifactIndex].data = data;
+    console.log(data);
+    artifactIndex++;
+    loadNext();
+}
+
+let icons = ['silhouette', 'foo'];
+function out() {
+    // other possibly useful props: objectDate, culture, primaryImage, primaryImageSmall
+    let str = '', iconIndex = 0;
+    for (let i=0; i<wonders.length; i++) {
+        let wonder = wonders[i], artifacts = wonder.artifacts;
+        str += `// ${wonder.type}\n`;
+        for (let j=0; j<artifacts.length; j++) {
+            let o = artifacts[j];
+            str += 
+`CollectibleData(
+  title: '${escape(o.data.title)}',
+  wonder: WonderType.${wonder.type},
+  artifactId: '${o.data.objectID}',
+  imageUrl: '${o.data.primaryImage}',
+  imageUrlSmall: '${o.data.primaryImageSmall}',
+  iconName: '${o.icon}',
+),\n`;
+        }
+        str += "\n";
+    }
+    output.value = str;
+}
+
+function escape(str) {
+    return str.replace(/'/g, '\\\'');
+}
+        </script>
+    </body>
+</html>
