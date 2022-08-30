@@ -23,7 +23,7 @@ Once Flutter is setup, you can use the latest `beta` channel:
  * `flutter channel beta`
  * `flutter upgrade`
 
- Once you're on `beta` you're ready to run the app:
+ Once on `beta` you're ready to run the app:
  * `flutter run -d ios`
  * `flutter run -d android`
 
