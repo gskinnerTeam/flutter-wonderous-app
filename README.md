@@ -1,4 +1,3 @@
-[![Codemagic build status](https://api.codemagic.io/apps/62c5bf4e59f5e09fd24b0994/62c5bf4e59f5e09fd24b0993/status_badge.svg)](https://codemagic.io/apps/62c5bf4e59f5e09fd24b0994/62c5bf4e59f5e09fd24b0993/latest_build)
 # Wonderous
 <p align="center">
 <img src="https://user-images.githubusercontent.com/736973/187334196-b79e48b2-dbb8-4ea7-8aac-04dbc7e5159f.png#gh-dark-mode-only">

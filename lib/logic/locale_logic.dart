@@ -17,6 +17,9 @@ class LocaleLogic {
       // Uncomment for testing in chinese
       // locale = Locale('zh');
     }
+    if (AppLocalizations.supportedLocales.contains(locale) == false) {
+      locale = Locale('en');
+    }
     _strings = await AppLocalizations.delegate.load(locale);
   }
 }
