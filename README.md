@@ -32,11 +32,13 @@ Once Flutter is setup, you can use the latest `beta` channel:
  * `flutter run -d ios`
  * `flutter run -d android`
 
-### Enable Impeller
+### Impeller Rendering Layer
 
-For better performance on iOS you can enable "Impeller", which is Flutters new rendering engine. 
+Impeller is Flutter's next-generation rendering layer, that takes full advantage of modern hardware-accelerated graphics APIs. It is currently available as an **early adopter preview**, but is not yet feature-complete or fully optimized.
 
-To enable, edit the `Info.plist` file and set `FLTEnableImpeller` to `true`:
+The version of Wonderous available in the iOS app store uses Impeller, but by default this code base does not. If you'd like to enable Impeller for iOS, follow these steps:
+
+Edit the `Info.plist` file and set `FLTEnableImpeller` to `true`:
 ```
 <key>FLTEnableImpeller</key>
 <true/>
@@ -47,10 +49,10 @@ Then, switch to the `master` channel and build as normal:
  * `flutter upgrade`
  * `flutter run -d ios`
 
-Note: When Impeller is enabled builds to the Simulator will not work, you will need to test on a physical device instead.
+**Note:** Currently, when Impeller is enabled testing in Simulator will not work, you will need to test on a physical device.
 
 # About gskinner
-We exist to build innovative digital experiences for smart clients, and we love how easy Flutter makes that experience. Don't hesitate to [stop by our site](https://gskinner.com/) to learn more about what we do. We'd love to hear from you!
+We build innovative digital experiences for smart clients, and we love how Flutter unleashes our creativity when building multi-platform apps. Don't hesitate to [stop by our site](https://gskinner.com/) to learn more about what we do, or check out other [innovative Flutter projects](https://flutter.gskinner.com) we've built. We'd love to hear from you!
 
 # License
 
