@@ -19,13 +19,31 @@ To try the app you can download it from your favorite app store:
 
 If you're new to Flutter the first thing you'll need is to follow the [setup instructions](https://flutter.dev/docs/get-started/install).
 
-Once Flutter is setup, you can use the latest `master` channel:
- * Run `flutter channel master`
- * Run `flutter upgrade`
+Once Flutter is setup, you can use the latest `beta` channel:
+ * `flutter channel beta`
+ * `flutter upgrade`
 
- Once you're on `master` you're ready to run the app:
+ Once you're on `beta` you're ready to run the app:
  * `flutter run -d ios`
  * `flutter run -d android`
+
+
+### Enable Impeller
+
+For better first-run performance on iOS you can enable "Impeller", which is Flutters new rendering engine. 
+
+To enable, edit the `Info.plist` file and set `FLTEnableImpeller` to `true`:
+```
+<key>FLTEnableImpeller</key>
+<true/>
+```
+
+Then, switch to the `master` channel and build as normal:
+ * `flutter channel master`
+ * `flutter upgrade`
+ * `flutter run -d ios`
+
+Note: When Impeller is enabled builds to the Simulator will not work, you will need to test on a physical device instead.
 
 # About gskinner
 We exist to build innovative digital experiences for smart clients, and we love how easy Flutter makes that experience. Don't hesitate to [stop by our site](https://gskinner.com/) to learn more about what we do. We'd love to hear from you!
