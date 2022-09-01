@@ -7,6 +7,7 @@ class SettingsLogic with ThrottledSaveLoadMixin {
 
   late final hasCompletedOnboarding = ValueNotifier<bool>(false)..addListener(scheduleSave);
   late final hasDismissedSearchMessage = ValueNotifier<bool>(false)..addListener(scheduleSave);
+  late final currentLocale = ValueNotifier<String>('en')..addListener(scheduleSave);
 
   final bool useBlurs = defaultTargetPlatform != TargetPlatform.android;
 

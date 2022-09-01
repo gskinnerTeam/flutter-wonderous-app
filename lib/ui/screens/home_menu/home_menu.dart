@@ -106,31 +106,35 @@ class HomeMenu extends StatelessWidget {
   }
 
   Widget _buildBottomBtns(BuildContext context) {
-    return SeparatedColumn(
-      separatorBuilder: () => Divider(thickness: 1.5, height: 1).animate().scale(
-            duration: $styles.times.slow,
-            delay: $styles.times.pageTransition + 200.ms,
-            curve: Curves.easeOutBack,
-          ),
-      children: [
-        _MenuTextBtn(
-            label: $strings.homeMenuButtonExplore,
-            icon: AppIcons.timeline,
-            onPressed: () => _handleTimelinePressed(context)),
-        _MenuTextBtn(
-            label: $strings.homeMenuButtonView,
-            icon: AppIcons.collection,
-            onPressed: () => _handleCollectionPressed(context)),
-        _MenuTextBtn(
-          label: $strings.homeMenuButtonAbout,
-          icon: AppIcons.info,
-          onPressed: () => _handleAboutPressed(context),
-        ),
-      ]
-          .animate(interval: 50.ms)
-          .fade(delay: $styles.times.pageTransition + 50.ms)
-          .slide(begin: Offset(0, .1), curve: Curves.easeOut),
-    );
+    return ValueListenableBuilder(
+        valueListenable: settingsLogic.currentLocale,
+        builder: (_, __, ___) {
+          return SeparatedColumn(
+            separatorBuilder: () => Divider(thickness: 1.5, height: 1).animate().scale(
+                  duration: $styles.times.slow,
+                  delay: $styles.times.pageTransition + 200.ms,
+                  curve: Curves.easeOutBack,
+                ),
+            children: [
+              _MenuTextBtn(
+                  label: $strings.homeMenuButtonExplore,
+                  icon: AppIcons.timeline,
+                  onPressed: () => _handleTimelinePressed(context)),
+              _MenuTextBtn(
+                  label: $strings.homeMenuButtonView,
+                  icon: AppIcons.collection,
+                  onPressed: () => _handleCollectionPressed(context)),
+              _MenuTextBtn(
+                label: $strings.homeMenuButtonAbout,
+                icon: AppIcons.info,
+                onPressed: () => _handleAboutPressed(context),
+              ),
+            ]
+                .animate(interval: 50.ms)
+                .fade(delay: $styles.times.pageTransition + 50.ms)
+                .slide(begin: Offset(0, .1), curve: Curves.easeOut),
+          );
+        });
   }
 
   Widget _buildGridBtn(BuildContext context, WonderData btnData) {
