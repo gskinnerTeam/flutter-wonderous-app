@@ -56,7 +56,7 @@ class AboutDialogContent extends StatelessWidget {
               }),
               ...buildSpan('\n\n'),
               ...buildSpan($strings.homeMenuAboutSource, linkSupplants: {
-                '{githubUrl}': [$strings.homeMenuAboutRepo, 'https://github.com/gskinnerTeam/flutter-wonders-app'],
+                '{githubUrl}': [$strings.homeMenuAboutRepo, 'https://github.com/gskinnerTeam/flutter-wonderous-app'],
               }),
               ...buildSpan('\n\n'),
               ...buildSpan($strings.homeMenuAboutPublic, linkSupplants: {
