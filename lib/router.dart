@@ -19,7 +19,7 @@ class ScreenPaths {
   static String intro = '/welcome';
   static String home = '/home';
   static String settings = '/settings';
-  static String wonderDetails(WonderType type) => '/wonder/${type.name}';
+  static String wonderDetails(WonderType type, {int tabIndex = 0}) => '/wonder/${type.name}?t=$tabIndex';
   static String video(String id) => '/video/$id';
   static String highlights(WonderType type) => '/highlights/${type.name}';
   static String search(WonderType type) => '/search/${type.name}';
@@ -39,7 +39,11 @@ final appRouter = GoRouter(
     AppRoute(ScreenPaths.home, (_) => HomeScreen()),
     AppRoute(ScreenPaths.intro, (_) => IntroScreen()),
     AppRoute('/wonder/:type', (s) {
-      return WonderDetailsScreen(type: _parseWonderType(s.params['type']!));
+      int tab = int.tryParse(s.queryParams['t'] ?? '') ?? 0;
+      return WonderDetailsScreen(
+        type: _parseWonderType(s.params['type']!),
+        initialTabIndex: tab,
+      );
     }, useFade: true),
     AppRoute('/timeline', (s) {
       return TimelineScreen(type: _tryParseWonderType(s.queryParams['type']!));

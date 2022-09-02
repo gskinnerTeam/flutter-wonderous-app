@@ -8,8 +8,9 @@ import 'package:wonders/ui/screens/wonder_details/wonder_details_tab_menu.dart';
 import 'package:wonders/ui/screens/wonder_events/wonder_events.dart';
 
 class WonderDetailsScreen extends StatefulWidget with GetItStatefulWidgetMixin {
-  WonderDetailsScreen({Key? key, required this.type}) : super(key: key);
+  WonderDetailsScreen({Key? key, required this.type, this.initialTabIndex = 0}) : super(key: key);
   final WonderType type;
+  final int initialTabIndex;
 
   @override
   State<WonderDetailsScreen> createState() => _WonderDetailsScreenState();
@@ -17,7 +18,11 @@ class WonderDetailsScreen extends StatefulWidget with GetItStatefulWidgetMixin {
 
 class _WonderDetailsScreenState extends State<WonderDetailsScreen>
     with GetItStateMixin, SingleTickerProviderStateMixin {
-  late final _tabController = TabController(length: 4, vsync: this)..addListener(_handleTabChanged);
+  late final _tabController = TabController(
+    length: 4,
+    vsync: this,
+    initialIndex: widget.initialTabIndex,
+  )..addListener(_handleTabChanged);
   AnimationController? _fade;
 
   final _detailsHasScrolled = ValueNotifier(false);
