@@ -2,6 +2,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
+import 'package:wonders/ui/common/static_text_scale.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
 
@@ -208,13 +209,15 @@ class _Page extends StatelessWidget {
         SizedBox(
           height: _IntroScreenState._textHeight,
           width: _IntroScreenState._imageSize + $styles.insets.md,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(data.title, style: $styles.text.wonderTitle.copyWith(fontSize: 24)),
-              Gap($styles.insets.sm),
-              Text(data.desc, style: $styles.text.body, textAlign: TextAlign.center),
-            ],
+          child: StaticTextScale(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(data.title, style: $styles.text.wonderTitle.copyWith(fontSize: 24)),
+                Gap($styles.insets.sm),
+                Text(data.desc, style: $styles.text.body, textAlign: TextAlign.center),
+              ],
+            ),
           ),
         ),
         Gap(_IntroScreenState._pageIndicatorHeight),
@@ -234,9 +237,11 @@ class _WonderousLogo extends StatelessWidget {
           child: SvgPicture.asset(SvgPaths.compassSimple, color: $styles.colors.offWhite, height: 48),
         ),
         Gap($styles.insets.xs),
-        Text(
-          $strings.introSemanticWonderous,
-          style: $styles.text.wonderTitle.copyWith(fontSize: 32, color: $styles.colors.offWhite),
+        StaticTextScale(
+          child: Text(
+            $strings.introSemanticWonderous,
+            style: $styles.text.wonderTitle.copyWith(fontSize: 32, color: $styles.colors.offWhite),
+          ),
         )
       ],
     );

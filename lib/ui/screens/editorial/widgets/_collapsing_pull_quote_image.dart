@@ -7,7 +7,6 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textScale = MediaQuery.of(context).textScaleFactor;
     // Start transitioning when we are halfway up the screen
     final collapseStartPx = context.heightPx * 1;
     final collapseEndPx = context.heightPx * .35;
@@ -20,7 +19,7 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
       var quoteSize = quoteStyle.fontSize;
       quoteStyle = quoteStyle.copyWith(
         color: $styles.colors.caption,
-        fontSize: (quoteSize ??= 36) / textScale, //dynamic font size for more consistent quote layout
+        fontSize: (quoteSize ??= 36), //dynamic font size for more consistent quote layout
       );
       if (isAuthor) {
         quoteStyle = quoteStyle.copyWith(fontSize: 20, fontWeight: FontWeight.w600);
@@ -91,19 +90,21 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
                 Positioned.fill(
                   child: Container(
                     margin: const EdgeInsets.symmetric(horizontal: 24),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(height: 32), // push down vertical centre
-                        buildText(data.pullQuote1Top, collapseAmt, top: true),
-                        buildText(data.pullQuote1Bottom, collapseAmt, top: false),
-                        if (data.pullQuote1Author.isNotEmpty) ...[
-                          Container(
-                            margin: const EdgeInsets.only(top: 16),
-                            child: buildText('- ${data.pullQuote1Author}', collapseAmt, top: false, isAuthor: true),
-                          )
+                    child: StaticTextScale(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(height: 32), // push down vertical centre
+                          buildText(data.pullQuote1Top, collapseAmt, top: true),
+                          buildText(data.pullQuote1Bottom, collapseAmt, top: false),
+                          if (data.pullQuote1Author.isNotEmpty) ...[
+                            Container(
+                              margin: const EdgeInsets.only(top: 16),
+                              child: buildText('- ${data.pullQuote1Author}', collapseAmt, top: false, isAuthor: true),
+                            )
+                          ],
                         ],
-                      ],
+                      ),
                     ),
                   ),
                 ),

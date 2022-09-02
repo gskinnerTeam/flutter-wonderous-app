@@ -15,6 +15,7 @@ import 'package:wonders/ui/common/google_maps_marker.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/hidden_collectible.dart';
 import 'package:wonders/ui/common/scaling_list_item.dart';
+import 'package:wonders/ui/common/static_text_scale.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/utils/context_utils.dart';
 import 'package:wonders/ui/wonder_illustrations/common/animated_clouds.dart';

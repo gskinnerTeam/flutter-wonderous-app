@@ -5,6 +5,7 @@ import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/simple_header.dart';
+import 'package:wonders/ui/common/static_text_scale.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/expanding_time_range_selector.dart';
 
@@ -129,39 +130,43 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
   Widget _buildStatusText(BuildContext context) {
     final TextStyle statusStyle = $styles.text.body.copyWith(color: $styles.colors.accent1);
     if (_searchResults.isEmpty) {
-      return Text(
-        $strings.artifactsSearchLabelNotFound,
-        textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
-        style: statusStyle,
-        textAlign: TextAlign.center,
+      return StaticTextScale(
+        child: Text(
+          $strings.artifactsSearchLabelNotFound,
+          textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+          style: statusStyle,
+          textAlign: TextAlign.center,
+        ),
       );
     }
     return MergeSemantics(
-      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Gap($styles.insets.sm),
-        Text(
-          StringUtils.supplant(
-            $strings.artifactsSearchLabelFound,
-            {
-              '{numFound}': _searchResults.length.toString(),
-              '{numResults}': _filteredResults.length.toString(),
-            },
-          ),
-          textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
-          style: statusStyle,
-        ),
-        AppBtn.basic(
-          semanticLabel: $strings.artifactsSearchButtonToggle,
-          onPressed: () => panelController.toggle(),
-          enableFeedback: false, // handled when panelController changes.
-          child: Text(
-            $strings.artifactsSearchSemanticTimeframe,
+      child: StaticTextScale(
+        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Gap($styles.insets.sm),
+          Text(
+            StringUtils.supplant(
+              $strings.artifactsSearchLabelFound,
+              {
+                '{numFound}': _searchResults.length.toString(),
+                '{numResults}': _filteredResults.length.toString(),
+              },
+            ),
             textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
-            style: statusStyle.copyWith(decoration: TextDecoration.underline),
+            style: statusStyle,
           ),
-        ),
-        Gap($styles.insets.sm),
-      ]),
+          AppBtn.basic(
+            semanticLabel: $strings.artifactsSearchButtonToggle,
+            onPressed: () => panelController.toggle(),
+            enableFeedback: false, // handled when panelController changes.
+            child: Text(
+              $strings.artifactsSearchSemanticTimeframe,
+              textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+              style: statusStyle.copyWith(decoration: TextDecoration.underline),
+            ),
+          ),
+          Gap($styles.insets.sm),
+        ]),
+      ),
     );
   }
 

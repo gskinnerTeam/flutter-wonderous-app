@@ -21,26 +21,30 @@ class AppLogic {
     // Default to only allowing portrait mode
     setDeviceOrientation(Axis.vertical);
 
-    // Try and get highest FPS possible on Android devices
+    // Set preferred refresh rate to the max possible (the OS may ignore this)
     await FlutterDisplayMode.setHighRefreshRate();
 
-    // Localizations load
+    // Localizations
     await localeLogic.load();
-    // Data load
+
+    // Timeline
     await timelineLogic.init();
-    // Settings load
+
+    // Settings
     await settingsLogic.load();
-    // Collectibles init
+
+    // Collectibles
     await collectiblesLogic.load();
 
     // flag bootStrap as complete
     isBootstrapComplete = true;
 
-    // load initial view (replace empty initial view)
-    if (settingsLogic.hasCompletedOnboarding.value) {
-      appRouter.go(ScreenPaths.home);
-    } else {
+    // load initial view (replace empty initial view which is covered by a native splash screen)
+    bool showIntro = settingsLogic.hasCompletedOnboarding.value == false;
+    if (showIntro) {
       appRouter.go(ScreenPaths.intro);
+    } else {
+      appRouter.go(ScreenPaths.home);
     }
   }
 

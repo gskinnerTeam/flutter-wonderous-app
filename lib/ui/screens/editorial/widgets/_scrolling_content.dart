@@ -26,7 +26,8 @@ class _ScrollingContent extends StatelessWidget {
       final TextStyle dropStyle = $styles.text.dropCase;
       final TextStyle bodyStyle = $styles.text.body;
       final String dropChar = value.substring(0, 1);
-      final double dropCapWidth = StringUtils.measure(dropChar, dropStyle).width;
+      final textScale = MediaQuery.of(context).textScaleFactor;
+      final double dropCapWidth = StringUtils.measure(dropChar, dropStyle).width * textScale;
       final bool isEnglish = localeLogic.strings.localeName == 'en'; //TODO EC: Helper method for localLogic.isEnglish?
       final bool skipCaps = !isEnglish || MediaQuery.of(context).accessibleNavigation;
       return Semantics(

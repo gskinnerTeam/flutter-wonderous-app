@@ -5,6 +5,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/highlight_data.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
 import 'package:wonders/ui/common/controls/simple_header.dart';
+import 'package:wonders/ui/common/static_text_scale.dart';
 part 'widgets/_blurred_image_bg.dart';
 part 'widgets/_carousel_item.dart';
 
@@ -184,12 +185,14 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                   Container(
                     height: small ? 90 : 110,
                     alignment: Alignment.center,
-                    child: Text(
-                      artifact.title,
-                      overflow: TextOverflow.ellipsis,
-                      style: $styles.text.h2.copyWith(color: $styles.colors.black, height: 1.2),
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
+                    child: StaticTextScale(
+                      child: Text(
+                        artifact.title,
+                        overflow: TextOverflow.ellipsis,
+                        style: $styles.text.h2.copyWith(color: $styles.colors.black, height: 1.2),
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                      ),
                     ),
                   ),
                   if (!small) Gap($styles.insets.xxs),
