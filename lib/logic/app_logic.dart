@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/utils/page_routes.dart';
 
@@ -19,6 +20,9 @@ class AppLogic {
 
     // Default to only allowing portrait mode
     setDeviceOrientation(Axis.vertical);
+
+    // Try and get highest FPS possible on Android devices
+    await FlutterDisplayMode.setHighRefreshRate();
 
     // Localizations load
     await localeLogic.load();
