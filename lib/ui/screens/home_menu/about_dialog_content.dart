@@ -38,12 +38,14 @@ class AboutDialogContent extends StatelessWidget {
       }
     }
 
+    double fontSize = $styles.text.bodySmall.fontSize!;
+    fontSize *= MediaQuery.textScaleFactorOf(context);
     return SingleChildScrollView(
       child: Column(children: [
         Gap($styles.insets.sm),
         RichText(
           text: TextSpan(
-            style: $styles.text.bodySmall.copyWith(color: Colors.black),
+            style: $styles.text.bodySmall.copyWith(color: Colors.black, fontSize: fontSize),
             children: [
               ...buildSpan($strings.homeMenuAboutWonderous),
               ...buildSpan($strings.homeMenuAboutBuilt, linkSupplants: {
