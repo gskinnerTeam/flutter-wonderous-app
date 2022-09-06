@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/utils/page_routes.dart';
@@ -22,7 +23,9 @@ class AppLogic {
     setDeviceOrientation(Axis.vertical);
 
     // Set preferred refresh rate to the max possible (the OS may ignore this)
-    await FlutterDisplayMode.setHighRefreshRate();
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      await FlutterDisplayMode.setHighRefreshRate();
+    }
 
     // Localizations
     await localeLogic.load();
