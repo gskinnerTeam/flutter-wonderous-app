@@ -4,6 +4,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/app_backdrop.dart';
 import 'package:wonders/ui/common/app_icons.dart';
+import 'package:wonders/ui/common/controls/locale_button.dart';
 import 'package:wonders/ui/screens/home_menu/about_dialog_content.dart';
 
 class HomeMenu extends StatelessWidget {
@@ -75,7 +76,17 @@ class HomeMenu extends StatelessWidget {
               ),
             ),
           ),
-        )
+        ),
+        Positioned(
+          right: -$styles.insets.xs,
+          top: $styles.insets.xs,
+          child: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: $styles.insets.lg),
+              child: LocaleButton(),
+            ),
+          ),
+        ),
       ],
     );
   }

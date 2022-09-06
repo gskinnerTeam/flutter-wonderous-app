@@ -11,6 +11,8 @@ class LocaleLogic {
 
   bool get isLoaded => _strings != null;
 
+  bool get isEnglish => strings.localeName == 'en';
+
   Future<void> load() async {
     final localeCode = await findSystemLocale();
     Locale locale = Locale(localeCode.split('_')[0]);

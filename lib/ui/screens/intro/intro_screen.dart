@@ -2,6 +2,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
+import 'package:wonders/ui/common/controls/locale_button.dart';
 import 'package:wonders/ui/common/static_text_scale.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
@@ -136,6 +137,12 @@ class _IntroScreenState extends State<IntroScreen> {
           padding: EdgeInsets.only(bottom: $styles.insets.lg),
           child: _buildNavText(context),
         ),
+      ),
+
+      Positioned(
+        right: 0,
+        top: 0,
+        child: LocaleButton(),
       ),
     ]);
 
