@@ -40,12 +40,15 @@ class WonderTitleText extends StatelessWidget {
       );
     }
 
-    List<Shadow> shadows = enableShadows ? $styles.shadows.text : [];
-    return RichText(
-      textAlign: TextAlign.center,
-      text: TextSpan(
-        style: textStyle.copyWith(shadows: shadows),
-        children: pieces.map(buildTextSpan).toList(),
+    List<Shadow> shadows = enableShadows ? $styles.shadows.textSoft : [];
+    return Hero(
+      tag: 'wonderTitle-$title',
+      child: RichText(
+        textAlign: TextAlign.center,
+        text: TextSpan(
+          style: textStyle.copyWith(shadows: shadows),
+          children: pieces.map(buildTextSpan).toList(),
+        ),
       ),
     );
   }

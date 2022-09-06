@@ -5,7 +5,7 @@ class DiagonalTextPageIndicator extends StatelessWidget {
   const DiagonalTextPageIndicator({Key? key, required this.current, required this.total}) : super(key: key);
   final int current;
   final int total;
-  static const double _fontSize = 32;
+  static const double _fontSize = 26;
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +21,7 @@ class DiagonalTextPageIndicator extends StatelessWidget {
             child: Transform.translate(
               offset: Offset(-_fontSize * .7, 0),
               child: SizedBox(
-                  width: size,
-                  height: size,
-                  child: Text('0$current',
-                      style: textStyle.copyWith(shadows: $styles.shadows.text), textAlign: TextAlign.right)),
+                  width: size, height: size, child: Text('0$current', style: textStyle, textAlign: TextAlign.right)),
             ),
           ),
           ClipPath(
@@ -38,7 +35,7 @@ class DiagonalTextPageIndicator extends StatelessWidget {
                   opacity: .5,
                   child: Text(
                     '0$total',
-                    style: textStyle.copyWith(shadows: $styles.shadows.textStrong),
+                    style: textStyle, //.copyWith(shadows: $styles.shadows.textStrong),
                   ),
                 ),
               ),
