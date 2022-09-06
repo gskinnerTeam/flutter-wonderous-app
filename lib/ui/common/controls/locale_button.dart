@@ -25,7 +25,12 @@ class LocaleButton extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular($styles.corners.md)),
         ),
         padding: EdgeInsets.all($styles.insets.sm),
-        child: Text($strings.localeSwapButton, style: $styles.text.btn.copyWith(color: $styles.colors.white)),
+        child: ValueListenableBuilder(
+          valueListenable: settingsLogic.currentLocale,
+          builder: (_, __, ___) {
+            return Text($strings.localeSwapButton, style: $styles.text.btn.copyWith(color: $styles.colors.white));
+          },
+        ),
       ),
     );
   }
