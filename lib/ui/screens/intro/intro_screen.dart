@@ -138,12 +138,6 @@ class _IntroScreenState extends State<IntroScreen> {
           child: _buildNavText(context),
         ),
       ),
-
-      Positioned(
-        right: 0,
-        top: 0,
-        child: LocaleSwitcher(),
-      ),
     ]);
 
     return DefaultTextColor(
