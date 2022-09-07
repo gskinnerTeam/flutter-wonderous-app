@@ -30,19 +30,25 @@ class WondersApp extends StatelessWidget {
   const WondersApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      routerDelegate: appRouter.routerDelegate,
-      routeInformationProvider: appRouter.routeInformationProvider,
-      routeInformationParser: appRouter.routeInformationParser,
-      theme: ThemeData(fontFamily: $styles.text.body.fontFamily),
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: AppLocalizations.supportedLocales,
+    return ValueListenableBuilder<String>(
+      valueListenable: settingsLogic.currentLocale,
+      builder: (_, localeCode, __) {
+        return MaterialApp.router(
+          locale: Locale(localeCode),
+          debugShowCheckedModeBanner: false,
+          routerDelegate: appRouter.routerDelegate,
+          routeInformationProvider: appRouter.routeInformationProvider,
+          routeInformationParser: appRouter.routeInformationParser,
+          theme: ThemeData(fontFamily: $styles.text.body.fontFamily),
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: AppLocalizations.supportedLocales,
+        );
+      }
     );
   }
 }

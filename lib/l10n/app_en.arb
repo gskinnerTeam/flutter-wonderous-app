@@ -1,5 +1,6 @@
 {
     "appName": "Wonderous",
+	"localeSwapButton": "简体中文",
 	"animatedArrowSemanticSwipe": "Explore details about {title}.",
 	"appBarTitleFactsHistory": "Facts and History",
 	"appBarTitleConstruction": "Construction",
