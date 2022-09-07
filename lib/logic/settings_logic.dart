@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/save_load_mixin.dart';
 
 class SettingsLogic with ThrottledSaveLoadMixin {
@@ -23,5 +24,12 @@ class SettingsLogic with ThrottledSaveLoadMixin {
       'hasCompletedOnboarding': hasCompletedOnboarding.value,
       'hasDismissedSearchMessage': hasDismissedSearchMessage.value,
     };
+  }
+
+  Future<void> setLocale(Locale value) async {
+    currentLocale.value = value.languageCode;
+    await localeLogic.refreshIfChanged(value);
+    wondersLogic.init();
+    timelineLogic.init();
   }
 }
