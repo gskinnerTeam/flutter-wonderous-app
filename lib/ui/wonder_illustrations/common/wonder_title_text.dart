@@ -17,7 +17,7 @@ class WonderTitleText extends StatelessWidget {
     );
     bool smallText = [WonderType.christRedeemer, WonderType.colosseum].contains(data.type);
     if (smallText) {
-      textStyle = textStyle.copyWith(fontSize: 48);
+      textStyle = textStyle.copyWith(fontSize: 56);
     }
 
     // First, get a list like: ['the\n', 'great wall']

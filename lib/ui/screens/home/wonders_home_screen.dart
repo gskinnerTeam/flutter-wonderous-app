@@ -177,8 +177,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                 child: Column(
                                   children: [
                                     WonderTitleText(currentWonder, enableShadows: true),
-
-                                    //Gap($styles.insets.sm),
+                                    Gap($styles.insets.xs),
                                     AppPageIndicator(
                                       count: _numWonders,
                                       controller: _pageController,
@@ -187,17 +186,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                       onDotPressed: _handlePageIndicatorDotPressed,
                                       semanticPageTitle: $strings.homeSemanticWonder,
                                     ),
-
-                                    /// Page indicator
-                                    // IgnorePointer(
-                                    //   child: DiagonalTextPageIndicator(current: _wonderIndex + 1, total: _numWonders),
-                                    // ),
                                   ],
                                 ),
                               ),
                             ),
                           ),
-                          //Gap($styles.insets.xs),
 
                           /// Animated arrow and background
                           /// Wrap in a container that is full-width to make it easier to find for screen readers
