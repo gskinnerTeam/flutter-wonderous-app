@@ -177,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                 child: Column(
                                   children: [
                                     WonderTitleText(currentWonder, enableShadows: true),
-                                    Gap($styles.insets.xs),
+                                    Gap($styles.insets.md),
                                     AppPageIndicator(
                                       count: _numWonders,
                                       controller: _pageController,
@@ -186,6 +186,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                       onDotPressed: _handlePageIndicatorDotPressed,
                                       semanticPageTitle: $strings.homeSemanticWonder,
                                     ),
+                                    Gap($styles.insets.md),
                                   ],
                                 ),
                               ),
