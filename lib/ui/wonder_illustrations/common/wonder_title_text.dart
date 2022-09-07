@@ -17,7 +17,7 @@ class WonderTitleText extends StatelessWidget {
     );
     bool smallText = [WonderType.christRedeemer, WonderType.colosseum].contains(data.type);
     if (smallText) {
-      textStyle = textStyle.copyWith(fontSize: 48);
+      textStyle = textStyle.copyWith(fontSize: 56);
     }
 
     // First, get a list like: ['the\n', 'great wall']
@@ -40,12 +40,15 @@ class WonderTitleText extends StatelessWidget {
       );
     }
 
-    List<Shadow> shadows = enableShadows ? $styles.shadows.text : [];
-    return RichText(
-      textAlign: TextAlign.center,
-      text: TextSpan(
-        style: textStyle.copyWith(shadows: shadows),
-        children: pieces.map(buildTextSpan).toList(),
+    List<Shadow> shadows = enableShadows ? $styles.shadows.textSoft : [];
+    return Hero(
+      tag: 'wonderTitle-$title',
+      child: RichText(
+        textAlign: TextAlign.center,
+        text: TextSpan(
+          style: textStyle.copyWith(shadows: shadows),
+          children: pieces.map(buildTextSpan).toList(),
+        ),
       ),
     );
   }

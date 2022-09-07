@@ -14,6 +14,8 @@ class _TitleText extends StatelessWidget {
               children: [
                 Gap($styles.insets.md),
                 Gap(30),
+
+                /// Sub-title row
                 SeparatedRow(
                   padding: EdgeInsets.symmetric(horizontal: $styles.insets.sm),
                   separatorBuilder: () => Gap($styles.insets.sm),
@@ -39,14 +41,23 @@ class _TitleText extends StatelessWidget {
                   ],
                 ),
                 Gap($styles.insets.md),
-                Semantics(sortKey: OrdinalSortKey(0), child: WonderTitleText(data)),
+
+                /// Wonder title text
+                Semantics(
+                  sortKey: OrdinalSortKey(0),
+                  child: WonderTitleText(data),
+                ),
                 Gap($styles.insets.xs),
+
+                /// Region
                 Text(
                   data.regionTitle.toUpperCase(),
                   style: $styles.text.title1,
                   textAlign: TextAlign.center,
                 ),
                 Gap($styles.insets.md),
+
+                /// Compass divider
                 ExcludeSemantics(
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
@@ -61,6 +72,8 @@ class _TitleText extends StatelessWidget {
                   ),
                 ),
                 Gap($styles.insets.sm),
+
+                /// Date
                 Text(
                   StringUtils.supplant(
                     $strings.titleLabelDate,
