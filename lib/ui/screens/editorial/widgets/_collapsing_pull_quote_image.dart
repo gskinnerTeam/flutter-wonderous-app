@@ -9,7 +9,7 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
   Widget build(BuildContext context) {
     // Start transitioning when we are halfway up the screen
     final collapseStartPx = context.heightPx * 1;
-    final collapseEndPx = context.heightPx * .35;
+    final collapseEndPx = context.heightPx * .15;
     const double imgHeight = 430;
     const double outerPadding = 100;
 

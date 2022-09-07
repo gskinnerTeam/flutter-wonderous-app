@@ -30,8 +30,11 @@ class AppLogic {
     // Localizations
     await localeLogic.load();
 
+    // Data load
+    wondersLogic.init();
+
     // Timeline
-    await timelineLogic.init();
+    timelineLogic.init();
 
     // Settings
     await settingsLogic.load();
