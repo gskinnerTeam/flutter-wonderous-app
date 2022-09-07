@@ -4,7 +4,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/app_backdrop.dart';
 import 'package:wonders/ui/common/app_icons.dart';
-import 'package:wonders/ui/common/controls/locale_button.dart';
+import 'package:wonders/ui/common/controls/locale_switcher.dart';
 import 'package:wonders/ui/screens/home_menu/about_dialog_content.dart';
 
 class HomeMenu extends StatelessWidget {
@@ -50,11 +50,23 @@ class HomeMenu extends StatelessWidget {
           ),
         ),
 
-        /// Back btn
-        BackBtn.close(
-          bgColor: Colors.transparent,
-          iconColor: $styles.colors.offWhite,
-        ).safe(),
+        SafeArea(
+          child: PaddedRow(
+            padding: EdgeInsets.symmetric(
+              horizontal: $styles.insets.md,
+              vertical: $styles.insets.sm,
+            ),
+            children: [
+              /// Back btn
+              BackBtn.close(
+                bgColor: Colors.transparent,
+                iconColor: $styles.colors.offWhite,
+              ),
+              Spacer(),
+              LocaleSwitcher()
+            ],
+          ),
+        ),
 
         /// Content
         Positioned.fill(
@@ -74,16 +86,6 @@ class HomeMenu extends StatelessWidget {
                   Gap($styles.insets.xl),
                 ],
               ),
-            ),
-          ),
-        ),
-        Positioned(
-          right: -$styles.insets.xs,
-          top: $styles.insets.xs,
-          child: SafeArea(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: $styles.insets.lg),
-              child: LocaleButton(),
             ),
           ),
         ),
