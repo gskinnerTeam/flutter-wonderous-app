@@ -91,9 +91,12 @@ class _ViewerState extends State<_Viewer> with SingleTickerProviderStateMixin {
         child: Hero(
           tag: widget.url,
           child: AppImage(
-            image: NetworkImage(widget.url),
+            image: NetworkImage(
+              widget.url,
+            ),
             fit: BoxFit.contain,
             scale: 2.5,
+            progress: true,
           ),
         ),
       ),
