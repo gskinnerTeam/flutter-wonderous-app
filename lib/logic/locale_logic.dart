@@ -12,7 +12,7 @@ class LocaleLogic {
   bool get isEnglish => strings.localeName == 'en';
 
   Future<void> load() async {
-    final localeCode = await findSystemLocale();
+    final localeCode = settingsLogic.currentLocale.value ?? await findSystemLocale();
     Locale locale = Locale(localeCode.split('_')[0]);
     if (kDebugMode) {
       // Uncomment for testing in chinese
@@ -25,8 +25,9 @@ class LocaleLogic {
     _strings = await AppLocalizations.delegate.load(locale);
   }
 
-  Future<void> refreshIfChanged(Locale locale) async {
-    if (_strings?.localeName != locale.languageCode && AppLocalizations.supportedLocales.contains(locale)) {
+  Future<void> loadIfChanged(Locale locale) async {
+    bool didChange = _strings?.localeName != locale.languageCode;
+    if (didChange && AppLocalizations.supportedLocales.contains(locale)) {
       _strings = await AppLocalizations.delegate.load(locale);
     }
   }

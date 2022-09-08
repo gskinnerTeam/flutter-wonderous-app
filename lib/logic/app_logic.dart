@@ -27,25 +27,25 @@ class AppLogic {
       await FlutterDisplayMode.setHighRefreshRate();
     }
 
+    // Settings
+    await settingsLogic.load();
+
     // Localizations
     await localeLogic.load();
 
-    // Data load
+    // Wonders Data
     wondersLogic.init();
 
-    // Timeline
+    // Events
     timelineLogic.init();
-
-    // Settings
-    await settingsLogic.load();
 
     // Collectibles
     await collectiblesLogic.load();
 
-    // flag bootStrap as complete
+    // Flag bootStrap as complete
     isBootstrapComplete = true;
 
-    // load initial view (replace empty initial view which is covered by a native splash screen)
+    // Load initial view (replace empty initial view which is covered by a native splash screen)
     bool showIntro = settingsLogic.hasCompletedOnboarding.value == false;
     if (showIntro) {
       appRouter.go(ScreenPaths.intro);

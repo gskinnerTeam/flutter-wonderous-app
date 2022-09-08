@@ -32,7 +32,7 @@ class WondersApp extends StatelessWidget with GetItMixin {
   Widget build(BuildContext context) {
     final locale = watchX((SettingsLogic s) => s.currentLocale);
     return MaterialApp.router(
-      locale: Locale(locale),
+      locale: locale == null ? null : Locale(locale),
       debugShowCheckedModeBanner: false,
       routerDelegate: appRouter.routerDelegate,
       routeInformationProvider: appRouter.routeInformationProvider,

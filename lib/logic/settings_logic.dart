@@ -8,7 +8,7 @@ class SettingsLogic with ThrottledSaveLoadMixin {
 
   late final hasCompletedOnboarding = ValueNotifier<bool>(false)..addListener(scheduleSave);
   late final hasDismissedSearchMessage = ValueNotifier<bool>(false)..addListener(scheduleSave);
-  late final currentLocale = ValueNotifier<String>('en')..addListener(scheduleSave);
+  late final currentLocale = ValueNotifier<String?>(null)..addListener(scheduleSave);
 
   final bool useBlurs = defaultTargetPlatform != TargetPlatform.android;
 
@@ -16,6 +16,7 @@ class SettingsLogic with ThrottledSaveLoadMixin {
   void copyFromJson(Map<String, dynamic> value) {
     hasCompletedOnboarding.value = value['hasCompletedOnboarding'] ?? false;
     hasDismissedSearchMessage.value = value['hasDismissedSearchMessage'] ?? false;
+    currentLocale.value = value['currentLocale'];
   }
 
   @override
@@ -23,12 +24,14 @@ class SettingsLogic with ThrottledSaveLoadMixin {
     return {
       'hasCompletedOnboarding': hasCompletedOnboarding.value,
       'hasDismissedSearchMessage': hasDismissedSearchMessage.value,
+      'currentLocale': currentLocale.value,
     };
   }
 
-  Future<void> setLocale(Locale value) async {
+  Future<void> changeLocale(Locale value) async {
     currentLocale.value = value.languageCode;
-    await localeLogic.refreshIfChanged(value);
+    await localeLogic.loadIfChanged(value);
+    // Re-init controllers that have some cached data that is localized
     wondersLogic.init();
     timelineLogic.init();
   }
