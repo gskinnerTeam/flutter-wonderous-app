@@ -12,6 +12,7 @@ import 'package:wonders/ui/screens/home_menu/home_menu.dart';
 import 'package:wonders/ui/wonder_illustrations/common/animated_clouds.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
+import 'package:wonders/ui/wonder_illustrations/common/wonder_title_text.dart';
 
 part '_vertical_swipe_controller.dart';
 part 'widgets/_animated_arrow_button.dart';
@@ -143,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             Stack(children: [
               /// Foreground gradient-1, gets darker when swiping up
               BottomCenter(
-                child: _buildSwipeableBgGradient(currentWonder.type.bgColor.withOpacity(.5)),
+                child: _buildSwipeableBgGradient(currentWonder.type.bgColor.withOpacity(.65)),
               ),
 
               /// Foreground decorators
@@ -151,69 +152,72 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
               /// Foreground gradient-2, gets darker when swiping up
               BottomCenter(
-                child: _buildSwipeableBgGradient(currentWonder.type.bgColor.withOpacity(.5)),
+                child: _buildSwipeableBgGradient(currentWonder.type.bgColor.withOpacity(1)),
               ),
 
               /// Floating controls / UI
               AnimatedSwitcher(
                 duration: $styles.times.fast,
                 child: RepaintBoundary(
-                  child: OverflowBox(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(width: double.infinity),
-                        const Spacer(),
+                  key: ObjectKey(currentWonder),
+                  child: IgnorePointer(
+                    ignoringSemantics: false,
+                    child: OverflowBox(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(width: double.infinity),
+                          const Spacer(),
 
-                        /// Title Content
-                        LightText(
-                          child: MergeSemantics(
-                            child: Column(
-                              children: [
-                                /// Page indicator
-                                IgnorePointer(
-                                  child: DiagonalTextPageIndicator(current: _wonderIndex + 1, total: _numWonders),
+                          /// Title Content
+                          LightText(
+                            child: MergeSemantics(
+                              child: Transform.translate(
+                                offset: Offset(0, 30),
+                                child: Column(
+                                  children: [
+                                    WonderTitleText(currentWonder, enableShadows: true),
+                                    Gap($styles.insets.md),
+                                    AppPageIndicator(
+                                      count: _numWonders,
+                                      controller: _pageController,
+                                      color: $styles.colors.white,
+                                      dotSize: 8,
+                                      onDotPressed: _handlePageIndicatorDotPressed,
+                                      semanticPageTitle: $strings.homeSemanticWonder,
+                                    ),
+                                    Gap($styles.insets.md),
+                                  ],
                                 ),
-                                Gap($styles.insets.sm),
-
-                                AppPageIndicator(
-                                  count: _numWonders,
-                                  controller: _pageController,
-                                  color: $styles.colors.white,
-                                  dotSize: 8,
-                                  onDotPressed: _handlePageIndicatorDotPressed,
-                                  semanticPageTitle: $strings.homeSemanticWonder,
-                                ),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
-                        Gap($styles.insets.xs),
 
-                        /// Animated arrow and background
-                        /// Wrap in a container that is full-width to make it easier to find for screen readers
-                        MergeSemantics(
-                          child: Container(
-                            width: double.infinity,
-                            alignment: Alignment.center,
+                          /// Animated arrow and background
+                          /// Wrap in a container that is full-width to make it easier to find for screen readers
+                          MergeSemantics(
+                            child: Container(
+                              width: double.infinity,
+                              alignment: Alignment.center,
 
-                            /// Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
-                            key: ValueKey(_wonderIndex),
-                            child: Stack(
-                              children: [
-                                /// Expanding rounded rect that grows in height as user swipes up
-                                Positioned.fill(
-                                  child: _buildSwipeableArrowBg(),
-                                ),
+                              /// Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
+                              key: ValueKey(_wonderIndex),
+                              child: Stack(
+                                children: [
+                                  /// Expanding rounded rect that grows in height as user swipes up
+                                  Positioned.fill(
+                                    child: _buildSwipeableArrowBg(),
+                                  ),
 
-                                /// Arrow Btn that fades in and out
-                                _AnimatedArrowButton(onTap: _showDetailsPage, semanticTitle: currentWonder.title),
-                              ],
+                                  /// Arrow Btn that fades in and out
+                                  _AnimatedArrowButton(onTap: _showDetailsPage, semanticTitle: currentWonder.title),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                        Gap($styles.insets.md),
-                      ],
+                          Gap($styles.insets.md),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -306,7 +310,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     return _swipeController.buildListener(builder: (swipeAmt, isPointerDown, _) {
       return IgnorePointer(
         child: FractionallySizedBox(
-          heightFactor: .5,
+          heightFactor: .6,
           child: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -314,7 +318,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 end: Alignment.bottomCenter,
                 colors: [
                   fgColor.withOpacity(0),
-                  fgColor.withOpacity(fgColor.opacity * .75 + (isPointerDown ? .05 : 0) + swipeAmt * .20),
+                  fgColor.withOpacity(.5 + fgColor.opacity * .25 + (isPointerDown ? .05 : 0) + swipeAmt * .20),
                 ],
                 stops: const [0, 1],
               ),

@@ -19,11 +19,7 @@ class _IntroScreenState extends State<IntroScreen> {
   static const double _textHeight = 155;
   static const double _pageIndicatorHeight = 55;
 
-  static List<_PageData> pageData = [
-    _PageData($strings.introTitleJourney, $strings.introDescriptionNavigate, 'camel', '1'),
-    _PageData($strings.introTitleExplore, $strings.introDescriptionUncover, 'petra', '2'),
-    _PageData($strings.introTitleDiscover, $strings.introDescriptionLearn, 'statue', '3'),
-  ];
+  static List<_PageData> pageData = [];
 
   late final PageController _pageController = PageController()..addListener(_handlePageChanged);
   final ValueNotifier<int> _currentPage = ValueNotifier(0);
@@ -51,6 +47,13 @@ class _IntroScreenState extends State<IntroScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Set the page data, as strings may have changed based on locale
+    pageData = [
+      _PageData($strings.introTitleJourney, $strings.introDescriptionNavigate, 'camel', '1'),
+      _PageData($strings.introTitleExplore, $strings.introDescriptionUncover, 'petra', '2'),
+      _PageData($strings.introTitleDiscover, $strings.introDescriptionLearn, 'statue', '3'),
+    ];
+
     // This view uses a full screen PageView to enable swipe navigation.
     // However, we only want the title / description to actually swipe,
     // so we stack a PageView with that content over top of all the other

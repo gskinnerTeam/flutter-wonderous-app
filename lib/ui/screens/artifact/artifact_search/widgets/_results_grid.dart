@@ -31,11 +31,10 @@ class _ResultsGrid extends StatelessWidget {
   }
 
   Widget _buildLanguageMessage(BuildContext context) {
-    bool isEnglish = localeLogic.strings.localeName == 'en';
     return ValueListenableBuilder<bool>(
       valueListenable: settingsLogic.hasDismissedSearchMessage,
       builder: (_, value, __) {
-        if (isEnglish || value) return SizedBox();
+        if (localeLogic.isEnglish || value) return SizedBox();
         return AppBtn.basic(
           onPressed: () => settingsLogic.hasDismissedSearchMessage.value = true,
           semanticLabel: $strings.resultsSemanticDismiss,

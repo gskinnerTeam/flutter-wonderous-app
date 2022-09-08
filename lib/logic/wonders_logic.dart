@@ -10,16 +10,7 @@ import 'package:wonders/logic/data/wonders_data/pyramids_giza_data.dart';
 import 'package:wonders/logic/data/wonders_data/taj_mahal_data.dart';
 
 class WondersLogic {
-  late List<WonderData> all = [
-    GreatWallData(),
-    PetraData(),
-    ColosseumData(),
-    ChichenItzaData(),
-    MachuPicchuData(),
-    TajMahalData(),
-    ChristRedeemerData(),
-    PyramidsGizaData(),
-  ];
+  List<WonderData> all = [];
 
   final int timelineStartYear = -3000;
   final int timelineEndYear = 2200;
@@ -28,5 +19,18 @@ class WondersLogic {
     WonderData? result = all.firstWhereOrNull((w) => w.type == value);
     if (result == null) throw ('Could not find data for wonder type $value');
     return result;
+  }
+
+  void init() {
+    all = [
+      GreatWallData(),
+      PetraData(),
+      ColosseumData(),
+      ChichenItzaData(),
+      MachuPicchuData(),
+      TajMahalData(),
+      ChristRedeemerData(),
+      PyramidsGizaData(),
+    ];
   }
 }
