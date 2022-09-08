@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     viewportFraction: 1,
     initialPage: _numWonders * 9999, // allow 'infinite' scrolling by starting at a very high page
   );
-  final _wonders = wondersLogic.all;
+  List<WonderData> get _wonders => wondersLogic.all;
   bool _isMenuOpen = false;
 
   /// Set initial wonderIndex

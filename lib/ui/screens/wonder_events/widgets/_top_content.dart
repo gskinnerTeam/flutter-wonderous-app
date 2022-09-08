@@ -31,7 +31,7 @@ class _TopContent extends StatelessWidget {
 
                   /// Title text
                   BottomCenter(
-                    child: WonderTitleText(data),
+                    child: WonderTitleText(data, enableHero: false),
                   )
                 ]),
               ),

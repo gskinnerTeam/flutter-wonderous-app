@@ -7,9 +7,10 @@ import 'package:wonders/logic/data/wonder_data.dart';
 /// - of/the should be down-sized
 /// Accomplished using a set of TextSpans, and a white list of 'small words'
 class WonderTitleText extends StatelessWidget {
-  const WonderTitleText(this.data, {Key? key, this.enableShadows = false}) : super(key: key);
+  const WonderTitleText(this.data, {Key? key, this.enableShadows = false, this.enableHero = true}) : super(key: key);
   final WonderData data;
   final bool enableShadows;
+  final bool enableHero;
   @override
   Widget build(BuildContext context) {
     var textStyle = $styles.text.wonderTitle.copyWith(
@@ -41,15 +42,18 @@ class WonderTitleText extends StatelessWidget {
     }
 
     List<Shadow> shadows = enableShadows ? $styles.shadows.textSoft : [];
-    return Hero(
-      tag: 'wonderTitle-$title',
-      child: RichText(
-        textAlign: TextAlign.center,
-        text: TextSpan(
-          style: textStyle.copyWith(shadows: shadows),
-          children: pieces.map(buildTextSpan).toList(),
-        ),
+    var content = RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(
+        style: textStyle.copyWith(shadows: shadows),
+        children: pieces.map(buildTextSpan).toList(),
       ),
     );
+    return enableHero
+        ? Hero(
+            tag: 'wonderTitle-$title',
+            child: content,
+          )
+        : content;
   }
 }

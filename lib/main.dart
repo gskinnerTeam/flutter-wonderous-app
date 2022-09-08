@@ -26,29 +26,25 @@ void main() async {
 }
 
 /// Creates an app using the [MaterialApp.router] constructor and the `appRouter`, an instance of [GoRouter].
-class WondersApp extends StatelessWidget {
-  const WondersApp({Key? key}) : super(key: key);
+class WondersApp extends StatelessWidget with GetItMixin {
+  WondersApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<String>(
-      valueListenable: settingsLogic.currentLocale,
-      builder: (_, localeCode, __) {
-        return MaterialApp.router(
-          locale: Locale(localeCode),
-          debugShowCheckedModeBanner: false,
-          routerDelegate: appRouter.routerDelegate,
-          routeInformationProvider: appRouter.routeInformationProvider,
-          routeInformationParser: appRouter.routeInformationParser,
-          theme: ThemeData(fontFamily: $styles.text.body.fontFamily),
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: AppLocalizations.supportedLocales,
-        );
-      }
+    final locale = watchX((SettingsLogic s) => s.currentLocale);
+    return MaterialApp.router(
+      locale: Locale(locale),
+      debugShowCheckedModeBanner: false,
+      routerDelegate: appRouter.routerDelegate,
+      routeInformationProvider: appRouter.routeInformationProvider,
+      routeInformationParser: appRouter.routeInformationParser,
+      theme: ThemeData(fontFamily: $styles.text.body.fontFamily),
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }
