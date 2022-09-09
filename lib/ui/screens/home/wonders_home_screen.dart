@@ -4,7 +4,6 @@ import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
-import 'package:wonders/ui/common/controls/diagonal_text_page_indicator.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
@@ -176,7 +175,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                 offset: Offset(0, 30),
                                 child: Column(
                                   children: [
-                                    WonderTitleText(currentWonder, enableShadows: true),
+                                    // Hide the title when the menu is open for visual polish
+                                    AnimatedOpacity(
+                                      opacity: _isMenuOpen ? 0 : 1,
+                                      duration: $styles.times.fast,
+                                      child: WonderTitleText(currentWonder, enableShadows: true),
+                                    ),
                                     Gap($styles.insets.md),
                                     AppPageIndicator(
                                       count: _numWonders,
