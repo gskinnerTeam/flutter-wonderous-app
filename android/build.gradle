@@ -1,5 +1,7 @@
 buildscript {
     ext.kotlin_version = '1.6.10'
+    ext.maps_version = '18.1.0'
+
     repositories {
         google()
         mavenCentral()
