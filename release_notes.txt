@@ -1,4 +1,4 @@
-# 1.9.0
+# 1.9.2
 - Improved support for dynamic text scaling
 - Improved performance for blend modes and blurs
 - Added LocalSwitcher btn in the main Wonders Menu
