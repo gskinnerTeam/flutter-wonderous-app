@@ -1,9 +1,10 @@
-# 1.9.2
+# 1.9.3
 - Improved support for dynamic text scaling
 - Improved performance for blend modes and blurs
 - Added LocalSwitcher btn in the main Wonders Menu
 - Request higher preferred FPS for Android devices
 - Fix rendering issues with Chinese fonts
+- Improved stability of fullscreen maps view
 
 # 1.8.0
 - Initial release
