@@ -1,3 +1,7 @@
+# 1.9.4
+- Fix tappable arrow on home page
+- Reduce text size for collapsing pull quote
+
 # 1.9.3
 - Improved support for dynamic text scaling
 - Improved performance for blend modes and blurs
