@@ -159,17 +159,17 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 duration: $styles.times.fast,
                 child: RepaintBoundary(
                   key: ObjectKey(currentWonder),
-                  child: IgnorePointer(
-                    ignoringSemantics: false,
-                    child: OverflowBox(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          SizedBox(width: double.infinity),
-                          const Spacer(),
+                  child: OverflowBox(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(width: double.infinity),
+                        const Spacer(),
 
-                          /// Title Content
-                          LightText(
+                        /// Title Content
+                        LightText(
+                          child: IgnorePointer(
+                            ignoringSemantics: false,
                             child: MergeSemantics(
                               child: Transform.translate(
                                 offset: Offset(0, 30),
@@ -196,32 +196,32 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               ),
                             ),
                           ),
+                        ),
 
-                          /// Animated arrow and background
-                          /// Wrap in a container that is full-width to make it easier to find for screen readers
-                          MergeSemantics(
-                            child: Container(
-                              width: double.infinity,
-                              alignment: Alignment.center,
+                        /// Animated arrow and background
+                        /// Wrap in a container that is full-width to make it easier to find for screen readers
+                        MergeSemantics(
+                          child: Container(
+                            width: double.infinity,
+                            alignment: Alignment.center,
 
-                              /// Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
-                              key: ValueKey(_wonderIndex),
-                              child: Stack(
-                                children: [
-                                  /// Expanding rounded rect that grows in height as user swipes up
-                                  Positioned.fill(
-                                    child: _buildSwipeableArrowBg(),
-                                  ),
+                            /// Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
+                            key: ValueKey(_wonderIndex),
+                            child: Stack(
+                              children: [
+                                /// Expanding rounded rect that grows in height as user swipes up
+                                Positioned.fill(
+                                  child: _buildSwipeableArrowBg(),
+                                ),
 
-                                  /// Arrow Btn that fades in and out
-                                  _AnimatedArrowButton(onTap: _showDetailsPage, semanticTitle: currentWonder.title),
-                                ],
-                              ),
+                                /// Arrow Btn that fades in and out
+                                _AnimatedArrowButton(onTap: _showDetailsPage, semanticTitle: currentWonder.title),
+                              ],
                             ),
                           ),
-                          Gap($styles.insets.md),
-                        ],
-                      ),
+                        ),
+                        Gap($styles.insets.md),
+                      ],
                     ),
                   ),
                 ),
