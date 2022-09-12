@@ -85,7 +85,7 @@ class _Text {
   late final TextStyle bodySmall = copy(contentFont, sizePx: 14, heightPx: 23);
   late final TextStyle bodySmallBold = copy(contentFont, sizePx: 14, heightPx: 23, weight: FontWeight.w600);
 
-  late final TextStyle quote1 = copy(quoteFont, sizePx: 36, heightPx: 40, weight: FontWeight.w600, spacingPc: -3);
+  late final TextStyle quote1 = copy(quoteFont, sizePx: 32, heightPx: 40, weight: FontWeight.w600, spacingPc: -3);
   late final TextStyle quote2 = copy(quoteFont, sizePx: 21, heightPx: 32, weight: FontWeight.w400);
   late final TextStyle quote2Sub = copy(body, sizePx: 16, heightPx: 40, weight: FontWeight.w400);
 

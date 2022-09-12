@@ -16,11 +16,7 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
     /// A single piece of quote text, this widget has one on top, and one on bottom
     Widget buildText(String value, double collapseAmt, {required bool top, bool isAuthor = false}) {
       var quoteStyle = $styles.text.quote1;
-      var quoteSize = quoteStyle.fontSize;
-      quoteStyle = quoteStyle.copyWith(
-        color: $styles.colors.caption,
-        fontSize: (quoteSize ??= 36), //dynamic font size for more consistent quote layout
-      );
+      quoteStyle = quoteStyle.copyWith(color: $styles.colors.caption);
       if (isAuthor) {
         quoteStyle = quoteStyle.copyWith(fontSize: 20, fontWeight: FontWeight.w600);
       }
