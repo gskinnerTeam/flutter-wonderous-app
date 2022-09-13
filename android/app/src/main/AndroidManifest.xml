@@ -3,7 +3,8 @@
    <application
         android:label="Wonderous"
         android:requestLegacyExternalStorage="true"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round">
 
        <meta-data android:name="com.google.android.geo.API_KEY"
            android:value="AIzaSyDectGpXKc04T6U5MyccC7L5DVl0xbUFY4"/>
