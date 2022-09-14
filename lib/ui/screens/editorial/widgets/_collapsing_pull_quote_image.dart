@@ -130,8 +130,8 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
         ),
         GradientContainer(
           [
-            Color(0xFFBEABA1).withOpacity(.9),
-            Color(0xFFA6958C).withOpacity(.9),
+            Color(0xFFBEABA1).withOpacity(1),
+            Color(0xFFA6958C).withOpacity(1),
           ],
           const [0.0, 1.0],
           blendMode: BlendMode.colorBurn,
