@@ -35,7 +35,8 @@ part 'widgets/_title_text.dart';
 part 'widgets/_top_illustration.dart';
 
 class WonderEditorialScreen extends StatefulWidget {
-  const WonderEditorialScreen(this.data, {Key? key, required this.onScroll}) : super(key: key);
+  const WonderEditorialScreen(this.data, {Key? key, required this.onScroll})
+      : super(key: key);
   final WonderData data;
   final void Function(double scrollPos) onScroll;
 
@@ -44,7 +45,8 @@ class WonderEditorialScreen extends StatefulWidget {
 }
 
 class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
-  late final ScrollController _scroller = ScrollController()..addListener(_handleScrollChanged);
+  late final ScrollController _scroller = ScrollController()
+    ..addListener(_handleScrollChanged);
   final _scrollPos = ValueNotifier(0.0);
   final _sectionIndex = ValueNotifier(0);
   final _scrollToPopThreshold = 50;
@@ -156,7 +158,8 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                     return Opacity(opacity: opacity, child: child);
                   },
                   // This is due to a bug: https://github.com/flutter/flutter/issues/101872
-                  child: RepaintBoundary(child: _TopIllustration(widget.data.type)),
+                  child: RepaintBoundary(
+                      child: _TopIllustration(widget.data.type)),
                 ),
               ),
 
@@ -205,16 +208,20 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                         widget.data.type,
                         scrollPos: _scrollPos,
                         sectionIndex: _sectionIndex,
-                      ).animate().fade(duration: $styles.times.med, delay: $styles.times.pageTransition),
+                      ).animate().fade(
+                          duration: $styles.times.med,
+                          delay: $styles.times.pageTransition),
                     ),
                   ),
 
                   /// Editorial content (text and images)
-                  _ScrollingContent(widget.data, scrollPos: _scrollPos, sectionNotifier: _sectionIndex),
+                  _ScrollingContent(widget.data,
+                      scrollPos: _scrollPos, sectionNotifier: _sectionIndex),
 
                   /// Bottom padding
                   SliverToBoxAdapter(
-                    child: Container(height: 150, color: $styles.colors.offWhite),
+                    child:
+                        Container(height: 150, color: $styles.colors.offWhite),
                   ),
                 ],
               ),
