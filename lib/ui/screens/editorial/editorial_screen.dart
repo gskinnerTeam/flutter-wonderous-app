@@ -50,6 +50,36 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
   final _scrollToPopThreshold = 50;
   bool _isPointerDown = false;
 
+  /// The largest scroll position at which we should show the colored background
+  /// widget.
+  static const _includeBackgroundThreshold = 1000;
+
+  /// Whether the colored background widget should be included in this view.
+  ///
+  /// This value should be true for scroll positions ranging from 0 to 1000, and
+  /// should be false for all values larger.
+  final _includeBackground = ValueNotifier<bool>(true);
+
+  /// The largest scroll position at which we should show the top illustration.
+  static const _includeTopIllustrationThreshold = 700;
+
+  /// The opacity value for the top illustration.
+  ///
+  /// This value should be clamped to (0, 1) and will shrink to 0 as the scroll
+  /// position increases to [_includeTopIllustrationThreshold].
+  final _topIllustrationOpacity = ValueNotifier<double>(1.0);
+
+  /// The largest scroll position at which we should show the text content.
+  static const _includeTextThreshold = 500.0;
+
+  /// The scroll position notifier that the text display widget below should
+  /// listen to.
+  ///
+  /// This value should be clamped to (0, [_includeTextThreshold]). This scroll
+  /// position value determines the opacity of the text, which decreases to 0.0
+  /// as the scroll position increases to [_includeTextThreshold].
+  final _scrollPositionForTextContent = ValueNotifier(0.0);
+
   @override
   void dispose() {
     _scroller.dispose();
@@ -60,6 +90,23 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
   void _handleScrollChanged() {
     _scrollPos.value = _scroller.position.pixels;
     widget.onScroll.call(_scrollPos.value);
+
+    _includeBackground.value = _scrollPos.value <= _includeBackgroundThreshold;
+
+    // Opacity value between 0 and 1, based on the amt scrolled. Once
+    // [_topIllustrationOpacity.value] reaches its clamped ends (0 or 1), it
+    // will not notify on subsequent assigments to the same value, which
+    // prevents us from triggering an unnecessary rebuild on Widgets that are
+    // listening to this notifier.
+    _topIllustrationOpacity.value = (1 - _scrollPos.value / _includeTopIllustrationThreshold).clamp(0, 1);
+
+    // We clamp to [_includeTextThreshold] so that we do not trigger unnecessary
+    // rebuilds on Widgets that are listening to this notifier. At a scroll
+    // position of [_includeTextThreshold] and beyond, we would be rendering the
+    // text with an opacity value of 0.0, and there is no point in doing any
+    // building or rendering for a transparent item.
+    _scrollPositionForTextContent.value = _scrollPos.value.clamp(0, _includeTextThreshold);
+
     // If user pulls far down on the elastic list, pop back to
     if (_scrollPos.value < -_scrollToPopThreshold) {
       if (_isPointerDown) {
@@ -86,14 +133,13 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
           child: Stack(
             children: [
               /// Background
-              Positioned.fill(
-                child: ValueListenableBuilder(
-                  valueListenable: _scrollPos,
-                  builder: (_, value, __) {
-                    return Container(
-                      color: widget.data.type.bgColor.withOpacity(_scrollPos.value > 1000 ? 0 : 1),
-                    );
-                  },
+              ValueListenableBuilder<bool>(
+                valueListenable: _includeBackground,
+                builder: (context, include, child) => include ? child! : const SizedBox(),
+                child: Positioned.fill(
+                  child: Container(
+                    color: widget.data.type.bgColor,
+                  ),
                 ),
               ),
 
@@ -101,10 +147,12 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
               SizedBox(
                 height: illustrationHeight,
                 child: ValueListenableBuilder<double>(
-                  valueListenable: _scrollPos,
-                  builder: (_, value, child) {
-                    // get some value between 0 and 1, based on the amt scrolled
-                    double opacity = (1 - value / 700).clamp(0, 1);
+                  valueListenable: _topIllustrationOpacity,
+                  builder: (_, opacity, child) {
+                    if (opacity == 0) {
+                      // No point in rendering something that is transparent.
+                      return SizedBox();
+                    }
                     return Opacity(opacity: opacity, child: child);
                   },
                   // This is due to a bug: https://github.com/flutter/flutter/issues/101872
@@ -126,10 +174,14 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                   /// Text content, animates itself to hide behind the app bar as it scrolls up
                   SliverToBoxAdapter(
                     child: ValueListenableBuilder<double>(
-                      valueListenable: _scrollPos,
+                      valueListenable: _scrollPositionForTextContent,
                       builder: (_, value, child) {
                         double offsetAmt = max(0, value * .3);
-                        double opacity = (1 - offsetAmt / 150).clamp(0, 1);
+                        double opacity = (1 - value / _includeTextThreshold).clamp(0, 1);
+                        if (opacity == 0) {
+                          // No point in rendering something that is transparent.
+                          return SizedBox();
+                        }
                         return Transform.translate(
                           offset: Offset(0, offsetAmt),
                           child: Opacity(opacity: opacity, child: child),
