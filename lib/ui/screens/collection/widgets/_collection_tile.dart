@@ -28,9 +28,14 @@ class _CollectionTile extends StatelessWidget {
       color: $styles.colors.black,
       child: Center(
         child: FractionallySizedBox(
-          widthFactor: 0.6,
-          heightFactor: 0.6,
-          child: Image(image: collectible.icon, color: $styles.colors.greyStrong),
+          widthFactor: 0.66,
+          heightFactor: 0.66,
+          child: Image(
+            image: collectible.icon,
+            color: $styles.colors.black,
+            colorBlendMode: BlendMode.color,
+            opacity: AlwaysStoppedAnimation(0.2),
+          ),
         ),
       ),
     );
