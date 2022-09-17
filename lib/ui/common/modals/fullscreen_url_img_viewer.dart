@@ -6,6 +6,8 @@ class FullscreenUrlImgViewer extends StatefulWidget {
   final List<String> urls;
   final int index;
 
+  static const double imageScale = 2.5;
+
   @override
   State<FullscreenUrlImgViewer> createState() => _FullscreenUrlImgViewerState();
 }
@@ -95,7 +97,7 @@ class _ViewerState extends State<_Viewer> with SingleTickerProviderStateMixin {
               widget.url,
             ),
             fit: BoxFit.contain,
-            scale: 2.5,
+            scale: FullscreenUrlImgViewer.imageScale,
             progress: true,
           ),
         ),
