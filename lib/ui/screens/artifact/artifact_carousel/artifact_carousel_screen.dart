@@ -28,11 +28,13 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   late PageController _controller;
 
   double get _currentOffset {
-    bool inited = _controller.hasClients && _controller.position.haveDimensions;
-    return inited ? _controller.page! : _controller.initialPage * 1.0;
+    bool hasOffset = _controller.hasClients && _controller.position.haveDimensions;
+    return hasOffset ? _controller.page! : _controller.initialPage * 1.0;
   }
 
-  int get _currentIndex => _currentOffset.round() % _artifacts.length;
+  final _currentIndex = ValueNotifier(0);
+
+  HighlightData get _currentArtifact => _artifacts[_currentIndex.value];
 
   @override
   void initState() {
@@ -43,8 +45,10 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
       // start at a high offset so we can scroll backwards:
       initialPage: _artifacts.length * 9999,
       viewportFraction: 0.5,
-    );
+    )..addListener(_handleCarouselScroll);
   }
+
+  void _handleCarouselScroll() => _currentIndex.value = _currentOffset.round() % _artifacts.length;
 
   @override
   void dispose() {
@@ -74,20 +78,24 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   Widget build(BuildContext context) {
     return Container(
       color: $styles.colors.greyStrong,
-      child: AnimatedBuilder(animation: _controller, builder: _buildScreen),
+      child: AnimatedBuilder(
+        animation: _currentIndex,
+        builder: (context, __) => _buildScreen(context),
+      ),
     );
   }
 
-  Widget _buildScreen(BuildContext context, _) {
+  Widget _buildScreen(BuildContext context) {
     final double w = context.widthPx;
     final double backdropWidth = w <= _maxElementWidth ? w : min(w * _partialElementWidth, _maxElementWidth);
     final double backdropHeight = math.min(context.heightPx * 0.65, _maxElementHeight);
     final bool small = backdropHeight / _maxElementHeight < 0.7;
-    final HighlightData artifact = _artifacts[_currentIndex];
 
     return Stack(
       children: [
-        Positioned.fill(child: _BlurredImageBg(url: artifact.imageUrl)),
+        Positioned.fill(
+          child: _BlurredImageBg(url: _currentArtifact.imageUrl),
+        ),
         Column(
           children: [
             SimpleHeader($strings.artifactsTitleArtifacts, showBackBtn: false, isTransparent: true),
@@ -113,27 +121,24 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                     child: PageView.builder(
                       controller: _controller,
                       clipBehavior: Clip.none,
-                      itemBuilder: (context, index) {
-                        bool isCurrentIndex = index % _artifacts.length == _currentIndex;
-                        return ExcludeSemantics(
-                          excluding: isCurrentIndex == false,
-                          child: MergeSemantics(
-                            child: Semantics(
-                              onIncrease: () => _handleArtifactTap(_currentIndex + 1),
-                              onDecrease: () => _handleArtifactTap(_currentIndex - 1),
-                              child: _CarouselItem(
-                                index: index,
-                                currentPage: _currentOffset,
-                                artifact: _artifacts[index % _artifacts.length],
-                                bottomPadding: backdropHeight,
-                                maxWidth: backdropWidth,
-                                maxHeight: backdropHeight,
-                                onPressed: () => _handleArtifactTap(index),
-                              ),
+                      itemBuilder: (context, index) => AnimatedBuilder(
+                        animation: _controller,
+                        builder: (_, __) {
+                          bool isCurrentIndex = index % _artifacts.length == _currentIndex.value;
+                          return ExcludeSemantics(
+                            excluding: !isCurrentIndex,
+                            child: _CarouselItem(
+                              index: index,
+                              currentPage: _currentOffset,
+                              artifact: _artifacts[index % _artifacts.length],
+                              bottomPadding: backdropHeight,
+                              maxWidth: backdropWidth,
+                              maxHeight: backdropHeight,
+                              onPressed: () => _handleArtifactTap(index),
                             ),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),
@@ -148,7 +153,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Gap($styles.insets.md),
-                        _buildContent(context, artifact, backdropWidth, small),
+                        _buildContent(context, backdropWidth, small),
                         Gap(small ? $styles.insets.sm : $styles.insets.md),
                         AppBtn.from(
                           text: $strings.artifactsButtonBrowse,
@@ -169,16 +174,20 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     );
   }
 
-  Widget _buildContent(BuildContext context, HighlightData artifact, double width, bool small) {
-    return Container(
-      width: width,
-      padding: EdgeInsets.symmetric(horizontal: $styles.insets.sm),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          IgnorePointer(
-            child: ExcludeSemantics(
+  Widget _buildContent(BuildContext context, double width, bool small) {
+    return Semantics(
+      onIncrease: () => _handleArtifactTap(_currentOffset.round() + 1),
+      onDecrease: () => _handleArtifactTap(_currentOffset.round() - 1),
+      liveRegion: true,
+      child: Container(
+        width: width,
+        padding: EdgeInsets.symmetric(horizontal: $styles.insets.sm),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IgnorePointer(
+              ignoringSemantics: false,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -187,7 +196,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                     alignment: Alignment.center,
                     child: StaticTextScale(
                       child: Text(
-                        artifact.title,
+                        _currentArtifact.title,
                         overflow: TextOverflow.ellipsis,
                         style: $styles.text.h2.copyWith(color: $styles.colors.black, height: 1.2),
                         textAlign: TextAlign.center,
@@ -197,21 +206,21 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                   ),
                   if (!small) Gap($styles.insets.xxs),
                   Text(
-                    artifact.date.isEmpty ? '--' : artifact.date,
+                    _currentArtifact.date.isEmpty ? '--' : _currentArtifact.date,
                     style: $styles.text.body,
                     textAlign: TextAlign.center,
                   ),
                 ],
-              ).animate(key: ValueKey(artifact.artifactId)).fadeIn(),
+              ).animate(key: ValueKey(_currentArtifact.artifactId)).fadeIn(),
             ),
-          ),
-          Gap(small ? $styles.insets.xs : $styles.insets.sm),
-          AppPageIndicator(
-            count: _artifacts.length,
-            controller: _controller,
-            semanticPageTitle: $strings.artifactsSemanticArtifact,
-          ),
-        ],
+            Gap(small ? $styles.insets.xs : $styles.insets.sm),
+            AppPageIndicator(
+              count: _artifacts.length,
+              controller: _controller,
+              semanticPageTitle: $strings.artifactsSemanticArtifact,
+            ),
+          ],
+        ),
       ),
     );
   }

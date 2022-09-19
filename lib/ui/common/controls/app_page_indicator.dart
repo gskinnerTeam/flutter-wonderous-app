@@ -50,6 +50,7 @@ class _AppPageIndicatorState extends State<AppPageIndicator> {
               return Semantics(
                   container: true,
                   liveRegion: true,
+                  readOnly: true,
                   label: StringUtils.supplant($strings.appPageSemanticSwipe, {
                     '{pageTitle}': widget.semanticPageTitle,
                     '{count}': (value % (widget.count) + 1).toString(),

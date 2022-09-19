@@ -22,7 +22,7 @@ class _CarouselItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBtn.basic(
-      semanticLabel: '${artifact.title} ${artifact.date}',
+      semanticLabel: 'Explore artifact details',
       onPressed: onPressed,
       pressEffect: false,
       child: _ImagePreview(

@@ -28,7 +28,7 @@ class _AnimatedArrowButton extends StatelessWidget {
       onPressed: onTap,
       child: SizedBox(
         height: 80,
-        width: 50,
+        width: 250,
         child: Animate(
           effects: [
             CustomEffect(builder: _buildOpacityTween, duration: duration, curve: Curves.easeOut),

@@ -127,11 +127,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             /// Wonders Illustrations
             MergeSemantics(
               child: Semantics(
-                header: true,
-                image: true,
                 liveRegion: true,
                 onIncrease: () => _setPageIndex(_wonderIndex + 1),
                 onDecrease: () => _setPageIndex(_wonderIndex - 1),
+                onTap: () => _showDetailsPage(),
                 child: PageView.builder(
                   controller: _pageController,
                   onPageChanged: _handlePageViewChanged,
@@ -170,29 +169,29 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         LightText(
                           child: IgnorePointer(
                             ignoringSemantics: false,
-                            child: MergeSemantics(
-                              child: Transform.translate(
-                                offset: Offset(0, 30),
-                                child: Column(
-                                  children: [
+                            child: Transform.translate(
+                              offset: Offset(0, 30),
+                              child: Column(
+                                children: [
+                                  ExcludeSemantics(
                                     // Hide the title when the menu is open for visual polish
-                                    AnimatedOpacity(
+                                    child: AnimatedOpacity(
                                       opacity: _isMenuOpen ? 0 : 1,
                                       duration: $styles.times.fast,
                                       child: WonderTitleText(currentWonder, enableShadows: true),
                                     ),
-                                    Gap($styles.insets.md),
-                                    AppPageIndicator(
-                                      count: _numWonders,
-                                      controller: _pageController,
-                                      color: $styles.colors.white,
-                                      dotSize: 8,
-                                      onDotPressed: _handlePageIndicatorDotPressed,
-                                      semanticPageTitle: $strings.homeSemanticWonder,
-                                    ),
-                                    Gap($styles.insets.md),
-                                  ],
-                                ),
+                                  ),
+                                  Gap($styles.insets.md),
+                                  AppPageIndicator(
+                                    count: _numWonders,
+                                    controller: _pageController,
+                                    color: $styles.colors.white,
+                                    dotSize: 8,
+                                    onDotPressed: _handlePageIndicatorDotPressed,
+                                    semanticPageTitle: $strings.homeSemanticWonder,
+                                  ),
+                                  Gap($styles.insets.md),
+                                ],
                               ),
                             ),
                           ),
@@ -200,24 +199,22 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
                         /// Animated arrow and background
                         /// Wrap in a container that is full-width to make it easier to find for screen readers
-                        MergeSemantics(
-                          child: Container(
-                            width: double.infinity,
-                            alignment: Alignment.center,
+                        Container(
+                          width: double.infinity,
+                          alignment: Alignment.center,
 
-                            /// Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
-                            key: ValueKey(_wonderIndex),
-                            child: Stack(
-                              children: [
-                                /// Expanding rounded rect that grows in height as user swipes up
-                                Positioned.fill(
-                                  child: _buildSwipeableArrowBg(),
-                                ),
+                          /// Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
+                          key: ValueKey(_wonderIndex),
+                          child: Stack(
+                            children: [
+                              /// Expanding rounded rect that grows in height as user swipes up
+                              Positioned.fill(
+                                child: _buildSwipeableArrowBg(),
+                              ),
 
-                                /// Arrow Btn that fades in and out
-                                _AnimatedArrowButton(onTap: _showDetailsPage, semanticTitle: currentWonder.title),
-                              ],
-                            ),
+                              /// Arrow Btn that fades in and out
+                              _AnimatedArrowButton(onTap: _showDetailsPage, semanticTitle: currentWonder.title),
+                            ],
                           ),
                         ),
                         Gap($styles.insets.md),
@@ -233,14 +230,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   duration: $styles.times.fast,
                   opacity: _isMenuOpen ? 0 : 1,
                   child: MergeSemantics(
-                    child: Semantics(
-                      sortKey: OrdinalSortKey(0),
-                      child: CircleIconBtn(
-                        icon: AppIcons.menu,
-                        onPressed: _handleOpenMenuPressed,
-                        semanticLabel: $strings.homeSemanticOpenMain,
-                      ).safe(),
-                    ),
+                    child: CircleIconBtn(
+                      icon: AppIcons.menu,
+                      onPressed: _handleOpenMenuPressed,
+                      semanticLabel: $strings.homeSemanticOpenMain,
+                    ).safe(),
                   ),
                 ),
               ),

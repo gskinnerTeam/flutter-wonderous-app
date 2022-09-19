@@ -116,7 +116,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
               CustomScrollView(
                 primary: false,
                 controller: _scroller,
-                cacheExtent: 500,
+                cacheExtent: 1000,
                 slivers: [
                   /// Invisible padding at the top of the list, so the illustration shows through the btm
                   SliverToBoxAdapter(
