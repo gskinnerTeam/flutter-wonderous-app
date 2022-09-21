@@ -6,6 +6,7 @@ import 'package:wonders/ui/common/compass_divider.dart';
 import 'package:wonders/ui/common/curved_clippers.dart';
 import 'package:wonders/ui/common/hidden_collectible.dart';
 import 'package:wonders/ui/common/list_gradient.dart';
+import 'package:wonders/ui/common/pop_router_on_over_scroll.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/timeline_event_card.dart';
 import 'package:wonders/ui/common/wonders_timeline_builder.dart';

@@ -9,31 +9,19 @@ class _EventsList extends StatefulWidget {
 }
 
 class _EventsListState extends State<_EventsList> {
-  late final ScrollController _scroller = ScrollController()..addListener(_handleScrollChanged);
-  bool _hasPopped = false;
-  bool _isPointerDown = false;
+  final ScrollController _scroller = ScrollController();
   @override
   void dispose() {
     _scroller.dispose();
     super.dispose();
   }
 
-  void _handleScrollChanged() {
-    if (!_isPointerDown) return;
-    if (_scroller.position.pixels < -100 && !_hasPopped) {
-      _hasPopped = true;
-      context.pop();
-    }
-  }
-
-  bool _checkPointerIsDown(d) => _isPointerDown = d.dragDetails != null;
-
   void _handleGlobalTimelinePressed() => context.push(ScreenPaths.timeline(widget.data.type));
 
   @override
   Widget build(BuildContext context) {
-    return NotificationListener<ScrollUpdateNotification>(
-      onNotification: _checkPointerIsDown,
+    return PopRouterOnOverScroll(
+      controller: _scroller,
       child: LayoutBuilder(builder: (_, constraints) {
         return Stack(
           children: [

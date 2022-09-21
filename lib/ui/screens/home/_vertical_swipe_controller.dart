@@ -22,18 +22,16 @@ class _VerticalSwipeController {
 
   void handleVerticalSwipeUpdate(DragUpdateDetails details) {
     if (swipeReleaseAnim.isAnimating) swipeReleaseAnim.stop();
-    if (details.delta.dy > 0) {
-      swipeAmt.value = 0;
-    } else {
-      isPointerDown.value = true;
-      double value = (swipeAmt.value - details.delta.dy / _pullToViewDetailsThreshold).clamp(0, 1);
-      if (value != swipeAmt.value) {
-        swipeAmt.value = value;
-        if (swipeAmt.value == 1) {
-          onSwipeComplete();
-        }
+
+    isPointerDown.value = true;
+    double value = (swipeAmt.value - details.delta.dy / _pullToViewDetailsThreshold).clamp(0, 1);
+    if (value != swipeAmt.value) {
+      swipeAmt.value = value;
+      if (swipeAmt.value == 1) {
+        onSwipeComplete();
       }
     }
+
     //print(_swipeUpAmt.value);
   }
 

@@ -3,15 +3,15 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/string_utils.dart';
 
 class AppPageIndicator extends StatefulWidget {
-  AppPageIndicator(
-      {Key? key,
-      required this.count,
-      required this.controller,
-      this.onDotPressed,
-      this.color,
-      this.dotSize,
-      String? semanticPageTitle})
-      : semanticPageTitle = semanticPageTitle ?? $strings.appPageDefaultTitlePage,
+  AppPageIndicator({
+    Key? key,
+    required this.count,
+    required this.controller,
+    this.onDotPressed,
+    this.color,
+    this.dotSize,
+    String? semanticPageTitle,
+  })  : semanticPageTitle = semanticPageTitle ?? $strings.appPageDefaultTitlePage,
         super(key: key);
   final int count;
   final PageController controller;
@@ -33,9 +33,11 @@ class _AppPageIndicatorState extends State<AppPageIndicator> {
     widget.controller.addListener(_handlePageChanged);
   }
 
-  int get _controllerPage => widget.controller.page?.round() ?? 0;
+  int get _controllerPage => _currentPage.value;
 
-  void _handlePageChanged() => _currentPage.value = _controllerPage;
+  void _handlePageChanged() {
+    _currentPage.value = widget.controller.page!.round();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +50,12 @@ class _AppPageIndicatorState extends State<AppPageIndicator> {
             valueListenable: _currentPage,
             builder: (_, value, child) {
               return Semantics(
-                  container: true,
                   liveRegion: true,
+                  focusable: false,
                   readOnly: true,
                   label: StringUtils.supplant($strings.appPageSemanticSwipe, {
                     '{pageTitle}': widget.semanticPageTitle,
-                    '{count}': (value % (widget.count) + 1).toString(),
+                    '{count}': (_controllerPage % (widget.count) + 1).toString(),
                     '{total}': widget.count.toString(),
                   }),
                   child: Container());

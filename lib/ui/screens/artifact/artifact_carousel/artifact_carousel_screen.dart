@@ -6,6 +6,7 @@ import 'package:wonders/logic/data/highlight_data.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
 import 'package:wonders/ui/common/controls/simple_header.dart';
 import 'package:wonders/ui/common/static_text_scale.dart';
+
 part 'widgets/_blurred_image_bg.dart';
 part 'widgets/_carousel_item.dart';
 
@@ -25,16 +26,24 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
 
   // Locally store loaded artifacts.
   late List<HighlightData> _artifacts;
+
   late PageController _controller;
+  final _currentIndex = ValueNotifier(0);
 
   double get _currentOffset {
     bool hasOffset = _controller.hasClients && _controller.position.haveDimensions;
     return hasOffset ? _controller.page! : _controller.initialPage * 1.0;
   }
 
-  final _currentIndex = ValueNotifier(0);
-
   HighlightData get _currentArtifact => _artifacts[_currentIndex.value];
+
+  double get _backdropWidth {
+    final w = context.widthPx;
+    return w <= _maxElementWidth ? w : min(w * _partialElementWidth, _maxElementWidth);
+  }
+
+  double get _backdropHeight => math.min(context.heightPx * 0.65, _maxElementHeight);
+  bool get _small => _backdropHeight / _maxElementHeight < 0.7;
 
   @override
   void initState() {
@@ -48,13 +57,13 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     )..addListener(_handleCarouselScroll);
   }
 
-  void _handleCarouselScroll() => _currentIndex.value = _currentOffset.round() % _artifacts.length;
-
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
+
+  void _handleCarouselScroll() => _currentIndex.value = _currentOffset.round() % _artifacts.length;
 
   void _handleArtifactTap(int index) {
     int delta = index - _currentOffset.round();
@@ -76,150 +85,154 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: $styles.colors.greyStrong,
-      child: AnimatedBuilder(
-        animation: _currentIndex,
-        builder: (context, __) => _buildScreen(context),
+    return ValueListenableBuilder<int>(
+      valueListenable: _currentIndex,
+      builder: (context, index, _) {
+        return Container(
+          color: $styles.colors.greyStrong,
+          child: Stack(
+            children: [
+              /// Background image
+              Positioned.fill(
+                child: _BlurredImageBg(url: _currentArtifact.imageUrl),
+              ),
+
+              /// Content
+              Column(
+                children: [
+                  SimpleHeader($strings.artifactsTitleArtifacts, showBackBtn: false, isTransparent: true),
+                  Gap($styles.insets.xs),
+                  Expanded(
+                    child: Stack(children: [
+                      // White arch, covering bottom half:
+                      _buildWhiteArch(),
+
+                      // Carousel
+                      _buildCarouselPageView(),
+
+                      // Text content
+                      _buildBottomTextContent(),
+                    ]),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildWhiteArch() {
+    return BottomCenter(
+      child: Container(
+        width: _backdropWidth,
+        height: _backdropHeight,
+        decoration: BoxDecoration(
+          color: $styles.colors.offWhite.withOpacity(0.8),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(999)),
+        ),
       ),
     );
   }
 
-  Widget _buildScreen(BuildContext context) {
-    final double w = context.widthPx;
-    final double backdropWidth = w <= _maxElementWidth ? w : min(w * _partialElementWidth, _maxElementWidth);
-    final double backdropHeight = math.min(context.heightPx * 0.65, _maxElementHeight);
-    final bool small = backdropHeight / _maxElementHeight < 0.7;
-
-    return Stack(
-      children: [
-        Positioned.fill(
-          child: _BlurredImageBg(url: _currentArtifact.imageUrl),
-        ),
-        Column(
-          children: [
-            SimpleHeader($strings.artifactsTitleArtifacts, showBackBtn: false, isTransparent: true),
-            Gap($styles.insets.xs),
-            Expanded(
-              child: Stack(children: [
-                // White arch, covering bottom half:
-                BottomCenter(
-                  child: Container(
-                    width: backdropWidth,
-                    height: backdropHeight,
-                    decoration: BoxDecoration(
-                      color: $styles.colors.offWhite.withOpacity(0.8),
-                      borderRadius: BorderRadius.vertical(top: Radius.circular(999)),
-                    ),
-                  ),
-                ),
-
-                // Carousel:
-                Center(
-                  child: SizedBox(
-                    width: backdropWidth,
-                    child: PageView.builder(
-                      controller: _controller,
-                      clipBehavior: Clip.none,
-                      itemBuilder: (context, index) => AnimatedBuilder(
-                        animation: _controller,
-                        builder: (_, __) {
-                          bool isCurrentIndex = index % _artifacts.length == _currentIndex.value;
-                          return ExcludeSemantics(
-                            excluding: !isCurrentIndex,
-                            child: _CarouselItem(
-                              index: index,
-                              currentPage: _currentOffset,
-                              artifact: _artifacts[index % _artifacts.length],
-                              bottomPadding: backdropHeight,
-                              maxWidth: backdropWidth,
-                              maxHeight: backdropHeight,
-                              onPressed: () => _handleArtifactTap(index),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-
-                // Text content
-                BottomCenter(
-                  child: Container(
-                    width: backdropWidth,
-                    padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Gap($styles.insets.md),
-                        _buildContent(context, backdropWidth, small),
-                        Gap(small ? $styles.insets.sm : $styles.insets.md),
-                        AppBtn.from(
-                          text: $strings.artifactsButtonBrowse,
-                          icon: Icons.search,
-                          expand: true,
-                          onPressed: _handleSearchTap,
-                        ),
-                        Gap(small ? $styles.insets.md : $styles.insets.lg),
-                      ],
-                    ),
-                  ),
-                ),
-              ]),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _buildContent(BuildContext context, double width, bool small) {
-    return Semantics(
-      onIncrease: () => _handleArtifactTap(_currentOffset.round() + 1),
-      onDecrease: () => _handleArtifactTap(_currentOffset.round() - 1),
-      liveRegion: true,
+  Widget _buildBottomTextContent() {
+    return BottomCenter(
       child: Container(
-        width: width,
-        padding: EdgeInsets.symmetric(horizontal: $styles.insets.sm),
+        width: _backdropWidth,
+        padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            IgnorePointer(
-              ignoringSemantics: false,
+            Gap($styles.insets.md),
+            Container(
+              width: _backdropWidth,
+              padding: EdgeInsets.symmetric(horizontal: $styles.insets.sm),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    height: small ? 90 : 110,
-                    alignment: Alignment.center,
-                    child: StaticTextScale(
-                      child: Text(
-                        _currentArtifact.title,
-                        overflow: TextOverflow.ellipsis,
-                        style: $styles.text.h2.copyWith(color: $styles.colors.black, height: 1.2),
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                      ),
+                  IgnorePointer(
+                    ignoringSemantics: false,
+                    child: Semantics(
+                      button: true,
+                      onIncrease: () => _handleArtifactTap(_currentOffset.round() + 1),
+                      onDecrease: () => _handleArtifactTap(_currentOffset.round() - 1),
+                      onTap: () => _handleArtifactTap(_currentOffset.round()),
+                      liveRegion: true,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            height: _small ? 90 : 110,
+                            alignment: Alignment.center,
+                            child: StaticTextScale(
+                              child: Text(
+                                _currentArtifact.title,
+                                overflow: TextOverflow.ellipsis,
+                                style: $styles.text.h2.copyWith(color: $styles.colors.black, height: 1.2),
+                                textAlign: TextAlign.center,
+                                maxLines: 2,
+                              ),
+                            ),
+                          ),
+                          if (!_small) Gap($styles.insets.xxs),
+                          Text(
+                            _currentArtifact.date.isEmpty ? '--' : _currentArtifact.date,
+                            style: $styles.text.body,
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ).animate(key: ValueKey(_currentArtifact.artifactId)).fadeIn(),
                     ),
                   ),
-                  if (!small) Gap($styles.insets.xxs),
-                  Text(
-                    _currentArtifact.date.isEmpty ? '--' : _currentArtifact.date,
-                    style: $styles.text.body,
-                    textAlign: TextAlign.center,
+                  Gap(_small ? $styles.insets.xs : $styles.insets.sm),
+                  AppPageIndicator(
+                    count: _artifacts.length,
+                    controller: _controller,
+                    semanticPageTitle: $strings.artifactsSemanticArtifact,
                   ),
                 ],
-              ).animate(key: ValueKey(_currentArtifact.artifactId)).fadeIn(),
+              ),
             ),
-            Gap(small ? $styles.insets.xs : $styles.insets.sm),
-            AppPageIndicator(
-              count: _artifacts.length,
-              controller: _controller,
-              semanticPageTitle: $strings.artifactsSemanticArtifact,
+            Gap(_small ? $styles.insets.sm : $styles.insets.md),
+            AppBtn.from(
+              text: $strings.artifactsButtonBrowse,
+              icon: Icons.search,
+              expand: true,
+              onPressed: _handleSearchTap,
             ),
+            Gap(_small ? $styles.insets.md : $styles.insets.lg),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCarouselPageView() {
+    return Center(
+      child: SizedBox(
+        width: _backdropWidth,
+        child: ExcludeSemantics(
+          child: PageView.builder(
+            controller: _controller,
+            clipBehavior: Clip.none,
+            itemBuilder: (context, index) => AnimatedBuilder(
+              animation: _controller,
+              builder: (_, __) {
+                return _CarouselItem(
+                  index: index,
+                  currentPage: _currentOffset,
+                  artifact: _artifacts[index % _artifacts.length],
+                  bottomPadding: _backdropHeight,
+                  maxWidth: _backdropWidth,
+                  maxHeight: _backdropHeight,
+                  onPressed: () => _handleArtifactTap(index),
+                );
+              },
+            ),
+          ),
         ),
       ),
     );

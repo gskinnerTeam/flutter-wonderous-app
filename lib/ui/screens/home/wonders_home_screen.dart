@@ -1,4 +1,3 @@
-import 'package:flutter/rendering.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
@@ -94,12 +93,16 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   }
 
   void _startDelayedFgFade() async {
-    for (var a in _fadeAnims) {
-      a.value = 0;
-    }
-    await Future.delayed(300.ms);
-    for (var a in _fadeAnims) {
-      a.forward();
+    try {
+      for (var a in _fadeAnims) {
+        a.value = 0;
+      }
+      await Future.delayed(300.ms);
+      for (var a in _fadeAnims) {
+        a.forward();
+      }
+    } on Exception catch (e) {
+      debugPrint(e.toString());
     }
   }
 
@@ -109,221 +112,231 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       _startDelayedFgFade();
       _fadeInOnNextBuild = false;
     }
-    return _swipeController.wrapGestureDetector(
-      Container(
-        color: $styles.colors.black,
-        child: Stack(
-          children: [
-            /// Background
-            ..._buildBgChildren(),
 
-            /// Clouds
-            FractionallySizedBox(
-              widthFactor: 1,
-              heightFactor: .5,
-              child: AnimatedClouds(wonderType: currentWonder.type, opacity: 1),
-            ),
+    return _swipeController.wrapGestureDetector(Container(
+      color: $styles.colors.black,
+      child: Stack(
+        children: [
+          Stack(
+            children: [
+              /// Background
+              ..._buildBgAndClouds(),
 
-            /// Wonders Illustrations
-            MergeSemantics(
-              child: Semantics(
-                liveRegion: true,
-                onIncrease: () => _setPageIndex(_wonderIndex + 1),
-                onDecrease: () => _setPageIndex(_wonderIndex - 1),
-                onTap: () => _showDetailsPage(),
-                child: PageView.builder(
-                  controller: _pageController,
-                  onPageChanged: _handlePageViewChanged,
-                  itemBuilder: _buildMgChild,
-                ),
-              ),
-            ),
+              /// Wonders Illustrations (main content)
+              _buildMgPageView(),
 
-            Stack(children: [
-              /// Foreground gradient-1, gets darker when swiping up
-              BottomCenter(
-                child: _buildSwipeableBgGradient(currentWonder.type.bgColor.withOpacity(.65)),
-              ),
+              /// Foreground illustrations and gradients
+              _buildFgAndGradients(),
 
-              /// Foreground decorators
-              ..._buildFgChildren(),
+              /// Controls that float on top of the various illustrations
+              _buildFloatingUi(),
+            ],
+          ).animate().fadeIn(),
+        ],
+      ),
+    ));
+  }
 
-              /// Foreground gradient-2, gets darker when swiping up
-              BottomCenter(
-                child: _buildSwipeableBgGradient(currentWonder.type.bgColor.withOpacity(1)),
-              ),
-
-              /// Floating controls / UI
-              AnimatedSwitcher(
-                duration: $styles.times.fast,
-                child: RepaintBoundary(
-                  key: ObjectKey(currentWonder),
-                  child: OverflowBox(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(width: double.infinity),
-                        const Spacer(),
-
-                        /// Title Content
-                        LightText(
-                          child: IgnorePointer(
-                            ignoringSemantics: false,
-                            child: Transform.translate(
-                              offset: Offset(0, 30),
-                              child: Column(
-                                children: [
-                                  ExcludeSemantics(
-                                    // Hide the title when the menu is open for visual polish
-                                    child: AnimatedOpacity(
-                                      opacity: _isMenuOpen ? 0 : 1,
-                                      duration: $styles.times.fast,
-                                      child: WonderTitleText(currentWonder, enableShadows: true),
-                                    ),
-                                  ),
-                                  Gap($styles.insets.md),
-                                  AppPageIndicator(
-                                    count: _numWonders,
-                                    controller: _pageController,
-                                    color: $styles.colors.white,
-                                    dotSize: 8,
-                                    onDotPressed: _handlePageIndicatorDotPressed,
-                                    semanticPageTitle: $strings.homeSemanticWonder,
-                                  ),
-                                  Gap($styles.insets.md),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-
-                        /// Animated arrow and background
-                        /// Wrap in a container that is full-width to make it easier to find for screen readers
-                        Container(
-                          width: double.infinity,
-                          alignment: Alignment.center,
-
-                          /// Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
-                          key: ValueKey(_wonderIndex),
-                          child: Stack(
-                            children: [
-                              /// Expanding rounded rect that grows in height as user swipes up
-                              Positioned.fill(
-                                child: _buildSwipeableArrowBg(),
-                              ),
-
-                              /// Arrow Btn that fades in and out
-                              _AnimatedArrowButton(onTap: _showDetailsPage, semanticTitle: currentWonder.title),
-                            ],
-                          ),
-                        ),
-                        Gap($styles.insets.md),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-
-              /// Menu Btn
-              TopLeft(
-                child: AnimatedOpacity(
-                  duration: $styles.times.fast,
-                  opacity: _isMenuOpen ? 0 : 1,
-                  child: MergeSemantics(
-                    child: CircleIconBtn(
-                      icon: AppIcons.menu,
-                      onPressed: _handleOpenMenuPressed,
-                      semanticLabel: $strings.homeSemanticOpenMain,
-                    ).safe(),
-                  ),
-                ),
-              ),
-            ]),
-          ],
-        ).animate().fadeIn(),
+  Widget _buildMgPageView() {
+    return ExcludeSemantics(
+      child: PageView.builder(
+        controller: _pageController,
+        onPageChanged: _handlePageViewChanged,
+        itemBuilder: (_, index) {
+          final wonder = _wonders[index % _wonders.length];
+          final wonderType = wonder.type;
+          bool isShowing = _isSelected(wonderType);
+          return _swipeController.buildListener(
+            builder: (swipeAmt, _, child) {
+              final config = WonderIllustrationConfig.mg(
+                isShowing: isShowing,
+                zoom: .05 * swipeAmt,
+              );
+              return WonderIllustration(wonderType, config: config);
+            },
+          );
+        },
       ),
     );
   }
 
-  Widget _buildMgChild(_, index) {
-    final wonder = _wonders[index % _wonders.length];
-    final wonderType = wonder.type;
-    bool isShowing = _isSelected(wonderType);
-    return _swipeController.buildListener(builder: (swipeAmt, _, child) {
-      final config = WonderIllustrationConfig.mg(
-        isShowing: isShowing,
-        zoom: .05 * swipeAmt,
-      );
-      return ExcludeSemantics(
-        excluding: !isShowing,
-        child: Semantics(
-          label: wonder.title,
-          child: WonderIllustration(wonderType, config: config),
-        ),
-      );
-    });
+  List<Widget> _buildBgAndClouds() {
+    return [
+      // Background
+      ..._wonders.map((e) {
+        final config = WonderIllustrationConfig.bg(isShowing: _isSelected(e.type));
+        return WonderIllustration(e.type, config: config);
+      }).toList(),
+      // Clouds
+      FractionallySizedBox(
+        widthFactor: 1,
+        heightFactor: .5,
+        child: AnimatedClouds(wonderType: currentWonder.type, opacity: 1),
+      )
+    ];
   }
 
-  List<Widget> _buildBgChildren() {
-    return _wonders.map((e) {
-      final config = WonderIllustrationConfig.bg(isShowing: _isSelected(e.type));
-      return WonderIllustration(e.type, config: config);
-    }).toList();
-  }
-
-  List<Widget> _buildFgChildren() {
-    return _wonders.map((e) {
-      return _swipeController.buildListener(builder: (swipeAmt, _, child) {
-        final config = WonderIllustrationConfig.fg(
-          isShowing: _isSelected(e.type),
-          zoom: .4 * (_swipeOverride ?? swipeAmt),
-        );
-        return Animate(
-            effects: const [FadeEffect()],
-            onPlay: _handleFadeAnimInit,
-            child: IgnorePointer(child: WonderIllustration(e.type, config: config)));
-      });
-    }).toList();
-  }
-
-  Widget _buildSwipeableArrowBg() {
-    return _swipeController.buildListener(
-      builder: (swipeAmt, _, child) {
-        double heightFactor = .5 + .5 * (1 + swipeAmt * 4);
-        return FractionallySizedBox(
-          alignment: Alignment.bottomCenter,
-          heightFactor: heightFactor,
-          child: Opacity(opacity: swipeAmt * .5, child: child),
-        );
-      },
-      child: VtGradient(
-        [$styles.colors.white.withOpacity(0), $styles.colors.white.withOpacity(1)],
-        const [.3, 1],
-        borderRadius: BorderRadius.circular(99),
-      ),
-    );
-  }
-
-  Widget _buildSwipeableBgGradient(Color fgColor) {
-    return _swipeController.buildListener(builder: (swipeAmt, isPointerDown, _) {
-      return IgnorePointer(
-        child: FractionallySizedBox(
-          heightFactor: .6,
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  fgColor.withOpacity(0),
-                  fgColor.withOpacity(.5 + fgColor.opacity * .25 + (isPointerDown ? .05 : 0) + swipeAmt * .20),
-                ],
-                stops: const [0, 1],
+  Widget _buildFgAndGradients() {
+    Widget buildSwipeableBgGradient(Color fgColor) {
+      return _swipeController.buildListener(builder: (swipeAmt, isPointerDown, _) {
+        return IgnorePointer(
+          child: FractionallySizedBox(
+            heightFactor: .6,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    fgColor.withOpacity(0),
+                    fgColor.withOpacity(.5 + fgColor.opacity * .25 + (isPointerDown ? .05 : 0) + swipeAmt * .20),
+                  ],
+                  stops: const [0, 1],
+                ),
               ),
             ),
           ),
+        );
+      });
+    }
+
+    final gradientColor = currentWonder.type.bgColor;
+    return Stack(children: [
+      /// Foreground gradient-1, gets darker when swiping up
+      BottomCenter(
+        child: buildSwipeableBgGradient(gradientColor.withOpacity(.65)),
+      ),
+
+      /// Foreground decorators
+      ..._wonders.map((e) {
+        return _swipeController.buildListener(builder: (swipeAmt, _, child) {
+          final config = WonderIllustrationConfig.fg(
+            isShowing: _isSelected(e.type),
+            zoom: .4 * (_swipeOverride ?? swipeAmt),
+          );
+          return Animate(
+              effects: const [FadeEffect()],
+              onPlay: _handleFadeAnimInit,
+              child: IgnorePointer(child: WonderIllustration(e.type, config: config)));
+        });
+      }).toList(),
+
+      /// Foreground gradient-2, gets darker when swiping up
+      BottomCenter(
+        child: buildSwipeableBgGradient(gradientColor),
+      ),
+    ]);
+  }
+
+  Widget _buildFloatingUi() {
+    return Stack(children: [
+      /// Floating controls / UI
+      AnimatedSwitcher(
+        duration: $styles.times.fast,
+        child: RepaintBoundary(
+          child: OverflowBox(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(width: double.infinity),
+                const Spacer(),
+
+                /// Title Content
+                LightText(
+                  child: IgnorePointer(
+                    ignoringSemantics: false,
+                    child: Transform.translate(
+                      offset: Offset(0, 30),
+                      child: Column(
+                        children: [
+                          Semantics(
+                            liveRegion: true,
+                            button: true,
+                            header: true,
+                            onIncrease: () => _setPageIndex(_wonderIndex + 1),
+                            onDecrease: () => _setPageIndex(_wonderIndex - 1),
+                            onTap: () => _showDetailsPage(),
+                            // Hide the title when the menu is open for visual polish
+                            child: AnimatedOpacity(
+                              opacity: _isMenuOpen ? 0 : 1,
+                              duration: $styles.times.fast,
+                              child: WonderTitleText(currentWonder, enableShadows: true),
+                            ),
+                          ),
+                          Gap($styles.insets.md),
+                          Semantics(
+                            onIncrease: () => _setPageIndex(_wonderIndex + 1),
+                            onDecrease: () => _setPageIndex(_wonderIndex - 1),
+                            child: AppPageIndicator(
+                              count: _numWonders,
+                              controller: _pageController,
+                              color: $styles.colors.white,
+                              dotSize: 8,
+                              onDotPressed: _handlePageIndicatorDotPressed,
+                              semanticPageTitle: $strings.homeSemanticWonder,
+                            ),
+                          ),
+                          Gap($styles.insets.md),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+
+                /// Animated arrow and background
+                /// Wrap in a container that is full-width to make it easier to find for screen readers
+                Container(
+                  width: double.infinity,
+                  alignment: Alignment.center,
+
+                  /// Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
+                  key: ValueKey(_wonderIndex),
+                  child: Stack(
+                    children: [
+                      /// Expanding rounded rect that grows in height as user swipes up
+                      Positioned.fill(
+                          child: _swipeController.buildListener(
+                        builder: (swipeAmt, _, child) {
+                          double heightFactor = .5 + .5 * (1 + swipeAmt * 4);
+                          return FractionallySizedBox(
+                            alignment: Alignment.bottomCenter,
+                            heightFactor: heightFactor,
+                            child: Opacity(opacity: swipeAmt * .5, child: child),
+                          );
+                        },
+                        child: VtGradient(
+                          [$styles.colors.white.withOpacity(0), $styles.colors.white.withOpacity(1)],
+                          const [.3, 1],
+                          borderRadius: BorderRadius.circular(99),
+                        ),
+                      )),
+
+                      /// Arrow Btn that fades in and out
+                      _AnimatedArrowButton(onTap: _showDetailsPage, semanticTitle: currentWonder.title),
+                    ],
+                  ),
+                ),
+                Gap($styles.insets.md),
+              ],
+            ),
+          ),
         ),
-      );
-    });
+      ),
+
+      /// Menu Btn
+      TopLeft(
+        child: AnimatedOpacity(
+          duration: $styles.times.fast,
+          opacity: _isMenuOpen ? 0 : 1,
+          child: MergeSemantics(
+            child: CircleIconBtn(
+              icon: AppIcons.menu,
+              onPressed: _handleOpenMenuPressed,
+              semanticLabel: $strings.homeSemanticOpenMain,
+            ).safe(),
+          ),
+        ),
+      ),
+    ]);
   }
 }

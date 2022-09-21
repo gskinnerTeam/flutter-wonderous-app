@@ -14,6 +14,7 @@ import 'package:wonders/ui/common/curved_clippers.dart';
 import 'package:wonders/ui/common/google_maps_marker.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/hidden_collectible.dart';
+import 'package:wonders/ui/common/pop_router_on_over_scroll.dart';
 import 'package:wonders/ui/common/scaling_list_item.dart';
 import 'package:wonders/ui/common/static_text_scale.dart';
 import 'package:wonders/ui/common/themed_text.dart';
@@ -47,8 +48,6 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
   late final ScrollController _scroller = ScrollController()..addListener(_handleScrollChanged);
   final _scrollPos = ValueNotifier(0.0);
   final _sectionIndex = ValueNotifier(0);
-  final _scrollToPopThreshold = 50;
-  bool _isPointerDown = false;
 
   @override
   void dispose() {
@@ -60,16 +59,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
   void _handleScrollChanged() {
     _scrollPos.value = _scroller.position.pixels;
     widget.onScroll.call(_scrollPos.value);
-    // If user pulls far down on the elastic list, pop back to
-    if (_scrollPos.value < -_scrollToPopThreshold) {
-      if (_isPointerDown) {
-        context.pop();
-        _scroller.removeListener(_handleScrollChanged);
-      }
-    }
   }
-
-  bool _checkPointerIsDown(d) => _isPointerDown = d.dragDetails != null;
 
   @override
   Widget build(BuildContext context) {
@@ -79,8 +69,8 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
       double minAppBarHeight = shortMode ? 80 : 120;
       double maxAppBarHeight = shortMode ? 400 : 500;
 
-      return NotificationListener<ScrollUpdateNotification>(
-        onNotification: _checkPointerIsDown,
+      return PopRouterOnOverScroll(
+        controller: _scroller,
         child: ColoredBox(
           color: $styles.colors.offWhite,
           child: Stack(
