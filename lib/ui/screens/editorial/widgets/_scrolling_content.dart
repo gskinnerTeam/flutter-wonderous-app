@@ -28,35 +28,37 @@ class _ScrollingContent extends StatelessWidget {
       final String dropChar = value.substring(0, 1);
       final textScale = MediaQuery.of(context).textScaleFactor;
       final double dropCapWidth = StringUtils.measure(dropChar, dropStyle).width * textScale;
-      final bool skipCaps = !localeLogic.isEnglish || MediaQuery.of(context).accessibleNavigation;
+      final bool skipCaps = !localeLogic.isEnglish;
       return Semantics(
         label: value,
-        child: !skipCaps
-            ? DropCapText(
-                _fixNewlines(value).substring(1),
-                dropCap: DropCap(
-                  width: dropCapWidth,
-                  height: $styles.text.body.fontSize! * $styles.text.body.height! * 2,
-                  child: Transform.translate(
-                    offset: Offset(0, bodyStyle.fontSize! * (bodyStyle.height! - 1) - 2),
-                    child: Text(
-                      dropChar,
-                      overflow: TextOverflow.visible,
-                      style: $styles.text.dropCase.copyWith(
-                        color: $styles.colors.accent1,
-                        height: 1,
+        child: ExcludeSemantics(
+          child: !skipCaps
+              ? DropCapText(
+                  _fixNewlines(value).substring(1),
+                  dropCap: DropCap(
+                    width: dropCapWidth,
+                    height: $styles.text.body.fontSize! * $styles.text.body.height! * 2,
+                    child: Transform.translate(
+                      offset: Offset(0, bodyStyle.fontSize! * (bodyStyle.height! - 1) - 2),
+                      child: Text(
+                        dropChar,
+                        overflow: TextOverflow.visible,
+                        style: $styles.text.dropCase.copyWith(
+                          color: $styles.colors.accent1,
+                          height: 1,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                style: $styles.text.body,
-                dropCapPadding: EdgeInsets.only(right: 6),
-                dropCapStyle: $styles.text.dropCase.copyWith(
-                  color: $styles.colors.accent1,
-                  height: 1,
-                ),
-              )
-            : Text(value, style: bodyStyle),
+                  style: $styles.text.body,
+                  dropCapPadding: EdgeInsets.only(right: 6),
+                  dropCapStyle: $styles.text.dropCase.copyWith(
+                    color: $styles.colors.accent1,
+                    height: 1,
+                  ),
+                )
+              : Text(value, style: bodyStyle),
+        ),
       );
     }
 

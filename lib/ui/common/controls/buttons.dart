@@ -138,19 +138,14 @@ class AppBtn extends StatelessWidget {
     // add press effect:
     if (pressEffect) button = _ButtonPressEffect(button);
 
-    // add semantics:
-    if (semanticLabel.isEmpty) {
-      button = ExcludeSemantics(child: button);
-    } else {
-      button = Semantics(
-        label: semanticLabel,
-        button: true,
-        container: true,
-        child: button,
-      );
-    }
-
-    return button;
+    // add semantics?
+    if (semanticLabel.isEmpty) return button;
+    return Semantics(
+      label: semanticLabel,
+      button: true,
+      container: true,
+      child: ExcludeSemantics(child: button),
+    );
   }
 }
 
