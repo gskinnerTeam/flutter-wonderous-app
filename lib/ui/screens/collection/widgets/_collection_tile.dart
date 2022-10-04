@@ -32,7 +32,9 @@ class _CollectionTile extends StatelessWidget {
           heightFactor: 0.66,
           child: Image(
             image: collectible.icon,
-            color: $styles.colors.greyStrong,
+            color: $styles.colors.black,
+            colorBlendMode: BlendMode.color,
+            opacity: AlwaysStoppedAnimation(0.2),
           ),
         ),
       ),
