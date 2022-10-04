@@ -1,3 +1,7 @@
+# 1.9.7
+- Updated impeller version 
+- Improved load state for search tiles
+
 # 1.9.6
 - Improved a11y for Home Screen and Artifact Carousel
 - Polished collection icons
