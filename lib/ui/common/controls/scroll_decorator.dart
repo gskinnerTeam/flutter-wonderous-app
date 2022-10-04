@@ -4,12 +4,17 @@ import 'package:flutter/material.dart';
 
 /// Easily add visual decorations to a scrolling widget based on the state of its controller.
 class ScrollDecorator extends StatefulWidget {
-
   /// Creates a widget that builds foreground and/or background decorations for a scrolling widget based on the state of
   /// its ScrollController.
   // ignore: prefer_const_constructors_in_immutables
-  ScrollDecorator({Key? key, required this.builder, this.foregroundBuilder, this.backgroundBuilder, this.controller})
-      : super(key: key);
+  ScrollDecorator({
+    Key? key,
+    required this.builder,
+    this.fgBuilder,
+    this.bgBuilder,
+    this.controller,
+    this.onInit,
+  }) : super(key: key);
 
   /// Creates a ScrollDecorator that fades a widget in at the begin or end of the scrolling widget based on the scroll
   /// position. For example on a vertical list, it would fade in the `begin` widget when the list is not scrolled to the
@@ -18,9 +23,10 @@ class ScrollDecorator extends StatefulWidget {
     Key? key,
     required this.builder,
     this.controller,
+    this.onInit,
     Widget? begin,
     Widget? end,
-    bool background = false,
+    bool bg = false,
     Axis direction = Axis.vertical,
     Duration duration = const Duration(milliseconds: 150),
   }) : super(key: key) {
@@ -45,8 +51,8 @@ class ScrollDecorator extends StatefulWidget {
       );
     }
 
-    backgroundBuilder = background ? flexBuilder : null;
-    foregroundBuilder = !background ? flexBuilder : null;
+    bgBuilder = bg ? flexBuilder : null;
+    fgBuilder = !bg ? flexBuilder : null;
   }
 
   /// Creates an ScrollDecorator that adds a shadow to the top of a vertical list when it is scrolled down.
@@ -54,10 +60,11 @@ class ScrollDecorator extends StatefulWidget {
     Key? key,
     required this.builder,
     this.controller,
+    this.onInit,
     Color color = Colors.black54,
   }) : super(key: key) {
-    backgroundBuilder = null;
-    foregroundBuilder = (controller) {
+    bgBuilder = null;
+    fgBuilder = (controller) {
       final double ratio = controller.hasClients ? min(1, controller.position.extentBefore / 60) : 0;
       return IgnorePointer(
         child: Container(
@@ -84,11 +91,13 @@ class ScrollDecorator extends StatefulWidget {
 
   /// Builder to create the decoration widget that will be layered in front of the scrolling widget. It should use the
   /// provided ScrollController to adjust its output as appropriate.
-  late final ScrollBuilder? foregroundBuilder;
+  late final ScrollBuilder? fgBuilder;
 
   /// Builder to create the decoration widget that will be layered behind the scrolling widget. It should use the
   /// provided ScrollController to adjust its output as appropriate.
-  late final ScrollBuilder? backgroundBuilder;
+  late final ScrollBuilder? bgBuilder;
+
+  final void Function(ScrollController controller)? onInit;
 
   @override
   State<ScrollDecorator> createState() => _ScrollDecoratorState();
@@ -98,9 +107,12 @@ class _ScrollDecoratorState extends State<ScrollDecorator> {
   ScrollController? _controller;
   late Widget content;
 
+  ScrollController get currentController => (widget.controller ?? _controller)!;
+
   @override
   void initState() {
     if (widget.controller == null) _controller = ScrollController();
+    widget.onInit?.call(currentController);
     super.initState();
   }
 
@@ -112,17 +124,19 @@ class _ScrollDecoratorState extends State<ScrollDecorator> {
 
   @override
   Widget build(BuildContext context) {
-    ScrollController controller = (widget.controller ?? _controller)!;
-
-    content = widget.builder(controller);
+    content = widget.builder(currentController);
     return AnimatedBuilder(
-        animation: controller,
+        animation: currentController,
         builder: (_, __) {
           return Stack(
             children: [
-              if (widget.backgroundBuilder != null) widget.backgroundBuilder!(controller),
+              if (widget.bgBuilder != null) ...[
+                widget.bgBuilder!(currentController),
+              ],
               content,
-              if (widget.foregroundBuilder != null) widget.foregroundBuilder!(controller),
+              if (widget.fgBuilder != null) ...[
+                widget.fgBuilder!(currentController),
+              ],
             ],
           );
         });
