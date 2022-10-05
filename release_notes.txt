@@ -1,6 +1,7 @@
 # 1.9.7
 - Updated impeller version 
 - Improved load state for search tiles
+- Hide Keyboard when scrolling begins in Search
 
 # 1.9.6
 - Improved a11y for Home Screen and Artifact Carousel
