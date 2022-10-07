@@ -40,6 +40,7 @@ class HomeMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double gridWidth = (context.heightPx / 2).clamp(200, 450);
     return Stack(
       children: [
         /// Backdrop / Underlay
@@ -73,18 +74,25 @@ class HomeMenu extends StatelessWidget {
           child: SafeArea(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: $styles.insets.lg),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Spacer(flex: 3),
-                  _buildIconGrid(context)
-                      .animate()
-                      .fade(duration: $styles.times.fast)
-                      .scale(begin: .8, curve: Curves.easeOut),
-                  Spacer(flex: 2),
-                  _buildBottomBtns(context),
-                  Gap($styles.insets.xl),
-                ],
+              child: Center(
+                child: SizedBox(
+                  width: gridWidth,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Gap($styles.insets.md),
+                      Spacer(),
+                      _buildIconGrid(context)
+                          .animate()
+                          .fade(duration: $styles.times.fast)
+                          .scale(begin: .8, curve: Curves.easeOut),
+                      Gap($styles.insets.lg),
+                      _buildBottomBtns(context),
+                      Spacer(),
+                      Gap($styles.insets.md),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
