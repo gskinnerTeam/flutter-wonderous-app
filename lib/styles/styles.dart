@@ -26,6 +26,9 @@ class AppStyle {
 
   /// Animation Durations
   final _Times times = _Times();
+
+  /// Shared sizes
+  final _Sizes sizes = _Sizes();
 }
 
 @immutable
@@ -118,6 +121,11 @@ class _Corners {
   late final double sm = 4;
   late final double md = 8;
   late final double lg = 32;
+}
+
+// TODO: add, @immutable when design is solidified
+class _Sizes {
+  double get maxContentWidth => 800;
 }
 
 @immutable
