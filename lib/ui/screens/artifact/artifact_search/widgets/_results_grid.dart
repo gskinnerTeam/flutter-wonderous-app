@@ -16,7 +16,7 @@ class _ResultsGridState extends State<_ResultsGrid> {
   double _prevVel = -1;
 
   void _handleResultsScrolled() {
-    // Hide the keyboard if the list is scrolled manually by the pointer, ignoring velocity based scroll changes
+    // Hide the keyboard if the list is scrolled manually by the pointer, ignoring velocity based scroll changes like deceleration or over-scroll bounce
     // ignore: INVALID_USE_OF_PROTECTED_MEMBER, INVALID_USE_OF_VISIBLE_FOR_TESTING_MEMBER
     final vel = _controller.position.activity?.velocity;
     if (vel == 0 && _prevVel == 0) {
@@ -40,7 +40,7 @@ class _ResultsGridState extends State<_ResultsGrid> {
             SliverPadding(
               padding: EdgeInsets.all($styles.insets.sm).copyWith(bottom: $styles.insets.offset * 1.5),
               sliver: SliverMasonryGrid.count(
-                crossAxisCount: 2,
+                crossAxisCount: (context.widthPx / 300).ceil(),
                 mainAxisSpacing: $styles.insets.sm,
                 crossAxisSpacing: $styles.insets.sm,
                 childCount: widget.searchResults.length,
