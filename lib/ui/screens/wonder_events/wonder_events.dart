@@ -28,14 +28,19 @@ class WonderEvents extends StatelessWidget {
         color: $styles.colors.black,
         child: SafeArea(
           bottom: false,
-          child: Stack(
-            children: [
-              /// Top content, sits underneath scrolling list
-              _TopContent(data: _data),
+          child: Center(
+            child: SizedBox(
+              width: $styles.sizes.maxContentWidth,
+              child: Stack(
+                children: [
+                  /// Top content, sits underneath scrolling list
+                  _TopContent(data: _data),
 
-              /// Scrolling Events list, takes up the full view
-              _EventsList(data: _data),
-            ],
+                  /// Scrolling Events list, takes up the full view
+                  _EventsList(data: _data),
+                ],
+              ),
+            ),
           ),
         ),
       );
