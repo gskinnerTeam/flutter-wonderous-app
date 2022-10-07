@@ -73,13 +73,18 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
               closedBuilder: (_) => _ClosedTimeRange(startYear: widget.startYear, endYear: widget.endYear),
               openBuilder: (_) => SizedBox(
                 width: constraints.maxWidth - pad * 2,
-                child: _OpenedTimeRange(
-                  startYear: widget.startYear,
-                  endYear: widget.endYear,
-                  onChange: widget.onChanged,
-                  wonder: widget.wonder,
-                  painter: _painter,
-                  onClose: widget.panelController.toggle,
+                child: Center(
+                  child: SizedBox(
+                    width: $styles.sizes.maxContentWidth,
+                    child: _OpenedTimeRange(
+                      startYear: widget.startYear,
+                      endYear: widget.endYear,
+                      onChange: widget.onChanged,
+                      wonder: widget.wonder,
+                      painter: _painter,
+                      onClose: widget.panelController.toggle,
+                    ),
+                  ),
                 ),
               ),
             ),
