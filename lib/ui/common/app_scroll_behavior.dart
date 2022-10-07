@@ -1,5 +1,6 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
-import 'package:wonders/common_libs.dart';
 
 /// Add mouse drag on desktop for easier responsive testing
 class AppScrollBehavior extends ScrollBehavior {
@@ -13,6 +14,9 @@ class AppScrollBehavior extends ScrollBehavior {
 
   @override
   Widget buildScrollbar(BuildContext context, Widget child, ScrollableDetails details) {
-    return RawScrollbar(controller: details.controller, child: child);
+    return child;
+    return defaultTargetPlatform == TargetPlatform.android
+        ? RawScrollbar(controller: details.controller, child: child)
+        : CupertinoScrollbar(controller: details.controller, child: child);
   }
 }
