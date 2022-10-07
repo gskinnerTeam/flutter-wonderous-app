@@ -81,7 +81,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                   valueListenable: _scrollPos,
                   builder: (_, value, __) {
                     return Container(
-                      color: widget.data.type.bgColor.withOpacity(_scrollPos.value > 1000 ? 0 : 1),
+                      color: widget.data.type.bgColor.withOpacity(1),
                     );
                   },
                 ),
@@ -103,58 +103,64 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
               ),
 
               /// Scrolling content - Includes an invisible gap at the top, and then scrolls over the illustration
-              CustomScrollView(
-                primary: false,
-                controller: _scroller,
-                cacheExtent: 1000,
-                slivers: [
-                  /// Invisible padding at the top of the list, so the illustration shows through the btm
-                  SliverToBoxAdapter(
-                    child: SizedBox(height: illustrationHeight),
-                  ),
+              TopCenter(
+                child: SizedBox(
+                  width: $styles.sizes.maxContentWidth,
+                  child: CustomScrollView(
+                    primary: false,
+                    controller: _scroller,
+                    scrollBehavior: ScrollConfiguration.of(context).copyWith(),
+                    cacheExtent: 1000,
+                    slivers: [
+                      /// Invisible padding at the top of the list, so the illustration shows through the btm
+                      SliverToBoxAdapter(
+                        child: SizedBox(height: illustrationHeight),
+                      ),
 
-                  /// Text content, animates itself to hide behind the app bar as it scrolls up
-                  SliverToBoxAdapter(
-                    child: ValueListenableBuilder<double>(
-                      valueListenable: _scrollPos,
-                      builder: (_, value, child) {
-                        double offsetAmt = max(0, value * .3);
-                        double opacity = (1 - offsetAmt / 150).clamp(0, 1);
-                        return Transform.translate(
-                          offset: Offset(0, offsetAmt),
-                          child: Opacity(opacity: opacity, child: child),
-                        );
-                      },
-                      child: _TitleText(widget.data, scroller: _scroller),
-                    ),
-                  ),
+                      /// Text content, animates itself to hide behind the app bar as it scrolls up
+                      SliverToBoxAdapter(
+                        child: ValueListenableBuilder<double>(
+                          valueListenable: _scrollPos,
+                          builder: (_, value, child) {
+                            double offsetAmt = max(0, value * .3);
+                            double opacity = (1 - offsetAmt / 150).clamp(0, 1);
+                            return Transform.translate(
+                              offset: Offset(0, offsetAmt),
+                              child: Opacity(opacity: opacity, child: child),
+                            );
+                          },
+                          child: _TitleText(widget.data, scroller: _scroller),
+                        ),
+                      ),
 
-                  /// Collapsing App bar, pins to the top of the list
-                  SliverAppBar(
-                    pinned: true,
-                    collapsedHeight: minAppBarHeight,
-                    toolbarHeight: minAppBarHeight,
-                    expandedHeight: maxAppBarHeight,
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                    leading: SizedBox.shrink(),
-                    flexibleSpace: SizedBox.expand(
-                      child: _AppBar(
-                        widget.data.type,
-                        scrollPos: _scrollPos,
-                        sectionIndex: _sectionIndex,
-                      ).animate().fade(duration: $styles.times.med, delay: $styles.times.pageTransition),
-                    ),
-                  ),
+                      /// Collapsing App bar, pins to the top of the list
+                      SliverAppBar(
+                        pinned: true,
+                        collapsedHeight: minAppBarHeight,
+                        toolbarHeight: minAppBarHeight,
+                        expandedHeight: maxAppBarHeight,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        leading: SizedBox.shrink(),
+                        flexibleSpace: SizedBox.expand(
+                          child: _AppBar(
+                            widget.data.type,
+                            scrollPos: _scrollPos,
+                            sectionIndex: _sectionIndex,
+                          ).animate().fade(duration: $styles.times.med, delay: $styles.times.pageTransition),
+                        ),
+                      ),
 
-                  /// Editorial content (text and images)
-                  _ScrollingContent(widget.data, scrollPos: _scrollPos, sectionNotifier: _sectionIndex),
+                      /// Editorial content (text and images)
+                      _ScrollingContent(widget.data, scrollPos: _scrollPos, sectionNotifier: _sectionIndex),
 
-                  /// Bottom padding
-                  SliverToBoxAdapter(
-                    child: Container(height: 150, color: $styles.colors.offWhite),
+                      /// Bottom padding
+                      SliverToBoxAdapter(
+                        child: Container(height: 150, color: $styles.colors.offWhite),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
 
               /// Home Btn
