@@ -27,7 +27,7 @@ class ChichenItzaIllustration extends StatelessWidget {
         ),
       ),
       Align(
-        alignment: Alignment(config.shortMode ? .25 : .7, config.shortMode ? 1 : -.15),
+        alignment: Alignment(config.shortMode ? .25 : .5, config.shortMode ? 1 : -.15),
         child: WonderHero(
           config,
           'chichen-sun',
@@ -50,7 +50,7 @@ class ChichenItzaIllustration extends StatelessWidget {
       Align(
         alignment: Alignment(0, config.shortMode ? 1.2 : -.15),
         child: FractionallySizedBox(
-          widthFactor: config.shortMode ? 1.5 : 2.6,
+          heightFactor: config.shortMode ? null : 2.6,
           child: WonderHero(
             config,
             'chichen-mg',
@@ -67,14 +67,14 @@ class ChichenItzaIllustration extends StatelessWidget {
       Stack(
         children: [
           Transform.scale(
-            scale: 1 + config.zoom * .2,
+            scale: 1 + config.zoom * .05,
             child: FractionalTranslation(
               translation: Offset(-.2 * (1 - curvedAnim), 0),
               child: BottomLeft(
-                child: FractionallySizedBox(
-                  heightFactor: .5,
+                child: SizedBox(
+                  height: 500,
                   child: FractionalTranslation(
-                    translation: Offset(-.4, 0),
+                    translation: Offset(-.4, .15),
                     child: Image.asset('$assetPath/foreground-left.png', opacity: anim, fit: BoxFit.cover),
                   ),
                 ),
@@ -82,14 +82,14 @@ class ChichenItzaIllustration extends StatelessWidget {
             ),
           ),
           Transform.scale(
-            scale: 1 + config.zoom * .1,
+            scale: 1 + config.zoom * .03,
             child: FractionalTranslation(
               translation: Offset(.2 * (1 - curvedAnim), 0),
               child: BottomRight(
-                child: FractionallySizedBox(
-                  heightFactor: .33,
+                child: SizedBox(
+                  height: 350,
                   child: FractionalTranslation(
-                    translation: Offset(.5, -.32),
+                    translation: Offset(.35, .2),
                     child: Image.asset('$assetPath/foreground-right.png', opacity: anim, fit: BoxFit.cover),
                   ),
                 ),
@@ -97,12 +97,12 @@ class ChichenItzaIllustration extends StatelessWidget {
             ),
           ),
           Transform.scale(
-            scale: 1 + config.zoom * .15,
+            scale: 1 + config.zoom * .25,
             child: FractionalTranslation(
               translation: Offset(-.2 * (1 - curvedAnim), 0),
               child: TopLeft(
-                child: FractionallySizedBox(
-                  heightFactor: .55,
+                child: SizedBox(
+                  height: 600,
                   child: FractionalTranslation(
                     translation: Offset(-.3, -.45),
                     child: Image.asset('$assetPath/top-left.png', opacity: anim, fit: BoxFit.cover),
@@ -112,14 +112,14 @@ class ChichenItzaIllustration extends StatelessWidget {
             ),
           ),
           Transform.scale(
-            scale: 1 + config.zoom * .3,
+            scale: 1 + config.zoom * .2,
             child: FractionalTranslation(
               translation: Offset(.2 * (1 - curvedAnim), 0),
               child: TopRight(
-                child: FractionallySizedBox(
-                  heightFactor: .65,
+                child: SizedBox(
+                  height: 700,
                   child: FractionalTranslation(
-                    translation: Offset(.45, -.35),
+                    translation: Offset(.2, -.35),
                     child: Image.asset('$assetPath/top-right.png', opacity: anim, fit: BoxFit.cover),
                   ),
                 ),
