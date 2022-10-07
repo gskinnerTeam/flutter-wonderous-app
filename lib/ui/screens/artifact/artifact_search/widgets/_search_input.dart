@@ -9,13 +9,18 @@ class _SearchInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (ctx, constraints) => Autocomplete<String>(
-        displayStringForOption: (data) => data,
-        onSelected: onSubmit,
-        optionsBuilder: _getSuggestions,
-        optionsViewBuilder: (context, onSelected, results) =>
-            _buildSuggestionsView(context, onSelected, results, constraints),
-        fieldViewBuilder: _buildInput,
+      builder: (ctx, constraints) => Center(
+        child: SizedBox(
+          width: $styles.sizes.maxContentWidth,
+          child: Autocomplete<String>(
+            displayStringForOption: (data) => data,
+            onSelected: onSubmit,
+            optionsBuilder: _getSuggestions,
+            optionsViewBuilder: (context, onSelected, results) =>
+                _buildSuggestionsView(context, onSelected, results, constraints),
+            fieldViewBuilder: _buildInput,
+          ),
+        ),
       ),
     );
   }
@@ -107,51 +112,53 @@ class _SearchInput extends StatelessWidget {
         color: $styles.colors.offWhite,
         borderRadius: BorderRadius.circular($styles.insets.xs),
       ),
-      child: Row(children: [
-        Gap($styles.insets.xs * 1.5),
-        Icon(Icons.search, color: $styles.colors.caption),
-        Expanded(
-          child: TextField(
-            onSubmitted: onSubmit,
-            controller: textController,
-            focusNode: focusNode,
-            style: TextStyle(color: captionColor),
-            textAlignVertical: TextAlignVertical.top,
-            decoration: InputDecoration(
-              isDense: true,
-              contentPadding: EdgeInsets.all($styles.insets.xs),
-              labelStyle: TextStyle(color: captionColor),
-              hintStyle: TextStyle(color: captionColor.withOpacity(0.5)),
-              prefixStyle: TextStyle(color: captionColor),
-              focusedBorder: OutlineInputBorder(borderSide: BorderSide.none),
-              enabledBorder: UnderlineInputBorder(borderSide: BorderSide.none),
-              hintText: $strings.searchInputHintSearch,
-            ),
-          ),
-        ),
-        Gap($styles.insets.xs),
-        ValueListenableBuilder(
-          valueListenable: textController,
-          builder: (_, value, __) => Visibility(
-            visible: textController.value.text.isNotEmpty,
-            child: Padding(
-              padding: EdgeInsets.only(right: $styles.insets.xs),
-              child: CircleIconBtn(
-                bgColor: $styles.colors.caption,
-                color: $styles.colors.white,
-                icon: AppIcons.close,
-                semanticLabel: $strings.searchInputSemanticClear,
-                size: $styles.insets.lg,
-                iconSize: $styles.insets.sm,
-                onPressed: () {
-                  textController.clear();
-                  onSubmit('');
-                },
+      child: Row(
+        children: [
+          Gap($styles.insets.xs * 1.5),
+          Icon(Icons.search, color: $styles.colors.caption),
+          Expanded(
+            child: TextField(
+              onSubmitted: onSubmit,
+              controller: textController,
+              focusNode: focusNode,
+              style: TextStyle(color: captionColor),
+              textAlignVertical: TextAlignVertical.top,
+              decoration: InputDecoration(
+                isDense: true,
+                contentPadding: EdgeInsets.all($styles.insets.xs),
+                labelStyle: TextStyle(color: captionColor),
+                hintStyle: TextStyle(color: captionColor.withOpacity(0.5)),
+                prefixStyle: TextStyle(color: captionColor),
+                focusedBorder: OutlineInputBorder(borderSide: BorderSide.none),
+                enabledBorder: UnderlineInputBorder(borderSide: BorderSide.none),
+                hintText: $strings.searchInputHintSearch,
               ),
             ),
           ),
-        )
-      ]),
+          Gap($styles.insets.xs),
+          ValueListenableBuilder(
+            valueListenable: textController,
+            builder: (_, value, __) => Visibility(
+              visible: textController.value.text.isNotEmpty,
+              child: Padding(
+                padding: EdgeInsets.only(right: $styles.insets.xs),
+                child: CircleIconBtn(
+                  bgColor: $styles.colors.caption,
+                  color: $styles.colors.white,
+                  icon: AppIcons.close,
+                  semanticLabel: $strings.searchInputSemanticClear,
+                  size: $styles.insets.lg,
+                  iconSize: $styles.insets.sm,
+                  onPressed: () {
+                    textController.clear();
+                    onSubmit('');
+                  },
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
