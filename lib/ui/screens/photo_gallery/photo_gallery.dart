@@ -146,46 +146,41 @@ class _PhotoGalleryState extends State<PhotoGallery> {
           gridOffset += Offset(0, -context.mq.padding.top / 2);
           final offsetTweenDuration = _skipNextOffsetTween ? Duration.zero : swipeDuration;
           final cutoutTweenDuration = _skipNextOffsetTween ? Duration.zero : swipeDuration * .5;
-          return Stack(
-            children: [
-              // A overlay with a transparent middle sits on top of everything, animating itself each time index changes
-              _AnimatedCutoutOverlay(
-                animationKey: ValueKey(_index),
-                cutoutSize: imgSize,
-                swipeDir: _lastSwipeDir,
-                duration: cutoutTweenDuration,
-                opacity: _scale == 1 ? .7 : .5,
-                child: SafeArea(
-                  bottom: false,
-                  // Place content in overflow box, to allow it to flow outside the parent
-                  child: OverflowBox(
-                    maxWidth: _gridSize * imgSize.width + padding * (_gridSize - 1),
-                    maxHeight: _gridSize * imgSize.height + padding * (_gridSize - 1),
-                    alignment: Alignment.center,
-                    // Detect swipes in order to change index
-                    child: EightWaySwipeDetector(
-                      onSwipe: _handleSwipe,
-                      threshold: 30,
-                      // A tween animation builder moves from image to image based on current offset
-                      child: TweenAnimationBuilder<Offset>(
-                        tween: Tween(begin: gridOffset, end: gridOffset),
-                        duration: offsetTweenDuration,
-                        curve: Curves.easeOut,
-                        builder: (_, value, child) => Transform.translate(offset: value, child: child),
-                        child: GridView.count(
-                          physics: NeverScrollableScrollPhysics(),
-                          crossAxisCount: _gridSize,
-                          childAspectRatio: imgSize.aspectRatio,
-                          mainAxisSpacing: padding,
-                          crossAxisSpacing: padding,
-                          children: List.generate(_imgCount, (i) => _buildImage(i, swipeDuration, imgSize)),
-                        ),
-                      ),
+          return  _AnimatedCutoutOverlay(
+            animationKey: ValueKey(_index),
+            cutoutSize: imgSize,
+            swipeDir: _lastSwipeDir,
+            duration: cutoutTweenDuration,
+            opacity: _scale == 1 ? .7 : .5,
+            child: SafeArea(
+              bottom: false,
+              // Place content in overflow box, to allow it to flow outside the parent
+              child: OverflowBox(
+                maxWidth: _gridSize * imgSize.width + padding * (_gridSize - 1),
+                maxHeight: _gridSize * imgSize.height + padding * (_gridSize - 1),
+                alignment: Alignment.center,
+                // Detect swipes in order to change index
+                child: EightWaySwipeDetector(
+                  onSwipe: _handleSwipe,
+                  threshold: 30,
+                  // A tween animation builder moves from image to image based on current offset
+                  child: TweenAnimationBuilder<Offset>(
+                    tween: Tween(begin: gridOffset, end: gridOffset),
+                    duration: offsetTweenDuration,
+                    curve: Curves.easeOut,
+                    builder: (_, value, child) => Transform.translate(offset: value, child: child),
+                    child: GridView.count(
+                      physics: NeverScrollableScrollPhysics(),
+                      crossAxisCount: _gridSize,
+                      childAspectRatio: imgSize.aspectRatio,
+                      mainAxisSpacing: padding,
+                      crossAxisSpacing: padding,
+                      children: List.generate(_imgCount, (i) => _buildImage(i, swipeDuration, imgSize)),
                     ),
                   ),
                 ),
               ),
-            ],
+            ),
           );
         });
   }
