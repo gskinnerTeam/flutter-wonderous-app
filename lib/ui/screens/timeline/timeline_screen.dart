@@ -53,16 +53,12 @@ class _TimelineScreenState extends State<TimelineScreen> {
 
               /// Vertically scrolling timeline, manages a ScrollController.
               Expanded(
-                child: Stack(
-                  children: [
-                    /// The timeline content itself
-                    _ScrollingViewport(
-                      scroller: _scroller,
-                      minSize: minSize,
-                      maxSize: maxSize,
-                      selectedWonder: widget.type,
-                    ),
-                  ],
+                /// The timeline content itself
+                child: _ScrollingViewport(
+                  scroller: _scroller,
+                  minSize: minSize,
+                  maxSize: maxSize,
+                  selectedWonder: widget.type,
                 ),
               ),
 
