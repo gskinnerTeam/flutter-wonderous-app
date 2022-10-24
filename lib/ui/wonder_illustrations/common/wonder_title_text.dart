@@ -18,7 +18,7 @@ class WonderTitleText extends StatelessWidget {
     );
     bool smallText = [WonderType.christRedeemer, WonderType.colosseum].contains(data.type);
     if (smallText) {
-      textStyle = textStyle.copyWith(fontSize: 56);
+      textStyle = textStyle.copyWith(fontSize: 56 * $styles.scale);
     }
 
     // First, get a list like: ['the\n', 'great wall']
@@ -37,7 +37,7 @@ class WonderTitleText extends StatelessWidget {
       }
       return TextSpan(
         text: '$text${addLinebreak ? '\n' : addSpace ? ' ' : ''}',
-        style: useSmallText ? textStyle.copyWith(fontSize: 20) : textStyle,
+        style: useSmallText ? textStyle.copyWith(fontSize: 20 * $styles.scale) : textStyle,
       );
     }
 

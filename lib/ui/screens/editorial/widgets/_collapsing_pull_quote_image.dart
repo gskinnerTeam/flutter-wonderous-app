@@ -18,7 +18,7 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
       var quoteStyle = $styles.text.quote1;
       quoteStyle = quoteStyle.copyWith(color: $styles.colors.caption);
       if (isAuthor) {
-        quoteStyle = quoteStyle.copyWith(fontSize: 20, fontWeight: FontWeight.w600);
+        quoteStyle = quoteStyle.copyWith(fontSize: 20 * $styles.scale, fontWeight: FontWeight.w600);
       }
       double offsetY = (imgHeight / 2 + outerPadding * .25) * (1 - collapseAmt);
       if (top) offsetY *= -1; // flip?

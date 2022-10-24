@@ -218,7 +218,7 @@ class _Page extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(data.title, style: $styles.text.wonderTitle.copyWith(fontSize: 24)),
+                Text(data.title, style: $styles.text.wonderTitle.copyWith(fontSize: 24 * $styles.scale)),
                 Gap($styles.insets.sm),
                 Text(data.desc, style: $styles.text.body, textAlign: TextAlign.center),
               ],
@@ -245,7 +245,7 @@ class _WonderousLogo extends StatelessWidget {
         StaticTextScale(
           child: Text(
             $strings.introSemanticWonderous,
-            style: $styles.text.wonderTitle.copyWith(fontSize: 32, color: $styles.colors.offWhite),
+            style: $styles.text.wonderTitle.copyWith(fontSize: 32 * $styles.scale, color: $styles.colors.offWhite),
           ),
         )
       ],

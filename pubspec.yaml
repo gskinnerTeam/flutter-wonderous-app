@@ -15,6 +15,7 @@ dependencies:
 
   collection: ^1.15.0
   copy_with_extension: ^4.0.3
+  desktop_window: ^0.4.0
   drop_cap_text: ^1.1.3
   equatable: ^2.0.5
   extra_alignments: ^1.0.0+1

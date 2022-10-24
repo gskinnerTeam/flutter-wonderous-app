@@ -17,7 +17,7 @@ class _LargeSimpleQuote extends StatelessWidget {
               '“',
               style: $styles.text.quote1.copyWith(
                 color: $styles.colors.accent1,
-                fontSize: 90,
+                fontSize: 90 * $styles.scale,
                 height: .7,
               ),
             ),

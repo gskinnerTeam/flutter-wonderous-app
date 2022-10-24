@@ -138,7 +138,10 @@ class _PhotoGalleryState extends State<PhotoGallery> {
             return Center(child: AppLoadingIndicator());
           }
 
-          Size imgSize = (widget.imageSize ?? Size(context.widthPx * .66, context.heightPx * .5)) * _scale;
+          Size imgSize = context.isLandscape
+              ? Size(context.widthPx * .5, context.heightPx * .66)
+              : Size(context.widthPx * .66, context.heightPx * .5);
+          imgSize = (widget.imageSize ?? imgSize) * _scale;
           // Get transform offset for the current _index
           final padding = $styles.insets.md;
 

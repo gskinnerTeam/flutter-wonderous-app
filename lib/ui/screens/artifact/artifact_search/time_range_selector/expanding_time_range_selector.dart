@@ -172,7 +172,7 @@ class _OpenedTimeRange extends StatelessWidget {
     double safeBottom = max($styles.insets.sm, MediaQuery.of(context).padding.bottom);
     List<Widget> timelineGrid = List.generate(5, (_) => Container(width: 1, color: $styles.colors.black));
 
-    final headingTextStyle = $styles.text.title1.copyWith(color: $styles.colors.offWhite, fontSize: 18);
+    final headingTextStyle = $styles.text.title1.copyWith(color: $styles.colors.offWhite, fontSize: 18 * $styles.scale);
     final captionTextStyle = $styles.text.bodySmall.copyWith(color: $styles.colors.greyMedium);
 
     final startYr = startYear.round(), endYr = endYear.round();

@@ -8,7 +8,11 @@ class WondersAppScaffold extends StatelessWidget with GetItMixin {
   @override
   Widget build(BuildContext context) {
     Animate.defaultDuration = $styles.times.fast;
+    // Listen to the device size, and update AppStyle when it changes
+    //$styles = AppStyle(appSize: null); //Size(context.widthPx, context.heightPx));
+    $styles = AppStyle(appSize: Size(context.widthPx, context.heightPx));
     return Stack(
+      key: ValueKey($styles.scale),
       children: [
         Theme(
           data: $styles.colors.toThemeData(),

@@ -5,13 +5,12 @@ class DiagonalTextPageIndicator extends StatelessWidget {
   const DiagonalTextPageIndicator({Key? key, required this.current, required this.total}) : super(key: key);
   final int current;
   final int total;
-  static const double _fontSize = 26;
+  static final _fontSize = 26 * $styles.scale;
 
   @override
   Widget build(BuildContext context) {
-    //final textShadows = [Shadow(color: Colors.black.withOpacity(.5), offset: Offset(0, 4), blurRadius: 6)];
     final textStyle = $styles.text.titleFont.copyWith(fontSize: _fontSize, height: 1);
-    const size = _fontSize * 1.5;
+    final size = _fontSize * 1.5;
     return StaticTextScale(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: textStyle.fontSize! * .4).copyWith(top: textStyle.fontSize! * .2),

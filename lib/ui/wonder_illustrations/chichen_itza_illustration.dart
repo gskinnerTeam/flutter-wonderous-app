@@ -46,15 +46,19 @@ class ChichenItzaIllustration extends StatelessWidget {
   }
 
   List<Widget> _buildMg(BuildContext context, Animation<double> anim) {
+    // We want to size to the shortest side
     return [
       Align(
-        alignment: Alignment(0, config.shortMode ? 1.2 : -.15),
-        child: FractionallySizedBox(
-          heightFactor: config.shortMode ? null : 2.6,
-          child: WonderHero(
-            config,
-            'chichen-mg',
-            child: Image.asset('$assetPath/chichen.png', opacity: anim, fit: BoxFit.contain),
+        alignment: Alignment(0, config.shortMode ? 1 : 0),
+        child: Transform.translate(
+          offset: Offset(0, config.shortMode ? 30 : 0),
+          child: FractionallySizedBox(
+            heightFactor: config.shortMode ? 1 : .6,
+            child: WonderHero(
+              config,
+              'chichen-mg',
+              child: Image.asset('$assetPath/chichen.png', opacity: anim, fit: BoxFit.cover),
+            ),
           ),
         ),
       ),
