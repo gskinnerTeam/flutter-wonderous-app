@@ -36,8 +36,6 @@ class _BottomScrubber extends StatelessWidget {
       scroller.position.jumpTo(newPos.clamp(0, scroller.position.maxScrollExtent));
     }
 
-    /// Create a list for the timeline builder to indicate the selected wonder
-    final wonder = selectedWonder;
     return SizedBox(
       height: size,
       child: Stack(
@@ -47,9 +45,7 @@ class _BottomScrubber extends StatelessWidget {
             padding: EdgeInsets.all($styles.insets.sm),
             child: WondersTimelineBuilder(
               crossAxisGap: 4,
-              selectedWonders: [
-                if (wonder != null) ...[wonder]
-              ],
+              selectedWonders: selectedWonder != null ? [selectedWonder!] : [],
             ),
           ),
 
