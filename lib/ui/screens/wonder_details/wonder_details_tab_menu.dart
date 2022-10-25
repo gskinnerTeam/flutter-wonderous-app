@@ -125,6 +125,7 @@ class _TabBtn extends StatelessWidget {
     final iconImgPath = '${ImagePaths.common}/tab-$iconImg${selected ? '-active' : ''}.png';
     String tabLabel = localizations.tabLabel(tabIndex: index + 1, tabCount: tabController.length);
     tabLabel = '$label: $tabLabel';
+    final double btnWidth = (context.widthPx / 6).clamp(80, 120);
     return MergeSemantics(
       child: Semantics(
         selected: selected,
@@ -134,7 +135,7 @@ class _TabBtn extends StatelessWidget {
             padding: EdgeInsets.only(top: $styles.insets.md + $styles.insets.xs, bottom: $styles.insets.sm),
             onPressed: () => tabController.index = index,
             semanticLabel: label,
-            minimumSize: Size(100, 0),
+            minimumSize: Size(btnWidth, 0),
             child: Stack(
               children: [
                 /// Image icon
