@@ -30,7 +30,7 @@ class SimpleHeader extends StatelessWidget {
                     Text(
                       title.toUpperCase(),
                       textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
-                      style: $styles.text.h4.copyWith(color: $styles.colors.offWhite),
+                      style: $styles.text.h4.copyWith(color: $styles.colors.offWhite, fontWeight: FontWeight.w500),
                     ),
                     if (subtitle != null)
                       Text(
