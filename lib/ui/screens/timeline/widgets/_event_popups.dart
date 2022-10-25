@@ -49,11 +49,14 @@ class _EventPopupsState extends State<_EventPopups> {
                       ],
                       key: ValueKey(_eventToShow?.year),
                       child: IntrinsicHeight(
-                        child: Padding(
-                          padding: EdgeInsets.all($styles.insets.md),
-                          child: TimelineEventCard(
-                            text: evt.description,
-                            year: evt.year,
+                        child: SizedBox(
+                          width: 600,
+                          child: Padding(
+                            padding: EdgeInsets.all($styles.insets.md),
+                            child: TimelineEventCard(
+                              text: evt.description,
+                              year: evt.year,
+                            ),
                           ),
                         ),
                       ),
