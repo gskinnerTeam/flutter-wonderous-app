@@ -22,6 +22,7 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool hzMode = context.isLandscape;
     return ColoredBox(
       color: $styles.colors.greyStrong,
       child: FutureBuilder<ArtifactData?>(
@@ -30,43 +31,28 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
           final data = snapshot.data;
           late Widget content;
           if (snapshot.hasError || (snapshot.hasData && data == null)) {
-            content = Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Center(
-                    child: Icon(
-                  Icons.warning_amber_outlined,
-                  color: $styles.colors.accent1,
-                  size: $styles.insets.lg,
-                )),
-                Gap($styles.insets.xs),
-                SizedBox(
-                  width: $styles.insets.xxl * 3,
-                  child: Text(
-                    StringUtils.supplant($strings.artifactDetailsErrorNotFound, {'{artifactId}': widget.artifactId}),
-                    style: $styles.text.body.copyWith(color: $styles.colors.offWhite),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ],
-            ).animate().fadeIn();
+            content = _buildError();
           } else if (!snapshot.hasData) {
             content = Center(child: AppLoadingIndicator());
           } else {
-            content = CustomScrollView(
-              slivers: [
-                SliverAppBar(
-                  pinned: true,
-                  elevation: 0,
-                  leading: SizedBox.shrink(),
-                  expandedHeight: context.heightPx * .5,
-                  collapsedHeight: context.heightPx * .35,
-                  flexibleSpace: _Header(data: data!),
-                ),
-                SliverToBoxAdapter(child: _Content(data: data)),
-              ],
-            );
+            content = hzMode
+                ? Row(children: [
+                    Expanded(child: _Header(data: data!)),
+                    Expanded(child: Center(child: SizedBox(width: 600, child: _Content(data: data)))),
+                  ])
+                : CustomScrollView(
+                    slivers: [
+                      SliverAppBar(
+                        pinned: true,
+                        elevation: 0,
+                        leading: SizedBox.shrink(),
+                        expandedHeight: context.heightPx * .5,
+                        collapsedHeight: context.heightPx * .35,
+                        flexibleSpace: _Header(data: data!),
+                      ),
+                      SliverToBoxAdapter(child: _Content(data: data)),
+                    ],
+                  );
           }
 
           return Stack(children: [
@@ -76,5 +62,29 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
         },
       ),
     );
+  }
+
+  Animate _buildError() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Center(
+            child: Icon(
+          Icons.warning_amber_outlined,
+          color: $styles.colors.accent1,
+          size: $styles.insets.lg,
+        )),
+        Gap($styles.insets.xs),
+        SizedBox(
+          width: $styles.insets.xxl * 3,
+          child: Text(
+            StringUtils.supplant($strings.artifactDetailsErrorNotFound, {'{artifactId}': widget.artifactId}),
+            style: $styles.text.body.copyWith(color: $styles.colors.offWhite),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ],
+    ).animate().fadeIn();
   }
 }
