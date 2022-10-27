@@ -233,87 +233,87 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       /// Floating controls / UI
       AnimatedSwitcher(
         duration: $styles.times.fast,
-        child: RepaintBoundary(
-          child: OverflowBox(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(width: double.infinity),
-                const Spacer(),
+        child: AnimatedOpacity(
+          opacity: _isMenuOpen ? 0 : 1,
+          duration: $styles.times.med,
+          child: RepaintBoundary(
+            child: OverflowBox(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(width: double.infinity),
+                  const Spacer(),
 
-                /// Title Content
-                LightText(
-                  child: IgnorePointer(
-                    ignoringSemantics: false,
-                    child: Transform.translate(
-                      offset: Offset(0, 30),
-                      child: Column(
-                        children: [
-                          Semantics(
-                            liveRegion: true,
-                            button: true,
-                            header: true,
-                            onIncrease: () => _setPageIndex(_wonderIndex + 1),
-                            onDecrease: () => _setPageIndex(_wonderIndex - 1),
-                            onTap: () => _showDetailsPage(),
-                            // Hide the title when the menu is open for visual polish
-                            child: AnimatedOpacity(
-                              opacity: _isMenuOpen ? 0 : 1,
-                              duration: $styles.times.fast,
+                  /// Title Content
+                  LightText(
+                    child: IgnorePointer(
+                      ignoringSemantics: false,
+                      child: Transform.translate(
+                        offset: Offset(0, 30),
+                        child: Column(
+                          children: [
+                            Semantics(
+                              liveRegion: true,
+                              button: true,
+                              header: true,
+                              onIncrease: () => _setPageIndex(_wonderIndex + 1),
+                              onDecrease: () => _setPageIndex(_wonderIndex - 1),
+                              onTap: () => _showDetailsPage(),
+                              // Hide the title when the menu is open for visual polish
                               child: WonderTitleText(currentWonder, enableShadows: true),
                             ),
-                          ),
-                          Gap($styles.insets.md),
-                          AppPageIndicator(
-                            count: _numWonders,
-                            controller: _pageController,
-                            color: $styles.colors.white,
-                            dotSize: 8,
-                            onDotPressed: _handlePageIndicatorDotPressed,
-                            semanticPageTitle: $strings.homeSemanticWonder,
-                          ),
-                          Gap($styles.insets.md),
-                        ],
+                            Gap($styles.insets.md),
+                            AppPageIndicator(
+                              count: _numWonders,
+                              controller: _pageController,
+                              color: $styles.colors.white,
+                              dotSize: 8,
+                              onDotPressed: _handlePageIndicatorDotPressed,
+                              semanticPageTitle: $strings.homeSemanticWonder,
+                            ),
+                            Gap($styles.insets.md),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
 
-                /// Animated arrow and background
-                /// Wrap in a container that is full-width to make it easier to find for screen readers
-                Container(
-                  width: double.infinity,
-                  alignment: Alignment.center,
+                  /// Animated arrow and background
+                  /// Wrap in a container that is full-width to make it easier to find for screen readers
+                  Container(
+                    width: double.infinity,
+                    alignment: Alignment.center,
 
-                  /// Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
-                  key: ValueKey(_wonderIndex),
-                  child: Stack(
-                    children: [
-                      /// Expanding rounded rect that grows in height as user swipes up
-                      Positioned.fill(
-                          child: _swipeController.buildListener(
-                        builder: (swipeAmt, _, child) {
-                          double heightFactor = .5 + .5 * (1 + swipeAmt * 4);
-                          return FractionallySizedBox(
-                            alignment: Alignment.bottomCenter,
-                            heightFactor: heightFactor,
-                            child: Opacity(opacity: swipeAmt * .5, child: child),
-                          );
-                        },
-                        child: VtGradient(
-                          [$styles.colors.white.withOpacity(0), $styles.colors.white.withOpacity(1)],
-                          const [.3, 1],
-                          borderRadius: BorderRadius.circular(99),
-                        ),
-                      )),
+                    /// Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
+                    key: ValueKey(_wonderIndex),
+                    child: Stack(
+                      children: [
+                        /// Expanding rounded rect that grows in height as user swipes up
+                        Positioned.fill(
+                            child: _swipeController.buildListener(
+                          builder: (swipeAmt, _, child) {
+                            double heightFactor = .5 + .5 * (1 + swipeAmt * 4);
+                            return FractionallySizedBox(
+                              alignment: Alignment.bottomCenter,
+                              heightFactor: heightFactor,
+                              child: Opacity(opacity: swipeAmt * .5, child: child),
+                            );
+                          },
+                          child: VtGradient(
+                            [$styles.colors.white.withOpacity(0), $styles.colors.white.withOpacity(1)],
+                            const [.3, 1],
+                            borderRadius: BorderRadius.circular(99),
+                          ),
+                        )),
 
-                      /// Arrow Btn that fades in and out
-                      _AnimatedArrowButton(onTap: _showDetailsPage, semanticTitle: currentWonder.title),
-                    ],
+                        /// Arrow Btn that fades in and out
+                        _AnimatedArrowButton(onTap: _showDetailsPage, semanticTitle: currentWonder.title),
+                      ],
+                    ),
                   ),
-                ),
-                Gap($styles.insets.md),
-              ],
+                  Gap($styles.insets.md),
+                ],
+              ),
             ),
           ),
         ),
