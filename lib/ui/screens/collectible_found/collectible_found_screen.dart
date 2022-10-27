@@ -51,21 +51,32 @@ class CollectibleFoundScreen extends StatelessWidget {
       Animate().custom(duration: t, builder: (context, ratio, _) => _buildGradient(context, 1, ratio)),
       _CelebrationParticles(fadeMs: (t * 6).inMilliseconds),
       SafeArea(
-        child: Column(children: [
-          Spacer(flex: 5),
-          Flexible(
-            flex: 18,
-            child: Center(child: Hero(tag: 'collectible_image_${collectible.id}', child: _buildImage(context))),
+        child: Center(
+          child: SizedBox(
+            width: $styles.sizes.maxContentWidth3,
+            child: Column(
+              children: [
+                Gap($styles.insets.lg),
+                Spacer(),
+                SizedBox(
+                  height: context.heightPx * .35,
+                  child: Center(child: Hero(tag: 'collectible_image_${collectible.id}', child: _buildImage(context))),
+                ),
+                _buildRibbon(context),
+                Gap($styles.insets.sm),
+                _buildTitle(context, collectible.title, $styles.text.h2, $styles.colors.offWhite, t * 1.5),
+                Gap($styles.insets.xs),
+                _buildTitle(
+                    context, collectible.subtitle.toUpperCase(), $styles.text.title2, $styles.colors.accent1, t * 2),
+                Spacer(),
+                Gap($styles.insets.lg),
+                _buildCollectionButton(context),
+                Gap($styles.insets.lg),
+                Spacer(),
+              ],
+            ),
           ),
-          Spacer(flex: 2),
-          _buildRibbon(context),
-          Spacer(flex: 2),
-          _buildTitle(context, collectible.title, $styles.text.h2, $styles.colors.offWhite, t * 1.5),
-          Gap($styles.insets.xs),
-          _buildTitle(context, collectible.subtitle.toUpperCase(), $styles.text.title2, $styles.colors.accent1, t * 2),
-          Spacer(flex: 2),
-          _buildCollectionButton(context),
-        ]),
+        ),
       ),
       BackBtn.close().safe().animate().fade(delay: t * 4, duration: t * 2),
     ]);
@@ -146,14 +157,11 @@ class CollectibleFoundScreen extends StatelessWidget {
 
   Widget _buildCollectionButton(BuildContext context) {
     Duration t = $styles.times.fast;
-    return Container(
-      padding: EdgeInsets.all($styles.insets.lg),
-      child: AppBtn.from(
-        text: $strings.collectibleFoundButtonViewCollection,
-        isSecondary: true,
-        expand: true,
-        onPressed: () => _handleViewCollectionPressed(context),
-      ),
+    return AppBtn.from(
+      text: $strings.collectibleFoundButtonViewCollection,
+      isSecondary: true,
+      expand: true,
+      onPressed: () => _handleViewCollectionPressed(context),
     )
         .animate()
         .show(delay: t * 4)
