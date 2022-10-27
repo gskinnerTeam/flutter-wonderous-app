@@ -50,7 +50,7 @@ class _EventPopupsState extends State<_EventPopups> {
                       key: ValueKey(_eventToShow?.year),
                       child: IntrinsicHeight(
                         child: SizedBox(
-                          width: 600,
+                          width: $styles.sizes.maxContentWidth3,
                           child: Padding(
                             padding: EdgeInsets.all($styles.insets.md),
                             child: TimelineEventCard(
