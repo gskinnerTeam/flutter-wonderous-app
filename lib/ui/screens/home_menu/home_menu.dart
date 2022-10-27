@@ -73,7 +73,7 @@ class HomeMenu extends StatelessWidget {
         Positioned.fill(
           child: SafeArea(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: $styles.insets.lg),
+              padding: EdgeInsets.symmetric(horizontal: $styles.insets.lg).copyWith(top: $styles.insets.lg),
               child: Center(
                 child: SizedBox(
                   width: gridWidth,
@@ -202,7 +202,7 @@ class _MenuTextBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBtn(
       expand: true,
-      padding: EdgeInsets.symmetric(vertical: $styles.insets.sm),
+      padding: EdgeInsets.symmetric(vertical: $styles.insets.md),
       onPressed: onPressed,
       bgColor: Colors.transparent,
       semanticLabel: label,
