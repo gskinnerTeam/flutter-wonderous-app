@@ -81,12 +81,14 @@ class _InfoRow extends StatelessWidget {
           padding: EdgeInsets.only(bottom: $styles.insets.sm),
           child: Row(children: [
             Expanded(
+              flex: 40,
               child: Text(
                 label.toUpperCase(),
                 style: $styles.text.titleFont.copyWith(color: $styles.colors.accent2),
               ),
             ),
             Expanded(
+              flex: 60,
               child: Text(
                 value.isEmpty ? '--' : value,
                 style: $styles.text.body.copyWith(color: $styles.colors.offWhite),

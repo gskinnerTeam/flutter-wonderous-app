@@ -10,16 +10,13 @@ class _SearchInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (ctx, constraints) => Center(
-        child: SizedBox(
-          width: $styles.sizes.maxContentWidth,
-          child: Autocomplete<String>(
-            displayStringForOption: (data) => data,
-            onSelected: onSubmit,
-            optionsBuilder: _getSuggestions,
-            optionsViewBuilder: (context, onSelected, results) =>
-                _buildSuggestionsView(context, onSelected, results, constraints),
-            fieldViewBuilder: _buildInput,
-          ),
+        child: Autocomplete<String>(
+          displayStringForOption: (data) => data,
+          onSelected: onSubmit,
+          optionsBuilder: _getSuggestions,
+          optionsViewBuilder: (context, onSelected, results) =>
+              _buildSuggestionsView(context, onSelected, results, constraints),
+          fieldViewBuilder: _buildInput,
         ),
       ),
     );
