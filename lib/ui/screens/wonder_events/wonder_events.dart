@@ -30,7 +30,7 @@ class WonderEvents extends StatelessWidget {
           bottom: false,
           child: Center(
             child: SizedBox(
-              width: $styles.sizes.maxContentWidth,
+              width: $styles.sizes.maxContentWidth1,
               child: Stack(
                 children: [
                   /// Top content, sits underneath scrolling list

@@ -105,7 +105,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
               /// Scrolling content - Includes an invisible gap at the top, and then scrolls over the illustration
               TopCenter(
                 child: SizedBox(
-                  width: $styles.sizes.maxContentWidth,
+                  width: $styles.sizes.maxContentWidth1,
                   child: CustomScrollView(
                     primary: false,
                     controller: _scroller,
