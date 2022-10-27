@@ -10,27 +10,33 @@ class _CollectionFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      Transform.translate(
-        offset: Offset(0, -$styles.insets.xl),
-        child: VtGradient(
-          [$styles.colors.greyStrong.withOpacity(0), $styles.colors.greyStrong],
-          const [0, 1],
-          height: $styles.insets.xl,
-        ),
-      ),
+      // TODO SB: Maybe restore this gradient? Need to come up with alternate approach since list can now scroll horizontally
+      // Transform.translate(
+      //   offset: Offset(0, -$styles.insets.xl),
+      //   child: VtGradient(
+      //     [$styles.colors.greyStrong.withOpacity(0), $styles.colors.greyStrong],
+      //     const [0, 1],
+      //     height: $styles.insets.xl,
+      //   ),
+      // ),
       Container(
         padding: EdgeInsets.symmetric(horizontal: $styles.insets.md, vertical: $styles.insets.sm),
         color: $styles.colors.greyStrong,
         child: SafeArea(
           top: false,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _buildProgressRow(context),
-              Gap($styles.insets.sm),
-              _buildProgressBar(context),
-              Gap($styles.insets.sm),
-            ],
+          child: Center(
+            child: SizedBox(
+              width: $styles.sizes.maxContentWidth1,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _buildProgressRow(context),
+                  Gap($styles.insets.sm),
+                  _buildProgressBar(context),
+                  Gap($styles.insets.sm),
+                ],
+              ),
+            ),
           ),
         ),
       )

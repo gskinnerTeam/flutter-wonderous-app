@@ -76,26 +76,27 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
 
     return ColoredBox(
       color: $styles.colors.greyStrong,
-      child: Stack(children: [
-        Positioned.fill(
-          child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            SimpleHeader($strings.collectionTitleCollection),
-            _NewlyDiscoveredRow(count: discovered, onPressed: _scrollToTarget),
-            _CollectionList(
-              states: _states,
-              fromId: widget.fromId,
-              scrollKey: _scrollKey,
-              scrollWonder: scrollWonder,
-              onPressed: (o) => _showDetails(context, o),
-              onReset: discovered + explored > 0 ? _handleReset : null,
-            ),
-          ]),
-        ),
-        Positioned.fill(
-          top: null,
-          child: _CollectionFooter(count: discovered + explored, total: total),
-        ),
-      ]),
+      child: Column(
+        children: [
+          Expanded(
+            child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+              SimpleHeader($strings.collectionTitleCollection),
+              _NewlyDiscoveredRow(count: discovered, onPressed: _scrollToTarget),
+              Flexible(
+                child: _CollectionList(
+                  states: _states,
+                  fromId: widget.fromId,
+                  scrollKey: _scrollKey,
+                  scrollWonder: scrollWonder,
+                  onPressed: (o) => _showDetails(context, o),
+                  onReset: discovered + explored > 0 ? _handleReset : null,
+                ),
+              ),
+            ]),
+          ),
+          _CollectionFooter(count: discovered + explored, total: total),
+        ],
+      ),
     );
   }
 }
