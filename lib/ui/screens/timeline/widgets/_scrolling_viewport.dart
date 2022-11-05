@@ -9,11 +9,13 @@ class _ScrollingViewport extends StatefulWidget {
     required this.minSize,
     required this.maxSize,
     required this.selectedWonder,
+    this.onYearChanged,
   }) : super(key: key);
   final double minSize;
   final double maxSize;
   final ScrollController scroller;
   final WonderType? selectedWonder;
+  final void Function(int year)? onYearChanged;
   final void Function(_ScrollingViewportController controller)? onInit;
 
   @override
@@ -53,21 +55,10 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
       // Fade in entire view when first shown
       child: Stack(
         children: [
-          Column(
-            children: [
-              /// Main scrolling area, holds the year markers, and the [WondersTimelineBuilder]
-              Expanded(
-                child: _buildScrollingArea(context),
-              ),
-              Gap($styles.insets.xs),
+          // Main content area
+          _buildScrollingArea(context).animate().fadeIn(),
 
-              /// Era Text (classical, modern etc)
-              _buildAnimatedEraText(context),
-              Gap($styles.insets.xs),
-            ],
-          ).animate().fadeIn(),
-
-          /// Dashed line with a year that changes as we scroll
+          // Dashed line with a year that changes as we scroll
           IgnorePointer(
             ignoringSemantics: false,
             child: AnimatedBuilder(
@@ -80,23 +71,6 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
         ],
       ),
     );
-  }
-
-  AnimatedBuilder _buildAnimatedEraText(BuildContext context) {
-    return AnimatedBuilder(
-        animation: controller.scroller,
-        builder: (_, __) {
-          String era = StringUtils.getEra(controller.calculateYearFromScrollPos());
-          final style = $styles.text.body.copyWith(color: $styles.colors.offWhite);
-          return AnimatedSwitcher(
-            duration: $styles.times.fast,
-            child: Semantics(
-                liveRegion: true,
-                child: Text(era, key: ValueKey(era), style: style)
-                    .animate(key: ValueKey(era))
-                    .slide(begin: Offset(0, .2))),
-          );
-        });
   }
 
   Widget _buildScrollingArea(BuildContext context) {

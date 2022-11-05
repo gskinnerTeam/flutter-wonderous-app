@@ -30,6 +30,7 @@ class _DashedDividerWithYear extends StatelessWidget {
                       shadows: $styles.shadows.textStrong,
                     ),
                   ),
+                  Gap($styles.insets.xs),
                 ],
               ),
             ),

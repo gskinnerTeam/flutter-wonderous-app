@@ -13,6 +13,7 @@ class _EventMarkers extends StatefulWidget {
 }
 
 class _EventMarkersState extends State<_EventMarkers> {
+  bool get showReferenceMarkers => kDebugMode;
   int get startYr => wondersLogic.timelineStartYear;
 
   int get endYr => wondersLogic.timelineEndYear;
@@ -60,7 +61,7 @@ class _EventMarkersState extends State<_EventMarkers> {
 
         /// Create a marker for each event
         List<Widget> markers = timelineLogic.events.map((event) {
-          final offsetY = _calculateOffsetY(event.year);
+          double offsetY = _calculateOffsetY(event.year);
           return _EventMarker(offsetY,
               isSelected: event == selectedEvent, semanticLabel: '${event.year}: ${event.description}');
         }).toList();
@@ -73,12 +74,32 @@ class _EventMarkersState extends State<_EventMarkers> {
             padding: EdgeInsets.only(left: 75),
             child: SizedBox(
               width: 20,
-              child: Stack(children: markers),
+              child: Stack(
+                children: [
+                  ...markers,
+                  if (showReferenceMarkers) ..._buildReferenceMarkers(),
+                ],
+              ),
             ),
           ),
         );
       }),
     );
+  }
+
+  List<Widget> _buildReferenceMarkers() {
+    final marker = Container(color: Colors.red.withOpacity(.4), width: 10, height: 10);
+    return [
+      Align(
+        alignment: Alignment.topCenter,
+        child: FractionalTranslation(translation: Offset(0, -.5), child: marker),
+      ),
+      Align(alignment: Alignment.center, child: marker),
+      Align(
+        alignment: Alignment.bottomCenter,
+        child: FractionalTranslation(translation: Offset(0, .5), child: marker),
+      ),
+    ];
   }
 }
 
@@ -99,23 +120,31 @@ class _EventMarker extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment(0, -1 + offset * 2),
-      child: Semantics(
-        label: semanticLabel,
-        child: Container(
-          alignment: Alignment.center,
-          height: 30,
-          child: AnimatedContainer(
-            width: isSelected ? 6 : 2,
-            height: isSelected ? 6 : 2,
-            curve: Curves.easeOutBack,
-            duration: $styles.times.med,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(99),
-              color: $styles.colors.accent1,
-              boxShadow: [
-                BoxShadow(
-                    color: $styles.colors.accent1.withOpacity(isSelected ? .5 : 0), spreadRadius: 3, blurRadius: 3),
-              ],
+      // Use an OverflowBox wrapped in a zero-height sized box so that al
+      // This allows alignment-based positioning to be accurate even at the edges of the parent.
+      child: SizedBox(
+        height: 0,
+        child: OverflowBox(
+          maxHeight: 30,
+          child: Semantics(
+            label: semanticLabel,
+            child: Container(
+              alignment: Alignment.center,
+              height: 30,
+              child: AnimatedContainer(
+                width: isSelected ? 6 : 2,
+                height: isSelected ? 6 : 2,
+                curve: Curves.easeOutBack,
+                duration: $styles.times.med,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(99),
+                  color: $styles.colors.accent1,
+                  boxShadow: [
+                    BoxShadow(
+                        color: $styles.colors.accent1.withOpacity(isSelected ? .5 : 0), spreadRadius: 3, blurRadius: 3),
+                  ],
+                ),
+              ),
             ),
           ),
         ),

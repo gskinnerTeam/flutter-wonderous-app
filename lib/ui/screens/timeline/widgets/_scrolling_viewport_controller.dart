@@ -12,6 +12,10 @@ class _ScrollingViewportController extends ChangeNotifier {
   late BoxConstraints _constraints;
   _ScrollingViewport get widget => state.widget;
   ScrollController get scroller => widget.scroller;
+  late final ValueNotifier<int> _currentYr = ValueNotifier(startYr)
+    ..addListener(
+      () => state.widget.onYearChanged?.call(_currentYr.value),
+    );
 
   void init() {
     scheduleMicrotask(() {
@@ -22,9 +26,12 @@ class _ScrollingViewportController extends ChangeNotifier {
         final pos = calculateScrollPosFromYear(data.startYr);
         scroller.jumpTo(pos - 200);
         scroller.animateTo(pos, duration: 1.35.seconds, curve: Curves.easeOutCubic);
+        scroller.addListener(_updateCurrentYear);
       }
     });
   }
+
+  void _updateCurrentYear() => _currentYr.value = calculateYearFromScrollPos();
 
   /// Allows ancestors to set zoom directly
   void setZoom(double d) {

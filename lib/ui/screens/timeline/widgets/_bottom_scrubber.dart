@@ -41,8 +41,12 @@ class _BottomScrubber extends StatelessWidget {
       child: Stack(
         children: [
           /// Timeline background
-          Padding(
-            padding: EdgeInsets.all($styles.insets.sm),
+          Container(
+            padding: EdgeInsets.all($styles.insets.md),
+            decoration: BoxDecoration(
+              color: $styles.colors.greyStrong,
+              borderRadius: BorderRadius.circular($styles.corners.md),
+            ),
             child: WondersTimelineBuilder(
               crossAxisGap: 4,
               selectedWonders: selectedWonder != null ? [selectedWonder!] : [],

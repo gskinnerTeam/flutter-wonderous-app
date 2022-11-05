@@ -57,10 +57,21 @@ class _YearMarker extends StatelessWidget {
     return ExcludeSemantics(
       child: Align(
         alignment: Alignment(0, -1 + offset * 2),
-        child: FractionalTranslation(
-          translation: Offset(0, 0),
-          child: Text('${yr.abs()}', style: $styles.text.body.copyWith(color: Colors.white, height: 1)),
+
+        // Use an OverflowBox wrapped in a zero-height sized box so that al
+        // This allows alignment-based positioning to be accurate even at the edges of the parent.
+        child: SizedBox(
+          height: 0,
+          child: OverflowBox(
+            alignment: Alignment.topCenter,
+            maxHeight: 100,
+            maxWidth: 100,
+            child: FractionalTranslation(
+                translation: Offset(0, -.5),
+                child: Text('${yr.abs()}', style: $styles.text.body.copyWith(color: Colors.white, height: 1))),
+          ),
         ),
+        //child:,
       ),
     );
   }
