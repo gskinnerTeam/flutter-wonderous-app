@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:wonders/_tools/unsplash_download_service.dart';
 import 'package:wonders/logic/common/platform_info.dart';
 
@@ -27,10 +26,7 @@ class UnsplashPhotoData {
         size = 1200;
         break;
     }
-    bool isDesktop = defaultTargetPlatform == TargetPlatform.windows ||
-        defaultTargetPlatform == TargetPlatform.macOS ||
-        defaultTargetPlatform == TargetPlatform.linux;
-    if (PlatformInfo.pixelRatio >= 1.5 || isDesktop) {
+    if (PlatformInfo.pixelRatio >= 1.5 || PlatformInfo.isDesktop) {
       size *= 2;
     }
     return 'https://wonderous.info/unsplash/$id-$size.jpg';

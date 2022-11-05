@@ -1,15 +1,26 @@
 import 'dart:async';
 
 import 'package:desktop_window/desktop_window.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/ui/common/utils/page_routes.dart';
 
 class AppLogic {
   /// Indicates to the rest of the app that bootstrap has not completed.
   /// The router will use this to prevent redirects while bootstrapping.
   bool isBootstrapComplete = false;
+
+  bool get isDesktopOrTablet => PlatformInfo.isDesktopOrWeb || deviceSize.shortestSide > 500;
+
+  /// Support portrait and landscape on desktop, web and tablets. Stick to portrait for phones.
+  /// A return value of null indicated both orientations are supported.
+  Axis? get supportedOrientations => isDesktopOrTablet ? null : Axis.vertical;
+
+  Size get deviceSize {
+    final w = WidgetsBinding.instance.platformDispatcher.views.first;
+    return w.physicalSize / w.devicePixelRatio;
+  }
 
   /// Initialize the app and all main actors.
   /// Loads settings, sets up services etc.
@@ -18,16 +29,18 @@ class AppLogic {
     FlutterError.onError = _handleFlutterError;
 
     // Set min-sizes for desktop apps
-    await DesktopWindow.setMinWindowSize($styles.sizes.minAppSize);
+    if (PlatformInfo.isDesktop) {
+      await DesktopWindow.setMinWindowSize($styles.sizes.minAppSize);
+    }
 
     // Load any bitmaps the views might need
     await AppBitmaps.init();
 
-    // Default to only allowing portrait mode
-    setDeviceOrientation(Axis.vertical);
+    // Set the initial supported orientations
+    setDeviceOrientation(supportedOrientations);
 
     // Set preferred refresh rate to the max possible (the OS may ignore this)
-    if (defaultTargetPlatform == TargetPlatform.android) {
+    if (PlatformInfo.isAndroid) {
       await FlutterDisplayMode.setHighRefreshRate();
     }
 
