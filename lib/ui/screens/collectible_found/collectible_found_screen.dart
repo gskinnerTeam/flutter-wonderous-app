@@ -62,6 +62,7 @@ class CollectibleFoundScreen extends StatelessWidget {
                   height: context.heightPx * .35,
                   child: Center(child: Hero(tag: 'collectible_image_${collectible.id}', child: _buildImage(context))),
                 ),
+                Gap($styles.insets.lg),
                 _buildRibbon(context),
                 Gap($styles.insets.sm),
                 _buildTitle(context, collectible.title, $styles.text.h2, $styles.colors.offWhite, t * 1.5),

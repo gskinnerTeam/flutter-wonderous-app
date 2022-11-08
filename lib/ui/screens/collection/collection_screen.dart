@@ -9,9 +9,10 @@ import 'package:wonders/ui/common/controls/simple_header.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/modals/app_modals.dart';
 
-part 'widgets/_collection_tile.dart';
-part 'widgets/_newly_discovered_row.dart';
+part 'widgets/_collectible_image.dart';
+part 'widgets/_newly_discovered_items_btn.dart';
 part 'widgets/_collection_list.dart';
+part 'widgets/_collection_list_card.dart';
 part 'widgets/_collection_footer.dart';
 
 class CollectionScreen extends StatefulWidget with GetItStatefulWidgetMixin {
@@ -25,15 +26,7 @@ class CollectionScreen extends StatefulWidget with GetItStatefulWidgetMixin {
 
 class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixin {
   Map<String, int> _states = collectiblesLogic.statesById.value;
-  GlobalKey? _scrollKey;
-
-  WonderType? get scrollTargetWonder {
-    String? id = widget.fromId;
-    if (_states[id] != CollectibleState.discovered) {
-      id = _states.keys.firstWhereOrNull((id) => _states[id] == CollectibleState.discovered);
-    }
-    return collectiblesLogic.fromId(id)?.wonder;
-  }
+  final GlobalKey _scrollKey = GlobalKey();
 
   @override
   void initState() {
@@ -44,14 +37,9 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
   }
 
   void _scrollToTarget([bool animate = true]) {
-    if (_scrollKey != null) {
-      Scrollable.ensureVisible(_scrollKey!.currentContext!, alignment: 0.15, duration: animate ? 300.ms : 0.ms);
+    if (_scrollKey.currentContext != null) {
+      Scrollable.ensureVisible(_scrollKey.currentContext!, alignment: 0.15, duration: animate ? 300.ms : 0.ms);
     }
-  }
-
-  void _showDetails(BuildContext context, CollectibleData collectible) {
-    context.push(ScreenPaths.artifact(collectible.artifactId));
-    Future.delayed(300.ms).then((_) => collectiblesLogic.updateState(collectible.id, CollectibleState.explored));
   }
 
   void _handleReset() async {
@@ -71,9 +59,6 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
       if (state == CollectibleState.explored) explored++;
     });
 
-    WonderType? scrollWonder = scrollTargetWonder;
-    if (scrollWonder != null) _scrollKey = GlobalKey();
-
     return ColoredBox(
       color: $styles.colors.greyStrong,
       child: Column(
@@ -81,14 +66,12 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
               SimpleHeader($strings.collectionTitleCollection),
-              _NewlyDiscoveredRow(count: discovered, onPressed: _scrollToTarget),
+              _NewlyDiscoveredItemsBtn(count: discovered, onPressed: _scrollToTarget),
               Flexible(
                 child: _CollectionList(
                   states: _states,
                   fromId: widget.fromId,
                   scrollKey: _scrollKey,
-                  scrollWonder: scrollWonder,
-                  onPressed: (o) => _showDetails(context, o),
                   onReset: discovered + explored > 0 ? _handleReset : null,
                 ),
               ),

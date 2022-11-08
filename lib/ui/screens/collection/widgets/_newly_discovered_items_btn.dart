@@ -1,8 +1,8 @@
 part of '../collection_screen.dart';
 
 @immutable
-class _NewlyDiscoveredRow extends StatelessWidget {
-  const _NewlyDiscoveredRow({Key? key, this.count = 0, required this.onPressed}) : super(key: key);
+class _NewlyDiscoveredItemsBtn extends StatelessWidget {
+  const _NewlyDiscoveredItemsBtn({Key? key, this.count = 0, required this.onPressed}) : super(key: key);
 
   final int count;
   final VoidCallback onPressed;
