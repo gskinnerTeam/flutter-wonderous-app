@@ -123,7 +123,7 @@ class _Text {
 
   late final TextStyle callout =
       _createFont(contentFont, sizePx: 16, heightPx: 26, weight: FontWeight.w600).copyWith(fontStyle: FontStyle.italic);
-  late final TextStyle btn = _createFont(titleFont, sizePx: 12, weight: FontWeight.w600, heightPx: 13.2);
+  late final TextStyle btn = _createFont(contentFont, sizePx: 12, weight: FontWeight.w600, heightPx: 14);
 
   TextStyle _createFont(TextStyle style,
       {required double sizePx, double? heightPx, double? spacingPc, FontWeight? weight}) {
