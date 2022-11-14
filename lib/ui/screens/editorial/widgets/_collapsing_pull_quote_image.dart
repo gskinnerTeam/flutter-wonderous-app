@@ -42,8 +42,9 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
 
         // The sized boxes in the column collapse to a zero height, allowing the quotes to naturally sit over top of the image
         return MergeSemantics(
-          child: Padding(
+          child: CenteredBox(
             padding: EdgeInsets.symmetric(vertical: outerPadding),
+            width: 450,
             child: Stack(
               children: [
                 Container(

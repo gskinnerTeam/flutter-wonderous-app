@@ -95,48 +95,46 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
         // cache constraints, so they can be used to maintain the selected year while zooming
         controller._constraints = constraints;
         double vtPadding = constraints.maxHeight / 2;
-        double size = controller.calculateContentHeight();
-        final contentSize = min($styles.sizes.maxContentWidth2, constraints.maxWidth);
+        double height = controller.calculateContentHeight();
+        final width = min($styles.sizes.maxContentWidth2, constraints.maxWidth);
         return Stack(
           children: [
             SingleChildScrollView(
               controller: controller.scroller,
               padding: EdgeInsets.symmetric(vertical: vtPadding),
               // A stack inside a SizedBox which sets its overall height
-              child: Center(
-                child: SizedBox(
-                  height: size,
-                  width: contentSize,
-                  child: Stack(
-                    children: [
-                      /// Year Markers
-                      _YearMarkers(),
+              child: CenteredBox(
+                height: height,
+                width: width,
+                child: Stack(
+                  children: [
+                    /// Year Markers
+                    _YearMarkers(),
 
-                      /// individual timeline sections
-                      Positioned.fill(
-                        left: 100,
-                        right: $styles.insets.sm,
-                        child: FocusTraversalGroup(
-                          //child: Placeholder(),
-                          child: WondersTimelineBuilder(
-                            axis: Axis.vertical,
-                            crossAxisGap: max(6, (contentSize - (120 * 3)) / 2),
-                            minSize: _minTimelineSize,
-                            timelineBuilder: (_, data, __) => buildTimelineSection(data),
-                          ),
+                    /// individual timeline sections
+                    Positioned.fill(
+                      left: 100,
+                      right: $styles.insets.sm,
+                      child: FocusTraversalGroup(
+                        //child: Placeholder(),
+                        child: WondersTimelineBuilder(
+                          axis: Axis.vertical,
+                          crossAxisGap: max(6, (width - (120 * 3)) / 2),
+                          minSize: _minTimelineSize,
+                          timelineBuilder: (_, data, __) => buildTimelineSection(data),
                         ),
                       ),
+                    ),
 
-                      /// Event Markers, rebuilds on scroll
-                      ListenableBuilder(
-                        listenable: controller.scroller,
-                        builder: (_, __) => _EventMarkers(
-                          controller.calculateYearFromScrollPos(),
-                          onEventChanged: _handleEventMarkerChanged,
-                        ),
+                    /// Event Markers, rebuilds on scroll
+                    ListenableBuilder(
+                      listenable: controller.scroller,
+                      builder: (_, __) => _EventMarkers(
+                        controller.calculateYearFromScrollPos(),
+                        onEventChanged: _handleEventMarkerChanged,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),

@@ -1,6 +1,7 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:particle_field/particle_field.dart';
+import 'package:wonders/ui/common/centered_box.dart';
 
 part 'widgets/_animated_ribbon.dart';
 part 'widgets/_celebration_particles.dart';
@@ -51,31 +52,29 @@ class CollectibleFoundScreen extends StatelessWidget {
       Animate().custom(duration: t, builder: (context, ratio, _) => _buildGradient(context, 1, ratio)),
       _CelebrationParticles(fadeMs: (t * 6).inMilliseconds),
       SafeArea(
-        child: Center(
-          child: SizedBox(
-            width: $styles.sizes.maxContentWidth3,
-            child: Column(
-              children: [
-                Gap($styles.insets.lg),
-                Spacer(),
-                SizedBox(
-                  height: context.heightPx * .35,
-                  child: Center(child: Hero(tag: 'collectible_image_${collectible.id}', child: _buildImage(context))),
-                ),
-                Gap($styles.insets.lg),
-                _buildRibbon(context),
-                Gap($styles.insets.sm),
-                _buildTitle(context, collectible.title, $styles.text.h2, $styles.colors.offWhite, t * 1.5),
-                Gap($styles.insets.xs),
-                _buildTitle(
-                    context, collectible.subtitle.toUpperCase(), $styles.text.title2, $styles.colors.accent1, t * 2),
-                Spacer(),
-                Gap($styles.insets.lg),
-                _buildCollectionButton(context),
-                Gap($styles.insets.lg),
-                Spacer(),
-              ],
-            ),
+        child: CenteredBox(
+          width: $styles.sizes.maxContentWidth3,
+          child: Column(
+            children: [
+              Gap($styles.insets.lg),
+              Spacer(),
+              SizedBox(
+                height: context.heightPx * .35,
+                child: Center(child: Hero(tag: 'collectible_image_${collectible.id}', child: _buildImage(context))),
+              ),
+              Gap($styles.insets.lg),
+              _buildRibbon(context),
+              Gap($styles.insets.sm),
+              _buildTitle(context, collectible.title, $styles.text.h2, $styles.colors.offWhite, t * 1.5),
+              Gap($styles.insets.xs),
+              _buildTitle(
+                  context, collectible.subtitle.toUpperCase(), $styles.text.title2, $styles.colors.accent1, t * 2),
+              Spacer(),
+              Gap($styles.insets.lg),
+              _buildCollectionButton(context),
+              Gap($styles.insets.lg),
+              Spacer(),
+            ],
           ),
         ),
       ),

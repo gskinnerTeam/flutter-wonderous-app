@@ -8,6 +8,7 @@ import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/timeline_data.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/blend_mask.dart';
+import 'package:wonders/ui/common/centered_box.dart';
 import 'package:wonders/ui/common/controls/simple_header.dart';
 import 'package:wonders/ui/common/dashed_line.dart';
 import 'package:wonders/ui/common/list_gradient.dart';
@@ -76,13 +77,16 @@ class _TimelineScreenState extends State<TimelineScreen> {
 
               /// Mini Horizontal timeline, reacts to the state of the larger scrolling timeline,
               /// and changes the timelines scroll position on Hz drag
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: $styles.insets.lg),
-                child: _BottomScrubber(
-                  _scroller,
-                  size: scrubberSize,
-                  timelineMinSize: minSize,
-                  selectedWonder: widget.type,
+              CenteredBox(
+                width: $styles.sizes.maxContentWidth1,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: $styles.insets.lg),
+                  child: _BottomScrubber(
+                    _scroller,
+                    size: scrubberSize,
+                    timelineMinSize: minSize,
+                    selectedWonder: widget.type,
+                  ),
                 ),
               ),
               Gap($styles.insets.lg),

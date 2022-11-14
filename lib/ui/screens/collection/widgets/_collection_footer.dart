@@ -24,18 +24,16 @@ class _CollectionFooter extends StatelessWidget {
         color: $styles.colors.greyStrong,
         child: SafeArea(
           top: false,
-          child: Center(
-            child: SizedBox(
-              width: $styles.sizes.maxContentWidth1,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _buildProgressRow(context),
-                  Gap($styles.insets.sm),
-                  _buildProgressBar(context),
-                  Gap($styles.insets.sm),
-                ],
-              ),
+          child: CenteredBox(
+            width: $styles.sizes.maxContentWidth1,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _buildProgressRow(context),
+                Gap($styles.insets.sm),
+                _buildProgressBar(context),
+                Gap($styles.insets.sm),
+              ],
             ),
           ),
         ),

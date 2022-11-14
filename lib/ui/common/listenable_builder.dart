@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 
+/// Replacement for the built in [AnimatedBuilder] because that name is semantically confusing.
 class ListenableBuilder extends AnimatedBuilder {
   const ListenableBuilder({
-    Key? key,
+    super.key,
     required Listenable listenable,
-    required TransitionBuilder builder,
-    Widget? child,
-  }) : super(key: key, animation: listenable, builder: builder, child: child);
+    required super.builder,
+    super.child,
+  }) : super(animation: listenable);
 }

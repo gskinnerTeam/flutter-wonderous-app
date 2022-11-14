@@ -3,6 +3,7 @@ import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/app_backdrop.dart';
 import 'package:wonders/ui/common/app_icons.dart';
+import 'package:wonders/ui/common/centered_box.dart';
 import 'package:wonders/ui/common/curved_clippers.dart';
 import 'package:wonders/ui/common/hidden_collectible.dart';
 import 'package:wonders/ui/common/list_gradient.dart';
@@ -58,34 +59,30 @@ class WonderEvents extends StatelessWidget {
       children: [
         /// WonderImage w/ Timeline btn
         Expanded(
-          child: Center(
-            child: SizedBox(
-              width: $styles.sizes.maxContentWidth3,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Gap($styles.insets.lg),
-                  Expanded(child: Center(child: _WonderImageWithTimeline(data: _data, height: 500))),
-                  Gap($styles.insets.lg),
-                  SizedBox(width: 300, child: _TimelineBtn(type: type)),
-                  Gap($styles.insets.xl),
-                ],
-              ),
+          child: CenteredBox(
+            width: $styles.sizes.maxContentWidth3,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Gap($styles.insets.lg),
+                Expanded(child: Center(child: _WonderImageWithTimeline(data: _data, height: 500))),
+                Gap($styles.insets.lg),
+                SizedBox(width: 300, child: _TimelineBtn(type: type)),
+                Gap($styles.insets.xl),
+              ],
             ),
           ),
         ),
 
         /// EventsList
         Expanded(
-          child: Center(
-            child: SizedBox(
-              width: $styles.sizes.maxContentWidth1,
-              child: _EventsList(
-                data: _data,
-                topHeight: 100,
-                blurOnScroll: false,
-              ),
+          child: CenteredBox(
+            width: $styles.sizes.maxContentWidth1,
+            child: _EventsList(
+              data: _data,
+              topHeight: 100,
+              blurOnScroll: false,
             ),
           ),
         ),
@@ -97,35 +94,33 @@ class WonderEvents extends StatelessWidget {
   Widget _buildPortrait() {
     return LayoutBuilder(builder: (_, constraints) {
       double topHeight = max(constraints.maxHeight * .55, 200);
-      return Center(
-        child: SizedBox(
-          width: $styles.sizes.maxContentWidth3,
-          child: Stack(
-            children: [
-              /// Top content, sits underneath scrolling list
-              _WonderImageWithTimeline(height: topHeight, data: _data),
+      return CenteredBox(
+        width: $styles.sizes.maxContentWidth3,
+        child: Stack(
+          children: [
+            /// Top content, sits underneath scrolling list
+            _WonderImageWithTimeline(height: topHeight, data: _data),
 
-              /// EventsList + TimelineBtn
-              Column(
-                children: [
-                  Expanded(
-                    /// List
-                    child: _EventsList(
-                      data: _data,
-                      topHeight: topHeight,
-                      blurOnScroll: true,
-                      showTopGradient: false,
-                    ),
+            /// EventsList + TimelineBtn
+            Column(
+              children: [
+                Expanded(
+                  /// List
+                  child: _EventsList(
+                    data: _data,
+                    topHeight: topHeight,
+                    blurOnScroll: true,
+                    showTopGradient: false,
                   ),
-                  Gap($styles.insets.lg),
+                ),
+                Gap($styles.insets.lg),
 
-                  /// Btn
-                  _TimelineBtn(type: _data.type, width: $styles.sizes.maxContentWidth3),
-                  Gap($styles.insets.xl),
-                ],
-              ),
-            ],
-          ),
+                /// Btn
+                _TimelineBtn(type: _data.type, width: $styles.sizes.maxContentWidth3),
+                Gap($styles.insets.xl),
+              ],
+            ),
+          ],
         ),
       );
     });
