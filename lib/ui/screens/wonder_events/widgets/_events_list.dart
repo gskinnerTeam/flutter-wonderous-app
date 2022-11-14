@@ -1,8 +1,19 @@
 part of '../wonder_events.dart';
 
 class _EventsList extends StatefulWidget {
-  const _EventsList({Key? key, required this.data}) : super(key: key);
+  const _EventsList(
+      {Key? key,
+      required this.data,
+      this.topHeight = 0,
+      this.blurOnScroll = false,
+      this.showTopGradient = true,
+      this.showBottomGradient = true})
+      : super(key: key);
   final WonderData data;
+  final double topHeight;
+  final bool blurOnScroll;
+  final bool showTopGradient;
+  final bool showBottomGradient;
 
   @override
   State<_EventsList> createState() => _EventsListState();
@@ -16,8 +27,6 @@ class _EventsListState extends State<_EventsList> {
     super.dispose();
   }
 
-  void _handleGlobalTimelinePressed() => context.push(ScreenPaths.timeline(widget.data.type));
-
   @override
   Widget build(BuildContext context) {
     return PopRouterOnOverScroll(
@@ -28,9 +37,9 @@ class _EventsListState extends State<_EventsList> {
             AnimatedBuilder(
               animation: _scroller,
               builder: (_, __) {
-                bool showBackdrop = true;
+                bool showBackdrop = widget.blurOnScroll;
                 double backdropAmt = 0;
-                if (_scroller.hasClients) {
+                if (_scroller.hasClients && showBackdrop) {
                   double blurStart = 50;
                   double maxScroll = 150;
                   double scrollPx = _scroller.position.pixels - blurStart;
@@ -77,46 +86,55 @@ class _EventsListState extends State<_EventsList> {
     for (var e in events.entries) {
       final delay = 100.ms + (100 * listItems.length).ms;
       listItems.add(
-        TimelineEventCard(year: e.key, text: e.value)
+        TimelineEventCard(year: e.key, text: e.value, darkMode: true)
             .animate()
             .fade(delay: delay, duration: $styles.times.med * 1.5)
             .slide(begin: Offset(0, 1), curve: Curves.easeOutBack),
       );
     }
-    return SingleChildScrollView(
-      controller: _scroller,
-      child: Column(
-        children: [
-          IgnorePointer(child: Gap(WonderEvents._topHeight)),
-          Container(
-            decoration: BoxDecoration(
-              color: $styles.colors.white,
-              borderRadius: BorderRadius.circular($styles.corners.md),
-            ),
-            padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
-            child: Column(
-              children: [
-                Gap($styles.insets.xs),
-                buildHandle(),
-                Gap($styles.insets.sm),
-                ...listItems,
-                Gap($styles.insets.lg),
-                AppBtn.from(
-                  text: $strings.eventsListButtonOpenGlobal,
-                  expand: true,
-                  onPressed: _handleGlobalTimelinePressed,
-                  semanticLabel: $strings.eventsListButtonOpenGlobal,
+    return Stack(
+      children: [
+        SingleChildScrollView(
+          controller: _scroller,
+          child: Column(
+            children: [
+              IgnorePointer(child: Gap(widget.topHeight)),
+              Container(
+                decoration: BoxDecoration(
+                  color: $styles.colors.black,
+                  borderRadius: BorderRadius.circular($styles.corners.md),
                 ),
-                Gap($styles.insets.xl),
-                CompassDivider(isExpanded: true),
-                Gap($styles.insets.md),
-                HiddenCollectible(widget.data.type, index: 2, size: 150),
-                Gap(150),
-              ],
+                padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
+                child: Column(
+                  children: [
+                    Gap($styles.insets.xs),
+                    buildHandle(),
+                    Gap($styles.insets.sm),
+                    ...listItems,
+                    Gap($styles.insets.xl),
+                    HiddenCollectible(widget.data.type, index: 2, size: 150),
+                    Gap(150),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        /// Vertical gradient on btm
+        if (widget.showBottomGradient)
+          Positioned.fill(
+            child: BottomCenter(
+              child: ListOverscollGradient(bottomUp: true, size: 100),
             ),
           ),
-        ],
-      ),
+        if (widget.showTopGradient)
+          Positioned.fill(
+            child: TopCenter(
+              child: ListOverscollGradient(size: 100),
+            ),
+          ),
+      ],
     );
   }
 }

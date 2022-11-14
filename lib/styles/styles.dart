@@ -158,7 +158,7 @@ class _Corners {
 class _Sizes {
   double get maxContentWidth1 => 800;
   double get maxContentWidth2 => 600;
-  double get maxContentWidth3 => 400;
+  double get maxContentWidth3 => 500;
   final Size minAppSize = Size(450, 600);
 }
 

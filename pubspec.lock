@@ -297,7 +297,7 @@ packages:
       name: flutter_inappwebview
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.4.3+7"
+    version: "5.7.1"
   flutter_lints:
     dependency: "direct dev"
     description:

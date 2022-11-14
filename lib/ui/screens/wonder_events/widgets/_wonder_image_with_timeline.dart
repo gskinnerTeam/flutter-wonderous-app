@@ -1,11 +1,12 @@
 part of '../wonder_events.dart';
 
-class _TopContent extends StatelessWidget {
-  const _TopContent({Key? key, required this.data}) : super(key: key);
+class _WonderImageWithTimeline extends StatelessWidget {
+  const _WonderImageWithTimeline({Key? key, required this.data, required this.height}) : super(key: key);
   final WonderData data;
+  final double height;
 
-  Color _fixLuminence(Color color, [double luminence = 0.35]) {
-    double d = luminence - color.computeLuminance();
+  Color _fixLuminance(Color color, [double luminance = 0.35]) {
+    double d = luminance - color.computeLuminance();
     if (d <= 0) return color;
     int r = color.red, g = color.green, b = color.blue;
     return Color.fromARGB(255, (r + (255 - r) * d).toInt(), (g + (255 - g) * d).toInt(), (b + (255 - b) * d).toInt());
@@ -14,7 +15,7 @@ class _TopContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: WonderEvents._topHeight,
+      height: height,
       child: MergeSemantics(
         child: LightText(
           child: SeparatedColumn(
@@ -45,7 +46,7 @@ class _TopContent extends StatelessWidget {
                       timelineBuilder: (_, data, isSelected) {
                         return Container(
                           decoration: BoxDecoration(
-                            color: isSelected ? _fixLuminence(data.type.fgColor) : Colors.transparent,
+                            color: isSelected ? _fixLuminance(data.type.fgColor) : Colors.transparent,
                             border: Border.all(color: $styles.colors.greyMedium),
                             borderRadius: BorderRadius.circular($styles.corners.md),
                           ),
