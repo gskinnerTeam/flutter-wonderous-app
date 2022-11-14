@@ -1,23 +1,21 @@
 part of '../collection_screen.dart';
 
-class _CollectionListCard extends StatelessWidget {
-  const _CollectionListCard(
-      {Key? key, this.width, this.height, required this.data, required this.fromId, required this.states})
-      : super(key: key);
+class _CollectionListCard extends StatelessWidget with GetItMixin {
+  _CollectionListCard({Key? key, this.width, this.height, required this.data, required this.fromId}) : super(key: key);
 
   final double? width;
   final double? height;
   final WonderData data;
-  final String? fromId;
-  final Map<String, int> states;
+  final String fromId;
 
   void _showDetails(BuildContext context, CollectibleData collectible) {
     context.push(ScreenPaths.artifact(collectible.artifactId));
-    Future.delayed(300.ms).then((_) => collectiblesLogic.updateState(collectible.id, CollectibleState.explored));
+    Future.delayed(300.ms).then((_) => collectiblesLogic.setState(collectible.id, CollectibleState.explored));
   }
 
   @override
   Widget build(BuildContext context) {
+    final states = watchX((CollectiblesLogic o) => o.statesById);
     List<CollectibleData> collectibles = collectiblesLogic.forWonder(data.type);
     return Center(
       child: SizedBox(

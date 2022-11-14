@@ -10,7 +10,13 @@ class CollectiblesLogic with ThrottledSaveLoadMixin {
   final List<CollectibleData> all = collectiblesData;
 
   /// Current state for each collectible
-  final statesById = ValueNotifier<Map<String, int>>({});
+  late final statesById = ValueNotifier<Map<String, int>>({})..addListener(_updateCounts);
+
+  int _discoveredCount = 0;
+  int get discoveredCount => _discoveredCount;
+
+  int _exploredCount = 0;
+  int get exploredCount => _exploredCount;
 
   CollectibleData? fromId(String? id) => id == null ? null : all.firstWhereOrNull((o) => o.id == id);
 
@@ -18,11 +24,33 @@ class CollectiblesLogic with ThrottledSaveLoadMixin {
     return all.where((o) => o.wonder == wonder).toList(growable: false);
   }
 
-  void updateState(String id, int state) {
+  void setState(String id, int state) {
     Map<String, int> states = Map.of(statesById.value);
     states[id] = state;
     statesById.value = states;
     scheduleSave();
+  }
+
+  void _updateCounts() {
+    _discoveredCount = _exploredCount = 0;
+    statesById.value.forEach((_, state) {
+      if (state == CollectibleState.discovered) _discoveredCount++;
+      if (state == CollectibleState.explored) _exploredCount++;
+    });
+  }
+
+  /// Get a discovered item, sorted by the order of wondersLogic.all
+  CollectibleData? getFirstDiscoveredOrNull() {
+    List<CollectibleData> discovered = [];
+    statesById.value.forEach((key, value) {
+      if (value == CollectibleState.discovered) discovered.add(fromId(key)!);
+    });
+    for (var w in wondersLogic.all) {
+      for (var d in discovered) {
+        if (d.wonder == w.type) return d;
+      }
+    }
+    return null;
   }
 
   bool isLost(WonderType wonderType, int i) {

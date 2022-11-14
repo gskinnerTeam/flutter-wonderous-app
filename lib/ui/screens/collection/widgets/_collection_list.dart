@@ -1,30 +1,31 @@
 part of '../collection_screen.dart';
 
 @immutable
-class _CollectionList extends StatelessWidget {
-  const _CollectionList({
+class _CollectionList extends StatelessWidget with GetItMixin {
+  _CollectionList({
     Key? key,
-    required this.states,
     this.onReset,
-    this.fromId,
+    required this.fromId,
     this.scrollKey,
   }) : super(key: key);
 
-  final Map<String, int> states;
   final VoidCallback? onReset;
   final Key? scrollKey;
-  final String? fromId;
+  final String fromId;
 
   WonderType? get scrollTargetWonder {
-    String? id = fromId;
-    if (states[id] != CollectibleState.discovered) {
-      id = states.keys.firstWhereOrNull((id) => states[id] == CollectibleState.discovered);
+    CollectibleData? item;
+    if (fromId.isEmpty) {
+      item = collectiblesLogic.getFirstDiscoveredOrNull();
+    } else {
+      item = collectiblesLogic.fromId(fromId);
     }
-    return collectiblesLogic.fromId(id)?.wonder;
+    return item?.wonder;
   }
 
   @override
   Widget build(BuildContext context) {
+    watchX((CollectiblesLogic o) => o.statesById);
     List<WonderData> wonders = wondersLogic.all;
     bool vtMode = context.isLandscape == false;
     final scrollWonder = scrollTargetWonder;
@@ -36,7 +37,6 @@ class _CollectionList extends StatelessWidget {
           height: vtMode ? 300 : 400,
           width: vtMode ? null : 600,
           fromId: fromId,
-          states: states,
           data: d,
         );
       }).toList()
@@ -46,17 +46,12 @@ class _CollectionList extends StatelessWidget {
       scrollDirection: vtMode ? Axis.vertical : Axis.horizontal,
       child: Padding(
         padding: EdgeInsets.all($styles.insets.lg),
-        child: vtMode
-            ? SeparatedColumn(
-                mainAxisSize: MainAxisSize.min,
-                separatorBuilder: () => Gap($styles.insets.lg),
-                children: collections,
-              )
-            : SeparatedRow(
-                separatorBuilder: () => Gap($styles.insets.xl * 2),
-                mainAxisSize: MainAxisSize.min,
-                children: collections,
-              ),
+        child: SeparatedFlex(
+          direction: vtMode ? Axis.vertical : Axis.horizontal,
+          mainAxisSize: MainAxisSize.min,
+          separatorBuilder: () => Gap($styles.insets.lg),
+          children: collections,
+        ),
       ),
     );
   }

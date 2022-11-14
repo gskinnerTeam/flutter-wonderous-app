@@ -23,7 +23,7 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
 
     // wait to update the state, to ensure the hero works properly:
     await Future.delayed($styles.times.pageTransition);
-    collectiblesLogic.updateState(collectible.id, CollectibleState.discovered);
+    collectiblesLogic.setState(collectible.id, CollectibleState.discovered);
   }
 
   @override
