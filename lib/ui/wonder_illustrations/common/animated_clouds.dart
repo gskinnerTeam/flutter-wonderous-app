@@ -89,8 +89,8 @@ class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProvid
     return RepaintBoundary(
       child: ClipRect(
         child: OverflowBox(
-          child: AnimatedBuilder(
-            animation: _anim,
+          child: ListenableBuilder(
+            listenable: _anim,
             builder: (_, __) {
               // A stack with 2 sets of clouds, one set is moving out of view while the other moves in.
               return Stack(

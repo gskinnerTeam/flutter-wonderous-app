@@ -1,6 +1,4 @@
-import 'dart:math';
-
-import 'package:flutter/material.dart';
+import 'package:wonders/common_libs.dart';
 
 /// Easily add visual decorations to a scrolling widget based on the state of its controller.
 class ScrollDecorator extends StatefulWidget {
@@ -125,8 +123,8 @@ class _ScrollDecoratorState extends State<ScrollDecorator> {
   @override
   Widget build(BuildContext context) {
     content = widget.builder(currentController);
-    return AnimatedBuilder(
-        animation: currentController,
+    return ListenableBuilder(
+        listenable: currentController,
         builder: (_, __) {
           return Stack(
             children: [

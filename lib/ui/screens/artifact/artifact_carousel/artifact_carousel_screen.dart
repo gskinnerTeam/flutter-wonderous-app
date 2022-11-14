@@ -218,8 +218,8 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
           child: PageView.builder(
             controller: _controller,
             clipBehavior: Clip.none,
-            itemBuilder: (context, index) => AnimatedBuilder(
-              animation: _controller,
+            itemBuilder: (context, index) => ListenableBuilder(
+              listenable: _controller,
               builder: (_, __) {
                 return _CarouselItem(
                   index: index,

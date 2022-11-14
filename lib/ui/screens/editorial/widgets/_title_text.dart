@@ -46,8 +46,8 @@ class _TitleText extends StatelessWidget {
               /// Wonder title text
               Semantics(
                 sortKey: OrdinalSortKey(0),
-                child: AnimatedBuilder(
-                    animation: scroller,
+                child: ListenableBuilder(
+                    listenable: scroller,
                     builder: (_, __) {
                       final yPos = ContextUtils.getGlobalPos(context)?.dy ?? 0;
                       bool enableHero = yPos > -100;
@@ -68,8 +68,8 @@ class _TitleText extends StatelessWidget {
               ExcludeSemantics(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
-                  child: AnimatedBuilder(
-                    animation: scroller,
+                  child: ListenableBuilder(
+                    listenable: scroller,
                     builder: (_, __) => CompassDivider(
                       isExpanded: scroller.position.pixels <= 0,
                       linesColor: data.type.fgColor,
