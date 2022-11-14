@@ -16,6 +16,7 @@ part 'widgets/_events_list.dart';
 part 'widgets/_timeline_btn.dart';
 part 'widgets/_wonder_image_with_timeline.dart';
 
+//TODO: Maintain scroll position when switching from portrait to landscape
 class WonderEvents extends StatelessWidget {
   WonderEvents({Key? key, required this.type}) : super(key: key);
   final WonderType type;
@@ -31,10 +32,13 @@ class WonderEvents extends StatelessWidget {
           bottom: false,
           child: Stack(
             children: [
+              /// Main view switches between portrait and landscape views
               Positioned.fill(
                 top: $styles.insets.lg,
                 child: context.isLandscape ? _buildLandscape() : _buildPortrait(),
               ),
+
+              /// Floating TimelineBtn
               Positioned(
                   right: $styles.insets.lg,
                   top: $styles.insets.lg,
@@ -49,11 +53,11 @@ class WonderEvents extends StatelessWidget {
     });
   }
 
-  /// Landscape layout is a row, with the WonderImage on left and events on the right
+  /// Landscape layout is a row, with the WonderImage on left and EventsList on the right
   Widget _buildLandscape() {
     return Row(
       children: [
-        /// WonderImage w/ Timeline btn sits on the left
+        /// WonderImage w/ Timeline btn
         Expanded(
           child: Center(
             child: SizedBox(
@@ -73,12 +77,16 @@ class WonderEvents extends StatelessWidget {
           ),
         ),
 
-        /// Scrolling event list
+        /// EventsList
         Expanded(
           child: Center(
             child: SizedBox(
               width: $styles.sizes.maxContentWidth1,
-              child: _EventsList(data: _data, topHeight: 100, blurOnScroll: false),
+              child: _EventsList(
+                data: _data,
+                topHeight: 100,
+                blurOnScroll: false,
+              ),
             ),
           ),
         ),
@@ -86,7 +94,7 @@ class WonderEvents extends StatelessWidget {
     );
   }
 
-  /// Portrait layout is a stack with the list scrolling overtop of the WonderImage
+  /// Portrait layout is a stack with the EventsList scrolling overtop of the WonderImage
   Widget _buildPortrait() {
     return LayoutBuilder(builder: (_, constraints) {
       double topHeight = max(constraints.maxHeight * .55, 200);
@@ -98,14 +106,22 @@ class WonderEvents extends StatelessWidget {
               /// Top content, sits underneath scrolling list
               _WonderImageWithTimeline(height: topHeight, data: _data),
 
-              /// Scrolling Events list, takes up the full view
+              /// EventsList + TimelineBtn
               Column(
                 children: [
                   Expanded(
-                    child: _EventsList(data: _data, topHeight: topHeight, blurOnScroll: true, showTopGradient: false),
+                    /// List
+                    child: _EventsList(
+                      data: _data,
+                      topHeight: topHeight,
+                      blurOnScroll: true,
+                      showTopGradient: false,
+                    ),
                   ),
                   Gap($styles.insets.lg),
-                  SizedBox(width: $styles.sizes.maxContentWidth3, child: _TimelineBtn(type: _data.type)),
+
+                  /// Btn
+                  _TimelineBtn(type: _data.type, width: $styles.sizes.maxContentWidth3),
                   Gap($styles.insets.xl),
                 ],
               ),

@@ -29,9 +29,8 @@ class _EventsListState extends State<_EventsList> {
 
   @override
   Widget build(BuildContext context) {
-    return PopRouterOnOverScroll(
-      controller: _scroller,
-      child: LayoutBuilder(builder: (_, constraints) {
+    return LayoutBuilder(
+      builder: (_, constraints) {
         return Stack(
           children: [
             AnimatedBuilder(
@@ -67,7 +66,7 @@ class _EventsListState extends State<_EventsList> {
             ),
           ],
         );
-      }),
+      },
     );
   }
 

@@ -18,29 +18,32 @@ class TimelineEventCard extends StatelessWidget {
           child: Container(
             color: darkMode ? $styles.colors.greyStrong : $styles.colors.offWhite,
             padding: EdgeInsets.all($styles.insets.sm),
-            child: Row(
-              children: [
-                /// Date
-                SizedBox(
-                  width: 75,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('${year.abs()}', style: $styles.text.h3.copyWith(fontWeight: FontWeight.w400, height: 1)),
-                      Text(StringUtils.getYrSuffix(year), style: $styles.text.bodySmall),
-                    ],
+            child: IntrinsicHeight(
+              child: Row(
+                children: [
+                  /// Date
+                  SizedBox(
+                    width: 75,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('${year.abs()}', style: $styles.text.h3.copyWith(fontWeight: FontWeight.w400, height: 1)),
+                        Text(StringUtils.getYrSuffix(year), style: $styles.text.bodySmall),
+                      ],
+                    ),
                   ),
-                ),
 
-                /// Divider
-                Center(child: Container(width: 1, height: 50, color: darkMode ? Colors.white : $styles.colors.black)),
-                Gap($styles.insets.sm),
+                  /// Divider
+                  Container(width: 1, color: darkMode ? Colors.white : $styles.colors.black),
 
-                /// Text content
-                Expanded(
-                  child: Text(text, style: $styles.text.bodySmall),
-                ),
-              ],
+                  Gap($styles.insets.sm),
+
+                  /// Text content
+                  Expanded(
+                    child: Text(text, style: $styles.text.bodySmall),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
