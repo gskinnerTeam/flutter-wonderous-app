@@ -40,7 +40,7 @@ class HomeMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double gridWidth = (context.heightPx / 2).clamp(200, 450);
+    final double gridWidth = (context.heightPx / 2).clamp(200, 350);
     return Stack(
       children: [
         /// Backdrop / Underlay
