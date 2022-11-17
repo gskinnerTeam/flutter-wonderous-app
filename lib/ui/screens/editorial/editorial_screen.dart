@@ -36,7 +36,8 @@ part 'widgets/_title_text.dart';
 part 'widgets/_top_illustration.dart';
 
 class WonderEditorialScreen extends StatefulWidget {
-  const WonderEditorialScreen(this.data, {Key? key, required this.onScroll}) : super(key: key);
+  const WonderEditorialScreen(this.data, {Key? key, required this.onScroll})
+      : super(key: key);
   final WonderData data;
   final void Function(double scrollPos) onScroll;
 
@@ -45,9 +46,40 @@ class WonderEditorialScreen extends StatefulWidget {
 }
 
 class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
-  late final ScrollController _scroller = ScrollController()..addListener(_handleScrollChanged);
+  late final ScrollController _scroller = ScrollController()
+    ..addListener(_handleScrollChanged);
   final _scrollPos = ValueNotifier(0.0);
   final _sectionIndex = ValueNotifier(0);
+
+  /// The largest scroll position at which we should show the colored background
+  /// widget.
+  static const _includeBackgroundThreshold = 1000;
+
+  /// Whether the colored background widget should be included in this view.
+  ///
+  /// This value should be true for scroll positions ranging from 0 to 1000, and
+  /// should be false for all values larger.
+  final _includeBackground = ValueNotifier<bool>(true);
+
+  /// The largest scroll position at which we should show the top illustration.
+  static const _includeTopIllustrationThreshold = 700;
+
+  /// The opacity value for the top illustration.
+  ///
+  /// This value should be clamped to (0, 1) and will shrink to 0 as the scroll
+  /// position increases to [_includeTopIllustrationThreshold].
+  final _topIllustrationOpacity = ValueNotifier<double>(1.0);
+
+  /// The largest scroll position at which we should show the text content.
+  static const _includeTextThreshold = 500.0;
+
+  /// The scroll position notifier that the text display widget below should
+  /// listen to.
+  ///
+  /// This value should be clamped to (0, [_includeTextThreshold]). This scroll
+  /// position value determines the opacity of the text, which decreases to 0.0
+  /// as the scroll position increases to [_includeTextThreshold].
+  final _scrollPositionForTextContent = ValueNotifier(0.0);
 
   @override
   void dispose() {
@@ -76,14 +108,13 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
           child: Stack(
             children: [
               /// Background
-              Positioned.fill(
-                child: ValueListenableBuilder(
-                  valueListenable: _scrollPos,
-                  builder: (_, value, __) {
-                    return Container(
-                      color: widget.data.type.bgColor.withOpacity(_scrollPos.value > 1000 ? 0 : 1),
-                    );
-                  },
+              ValueListenableBuilder<bool>(
+                valueListenable: _includeBackground,
+                builder: (context, include, child) => include ? child! : const SizedBox(),
+                child: Positioned.fill(
+                  child: Container(
+                    color: widget.data.type.bgColor,
+                  ),
                 ),
               ),
 
@@ -91,14 +122,17 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
               SizedBox(
                 height: illustrationHeight,
                 child: ValueListenableBuilder<double>(
-                  valueListenable: _scrollPos,
-                  builder: (_, value, child) {
-                    // get some value between 0 and 1, based on the amt scrolled
-                    double opacity = (1 - value / 700).clamp(0, 1);
+                  valueListenable: _topIllustrationOpacity,
+                  builder: (_, opacity, child) {
+                    if (opacity == 0) {
+                      // No point in rendering something that is transparent.
+                      return SizedBox();
+                    }
                     return Opacity(opacity: opacity, child: child);
                   },
                   // This is due to a bug: https://github.com/flutter/flutter/issues/101872
-                  child: RepaintBoundary(child: _TopIllustration(widget.data.type)),
+                  child: RepaintBoundary(
+                      child: _TopIllustration(widget.data.type)),
                 ),
               ),
 
@@ -116,10 +150,14 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                   /// Text content, animates itself to hide behind the app bar as it scrolls up
                   SliverToBoxAdapter(
                     child: ValueListenableBuilder<double>(
-                      valueListenable: _scrollPos,
+                      valueListenable: _scrollPositionForTextContent,
                       builder: (_, value, child) {
                         double offsetAmt = max(0, value * .3);
-                        double opacity = (1 - offsetAmt / 150).clamp(0, 1);
+                        double opacity = (1 - value / _includeTextThreshold).clamp(0, 1);
+                        if (opacity == 0) {
+                          // No point in rendering something that is transparent.
+                          return SizedBox();
+                        }
                         return Transform.translate(
                           offset: Offset(0, offsetAmt),
                           child: Opacity(opacity: opacity, child: child),
@@ -143,16 +181,20 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                         widget.data.type,
                         scrollPos: _scrollPos,
                         sectionIndex: _sectionIndex,
-                      ).animate().fade(duration: $styles.times.med, delay: $styles.times.pageTransition),
+                      ).animate().fade(
+                          duration: $styles.times.med,
+                          delay: $styles.times.pageTransition),
                     ),
                   ),
 
                   /// Editorial content (text and images)
-                  _ScrollingContent(widget.data, scrollPos: _scrollPos, sectionNotifier: _sectionIndex),
+                  _ScrollingContent(widget.data,
+                      scrollPos: _scrollPos, sectionNotifier: _sectionIndex),
 
                   /// Bottom padding
                   SliverToBoxAdapter(
-                    child: Container(height: 150, color: $styles.colors.offWhite),
+                    child:
+                        Container(height: 150, color: $styles.colors.offWhite),
                   ),
                 ],
               ),

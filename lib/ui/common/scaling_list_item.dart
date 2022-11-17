@@ -45,6 +45,7 @@ class ScalingListItem extends StatelessWidget {
       scrollPos: scrollPos,
       builder: (_, pctVisible) {
         final scale = 1.35 - pctVisible * .35;
+        // TODO: consider returning a SizedBox when scale == 0.
         return ClipRect(
           child: Transform.scale(scale: scale, child: child),
         );
