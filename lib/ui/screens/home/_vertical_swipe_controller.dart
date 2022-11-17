@@ -22,18 +22,16 @@ class _VerticalSwipeController {
 
   void handleVerticalSwipeUpdate(DragUpdateDetails details) {
     if (swipeReleaseAnim.isAnimating) swipeReleaseAnim.stop();
-    if (details.delta.dy > 0) {
-      swipeAmt.value = 0;
-    } else {
-      isPointerDown.value = true;
-      double value = (swipeAmt.value - details.delta.dy / _pullToViewDetailsThreshold).clamp(0, 1);
-      if (value != swipeAmt.value) {
-        swipeAmt.value = value;
-        if (swipeAmt.value == 1) {
-          onSwipeComplete();
-        }
+
+    isPointerDown.value = true;
+    double value = (swipeAmt.value - details.delta.dy / _pullToViewDetailsThreshold).clamp(0, 1);
+    if (value != swipeAmt.value) {
+      swipeAmt.value = value;
+      if (swipeAmt.value == 1) {
+        onSwipeComplete();
       }
     }
+
     //print(_swipeUpAmt.value);
   }
 
@@ -53,18 +51,14 @@ class _VerticalSwipeController {
   }
 
   /// Utility method to wrap a gesture detector and wire up the required handlers.
-  Widget wrapGestureDetector(Widget child, {Key? key}) => Semantics(
-        button: false,
-        child: GestureDetector(
-            key: key,
-            onTapDown: (_) {
-              handleTapDown();
-            },
-            onTapUp: (_) => handleTapCancelled(),
-            onVerticalDragUpdate: handleVerticalSwipeUpdate,
-            onVerticalDragEnd: (_) => handleVerticalSwipeCancelled(),
-            onVerticalDragCancel: handleVerticalSwipeCancelled,
-            behavior: HitTestBehavior.translucent,
-            child: child),
-      );
+  Widget wrapGestureDetector(Widget child, {Key? key}) => GestureDetector(
+      key: key,
+      excludeFromSemantics: true,
+      onTapDown: (_) => handleTapDown(),
+      onTapUp: (_) => handleTapCancelled(),
+      onVerticalDragUpdate: handleVerticalSwipeUpdate,
+      onVerticalDragEnd: (_) => handleVerticalSwipeCancelled(),
+      onVerticalDragCancel: handleVerticalSwipeCancelled,
+      behavior: HitTestBehavior.translucent,
+      child: child);
 }

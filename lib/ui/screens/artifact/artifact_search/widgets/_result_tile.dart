@@ -8,15 +8,13 @@ class _ResultTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Widget content = Container(
-      color: $styles.colors.black,
-      width: double.infinity,
-      child: AppImage(
-        key: ValueKey(data.id),
-        image: NetworkImage(data.imageUrl),
-        fit: BoxFit.cover,
-        scale: 0.5,
-      ),
+    final Widget image = AppImage(
+      key: ValueKey(data.id),
+      image: NetworkImage(data.imageUrl),
+      fit: BoxFit.cover,
+      scale: 0.5,
+      distractor: true,
+      color: $styles.colors.greyMedium.withOpacity(0.2),
     );
 
     return AspectRatio(
@@ -26,7 +24,12 @@ class _ResultTile extends StatelessWidget {
         child: AppBtn.basic(
           semanticLabel: data.title,
           onPressed: () => onPressed(data),
-          child: content,
+          child: Container(
+            color: $styles.colors.black,
+            width: double.infinity, // force image to fill area
+            height: double.infinity,
+            child: image,
+          ),
         ),
       ),
     );

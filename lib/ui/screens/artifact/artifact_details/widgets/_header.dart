@@ -27,12 +27,14 @@ class _Header extends StatelessWidget {
             child: SafeArea(
               bottom: false,
               minimum: EdgeInsets.symmetric(vertical: $styles.insets.sm),
-              child: AppImage(
-                image: NetworkImage(data.image),
-                fit: BoxFit.cover,
-                alignment: Alignment.topCenter,
-                distractor: true,
-                scale: 1.0,
+              child: Hero(
+                tag: data.image,
+                child: AppImage(
+                  image: NetworkImage(data.image),
+                  fit: BoxFit.contain,
+                  distractor: true,
+                  scale: FullscreenUrlImgViewer.imageScale, // so the image isn't reloaded
+                ),
               ),
             ),
           ),
@@ -42,6 +44,6 @@ class _Header extends StatelessWidget {
   }
 
   void _handleImagePressed(BuildContext context) {
-    Navigator.push(context, CupertinoPageRoute(builder: (_) => FullscreenUrlImgViewer(urls: [data.image])));
+    appLogic.showFullscreenDialogRoute(context, FullscreenUrlImgViewer(urls: [data.image]));
   }
 }

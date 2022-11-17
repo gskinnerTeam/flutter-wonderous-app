@@ -112,7 +112,7 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
     );
   }
 
-  Stack _buildImage(double collapseAmt) {
+  Widget _buildImage(double collapseAmt) {
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -124,16 +124,13 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
             opacity: AlwaysStoppedAnimation(1 - collapseAmt * .7),
           ),
         ),
-        BlendMask(
-          blendModes: const [BlendMode.colorBurn],
-          opacity: .9,
-          child: VtGradient(
-            [
-              Color(0xFFBEABA1).withOpacity(1),
-              Color(0xFFA6958C).withOpacity(1),
-            ],
-            const [0, 1],
-          ),
+        GradientContainer(
+          [
+            Color(0xFFBEABA1).withOpacity(1),
+            Color(0xFFA6958C).withOpacity(1),
+          ],
+          const [0.0, 1.0],
+          blendMode: BlendMode.colorBurn,
         ),
       ],
     );
