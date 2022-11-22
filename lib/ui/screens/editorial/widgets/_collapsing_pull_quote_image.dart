@@ -10,15 +10,16 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
     // Start transitioning when we are halfway up the screen
     final collapseStartPx = context.heightPx * 1;
     final collapseEndPx = context.heightPx * .15;
-    const double imgHeight = 430;
+    const double imgHeight = 500;
     const double outerPadding = 100;
 
     /// A single piece of quote text, this widget has one on top, and one on bottom
     Widget buildText(String value, double collapseAmt, {required bool top, bool isAuthor = false}) {
-      var quoteStyle = $styles.text.quote1;
+      /// Use a fixed font-size for this for consistent scaling
+      var quoteStyle = $styles.text.quote1.copyWith(fontSize: 32);
       quoteStyle = quoteStyle.copyWith(color: $styles.colors.caption);
       if (isAuthor) {
-        quoteStyle = quoteStyle.copyWith(fontSize: 20 * $styles.scale, fontWeight: FontWeight.w600);
+        quoteStyle = quoteStyle.copyWith(fontSize: 20, fontWeight: FontWeight.w600);
       }
       double offsetY = (imgHeight / 2 + outerPadding * .25) * (1 - collapseAmt);
       if (top) offsetY *= -1; // flip?
@@ -44,7 +45,7 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
         return MergeSemantics(
           child: CenteredBox(
             padding: EdgeInsets.symmetric(vertical: outerPadding),
-            width: 450,
+            width: imgHeight * .66,
             child: Stack(
               children: [
                 Container(

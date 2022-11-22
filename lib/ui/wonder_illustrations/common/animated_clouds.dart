@@ -112,6 +112,7 @@ class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProvid
 
   List<_Cloud> _getClouds() {
     Size size = ContextUtils.getSize(context) ?? Size(context.widthPx, 400);
+
     rndSeed = _getCloudSeed(widget.wonderType);
     return List<_Cloud>.generate(3, (index) {
       return _Cloud(
@@ -141,7 +142,7 @@ class _Cloud extends StatelessWidget {
         child: Image.asset(
           ImagePaths.cloud,
           opacity: AlwaysStoppedAnimation(.4 * opacity),
-          width: context.widthPx * .65 * scale,
+          width: 400 * scale,
           fit: BoxFit.fitWidth,
         ),
       );

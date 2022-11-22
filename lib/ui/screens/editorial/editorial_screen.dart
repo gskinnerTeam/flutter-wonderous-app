@@ -78,11 +78,13 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
             children: [
               /// Background
               Positioned.fill(
-                child: ValueListenableBuilder(
+                child: ValueListenableBuilder<double>(
                   valueListenable: _scrollPos,
                   builder: (_, value, __) {
-                    return Container(
-                      color: widget.data.type.bgColor.withOpacity(1),
+                    bool showBg = value < 700;
+                    return AnimatedContainer(
+                      duration: $styles.times.fast,
+                      color: widget.data.type.bgColor.withOpacity(showBg ? 1 : 0),
                     );
                   },
                 ),

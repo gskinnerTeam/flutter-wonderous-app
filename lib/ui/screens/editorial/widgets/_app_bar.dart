@@ -74,10 +74,9 @@ class _AppBar extends StatelessWidget {
 
                 /// Colored overlay
                 if (showOverlay) ...[
-                  ClipRect(
-                    child: ColoredBox(
-                      color: wonderType.bgColor.withOpacity(.8),
-                    ).animate().fade(duration: $styles.times.fast),
+                  AnimatedContainer(
+                    duration: $styles.times.slow,
+                    color: wonderType.bgColor.withOpacity(showOverlay ? .8 : 0),
                   ),
                 ],
               ],

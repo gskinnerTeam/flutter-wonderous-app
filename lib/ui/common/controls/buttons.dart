@@ -1,8 +1,9 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/ui/common/app_icons.dart';
 
 /// Shared methods across button types
-Widget _buildIcon(BuildContext context, IconData icon, {required bool isSecondary, required double? size}) =>
-    Icon(icon, color: isSecondary ? $styles.colors.black : $styles.colors.offWhite, size: size ?? 18);
+Widget _buildIcon(BuildContext context, AppIcons icon, {required bool isSecondary, required double? size}) =>
+    AppIcon(icon, color: isSecondary ? $styles.colors.black : $styles.colors.offWhite, size: size ?? 18);
 
 /// The core button that drives all other buttons.
 class AppBtn extends StatelessWidget {
@@ -37,7 +38,7 @@ class AppBtn extends StatelessWidget {
     this.border,
     String? semanticLabel,
     String? text,
-    IconData? icon,
+    AppIcons? icon,
     double? iconSize,
   })  : child = null,
         circular = false,
