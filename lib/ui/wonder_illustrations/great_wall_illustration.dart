@@ -1,5 +1,6 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/fade_color_transition.dart';
+import 'package:wonders/ui/wonder_illustrations/common/illustration_mg.dart';
 import 'package:wonders/ui/wonder_illustrations/common/paint_textures.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_hero.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_builder.dart';
@@ -52,41 +53,53 @@ class GreatWallIllustration extends StatelessWidget {
     ];
   }
 
-  List<Widget> _buildMg(BuildContext context, Animation<double> anim) => [
-        Center(
-          child: FractionalTranslation(
-            translation: Offset(0, config.shortMode ? .1 * anim.value : 0),
-            child: FractionallySizedBox(
-              widthFactor: config.shortMode ? null : 1.3,
-              child: WonderHero(
-                config,
-                'great-wall-mg',
-                child: Image.asset(
-                  '$assetPath/great-wall.png',
-                  opacity: anim,
-                  width: config.shortMode ? 300 : 500,
-                ),
+  List<Widget> _buildMg(BuildContext context, Animation<double> anim) {
+    return [
+      IllustrationMg(
+        'great-wall.png',
+        type: WonderType.greatWall,
+        anim: anim,
+        config: config,
+        maxHeight: 800,
+        heightFraction: .85,
+      ),
+    ];
+    return [
+      Center(
+        child: FractionalTranslation(
+          translation: Offset(0, config.shortMode ? .1 * anim.value : 0),
+          child: FractionallySizedBox(
+            widthFactor: config.shortMode ? null : 1.3,
+            child: WonderHero(
+              config,
+              'great-wall-mg',
+              child: Image.asset(
+                '$assetPath/great-wall.png',
+                opacity: anim,
+                width: config.shortMode ? 300 : 500,
               ),
             ),
           ),
+        ),
 
-          // child: FractionalTranslation(
-          //   translation: Offset(0, 0),
-          //   child: Transform.scale(
-          //     scale: 1, //config.shortMode ? .95 : 1.4 + config.zoom * .2,
-          //     child: WonderHero(
-          //       config,
-          //       'great-wall-mg',
-          //       child: Image.asset(
-          //         '$assetPath/great-wall.png',
-          //         opacity: anim,
-          //         width: 700,
-          //       ),
-          //     ),
-          //   ),
-          // ),
-        )
-      ];
+        // child: FractionalTranslation(
+        //   translation: Offset(0, 0),
+        //   child: Transform.scale(
+        //     scale: 1, //config.shortMode ? .95 : 1.4 + config.zoom * .2,
+        //     child: WonderHero(
+        //       config,
+        //       'great-wall-mg',
+        //       child: Image.asset(
+        //         '$assetPath/great-wall.png',
+        //         opacity: anim,
+        //         width: 700,
+        //       ),
+        //     ),
+        //   ),
+        // ),
+      )
+    ];
+  }
 
   List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
     final curvedAnim = Curves.easeOut.transform(anim.value);
