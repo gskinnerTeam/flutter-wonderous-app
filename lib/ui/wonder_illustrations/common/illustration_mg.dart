@@ -2,6 +2,9 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_hero.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 
+/// TODO: This can just be an IllustrrationPiece
+/// TODO: Add counter scaling to illustration piece like this
+/// TODO: Add hero support to [IllustrationPiece]? Or at least use [FractionalBoxWithMinSize]
 class IllustrationMg extends StatelessWidget {
   const IllustrationMg(
     this.imagePath, {

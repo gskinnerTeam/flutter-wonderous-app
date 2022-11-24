@@ -1,5 +1,6 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/fade_color_transition.dart';
+import 'package:wonders/ui/wonder_illustrations/common/illustration_fg.dart';
 import 'package:wonders/ui/wonder_illustrations/common/illustration_mg.dart';
 import 'package:wonders/ui/wonder_illustrations/common/paint_textures.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_hero.dart';
@@ -78,6 +79,20 @@ class PyramidsGizaIllustration extends StatelessWidget {
   List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
     final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
+      IllustrationPiece(
+        type: WonderType.pyramidsGiza,
+        anim: anim,
+        fileName: 'foreground-back.png',
+        heightFactor: .5,
+        alignment: Alignment.bottomCenter,
+      ),
+      IllustrationPiece(
+        type: WonderType.pyramidsGiza,
+        anim: anim,
+        fileName: 'foreground-front.png',
+        heightFactor: .5,
+        alignment: Alignment.bottomCenter,
+      )
       // Transform.scale(
       //   scale: 1 + config.zoom * .2,
       //   child: Transform.translate(
