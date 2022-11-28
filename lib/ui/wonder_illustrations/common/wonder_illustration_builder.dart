@@ -13,37 +13,39 @@ class WonderIllustrationBuilder extends StatefulWidget {
     required this.fgBuilder,
     required this.mgBuilder,
     required this.bgBuilder,
+    required this.wonderType,
   }) : super(key: key);
   final List<Widget> Function(BuildContext context, Animation<double> animation) fgBuilder;
   final List<Widget> Function(BuildContext context, Animation<double> animation) mgBuilder;
   final List<Widget> Function(BuildContext context, Animation<double> animation) bgBuilder;
   final WonderIllustrationConfig config;
+  final WonderType wonderType;
 
   @override
-  State<WonderIllustrationBuilder> createState() => _WonderIllustrationBuilderState();
+  State<WonderIllustrationBuilder> createState() => WonderIllustrationBuilderState();
 }
 
-class _WonderIllustrationBuilderState extends State<WonderIllustrationBuilder> with SingleTickerProviderStateMixin {
-  late final _anim = AnimationController(vsync: this, duration: $styles.times.med * .75)
+class WonderIllustrationBuilderState extends State<WonderIllustrationBuilder> with SingleTickerProviderStateMixin {
+  late final anim = AnimationController(vsync: this, duration: $styles.times.med * .75)
     ..addListener(() => setState(() {}));
 
   bool get isShowing => widget.config.isShowing;
   @override
   void initState() {
     super.initState();
-    if (isShowing) _anim.forward(from: 0);
+    if (isShowing) anim.forward(from: 0);
   }
 
   @override
   void dispose() {
-    _anim.dispose();
+    anim.dispose();
     super.dispose();
   }
 
   @override
   void didUpdateWidget(covariant WonderIllustrationBuilder oldWidget) {
     if (isShowing != oldWidget.config.isShowing) {
-      isShowing ? _anim.forward(from: 0) : _anim.reverse(from: 1);
+      isShowing ? anim.forward(from: 0) : anim.reverse(from: 1);
     }
     super.didUpdateWidget(oldWidget);
   }
@@ -51,13 +53,19 @@ class _WonderIllustrationBuilderState extends State<WonderIllustrationBuilder> w
   @override
   Widget build(BuildContext context) {
     // Optimization: no need to return all of these children if the widget is fully invisible.
-    if (_anim.value == 0 && widget.config.enableAnims) return SizedBox.expand();
-    Animation<double> anim = widget.config.enableAnims ? _anim : AlwaysStoppedAnimation(1);
+    if (anim.value == 0 && widget.config.enableAnims) return SizedBox.expand();
+    Animation<double> animation = widget.config.enableAnims ? anim : AlwaysStoppedAnimation(1);
 
-    return Stack(key: ValueKey(anim.value == 0), children: [
-      if (widget.config.enableBg) ...widget.bgBuilder(context, _anim),
-      if (widget.config.enableMg) ...widget.mgBuilder(context, _anim),
-      if (widget.config.enableFg) ...widget.fgBuilder(context, _anim),
-    ]);
+    return Provider<WonderIllustrationBuilderState>.value(
+      value: this,
+      child: Stack(
+        key: ValueKey(animation.value == 0),
+        children: [
+          if (widget.config.enableBg) ...widget.bgBuilder(context, animation),
+          if (widget.config.enableMg) ...widget.mgBuilder(context, animation),
+          if (widget.config.enableFg) ...widget.fgBuilder(context, animation),
+        ],
+      ),
+    );
   }
 }
