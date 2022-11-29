@@ -101,7 +101,7 @@ class _IllustrationPieceState extends State<IllustrationPiece> {
               finalTranslation += widget.initialOffset * (1 - curvedAnim);
             }
             // Dynamic
-            final dynamicOffsetAmt = min(context.widthPx / 1500, 1);
+            final dynamicOffsetAmt = ((context.widthPx - 400) / 1100).clamp(0, 1);
             finalTranslation += Offset(dynamicOffsetAmt * widget.dynamicHzOffset, 0);
             // Fractional
             final width = height * (aspectRatio ?? 0);

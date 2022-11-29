@@ -66,8 +66,8 @@ class ChristRedeemerIllustration extends StatelessWidget {
         initialScale: .9,
         initialOffset: Offset(-40, 60),
         heightFactor: .55,
-        fractionalOffset: Offset(-.25, 0),
-        zoomAmt: .25,
+        fractionalOffset: Offset(-.15, .05),
+        zoomAmt: .1,
         dynamicHzOffset: -100,
       ),
       IllustrationPiece(
@@ -77,7 +77,7 @@ class ChristRedeemerIllustration extends StatelessWidget {
         initialScale: .95,
         heightFactor: .65,
         fractionalOffset: Offset(.2, 0),
-        zoomAmt: .1,
+        zoomAmt: .15,
         dynamicHzOffset: 100,
       ),
     ];

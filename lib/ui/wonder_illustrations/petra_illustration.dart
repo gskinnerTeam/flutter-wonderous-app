@@ -65,7 +65,7 @@ class PetraIllustration extends StatelessWidget {
         alignment: Alignment.bottomCenter,
         initialOffset: Offset(-80, 0),
         heightFactor: 1,
-        fractionalOffset: Offset(-.5, 0),
+        fractionalOffset: Offset(-.55, 0),
         zoomAmt: .1,
         dynamicHzOffset: -130,
         bottom: (_) {
@@ -84,7 +84,7 @@ class PetraIllustration extends StatelessWidget {
         alignment: Alignment.bottomCenter,
         initialOffset: Offset(80, 00),
         heightFactor: 1,
-        fractionalOffset: Offset(.5, 0),
+        fractionalOffset: Offset(.55, 0),
         zoomAmt: .15,
         dynamicHzOffset: 130,
         bottom: (_) {
