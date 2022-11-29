@@ -54,8 +54,6 @@ class PyramidsGizaIllustration extends StatelessWidget {
         heightFactor: .5,
         minHeight: 300,
         zoomAmt: .1,
-        boxFit: BoxFit.contain,
-        overflow: !config.shortMode,
       )
     ];
   }

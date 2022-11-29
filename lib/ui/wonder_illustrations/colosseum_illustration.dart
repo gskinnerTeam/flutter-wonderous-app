@@ -77,6 +77,7 @@ class ColosseumIllustration extends StatelessWidget {
         initialScale: .9,
         initialOffset: Offset(-40, 60),
         heightFactor: .65,
+        offset: Offset.zero,
         fractionalOffset: Offset(-.5, .1),
         zoomAmt: .25,
         dynamicHzOffset: -150,

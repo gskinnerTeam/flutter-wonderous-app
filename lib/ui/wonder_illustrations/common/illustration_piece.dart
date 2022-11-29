@@ -16,8 +16,6 @@ class IllustrationPiece extends StatefulWidget {
     this.fractionalOffset,
     this.zoomAmt = 0,
     this.initialOffset = Offset.zero,
-    this.boxFit = BoxFit.fitHeight,
-    this.overflow = true,
     this.enableHero = false,
     this.initialScale = 1,
     this.dynamicHzOffset = 0,
@@ -49,12 +47,6 @@ class IllustrationPiece extends StatefulWidget {
 
   /// The % amount that this object should scale up as the user drags their finger up the screen
   final double zoomAmt;
-
-  /// Applied to the underlying image in the piece, defaults to [BoxFit.cover]
-  final BoxFit boxFit;
-
-  /// Whether or not this piece can overflow it's parent on the horizontal bounds
-  final bool overflow;
 
   /// Adds a hero tag to this piece, made from wonderType + fileName
   final bool enableHero;
@@ -93,10 +85,10 @@ class _IllustrationPieceState extends State<IllustrationPiece> {
             final anim = wonderBuilder.anim;
             final curvedAnim = Curves.easeOut.transform(anim.value);
             final config = wonderBuilder.widget.config;
-            Widget img = Image.asset(imgPath, opacity: anim, fit: widget.boxFit);
-            if (widget.overflow) {
-              img = OverflowBox(maxWidth: 2000, child: img);
-            }
+            Widget img = Image.asset(imgPath, opacity: anim, fit: BoxFit.fitHeight);
+            // Add overflow box so image doesn't get clipped as we translate it around
+            img = OverflowBox(maxWidth: 2000, child: img);
+
             final double introZoom = (widget.initialScale - 1) * (1 - curvedAnim);
 
             /// Determine target height
