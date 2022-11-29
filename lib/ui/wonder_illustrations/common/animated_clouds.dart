@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/utils/context_utils.dart';
 
+//TODO: Make the clouds fade out and in
 // Shows a set of clouds that animated onto stage.
 // When value-key is changed, a new set of clouds will animate into place and the old ones will animate out.
 // Uses a random seed system, to make sure we get the same set of clouds for each wonder, without actually having to hand-position them.

@@ -252,7 +252,7 @@ class _CarouselBottomTextWithCircle extends StatelessWidget {
                 text: $strings.artifactsButtonBrowse,
                 icon: AppIcons.search,
                 expand: true,
-                onPressed: () {}, //_handleSearchTap,
+                onPressed: () => _handleSearchTap(context),
               ),
               Gap($styles.insets.lg),
             ],
@@ -260,6 +260,10 @@ class _CarouselBottomTextWithCircle extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _handleSearchTap(BuildContext context) {
+    //context.push(ScreenPaths.search(widget.type));
   }
 
   OverflowBox _buildBgCircle() {

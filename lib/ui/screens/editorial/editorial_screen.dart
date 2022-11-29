@@ -36,6 +36,10 @@ part 'widgets/_sliding_image_stack.dart';
 part 'widgets/_title_text.dart';
 part 'widgets/_top_illustration.dart';
 
+//TODO: Try and maintain 1.5 : 1 aspect ratio on the featured image
+//TODO: Try and move the scrollbar all the way to the edge of the screen
+//TODO: Fix arch logic (if necessary)
+// or maybe remove
 class WonderEditorialScreen extends StatefulWidget {
   const WonderEditorialScreen(this.data, {Key? key, required this.onScroll}) : super(key: key);
   final WonderData data;

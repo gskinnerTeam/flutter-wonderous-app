@@ -56,6 +56,7 @@ class _EventsListState extends State<_EventsList> {
     }
     return Stack(
       children: [
+        //TODO: Remove scrollbar on portrait
         SingleChildScrollView(
           controller: _scroller,
           child: Column(

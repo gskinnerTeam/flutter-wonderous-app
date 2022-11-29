@@ -59,6 +59,7 @@ class TajMahalIllustration extends StatelessWidget {
               fileName: 'taj-mahal.png',
               heightFactor: heightFactor,
               minHeight: minHeight,
+              enableHero: true,
               zoomAmt: .05,
               top: config.shortMode
                   ? null

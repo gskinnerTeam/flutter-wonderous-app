@@ -33,23 +33,13 @@ class ColosseumIllustration extends StatelessWidget {
           opacity: anim.drive(Tween(begin: 0, end: .5)),
         ),
       ),
-      Align(
-        alignment: config.shortMode ? Alignment(-.3, 1) : Alignment(-.5, -.4),
-        child: FractionalTranslation(
-          translation: Offset(0, -.5 * anim.value),
-          child: WonderHero(
-            config,
-            'colosseum-sun',
-            child: Transform.scale(
-              scale: config.shortMode ? .75 : 1,
-              child: Image.asset(
-                '$assetPath/sun.png',
-                cacheWidth: context.widthPx.round() * 2,
-                opacity: anim,
-              ),
-            ),
-          ),
-        ),
+      IllustrationPiece(
+        fileName: 'sun.png',
+        initialOffset: Offset(0, 20),
+        enableHero: true,
+        heightFactor: .15,
+        minHeight: 150,
+        offset: config.shortMode ? Offset(70, context.heightPx * -.05) : Offset(50, context.heightPx * -.25),
       ),
     ];
   }
@@ -60,6 +50,7 @@ class ColosseumIllustration extends StatelessWidget {
         children: const [
           IllustrationPiece(
             fileName: 'colosseum.png',
+            enableHero: true,
             heightFactor: .55,
             minHeight: 400,
             zoomAmt: .15,

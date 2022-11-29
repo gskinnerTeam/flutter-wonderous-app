@@ -50,7 +50,7 @@ class GreatWallIllustration extends StatelessWidget {
       IllustrationPiece(
         fileName: 'great-wall.png',
         heightFactor: .55,
-        minHeight: 600,
+        minHeight: 500,
         zoomAmt: .05,
         enableHero: true,
       ),
