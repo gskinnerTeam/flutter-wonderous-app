@@ -1,9 +1,7 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/fade_color_transition.dart';
-import 'package:wonders/ui/wonder_illustrations/common/illustration_fg.dart';
-import 'package:wonders/ui/wonder_illustrations/common/illustration_mg.dart';
+import 'package:wonders/ui/wonder_illustrations/common/illustration_piece.dart';
 import 'package:wonders/ui/wonder_illustrations/common/paint_textures.dart';
-import 'package:wonders/ui/wonder_illustrations/common/wonder_hero.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_builder.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 
@@ -17,6 +15,7 @@ class PyramidsGizaIllustration extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WonderIllustrationBuilder(
+      wonderType: WonderType.pyramidsGiza,
       config: config,
       bgBuilder: _buildBg,
       mgBuilder: _buildMg,
@@ -35,93 +34,54 @@ class PyramidsGizaIllustration extends StatelessWidget {
           flipY: true,
         ),
       ),
-      Align(
-          alignment: Alignment(.75, config.shortMode ? -.2 : -.5),
-          child: FractionalTranslation(
-            translation: Offset(0, -.5 * anim.value),
-            child: WonderHero(
-              config,
-              'pyramids-moon',
-              child: Transform.scale(
-                scale: config.shortMode ? 0.8 : 1.2,
-                child: Image.asset('$assetPath/moon.png', opacity: anim),
-              ),
-            ),
-          )),
+      IllustrationPiece(
+        fileName: 'moon.png',
+        initialOffset: Offset(0, 20),
+        enableHero: true,
+        heightFactor: .15,
+        minHeight: 100,
+        offset: config.shortMode ? Offset(100, context.heightPx * -.1) : Offset(150, context.heightPx * -.15),
+        zoomAmt: .05,
+      ),
     ];
   }
 
   List<Widget> _buildMg(BuildContext context, Animation<double> anim) {
     return [
-      IllustrationMg(
-        'pyramids.png',
-        type: WonderType.pyramidsGiza,
-        anim: anim,
-        config: config,
-        maxHeight: 600,
-        heightFraction: .85,
-      ),
-
-      // Align(
-      //   alignment: Alignment(0, config.shortMode ? 0.9 : 0),
-      //   child: WonderHero(config, 'pyramids-mg',
-      //       child: Transform.scale(
-      //         scale: 1 + config.zoom * .1,
-      //         child: FractionallySizedBox(
-      //           widthFactor: config.shortMode ? 1 : 1.94,
-      //           child: Image.asset('$assetPath/pyramids.png', fit: BoxFit.contain, opacity: anim),
-      //         ),
-      //       )),
-      // ),
+      IllustrationPiece(
+        fileName: 'pyramids.png',
+        enableHero: true,
+        heightFactor: .5,
+        minHeight: 300,
+        zoomAmt: .1,
+        boxFit: BoxFit.contain,
+        overflow: !config.shortMode,
+      )
     ];
   }
 
   List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
-    final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
       IllustrationPiece(
-        type: WonderType.pyramidsGiza,
-        anim: anim,
         fileName: 'foreground-back.png',
-        heightFactor: .5,
         alignment: Alignment.bottomCenter,
+        initialOffset: Offset(20, 40),
+        initialScale: .95,
+        heightFactor: .55,
+        fractionalOffset: Offset(.1, .06),
+        zoomAmt: .1,
+        dynamicHzOffset: 150,
       ),
       IllustrationPiece(
-        type: WonderType.pyramidsGiza,
-        anim: anim,
         fileName: 'foreground-front.png',
-        heightFactor: .5,
         alignment: Alignment.bottomCenter,
-      )
-      // Transform.scale(
-      //   scale: 1 + config.zoom * .2,
-      //   child: Transform.translate(
-      //     offset: Offset(0, 10 * (1 - curvedAnim)),
-      //     child: BottomCenter(
-      //       child: FractionallySizedBox(
-      //         widthFactor: 1.2,
-      //         child: FractionalTranslation(
-      //             translation: Offset(0, -1.2),
-      //             child: Image.asset('$assetPath/foreground-back.png', opacity: anim, fit: BoxFit.cover)),
-      //       ),
-      //     ),
-      //   ),
-      // ),
-      // Transform.scale(
-      //   scale: 1 + config.zoom * .4,
-      //   child: Transform.translate(
-      //     offset: Offset(0, 30 * (1 - curvedAnim)),
-      //     child: BottomCenter(
-      //       child: FractionallySizedBox(
-      //         widthFactor: 1.52,
-      //         child: FractionalTranslation(
-      //           translation: Offset(0, 0.1),
-      //           child: Image.asset('$assetPath/foreground-front.png', opacity: anim, fit: BoxFit.cover),
-      //         ),
-      //       ),
-      //     ),
-      //   ),
-      // ),
+        initialScale: .9,
+        initialOffset: Offset(-40, 60),
+        heightFactor: .55,
+        fractionalOffset: Offset(-.1, .1),
+        zoomAmt: .25,
+        dynamicHzOffset: -150,
+      ),
     ];
   }
 }

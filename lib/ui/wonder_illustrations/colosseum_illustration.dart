@@ -1,5 +1,6 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/fade_color_transition.dart';
+import 'package:wonders/ui/wonder_illustrations/common/illustration_piece.dart';
 import 'package:wonders/ui/wonder_illustrations/common/paint_textures.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_hero.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_builder.dart';
@@ -18,6 +19,7 @@ class ColosseumIllustration extends StatelessWidget {
       bgBuilder: _buildBg,
       mgBuilder: _buildMg,
       fgBuilder: _buildFg,
+      wonderType: WonderType.colosseum,
     );
   }
 
@@ -55,25 +57,12 @@ class ColosseumIllustration extends StatelessWidget {
   List<Widget> _buildMg(BuildContext context, Animation<double> anim) {
     return [
       Stack(
-        children: [
-          if (config.shortMode) ...[
-            FractionalTranslation(
-              translation: Offset(0, .9),
-              child: Container(color: bgColor),
-            )
-          ],
-          Center(
-            child: FractionalTranslation(
-              translation: Offset(0, config.shortMode ? .1 : -.15),
-              child: Transform.scale(
-                scale: config.shortMode ? .85 : 1.55 + config.zoom * .2,
-                child: WonderHero(
-                  config,
-                  'colosseum-mg',
-                  child: Image.asset('$assetPath/colosseum.png', opacity: anim, fit: BoxFit.cover),
-                ),
-              ),
-            ),
+        children: const [
+          IllustrationPiece(
+            fileName: 'colosseum.png',
+            heightFactor: .55,
+            minHeight: 400,
+            zoomAmt: .15,
           ),
         ],
       )
@@ -81,40 +70,27 @@ class ColosseumIllustration extends StatelessWidget {
   }
 
   List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
-    final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
-      Stack(children: [
-        BottomLeft(
-          child: FractionallySizedBox(
-            heightFactor: .56,
-            child: FractionalTranslation(
-              translation: Offset(-.2 * (1 - curvedAnim), 0),
-              child: Transform.scale(
-                scale: 1 + config.zoom * .3,
-                child: FractionalTranslation(
-                  translation: Offset(-.1, .1),
-                  child: Image.asset('$assetPath/foreground-left.png', opacity: anim, fit: BoxFit.cover),
-                ),
-              ),
-            ),
-          ),
-        ),
-        BottomRight(
-          child: FractionallySizedBox(
-            heightFactor: .56,
-            child: FractionalTranslation(
-              translation: Offset(.2 * (1 - curvedAnim), 0),
-              child: Transform.scale(
-                scale: 1 + config.zoom * .3,
-                child: FractionalTranslation(
-                  translation: Offset(.3, .2),
-                  child: Image.asset('$assetPath/foreground-right.png', opacity: anim, fit: BoxFit.cover),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ])
+      IllustrationPiece(
+        fileName: 'foreground-left.png',
+        alignment: Alignment.bottomCenter,
+        initialScale: .9,
+        initialOffset: Offset(-40, 60),
+        heightFactor: .65,
+        fractionalOffset: Offset(-.5, .1),
+        zoomAmt: .25,
+        dynamicHzOffset: -150,
+      ),
+      IllustrationPiece(
+        fileName: 'foreground-right.png',
+        alignment: Alignment.bottomCenter,
+        initialOffset: Offset(20, 40),
+        initialScale: .95,
+        heightFactor: .75,
+        fractionalOffset: Offset(.5, .25),
+        zoomAmt: .1,
+        dynamicHzOffset: 150,
+      ),
     ];
   }
 }

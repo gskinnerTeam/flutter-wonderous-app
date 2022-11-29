@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/fade_color_transition.dart';
+import 'package:wonders/ui/wonder_illustrations/common/illustration_piece.dart';
 import 'package:wonders/ui/wonder_illustrations/common/paint_textures.dart';
-import 'package:wonders/ui/wonder_illustrations/common/wonder_hero.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_builder.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 
@@ -19,6 +19,7 @@ class PetraIllustration extends StatelessWidget {
       bgBuilder: _buildBg,
       mgBuilder: _buildMg,
       fgBuilder: _buildFg,
+      wonderType: WonderType.petra,
     );
   }
 
@@ -33,74 +34,69 @@ class PetraIllustration extends StatelessWidget {
           opacity: anim.drive(Tween(begin: 0, end: .25)),
         ),
       ),
-      Align(
-        alignment: Alignment(-.3, config.shortMode ? -1.5 : -1.23),
-        child: FractionalTranslation(
-          translation: Offset(0, .5 * anim.value),
-          child: WonderHero(
-            config,
-            'petra-moon',
-            child: Image.asset(
-              '$assetPath/moon.png',
-              opacity: anim,
-            ),
-          ),
-        ),
+      IllustrationPiece(
+        fileName: 'moon.png',
+        heightFactor: .15,
+        minHeight: 100,
+        alignment: Alignment.topCenter,
+        fractionalOffset: Offset(-.7, 0),
       ),
     ];
   }
 
   List<Widget> _buildMg(BuildContext context, Animation<double> anim) => [
-        Center(
-          child: FractionalTranslation(
-            translation: Offset(0, config.shortMode ? 0.05 : -.1),
-            child: FractionallySizedBox(
-              widthFactor: config.shortMode ? 1 : 2,
-              child: WonderHero(
-                config,
-                'petra-mg',
-                child: Image.asset('$assetPath/petra.png', fit: BoxFit.contain, opacity: anim),
-              ),
-            ),
+        FractionallySizedBox(
+          heightFactor: config.shortMode ? 1 : .8,
+          alignment: Alignment.bottomCenter,
+          child: IllustrationPiece(
+            fileName: 'petra.png',
+            heightFactor: .65,
+            minHeight: 500,
+            zoomAmt: .1,
+            enableHero: true,
           ),
         ),
       ];
 
   List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
-    final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
-      Stack(children: [
-        CenterLeft(
-          child: FractionallySizedBox(
-            widthFactor: .63,
-            child: FractionalTranslation(
-              translation: Offset(-.3 * (1 - curvedAnim), 0),
-              child: Transform.scale(
-                scale: 1.1 + config.zoom * .2,
-                child: FractionalTranslation(
-                  translation: Offset(-.35, -.07),
-                  child: Image.asset('$assetPath/foreground-left.png', opacity: anim, fit: BoxFit.contain),
-                ),
-              ),
-            ),
-          ),
-        ),
-        CenterRight(
-          child: FractionallySizedBox(
-            widthFactor: .72,
-            child: FractionalTranslation(
-              translation: Offset(.3 * (1 - curvedAnim), 0),
-              child: Transform.scale(
-                scale: 1 + config.zoom * .4,
-                child: FractionalTranslation(
-                  translation: Offset(.4, -.03),
-                  child: Image.asset('$assetPath/foreground-right.png', opacity: anim, fit: BoxFit.contain),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ])
+      IllustrationPiece(
+        fileName: 'foreground-left.png',
+        alignment: Alignment.bottomCenter,
+        initialOffset: Offset(-80, 0),
+        heightFactor: 1,
+        fractionalOffset: Offset(-.5, 0),
+        zoomAmt: .1,
+        dynamicHzOffset: -130,
+        bottom: (_) {
+          /// To cover everything behind this piece with a solid color, we scale up a container
+          /// and then offset it in negative space
+          const double scaleX = 5;
+          return FractionalTranslation(
+            translation: Offset(-1 - scaleX / 2, 0),
+            child:
+                Transform.scale(scaleX: 5, child: Container(color: WonderType.petra.fgColor.withOpacity(anim.value))),
+          );
+        },
+      ),
+      IllustrationPiece(
+        fileName: 'foreground-right.png',
+        alignment: Alignment.bottomCenter,
+        initialOffset: Offset(80, 00),
+        heightFactor: 1,
+        fractionalOffset: Offset(.5, 0),
+        zoomAmt: .15,
+        dynamicHzOffset: 130,
+        bottom: (_) {
+          /// To cover everything behind this piece with a solid color, we scale up a container and then offset it in negative space
+          const double scaleX = 5;
+          return FractionalTranslation(
+            translation: Offset(1 + scaleX / 2, 0),
+            child:
+                Transform.scale(scaleX: 5, child: Container(color: WonderType.petra.fgColor.withOpacity(anim.value))),
+          );
+        },
+      ),
     ];
   }
 }

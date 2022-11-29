@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/fade_color_transition.dart';
+import 'package:wonders/ui/wonder_illustrations/common/illustration_piece.dart';
 import 'package:wonders/ui/wonder_illustrations/common/paint_textures.dart';
-import 'package:wonders/ui/wonder_illustrations/common/wonder_hero.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_builder.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 
@@ -19,6 +19,7 @@ class MachuPicchuIllustration extends StatelessWidget {
       bgBuilder: _buildBg,
       mgBuilder: _buildMg,
       fgBuilder: _buildFg,
+      wonderType: WonderType.machuPicchu,
     );
   }
 
@@ -33,80 +34,49 @@ class MachuPicchuIllustration extends StatelessWidget {
           opacity: anim.drive(Tween(begin: 0, end: .7)),
         ),
       ),
-      Align(
-        alignment: config.shortMode ? Alignment.center : Alignment(.75, -.6),
-        child: FractionalTranslation(
-          translation: Offset(0, -.5 * anim.value),
-          child: Transform.scale(
-            scale: config.shortMode ? .75 : 1,
-            child: WonderHero(
-              config,
-              'machu-sun',
-              child: Image.asset(
-                '$assetPath/sun.png',
-                cacheWidth: context.widthPx.round() * 2,
-                opacity: anim,
-              ),
-            ),
-          ),
-        ),
+      IllustrationPiece(
+        fileName: 'sun.png',
+        initialOffset: Offset(0, 20),
+        enableHero: true,
+        heightFactor: .15,
+        minHeight: 150,
+        offset: config.shortMode ? Offset(-70, context.heightPx * -.05) : Offset(-150, context.heightPx * -.25),
       ),
     ];
   }
 
   List<Widget> _buildMg(BuildContext context, Animation<double> anim) => [
-        Center(
-          child: Transform.scale(
-            scale: config.shortMode ? 1.2 : 2.5 + config.zoom * .2,
-            alignment: Alignment(config.shortMode ? 0 : .15, config.shortMode ? -0.6 : .3),
-            child: WonderHero(
-              config,
-              'machu-mg',
-              child: Image.asset(
-                '$assetPath/machu-picchu.png',
-                fit: BoxFit.contain,
-                opacity: anim,
-              ),
-            ),
-          ),
-        )
+        IllustrationPiece(
+          fileName: 'machu-picchu.png',
+          heightFactor: .65,
+          minHeight: 500,
+          zoomAmt: .05,
+          enableHero: true,
+        ),
       ];
 
   List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
-    final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
-      Transform.translate(
-        offset: Offset(0, 20 * (1 - curvedAnim)),
-        child: Stack(children: [
-          BottomRight(
-            child: Transform.scale(
-              scale: 1 + config.zoom * .05,
-              child: FractionallySizedBox(
-                widthFactor: 1.5,
-                child: FractionalTranslation(
-                  translation: Offset(0, .1),
-                  child: Image.asset('$assetPath/foreground-back.png', opacity: anim),
-                ),
-              ),
-            ),
-          ),
-          BottomLeft(
-            child: FractionalTranslation(
-              translation: Offset(-.2 * (1 - curvedAnim), 0),
-              child: Transform.scale(
-                scale: 1 + config.zoom * .25,
-                child: FractionallySizedBox(
-                  widthFactor: 1.5,
-                  child: FractionalTranslation(
-                    translation: Offset(-.3, .4),
-                    child: Image.asset('$assetPath/foreground-front.png', opacity: anim),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ]),
-      )
+      IllustrationPiece(
+        fileName: 'foreground-back.png',
+        alignment: Alignment.bottomCenter,
+        initialScale: .9,
+        initialOffset: Offset(0, 60),
+        heightFactor: .6,
+        fractionalOffset: Offset(0, .3),
+        zoomAmt: .1,
+        dynamicHzOffset: 150,
+      ),
+      IllustrationPiece(
+        fileName: 'foreground-front.png',
+        alignment: Alignment.bottomCenter,
+        initialOffset: Offset(20, 40),
+        heightFactor: .5,
+        initialScale: .95,
+        fractionalOffset: Offset(-.25, .25),
+        zoomAmt: .12,
+        dynamicHzOffset: -50,
+      ),
     ];
   }
 }
