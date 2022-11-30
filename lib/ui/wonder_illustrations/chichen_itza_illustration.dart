@@ -27,18 +27,19 @@ class ChichenItzaIllustration extends StatelessWidget {
       Positioned.fill(
         child: IllustrationTexture(
           ImagePaths.roller2,
-          color: Colors.white,
+          color: Color(0xffDC762A),
           opacity: anim.drive(Tween(begin: 0, end: .5)),
           flipY: true,
+          scale: config.shortMode ? 4 : 1.15,
         ),
       ),
       IllustrationPiece(
         fileName: 'sun.png',
-        initialOffset: Offset(0, 20),
+        initialOffset: Offset(0, 50),
         enableHero: true,
-        heightFactor: .25,
+        heightFactor: .4,
         minHeight: 200,
-        fractionalOffset: Offset(1, config.shortMode ? 0 : -.5),
+        fractionalOffset: Offset(.55, config.shortMode ? -.1 : -.35),
       ),
     ];
   }
@@ -47,12 +48,12 @@ class ChichenItzaIllustration extends StatelessWidget {
     // We want to size to the shortest side
     return [
       Transform.translate(
-        offset: Offset(0, 20),
+        offset: Offset(0, config.shortMode ? 40 : -30),
         child: IllustrationPiece(
           fileName: 'chichen.png',
-          heightFactor: .55,
-          minHeight: 400,
-          zoomAmt: .05,
+          heightFactor: .45,
+          minHeight: 300,
+          zoomAmt: -.1,
           enableHero: true,
         ),
       ),
@@ -67,7 +68,7 @@ class ChichenItzaIllustration extends StatelessWidget {
         initialOffset: Offset(20, 40),
         initialScale: .95,
         heightFactor: .4,
-        fractionalOffset: Offset(.35, -.1),
+        fractionalOffset: Offset(.5, -.1),
         zoomAmt: .1,
         dynamicHzOffset: 250,
       ),
@@ -77,7 +78,7 @@ class ChichenItzaIllustration extends StatelessWidget {
         initialScale: .9,
         initialOffset: Offset(-40, 60),
         heightFactor: .65,
-        fractionalOffset: Offset(-.45, .2),
+        fractionalOffset: Offset(-.4, .2),
         zoomAmt: .25,
         dynamicHzOffset: -250,
       ),
@@ -86,9 +87,9 @@ class ChichenItzaIllustration extends StatelessWidget {
         alignment: Alignment.topLeft,
         initialScale: .9,
         initialOffset: Offset(-40, 60),
-        heightFactor: .75,
-        fractionalOffset: Offset(-.4, -.3),
-        zoomAmt: .25,
+        heightFactor: .65,
+        fractionalOffset: Offset(-.4, -.4),
+        zoomAmt: .05,
         dynamicHzOffset: 100,
       ),
       IllustrationPiece(
@@ -96,9 +97,9 @@ class ChichenItzaIllustration extends StatelessWidget {
         alignment: Alignment.topRight,
         initialOffset: Offset(20, 40),
         initialScale: .95,
-        heightFactor: .85,
+        heightFactor: .65,
         fractionalOffset: Offset(.35, -.4),
-        zoomAmt: .1,
+        zoomAmt: .05,
         dynamicHzOffset: -100,
       ),
     ];
