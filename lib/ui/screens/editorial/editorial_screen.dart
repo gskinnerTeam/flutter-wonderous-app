@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_circular_text/circular_text.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/app_icons.dart';
@@ -72,7 +73,9 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
       bool shortMode = constraints.biggest.height < 700;
       double illustrationHeight = shortMode ? 250 : 280;
       double minAppBarHeight = shortMode ? 80 : 120;
-      double maxAppBarHeight = shortMode ? 400 : 500;
+
+      /// Attempt to maintain a similar aspect ratio for the image within the app-bar
+      double maxAppBarHeight = min(context.widthPx, $styles.sizes.maxContentWidth1) * 1.5;
 
       return PopRouterOnOverScroll(
         controller: _scroller,
@@ -82,16 +85,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
             children: [
               /// Background
               Positioned.fill(
-                child: ValueListenableBuilder<double>(
-                  valueListenable: _scrollPos,
-                  builder: (_, value, __) {
-                    bool showBg = value < 700;
-                    return AnimatedContainer(
-                      duration: $styles.times.fast,
-                      color: widget.data.type.bgColor.withOpacity(showBg ? 1 : 0),
-                    );
-                  },
-                ),
+                child: ColoredBox(color: widget.data.type.bgColor),
               ),
 
               /// Top Illustration - Sits underneath the scrolling content, fades out as it scrolls
@@ -112,7 +106,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
               /// Scrolling content - Includes an invisible gap at the top, and then scrolls over the illustration
               TopCenter(
                 child: SizedBox(
-                  width: $styles.sizes.maxContentWidth1,
+                  //width: $styles.sizes.maxContentWidth1,
                   child: CustomScrollView(
                     primary: false,
                     controller: _scroller,

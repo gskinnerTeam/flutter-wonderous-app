@@ -160,7 +160,6 @@ class CollectibleFoundScreen extends StatelessWidget {
     return AppBtn.from(
       text: $strings.collectibleFoundButtonViewCollection,
       isSecondary: true,
-      expand: true,
       onPressed: () => _handleViewCollectionPressed(context),
     )
         .animate()

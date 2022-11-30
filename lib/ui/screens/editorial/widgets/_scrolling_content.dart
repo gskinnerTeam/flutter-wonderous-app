@@ -89,50 +89,57 @@ class _ScrollingContent extends StatelessWidget {
       sliver: SliverPadding(
         padding: EdgeInsets.symmetric(vertical: $styles.insets.md),
         sliver: SliverList(
-          delegate: SliverChildListDelegate([
-            ..._contentSection([
-              Center(child: buildHiddenCollectible(slot: 0)),
+          delegate: SliverChildListDelegate.fixed([
+            Center(
+              child: SizedBox(
+                width: $styles.sizes.maxContentWidth1,
+                child: Column(children: [
+                  ..._contentSection([
+                    Center(child: buildHiddenCollectible(slot: 0)),
 
-              /// History 1
-              buildDropCapText(data.historyInfo1),
+                    /// History 1
+                    buildDropCapText(data.historyInfo1),
 
-              /// Quote1
-              _CollapsingPullQuoteImage(data: data, scrollPos: scrollPos),
-              Center(child: buildHiddenCollectible(slot: 1)),
+                    /// Quote1
+                    _CollapsingPullQuoteImage(data: data, scrollPos: scrollPos),
+                    Center(child: buildHiddenCollectible(slot: 1)),
 
-              /// Callout1
-              _Callout(text: data.callout1),
+                    /// Callout1
+                    _Callout(text: data.callout1),
 
-              /// History 2
-              buildText(data.historyInfo2),
-              _SectionDivider(scrollPos, sectionNotifier, index: 1),
+                    /// History 2
+                    buildText(data.historyInfo2),
+                    _SectionDivider(scrollPos, sectionNotifier, index: 1),
 
-              /// Construction 1
-              buildDropCapText(data.constructionInfo1),
-              Center(child: buildHiddenCollectible(slot: 2)),
-            ]),
-            Gap($styles.insets.md),
-            _YouTubeThumbnail(id: data.videoId, caption: data.videoCaption),
-            Gap($styles.insets.md),
-            ..._contentSection([
-              /// Callout2
-              Gap($styles.insets.xs),
-              _Callout(text: data.callout2),
+                    /// Construction 1
+                    buildDropCapText(data.constructionInfo1),
+                    Center(child: buildHiddenCollectible(slot: 2)),
+                  ]),
+                  Gap($styles.insets.md),
+                  _YouTubeThumbnail(id: data.videoId, caption: data.videoCaption),
+                  Gap($styles.insets.md),
+                  ..._contentSection([
+                    /// Callout2
+                    Gap($styles.insets.xs),
+                    _Callout(text: data.callout2),
 
-              /// Construction 2
-              buildText(data.constructionInfo2),
-              _SlidingImageStack(scrollPos: scrollPos, type: data.type),
-              _SectionDivider(scrollPos, sectionNotifier, index: 2),
+                    /// Construction 2
+                    buildText(data.constructionInfo2),
+                    _SlidingImageStack(scrollPos: scrollPos, type: data.type),
+                    _SectionDivider(scrollPos, sectionNotifier, index: 2),
 
-              /// Location
-              buildDropCapText(data.locationInfo1),
-              _LargeSimpleQuote(text: data.pullQuote2, author: data.pullQuote2Author),
-              buildText(data.locationInfo2),
-            ]),
-            Gap($styles.insets.md),
-            _MapsThumbnail(data, height: 200),
-            Gap($styles.insets.md),
-            ..._contentSection([Center(child: buildHiddenCollectible(slot: 3))]),
+                    /// Location
+                    buildDropCapText(data.locationInfo1),
+                    _LargeSimpleQuote(text: data.pullQuote2, author: data.pullQuote2Author),
+                    buildText(data.locationInfo2),
+                  ]),
+                  Gap($styles.insets.md),
+                  _MapsThumbnail(data, height: 200),
+                  Gap($styles.insets.md),
+                  ..._contentSection([Center(child: buildHiddenCollectible(slot: 3))]),
+                ]),
+              ),
+            ),
           ]),
         ),
       ),
@@ -221,6 +228,7 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
   @override
   Widget build(BuildContext context) {
     void handlePressed() => context.push(ScreenPaths.maps(widget.data.type));
+    if (PlatformInfo.isDesktop) return Placeholder();
     return MergeSemantics(
       child: Column(
         children: [

@@ -125,7 +125,7 @@ class _TabBtn extends StatelessWidget {
     final iconImgPath = '${ImagePaths.common}/tab-$iconImg${selected ? '-active' : ''}.png';
     String tabLabel = localizations.tabLabel(tabIndex: index + 1, tabCount: tabController.length);
     tabLabel = '$label: $tabLabel';
-    final double btnWidth = (context.widthPx / 6).clamp(80, 120);
+    final double btnWidth = (context.widthPx / 6).clamp(70, 120);
     return MergeSemantics(
       child: Semantics(
         selected: selected,
@@ -136,25 +136,8 @@ class _TabBtn extends StatelessWidget {
             onPressed: () => tabController.index = index,
             semanticLabel: label,
             minimumSize: Size(btnWidth, 0),
-            child: Stack(
-              children: [
-                /// Image icon
-                Image.asset(iconImgPath, height: 32, width: 32, color: selected ? null : color),
-                // if (selected)
-                // Positioned.fill(
-                //   child: BottomCenter(
-                //     child: Transform.translate(
-                //       offset: Offset(0, $styles.insets.xxs),
-                //       child: Animate().custom(
-                //         curve: Curves.easeOutCubic,
-                //         end: 24,
-                //         builder: (_, v, __) => Container(height: 3, width: v, color: $styles.colors.accent1),
-                //       ),
-                //     ),
-                //   ),
-                // ),
-              ],
-            ),
+            // Image icon
+            child: Image.asset(iconImgPath, height: 32, width: 32, color: selected ? null : color),
           ),
         ),
       ),
