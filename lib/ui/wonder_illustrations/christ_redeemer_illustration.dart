@@ -40,20 +40,23 @@ class ChristRedeemerIllustration extends StatelessWidget {
         enableHero: true,
         heightFactor: .25,
         minHeight: 120,
-        fractionalOffset: Offset(.7, config.shortMode ?  -.5 : -1.35),
+        fractionalOffset: Offset(.7, config.shortMode ? -.5 : -1.35),
       ),
     ];
   }
 
   List<Widget> _buildMg(BuildContext context, Animation<double> anim) {
     return [
-      IllustrationPiece(
-        fileName: 'redeemer.png',
-        enableHero: true,
-        heightFactor: 1,
-        alignment: Alignment.bottomCenter,
-        fractionalOffset: Offset(0, config.shortMode ? .5 : .1),
-        zoomAmt: .7,
+      ClipRect(
+        clipBehavior: config.shortMode ? Clip.hardEdge : Clip.none,
+        child: IllustrationPiece(
+          fileName: 'redeemer.png',
+          enableHero: true,
+          heightFactor: 1,
+          alignment: Alignment.bottomCenter,
+          fractionalOffset: Offset(0, config.shortMode ? .5 : .1),
+          zoomAmt: .7,
+        ),
       )
       //
     ];
