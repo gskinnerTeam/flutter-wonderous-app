@@ -1,10 +1,8 @@
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 
 Future<bool?> showModal(BuildContext context, {required Widget child}) async {
-  return await showMaterialModalBottomSheet(
-        expand: false,
+  return await showModalBottomSheet(
         context: context,
         backgroundColor: $styles.colors.greyStrong,
         builder: (_) => child,
@@ -41,7 +39,11 @@ class OkModal extends StatelessWidget {
       title: title,
       msg: msg,
       buttons: [
-        AppBtn.from(text: $strings.appModalsButtonOk, expand: true, isSecondary: true, onPressed: () => Navigator.of(context).pop(true)),
+        AppBtn.from(
+            text: $strings.appModalsButtonOk,
+            expand: true,
+            isSecondary: true,
+            onPressed: () => Navigator.of(context).pop(true)),
       ],
       child: child,
     );
@@ -60,9 +62,14 @@ class OkCancelModal extends StatelessWidget {
       title: title,
       msg: msg,
       buttons: [
-        AppBtn.from(text: $strings.appModalsButtonOk, expand: true, isSecondary: true, onPressed: () => Navigator.of(context).pop(true)),
+        AppBtn.from(
+            text: $strings.appModalsButtonOk,
+            expand: true,
+            isSecondary: true,
+            onPressed: () => Navigator.of(context).pop(true)),
         Gap($styles.insets.xs),
-        AppBtn.from(text: $strings.appModalsButtonCancel, expand: true, onPressed: () => Navigator.of(context).pop(false)), 
+        AppBtn.from(
+            text: $strings.appModalsButtonCancel, expand: true, onPressed: () => Navigator.of(context).pop(false)),
       ],
       child: child,
     );
