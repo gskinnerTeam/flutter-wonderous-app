@@ -39,9 +39,9 @@ class GreatWallIllustration extends StatelessWidget {
         fileName: 'sun.png',
         initialOffset: Offset(0, 50),
         enableHero: true,
-        heightFactor: config.shortMode ? .05 : .25,
-        minHeight: 150,
-        offset: config.shortMode ? Offset(-40, context.heightPx * -.06) : Offset(-75, context.heightPx * -.3),
+        heightFactor: config.shortMode ? .07 : .25,
+        minHeight: 120,
+        offset: config.shortMode ? Offset(-40, context.heightPx * -.06) : Offset(-65, context.heightPx * -.3),
       ),
     ];
   }
@@ -50,11 +50,11 @@ class GreatWallIllustration extends StatelessWidget {
     return [
       IllustrationPiece(
         fileName: 'great-wall.png',
-        heightFactor: .65,
-        minHeight: 400,
+        heightFactor: config.shortMode ? .45 : .65,
+        minHeight: 250,
         zoomAmt: .05,
         enableHero: true,
-        fractionalOffset: Offset(0, config.shortMode ? 0: -.1),
+        fractionalOffset: Offset(0, config.shortMode ? .15 : -.15),
       ),
     ];
   }

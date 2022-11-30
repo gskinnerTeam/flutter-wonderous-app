@@ -31,7 +31,7 @@ class ColosseumIllustration extends StatelessWidget {
           ImagePaths.roller1,
           color: Colors.white,
           opacity: anim.drive(Tween(begin: 0, end: .75)),
-          scale: config.shortMode ? 4 : 1,
+          scale: config.shortMode ? 3 : 1,
         ),
       ),
       IllustrationPiece(

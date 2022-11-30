@@ -32,7 +32,7 @@ class MachuPicchuIllustration extends StatelessWidget {
           flipX: false,
           color: Color(0xff1E736D),
           opacity: anim.drive(Tween(begin: 0, end: .5)),
-          scale: config.shortMode ? 4 : 1,
+          scale: config.shortMode ? 3 : 1,
         ),
       ),
       IllustrationPiece(
@@ -50,10 +50,10 @@ class MachuPicchuIllustration extends StatelessWidget {
         IllustrationPiece(
           fileName: 'machu-picchu.png',
           heightFactor: .65,
-          minHeight: 500,
+          minHeight: 230,
           zoomAmt: config.shortMode ? .1 : -1,
           enableHero: true,
-          fractionalOffset: Offset(config.shortMode ? 0 : -.05, config.shortMode ? 0.02 : -.12),
+          fractionalOffset: Offset(config.shortMode ? 0 : -.05, config.shortMode ? 0.12 : -.12),
         ),
       ];
 

@@ -31,7 +31,7 @@ class ChristRedeemerIllustration extends StatelessWidget {
           color: Color(0xffFAE5C8),
           flipX: false,
           opacity: anim.drive(Tween(begin: 0, end: .8)),
-          scale: config.shortMode ? 4 : 1.15,
+          scale: config.shortMode ? 3.5 : 1.15,
         ),
       ),
       IllustrationPiece(

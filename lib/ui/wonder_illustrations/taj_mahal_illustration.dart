@@ -35,7 +35,7 @@ class TajMahalIllustration extends StatelessWidget {
           flipY: true,
           opacity: anim.drive(Tween(begin: 0, end: .7)),
           color: bgColor,
-          scale: config.shortMode ? 4 : 1.15,
+          scale: config.shortMode ? 3 : 1.15,
         ),
       ),
       // Sun
@@ -45,7 +45,7 @@ class TajMahalIllustration extends StatelessWidget {
         enableHero: true,
         heightFactor: .3,
         minHeight: 140,
-        offset: config.shortMode ? Offset(-100, context.heightPx * -.05) : Offset(-220, context.heightPx * -.34),
+        offset: config.shortMode ? Offset(-100, context.heightPx * -.02) : Offset(-150, context.heightPx * -.34),
       ),
     ];
   }
@@ -53,7 +53,7 @@ class TajMahalIllustration extends StatelessWidget {
   List<Widget> _buildMg(BuildContext context, Animation<double> anim) {
     return [
       LayoutBuilder(builder: (_, constraints) {
-        const double minHeight = 500, heightFactor = .6, poolScale = 1;
+        const double minHeight = 230, heightFactor = .6, poolScale = 1;
         return Stack(
           children: [
             IllustrationPiece(
@@ -62,11 +62,11 @@ class TajMahalIllustration extends StatelessWidget {
               minHeight: minHeight,
               enableHero: true,
               zoomAmt: .05,
-              fractionalOffset: Offset(0, config.shortMode ? 0 : -.15),
+              fractionalOffset: Offset(0, config.shortMode ? .12 : -.15),
               top: config.shortMode
                   ? null
                   : (_) => FractionalTranslation(
-                        translation: Offset(0, 0.73),
+                        translation: Offset(0, heightFactor),
                         child: IllustrationPiece(
                           fileName: 'pool.png',
                           heightFactor: heightFactor * poolScale,

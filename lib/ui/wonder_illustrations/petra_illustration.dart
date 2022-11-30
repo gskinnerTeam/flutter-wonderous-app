@@ -54,8 +54,9 @@ class PetraIllustration extends StatelessWidget {
             fileName: 'petra.png',
             heightFactor: .65,
             minHeight: 500,
-            zoomAmt: config.shortMode ? -0.05 : -1,
+            zoomAmt: config.shortMode ? -0.1 : -1,
             enableHero: true,
+            fractionalOffset: Offset(0, config.shortMode ? .025 : 0),
           ),
         ),
       ];

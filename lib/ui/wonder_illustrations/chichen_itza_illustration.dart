@@ -39,7 +39,7 @@ class ChichenItzaIllustration extends StatelessWidget {
         enableHero: true,
         heightFactor: .4,
         minHeight: 200,
-        fractionalOffset: Offset(.55, config.shortMode ? -.1 : -.35),
+        fractionalOffset: Offset(.55, config.shortMode ? .2 : -.35),
       ),
     ];
   }
@@ -48,11 +48,11 @@ class ChichenItzaIllustration extends StatelessWidget {
     // We want to size to the shortest side
     return [
       Transform.translate(
-        offset: Offset(0, config.shortMode ? 40 : -30),
+        offset: Offset(0, config.shortMode ? 70 : -30),
         child: IllustrationPiece(
           fileName: 'chichen.png',
-          heightFactor: .45,
-          minHeight: 300,
+          heightFactor: .4,
+          minHeight: 180,
           zoomAmt: -.1,
           enableHero: true,
         ),
