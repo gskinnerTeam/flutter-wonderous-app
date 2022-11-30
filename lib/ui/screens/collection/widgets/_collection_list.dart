@@ -50,20 +50,23 @@ class _CollectionList extends StatelessWidget with GetItMixin {
           direction: vtMode ? Axis.vertical : Axis.horizontal,
           mainAxisSize: MainAxisSize.min,
           separatorBuilder: () => Gap($styles.insets.lg),
-          children: collections,
+          children: [
+            ...collections,
+            Gap($styles.insets.sm),
+            _buildResetBtn(context),
+          ],
         ),
       ),
     );
   }
 
-  // TODO: Restore reset functionality somehow
-  // Widget _buildResetBtn(BuildContext context) {
-  //   Widget btn = AppBtn.from(
-  //     onPressed: onReset ?? () {},
-  //     text: $strings.collectionButtonReset,
-  //     isSecondary: true,
-  //     expand: true,
-  //   );
-  //   return AnimatedOpacity(opacity: onReset == null ? 0.25 : 1, duration: $styles.times.fast, child: btn);
-  // }
+  Widget _buildResetBtn(BuildContext context) {
+    Widget btn = AppBtn.from(
+      onPressed: onReset ?? () {},
+      text: $strings.collectionButtonReset,
+      isSecondary: true,
+      expand: true,
+    );
+    return AnimatedOpacity(opacity: onReset == null ? 0.25 : 1, duration: $styles.times.fast, child: btn);
+  }
 }
