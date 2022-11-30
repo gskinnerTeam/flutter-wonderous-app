@@ -79,7 +79,7 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
         SizedBox(
           width: $styles.insets.xxl * 3,
           child: Text(
-            StringUtils.supplant($strings.artifactDetailsErrorNotFound, {'{artifactId}': widget.artifactId}),
+            $strings.artifactDetailsErrorNotFound(widget.artifactId),
             style: $styles.text.body.copyWith(color: $styles.colors.offWhite),
             textAlign: TextAlign.center,
           ),

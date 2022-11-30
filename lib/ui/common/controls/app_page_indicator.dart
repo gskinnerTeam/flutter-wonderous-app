@@ -1,6 +1,5 @@
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/common/string_utils.dart';
 
 class AppPageIndicator extends StatefulWidget {
   AppPageIndicator({
@@ -53,11 +52,11 @@ class _AppPageIndicatorState extends State<AppPageIndicator> {
                   liveRegion: true,
                   focusable: false,
                   readOnly: true,
-                  label: StringUtils.supplant($strings.appPageSemanticSwipe, {
-                    '{pageTitle}': widget.semanticPageTitle,
-                    '{count}': (_controllerPage % (widget.count) + 1).toString(),
-                    '{total}': widget.count.toString(),
-                  }),
+                  label: $strings.appPageSemanticSwipe(
+                    widget.semanticPageTitle,
+                    (_controllerPage % (widget.count) + 1),
+                    widget.count,
+                  ),
                   child: Container());
             }),
       ),

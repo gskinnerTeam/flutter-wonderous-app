@@ -1,6 +1,5 @@
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
 import 'package:wonders/ui/common/app_icons.dart';
@@ -144,13 +143,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
         child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           Gap($styles.insets.sm),
           Text(
-            StringUtils.supplant(
-              $strings.artifactsSearchLabelFound,
-              {
-                '{numFound}': _searchResults.length.toString(),
-                '{numResults}': _filteredResults.length.toString(),
-              },
-            ),
+            $strings.artifactsSearchLabelFound(_searchResults.length, _filteredResults.length),
             textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
             style: statusStyle,
           ),

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/unsplash_photo_data.dart';
 import 'package:wonders/ui/common/controls/app_loading_indicator.dart';
 import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
@@ -206,14 +205,8 @@ class _PhotoGalleryState extends State<PhotoGallery> {
             semanticLbl = $strings.collectibleItemSemanticCollectible;
           } else {
             semanticLbl = !selected
-                ? StringUtils.supplant($strings.photoGallerySemanticFocus, {
-                    '{photoIndex}': (index + 1).toString(),
-                    '{photoTotal}': _imgCount.toString(),
-                  })
-                : StringUtils.supplant($strings.photoGallerySemanticFullscreen, {
-                    '{photoIndex}': (index + 1).toString(),
-                    '{photoTotal}': _imgCount.toString(),
-                  });
+                ? $strings.photoGallerySemanticFocus(index + 1, _imgCount)
+                : $strings.photoGallerySemanticFullscreen(index + 1, _imgCount);
           }
           return MergeSemantics(
             child: Semantics(

@@ -12,10 +12,7 @@ class _NewlyDiscoveredItemsBtn extends StatelessWidget {
     if (count == 0) return SizedBox.shrink();
 
     return AppBtn.basic(
-      semanticLabel: StringUtils.supplant(
-        $strings.newlyDiscoveredSemanticNew,
-        {'{count}': count.toString(), '{plural}': count == 1 ? '' : 's'},
-      ),
+      semanticLabel: $strings.newlyDiscoveredSemanticNew(count, count == 1 ? '' : 's'),
       onPressed: onPressed,
       child: Container(
         alignment: Alignment.center,
@@ -23,10 +20,7 @@ class _NewlyDiscoveredItemsBtn extends StatelessWidget {
         color: $styles.colors.black,
         padding: EdgeInsets.symmetric(vertical: $styles.insets.xs),
         child: Text(
-          StringUtils.supplant(
-            $strings.newlyDiscoveredLabelNew,
-            {'{count}': count.toString(), '{plural}': count == 1 ? '' : 's'},
-          ),
+          $strings.newlyDiscoveredLabelNew(count, count == 1 ? '' : 's'),
           textAlign: TextAlign.center,
           textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
           style: $styles.text.bodySmallBold.copyWith(color: $styles.colors.accent1),

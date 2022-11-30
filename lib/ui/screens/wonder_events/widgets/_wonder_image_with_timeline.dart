@@ -96,12 +96,9 @@ class _WonderImageWithTimeline extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          StringUtils.supplant(
-            $strings.titleLabelDate,
-            {
-              '{fromDate}': StringUtils.formatYr(data.startYr),
-              '{endDate}': StringUtils.formatYr(data.endYr),
-            },
+          $strings.titleLabelDate(
+            StringUtils.formatYr(data.startYr),
+            StringUtils.formatYr(data.endYr),
           ),
           style: textStyle,
         ),

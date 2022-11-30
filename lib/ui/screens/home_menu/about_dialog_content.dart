@@ -48,28 +48,28 @@ class AboutDialogContent extends StatelessWidget {
             style: $styles.text.bodySmall.copyWith(color: Colors.black, fontSize: fontSize),
             children: [
               ...buildSpan($strings.homeMenuAboutWonderous),
-              ...buildSpan($strings.homeMenuAboutBuilt, linkSupplants: {
-                '{flutterUrl}': [$strings.homeMenuAboutFlutter, 'https://flutter.dev'],
-                '{gskinnerUrl}': [$strings.homeMenuAboutGskinner, 'https://gskinner.com/flutter'],
+              ...buildSpan($strings.homeMenuAboutBuilt('{flutterUrl}', '{gskinnerUrl}'), linkSupplants: {
+                'flutterUrl': [$strings.homeMenuAboutFlutter, 'https://flutter.dev'],
+                'gskinnerUrl': [$strings.homeMenuAboutGskinner, 'https://gskinner.com/flutter'],
               }),
               ...buildSpan('\n\n'),
-              ...buildSpan($strings.homeMenuAboutLearn, linkSupplants: {
-                '{wonderousUrl}': [$strings.homeMenuAboutApp, 'https://wonderous.app'],
+              ...buildSpan($strings.homeMenuAboutLearn('wonderousUrl'), linkSupplants: {
+                'wonderousUrl': [$strings.homeMenuAboutApp, 'https://wonderous.app'],
               }),
               ...buildSpan('\n\n'),
-              ...buildSpan($strings.homeMenuAboutSource, linkSupplants: {
-                '{githubUrl}': [$strings.homeMenuAboutRepo, 'https://github.com/gskinnerTeam/flutter-wonderous-app'],
+              ...buildSpan($strings.homeMenuAboutSource('githubUrl'), linkSupplants: {
+                'githubUrl': [$strings.homeMenuAboutRepo, 'https://github.com/gskinnerTeam/flutter-wonderous-app'],
               }),
               ...buildSpan('\n\n'),
-              ...buildSpan($strings.homeMenuAboutPublic, linkSupplants: {
-                '{metUrl}': [
+              ...buildSpan($strings.homeMenuAboutPublic('metUrl'), linkSupplants: {
+                'metUrl': [
                   $strings.homeMenuAboutMet,
                   'https://www.metmuseum.org/about-the-met/policies-and-documents/open-access'
                 ],
               }),
               ...buildSpan('\n\n'),
-              ...buildSpan($strings.homeMenuAboutPhotography, linkSupplants: {
-                '{unsplashUrl}': [$strings.homeMenuAboutUnsplash, 'https://unsplash.com/@gskinner/collections'],
+              ...buildSpan($strings.homeMenuAboutPhotography('unsplashUrl'), linkSupplants: {
+                'unsplashUrl': [$strings.homeMenuAboutUnsplash, 'https://unsplash.com/@gskinner/collections'],
               }),
             ],
           ),

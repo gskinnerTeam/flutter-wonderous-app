@@ -82,13 +82,7 @@ class _TitleText extends StatelessWidget {
 
               /// Date
               Text(
-                StringUtils.supplant(
-                  $strings.titleLabelDate,
-                  {
-                    '{fromDate}': StringUtils.formatYr(data.startYr),
-                    '{endDate}': StringUtils.formatYr(data.endYr),
-                  },
-                ),
+                $strings.titleLabelDate(StringUtils.formatYr(data.startYr), StringUtils.formatYr(data.endYr)),
                 style: $styles.text.h4,
                 textAlign: TextAlign.center,
               ),
