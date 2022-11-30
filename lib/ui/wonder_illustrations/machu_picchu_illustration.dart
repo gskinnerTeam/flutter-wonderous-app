@@ -29,18 +29,19 @@ class MachuPicchuIllustration extends StatelessWidget {
       Positioned.fill(
         child: IllustrationTexture(
           ImagePaths.roller1,
-          flipX: true,
-          color: Colors.white,
-          opacity: anim.drive(Tween(begin: 0, end: .7)),
+          flipX: false,
+          color: Color(0xff1E736D),
+          opacity: anim.drive(Tween(begin: 0, end: .5)),
+          scale: config.shortMode ? 4 : 1,
         ),
       ),
       IllustrationPiece(
         fileName: 'sun.png',
-        initialOffset: Offset(0, 20),
+        initialOffset: Offset(0, 50),
         enableHero: true,
-        heightFactor: .15,
-        minHeight: 150,
-        offset: config.shortMode ? Offset(-70, context.heightPx * -.05) : Offset(-150, context.heightPx * -.25),
+        heightFactor: config.shortMode ? .15 : .15,
+        minHeight: 100,
+        offset: config.shortMode ? Offset(150, context.heightPx * -.08) : Offset(150, context.heightPx * -.35),
       ),
     ];
   }
@@ -50,8 +51,9 @@ class MachuPicchuIllustration extends StatelessWidget {
           fileName: 'machu-picchu.png',
           heightFactor: .65,
           minHeight: 500,
-          zoomAmt: .05,
+          zoomAmt: config.shortMode ? .1 : -1,
           enableHero: true,
+          fractionalOffset: Offset(config.shortMode ? 0 : -.05, config.shortMode ? 0.02 : -.12),
         ),
       ];
 
@@ -63,18 +65,18 @@ class MachuPicchuIllustration extends StatelessWidget {
         initialScale: .9,
         initialOffset: Offset(0, 60),
         heightFactor: .6,
-        fractionalOffset: Offset(0, .3),
-        zoomAmt: .1,
+        fractionalOffset: Offset(0, .2),
+        zoomAmt: .05,
         dynamicHzOffset: 150,
       ),
       IllustrationPiece(
         fileName: 'foreground-front.png',
         alignment: Alignment.bottomCenter,
         initialOffset: Offset(20, 40),
-        heightFactor: .5,
-        initialScale: .95,
-        fractionalOffset: Offset(-.25, .25),
-        zoomAmt: .12,
+        heightFactor: .6,
+        initialScale: 1.2,
+        fractionalOffset: Offset(-.35, .4),
+        zoomAmt: .2,
         dynamicHzOffset: -50,
       ),
     ];

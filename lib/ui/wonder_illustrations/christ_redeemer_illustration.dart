@@ -28,18 +28,19 @@ class ChristRedeemerIllustration extends StatelessWidget {
       Positioned.fill(
         child: IllustrationTexture(
           ImagePaths.roller1,
-          color: Colors.white,
+          color: Color(0xffFAE5C8),
           flipX: false,
-          opacity: anim.drive(Tween(begin: 0, end: .4)),
+          opacity: anim.drive(Tween(begin: 0, end: .8)),
+          scale: config.shortMode ? 4 : 1.15,
         ),
       ),
       IllustrationPiece(
         fileName: 'sun.png',
-        initialOffset: Offset(0, 20),
+        initialOffset: Offset(0, 50),
         enableHero: true,
-        heightFactor: .2,
+        heightFactor: .25,
         minHeight: 120,
-        fractionalOffset: Offset(.5, -1),
+        fractionalOffset: Offset(.7, config.shortMode ?  -.5 : -1.35),
       ),
     ];
   }
@@ -51,8 +52,8 @@ class ChristRedeemerIllustration extends StatelessWidget {
         enableHero: true,
         heightFactor: 1,
         alignment: Alignment.bottomCenter,
-        fractionalOffset: Offset(0, .1),
-        zoomAmt: .1,
+        fractionalOffset: Offset(0, config.shortMode ? .5 : .1),
+        zoomAmt: .7,
       )
       //
     ];
@@ -63,21 +64,21 @@ class ChristRedeemerIllustration extends StatelessWidget {
       IllustrationPiece(
         fileName: 'foreground-left.png',
         alignment: Alignment.bottomCenter,
-        initialScale: .9,
-        initialOffset: Offset(-40, 60),
-        heightFactor: .55,
-        fractionalOffset: Offset(-.15, .05),
-        zoomAmt: .1,
+        initialScale: .95,
+        initialOffset: Offset(-140, 60),
+        heightFactor: .65,
+        fractionalOffset: Offset(-.25, .05),
+        zoomAmt: .15,
         dynamicHzOffset: -100,
       ),
       IllustrationPiece(
         fileName: 'foreground-right.png',
         alignment: Alignment.bottomCenter,
-        initialOffset: Offset(20, 40),
-        initialScale: .95,
-        heightFactor: .65,
-        fractionalOffset: Offset(.2, 0),
-        zoomAmt: .15,
+        initialOffset: Offset(120, 40),
+        initialScale: .9,
+        heightFactor: .55,
+        fractionalOffset: Offset(.35, .2),
+        zoomAmt: .1,
         dynamicHzOffset: 100,
       ),
     ];

@@ -29,15 +29,17 @@ class PetraIllustration extends StatelessWidget {
       Positioned.fill(
         child: IllustrationTexture(
           ImagePaths.roller1,
-          color: Colors.white,
+          color: WonderType.petra.bgColor,
           flipX: true,
-          opacity: anim.drive(Tween(begin: 0, end: .25)),
+          opacity: anim.drive(Tween(begin: 0, end: 1)),
+          scale: config.shortMode ? 4 : 1.15,
         ),
       ),
       IllustrationPiece(
         fileName: 'moon.png',
+        initialOffset: Offset(0, -150),
         heightFactor: .15,
-        minHeight: 100,
+        minHeight: 50,
         alignment: Alignment.topCenter,
         fractionalOffset: Offset(-.7, 0),
       ),
@@ -52,7 +54,7 @@ class PetraIllustration extends StatelessWidget {
             fileName: 'petra.png',
             heightFactor: .65,
             minHeight: 500,
-            zoomAmt: .1,
+            zoomAmt: config.shortMode ? -0.05 : -1,
             enableHero: true,
           ),
         ),
@@ -65,8 +67,8 @@ class PetraIllustration extends StatelessWidget {
         alignment: Alignment.bottomCenter,
         initialOffset: Offset(-80, 0),
         heightFactor: 1,
-        fractionalOffset: Offset(-.55, 0),
-        zoomAmt: .1,
+        fractionalOffset: Offset(-.6, 0),
+        zoomAmt: .03,
         dynamicHzOffset: -130,
         bottom: (_) {
           /// To cover everything behind this piece with a solid color, we scale up a container
@@ -85,7 +87,7 @@ class PetraIllustration extends StatelessWidget {
         initialOffset: Offset(80, 00),
         heightFactor: 1,
         fractionalOffset: Offset(.55, 0),
-        zoomAmt: .15,
+        zoomAmt: .12,
         dynamicHzOffset: 130,
         bottom: (_) {
           /// To cover everything behind this piece with a solid color, we scale up a container and then offset it in negative space

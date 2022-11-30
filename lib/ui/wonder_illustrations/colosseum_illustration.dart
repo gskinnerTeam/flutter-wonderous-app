@@ -30,32 +30,30 @@ class ColosseumIllustration extends StatelessWidget {
         child: IllustrationTexture(
           ImagePaths.roller1,
           color: Colors.white,
-          opacity: anim.drive(Tween(begin: 0, end: .5)),
+          opacity: anim.drive(Tween(begin: 0, end: .75)),
+          scale: config.shortMode ? 4 : 1,
         ),
       ),
       IllustrationPiece(
         fileName: 'sun.png',
-        initialOffset: Offset(0, 20),
+        initialOffset: Offset(0, 50),
         enableHero: true,
-        heightFactor: .15,
-        minHeight: 150,
-        offset: config.shortMode ? Offset(70, context.heightPx * -.05) : Offset(50, context.heightPx * -.25),
+        heightFactor: config.shortMode ? .25 : .25,
+        minHeight: 100,
+        offset: config.shortMode ? Offset(50, context.heightPx * -.07) : Offset(80, context.heightPx * -.28),
       ),
     ];
   }
 
   List<Widget> _buildMg(BuildContext context, Animation<double> anim) {
     return [
-      Stack(
-        children: const [
           IllustrationPiece(
             fileName: 'colosseum.png',
             enableHero: true,
-            heightFactor: .55,
-            minHeight: 400,
+            heightFactor: .6,
+            minHeight: 200,
             zoomAmt: .15,
-          ),
-        ],
+            fractionalOffset: Offset(0, config.shortMode ? .10: -.1),
       )
     ];
   }
@@ -70,7 +68,7 @@ class ColosseumIllustration extends StatelessWidget {
         heightFactor: .65,
         offset: Offset.zero,
         fractionalOffset: Offset(-.5, .1),
-        zoomAmt: .25,
+        zoomAmt: .05,
         dynamicHzOffset: -150,
       ),
       IllustrationPiece(
@@ -80,7 +78,7 @@ class ColosseumIllustration extends StatelessWidget {
         initialScale: .95,
         heightFactor: .75,
         fractionalOffset: Offset(.5, .25),
-        zoomAmt: .1,
+        zoomAmt: .05,
         dynamicHzOffset: 150,
       ),
     ];

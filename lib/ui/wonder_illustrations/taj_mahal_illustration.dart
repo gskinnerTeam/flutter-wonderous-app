@@ -31,20 +31,21 @@ class TajMahalIllustration extends StatelessWidget {
       // Noise texture
       Positioned.fill(
         child: IllustrationTexture(
-          ImagePaths.roller1,
+          ImagePaths.roller2,
           flipY: true,
-          opacity: anim.drive(Tween(begin: 0, end: 1)),
+          opacity: anim.drive(Tween(begin: 0, end: .7)),
           color: bgColor,
+          scale: config.shortMode ? 4 : 1.15,
         ),
       ),
       // Sun
       IllustrationPiece(
         fileName: 'sun.png',
-        initialOffset: Offset(0, 20),
+        initialOffset: Offset(0, 50),
         enableHero: true,
-        heightFactor: .15,
+        heightFactor: .3,
         minHeight: 140,
-        offset: config.shortMode ? Offset(-100, context.heightPx * -.05) : Offset(-150, context.heightPx * -.15),
+        offset: config.shortMode ? Offset(-100, context.heightPx * -.05) : Offset(-220, context.heightPx * -.34),
       ),
     ];
   }
@@ -61,10 +62,11 @@ class TajMahalIllustration extends StatelessWidget {
               minHeight: minHeight,
               enableHero: true,
               zoomAmt: .05,
+              fractionalOffset: Offset(0, config.shortMode ? 0 : -.15),
               top: config.shortMode
                   ? null
                   : (_) => FractionalTranslation(
-                        translation: Offset(0, .85),
+                        translation: Offset(0, 0.73),
                         child: IllustrationPiece(
                           fileName: 'pool.png',
                           heightFactor: heightFactor * poolScale,
@@ -88,16 +90,16 @@ class TajMahalIllustration extends StatelessWidget {
         alignment: Alignment.bottomRight,
         initialOffset: Offset(20, 40),
         initialScale: .85,
-        heightFactor: .4 + .2 * mangoScale,
+        heightFactor: .5 + .4 * mangoScale,
         fractionalOffset: Offset(.3, 0),
-        zoomAmt: .1,
+        zoomAmt: .25,
       ),
       IllustrationPiece(
         fileName: 'foreground-left.png',
         alignment: Alignment.bottomLeft,
         initialScale: .9,
         initialOffset: Offset(-40, 60),
-        heightFactor: .5 + .3 * mangoScale,
+        heightFactor: .6 + .3 * mangoScale,
         fractionalOffset: Offset(-.3, 0),
         zoomAmt: .25,
         dynamicHzOffset: 0,

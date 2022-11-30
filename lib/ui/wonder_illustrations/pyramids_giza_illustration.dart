@@ -29,18 +29,20 @@ class PyramidsGizaIllustration extends StatelessWidget {
       Positioned.fill(
         child: IllustrationTexture(
           ImagePaths.roller2,
-          color: Colors.white,
-          opacity: anim.drive(Tween(begin: 0, end: .3)),
+          color: Color(0xff797FD8),
+          opacity: anim.drive(Tween(begin: 0, end: .75)),
           flipY: true,
+          scale: config.shortMode ? 4 : 1.15,
+
         ),
       ),
       IllustrationPiece(
         fileName: 'moon.png',
-        initialOffset: Offset(0, 20),
+        initialOffset: Offset(0, 50),
         enableHero: true,
         heightFactor: .15,
         minHeight: 100,
-        offset: config.shortMode ? Offset(100, context.heightPx * -.1) : Offset(150, context.heightPx * -.15),
+        offset: config.shortMode ? Offset(100, context.heightPx * -.06) : Offset(150, context.heightPx * -.3),
         zoomAmt: .05,
       ),
     ];
@@ -53,7 +55,8 @@ class PyramidsGizaIllustration extends StatelessWidget {
         enableHero: true,
         heightFactor: .5,
         minHeight: 300,
-        zoomAmt: .1,
+        zoomAmt: config.shortMode ? -.2 : -2,
+        fractionalOffset: Offset(0, config.shortMode ? .1 : -.05),
       )
     ];
   }
@@ -66,7 +69,7 @@ class PyramidsGizaIllustration extends StatelessWidget {
         initialOffset: Offset(20, 40),
         initialScale: .95,
         heightFactor: .55,
-        fractionalOffset: Offset(.1, .06),
+        fractionalOffset: Offset(.2, -.01),
         zoomAmt: .1,
         dynamicHzOffset: 150,
       ),
@@ -76,7 +79,7 @@ class PyramidsGizaIllustration extends StatelessWidget {
         initialScale: .9,
         initialOffset: Offset(-40, 60),
         heightFactor: .55,
-        fractionalOffset: Offset(-.1, .1),
+        fractionalOffset: Offset(-.09, 0.02),
         zoomAmt: .25,
         dynamicHzOffset: -150,
       ),

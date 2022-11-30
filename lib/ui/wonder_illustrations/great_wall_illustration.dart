@@ -30,17 +30,18 @@ class GreatWallIllustration extends StatelessWidget {
         child: IllustrationTexture(
           ImagePaths.roller2,
           flipX: true,
-          color: Colors.white,
-          opacity: anim.drive(Tween(begin: 0, end: .5)),
+          color: Color(0xff688750),
+          opacity: anim.drive(Tween(begin: 0, end: 1)),
+          scale: config.shortMode ? 4 : 1.15,
         ),
       ),
       IllustrationPiece(
         fileName: 'sun.png',
-        initialOffset: Offset(0, 20),
+        initialOffset: Offset(0, 50),
         enableHero: true,
-        heightFactor: .15,
+        heightFactor: config.shortMode ? .05 : .25,
         minHeight: 150,
-        offset: config.shortMode ? Offset(-70, context.heightPx * -.05) : Offset(-150, context.heightPx * -.25),
+        offset: config.shortMode ? Offset(-40, context.heightPx * -.06) : Offset(-75, context.heightPx * -.3),
       ),
     ];
   }
@@ -49,10 +50,11 @@ class GreatWallIllustration extends StatelessWidget {
     return [
       IllustrationPiece(
         fileName: 'great-wall.png',
-        heightFactor: .55,
-        minHeight: 500,
+        heightFactor: .65,
+        minHeight: 400,
         zoomAmt: .05,
         enableHero: true,
+        fractionalOffset: Offset(0, config.shortMode ? 0: -.1),
       ),
     ];
   }
@@ -64,7 +66,7 @@ class GreatWallIllustration extends StatelessWidget {
         alignment: Alignment.bottomCenter,
         initialScale: .9,
         initialOffset: Offset(-40, 60),
-        heightFactor: .75,
+        heightFactor: .85,
         fractionalOffset: Offset(-.4, .45),
         zoomAmt: .25,
         dynamicHzOffset: -150,
@@ -74,8 +76,8 @@ class GreatWallIllustration extends StatelessWidget {
         alignment: Alignment.bottomCenter,
         initialOffset: Offset(20, 40),
         initialScale: .95,
-        heightFactor: .85,
-        fractionalOffset: Offset(.4, .25),
+        heightFactor: 1,
+        fractionalOffset: Offset(.4, .3),
         zoomAmt: .1,
         dynamicHzOffset: 150,
       ),
