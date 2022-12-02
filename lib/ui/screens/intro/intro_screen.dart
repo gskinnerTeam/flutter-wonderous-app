@@ -2,6 +2,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
+import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/static_text_scale.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
@@ -139,6 +140,10 @@ class _IntroScreenState extends State<IntroScreen> {
           child: _buildNavText(context),
         ),
       ),
+
+      // Build a cpl overlays to hide the content when swiping on very wide screens
+      _buildHzGradientOverlay(left: true),
+      _buildHzGradientOverlay(),
     ]);
 
     return DefaultTextColor(
@@ -148,6 +153,36 @@ class _IntroScreenState extends State<IntroScreen> {
         child: SafeArea(child: content.animate().fadeIn(delay: 500.ms)),
       ),
     );
+  }
+
+  Widget _buildHzGradientOverlay({bool left = false}) {
+    return Align(
+      alignment: Alignment(left ? -1 : 1, 0),
+      child: FractionallySizedBox(
+        widthFactor: .5,
+        child: Padding(
+          padding: EdgeInsets.only(left: left ? 0 : 200, right: left ? 200 : 0),
+          child: Transform.scale(
+              scaleX: left ? -1 : 1,
+              child: HzGradient([
+                $styles.colors.black.withOpacity(0),
+                $styles.colors.black,
+              ], const [
+                0,
+                .2
+              ])),
+        ),
+      ),
+    );
+    // CenterLeft(
+    // child: FractionallySizedBox(
+    // widthFactor: .5,
+    // child: Padding(
+    // padding: const EdgeInsets.only(right: 200),
+    // child: HzGradient([$styles.colors.black, $styles.colors.black.withOpacity(0)], const [.8, 1]),
+    // ),
+    // ),
+    // );
   }
 
   Widget _buildFinishBtn(BuildContext context) {

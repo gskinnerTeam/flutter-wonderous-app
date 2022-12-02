@@ -40,7 +40,6 @@ class SimpleHeader extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        if (!showBackBtn) Gap($styles.insets.xs),
                         Text(
                           title.toUpperCase(),
                           textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
@@ -52,7 +51,6 @@ class SimpleHeader extends StatelessWidget {
                             textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
                             style: $styles.text.title1.copyWith(color: $styles.colors.accent1),
                           ),
-                        if (!showBackBtn) Gap($styles.insets.md),
                       ],
                     ),
                   ),

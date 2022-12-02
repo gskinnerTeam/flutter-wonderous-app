@@ -80,7 +80,7 @@ class _AppBar extends StatelessWidget {
                 /// Colored overlay
                 if (showOverlay) ...[
                   AnimatedContainer(
-                    duration: $styles.times.slow,
+                    duration: $styles.times.med,
                     color: wonderType.bgColor.withOpacity(showOverlay ? .8 : 0),
                   ),
                 ],
