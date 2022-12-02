@@ -24,7 +24,7 @@ class AppColors {
     TextTheme txtTheme = (isDark ? ThemeData.dark() : ThemeData.light()).textTheme;
     Color txtColor = white;
     ColorScheme colorScheme = ColorScheme(
-        // Decide how you want to apply your own custom them, to the MaterialApp
+        // Decide how you want to apply your own custom theme, to the MaterialApp
         brightness: isDark ? Brightness.dark : Brightness.light,
         primary: accent1,
         primaryContainer: accent1,
