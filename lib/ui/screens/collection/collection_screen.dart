@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/collectibles_logic.dart';
-import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/centered_box.dart';
