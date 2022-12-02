@@ -1,3 +1,7 @@
+# 2.0.0
+- Add support for widescreen tablet devices
+- Various polish and improvements
+
 # 1.9.7
 - Updated impeller version 
 - Improved load state for search tiles
