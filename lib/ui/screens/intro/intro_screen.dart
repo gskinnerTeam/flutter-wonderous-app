@@ -126,6 +126,10 @@ class _IntroScreenState extends State<IntroScreen> {
         ]),
       ),
 
+      // Build a cpl overlays to hide the content when swiping on very wide screens
+      _buildHzGradientOverlay(left: true),
+      _buildHzGradientOverlay(),
+
       // finish button:
       Positioned(
         right: $styles.insets.lg,
@@ -140,10 +144,6 @@ class _IntroScreenState extends State<IntroScreen> {
           child: _buildNavText(context),
         ),
       ),
-
-      // Build a cpl overlays to hide the content when swiping on very wide screens
-      _buildHzGradientOverlay(left: true),
-      _buildHzGradientOverlay(),
     ]);
 
     return DefaultTextColor(
