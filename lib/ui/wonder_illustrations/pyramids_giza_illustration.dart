@@ -29,11 +29,10 @@ class PyramidsGizaIllustration extends StatelessWidget {
       Positioned.fill(
         child: IllustrationTexture(
           ImagePaths.roller2,
-          color: Color(0xff797FD8),
+          color: Color(0xFF797FD8),
           opacity: anim.drive(Tween(begin: 0, end: .75)),
           flipY: true,
           scale: config.shortMode ? 4 : 1.15,
-
         ),
       ),
       IllustrationPiece(
@@ -55,8 +54,8 @@ class PyramidsGizaIllustration extends StatelessWidget {
         enableHero: true,
         heightFactor: .5,
         minHeight: 300,
-        zoomAmt: config.shortMode ? -.2 : -2,
-        fractionalOffset: Offset(config.shortMode ? .015 : 0, config.shortMode ? .17 : -.15),
+        zoomAmt: 0, //config.shortMode ? -.2 : -2,
+        fractionalOffset: Offset.zero, //Offset(config.shortMode ? .015 : 0, config.shortMode ? .17 : -.15),
       )
     ];
   }

@@ -49,27 +49,27 @@ class AboutDialogContent extends StatelessWidget {
             children: [
               ...buildSpan($strings.homeMenuAboutWonderous),
               ...buildSpan($strings.homeMenuAboutBuilt('{flutterUrl}', '{gskinnerUrl}'), linkSupplants: {
-                'flutterUrl': [$strings.homeMenuAboutFlutter, 'https://flutter.dev'],
-                'gskinnerUrl': [$strings.homeMenuAboutGskinner, 'https://gskinner.com/flutter'],
+                '{flutterUrl}': [$strings.homeMenuAboutFlutter, 'https://flutter.dev'],
+                '{gskinnerUrl}': [$strings.homeMenuAboutGskinner, 'https://gskinner.com/flutter'],
               }),
               ...buildSpan('\n\n'),
-              ...buildSpan($strings.homeMenuAboutLearn('wonderousUrl'), linkSupplants: {
-                'wonderousUrl': [$strings.homeMenuAboutApp, 'https://wonderous.app'],
+              ...buildSpan($strings.homeMenuAboutLearn('{wonderousUrl}'), linkSupplants: {
+                '{wonderousUrl}': [$strings.homeMenuAboutApp, 'https://wonderous.app'],
               }),
               ...buildSpan('\n\n'),
-              ...buildSpan($strings.homeMenuAboutSource('githubUrl'), linkSupplants: {
-                'githubUrl': [$strings.homeMenuAboutRepo, 'https://github.com/gskinnerTeam/flutter-wonderous-app'],
+              ...buildSpan($strings.homeMenuAboutSource('{githubUrl}'), linkSupplants: {
+                '{githubUrl}': [$strings.homeMenuAboutRepo, 'https://github.com/gskinnerTeam/flutter-wonderous-app'],
               }),
               ...buildSpan('\n\n'),
-              ...buildSpan($strings.homeMenuAboutPublic('metUrl'), linkSupplants: {
-                'metUrl': [
+              ...buildSpan($strings.homeMenuAboutPublic('{metUrl}'), linkSupplants: {
+                '{metUrl}': [
                   $strings.homeMenuAboutMet,
                   'https://www.metmuseum.org/about-the-met/policies-and-documents/open-access'
                 ],
               }),
               ...buildSpan('\n\n'),
-              ...buildSpan($strings.homeMenuAboutPhotography('unsplashUrl'), linkSupplants: {
-                'unsplashUrl': [$strings.homeMenuAboutUnsplash, 'https://unsplash.com/@gskinner/collections'],
+              ...buildSpan($strings.homeMenuAboutPhotography('{unsplashUrl}'), linkSupplants: {
+                '{unsplashUrl}': [$strings.homeMenuAboutUnsplash, 'https://unsplash.com/@gskinner/collections'],
               }),
             ],
           ),

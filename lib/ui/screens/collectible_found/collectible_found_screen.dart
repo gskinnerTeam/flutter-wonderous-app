@@ -156,15 +156,16 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   Widget _buildCollectionButton(BuildContext context) {
-    Duration t = $styles.times.fast;
+    Duration t = $styles.times.med;
     return AppBtn.from(
       text: $strings.collectibleFoundButtonViewCollection,
       isSecondary: true,
       onPressed: () => _handleViewCollectionPressed(context),
-    )
-        .animate()
-        .show(delay: t * 4)
-        .move(begin: Offset(0, $styles.insets.md), duration: t * 3, curve: Curves.easeOutCubic);
+    ).animate().fadeIn(delay: t).move(
+          begin: Offset(0, 50),
+          duration: t,
+          curve: Curves.easeOutCubic,
+        );
   }
 
   void _handleViewCollectionPressed(BuildContext context) {
