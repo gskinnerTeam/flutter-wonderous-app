@@ -62,22 +62,13 @@ class _AnimatedCircleWithText extends StatefulWidget {
   State<_AnimatedCircleWithText> createState() => _AnimatedCircleWithTextState();
 }
 
-class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with SingleTickerProviderStateMixin {
+class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with StatefulPropsMixin {
   int _prevIndex = -1;
   String get oldTitle => _prevIndex == -1 ? '' : widget.titles[_prevIndex];
   String get newTitle => widget.titles[widget.index];
-  late final _anim = AnimationController(
-    vsync: this,
-    duration: $styles.times.med,
-  )..forward();
+  late final _anim = AnimationControllerProp(this, $styles.times.med);
 
-  bool get isAnimStopped => _anim.value == 0 || _anim.value == _anim.upperBound;
-
-  @override
-  void dispose() {
-    _anim.dispose();
-    super.dispose();
-  }
+  bool get isAnimStopped => _anim.value == 0 || _anim.value == _anim.controller.upperBound;
 
   @override
   void didUpdateWidget(covariant _AnimatedCircleWithText oldWidget) {
@@ -86,7 +77,7 @@ class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with S
       _prevIndex = oldWidget.index;
       // If the animation is already in motion, we don't need to interrupt it, just let the text change
       if (isAnimStopped) {
-        _anim.forward(from: 0);
+        _anim.controller.forward(from: 0);
       }
     }
     super.didUpdateWidget(oldWidget);
@@ -95,9 +86,10 @@ class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with S
   @override
   Widget build(_) {
     return ListenableBuilder(
-      listenable: _anim,
+      listenable: _anim.controller,
       builder: (_, __) {
         var rot = _prevIndex > widget.index ? -pi : pi;
+        bool isCompleted = _anim.controller.isCompleted;
         return Transform.rotate(
           angle: Curves.easeInOut.transform(_anim.value) * rot,
           child: Container(
@@ -114,13 +106,13 @@ class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with S
                 child: Stack(
                   children: [
                     Transform.rotate(
-                      angle: _anim.isCompleted ? rot : 0,
-                      child: _buildCircularText(_anim.isCompleted ? newTitle : oldTitle),
+                      angle: isCompleted ? rot : 0,
+                      child: _buildCircularText(isCompleted ? newTitle : oldTitle),
                     ),
-                    if (!_anim.isCompleted) ...[
+                    if (!isCompleted) ...[
                       Transform.rotate(
-                        angle: _anim.isCompleted ? 0 : rot,
-                        child: _buildCircularText(_anim.isCompleted ? oldTitle : newTitle),
+                        angle: rot,
+                        child: _buildCircularText(newTitle),
                       ),
                     ]
                   ],

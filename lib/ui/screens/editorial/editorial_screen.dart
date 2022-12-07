@@ -37,10 +37,6 @@ part 'widgets/_sliding_image_stack.dart';
 part 'widgets/_title_text.dart';
 part 'widgets/_top_illustration.dart';
 
-//TODO: Try and maintain 1.5 : 1 aspect ratio on the featured image
-//TODO: Try and move the scrollbar all the way to the edge of the screen
-//TODO: Fix arch logic (if necessary)
-// or maybe remove
 class WonderEditorialScreen extends StatefulWidget {
   const WonderEditorialScreen(this.data, {Key? key, required this.onScroll}) : super(key: key);
   final WonderData data;
@@ -50,20 +46,14 @@ class WonderEditorialScreen extends StatefulWidget {
   State<WonderEditorialScreen> createState() => _WonderEditorialScreenState();
 }
 
-class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
-  late final ScrollController _scroller = ScrollController()..addListener(_handleScrollChanged);
-  final _scrollPos = ValueNotifier(0.0);
-  final _sectionIndex = ValueNotifier(0);
-
-  @override
-  void dispose() {
-    _scroller.dispose();
-    super.dispose();
-  }
+class _WonderEditorialScreenState extends State<WonderEditorialScreen> with StatefulPropsMixin {
+  late final _scroll = ScrollControllerProp(this, onChange: _handleScrollChanged);
+  late final _scrollPos = ValueNotifier(0.0);
+  late final _sectionIndex = ValueNotifier(0);
 
   /// Various [ValueListenableBuilders] are mapped to the _scrollPos and will rebuild when it changes
   void _handleScrollChanged() {
-    _scrollPos.value = _scroller.position.pixels;
+    _scrollPos.value = _scroll.px;
     widget.onScroll.call(_scrollPos.value);
   }
 
@@ -78,7 +68,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
       double maxAppBarHeight = min(context.widthPx, $styles.sizes.maxContentWidth1) * 1.5;
 
       return PopRouterOnOverScroll(
-        controller: _scroller,
+        controller: _scroll.controller,
         child: ColoredBox(
           color: $styles.colors.offWhite,
           child: Stack(
@@ -91,11 +81,11 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
               /// Top Illustration - Sits underneath the scrolling content, fades out as it scrolls
               SizedBox(
                 height: illustrationHeight,
-                child: ValueListenableBuilder<double>(
-                  valueListenable: _scrollPos,
-                  builder: (_, value, child) {
+                child: ListenableBuilder(
+                  listenable: _scrollPos,
+                  builder: (_, child) {
                     // get some value between 0 and 1, based on the amt scrolled
-                    double opacity = (1 - value / 700).clamp(0, 1);
+                    double opacity = (1 - _scrollPos.value / 700).clamp(0, 1);
                     return Opacity(opacity: opacity, child: child);
                   },
                   // This is due to a bug: https://github.com/flutter/flutter/issues/101872
@@ -109,7 +99,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                   //width: $styles.sizes.maxContentWidth1,
                   child: CustomScrollView(
                     primary: false,
-                    controller: _scroller,
+                    controller: _scroll.controller,
                     scrollBehavior: ScrollConfiguration.of(context).copyWith(),
                     cacheExtent: 1000,
                     slivers: [
@@ -120,17 +110,17 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
 
                       /// Text content, animates itself to hide behind the app bar as it scrolls up
                       SliverToBoxAdapter(
-                        child: ValueListenableBuilder<double>(
-                          valueListenable: _scrollPos,
-                          builder: (_, value, child) {
-                            double offsetAmt = max(0, value * .3);
+                        child: ListenableBuilder(
+                          listenable: _scrollPos,
+                          builder: (_, child) {
+                            double offsetAmt = max(0, _scrollPos.value * .3);
                             double opacity = (1 - offsetAmt / 150).clamp(0, 1);
                             return Transform.translate(
                               offset: Offset(0, offsetAmt),
                               child: Opacity(opacity: opacity, child: child),
                             );
                           },
-                          child: _TitleText(widget.data, scroller: _scroller),
+                          child: _TitleText(widget.data, scroller: _scroll.controller),
                         ),
                       ),
 
@@ -166,7 +156,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
 
               /// Home Btn
               ListenableBuilder(
-                  listenable: _scroller,
+                  listenable: _scroll.controller,
                   builder: (_, child) {
                     return AnimatedOpacity(
                       opacity: _scrollPos.value > 0 ? 0 : 1,

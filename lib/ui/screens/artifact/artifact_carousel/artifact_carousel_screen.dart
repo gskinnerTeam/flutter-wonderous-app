@@ -153,4 +153,10 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    _pageController?.dispose();
+    super.dispose();
+  }
 }

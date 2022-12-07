@@ -19,13 +19,8 @@ class _EventsList extends StatefulWidget {
   State<_EventsList> createState() => _EventsListState();
 }
 
-class _EventsListState extends State<_EventsList> {
-  final ScrollController _scroller = ScrollController();
-  @override
-  void dispose() {
-    _scroller.dispose();
-    super.dispose();
-  }
+class _EventsListState extends State<_EventsList> with StatefulPropsMixin {
+  late final _scroll = ScrollControllerProp(this);
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +53,7 @@ class _EventsListState extends State<_EventsList> {
       children: [
         //TODO: Remove scrollbar on portrait
         SingleChildScrollView(
-          controller: _scroller,
+          controller: _scroll.controller,
           child: Column(
             children: [
               IgnorePointer(child: Gap(widget.topHeight)),
@@ -104,17 +99,17 @@ class _EventsListState extends State<_EventsList> {
   /// Wraps the list in a scroll listener
   Widget _buildScrollingListWithBlur() {
     return ListenableBuilder(
-      listenable: _scroller,
+      listenable: _scroll.controller,
       child: _buildScrollingList(),
       builder: (_, child) {
         bool showBackdrop = true;
         double backdropAmt = 0;
-        if (_scroller.hasClients && showBackdrop) {
+        if (showBackdrop) {
           double blurStart = 50;
           double maxScroll = 150;
-          double scrollPx = _scroller.position.pixels - blurStart;
+          double scrollPx = _scroll.px - blurStart;
           // Normalize scroll position to a value between 0 and 1
-          backdropAmt = (_scroller.position.pixels - blurStart).clamp(0, maxScroll) / maxScroll;
+          backdropAmt = (_scroll.px - blurStart).clamp(0, maxScroll) / maxScroll;
           // Disable backdrop once it is offscreen for an easy perf win
           showBackdrop = (scrollPx <= 500);
         }

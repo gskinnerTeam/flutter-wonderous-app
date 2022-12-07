@@ -1129,6 +1129,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.11.0"
+  stateful_props:
+    dependency: "direct main"
+    description:
+      name: stateful_props
+      sha256: "5f14e2f7c720b044e44d587ed3e7cfa6a3a2431d348416027755e5d331d0c164"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0+1"
   stream_channel:
     dependency: transitive
     description:

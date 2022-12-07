@@ -12,17 +12,11 @@ class FullscreenUrlImgViewer extends StatefulWidget {
   State<FullscreenUrlImgViewer> createState() => _FullscreenUrlImgViewerState();
 }
 
-class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
+class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> with StatefulPropsMixin {
   final _isZoomed = ValueNotifier(false);
-  late final _controller = PageController(initialPage: widget.index);
+  late final _pages = PageControllerProp(this, initialPage: widget.index);
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  void _handleBackPressed() => Navigator.pop(context, _controller.page!.round());
+  void _handleBackPressed() => Navigator.pop(context, _pages.page.round());
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +26,7 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
         final bool enableSwipe = !_isZoomed.value && widget.urls.length > 1;
         return PageView.builder(
           physics: enableSwipe ? PageScrollPhysics() : NeverScrollableScrollPhysics(),
-          controller: _controller,
+          controller: _pages.controller,
           itemCount: widget.urls.length,
           itemBuilder: (_, index) => _Viewer(widget.urls[index], _isZoomed),
           onPageChanged: (_) => AppHaptics.lightImpact(),
@@ -69,25 +63,19 @@ class _Viewer extends StatefulWidget {
   State<_Viewer> createState() => _ViewerState();
 }
 
-class _ViewerState extends State<_Viewer> with SingleTickerProviderStateMixin {
-  final _controller = TransformationController();
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+class _ViewerState extends State<_Viewer> with StatefulPropsMixin {
+  late final _transformation = TransformationControllerProp(this);
 
   /// Reset zoom level to 1 on double-tap
-  void _handleDoubleTap() => _controller.value = Matrix4.identity();
+  void _handleDoubleTap() => _transformation.controller.value = Matrix4.identity();
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onDoubleTap: _handleDoubleTap,
       child: InteractiveViewer(
-        transformationController: _controller,
-        onInteractionEnd: (_) => widget.isZoomed.value = _controller.value.getMaxScaleOnAxis() > 1,
+        transformationController: _transformation.controller,
+        onInteractionEnd: (_) => widget.isZoomed.value = _transformation.matrix.getMaxScaleOnAxis() > 1,
         minScale: 1,
         maxScale: 5,
         child: Hero(

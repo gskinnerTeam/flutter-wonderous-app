@@ -24,13 +24,6 @@ class _WallpaperPhotoScreenState extends State<WallpaperPhotoScreen> {
   Widget? _illustration;
 
   bool _showTitleText = true;
-  Timer? _photoRetryTimer;
-
-  @override
-  void dispose() {
-    _photoRetryTimer?.cancel();
-    super.dispose();
-  }
 
   void _handleTakePhoto(BuildContext context, String wonderName) async {
     final boundary = _containerKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;

@@ -16,28 +16,16 @@ class WonderDetailsScreen extends StatefulWidget with GetItStatefulWidgetMixin {
   State<WonderDetailsScreen> createState() => _WonderDetailsScreenState();
 }
 
-class _WonderDetailsScreenState extends State<WonderDetailsScreen>
-    with GetItStateMixin, SingleTickerProviderStateMixin {
-  late final _tabController = TabController(
+class _WonderDetailsScreenState extends State<WonderDetailsScreen> with GetItStateMixin, StatefulPropsMixin {
+  late final _tabs = TabControllerProp(
+    this,
     length: 4,
-    vsync: this,
     initialIndex: widget.initialTabIndex,
-  )..addListener(_handleTabChanged);
-  AnimationController? _fade;
+    autoBuild: true,
+  );
 
   final _detailsHasScrolled = ValueNotifier(false);
   double? _tabBarHeight;
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  void _handleTabChanged() {
-    _fade?.forward(from: 0);
-    setState(() {});
-  }
 
   void _handleDetailsScrolled(double scrollPos) => _detailsHasScrolled.value = scrollPos > 0;
 
@@ -48,17 +36,16 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
   @override
   Widget build(BuildContext context) {
     final wonder = wondersLogic.getData(widget.type);
-    int tabIndex = _tabController.index;
+    int tabIndex = _tabs.controller.index;
     bool showTabBarBg = tabIndex != 1;
     final tabBarHeight = _tabBarHeight ?? 0;
-    //final double tabBarHeight = WonderDetailsTabMenu.bottomPadding + 60;
     return ColoredBox(
       color: Colors.black,
       child: Stack(
         children: [
           /// Fullscreen tab views
           LazyIndexedStack(
-            index: _tabController.index,
+            index: _tabs.controller.index,
             children: [
               WonderEditorialScreen(wonder, onScroll: _handleDetailsScrolled),
               PhotoGallery(collectionId: wonder.unsplashCollectionId, wonderType: wonder.type),
@@ -74,7 +61,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
               builder: (_, value, ___) => MeasurableWidget(
                 onChange: _handleTabMenuSized,
                 child: WonderDetailsTabMenu(
-                  tabController: _tabController,
+                  tabController: _tabs.controller,
                   wonderType: wonder.type,
                   showBg: showTabBarBg,
                 ),

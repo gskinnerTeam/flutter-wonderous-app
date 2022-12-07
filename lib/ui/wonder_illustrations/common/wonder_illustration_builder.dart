@@ -25,27 +25,24 @@ class WonderIllustrationBuilder extends StatefulWidget {
   State<WonderIllustrationBuilder> createState() => WonderIllustrationBuilderState();
 }
 
-class WonderIllustrationBuilderState extends State<WonderIllustrationBuilder> with SingleTickerProviderStateMixin {
-  late final anim = AnimationController(vsync: this, duration: $styles.times.med * .75)
-    ..addListener(() => setState(() {}));
-
+class WonderIllustrationBuilderState extends State<WonderIllustrationBuilder> with StatefulPropsMixin {
+  late final anim = AnimationControllerProp(
+    this,
+    $styles.times.med * .75,
+    autoBuild: true,
+    autoPlay: false,
+  );
   bool get isShowing => widget.config.isShowing;
   @override
   void initState() {
     super.initState();
-    if (isShowing) anim.forward(from: 0);
-  }
-
-  @override
-  void dispose() {
-    anim.dispose();
-    super.dispose();
+    if (isShowing) anim.controller.forward(from: 0);
   }
 
   @override
   void didUpdateWidget(covariant WonderIllustrationBuilder oldWidget) {
     if (isShowing != oldWidget.config.isShowing) {
-      isShowing ? anim.forward(from: 0) : anim.reverse(from: 1);
+      isShowing ? anim.controller.forward(from: 0) : anim.controller.reverse(from: 1);
     }
     super.didUpdateWidget(oldWidget);
   }
@@ -53,8 +50,8 @@ class WonderIllustrationBuilderState extends State<WonderIllustrationBuilder> wi
   @override
   Widget build(BuildContext context) {
     // Optimization: no need to return all of these children if the widget is fully invisible.
-    if (anim.value == 0 && widget.config.enableAnims) return SizedBox.expand();
-    Animation<double> animation = widget.config.enableAnims ? anim : AlwaysStoppedAnimation(1);
+    if (anim.controller.value == 0 && widget.config.enableAnims) return SizedBox.expand();
+    Animation<double> animation = widget.config.enableAnims ? anim.controller : AlwaysStoppedAnimation(1);
 
     return Provider<WonderIllustrationBuilderState>.value(
       value: this,

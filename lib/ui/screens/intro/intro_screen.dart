@@ -14,7 +14,7 @@ class IntroScreen extends StatefulWidget {
   State<IntroScreen> createState() => _IntroScreenState();
 }
 
-class _IntroScreenState extends State<IntroScreen> {
+class _IntroScreenState extends State<IntroScreen> with StatefulPropsMixin {
   static const double _imageSize = 264;
   static const double _logoHeight = 126;
   static const double _textHeight = 155;
@@ -22,14 +22,8 @@ class _IntroScreenState extends State<IntroScreen> {
 
   static List<_PageData> pageData = [];
 
-  late final PageController _pageController = PageController()..addListener(_handlePageChanged);
+  late final _page = PageControllerProp(this, onChange: _handlePageChanged);
   final ValueNotifier<int> _currentPage = ValueNotifier(0);
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
 
   void _handleIntroCompletePressed() {
     if (_currentPage.value == pageData.length - 1) {
@@ -39,13 +33,16 @@ class _IntroScreenState extends State<IntroScreen> {
   }
 
   void _handlePageChanged() {
-    int newPage = _pageController.page?.round() ?? 0;
+    int newPage = _page.controller.page?.round() ?? 0;
     _currentPage.value = newPage;
   }
 
   void _handleSemanticSwipe(int dir) {
-    _pageController.animateToPage((_pageController.page ?? 0).round() + dir,
-        duration: $styles.times.fast, curve: Curves.easeOut);
+    _page.controller.animateToPage(
+      (_page.controller.page ?? 0).round() + dir,
+      duration: $styles.times.fast,
+      curve: Curves.easeOut,
+    );
   }
 
   @override
@@ -61,9 +58,7 @@ class _IntroScreenState extends State<IntroScreen> {
     // However, we only want the title / description to actually swipe,
     // so we stack a PageView with that content over top of all the other
     // content, and line up their layouts.
-
     final List<Widget> pages = pageData.map((e) => _Page(data: e)).toList();
-
     final Widget content = Stack(children: [
       // page view with title & description:
       MergeSemantics(
@@ -71,7 +66,7 @@ class _IntroScreenState extends State<IntroScreen> {
           onIncrease: () => _handleSemanticSwipe(1),
           onDecrease: () => _handleSemanticSwipe(-1),
           child: PageView(
-            controller: _pageController,
+            controller: _page.controller,
             children: pages,
             onPageChanged: (_) => AppHaptics.lightImpact(),
           ),
@@ -118,8 +113,11 @@ class _IntroScreenState extends State<IntroScreen> {
           Container(
             height: _pageIndicatorHeight,
             alignment: Alignment(0.0, -0.75),
-            child:
-                AppPageIndicator(count: pageData.length, controller: _pageController, color: $styles.colors.offWhite),
+            child: AppPageIndicator(
+              count: pageData.length,
+              controller: _page.controller,
+              color: $styles.colors.offWhite,
+            ),
           ),
 
           Spacer(flex: 2),
@@ -213,8 +211,8 @@ class _IntroScreenState extends State<IntroScreen> {
           child: Semantics(
             onTapHint: $strings.introSemanticNavigate,
             onTap: () {
-              final int current = _pageController.page!.round();
-              _pageController.animateToPage(current + 1, duration: 250.ms, curve: Curves.easeIn);
+              final int current = _page.controller.page!.round();
+              _page.controller.animateToPage(current + 1, duration: 250.ms, curve: Curves.easeIn);
             },
             child: Text($strings.introSemanticSwipeLeft, style: $styles.text.bodySmall),
           ),

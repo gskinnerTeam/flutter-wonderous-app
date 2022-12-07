@@ -1,5 +1,6 @@
 part of '../timeline_screen.dart';
 
+/// TODO: This can just be a prop??
 class _ScrollingViewportController extends ChangeNotifier {
   _ScrollingViewportController(this.state);
   final _ScalingViewportState state;
