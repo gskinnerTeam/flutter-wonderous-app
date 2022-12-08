@@ -103,8 +103,8 @@ class _EventsListState extends State<_EventsList> {
 
   /// Wraps the list in a scroll listener
   Widget _buildScrollingListWithBlur() {
-    return ListenableBuilder(
-      listenable: _scroller,
+    return AnimatedBuilder(
+      animation: _scroller,
       child: _buildScrollingList(),
       builder: (_, child) {
         bool showBackdrop = true;

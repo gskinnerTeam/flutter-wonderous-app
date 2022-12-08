@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/utils/context_utils.dart';
 
@@ -90,8 +91,8 @@ class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProvid
     return RepaintBoundary(
       child: ClipRect(
         child: OverflowBox(
-          child: ListenableBuilder(
-            listenable: _anim,
+          child: AnimatedBuilder(
+            animation: _anim,
             builder: (_, __) {
               // A stack with 2 sets of clouds, one set is moving out of view while the other moves in.
               return Stack(

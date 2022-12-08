@@ -57,8 +57,8 @@ class _BottomScrubber extends StatelessWidget {
             ),
 
             /// Visible area, follows the position of scroller
-            ListenableBuilder(
-              listenable: scroller,
+            AnimatedBuilder(
+              animation: scroller,
               builder: (_, __) {
                 ScrollPosition? pos;
                 if (scroller.hasClients) pos = scroller.position;

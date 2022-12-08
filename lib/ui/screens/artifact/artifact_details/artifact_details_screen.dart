@@ -1,5 +1,4 @@
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/ui/common/compass_divider.dart';
 import 'package:wonders/ui/common/controls/app_loading_indicator.dart';

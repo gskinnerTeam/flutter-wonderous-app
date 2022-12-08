@@ -26,8 +26,8 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
 
   @override
   Widget build(BuildContext context) {
-    Widget content = ListenableBuilder(
-      listenable: _isZoomed,
+    Widget content = AnimatedBuilder(
+      animation: _isZoomed,
       builder: (_, __) {
         final bool enableSwipe = !_isZoomed.value && widget.urls.length > 1;
         return PageView.builder(
