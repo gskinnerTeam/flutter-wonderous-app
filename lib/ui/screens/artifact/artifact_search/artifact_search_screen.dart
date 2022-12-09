@@ -38,7 +38,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
 
   @override
   void initState() {
-    _search();
+    _updateResults();
     panelController.addListener(() {
       AppHaptics.lightImpact();
     });
@@ -47,16 +47,18 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
 
   void _handleSearchSubmitted(String query) {
     _query = query;
-    _search();
+    _updateResults();
   }
 
   void _handleTimelineChanged(double start, double end) {
     _startYear = start;
     _endYear = end;
-    _filter();
+    _updateFilter();
   }
 
-  void _search() {
+  void _handleResultPressed(SearchData o) => context.push(ScreenPaths.artifact(o.id.toString()));
+
+  void _updateResults() {
     if (_query.isEmpty) {
       _searchResults = wonder.searchData;
     } else {
@@ -66,10 +68,10 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
       _searchResults = wonder.searchData.where((o) => o.title.contains(q) || o.keywords.contains(q)).toList();
     }
     vizController.value = _searchResults;
-    _filter();
+    _updateFilter();
   }
 
-  void _filter() {
+  void _updateFilter() {
     _filteredResults = _searchResults.where((o) => o.year >= _startYear && o.year <= _endYear).toList();
     setState(() {});
   }
@@ -79,7 +81,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
     // tone down the orange just a bit:
     vizController.color = Color.lerp($styles.colors.accent1, $styles.colors.black, 0.2)!;
     Widget content = GestureDetector(
-      onTap: () => WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
+      onTap: FocusManager.instance.primaryFocus?.unfocus,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -101,7 +103,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
                   ? _buildEmptyIndicator(context)
                   : _ResultsGrid(
                       searchResults: _filteredResults,
-                      onPressed: (o) => context.push(ScreenPaths.artifact(o.id.toString())),
+                      onPressed: _handleResultPressed,
                     ),
             ),
           ),
