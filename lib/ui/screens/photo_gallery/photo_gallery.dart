@@ -107,15 +107,14 @@ class _PhotoGalleryState extends State<PhotoGallery> {
 
   Future<void> _handleImageTapped(int index) async {
     if (_index == index) {
-      int? newIndex = await Navigator.push(
+      final urls = _photoIds.value.map((e) {
+        return UnsplashPhotoData.getSelfHostedUrl(e, UnsplashPhotoSize.med);
+      }).toList();
+      int? newIndex = await appLogic.showFullscreenDialogRoute(
         context,
-        CupertinoPageRoute(builder: (_) {
-          final urls = _photoIds.value.map((e) {
-            return UnsplashPhotoData.getSelfHostedUrl(e, UnsplashPhotoSize.med);
-          }).toList();
-          return FullscreenUrlImgViewer(urls: urls, index: _index);
-        }),
+        FullscreenUrlImgViewer(urls: urls, index: _index),
       );
+
       if (newIndex != null) {
         _setIndex(newIndex, skipAnimation: true);
       }
@@ -148,7 +147,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
           gridOffset += Offset(0, -context.mq.padding.top / 2);
           final offsetTweenDuration = _skipNextOffsetTween ? Duration.zero : swipeDuration;
           final cutoutTweenDuration = _skipNextOffsetTween ? Duration.zero : swipeDuration * .5;
-          return  _AnimatedCutoutOverlay(
+          return _AnimatedCutoutOverlay(
             animationKey: ValueKey(_index),
             cutoutSize: imgSize,
             swipeDir: _lastSwipeDir,
