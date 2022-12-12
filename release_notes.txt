@@ -1,6 +1,8 @@
-# 2.0.0
+# 2.0.3
 - Add support for widescreen tablet devices
-- Various polish and improvements
+- Various improvements / polish
+- Add privacy policy link
+- Fix for rendering issues on Timeline / Editorial
 
 # 1.9.7
 - Updated impeller version 
