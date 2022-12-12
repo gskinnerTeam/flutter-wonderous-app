@@ -7,7 +7,7 @@ class PageRoutes {
     // Use cupertino routes for all dialogs so we get the 'swipe right to go back' behavior
     return CupertinoPageRoute(builder: (_) => child);
 
-    // SB: Removed this in favor of Cupertino routes, we could restor with a `useFade` option
+    // SB: Removed this in favor of Cupertino routes, we could restore with a `useFade` option
     // return PageRouteBuilder<T>(
     //   transitionDuration: duration,
     //   reverseTransitionDuration: duration,
