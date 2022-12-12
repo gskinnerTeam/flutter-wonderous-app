@@ -134,7 +134,7 @@ class _ScrollingContent extends StatelessWidget {
                     buildText(data.locationInfo2),
                   ]),
                   Gap($styles.insets.md),
-                  _MapsThumbnail(data, height: 200),
+                  _MapsThumbnail(data, height: 400),
                   Gap($styles.insets.md),
                   ..._contentSection([Center(child: buildHiddenCollectible(slot: 3))]),
                 ]),
