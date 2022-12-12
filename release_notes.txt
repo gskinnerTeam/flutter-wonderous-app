@@ -3,6 +3,7 @@
 - Various improvements / polish
 - Add privacy policy link
 - Fix for rendering issues on Timeline / Editorial
+  - Uses Flutter 3.7 Candidate 5
 
 # 1.9.7
 - Updated impeller version 
