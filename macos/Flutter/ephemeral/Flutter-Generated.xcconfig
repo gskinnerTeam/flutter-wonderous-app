@@ -1,10 +1,10 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=C:\_dev\sdks\flutter
-FLUTTER_APPLICATION_PATH=C:\_dev\gskinner\flutter_wonders_app
+FLUTTER_ROOT=/Users/shawn/Dev/flutter
+FLUTTER_APPLICATION_PATH=/Users/shawn/Dev/gskinner/flutter-wonders-app
 COCOAPODS_PARALLEL_CODE_SIGN=true
 FLUTTER_BUILD_DIR=build
-FLUTTER_BUILD_NAME=1.9.7
-FLUTTER_BUILD_NUMBER=1.9.7
+FLUTTER_BUILD_NAME=2.0.3
+FLUTTER_BUILD_NUMBER=2.0.3
 DART_OBFUSCATION=false
 TRACK_WIDGET_CREATION=true
 TREE_SHAKE_ICONS=false
