@@ -1,6 +1,6 @@
+import 'package:particle_field/particle_field.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
-import 'package:particle_field/particle_field.dart';
 import 'package:wonders/ui/common/centered_box.dart';
 
 part 'widgets/_animated_ribbon.dart';

@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:wonders/common_libs.dart';
@@ -9,8 +8,8 @@ import 'package:wonders/ui/common/controls/simple_header.dart';
 import 'package:wonders/ui/common/static_text_scale.dart';
 
 part 'widgets/_blurred_image_bg.dart';
-part 'widgets/_collapsing_carousel_item.dart';
 part 'widgets/_bottom_text_content.dart';
+part 'widgets/_collapsing_carousel_item.dart';
 
 class ArtifactCarouselScreen extends StatefulWidget {
   final WonderType type;

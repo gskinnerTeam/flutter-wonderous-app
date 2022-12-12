@@ -2,7 +2,6 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/fade_color_transition.dart';
 import 'package:wonders/ui/wonder_illustrations/common/illustration_piece.dart';
 import 'package:wonders/ui/wonder_illustrations/common/paint_textures.dart';
-import 'package:wonders/ui/wonder_illustrations/common/wonder_hero.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_builder.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 
@@ -47,13 +46,13 @@ class ColosseumIllustration extends StatelessWidget {
 
   List<Widget> _buildMg(BuildContext context, Animation<double> anim) {
     return [
-          IllustrationPiece(
-            fileName: 'colosseum.png',
-            enableHero: true,
-            heightFactor: .6,
-            minHeight: 200,
-            zoomAmt: .15,
-            fractionalOffset: Offset(0, config.shortMode ? .10: -.1),
+      IllustrationPiece(
+        fileName: 'colosseum.png',
+        enableHero: true,
+        heightFactor: .6,
+        minHeight: 200,
+        zoomAmt: .15,
+        fractionalOffset: Offset(0, config.shortMode ? .10 : -.1),
       )
     ];
   }

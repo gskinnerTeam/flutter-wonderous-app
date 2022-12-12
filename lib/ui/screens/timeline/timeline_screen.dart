@@ -16,6 +16,7 @@ import 'package:wonders/ui/common/timeline_event_card.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
 import 'package:wonders/ui/common/wonders_timeline_builder.dart';
 
+part 'widgets/_animated_era_text.dart';
 part 'widgets/_bottom_scrubber.dart';
 part 'widgets/_dashed_divider_with_year.dart';
 part 'widgets/_event_markers.dart';
@@ -24,7 +25,6 @@ part 'widgets/_scrolling_viewport.dart';
 part 'widgets/_scrolling_viewport_controller.dart';
 part 'widgets/_timeline_section.dart';
 part 'widgets/_year_markers.dart';
-part 'widgets/_animated_era_text.dart';
 
 class TimelineScreen extends StatefulWidget {
   final WonderType? type;
