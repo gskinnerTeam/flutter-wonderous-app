@@ -1,5 +1,5 @@
 # 2.0.3
-- Add support for widescreen tablet devices
+- Add support for landscape tablet devices
 - Various improvements / polish
 - Add privacy policy link
 - Fix for rendering issues on Timeline / Editorial
