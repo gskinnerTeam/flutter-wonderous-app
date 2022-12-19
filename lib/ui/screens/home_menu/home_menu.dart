@@ -5,6 +5,7 @@ import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/app_backdrop.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/locale_switcher.dart';
+import 'package:wonders/ui/common/pop_navigator_underlay.dart';
 import 'package:wonders/ui/screens/home_menu/about_dialog_content.dart';
 
 class HomeMenu extends StatelessWidget {
@@ -48,10 +49,10 @@ class HomeMenu extends StatelessWidget {
         /// Backdrop / Underlay
         AppBackdrop(
           strength: .5,
-          child: Container(
-            color: $styles.colors.greyStrong.withOpacity(.7),
-          ),
+          child: Container(color: $styles.colors.greyStrong.withOpacity(.7)),
         ),
+
+        PopNavigatorUnderlay(),
 
         SafeArea(
           child: PaddedRow(

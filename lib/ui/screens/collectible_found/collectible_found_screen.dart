@@ -1,7 +1,9 @@
 import 'package:particle_field/particle_field.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
+import 'package:wonders/ui/common/app_backdrop.dart';
 import 'package:wonders/ui/common/centered_box.dart';
+import 'package:wonders/ui/common/pop_navigator_underlay.dart';
 
 part 'widgets/_animated_ribbon.dart';
 part 'widgets/_celebration_particles.dart';
@@ -49,8 +51,19 @@ class CollectibleFoundScreen extends StatelessWidget {
   Widget _buildDetail(BuildContext context) {
     Duration t = $styles.times.fast;
     return Stack(key: ValueKey('detail'), children: [
-      Animate().custom(duration: t, builder: (context, ratio, _) => _buildGradient(context, 1, ratio)),
+      /// Background
+      AppBackdrop(
+        strength: .5,
+        child: Container(color: $styles.colors.greyStrong.withOpacity(.96)),
+      ).animate().fadeIn(),
+
+      /// Particles
       _CelebrationParticles(fadeMs: (t * 6).inMilliseconds),
+
+      /// invisible close btn
+      PopNavigatorUnderlay(),
+
+      /// Content
       SafeArea(
         child: CenteredBox(
           width: $styles.sizes.maxContentWidth3,
