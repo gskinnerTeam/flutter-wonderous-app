@@ -136,13 +136,10 @@ class _PhotoGalleryState extends State<PhotoGallery> {
             return Center(child: AppLoadingIndicator());
           }
 
-          Size imgSize = context.isLandscape
-              ? Size(context.widthPx * .5, context.heightPx * .66)
-              : Size(context.widthPx * .66, context.heightPx * .5);
+          Size imgSize = Size(context.widthPx * .5, context.heightPx * .5);
           imgSize = (widget.imageSize ?? imgSize) * _scale;
           // Get transform offset for the current _index
           final padding = $styles.insets.md;
-
           var gridOffset = _calculateCurrentOffset(padding, imgSize);
           gridOffset += Offset(0, -context.mq.padding.top / 2);
           final offsetTweenDuration = _skipNextOffsetTween ? Duration.zero : swipeDuration;
