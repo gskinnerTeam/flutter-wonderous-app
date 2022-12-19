@@ -13,6 +13,8 @@ class HomeMenu extends StatelessWidget {
 
   void _handleAboutPressed(BuildContext context) async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    // ignore: use_build_context_synchronously
+    if (!context.mounted) return;
     showAboutDialog(
       context: context,
       applicationName: $strings.appName,

@@ -12,7 +12,7 @@ class AppLogic {
   /// The router will use this to prevent redirects while bootstrapping.
   bool isBootstrapComplete = false;
 
-  bool get isDesktopOrTablet => PlatformInfo.isDesktopOrWeb || deviceSize.shortestSide > 500;
+  bool get isDesktopOrTablet => PlatformInfo.isDesktopOrWeb || deviceSize.shortestSide > 480;
 
   /// Support portrait and landscape on desktop, web and tablets. Stick to portrait for phones.
   /// A return value of null indicated both orientations are supported.
@@ -26,6 +26,7 @@ class AppLogic {
   /// Initialize the app and all main actors.
   /// Loads settings, sets up services etc.
   Future<void> bootstrap() async {
+    debugPrint('bootstrap app, deviceSize: $deviceSize, isTablet: $isDesktopOrTablet');
     // Default error handler
     FlutterError.onError = _handleFlutterError;
 

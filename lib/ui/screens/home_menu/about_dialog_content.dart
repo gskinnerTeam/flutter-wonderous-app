@@ -53,21 +53,23 @@ class AboutDialogContent extends StatelessWidget {
                 '{gskinnerUrl}': [$strings.homeMenuAboutGskinner, 'https://gskinner.com/flutter'],
               }),
               ...buildSpan('\n\n'),
-              ...buildSpan($strings.homeMenuAboutLearn('{wonderousUrl}'), linkSupplants: {
-                '{wonderousUrl}': [$strings.homeMenuAboutApp, 'https://wonderous.app'],
+              ...buildSpan('${$strings.homeMenuAboutLearn('{wonderousUrl}')} ', linkSupplants: {
+                '{wonderousUrl}': [$strings.homeMenuAboutApp, 'https://flutter.gskinner.com/wonderous/'],
               }),
-              ...buildSpan('\n\n'),
               ...buildSpan($strings.homeMenuAboutSource('{githubUrl}'), linkSupplants: {
-                '{githubUrl}': [$strings.homeMenuAboutRepo, 'https://github.com/gskinnerTeam/flutter-wonderous-app'],
+                '{githubUrl}': [($strings.homeMenuAboutRepo), 'https://github.com/gskinnerTeam/flutter-wonderous-app'],
               }),
+              ...buildSpan(' As explained in our {privacyUrl} we do no collect any personal information.',
+                  linkSupplants: {
+                    '{privacyUrl}': ['Privacy Policy', 'https://flutter.gskinner.com/wonderous/privacy/'],
+                  }),
               ...buildSpan('\n\n'),
-              ...buildSpan($strings.homeMenuAboutPublic('{metUrl}'), linkSupplants: {
+              ...buildSpan('${$strings.homeMenuAboutPublic('{metUrl}')} ', linkSupplants: {
                 '{metUrl}': [
                   $strings.homeMenuAboutMet,
                   'https://www.metmuseum.org/about-the-met/policies-and-documents/open-access'
                 ],
               }),
-              ...buildSpan('\n\n'),
               ...buildSpan($strings.homeMenuAboutPhotography('{unsplashUrl}'), linkSupplants: {
                 '{unsplashUrl}': [$strings.homeMenuAboutUnsplash, 'https://unsplash.com/@gskinner/collections'],
               }),

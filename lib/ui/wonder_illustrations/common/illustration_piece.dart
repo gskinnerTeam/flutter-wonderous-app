@@ -87,7 +87,7 @@ class _IllustrationPieceState extends State<IllustrationPiece> {
             final config = wonderBuilder.widget.config;
             Widget img = Image.asset(imgPath, opacity: anim, fit: BoxFit.fitHeight);
             // Add overflow box so image doesn't get clipped as we translate it around
-            img = OverflowBox(maxWidth: 2000, child: img);
+            img = OverflowBox(maxWidth: 2500, child: img);
 
             final double introZoom = (widget.initialScale - 1) * (1 - curvedAnim);
 

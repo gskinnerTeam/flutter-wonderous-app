@@ -120,12 +120,11 @@ class _TabBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool selected = tabController.index == index;
-
     final MaterialLocalizations localizations = MaterialLocalizations.of(context);
     final iconImgPath = '${ImagePaths.common}/tab-$iconImg${selected ? '-active' : ''}.png';
     String tabLabel = localizations.tabLabel(tabIndex: index + 1, tabCount: tabController.length);
     tabLabel = '$label: $tabLabel';
-    final double btnWidth = (context.widthPx / 6).clamp(70, 120);
+    final double btnWidth = (context.widthPx / 6).clamp(50, 120);
     return MergeSemantics(
       child: Semantics(
         selected: selected,
