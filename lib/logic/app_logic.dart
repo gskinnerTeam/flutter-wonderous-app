@@ -27,8 +27,6 @@ class AppLogic {
   /// Loads settings, sets up services etc.
   Future<void> bootstrap() async {
     debugPrint('bootstrap app, deviceSize: $deviceSize, isTablet: $isDesktopOrTablet');
-    // Default error handler
-    FlutterError.onError = _handleFlutterError;
 
     // Set min-sizes for desktop apps
     if (PlatformInfo.isDesktop) {
@@ -88,10 +86,6 @@ class AppLogic {
       ]);
     }
     SystemChrome.setPreferredOrientations(orientations);
-  }
-
-  void _handleFlutterError(FlutterErrorDetails details) {
-    FlutterError.dumpErrorToConsole(details);
   }
 
   Future<T?> showFullscreenDialogRoute<T>(BuildContext context, Widget child) async {
