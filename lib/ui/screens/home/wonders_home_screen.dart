@@ -62,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     WonderType? pickedWonder = await appLogic.showFullscreenDialogRoute<WonderType>(
       context,
       HomeMenu(data: currentWonder),
+      transparent: true,
     );
     setState(() => _isMenuOpen = false);
     if (pickedWonder != null) {

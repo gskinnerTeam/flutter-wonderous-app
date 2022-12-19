@@ -4,7 +4,11 @@ class WonderDetailsTabMenu extends StatelessWidget {
   static double bottomPadding = 0;
   static double buttonInset = 12;
 
-  const WonderDetailsTabMenu({Key? key, required this.tabController, this.showBg = false, required this.wonderType})
+  const WonderDetailsTabMenu(
+      {Key? key,
+      required this.tabController,
+      this.showBg = false,
+      required this.wonderType})
       : super(key: key);
 
   final TabController tabController;
@@ -32,7 +36,10 @@ class WonderDetailsTabMenu extends StatelessWidget {
         ),
         // Buttons
         Padding(
-          padding: EdgeInsets.only(left: $styles.insets.sm, right: $styles.insets.xxs, bottom: bottomPadding),
+          padding: EdgeInsets.only(
+              left: $styles.insets.sm,
+              right: $styles.insets.xxs,
+              bottom: bottomPadding),
           // TabButtons are a Stack with a row of icon buttons, and an illustrated home button sitting on top.
           // The home buttons shows / hides itself based on `showHomeBtn`
           // The row contains an animated placeholder gap which makes room for the icon as it transitions in.
@@ -52,13 +59,21 @@ class WonderDetailsTabMenu extends StatelessWidget {
                         borderSize: showBg ? 6 : 2,
                       ),
                       _TabBtn(0, tabController,
-                          iconImg: 'editorial', label: $strings.wonderDetailsTabLabelInformation, color: iconColor),
+                          iconImg: 'editorial',
+                          label: $strings.wonderDetailsTabLabelInformation,
+                          color: iconColor),
                       _TabBtn(1, tabController,
-                          iconImg: 'photos', label: $strings.wonderDetailsTabLabelImages, color: iconColor),
+                          iconImg: 'photos',
+                          label: $strings.wonderDetailsTabLabelImages,
+                          color: iconColor),
                       _TabBtn(2, tabController,
-                          iconImg: 'artifacts', label: $strings.wonderDetailsTabLabelArtifacts, color: iconColor),
+                          iconImg: 'artifacts',
+                          label: $strings.wonderDetailsTabLabelArtifacts,
+                          color: iconColor),
                       _TabBtn(3, tabController,
-                          iconImg: 'timeline', label: $strings.wonderDetailsTabLabelEvents, color: iconColor),
+                          iconImg: 'timeline',
+                          label: $strings.wonderDetailsTabLabelEvents,
+                          color: iconColor),
                     ],
                   ),
                 ),
@@ -72,7 +87,11 @@ class WonderDetailsTabMenu extends StatelessWidget {
 }
 
 class _WonderHomeBtn extends StatelessWidget {
-  const _WonderHomeBtn({Key? key, required this.size, required this.wonderType, required this.borderSize})
+  const _WonderHomeBtn(
+      {Key? key,
+      required this.size,
+      required this.wonderType,
+      required this.borderSize})
       : super(key: key);
 
   final double size;
@@ -94,7 +113,8 @@ class _WonderHomeBtn extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(99),
           color: wonderType.fgColor,
-          image: DecorationImage(image: AssetImage(wonderType.homeBtn), fit: BoxFit.fill),
+          image: DecorationImage(
+              image: AssetImage(wonderType.homeBtn), fit: BoxFit.fill),
         ),
       ),
     );
@@ -111,6 +131,9 @@ class _TabBtn extends StatelessWidget {
     required this.label,
   }) : super(key: key);
 
+  static const double _minWidth = 50;
+  static const double _maxWidth = 120;
+
   final int index;
   final TabController tabController;
   final String iconImg;
@@ -120,23 +143,29 @@ class _TabBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool selected = tabController.index == index;
-    final MaterialLocalizations localizations = MaterialLocalizations.of(context);
-    final iconImgPath = '${ImagePaths.common}/tab-$iconImg${selected ? '-active' : ''}.png';
-    String tabLabel = localizations.tabLabel(tabIndex: index + 1, tabCount: tabController.length);
+    final MaterialLocalizations localizations =
+        MaterialLocalizations.of(context);
+    final iconImgPath =
+        '${ImagePaths.common}/tab-$iconImg${selected ? '-active' : ''}.png';
+    String tabLabel = localizations.tabLabel(
+        tabIndex: index + 1, tabCount: tabController.length);
     tabLabel = '$label: $tabLabel';
-    final double btnWidth = (context.widthPx / 6).clamp(50, 120);
+    final double btnWidth = (context.widthPx / 6).clamp(_minWidth, _maxWidth);
     return MergeSemantics(
       child: Semantics(
         selected: selected,
         label: tabLabel,
         child: ExcludeSemantics(
           child: AppBtn.basic(
-            padding: EdgeInsets.only(top: $styles.insets.md + $styles.insets.xs, bottom: $styles.insets.sm),
+            padding: EdgeInsets.only(
+                top: $styles.insets.md + $styles.insets.xs,
+                bottom: $styles.insets.sm),
             onPressed: () => tabController.index = index,
             semanticLabel: label,
             minimumSize: Size(btnWidth, 0),
             // Image icon
-            child: Image.asset(iconImgPath, height: 32, width: 32, color: selected ? null : color),
+            child: Image.asset(iconImgPath,
+                height: 32, width: 32, color: selected ? null : color),
           ),
         ),
       ),
