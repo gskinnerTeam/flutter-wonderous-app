@@ -4,6 +4,7 @@ import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/app_backdrop.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/centered_box.dart';
+import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/curved_clippers.dart';
 import 'package:wonders/ui/common/hidden_collectible.dart';
 import 'package:wonders/ui/common/list_gradient.dart';
@@ -35,17 +36,20 @@ class WonderEvents extends StatelessWidget {
               /// Main view switches between portrait and landscape views
               Positioned.fill(
                 top: $styles.insets.lg,
-                child: context.isLandscape ? _buildLandscape() : _buildPortrait(),
+                child: context.isLandscape ? _buildLandscape(context) : _buildPortrait(),
               ),
 
-              /// Floating TimelineBtn
-              Positioned(
-                  right: $styles.insets.lg,
-                  top: $styles.insets.lg,
-                  child: CircleIconBtn(
+              /// Header w/ TimelineBtn
+              TopCenter(
+                child: AppHeader(
+                  showBackBtn: false,
+                  isTransparent: true,
+                  trailing: (_) => CircleIconBtn(
                       icon: AppIcons.timeline,
                       onPressed: handleTimelineBtnPressed,
-                      semanticLabel: $strings.eventsListButtonOpenGlobal)),
+                      semanticLabel: $strings.eventsListButtonOpenGlobal),
+                ),
+              ),
             ],
           ),
         ),
@@ -54,7 +58,7 @@ class WonderEvents extends StatelessWidget {
   }
 
   /// Landscape layout is a row, with the WonderImage on left and EventsList on the right
-  Widget _buildLandscape() {
+  Widget _buildLandscape(BuildContext context) {
     return Row(
       children: [
         /// WonderImage w/ Timeline btn
@@ -66,10 +70,19 @@ class WonderEvents extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Gap($styles.insets.lg),
-                Expanded(child: Center(child: _WonderImageWithTimeline(data: _data, height: 500))),
+                Expanded(
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        _WonderImageWithTimeline(data: _data, height: min(500, context.heightPx - 300)),
+                        Gap($styles.insets.lg),
+                        SizedBox(width: 300, child: _TimelineBtn(type: type)),
+                      ],
+                    ),
+                  ),
+                ),
                 Gap($styles.insets.lg),
-                SizedBox(width: 300, child: _TimelineBtn(type: type)),
-                Gap($styles.insets.xl),
               ],
             ),
           ),
@@ -78,7 +91,7 @@ class WonderEvents extends StatelessWidget {
         /// EventsList
         Expanded(
           child: CenteredBox(
-            width: $styles.sizes.maxContentWidth1,
+            width: $styles.sizes.maxContentWidth2,
             child: _EventsList(
               data: _data,
               topHeight: 100,

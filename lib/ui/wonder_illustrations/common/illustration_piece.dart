@@ -69,6 +69,7 @@ class _IllustrationPieceState extends State<IllustrationPiece> {
     final wonderBuilder = context.watch<WonderIllustrationBuilderState>();
     final type = wonderBuilder.widget.wonderType;
     final imgPath = '${type.assetPath}/${widget.fileName}';
+    // Dynamically determine the aspect ratio of the image, so we can more easily position it
     if (aspectRatio == null) {
       aspectRatio == 0; // indicates load has started, so we don't run twice
       rootBundle.load(imgPath).then((img) async {
@@ -111,21 +112,26 @@ class _IllustrationPieceState extends State<IllustrationPiece> {
                 height * widget.fractionalOffset!.dy,
               );
             }
+            Widget? content;
+            if (uiImage != null) {
+              content = Transform.translate(
+                offset: finalTranslation,
+                child: Transform.scale(
+                  scale: 1 + (widget.zoomAmt * config.zoom) + introZoom,
+                  child: SizedBox(
+                    height: height,
+                    width: height * aspectRatio!,
+                    child: img,
+                  ),
+                ),
+              );
+            }
+
             return Stack(
               children: [
                 if (widget.bottom != null) Positioned.fill(child: widget.bottom!.call(context)),
                 if (uiImage != null) ...[
-                  Transform.translate(
-                    offset: finalTranslation,
-                    child: Transform.scale(
-                      scale: 1 + (widget.zoomAmt * config.zoom) + introZoom,
-                      child: SizedBox(
-                        height: height,
-                        width: height * aspectRatio!,
-                        child: !widget.enableHero ? img : Hero(tag: '$type-${widget.fileName}', child: img),
-                      ),
-                    ),
-                  ),
+                  widget.enableHero ? Hero(tag: '$type-${widget.fileName}', child: content!) : content!,
                 ],
                 if (widget.top != null) Positioned.fill(child: widget.top!.call(context)),
               ],

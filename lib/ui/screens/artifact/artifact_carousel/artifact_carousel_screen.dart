@@ -4,7 +4,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/highlight_data.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
-import 'package:wonders/ui/common/controls/simple_header.dart';
+import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/static_text_scale.dart';
 
 part 'widgets/_blurred_image_bg.dart';
@@ -122,8 +122,8 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
         ),
 
         /// Header
-        SimpleHeader(
-          $strings.artifactsTitleArtifacts,
+        AppHeader(
+          title: $strings.artifactsTitleArtifacts,
           showBackBtn: false,
           isTransparent: true,
           trailing: (context) => CircleBtn(

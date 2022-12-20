@@ -1,7 +1,7 @@
 part of '../artifact_details_screen.dart';
 
-class _Header extends StatelessWidget {
-  const _Header({Key? key, required this.data}) : super(key: key);
+class _ImageBtn extends StatelessWidget {
+  const _ImageBtn({Key? key, required this.data}) : super(key: key);
   final ArtifactData data;
 
   @override

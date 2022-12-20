@@ -61,8 +61,8 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
           // Dashed line with a year that changes as we scroll
           IgnorePointer(
             ignoringSemantics: false,
-            child: ListenableBuilder(
-              listenable: controller.scroller,
+            child: AnimatedBuilder(
+              animation: controller.scroller,
               builder: (_, __) {
                 return _DashedDividerWithYear(controller.calculateYearFromScrollPos());
               },
@@ -79,8 +79,8 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
     Widget buildTimelineSection(WonderData data) {
       return ClipRRect(
         borderRadius: BorderRadius.circular(99),
-        child: ListenableBuilder(
-          listenable: controller.scroller,
+        child: AnimatedBuilder(
+          animation: controller.scroller,
           builder: (_, __) => TimelineSection(
             data,
             controller.calculateYearFromScrollPos(),
@@ -127,8 +127,8 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
                     ),
 
                     /// Event Markers, rebuilds on scroll
-                    ListenableBuilder(
-                      listenable: controller.scroller,
+                    AnimatedBuilder(
+                      animation: controller.scroller,
                       builder: (_, __) => _EventMarkers(
                         controller.calculateYearFromScrollPos(),
                         onEventChanged: _handleEventMarkerChanged,

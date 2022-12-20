@@ -94,8 +94,8 @@ class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with S
 
   @override
   Widget build(_) {
-    return ListenableBuilder(
-      listenable: _anim,
+    return AnimatedBuilder(
+      animation: _anim,
       builder: (_, __) {
         var rot = _prevIndex > widget.index ? -pi : pi;
         return Transform.rotate(

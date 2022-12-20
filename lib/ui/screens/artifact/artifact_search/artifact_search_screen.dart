@@ -3,7 +3,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
 import 'package:wonders/ui/common/app_icons.dart';
-import 'package:wonders/ui/common/controls/simple_header.dart';
+import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/static_text_scale.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/expanding_time_range_selector.dart';
@@ -38,7 +38,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
 
   @override
   void initState() {
-    _search();
+    _updateResults();
     panelController.addListener(() {
       AppHaptics.lightImpact();
     });
@@ -47,16 +47,18 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
 
   void _handleSearchSubmitted(String query) {
     _query = query;
-    _search();
+    _updateResults();
   }
 
   void _handleTimelineChanged(double start, double end) {
     _startYear = start;
     _endYear = end;
-    _filter();
+    _updateFilter();
   }
 
-  void _search() {
+  void _handleResultPressed(SearchData o) => context.push(ScreenPaths.artifact(o.id.toString()));
+
+  void _updateResults() {
     if (_query.isEmpty) {
       _searchResults = wonder.searchData;
     } else {
@@ -66,10 +68,10 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
       _searchResults = wonder.searchData.where((o) => o.title.contains(q) || o.keywords.contains(q)).toList();
     }
     vizController.value = _searchResults;
-    _filter();
+    _updateFilter();
   }
 
-  void _filter() {
+  void _updateFilter() {
     _filteredResults = _searchResults.where((o) => o.year >= _startYear && o.year <= _endYear).toList();
     setState(() {});
   }
@@ -79,11 +81,11 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
     // tone down the orange just a bit:
     vizController.color = Color.lerp($styles.colors.accent1, $styles.colors.black, 0.2)!;
     Widget content = GestureDetector(
-      onTap: () => WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
+      onTap: FocusManager.instance.primaryFocus?.unfocus,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SimpleHeader($strings.artifactsSearchTitleBrowse, subtitle: wonder.title),
+          AppHeader(title: $strings.artifactsSearchTitleBrowse, subtitle: wonder.title),
           Gap($styles.insets.xs),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: $styles.insets.sm),
@@ -101,7 +103,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
                   ? _buildEmptyIndicator(context)
                   : _ResultsGrid(
                       searchResults: _filteredResults,
-                      onPressed: (o) => context.push(ScreenPaths.artifact(o.id.toString())),
+                      onPressed: _handleResultPressed,
                     ),
             ),
           ),

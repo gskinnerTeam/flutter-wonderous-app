@@ -1,7 +1,7 @@
 part of '../artifact_details_screen.dart';
 
-class _Content extends StatelessWidget {
-  const _Content({Key? key, required this.data}) : super(key: key);
+class _InfoColumn extends StatelessWidget {
+  const _InfoColumn({Key? key, required this.data}) : super(key: key);
   final ArtifactData data;
 
   @override

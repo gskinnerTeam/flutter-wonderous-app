@@ -9,7 +9,7 @@ import 'package:wonders/logic/data/timeline_data.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/blend_mask.dart';
 import 'package:wonders/ui/common/centered_box.dart';
-import 'package:wonders/ui/common/controls/simple_header.dart';
+import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/dashed_line.dart';
 import 'package:wonders/ui/common/list_gradient.dart';
 import 'package:wonders/ui/common/timeline_event_card.dart';
@@ -55,7 +55,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
           padding: EdgeInsets.only(bottom: 0),
           child: Column(
             children: [
-              SimpleHeader($strings.timelineTitleGlobalTimeline),
+              AppHeader(title: $strings.timelineTitleGlobalTimeline),
 
               /// Vertically scrolling timeline, manages a ScrollController.
               Expanded(

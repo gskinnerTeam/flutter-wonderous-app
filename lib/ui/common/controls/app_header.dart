@@ -1,10 +1,16 @@
 import 'package:wonders/common_libs.dart';
 
-class SimpleHeader extends StatelessWidget {
-  const SimpleHeader(this.title,
-      {Key? key, this.subtitle, this.showBackBtn = true, this.isTransparent = false, this.onBack, this.trailing})
+class AppHeader extends StatelessWidget {
+  const AppHeader(
+      {Key? key,
+      this.title,
+      this.subtitle,
+      this.showBackBtn = true,
+      this.isTransparent = false,
+      this.onBack,
+      this.trailing})
       : super(key: key);
-  final String title;
+  final String? title;
   final String? subtitle;
   final bool showBackBtn;
   final bool isTransparent;
@@ -40,11 +46,13 @@ class SimpleHeader extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
-                          title.toUpperCase(),
-                          textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
-                          style: $styles.text.h4.copyWith(color: $styles.colors.offWhite, fontWeight: FontWeight.w500),
-                        ),
+                        if (title != null)
+                          Text(
+                            title!.toUpperCase(),
+                            textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+                            style:
+                                $styles.text.h4.copyWith(color: $styles.colors.offWhite, fontWeight: FontWeight.w500),
+                          ),
                         if (subtitle != null)
                           Text(
                             subtitle!.toUpperCase(),

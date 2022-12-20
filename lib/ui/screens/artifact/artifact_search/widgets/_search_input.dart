@@ -34,36 +34,46 @@ class _SearchInput extends StatelessWidget {
   Widget _buildSuggestionsView(BuildContext context, onSelected, Iterable<String> results, BoxConstraints constraints) {
     List<Widget> items = results.map((str) => _buildSuggestion(context, str, () => onSelected(str))).toList();
     items.insert(0, _buildSuggestionTitle(context));
-
-    return TopLeft(
-      child: Container(
-        margin: EdgeInsets.only(top: $styles.insets.xxs),
-        width: constraints.maxWidth,
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: $styles.colors.black.withOpacity(0.25),
-              blurRadius: 4,
-              offset: Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Container(
-          padding: EdgeInsets.all($styles.insets.xs),
-          decoration: BoxDecoration(
-            color: $styles.colors.offWhite.withOpacity(0.92),
-            borderRadius: BorderRadius.circular($styles.insets.xs),
+    return Stack(
+      children: [
+        ExcludeSemantics(
+          child: AppBtn.basic(
+            onPressed: FocusManager.instance.primaryFocus!.unfocus,
+            semanticLabel: '',
+            child: SizedBox.expand(),
           ),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: 200),
-            child: ListView(
+        ),
+        TopLeft(
+          child: Container(
+            margin: EdgeInsets.only(top: $styles.insets.xxs),
+            width: constraints.maxWidth,
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: $styles.colors.black.withOpacity(0.25),
+                  blurRadius: 4,
+                  offset: Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Container(
               padding: EdgeInsets.all($styles.insets.xs),
-              shrinkWrap: true,
-              children: items,
+              decoration: BoxDecoration(
+                color: $styles.colors.offWhite.withOpacity(0.92),
+                borderRadius: BorderRadius.circular($styles.insets.xs),
+              ),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxHeight: 200),
+                child: ListView(
+                  padding: EdgeInsets.all($styles.insets.xs),
+                  shrinkWrap: true,
+                  children: items,
+                ),
+              ),
             ),
           ),
         ),
-      ),
+      ],
     );
   }
 

@@ -87,19 +87,26 @@ class _BaseContentModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all($styles.insets.lg),
-      child: LightText(
-        child: SeparatedColumn(
-          mainAxisSize: MainAxisSize.min,
-          separatorBuilder: () => Gap($styles.insets.md),
-          children: [
-            if (title != null) Text(title!, style: $styles.text.h2),
-            if (child != null) child!,
-            if (msg != null) Text(msg!, style: $styles.text.body),
-            Gap($styles.insets.md),
-            Column(children: buttons.map((e) => e).toList())
-          ],
+    return IntrinsicHeight(
+      child: Center(
+        child: SizedBox(
+          width: $styles.sizes.maxContentWidth3,
+          child: Padding(
+            padding: EdgeInsets.all($styles.insets.lg),
+            child: LightText(
+              child: SeparatedColumn(
+                mainAxisSize: MainAxisSize.min,
+                separatorBuilder: () => Gap($styles.insets.md),
+                children: [
+                  if (title != null) Text(title!, style: $styles.text.h2),
+                  if (child != null) child!,
+                  if (msg != null) Text(msg!, style: $styles.text.body),
+                  Gap($styles.insets.md),
+                  Column(children: buttons.map((e) => e).toList())
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );

@@ -164,8 +164,8 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
               ),
 
               /// Home Btn
-              ListenableBuilder(
-                  listenable: _scroller,
+              AnimatedBuilder(
+                  animation: _scroller,
                   builder: (_, child) {
                     return AnimatedOpacity(
                       opacity: _scrollPos.value > 0 ? 0 : 1,
