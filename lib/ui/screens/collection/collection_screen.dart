@@ -5,7 +5,7 @@ import 'package:wonders/logic/collectibles_logic.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/centered_box.dart';
-import 'package:wonders/ui/common/controls/simple_header.dart';
+import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/modals/app_modals.dart';
 
 part 'widgets/_collectible_image.dart';
@@ -63,7 +63,7 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
         children: [
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-              SimpleHeader($strings.collectionTitleCollection),
+              AppHeader(title: $strings.collectionTitleCollection),
               _NewlyDiscoveredItemsBtn(count: discovered, onPressed: _scrollToTarget),
               Flexible(
                 child: _CollectionList(

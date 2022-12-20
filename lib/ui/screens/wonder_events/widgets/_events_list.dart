@@ -56,7 +56,6 @@ class _EventsListState extends State<_EventsList> {
     }
     return Stack(
       children: [
-        //TODO: Remove scrollbar on portrait
         SingleChildScrollView(
           controller: _scroller,
           child: Column(
@@ -101,7 +100,8 @@ class _EventsListState extends State<_EventsList> {
     );
   }
 
-  /// Wraps the list in a scroll listener
+  /// Wraps the list in a scroll listener that fades in an underlay as the content
+  /// is scrolled
   Widget _buildScrollingListWithBlur() {
     return AnimatedBuilder(
       animation: _scroller,
