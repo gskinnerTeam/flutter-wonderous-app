@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/unsplash_photo_data.dart';
 import 'package:wonders/ui/common/controls/app_loading_indicator.dart';
@@ -136,7 +135,9 @@ class _PhotoGalleryState extends State<PhotoGallery> {
             return Center(child: AppLoadingIndicator());
           }
 
-          Size imgSize = Size(context.widthPx * .5, context.heightPx * .5);
+          Size imgSize = context.isLandscape
+              ? Size(context.widthPx * .5, context.heightPx * .66)
+              : Size(context.widthPx * .66, context.heightPx * .5);
           imgSize = (widget.imageSize ?? imgSize) * _scale;
           // Get transform offset for the current _index
           final padding = $styles.insets.md;
