@@ -22,21 +22,22 @@ class _CollapsingCarouselItem extends StatelessWidget {
   Widget build(BuildContext context) {
     // Calculate offset, this will be subtracted from the bottom padding moving the element downwards
     double vtOffset = 0;
-    if (indexOffset == 1) vtOffset = width * .1;
-    if (indexOffset == 2) vtOffset = width * .4;
+    final tallHeight = width * 1.5;
+    if (indexOffset == 1) vtOffset = width * .4;
+    if (indexOffset == 2) vtOffset = width * .8;
     if (indexOffset > 2) vtOffset = width;
 
     final content = AnimatedOpacity(
       duration: $styles.times.fast,
       opacity: indexOffset.abs() <= 2 ? 1 : 0,
-      child: AnimatedPadding(
+      child: _AnimatedTranslate(
         duration: $styles.times.fast,
-        padding: EdgeInsets.only(bottom: max(bottom - vtOffset, 0)),
-        child: BottomCenter(
+        offset: Offset(0, -tallHeight * .2 + vtOffset),
+        child: Center(
           child: AnimatedContainer(
             duration: $styles.times.fast,
             // Center item is portrait, the others are square
-            height: indexOffset == 0 ? width * 1.5 : width,
+            height: indexOffset == 0 ? tallHeight : width,
             width: width,
             child: child,
           ),
@@ -45,6 +46,28 @@ class _CollapsingCarouselItem extends StatelessWidget {
     );
     if (indexOffset > 2) return content;
     return AppBtn.basic(onPressed: onPressed, semanticLabel: title, child: content);
+  }
+}
+
+class _AnimatedTranslate extends StatelessWidget {
+  const _AnimatedTranslate({
+    Key? key,
+    required this.duration,
+    required this.offset,
+    required this.child,
+  }) : super(key: key);
+  final Duration duration;
+  final Offset offset;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return TweenAnimationBuilder<Offset>(
+      tween: Tween(begin: offset, end: offset),
+      duration: duration,
+      child: child,
+      builder: (_, offset, c) => Transform.translate(offset: offset, child: c),
+    );
   }
 }
 
