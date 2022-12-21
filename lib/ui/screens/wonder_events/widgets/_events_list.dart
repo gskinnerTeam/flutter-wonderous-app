@@ -1,19 +1,17 @@
 part of '../wonder_events.dart';
 
 class _EventsList extends StatefulWidget {
-  const _EventsList(
-      {Key? key,
-      required this.data,
-      this.topHeight = 0,
-      this.blurOnScroll = false,
-      this.showTopGradient = true,
-      this.showBottomGradient = true})
-      : super(key: key);
+  const _EventsList({
+    Key? key,
+    required this.data,
+    this.topHeight = 0,
+    this.blurOnScroll = false,
+    this.showTopGradient = true,
+  }) : super(key: key);
   final WonderData data;
   final double topHeight;
   final bool blurOnScroll;
   final bool showTopGradient;
-  final bool showBottomGradient;
 
   @override
   State<_EventsList> createState() => _EventsListState();
@@ -82,14 +80,6 @@ class _EventsListState extends State<_EventsList> {
             ],
           ),
         ),
-
-        /// Vertical gradient on btm
-        if (widget.showBottomGradient)
-          Positioned.fill(
-            child: BottomCenter(
-              child: ListOverscollGradient(bottomUp: true, size: 100),
-            ),
-          ),
         if (widget.showTopGradient)
           Positioned.fill(
             child: TopCenter(

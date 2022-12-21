@@ -8,14 +8,18 @@ import 'package:wonders/ui/common/controls/locale_switcher.dart';
 import 'package:wonders/ui/common/pop_navigator_underlay.dart';
 import 'package:wonders/ui/screens/home_menu/about_dialog_content.dart';
 
-class HomeMenu extends StatelessWidget {
+class HomeMenu extends StatefulWidget {
   const HomeMenu({Key? key, required this.data}) : super(key: key);
   final WonderData data;
 
+  @override
+  State<HomeMenu> createState() => _HomeMenuState();
+}
+
+class _HomeMenuState extends State<HomeMenu> {
   void _handleAboutPressed(BuildContext context) async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    // ignore: use_build_context_synchronously
-    if (!context.mounted) return;
+    if (!mounted) return;
     showAboutDialog(
       context: context,
       applicationName: $strings.appName,
@@ -37,7 +41,7 @@ class HomeMenu extends StatelessWidget {
 
   void _handleCollectionPressed(BuildContext context) => context.push(ScreenPaths.collection(''));
 
-  void _handleTimelinePressed(BuildContext context) => context.push(ScreenPaths.timeline(data.type));
+  void _handleTimelinePressed(BuildContext context) => context.push(ScreenPaths.timeline(widget.data.type));
 
   void _handleWonderPressed(BuildContext context, WonderData data) => Navigator.pop(context, data.type);
 
@@ -162,7 +166,7 @@ class HomeMenu extends StatelessWidget {
   }
 
   Widget _buildGridBtn(BuildContext context, WonderData btnData) {
-    bool isSelected = btnData == data;
+    bool isSelected = btnData == widget.data;
     return AspectRatio(
       aspectRatio: 1,
       child: Container(
