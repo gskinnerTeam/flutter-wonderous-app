@@ -53,25 +53,28 @@ class _AppBar extends StatelessWidget {
               fit: StackFit.expand,
               children: [
                 /// Masked image
-                Center(
+                BottomCenter(
                   child: SizedBox(
                     width: showOverlay ? double.infinity : $styles.sizes.maxContentWidth1,
-                    child: ClipPath(
-                      // Switch arch type to Rect if we are showing the title bar
-                      clipper: showOverlay ? null : ArchClipper(arch),
-                      child: ValueListenableBuilder<double>(
-                        valueListenable: scrollPos,
-                        builder: (_, value, child) {
-                          double opacity = (.4 + (value / 1500)).clamp(0, 1);
-                          return ScalingListItem(
-                            scrollPos: scrollPos,
-                            child: Image.asset(
-                              wonderType.photo1,
-                              fit: BoxFit.cover,
-                              opacity: AlwaysStoppedAnimation(opacity),
-                            ),
-                          );
-                        },
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 50),
+                      child: ClipPath(
+                        // Switch arch type to Rect if we are showing the title bar
+                        clipper: showOverlay ? null : ArchClipper(arch),
+                        child: ValueListenableBuilder<double>(
+                          valueListenable: scrollPos,
+                          builder: (_, value, child) {
+                            double opacity = (.4 + (value / 1500)).clamp(0, 1);
+                            return ScalingListItem(
+                              scrollPos: scrollPos,
+                              child: Image.asset(
+                                wonderType.photo1,
+                                fit: BoxFit.cover,
+                                opacity: AlwaysStoppedAnimation(opacity),
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
