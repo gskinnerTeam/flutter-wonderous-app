@@ -61,6 +61,7 @@ class _HomeMenuState extends State<HomeMenu> {
 
         AppHeader(
           isTransparent: true,
+          backIcon: AppIcons.close,
           trailing: (_) => LocaleSwitcher(),
         ),
 
