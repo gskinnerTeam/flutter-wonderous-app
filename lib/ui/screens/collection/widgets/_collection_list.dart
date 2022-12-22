@@ -53,7 +53,7 @@ class _CollectionList extends StatelessWidget with GetItMixin {
           children: [
             ...collections,
             Gap($styles.insets.sm),
-            _buildResetBtn(context),
+            if (kDebugMode) _buildResetBtn(context),
           ],
         ),
       ),
