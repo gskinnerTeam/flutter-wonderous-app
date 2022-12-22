@@ -11,21 +11,19 @@ AppStyle $styles = AppStyle();
 @immutable
 class AppStyle {
   AppStyle({Size? appSize}) {
+    /// Measure the diagonal size of the app window, and slightly adjust the scale value which is
+    /// applied to paddings and font-sizes across the app.
     if (appSize == null) {
       scale = 1;
       return;
     }
     final screenSize = (appSize.width + appSize.height) / 2;
-    if (screenSize > 1600) {
-      scale = 1.25;
-    } else if (screenSize > 1400) {
-      scale = 1.15;
-    } else if (screenSize > 1000) {
-      scale = 1.1;
+    if (screenSize > 1000) {
+      scale = 1.25; // large tablets
     } else if (screenSize > 800) {
-      scale = 1;
+      scale = 1; // small tablets
     } else {
-      scale = .9;
+      scale = .9; // phones
     }
     debugPrint('screenSize=$screenSize, scale=$scale');
   }
