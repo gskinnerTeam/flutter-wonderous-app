@@ -37,7 +37,7 @@ class PetraIllustration extends StatelessWidget {
       ),
       IllustrationPiece(
         fileName: 'moon.png',
-        initialOffset: Offset(0, -150),
+        initialOffset: Offset(0, 50),
         heightFactor: .15,
         minHeight: 50,
         alignment: Alignment.topCenter,

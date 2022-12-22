@@ -39,7 +39,7 @@ class ArchPoint {
 }
 
 List<ArchPoint> _getArchPts(Size size, ArchType type) {
-  double distanceFromTop = size.width / 3;
+  double distanceFromTop = size.width / 2.5;
   switch (type) {
     case ArchType.pyramid:
       return [

@@ -51,8 +51,8 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
 
   @override
   Widget build(BuildContext context) {
-    bool shortMode = context.heightPx < 800;
-    final double bottomHeight = shortMode ? 240 : 340;
+    bool shortMode = context.heightPx <= 800;
+    final double bottomHeight = context.heightPx / 2.75; // Prev 340, dynamic seems to work better
     // Allow objects to become wider as the screen becomes tall, this allows
     // them to grow taller as well, filling the available space better.
     double itemHeight = (context.heightPx - 200 - bottomHeight).clamp(250, 400);
@@ -137,7 +137,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   }
 
   OverflowBox _buildBgCircle(double height) {
-    const double size = 1500;
+    final double size = 2000;
     return OverflowBox(
       maxWidth: size,
       maxHeight: size,
@@ -146,7 +146,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
         child: Container(
           decoration: BoxDecoration(
             color: $styles.colors.offWhite.withOpacity(0.8),
-            borderRadius: BorderRadius.vertical(top: Radius.circular(size * .45)),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(size)),
           ),
         ),
       ),

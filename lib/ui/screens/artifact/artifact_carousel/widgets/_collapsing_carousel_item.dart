@@ -23,8 +23,8 @@ class _CollapsingCarouselItem extends StatelessWidget {
     // Calculate offset, this will be subtracted from the bottom padding moving the element downwards
     double vtOffset = 0;
     final tallHeight = width * 1.5;
-    if (indexOffset == 1) vtOffset = width * .4;
-    if (indexOffset == 2) vtOffset = width * .8;
+    if (indexOffset == 1) vtOffset = width * .5;
+    if (indexOffset == 2) vtOffset = width * .825;
     if (indexOffset > 2) vtOffset = width;
 
     final content = AnimatedOpacity(
@@ -32,13 +32,14 @@ class _CollapsingCarouselItem extends StatelessWidget {
       opacity: indexOffset.abs() <= 2 ? 1 : 0,
       child: _AnimatedTranslate(
         duration: $styles.times.fast,
-        offset: Offset(0, -tallHeight * .2 + vtOffset),
+        offset: Offset(0, -tallHeight * .25 + vtOffset),
         child: Center(
           child: AnimatedContainer(
             duration: $styles.times.fast,
             // Center item is portrait, the others are square
             height: indexOffset == 0 ? tallHeight : width,
             width: width,
+            padding: indexOffset == 0 ? EdgeInsets.all(0) : EdgeInsets.all(30),
             child: child,
           ),
         ),
