@@ -97,7 +97,6 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                 final int offset = (value.round() - index).abs();
                 return _CollapsingCarouselItem(
                   width: itemWidth,
-                  bottom: bottomHeight - 20,
                   indexOffset: min(3, offset),
                   onPressed: () => _handleArtifactTap(index),
                   title: _artifacts[wrappedIndex].title,

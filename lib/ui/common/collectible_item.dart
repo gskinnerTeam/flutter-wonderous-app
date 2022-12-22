@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/collectibles_logic.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
-import 'package:wonders/ui/common/cards/opening_card.dart';
+import 'package:wonders/ui/common/opening_card.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
 import 'package:wonders/ui/screens/collectible_found/collectible_found_screen.dart';
 
