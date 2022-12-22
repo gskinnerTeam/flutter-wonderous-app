@@ -8,14 +8,12 @@ class _CollapsingCarouselItem extends StatelessWidget {
       required this.child,
       required this.indexOffset,
       required this.width,
-      required this.bottom,
       required this.onPressed,
       required this.title})
       : super(key: key);
   final Widget child;
   final int indexOffset;
   final double width;
-  final double bottom;
   final VoidCallback onPressed;
   final String title;
   @override
@@ -39,7 +37,7 @@ class _CollapsingCarouselItem extends StatelessWidget {
             // Center item is portrait, the others are square
             height: indexOffset == 0 ? tallHeight : width,
             width: width,
-            padding: indexOffset == 0 ? EdgeInsets.all(0) : EdgeInsets.all(30),
+            padding: indexOffset == 0 ? EdgeInsets.all(0) : EdgeInsets.all(width * .1),
             child: child,
           ),
         ),
