@@ -4,6 +4,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/app_backdrop.dart';
 import 'package:wonders/ui/common/app_icons.dart';
+import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/controls/locale_switcher.dart';
 import 'package:wonders/ui/common/pop_navigator_underlay.dart';
 import 'package:wonders/ui/screens/home_menu/about_dialog_content.dart';
@@ -58,22 +59,9 @@ class _HomeMenuState extends State<HomeMenu> {
 
         PopNavigatorUnderlay(),
 
-        SafeArea(
-          child: PaddedRow(
-            padding: EdgeInsets.symmetric(
-              horizontal: $styles.insets.md,
-              vertical: $styles.insets.sm,
-            ),
-            children: [
-              /// Back btn
-              BackBtn.close(
-                bgColor: Colors.transparent,
-                iconColor: $styles.colors.offWhite,
-              ),
-              Spacer(),
-              LocaleSwitcher()
-            ],
-          ),
+        AppHeader(
+          isTransparent: true,
+          trailing: (_) => LocaleSwitcher(),
         ),
 
         /// Content

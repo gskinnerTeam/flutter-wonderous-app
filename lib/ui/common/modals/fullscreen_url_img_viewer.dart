@@ -1,4 +1,5 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
 
 class FullscreenUrlImgViewer extends StatefulWidget {
@@ -52,7 +53,7 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
       child: Stack(
         children: [
           Positioned.fill(child: content),
-          BackBtn.close(onPressed: _handleBackPressed).safe(),
+          AppHeader(onBack: _handleBackPressed, isTransparent: true),
         ],
       ),
     );

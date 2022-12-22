@@ -1,6 +1,7 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/app_icons.dart';
+import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/themed_text.dart';
@@ -324,12 +325,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         child: AnimatedOpacity(
           duration: $styles.times.fast,
           opacity: _isMenuOpen ? 0 : 1,
-          child: MergeSemantics(
-            child: CircleIconBtn(
-              icon: AppIcons.menu,
-              onPressed: _handleOpenMenuPressed,
-              semanticLabel: $strings.homeSemanticOpenMain,
-            ).safe(),
+          child: AppHeader(
+            backIcon: AppIcons.menu,
+            backBtnSemantics: $strings.homeSemanticOpenMain,
+            onBack: _handleOpenMenuPressed,
+            isTransparent: true,
           ),
         ),
       ),

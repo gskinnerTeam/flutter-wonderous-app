@@ -134,7 +134,6 @@ class _PhotoGalleryState extends State<PhotoGallery> {
           if (value.isEmpty) {
             return Center(child: AppLoadingIndicator());
           }
-
           Size imgSize = context.isLandscape
               ? Size(context.widthPx * .5, context.heightPx * .66)
               : Size(context.widthPx * .66, context.heightPx * .5);

@@ -1,4 +1,5 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/ui/common/app_icons.dart';
 
 class AppHeader extends StatelessWidget {
   const AppHeader(
@@ -8,11 +9,15 @@ class AppHeader extends StatelessWidget {
       this.showBackBtn = true,
       this.isTransparent = false,
       this.onBack,
-      this.trailing})
+      this.trailing,
+      this.backIcon = AppIcons.prev,
+      this.backBtnSemantics})
       : super(key: key);
   final String? title;
   final String? subtitle;
   final bool showBackBtn;
+  final AppIcons backIcon;
+  final String? backBtnSemantics;
   final bool isTransparent;
   final VoidCallback? onBack;
   final Widget Function(BuildContext context)? trailing;
@@ -31,7 +36,12 @@ class AppHeader extends StatelessWidget {
                 child: Center(
                   child: Row(children: [
                     Gap($styles.insets.sm),
-                    if (showBackBtn) BackBtn(onPressed: onBack),
+                    if (showBackBtn)
+                      BackBtn(
+                        onPressed: onBack,
+                        icon: backIcon,
+                        semanticLabel: backBtnSemantics,
+                      ),
                     Spacer(),
                     if (trailing != null) trailing!.call(context),
                     Gap($styles.insets.sm),

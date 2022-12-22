@@ -3,6 +3,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:wonders/ui/common/app_backdrop.dart';
 import 'package:wonders/ui/common/centered_box.dart';
+import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/pop_navigator_underlay.dart';
 
 part 'widgets/_animated_ribbon.dart';
@@ -91,7 +92,7 @@ class CollectibleFoundScreen extends StatelessWidget {
           ),
         ),
       ),
-      BackBtn.close().safe().animate().fade(delay: t * 4, duration: t * 2),
+      AppHeader(isTransparent: true).animate().fade(delay: t * 4, duration: t * 2),
     ]);
   }
 
