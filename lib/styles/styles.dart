@@ -21,7 +21,7 @@ class AppStyle {
     } else if (screenSize > 1400) {
       scale = 1.15;
     } else if (screenSize > 1000) {
-      scale = 1.25;
+      scale = 1.1;
     } else if (screenSize > 800) {
       scale = 1;
     } else {
