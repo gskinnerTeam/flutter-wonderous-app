@@ -70,7 +70,7 @@ class _TitleText extends StatelessWidget {
                   /// Compass divider
                   ExcludeSemantics(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
+                      padding: EdgeInsets.symmetric(horizontal: $styles.insets.sm),
                       child: AnimatedBuilder(
                         animation: scroller,
                         builder: (_, __) => CompassDivider(
