@@ -130,7 +130,7 @@ class WonderEvents extends StatelessWidget {
 
                 /// Btn
                 _TimelineBtn(type: _data.type, width: $styles.sizes.maxContentWidth3),
-                Gap($styles.insets.xl),
+                Gap($styles.insets.lg),
               ],
             ),
           ],
