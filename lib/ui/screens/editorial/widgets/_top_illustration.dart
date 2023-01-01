@@ -9,10 +9,6 @@ class _TopIllustration extends StatelessWidget {
     return Stack(
       children: [
         WonderIllustration(type, config: WonderIllustrationConfig.bg(enableAnims: false, shortMode: true)),
-        Positioned.fill(
-          bottom: 50,
-          child: AnimatedClouds(wonderType: type, enableAnimations: false, opacity: .5, cloudSize: 400),
-        ),
         Transform.translate(
           // Small bump down to make sure we cover the edge between the editorial page and the sky.
           offset: Offset(0, 10),

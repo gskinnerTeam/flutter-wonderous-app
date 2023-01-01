@@ -116,7 +116,6 @@ class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProvid
 
   List<_Cloud> _getClouds() {
     Size size = ContextUtils.getSize(context) ?? Size(context.widthPx, 400);
-
     rndSeed = _getCloudSeed(widget.wonderType);
     return List<_Cloud>.generate(3, (index) {
       return _Cloud(
