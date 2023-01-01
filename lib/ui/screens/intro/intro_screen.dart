@@ -48,6 +48,11 @@ class _IntroScreenState extends State<IntroScreen> {
         duration: $styles.times.fast, curve: Curves.easeOut);
   }
 
+  void _handleNavTextDoubleTapped() {
+    final int current = _pageController.page!.round();
+    _pageController.animateToPage(current + 1, duration: 250.ms, curve: Curves.easeIn);
+  }
+
   @override
   Widget build(BuildContext context) {
     // Set the page data, as strings may have changed based on locale
@@ -174,15 +179,6 @@ class _IntroScreenState extends State<IntroScreen> {
         ),
       ),
     );
-    // CenterLeft(
-    // child: FractionallySizedBox(
-    // widthFactor: .5,
-    // child: Padding(
-    // padding: const EdgeInsets.only(right: 200),
-    // child: HzGradient([$styles.colors.black, $styles.colors.black.withOpacity(0)], const [.8, 1]),
-    // ),
-    // ),
-    // );
   }
 
   Widget _buildFinishBtn(BuildContext context) {
@@ -212,10 +208,7 @@ class _IntroScreenState extends State<IntroScreen> {
           duration: $styles.times.fast,
           child: Semantics(
             onTapHint: $strings.introSemanticNavigate,
-            onTap: () {
-              final int current = _pageController.page!.round();
-              _pageController.animateToPage(current + 1, duration: 250.ms, curve: Curves.easeIn);
-            },
+            onTap: _handleNavTextDoubleTapped,
             child: Text($strings.introSemanticSwipeLeft, style: $styles.text.bodySmall),
           ),
         );
