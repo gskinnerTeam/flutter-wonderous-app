@@ -11,8 +11,7 @@ class AppLogic {
   /// The router will use this to prevent redirects while bootstrapping.
   bool isBootstrapComplete = false;
 
-  bool get isLandscapeEnabled =>
-      PlatformInfo.isDesktopOrWeb || deviceSize.shortestSide > 500;
+  bool get isLandscapeEnabled => PlatformInfo.isDesktopOrWeb || deviceSize.shortestSide > 500;
 
   /// Support portrait and landscape on desktop, web and tablets. Stick to portrait for phones.
   /// A return value of null indicated both orientations are supported.
@@ -26,8 +25,7 @@ class AppLogic {
   /// Initialize the app and all main actors.
   /// Loads settings, sets up services etc.
   Future<void> bootstrap() async {
-    debugPrint(
-        'bootstrap app, deviceSize: $deviceSize, isTablet: $isLandscapeEnabled');
+    debugPrint('bootstrap app, deviceSize: $deviceSize, isTablet: $isLandscapeEnabled');
 
     // Set min-sizes for desktop apps
     if (PlatformInfo.isDesktop) {
@@ -89,8 +87,7 @@ class AppLogic {
     SystemChrome.setPreferredOrientations(orientations);
   }
 
-  Future<T?> showFullscreenDialogRoute<T>(BuildContext context, Widget child,
-      {bool transparent = false}) async {
+  Future<T?> showFullscreenDialogRoute<T>(BuildContext context, Widget child, {bool transparent = false}) async {
     return await Navigator.of(context).push<T>(
       PageRoutes.dialog<T>(child, duration: $styles.times.pageTransition),
     );

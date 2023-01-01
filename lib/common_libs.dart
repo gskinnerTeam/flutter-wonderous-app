@@ -1,4 +1,4 @@
-/// Consolidate shared imports that are common across the app.
+/// Consolidate imports that are common across the app.
 
 export 'dart:math';
 
@@ -23,6 +23,7 @@ export 'package:wonders/logic/settings_logic.dart';
 export 'package:wonders/main.dart';
 export 'package:wonders/router.dart';
 export 'package:wonders/styles/styles.dart';
+export 'package:wonders/ui/app_scaffold.dart';
 export 'package:wonders/ui/common/controls/app_image.dart';
 export 'package:wonders/ui/common/controls/buttons.dart';
 export 'package:wonders/ui/common/controls/circle_buttons.dart';

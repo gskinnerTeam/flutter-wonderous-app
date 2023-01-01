@@ -25,18 +25,18 @@ void main() async {
   FlutterNativeSplash.remove();
 }
 
-/// Creates an app using the [MaterialApp.router] constructor and the `appRouter`, an instance of [GoRouter].
+/// Creates an app using the [MaterialApp.router] constructor and the global `appRouter`, an instance of [GoRouter].
 class WondersApp extends StatelessWidget with GetItMixin {
   WondersApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final locale = watchX((SettingsLogic s) => s.currentLocale);
     return MaterialApp.router(
+      routeInformationProvider: appRouter.routeInformationProvider,
+      routeInformationParser: appRouter.routeInformationParser,
       locale: locale == null ? null : Locale(locale),
       debugShowCheckedModeBanner: false,
       routerDelegate: appRouter.routerDelegate,
-      routeInformationProvider: appRouter.routeInformationProvider,
-      routeInformationParser: appRouter.routeInformationParser,
       theme: ThemeData(fontFamily: $styles.text.body.fontFamily),
       localizationsDelegates: const [
         AppLocalizations.delegate,
@@ -49,7 +49,7 @@ class WondersApp extends StatelessWidget with GetItMixin {
   }
 }
 
-/// Create singletons (controllers and services) that can be shared across the app.
+/// Create singletons (logic and services) that can be shared across the app.
 void registerSingletons() {
   // Top level app controller
   GetIt.I.registerLazySingleton<AppLogic>(() => AppLogic());
@@ -70,7 +70,7 @@ void registerSingletons() {
   GetIt.I.registerLazySingleton<LocaleLogic>(() => LocaleLogic());
 }
 
-/// Add syntax sugar for quickly accessing the main logical controllers in the app
+/// Add syntax sugar for quickly accessing the main "logic" controllers in the app
 /// We deliberately do not create shortcuts for services, to discourage their use directly in the view/widget layer.
 AppLogic get appLogic => GetIt.I.get<AppLogic>();
 WondersLogic get wondersLogic => GetIt.I.get<WondersLogic>();
@@ -81,4 +81,7 @@ MetAPILogic get metAPILogic => GetIt.I.get<MetAPILogic>();
 CollectiblesLogic get collectiblesLogic => GetIt.I.get<CollectiblesLogic>();
 WallPaperLogic get wallpaperLogic => GetIt.I.get<WallPaperLogic>();
 LocaleLogic get localeLogic => GetIt.I.get<LocaleLogic>();
+
+/// Global helpers for readability
 AppLocalizations get $strings => localeLogic.strings;
+AppStyle get $styles => WondersAppScaffold.style;
