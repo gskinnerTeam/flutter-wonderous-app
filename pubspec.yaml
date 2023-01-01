@@ -46,7 +46,7 @@ dependencies:
   provider: ^6.0.2
   rnd: ^0.2.0
   screenshot: ^1.2.3
-  share_plus: ^4.0.10
+  share_plus: ^6.3.0
   shared_preferences: ^2.0.15
   simple_rich_text: ^2.0.49
   sized_context: ^1.0.0+1

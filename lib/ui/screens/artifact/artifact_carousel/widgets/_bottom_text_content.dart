@@ -9,6 +9,7 @@ class _BottomTextContent extends StatelessWidget {
   final double height;
   final _ArtifactScreenState state;
   final bool shortMode;
+  int get _currentPage => state._currentPage.value.round();
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +31,9 @@ class _BottomTextContent extends StatelessWidget {
                     ignoringSemantics: false,
                     child: Semantics(
                       button: true,
-                      onIncrease: () => state._handleArtifactTap(state._currentPage.value.round() + 1),
-                      onDecrease: () => state._handleArtifactTap(state._currentPage.value.round() - 1),
-                      // onTap: () => _handleArtifactTap(_currentOffset.round()),
+                      onIncrease: () => state._handleArtifactTap(_currentPage + 1),
+                      onDecrease: () => state._handleArtifactTap(_currentPage - 1),
+                      onTap: () => state._handleArtifactTap(_currentPage),
                       liveRegion: true,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,

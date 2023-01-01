@@ -43,10 +43,8 @@ class WallPaperLogic {
       final directory = (await getApplicationDocumentsDirectory()).path;
       File imgFile = File('$directory/$name.png');
       await imgFile.writeAsBytes(pngBytes);
-      Share.shareFiles([imgFile.path],
-          mimeTypes: ['image/png'],
-          subject: '$wonderName Wallpaper',
-          text: 'Check out this $wonderName wallpaper from the Wonderous app!');
+      Share.shareXFiles([XFile(imgFile.path)],
+          subject: '$wonderName Wallpaper', text: 'Check out this $wonderName wallpaper from the Wonderous app!');
     }
   }
 }
