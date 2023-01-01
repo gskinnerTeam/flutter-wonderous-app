@@ -8,9 +8,9 @@ class PlatformInfo {
   static const _desktopPlatforms = [TargetPlatform.macOS, TargetPlatform.windows, TargetPlatform.linux];
   static const _mobilePlatforms = [TargetPlatform.android, TargetPlatform.iOS];
 
-  static bool get isDesktop => _desktopPlatforms.contains(defaultTargetPlatform);
+  static bool get isDesktop => _desktopPlatforms.contains(defaultTargetPlatform) && !kIsWeb;
   static bool get isDesktopOrWeb => isDesktop || kIsWeb;
-  static bool get isMobile => _mobilePlatforms.contains(defaultTargetPlatform);
+  static bool get isMobile => _mobilePlatforms.contains(defaultTargetPlatform) && !kIsWeb;
 
   static double get pixelRatio => WidgetsBinding.instance.window.devicePixelRatio;
 
