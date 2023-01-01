@@ -49,7 +49,7 @@ class _InfoColumn extends StatelessWidget {
                   _InfoRow($strings.artifactDetailsLabelClassification, data.classification),
                 ]
                     .animate(interval: 100.ms)
-                    .fade(delay: 600.ms, duration: $styles.times.med)
+                    .fadeIn(delay: 600.ms, duration: $styles.times.med)
                     .slide(begin: Offset(0.2, 0), curve: Curves.easeOut),
               ],
             ),
@@ -57,7 +57,7 @@ class _InfoColumn extends StatelessWidget {
             Text(
               $strings.homeMenuAboutMet,
               style: $styles.text.caption.copyWith(color: $styles.colors.accent2),
-            ),
+            ).animate(delay: 1.5.seconds).fadeIn().slide(begin: Offset(0.2, 0), curve: Curves.easeOut),
             Gap($styles.insets.offset),
           ],
         ),
