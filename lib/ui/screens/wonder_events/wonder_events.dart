@@ -77,7 +77,7 @@ class WonderEvents extends StatelessWidget {
                       children: [
                         _WonderImageWithTimeline(data: _data, height: min(500, context.heightPx - 300)),
                         Gap($styles.insets.lg),
-                        SizedBox(width: 300, child: _TimelineBtn(type: type)),
+                        SizedBox(width: 400, child: _TimelineBtn(type: type)),
                       ],
                     ),
                   ),
