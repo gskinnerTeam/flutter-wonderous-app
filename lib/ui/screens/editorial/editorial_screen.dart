@@ -21,7 +21,6 @@ import 'package:wonders/ui/common/scaling_list_item.dart';
 import 'package:wonders/ui/common/static_text_scale.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/utils/context_utils.dart';
-import 'package:wonders/ui/wonder_illustrations/common/animated_clouds.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_title_text.dart';
@@ -37,10 +36,6 @@ part 'widgets/_sliding_image_stack.dart';
 part 'widgets/_title_text.dart';
 part 'widgets/_top_illustration.dart';
 
-//TODO: Try and maintain 1.5 : 1 aspect ratio on the featured image
-//TODO: Try and move the scrollbar all the way to the edge of the screen
-//TODO: Fix arch logic (if necessary)
-// or maybe remove
 class WonderEditorialScreen extends StatefulWidget {
   const WonderEditorialScreen(this.data, {Key? key, required this.onScroll}) : super(key: key);
   final WonderData data;
@@ -75,7 +70,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
       double minAppBarHeight = shortMode ? 80 : 150;
 
       /// Attempt to maintain a similar aspect ratio for the image within the app-bar
-      double maxAppBarHeight = min(context.widthPx, $styles.sizes.maxContentWidth1) * 1.5;
+      double maxAppBarHeight = min(context.widthPx, $styles.sizes.maxContentWidth1) * 1.2;
 
       return PopRouterOnOverScroll(
         controller: _scroller,
@@ -147,17 +142,12 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                             widget.data.type,
                             scrollPos: _scrollPos,
                             sectionIndex: _sectionIndex,
-                          ).animate().fade(duration: $styles.times.med, delay: $styles.times.pageTransition),
+                          ),
                         ),
                       ),
 
                       /// Editorial content (text and images)
                       _ScrollingContent(widget.data, scrollPos: _scrollPos, sectionNotifier: _sectionIndex),
-
-                      /// Bottom padding
-                      SliverToBoxAdapter(
-                        child: Container(height: 150, color: $styles.colors.offWhite),
-                      ),
                     ],
                   ),
                 ),

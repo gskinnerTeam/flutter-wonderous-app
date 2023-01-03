@@ -134,9 +134,10 @@ class _ScrollingContent extends StatelessWidget {
                     buildText(data.locationInfo2),
                   ]),
                   Gap($styles.insets.md),
-                  _MapsThumbnail(data, height: 400),
+                  AspectRatio(aspectRatio: 1.65, child: _MapsThumbnail(data)),
                   Gap($styles.insets.md),
                   ..._contentSection([Center(child: buildHiddenCollectible(slot: 3))]),
+                  Gap(150),
                 ]),
               ),
             ),
@@ -214,9 +215,8 @@ class _YouTubeThumbnail extends StatelessWidget {
 }
 
 class _MapsThumbnail extends StatefulWidget {
-  const _MapsThumbnail(this.data, {Key? key, required this.height}) : super(key: key);
+  const _MapsThumbnail(this.data, {Key? key}) : super(key: key);
   final WonderData data;
-  final double height;
 
   @override
   State<_MapsThumbnail> createState() => _MapsThumbnailState();
@@ -232,30 +232,27 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
     return MergeSemantics(
       child: Column(
         children: [
-          SizedBox(
-            height: widget.height,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular($styles.corners.md),
-              child: AppBtn.basic(
-                semanticLabel: $strings.scrollingContentSemanticOpen,
-                onPressed: handlePressed,
+          ClipRRect(
+            borderRadius: BorderRadius.circular($styles.corners.md),
+            child: AppBtn.basic(
+              semanticLabel: $strings.scrollingContentSemanticOpen,
+              onPressed: handlePressed,
 
-                /// To prevent the map widget from absorbing the onPressed action, use a Stack + IgnorePointer + a transparent Container
-                child: Stack(
-                  children: [
-                    Positioned.fill(child: ColoredBox(color: Colors.transparent)),
-                    IgnorePointer(
-                      child: GoogleMap(
-                        markers: {getMapsMarker(startPos.target)},
-                        zoomControlsEnabled: false,
-                        mapType: MapType.normal,
-                        mapToolbarEnabled: false,
-                        initialCameraPosition: startPos,
-                        myLocationButtonEnabled: false,
-                      ),
+              /// To prevent the map widget from absorbing the onPressed action, use a Stack + IgnorePointer + a transparent Container
+              child: Stack(
+                children: [
+                  Positioned.fill(child: ColoredBox(color: Colors.transparent)),
+                  IgnorePointer(
+                    child: GoogleMap(
+                      markers: {getMapsMarker(startPos.target)},
+                      zoomControlsEnabled: false,
+                      mapType: MapType.normal,
+                      mapToolbarEnabled: false,
+                      initialCameraPosition: startPos,
+                      myLocationButtonEnabled: false,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
