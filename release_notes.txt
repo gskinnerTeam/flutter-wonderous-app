@@ -1,3 +1,6 @@
+# 2.0.5
+- Styling polish / fixes
+
 # 2.0.3
 - Add support for landscape tablet devices
 - Various improvements / polish
