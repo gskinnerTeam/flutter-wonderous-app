@@ -83,7 +83,7 @@ class AppBtn extends StatelessWidget {
         super(key: key);
 
   // interaction:
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   late final String semanticLabel;
   final bool enableFeedback;
 
@@ -128,7 +128,7 @@ class AppBtn extends StatelessWidget {
     );
 
     Widget button = TextButton(
-      onPressed: () => onPressed(),
+      onPressed: onPressed,
       style: style,
       child: DefaultTextStyle(
         style: DefaultTextStyle.of(context).style.copyWith(color: textColor),
