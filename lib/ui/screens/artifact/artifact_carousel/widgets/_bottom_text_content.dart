@@ -62,17 +62,17 @@ class _BottomTextContent extends StatelessWidget {
                       ).animate(key: ValueKey(artifact.artifactId)).fadeIn(),
                     ),
                   ),
-                  Gap($styles.insets.sm),
-                  if (!shortMode)
-                    AppPageIndicator(
-                      count: state._artifacts.length,
-                      controller: state._pageController!,
-                      semanticPageTitle: $strings.artifactsSemanticArtifact,
-                    ),
                 ],
               ),
               if (!shortMode) Gap($styles.insets.md),
               Spacer(),
+              if (!shortMode)
+                AppPageIndicator(
+                  count: state._artifacts.length,
+                  controller: state._pageController!,
+                  semanticPageTitle: $strings.artifactsSemanticArtifact,
+                ),
+              Gap($styles.insets.md),
               AppBtn.from(
                 text: $strings.artifactsButtonBrowse,
                 icon: AppIcons.search,
