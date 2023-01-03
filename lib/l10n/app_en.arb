@@ -424,6 +424,8 @@
 	"timelineEvent1929ce": "Black Tuesday signals the beginning of the Great Depression",
 	"timelineEvent1939ce": "World War II",
 	"timelineEvent1957ce": "launch of Sputnik 1 by the Soviet Union",
-	"timelineEvent1969ce": "Apollo 11 mission lands on the moon"
+	"timelineEvent1969ce": "Apollo 11 mission lands on the moon",
+	"privacyPolicy": "Privacy Policy",
+	"privacyStatement": "As explained in our {privacyUrl} we do not collect any personal information.",
+	"@privacyStatement": {"placeholders": {"privacyUrl": {}}}
 }
-  
