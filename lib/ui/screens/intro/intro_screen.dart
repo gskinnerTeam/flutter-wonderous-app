@@ -24,7 +24,7 @@ class _IntroScreenState extends State<IntroScreen> {
 
   late final PageController _pageController = PageController()..addListener(_handlePageChanged);
   final ValueNotifier<int> _currentPage = ValueNotifier(0);
-
+  bool get _isOnLastPage => _currentPage.value.round() == pageData.length - 1;
   @override
   void dispose() {
     _pageController.dispose();
@@ -50,6 +50,7 @@ class _IntroScreenState extends State<IntroScreen> {
 
   void _handleNavTextDoubleTapped() {
     final int current = _pageController.page!.round();
+    if (_isOnLastPage) return;
     _pageController.animateToPage(current + 1, duration: 250.ms, curve: Curves.easeIn);
   }
 
@@ -66,96 +67,102 @@ class _IntroScreenState extends State<IntroScreen> {
     // However, we only want the title / description to actually swipe,
     // so we stack a PageView with that content over top of all the other
     // content, and line up their layouts.
-
     final List<Widget> pages = pageData.map((e) => _Page(data: e)).toList();
 
-    final Widget content = Stack(children: [
-      // page view with title & description:
-      MergeSemantics(
-        child: Semantics(
-          onIncrease: () => _handleSemanticSwipe(1),
-          onDecrease: () => _handleSemanticSwipe(-1),
-          child: PageView(
-            controller: _pageController,
-            children: pages,
-            onPageChanged: (_) => AppHaptics.lightImpact(),
-          ),
-        ),
-      ),
-
-      IgnorePointer(
-        ignoringSemantics: false,
-        child: Column(children: [
-          Spacer(),
-
-          // logo:
-          Semantics(
-            header: true,
-            child: Container(
-              height: _logoHeight,
-              alignment: Alignment.center,
-              child: _WonderousLogo(),
-            ),
-          ),
-
-          // masked image:
-          SizedBox(
-            height: _imageSize,
-            width: _imageSize,
-            child: ValueListenableBuilder<int>(
-              valueListenable: _currentPage,
-              builder: (_, value, __) {
-                return AnimatedSwitcher(
-                  duration: $styles.times.slow,
-                  child: KeyedSubtree(
-                    key: ValueKey(value), // so AnimatedSwitcher sees it as a different child.
-                    child: _PageImage(data: pageData[value]),
-                  ),
-                );
-              },
-            ),
-          ),
-
-          // placeholder gap for text:
-          Gap(_IntroScreenState._textHeight),
-
-          // page indicator:
-          Container(
-            height: _pageIndicatorHeight,
-            alignment: Alignment(0.0, -0.75),
-            child:
-                AppPageIndicator(count: pageData.length, controller: _pageController, color: $styles.colors.offWhite),
-          ),
-
-          Spacer(flex: 2),
-        ]),
-      ),
-
-      // Build a cpl overlays to hide the content when swiping on very wide screens
-      _buildHzGradientOverlay(left: true),
-      _buildHzGradientOverlay(),
-
-      // finish button:
-      Positioned(
-        right: $styles.insets.lg,
-        bottom: $styles.insets.lg,
-        child: _buildFinishBtn(context),
-      ),
-
-      // nav help text:
-      BottomCenter(
-        child: Padding(
-          padding: EdgeInsets.only(bottom: $styles.insets.lg),
-          child: _buildNavText(context),
-        ),
-      ),
-    ]);
-
+    /// Return resulting widget tree
     return DefaultTextColor(
       color: $styles.colors.offWhite,
       child: Container(
         color: $styles.colors.black,
-        child: SafeArea(child: content.animate().fadeIn(delay: 500.ms)),
+        child: SafeArea(
+          child: Animate(
+            delay: 500.ms,
+            effects: const [FadeEffect()],
+            child: Stack(
+              children: [
+                // page view with title & description:
+                MergeSemantics(
+                  child: Semantics(
+                    onIncrease: () => _handleSemanticSwipe(1),
+                    onDecrease: () => _handleSemanticSwipe(-1),
+                    child: PageView(
+                      controller: _pageController,
+                      children: pages,
+                      onPageChanged: (_) => AppHaptics.lightImpact(),
+                    ),
+                  ),
+                ),
+
+                IgnorePointer(
+                  ignoringSemantics: false,
+                  child: Column(children: [
+                    Spacer(),
+
+                    // logo:
+                    Semantics(
+                      header: true,
+                      child: Container(
+                        height: _logoHeight,
+                        alignment: Alignment.center,
+                        child: _WonderousLogo(),
+                      ),
+                    ),
+
+                    // masked image:
+                    SizedBox(
+                      height: _imageSize,
+                      width: _imageSize,
+                      child: ValueListenableBuilder<int>(
+                        valueListenable: _currentPage,
+                        builder: (_, value, __) {
+                          return AnimatedSwitcher(
+                            duration: $styles.times.slow,
+                            child: KeyedSubtree(
+                              key: ValueKey(value), // so AnimatedSwitcher sees it as a different child.
+                              child: _PageImage(data: pageData[value]),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+
+                    // placeholder gap for text:
+                    Gap(_IntroScreenState._textHeight),
+
+                    // page indicator:
+                    Container(
+                      height: _pageIndicatorHeight,
+                      alignment: Alignment(0.0, -0.75),
+                      child: AppPageIndicator(
+                          count: pageData.length, controller: _pageController, color: $styles.colors.offWhite),
+                    ),
+
+                    Spacer(flex: 2),
+                  ]),
+                ),
+
+                // Build a cpl overlays to hide the content when swiping on very wide screens
+                _buildHzGradientOverlay(left: true),
+                _buildHzGradientOverlay(),
+
+                // finish button:
+                Positioned(
+                  right: $styles.insets.lg,
+                  bottom: $styles.insets.lg,
+                  child: _buildFinishBtn(context),
+                ),
+
+                // nav help text:
+                BottomCenter(
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: $styles.insets.lg),
+                    child: _buildNavText(context),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -208,7 +215,7 @@ class _IntroScreenState extends State<IntroScreen> {
           duration: $styles.times.fast,
           child: Semantics(
             onTapHint: $strings.introSemanticNavigate,
-            onTap: _handleNavTextDoubleTapped,
+            onTap: _isOnLastPage ? null : _handleNavTextDoubleTapped,
             child: Text($strings.introSemanticSwipeLeft, style: $styles.text.bodySmall),
           ),
         );
