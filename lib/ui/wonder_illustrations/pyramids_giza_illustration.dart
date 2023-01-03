@@ -54,8 +54,8 @@ class PyramidsGizaIllustration extends StatelessWidget {
         enableHero: true,
         heightFactor: .5,
         minHeight: 300,
-        zoomAmt: 0, //config.shortMode ? -.2 : -2,
-        fractionalOffset: Offset.zero, //Offset(config.shortMode ? .015 : 0, config.shortMode ? .17 : -.15),
+        zoomAmt: config.shortMode ? -.2 : -2,
+        fractionalOffset: Offset(config.shortMode ? .015 : 0, config.shortMode ? .17 : -.15),
       )
     ];
   }
