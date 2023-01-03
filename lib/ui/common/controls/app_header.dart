@@ -29,7 +29,7 @@ class AppHeader extends StatelessWidget {
       child: SafeArea(
         bottom: false,
         child: SizedBox(
-          height: 64,
+          height: 64 * $styles.scale,
           child: Stack(
             children: [
               Positioned.fill(
