@@ -232,27 +232,29 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
     return MergeSemantics(
       child: Column(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular($styles.corners.md),
-            child: AppBtn.basic(
-              semanticLabel: $strings.scrollingContentSemanticOpen,
-              onPressed: handlePressed,
+          Flexible(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular($styles.corners.md),
+              child: AppBtn.basic(
+                semanticLabel: $strings.scrollingContentSemanticOpen,
+                onPressed: handlePressed,
 
-              /// To prevent the map widget from absorbing the onPressed action, use a Stack + IgnorePointer + a transparent Container
-              child: Stack(
-                children: [
-                  Positioned.fill(child: ColoredBox(color: Colors.transparent)),
-                  IgnorePointer(
-                    child: GoogleMap(
-                      markers: {getMapsMarker(startPos.target)},
-                      zoomControlsEnabled: false,
-                      mapType: MapType.normal,
-                      mapToolbarEnabled: false,
-                      initialCameraPosition: startPos,
-                      myLocationButtonEnabled: false,
+                /// To prevent the map widget from absorbing the onPressed action, use a Stack + IgnorePointer + a transparent Container
+                child: Stack(
+                  children: [
+                    Positioned.fill(child: ColoredBox(color: Colors.transparent)),
+                    IgnorePointer(
+                      child: GoogleMap(
+                        markers: {getMapsMarker(startPos.target)},
+                        zoomControlsEnabled: false,
+                        mapType: MapType.normal,
+                        mapToolbarEnabled: false,
+                        initialCameraPosition: startPos,
+                        myLocationButtonEnabled: false,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
