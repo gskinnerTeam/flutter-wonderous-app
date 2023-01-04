@@ -12,6 +12,7 @@ import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/blend_mask.dart';
 import 'package:wonders/ui/common/centered_box.dart';
 import 'package:wonders/ui/common/compass_divider.dart';
+import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/curved_clippers.dart';
 import 'package:wonders/ui/common/google_maps_marker.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
@@ -163,7 +164,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                       child: child,
                     );
                   },
-                  child: BackBtn(icon: AppIcons.north).safe()),
+                  child: AppHeader(backIcon: AppIcons.north, isTransparent: true)),
             ],
           ),
         ),
