@@ -243,26 +243,29 @@ class _Page extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       liveRegion: true,
-      child: Column(children: [
-        Spacer(),
-        Gap(_IntroScreenState._imageSize + _IntroScreenState._logoHeight),
-        SizedBox(
-          height: _IntroScreenState._textHeight,
-          width: _IntroScreenState._imageSize + $styles.insets.md,
-          child: StaticTextScale(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(data.title, style: $styles.text.wonderTitle.copyWith(fontSize: 24 * $styles.scale)),
-                Gap($styles.insets.sm),
-                Text(data.desc, style: $styles.text.body, textAlign: TextAlign.center),
-              ],
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
+        child: Column(children: [
+          Spacer(),
+          Gap(_IntroScreenState._imageSize + _IntroScreenState._logoHeight),
+          SizedBox(
+            height: _IntroScreenState._textHeight,
+            width: 400,
+            child: StaticTextScale(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(data.title, style: $styles.text.wonderTitle.copyWith(fontSize: 24 * $styles.scale)),
+                  Gap($styles.insets.sm),
+                  Text(data.desc, style: $styles.text.body, textAlign: TextAlign.center),
+                ],
+              ),
             ),
           ),
-        ),
-        Gap(_IntroScreenState._pageIndicatorHeight),
-        Spacer(flex: 2),
-      ]),
+          Gap(_IntroScreenState._pageIndicatorHeight),
+          Spacer(flex: 2),
+        ]),
+      ),
     );
   }
 }
