@@ -109,7 +109,7 @@ class _ClosedTimeRange extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: $styles.insets.xs),
       child: Row(
         children: [
-          Text(text, style: $styles.text.titleFont.copyWith(color: $styles.colors.offWhite)),
+          Text(text, style: $styles.text.title2.copyWith(color: $styles.colors.offWhite)),
           Gap($styles.insets.xs),
           Icon(Icons.edit_calendar_outlined, color: $styles.colors.accent1, size: $styles.insets.md),
         ],
@@ -170,7 +170,7 @@ class _OpenedTimeRange extends StatelessWidget {
     double safeBottom = max($styles.insets.sm, MediaQuery.of(context).padding.bottom);
     List<Widget> timelineGrid = List.generate(5, (_) => Container(width: 1, color: $styles.colors.black));
 
-    final headingTextStyle = $styles.text.title1.copyWith(color: $styles.colors.offWhite, fontSize: 18 * $styles.scale);
+    final headingTextStyle = $styles.text.title1.copyWith(color: $styles.colors.offWhite, fontSize: 20 * $styles.scale);
     final captionTextStyle = $styles.text.bodySmall.copyWith(color: $styles.colors.greyMedium);
 
     final startYr = startYear.round(), endYr = endYear.round();

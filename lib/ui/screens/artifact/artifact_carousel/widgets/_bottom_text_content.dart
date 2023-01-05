@@ -64,7 +64,7 @@ class _BottomTextContent extends StatelessWidget {
                   ),
                 ],
               ),
-              if (!shortMode) Gap($styles.insets.md),
+              if (!shortMode) Gap($styles.insets.sm),
               Spacer(),
               if (!shortMode)
                 AppPageIndicator(
@@ -75,7 +75,6 @@ class _BottomTextContent extends StatelessWidget {
               Gap($styles.insets.md),
               AppBtn.from(
                 text: $strings.artifactsButtonBrowse,
-                icon: AppIcons.search,
                 expand: true,
                 onPressed: state._handleSearchTap,
               ),

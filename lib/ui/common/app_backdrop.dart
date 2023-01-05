@@ -18,7 +18,7 @@ class AppBackdrop extends StatelessWidget {
     final double normalStrength = clampDouble(strength, 0, 1);
     if (settingsLogic.useBlurs) {
       return BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: normalStrength * 5.0, sigmaY: normalStrength * 5.0),
+        filter: ImageFilter.blur(sigmaX: normalStrength * 10, sigmaY: normalStrength * 10),
         child: child ?? SizedBox.expand(),
       );
     }

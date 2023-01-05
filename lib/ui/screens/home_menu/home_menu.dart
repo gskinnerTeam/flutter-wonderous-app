@@ -54,7 +54,7 @@ class _HomeMenuState extends State<HomeMenu> {
         /// Backdrop / Underlay
         AppBackdrop(
           strength: .5,
-          child: Container(color: $styles.colors.greyStrong.withOpacity(.7)),
+          child: Container(color: $styles.colors.greyStrong.withOpacity(.5)),
         ),
 
         PopNavigatorUnderlay(),

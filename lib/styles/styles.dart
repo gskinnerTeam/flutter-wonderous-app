@@ -79,7 +79,6 @@ class _Text {
 
   final Map<String, TextStyle> _contentFonts = {
     'en': TextStyle(fontFamily: 'Raleway', fontFeatures: const [
-      FontFeature.enable('dlig'),
       FontFeature.enable('kern'),
     ]),
   };
@@ -110,7 +109,7 @@ class _Text {
   late final TextStyle title1 = _createFont(titleFont, sizePx: 16, heightPx: 26, spacingPc: 5);
   late final TextStyle title2 = _createFont(titleFont, sizePx: 14, heightPx: 16.38);
 
-  late final TextStyle body = _createFont(contentFont, sizePx: 16, heightPx: 27);
+  late final TextStyle body = _createFont(contentFont, sizePx: 16, heightPx: 26);
   late final TextStyle bodyBold = _createFont(contentFont, sizePx: 16, heightPx: 26, weight: FontWeight.w600);
   late final TextStyle bodySmall = _createFont(contentFont, sizePx: 14, heightPx: 23);
   late final TextStyle bodySmallBold = _createFont(contentFont, sizePx: 14, heightPx: 23, weight: FontWeight.w600);
@@ -121,11 +120,11 @@ class _Text {
   late final TextStyle quote2Sub = _createFont(body, sizePx: 16, heightPx: 40, weight: FontWeight.w400);
 
   late final TextStyle caption =
-      _createFont(contentFont, sizePx: 12, heightPx: 18, weight: FontWeight.w500).copyWith(fontStyle: FontStyle.italic);
+      _createFont(contentFont, sizePx: 14, heightPx: 20, weight: FontWeight.w500).copyWith(fontStyle: FontStyle.italic);
 
   late final TextStyle callout =
       _createFont(contentFont, sizePx: 16, heightPx: 26, weight: FontWeight.w600).copyWith(fontStyle: FontStyle.italic);
-  late final TextStyle btn = _createFont(contentFont, sizePx: 12, weight: FontWeight.w600, heightPx: 14);
+  late final TextStyle btn = _createFont(contentFont, sizePx: 14, weight: FontWeight.w500, spacingPc: 2, heightPx: 14);
 
   TextStyle _createFont(TextStyle style,
       {required double sizePx, double? heightPx, double? spacingPc, FontWeight? weight}) {

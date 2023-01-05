@@ -40,7 +40,7 @@ class TimelineEventCard extends StatelessWidget {
 
                   /// Text content
                   Expanded(
-                    child: Text(text, style: $styles.text.bodySmall),
+                    child: Text(text, style: $styles.text.body),
                   ),
                 ],
               ),

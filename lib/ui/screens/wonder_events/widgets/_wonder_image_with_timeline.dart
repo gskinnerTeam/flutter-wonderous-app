@@ -5,7 +5,7 @@ class _WonderImageWithTimeline extends StatelessWidget {
   final WonderData data;
   final double height;
 
-  Color _fixLuminance(Color color, [double luminance = 0.35]) {
+  Color _fixLuminance(Color color, [double luminance = 0.2]) {
     double d = luminance - color.computeLuminance();
     if (d <= 0) return color;
     int r = color.red, g = color.green, b = color.blue;
@@ -20,7 +20,7 @@ class _WonderImageWithTimeline extends StatelessWidget {
         child: LightText(
           child: SeparatedColumn(
             separatorBuilder: () => Gap($styles.insets.xs * 1.5),
-            padding: EdgeInsets.only(top: $styles.insets.md, bottom: $styles.insets.sm),
+            padding: EdgeInsets.only(bottom: $styles.insets.sm),
             children: [
               /// Text and image in a stack
               Expanded(
@@ -47,7 +47,7 @@ class _WonderImageWithTimeline extends StatelessWidget {
                         return Container(
                           decoration: BoxDecoration(
                             color: isSelected ? _fixLuminance(data.type.fgColor) : Colors.transparent,
-                            border: Border.all(color: $styles.colors.greyMedium),
+                            border: isSelected ? Border.all(color: Colors.transparent) : Border.all(color: $styles.colors.greyMedium),
                             borderRadius: BorderRadius.circular($styles.corners.md),
                           ),
                         );
