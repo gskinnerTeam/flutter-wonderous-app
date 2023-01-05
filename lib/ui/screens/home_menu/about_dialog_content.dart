@@ -59,10 +59,9 @@ class AboutDialogContent extends StatelessWidget {
               ...buildSpan($strings.homeMenuAboutSource('{githubUrl}'), linkSupplants: {
                 '{githubUrl}': [($strings.homeMenuAboutRepo), 'https://github.com/gskinnerTeam/flutter-wonderous-app'],
               }),
-              ...buildSpan(' As explained in our {privacyUrl} we do not collect any personal information.',
-                  linkSupplants: {
-                    '{privacyUrl}': ['Privacy Policy', 'https://flutter.gskinner.com/wonderous/privacy/'],
-                  }),
+              ...buildSpan(' ${$strings.privacyStatement('{privacyUrl}')}', linkSupplants: {
+                '{privacyUrl}': [$strings.privacyPolicy, 'https://flutter.gskinner.com/wonderous/privacy/'],
+              }),
               ...buildSpan('\n\n'),
               ...buildSpan('${$strings.homeMenuAboutPublic('{metUrl}')} ', linkSupplants: {
                 '{metUrl}': [
