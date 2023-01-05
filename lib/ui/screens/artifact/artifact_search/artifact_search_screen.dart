@@ -86,12 +86,11 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           AppHeader(title: $strings.artifactsSearchTitleBrowse, subtitle: wonder.title),
-          Gap($styles.insets.xs),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: $styles.insets.sm),
+          Container(
+            color: $styles.colors.black,
+            padding: EdgeInsets.fromLTRB($styles.insets.sm, $styles.insets.sm, $styles.insets.sm, 0),
             child: _SearchInput(onSubmit: _handleSearchSubmitted, wonder: wonder),
           ),
-          Gap($styles.insets.sm),
           Container(
             color: $styles.colors.black,
             padding: EdgeInsets.all($styles.insets.xs * 1.5),
