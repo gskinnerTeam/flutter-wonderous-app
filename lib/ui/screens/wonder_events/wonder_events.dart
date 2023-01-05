@@ -35,7 +35,7 @@ class WonderEvents extends StatelessWidget {
             children: [
               /// Main view switches between portrait and landscape views
               Positioned.fill(
-                top: $styles.insets.lg,
+                top: $styles.insets.sm,
                 child: context.isLandscape ? _buildLandscape(context) : _buildPortrait(),
               ),
 
@@ -108,7 +108,7 @@ class WonderEvents extends StatelessWidget {
     return LayoutBuilder(builder: (_, constraints) {
       double topHeight = max(constraints.maxHeight * .55, 200);
       return CenteredBox(
-        width: $styles.sizes.maxContentWidth3,
+        width: $styles.sizes.maxContentWidth2,
         child: Stack(
           children: [
             /// Top content, sits underneath scrolling list
@@ -129,7 +129,7 @@ class WonderEvents extends StatelessWidget {
                 Gap($styles.insets.lg),
 
                 /// Btn
-                _TimelineBtn(type: _data.type, width: $styles.sizes.maxContentWidth3),
+                _TimelineBtn(type: _data.type, width: $styles.sizes.maxContentWidth2),
                 Gap($styles.insets.lg),
               ],
             ),

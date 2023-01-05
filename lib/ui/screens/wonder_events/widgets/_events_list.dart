@@ -101,12 +101,12 @@ class _EventsListState extends State<_EventsList> {
         double backdropAmt = 0;
         if (_scroller.hasClients && showBackdrop) {
           double blurStart = 50;
-          double maxScroll = 150;
+          double maxScroll = 300;
           double scrollPx = _scroller.position.pixels - blurStart;
           // Normalize scroll position to a value between 0 and 1
           backdropAmt = (_scroller.position.pixels - blurStart).clamp(0, maxScroll) / maxScroll;
           // Disable backdrop once it is offscreen for an easy perf win
-          showBackdrop = (scrollPx <= 500);
+          showBackdrop = (scrollPx <= 1000);
         }
         // Container provides a underlay which gets darker as the background blurs
         return Stack(
