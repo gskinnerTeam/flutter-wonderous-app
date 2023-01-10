@@ -205,7 +205,7 @@ class _MenuTextBtn extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          AppIcon(icon, color: $styles.colors.offWhite),
+          AppIcon(icon, color: $styles.colors.offWhite, size: 24),
           Gap($styles.insets.xs),
           Text(label, style: $styles.text.bodyBold.copyWith(height: 1)),
         ],

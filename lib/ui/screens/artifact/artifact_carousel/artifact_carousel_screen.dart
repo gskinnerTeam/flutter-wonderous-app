@@ -128,7 +128,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
           trailing: (context) => CircleBtn(
             semanticLabel: $strings.artifactsButtonBrowse,
             onPressed: _handleSearchTap,
-            child: AppIcon(AppIcons.search),
+            child: AppIcon(AppIcons.search, size: 24),
           ),
         ),
       ],

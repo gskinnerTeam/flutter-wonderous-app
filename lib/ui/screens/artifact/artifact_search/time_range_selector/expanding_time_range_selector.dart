@@ -195,7 +195,7 @@ class _OpenedTimeRange extends StatelessWidget {
                 semanticLabel: $strings.expandingTimeSelectorSemanticSelector,
                 enableFeedback: false, // handled when panelController changes.
                 icon: AppIcons.close,
-                iconSize: 20,
+                iconSize: 24,
                 padding: EdgeInsets.symmetric(vertical: $styles.insets.xxs),
                 bgColor: Colors.transparent,
               ),

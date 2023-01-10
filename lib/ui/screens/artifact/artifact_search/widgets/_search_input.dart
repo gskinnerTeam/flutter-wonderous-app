@@ -154,8 +154,8 @@ class _SearchInput extends StatelessWidget {
                   color: $styles.colors.white,
                   icon: AppIcons.close,
                   semanticLabel: $strings.searchInputSemanticClear,
-                  size: $styles.insets.md,
-                  iconSize: $styles.insets.sm,
+                  size: $styles.insets.lg,
+                  iconSize: 24,
                   onPressed: () {
                     textController.clear();
                     onSubmit('');
