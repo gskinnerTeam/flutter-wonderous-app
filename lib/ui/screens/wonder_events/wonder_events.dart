@@ -36,7 +36,9 @@ class WonderEvents extends StatelessWidget {
               /// Main view switches between portrait and landscape views
               Positioned.fill(
                 top: $styles.insets.sm,
-                child: context.isLandscape ? _buildLandscape(context) : _buildPortrait(),
+                child: context.isLandscape || MediaQuery.of(context).size.aspectRatio > .85
+                    ? _buildLandscape(context)
+                    : _buildPortrait(),
               ),
 
               /// Header w/ TimelineBtn
