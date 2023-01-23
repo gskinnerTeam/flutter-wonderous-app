@@ -1,2 +1,2 @@
-# 2.0.8
-- Styling polish / fixes
+# 2.0.9
+- Remember currently selected wonder on home page
