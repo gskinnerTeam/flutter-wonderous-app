@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/app_backdrop.dart';
@@ -26,6 +29,11 @@ class WonderEvents extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void handleTimelineBtnPressed() => context.push(ScreenPaths.timeline(type));
+    // Main view content switches between 1 and 2 column layouts
+    // On mobile, use the 2 column layout on screens close to landscape (>.85). This is primarily an optimization for foldable devices square-ish dimensions when opened.
+    final twoColumnAspect = PlatformInfo.isMobile ? .85 : 1;
+    bool useTwoColumnLayout = context.mq.size.aspectRatio > twoColumnAspect;
+
     return LayoutBuilder(builder: (context, constraints) {
       return Container(
         color: $styles.colors.black,
@@ -33,10 +41,10 @@ class WonderEvents extends StatelessWidget {
           bottom: false,
           child: Stack(
             children: [
-              /// Main view switches between portrait and landscape views
+              /// Main view
               Positioned.fill(
                 top: $styles.insets.sm,
-                child: context.isLandscape ? _buildLandscape(context) : _buildPortrait(),
+                child: useTwoColumnLayout ? _buildTwoColumn(context) : _buildSingleColumn(),
               ),
 
               /// Header w/ TimelineBtn
@@ -58,7 +66,7 @@ class WonderEvents extends StatelessWidget {
   }
 
   /// Landscape layout is a row, with the WonderImage on left and EventsList on the right
-  Widget _buildLandscape(BuildContext context) {
+  Widget _buildTwoColumn(BuildContext context) {
     return Row(
       children: [
         /// WonderImage w/ Timeline btn
@@ -104,7 +112,7 @@ class WonderEvents extends StatelessWidget {
   }
 
   /// Portrait layout is a stack with the EventsList scrolling overtop of the WonderImage
-  Widget _buildPortrait() {
+  Widget _buildSingleColumn() {
     return LayoutBuilder(builder: (_, constraints) {
       double topHeight = max(constraints.maxHeight * .55, 200);
       return CenteredBox(
