@@ -25,10 +25,7 @@ class HomeScreen extends StatefulWidget with GetItStatefulWidgetMixin {
 /// Shows a horizontally scrollable list PageView sandwiched between Foreground and Background layers
 /// arranged in a parallax style.
 class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
-  late final _pageController = PageController(
-    viewportFraction: 1,
-    initialPage: _numWonders * 9999, // allow 'infinite' scrolling by starting at a very high page
-  );
+  late final _pageController;
   List<WonderData> get _wonders => wondersLogic.all;
   bool _isMenuOpen = false;
 
@@ -53,8 +50,23 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   bool _isSelected(WonderType t) => t == currentWonder.type;
 
-  void _handlePageViewChanged(v) {
-    setState(() => _wonderIndex = v % _numWonders);
+  @override
+  void initState() {
+    super.initState();
+    // Create page controller,
+    // allow 'infinite' scrolling by starting at a very high page, or remember the previous value
+    final previousWonder = settingsLogic.currentWonder.value;
+    final initialPage = previousWonder ?? _numWonders * 9999;
+    _pageController = PageController(viewportFraction: 1, initialPage: initialPage);
+    _wonderIndex = initialPage % _numWonders;
+  }
+
+  void _handlePageChanged(value) {
+    setState(() {
+      _wonderIndex = value % _numWonders;
+      // Save current wonder for next launch
+      settingsLogic.currentWonder.value = value;
+    });
     AppHaptics.lightImpact();
   }
 
@@ -142,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     return ExcludeSemantics(
       child: PageView.builder(
         controller: _pageController,
-        onPageChanged: _handlePageViewChanged,
+        onPageChanged: _handlePageChanged,
         itemBuilder: (_, index) {
           final wonder = _wonders[index % _wonders.length];
           final wonderType = wonder.type;
