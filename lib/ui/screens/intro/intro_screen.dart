@@ -15,9 +15,9 @@ class IntroScreen extends StatefulWidget {
 }
 
 class _IntroScreenState extends State<IntroScreen> {
-  static const double _imageSize = 264;
+  static const double _imageSize = 250;
   static const double _logoHeight = 126;
-  static const double _textHeight = 155;
+  static const double _textHeight = 100;
   static const double _pageIndicatorHeight = 55;
 
   static List<_PageData> pageData = [];
@@ -132,7 +132,7 @@ class _IntroScreenState extends State<IntroScreen> {
                     // page indicator:
                     Container(
                       height: _pageIndicatorHeight,
-                      alignment: Alignment(0.0, -0.75),
+                      alignment: Alignment(0.0, 0),
                       child: AppPageIndicator(
                           count: pageData.length, controller: _pageController, color: $styles.colors.offWhite),
                     ),
