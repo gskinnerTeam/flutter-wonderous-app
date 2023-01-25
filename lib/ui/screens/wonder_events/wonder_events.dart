@@ -30,7 +30,7 @@ class WonderEvents extends StatelessWidget {
   Widget build(BuildContext context) {
     void handleTimelineBtnPressed() => context.push(ScreenPaths.timeline(type));
     // Main view content switches between 1 and 2 column layouts
-    // On mobile, use the 2 column layout on screens close to landscape (>.85). This is primarily an optimization for foldable devices square-ish dimensions when opened.
+    // On mobile, use the 2 column layout on screens close to landscape (>.85). This is primarily an optimization for foldable devices which have square-ish dimensions when opened.
     final twoColumnAspect = PlatformInfo.isMobile ? .85 : 1;
     bool useTwoColumnLayout = context.mq.size.aspectRatio > twoColumnAspect;
 
