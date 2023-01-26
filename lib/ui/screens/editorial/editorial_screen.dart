@@ -5,11 +5,14 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_circular_text/circular_text.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/blend_mask.dart';
+import 'package:wonders/ui/common/centered_box.dart';
 import 'package:wonders/ui/common/compass_divider.dart';
+import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/curved_clippers.dart';
 import 'package:wonders/ui/common/google_maps_marker.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
@@ -19,7 +22,6 @@ import 'package:wonders/ui/common/scaling_list_item.dart';
 import 'package:wonders/ui/common/static_text_scale.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/utils/context_utils.dart';
-import 'package:wonders/ui/wonder_illustrations/common/animated_clouds.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_title_text.dart';
@@ -66,8 +68,10 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
     return LayoutBuilder(builder: (_, constraints) {
       bool shortMode = constraints.biggest.height < 700;
       double illustrationHeight = shortMode ? 250 : 280;
-      double minAppBarHeight = shortMode ? 80 : 120;
-      double maxAppBarHeight = shortMode ? 400 : 500;
+      double minAppBarHeight = shortMode ? 80 : 150;
+
+      /// Attempt to maintain a similar aspect ratio for the image within the app-bar
+      double maxAppBarHeight = min(context.widthPx, $styles.sizes.maxContentWidth1) * 1.2;
 
       return PopRouterOnOverScroll(
         controller: _scroller,
@@ -77,14 +81,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
             children: [
               /// Background
               Positioned.fill(
-                child: ValueListenableBuilder(
-                  valueListenable: _scrollPos,
-                  builder: (_, value, __) {
-                    return Container(
-                      color: widget.data.type.bgColor.withOpacity(_scrollPos.value > 1000 ? 0 : 1),
-                    );
-                  },
-                ),
+                child: ColoredBox(color: widget.data.type.bgColor),
               ),
 
               /// Top Illustration - Sits underneath the scrolling content, fades out as it scrolls
@@ -103,58 +100,58 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
               ),
 
               /// Scrolling content - Includes an invisible gap at the top, and then scrolls over the illustration
-              CustomScrollView(
-                primary: false,
-                controller: _scroller,
-                cacheExtent: 1000,
-                slivers: [
-                  /// Invisible padding at the top of the list, so the illustration shows through the btm
-                  SliverToBoxAdapter(
-                    child: SizedBox(height: illustrationHeight),
-                  ),
+              TopCenter(
+                child: SizedBox(
+                  //width: $styles.sizes.maxContentWidth1,
+                  child: CustomScrollView(
+                    primary: false,
+                    controller: _scroller,
+                    scrollBehavior: ScrollConfiguration.of(context).copyWith(),
+                    slivers: [
+                      /// Invisible padding at the top of the list, so the illustration shows through the btm
+                      SliverToBoxAdapter(
+                        child: SizedBox(height: illustrationHeight),
+                      ),
 
-                  /// Text content, animates itself to hide behind the app bar as it scrolls up
-                  SliverToBoxAdapter(
-                    child: ValueListenableBuilder<double>(
-                      valueListenable: _scrollPos,
-                      builder: (_, value, child) {
-                        double offsetAmt = max(0, value * .3);
-                        double opacity = (1 - offsetAmt / 150).clamp(0, 1);
-                        return Transform.translate(
-                          offset: Offset(0, offsetAmt),
-                          child: Opacity(opacity: opacity, child: child),
-                        );
-                      },
-                      child: _TitleText(widget.data, scroller: _scroller),
-                    ),
-                  ),
+                      /// Text content, animates itself to hide behind the app bar as it scrolls up
+                      SliverToBoxAdapter(
+                        child: ValueListenableBuilder<double>(
+                          valueListenable: _scrollPos,
+                          builder: (_, value, child) {
+                            double offsetAmt = max(0, value * .3);
+                            double opacity = (1 - offsetAmt / 150).clamp(0, 1);
+                            return Transform.translate(
+                              offset: Offset(0, offsetAmt),
+                              child: Opacity(opacity: opacity, child: child),
+                            );
+                          },
+                          child: _TitleText(widget.data, scroller: _scroller),
+                        ),
+                      ),
 
-                  /// Collapsing App bar, pins to the top of the list
-                  SliverAppBar(
-                    pinned: true,
-                    collapsedHeight: minAppBarHeight,
-                    toolbarHeight: minAppBarHeight,
-                    expandedHeight: maxAppBarHeight,
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                    leading: SizedBox.shrink(),
-                    flexibleSpace: SizedBox.expand(
-                      child: _AppBar(
-                        widget.data.type,
-                        scrollPos: _scrollPos,
-                        sectionIndex: _sectionIndex,
-                      ).animate().fade(duration: $styles.times.med, delay: $styles.times.pageTransition),
-                    ),
-                  ),
+                      /// Collapsing App bar, pins to the top of the list
+                      SliverAppBar(
+                        pinned: true,
+                        collapsedHeight: minAppBarHeight,
+                        toolbarHeight: minAppBarHeight,
+                        expandedHeight: maxAppBarHeight,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        leading: SizedBox.shrink(),
+                        flexibleSpace: SizedBox.expand(
+                          child: _AppBar(
+                            widget.data.type,
+                            scrollPos: _scrollPos,
+                            sectionIndex: _sectionIndex,
+                          ),
+                        ),
+                      ),
 
-                  /// Editorial content (text and images)
-                  _ScrollingContent(widget.data, scrollPos: _scrollPos, sectionNotifier: _sectionIndex),
-
-                  /// Bottom padding
-                  SliverToBoxAdapter(
-                    child: Container(height: 150, color: $styles.colors.offWhite),
+                      /// Editorial content (text and images)
+                      _ScrollingContent(widget.data, scrollPos: _scrollPos, sectionNotifier: _sectionIndex),
+                    ],
                   ),
-                ],
+                ),
               ),
 
               /// Home Btn
@@ -167,7 +164,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                       child: child,
                     );
                   },
-                  child: BackBtn(icon: AppIcons.north).safe()),
+                  child: AppHeader(backIcon: AppIcons.north, isTransparent: true)),
             ],
           ),
         ),

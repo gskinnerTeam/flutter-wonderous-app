@@ -11,9 +11,6 @@ class LocaleSwitcher extends StatelessWidget with GetItMixin {
       await settingsLogic.changeLocale(newLocale);
     }
 
-    return AppBtn.from(
-        padding: EdgeInsets.symmetric(vertical: $styles.insets.sm, horizontal: $styles.insets.sm),
-        text: $strings.localeSwapButton,
-        onPressed: handleSwapLocale);
+    return AppBtn.from(text: $strings.localeSwapButton, onPressed: handleSwapLocale);
   }
 }

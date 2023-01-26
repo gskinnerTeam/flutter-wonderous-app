@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/app_scaffold.dart';
 import 'package:wonders/ui/common/modals//fullscreen_video_viewer.dart';
 import 'package:wonders/ui/common/modals/fullscreen_maps_viewer.dart';
 import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_screen.dart';
@@ -30,7 +29,7 @@ class ScreenPaths {
   static String wallpaperPhoto(WonderType type) => '/wallpaperPhoto/${type.name}';
 }
 
-/// Routing table, matches string paths to UI Screens
+/// Routing table, matches string paths to UI Screens, optionally parses params from the paths
 final appRouter = GoRouter(
   redirect: _handleRedirect,
   navigatorBuilder: (_, __, child) => WondersAppScaffold(child: child),
@@ -41,7 +40,7 @@ final appRouter = GoRouter(
     AppRoute('/wonder/:type', (s) {
       int tab = int.tryParse(s.queryParams['t'] ?? '') ?? 0;
       return WonderDetailsScreen(
-        type: _parseWonderType(s.params['type']!),
+        type: _parseWonderType(s.params['type']),
         initialTabIndex: tab,
       );
     }, useFade: true),
@@ -52,10 +51,10 @@ final appRouter = GoRouter(
       return FullscreenVideoPage(id: s.params['id']!);
     }),
     AppRoute('/highlights/:type', (s) {
-      return ArtifactCarouselScreen(type: _parseWonderType(s.params['type']!));
+      return ArtifactCarouselScreen(type: _parseWonderType(s.params['type']));
     }),
     AppRoute('/search/:type', (s) {
-      return ArtifactSearchScreen(type: _parseWonderType(s.params['type']!));
+      return ArtifactSearchScreen(type: _parseWonderType(s.params['type']));
     }),
     AppRoute('/artifact/:id', (s) {
       return ArtifactDetailsScreen(artifactId: s.params['id']!);
@@ -64,10 +63,10 @@ final appRouter = GoRouter(
       return CollectionScreen(fromId: s.queryParams['id'] ?? '');
     }),
     AppRoute('/maps/:type', (s) {
-      return FullscreenMapsViewer(type: _parseWonderType(s.params['type']!));
+      return FullscreenMapsViewer(type: _parseWonderType(s.params['type']));
     }),
     AppRoute('/wallpaperPhoto/:type', (s) {
-      return WallpaperPhotoScreen(type: _parseWonderType(s.params['type']!));
+      return WallpaperPhotoScreen(type: _parseWonderType(s.params['type']));
     }),
   ],
 );
@@ -108,6 +107,10 @@ String? _handleRedirect(GoRouterState state) {
   return null; // do nothing
 }
 
-WonderType _parseWonderType(String value) => _tryParseWonderType(value) ?? WonderType.chichenItza;
+WonderType _parseWonderType(String? value) {
+  const fallback = WonderType.chichenItza;
+  if (value == null) return fallback;
+  return _tryParseWonderType(value) ?? fallback;
+}
 
 WonderType? _tryParseWonderType(String value) => WonderType.values.asNameMap()[value];

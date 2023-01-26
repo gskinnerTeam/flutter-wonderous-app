@@ -2,15 +2,17 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/platform_info.dart';
 
 class AppHaptics {
   // note: system sounds are pretty buggy on Android: https://github.com/flutter/flutter/issues/57531
-  static bool debugSound = kDebugMode;
-  static bool debugLog = kDebugMode;
+  static bool debugSound = kDebugMode && enableDebugLogs;
+  static bool debugLog = kDebugMode && enableDebugLogs;
+  static bool enableDebugLogs = false;
 
   static void buttonPress() {
     // Android/Fuchsia expect haptics on all button presses, iOS does not.
-    if (defaultTargetPlatform != TargetPlatform.android || defaultTargetPlatform != TargetPlatform.fuchsia) {
+    if (PlatformInfo.isAndroid) {
       lightImpact();
     }
   }

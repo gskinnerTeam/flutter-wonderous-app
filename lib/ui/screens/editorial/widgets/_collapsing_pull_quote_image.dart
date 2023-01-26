@@ -10,12 +10,13 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
     // Start transitioning when we are halfway up the screen
     final collapseStartPx = context.heightPx * 1;
     final collapseEndPx = context.heightPx * .15;
-    const double imgHeight = 430;
+    const double imgHeight = 500;
     const double outerPadding = 100;
 
     /// A single piece of quote text, this widget has one on top, and one on bottom
     Widget buildText(String value, double collapseAmt, {required bool top, bool isAuthor = false}) {
-      var quoteStyle = $styles.text.quote1;
+      /// Use a fixed font-size for this for consistent scaling
+      var quoteStyle = $styles.text.quote1.copyWith(fontSize: 32);
       quoteStyle = quoteStyle.copyWith(color: $styles.colors.caption);
       if (isAuthor) {
         quoteStyle = quoteStyle.copyWith(fontSize: 20, fontWeight: FontWeight.w600);
@@ -42,8 +43,9 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
 
         // The sized boxes in the column collapse to a zero height, allowing the quotes to naturally sit over top of the image
         return MergeSemantics(
-          child: Padding(
+          child: CenteredBox(
             padding: EdgeInsets.symmetric(vertical: outerPadding),
+            width: imgHeight * .66,
             child: Stack(
               children: [
                 Container(

@@ -77,7 +77,6 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
                   tabController: _tabController,
                   wonderType: wonder.type,
                   showBg: showTabBarBg,
-                  showHomeBtn: true,
                 ),
               ),
             ),

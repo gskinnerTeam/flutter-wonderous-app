@@ -1,14 +1,15 @@
-import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/highlight_data.dart';
+import 'package:wonders/ui/common/app_icons.dart';
+import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
-import 'package:wonders/ui/common/controls/simple_header.dart';
 import 'package:wonders/ui/common/static_text_scale.dart';
 
 part 'widgets/_blurred_image_bg.dart';
-part 'widgets/_carousel_item.dart';
+part 'widgets/_bottom_text_content.dart';
+part 'widgets/_collapsing_carousel_item.dart';
 
 class ArtifactCarouselScreen extends StatefulWidget {
   final WonderType type;
@@ -19,219 +20,132 @@ class ArtifactCarouselScreen extends StatefulWidget {
 }
 
 class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
-  // Used to cap white background dimensions.
-  static const double _maxElementWidth = 440;
-  static const double _partialElementWidth = 0.9;
-  static const double _maxElementHeight = 640;
+  PageController? _pageController;
+  final _currentPage = ValueNotifier<double>(9999);
 
-  // Locally store loaded artifacts.
-  late List<HighlightData> _artifacts;
+  late final List<HighlightData> _artifacts = HighlightData.forWonder(widget.type);
+  late final _currentArtifactIndex = ValueNotifier<int>(_wrappedPageIndex);
 
-  late PageController _controller;
-  final _currentIndex = ValueNotifier(0);
+  int get _wrappedPageIndex => _currentPage.value.round() % _artifacts.length;
 
-  double get _currentOffset {
-    bool hasOffset = _controller.hasClients && _controller.position.haveDimensions;
-    return hasOffset ? _controller.page! : _controller.initialPage * 1.0;
+  void _handlePageChanged() {
+    _currentPage.value = _pageController?.page ?? 0;
+    _currentArtifactIndex.value = _wrappedPageIndex;
   }
 
-  HighlightData get _currentArtifact => _artifacts[_currentIndex.value];
-
-  double get _backdropWidth {
-    final w = context.widthPx;
-    return w <= _maxElementWidth ? w : min(w * _partialElementWidth, _maxElementWidth);
-  }
-
-  double get _backdropHeight => math.min(context.heightPx * 0.65, _maxElementHeight);
-  bool get _small => _backdropHeight / _maxElementHeight < 0.7;
-
-  @override
-  void initState() {
-    super.initState();
-    _artifacts = HighlightData.forWonder(widget.type);
-
-    _controller = PageController(
-      // start at a high offset so we can scroll backwards:
-      initialPage: _artifacts.length * 9999,
-      viewportFraction: 0.5,
-    )..addListener(_handleCarouselScroll);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  void _handleCarouselScroll() => _currentIndex.value = _currentOffset.round() % _artifacts.length;
+  void _handleSearchTap() => context.push(ScreenPaths.search(widget.type));
 
   void _handleArtifactTap(int index) {
-    int delta = index - _currentOffset.round();
+    int delta = index - _currentPage.value.round();
     if (delta == 0) {
       HighlightData data = _artifacts[index % _artifacts.length];
       context.push(ScreenPaths.artifact(data.artifactId));
     } else {
-      _controller.animateToPage(
-        _currentOffset.round() + delta,
+      _pageController?.animateToPage(
+        _currentPage.value.round() + delta,
         duration: $styles.times.fast,
         curve: Curves.easeOut,
       );
     }
   }
 
-  void _handleSearchTap() {
-    context.push(ScreenPaths.search(widget.type));
-  }
-
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<int>(
-      valueListenable: _currentIndex,
-      builder: (context, index, _) {
-        return Container(
-          color: $styles.colors.greyStrong,
-          child: Stack(
-            children: [
-              /// Background image
-              Positioned.fill(
-                child: _BlurredImageBg(url: _currentArtifact.imageUrl),
-              ),
-
-              /// Content
-              Column(
-                children: [
-                  SimpleHeader($strings.artifactsTitleArtifacts, showBackBtn: false, isTransparent: true),
-                  Gap($styles.insets.xs),
-                  Expanded(
-                    child: Stack(children: [
-                      // White arch, covering bottom half:
-                      _buildWhiteArch(),
-
-                      // Carousel
-                      _buildCarouselPageView(),
-
-                      // Text content
-                      _buildBottomTextContent(),
-                    ]),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        );
-      },
+    bool shortMode = context.heightPx <= 800;
+    final double bottomHeight = context.heightPx / 2.75; // Prev 340, dynamic seems to work better
+    // Allow objects to become wider as the screen becomes tall, this allows
+    // them to grow taller as well, filling the available space better.
+    double itemHeight = (context.heightPx - 200 - bottomHeight).clamp(250, 400);
+    double itemWidth = itemHeight * .666;
+    // TODO: This could be optimized to only run if the size has changed...is it worth it?
+    _pageController?.dispose();
+    _pageController = PageController(
+      viewportFraction: itemWidth / context.widthPx,
+      initialPage: _currentPage.value.round(),
     );
-  }
+    _pageController?.addListener(_handlePageChanged);
+    final pages = _artifacts.map((e) {
+      return Padding(
+        padding: EdgeInsets.all(10),
+        child: _DoubleBorderImage(e),
+      );
+    }).toList();
 
-  Widget _buildWhiteArch() {
-    return BottomCenter(
-      child: Container(
-        width: _backdropWidth,
-        height: _backdropHeight,
-        decoration: BoxDecoration(
-          color: $styles.colors.offWhite.withOpacity(0.8),
-          borderRadius: BorderRadius.vertical(top: Radius.circular(999)),
+    return Stack(
+      children: [
+        /// Blurred Bg
+        Positioned.fill(
+          child: ValueListenableBuilder<int>(
+              valueListenable: _currentArtifactIndex,
+              builder: (_, value, __) {
+                return _BlurredImageBg(url: _artifacts[value].imageUrl);
+              }),
         ),
-      ),
-    );
-  }
 
-  Widget _buildBottomTextContent() {
-    return BottomCenter(
-      child: Container(
-        width: _backdropWidth,
-        padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Gap($styles.insets.md),
-            Container(
-              width: _backdropWidth,
-              padding: EdgeInsets.symmetric(horizontal: $styles.insets.sm),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IgnorePointer(
-                    ignoringSemantics: false,
-                    child: Semantics(
-                      button: true,
-                      onIncrease: () => _handleArtifactTap(_currentOffset.round() + 1),
-                      onDecrease: () => _handleArtifactTap(_currentOffset.round() - 1),
-                      onTap: () => _handleArtifactTap(_currentOffset.round()),
-                      liveRegion: true,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            height: _small ? 90 : 110,
-                            alignment: Alignment.center,
-                            child: StaticTextScale(
-                              child: Text(
-                                _currentArtifact.title,
-                                overflow: TextOverflow.ellipsis,
-                                style: $styles.text.h2.copyWith(color: $styles.colors.black, height: 1.2),
-                                textAlign: TextAlign.center,
-                                maxLines: 2,
-                              ),
-                            ),
-                          ),
-                          if (!_small) Gap($styles.insets.xxs),
-                          Text(
-                            _currentArtifact.date.isEmpty ? '--' : _currentArtifact.date,
-                            style: $styles.text.body,
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ).animate(key: ValueKey(_currentArtifact.artifactId)).fadeIn(),
-                    ),
-                  ),
-                  Gap(_small ? $styles.insets.xs : $styles.insets.sm),
-                  AppPageIndicator(
-                    count: _artifacts.length,
-                    controller: _controller,
-                    semanticPageTitle: $strings.artifactsSemanticArtifact,
-                  ),
-                ],
-              ),
-            ),
-            Gap(_small ? $styles.insets.sm : $styles.insets.md),
-            AppBtn.from(
-              text: $strings.artifactsButtonBrowse,
-              icon: Icons.search,
-              expand: true,
-              onPressed: _handleSearchTap,
-            ),
-            Gap(_small ? $styles.insets.md : $styles.insets.lg),
-          ],
-        ),
-      ),
-    );
-  }
+        /// BgCircle
+        _buildBgCircle(bottomHeight),
 
-  Widget _buildCarouselPageView() {
-    return Center(
-      child: SizedBox(
-        width: _backdropWidth,
-        child: ExcludeSemantics(
-          child: PageView.builder(
-            controller: _controller,
-            clipBehavior: Clip.none,
-            itemBuilder: (context, index) => AnimatedBuilder(
-              animation: _controller,
-              builder: (_, __) {
-                return _CarouselItem(
-                  index: index,
-                  currentPage: _currentOffset,
-                  artifact: _artifacts[index % _artifacts.length],
-                  bottomPadding: _backdropHeight,
-                  maxWidth: _backdropWidth,
-                  maxHeight: _backdropHeight,
+        /// Carousel Items
+        PageView.builder(
+          controller: _pageController,
+          itemBuilder: (_, index) {
+            final wrappedIndex = index % pages.length;
+            final child = pages[wrappedIndex];
+            return ValueListenableBuilder<double>(
+              valueListenable: _currentPage,
+              builder: (_, value, __) {
+                final int offset = (value.round() - index).abs();
+                return _CollapsingCarouselItem(
+                  width: itemWidth,
+                  indexOffset: min(3, offset),
                   onPressed: () => _handleArtifactTap(index),
+                  title: _artifacts[wrappedIndex].title,
+                  child: child,
                 );
               },
+            );
+          },
+        ),
+
+        /// Bottom Text
+        BottomCenter(
+          child: ValueListenableBuilder<int>(
+            valueListenable: _currentArtifactIndex,
+            builder: (_, value, __) => _BottomTextContent(
+              artifact: _artifacts[value],
+              height: bottomHeight,
+              shortMode: shortMode,
+              state: this,
             ),
+          ),
+        ),
+
+        /// Header
+        AppHeader(
+          title: $strings.artifactsTitleArtifacts,
+          showBackBtn: false,
+          isTransparent: true,
+          trailing: (context) => CircleBtn(
+            semanticLabel: $strings.artifactsButtonBrowse,
+            onPressed: _handleSearchTap,
+            child: AppIcon(AppIcons.search),
+          ),
+        ),
+      ],
+    );
+  }
+
+  OverflowBox _buildBgCircle(double height) {
+    const double size = 2000;
+    return OverflowBox(
+      maxWidth: size,
+      maxHeight: size,
+      child: Transform.translate(
+        offset: Offset(0, size / 2),
+        child: Container(
+          decoration: BoxDecoration(
+            color: $styles.colors.offWhite.withOpacity(0.8),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(size)),
           ),
         ),
       ),

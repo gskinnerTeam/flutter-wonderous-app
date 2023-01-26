@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/fade_color_transition.dart';
+import 'package:wonders/ui/wonder_illustrations/common/illustration_piece.dart';
 import 'package:wonders/ui/wonder_illustrations/common/paint_textures.dart';
-import 'package:wonders/ui/wonder_illustrations/common/wonder_hero.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_builder.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 
@@ -19,6 +19,7 @@ class GreatWallIllustration extends StatelessWidget {
       bgBuilder: _buildBg,
       mgBuilder: _buildMg,
       fgBuilder: _buildFg,
+      wonderType: WonderType.greatWall,
     );
   }
 
@@ -29,96 +30,57 @@ class GreatWallIllustration extends StatelessWidget {
         child: IllustrationTexture(
           ImagePaths.roller2,
           flipX: true,
-          color: Colors.white,
-          opacity: anim.drive(Tween(begin: 0, end: .5)),
+          color: Color(0xff688750),
+          opacity: anim.drive(Tween(begin: 0, end: 1)),
+          scale: config.shortMode ? 4 : 1.15,
         ),
       ),
-      Align(
-        alignment: config.shortMode ? Alignment(-.5, -.5) : Alignment(-.45, -.63),
-        child: FractionalTranslation(
-          translation: Offset(0, -.5 * anim.value),
-          child: WonderHero(
-            config,
-            'great-wall-sun',
-            child: Image.asset(
-              '$assetPath/sun.png',
-              cacheWidth: context.widthPx.round() * 2,
-              width: config.shortMode ? 100 : 150,
-              opacity: anim,
-            ),
-          ),
-        ),
+      IllustrationPiece(
+        fileName: 'sun.png',
+        initialOffset: Offset(0, 50),
+        enableHero: true,
+        heightFactor: config.shortMode ? .07 : .25,
+        minHeight: 120,
+        offset: config.shortMode ? Offset(-40, context.heightPx * -.06) : Offset(-65, context.heightPx * -.3),
       ),
     ];
   }
 
-  List<Widget> _buildMg(BuildContext context, Animation<double> anim) => [
-        Center(
-          child: FractionalTranslation(
-            translation: Offset(0, config.shortMode ? .1 * anim.value : 0),
-            child: FractionallySizedBox(
-              widthFactor: config.shortMode ? null : 1.3,
-              child: WonderHero(
-                config,
-                'great-wall-mg',
-                child: Image.asset(
-                  '$assetPath/great-wall.png',
-                  opacity: anim,
-                  width: config.shortMode ? 300 : 500,
-                ),
-              ),
-            ),
-          ),
-
-          // child: FractionalTranslation(
-          //   translation: Offset(0, 0),
-          //   child: Transform.scale(
-          //     scale: 1, //config.shortMode ? .95 : 1.4 + config.zoom * .2,
-          //     child: WonderHero(
-          //       config,
-          //       'great-wall-mg',
-          //       child: Image.asset(
-          //         '$assetPath/great-wall.png',
-          //         opacity: anim,
-          //         width: 700,
-          //       ),
-          //     ),
-          //   ),
-          // ),
-        )
-      ];
+  List<Widget> _buildMg(BuildContext context, Animation<double> anim) {
+    return [
+      IllustrationPiece(
+        fileName: 'great-wall.png',
+        heightFactor: config.shortMode ? .45 : .65,
+        minHeight: 250,
+        zoomAmt: .05,
+        enableHero: true,
+        fractionalOffset: Offset(0, config.shortMode ? .15 : -.15),
+      ),
+    ];
+  }
 
   List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
-    final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
-      Stack(children: [
-        BottomRight(
-          child: FractionalTranslation(
-            translation: Offset(.2 * (1 - curvedAnim), 0),
-            child: Transform.scale(
-              scale: 1.5 + config.zoom * .1,
-              child: FractionalTranslation(
-                translation: Offset(.46, -.22),
-                child: Image.asset('$assetPath/foreground-right.png',
-                    opacity: anim, cacheWidth: context.widthPx.round() * 3),
-              ),
-            ),
-          ),
-        ),
-        BottomLeft(
-          child: FractionalTranslation(
-            translation: Offset(-.2 * (1 - curvedAnim), 0),
-            child: Transform.scale(
-              scale: 1 + config.zoom * .3,
-              child: FractionalTranslation(
-                translation: Offset(-.3, -.01),
-                child: Image.asset('$assetPath/foreground-left.png',
-                    opacity: anim, cacheWidth: context.widthPx.round() * 3),
-              ),
-            ),
-          ),
-        ),
-      ])
+      IllustrationPiece(
+        fileName: 'foreground-left.png',
+        alignment: Alignment.bottomCenter,
+        initialScale: .9,
+        initialOffset: Offset(-40, 60),
+        heightFactor: .85,
+        fractionalOffset: Offset(-.4, .45),
+        zoomAmt: .25,
+        dynamicHzOffset: -150,
+      ),
+      IllustrationPiece(
+        fileName: 'foreground-right.png',
+        alignment: Alignment.bottomCenter,
+        initialOffset: Offset(20, 40),
+        initialScale: .95,
+        heightFactor: 1,
+        fractionalOffset: Offset(.4, .3),
+        zoomAmt: .1,
+        dynamicHzOffset: 150,
+      ),
     ];
   }
 }

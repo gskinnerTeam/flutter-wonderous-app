@@ -1,7 +1,7 @@
 part of '../collection_screen.dart';
 
-class _CollectionTile extends StatelessWidget {
-  const _CollectionTile({
+class _CollectibleImage extends StatelessWidget {
+  const _CollectibleImage({
     Key? key,
     required this.collectible,
     required this.state,

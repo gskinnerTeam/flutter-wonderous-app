@@ -1,7 +1,8 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
-import 'package:wonders/ui/common/cards/opening_card.dart';
+import 'package:wonders/ui/common/app_icons.dart';
+import 'package:wonders/ui/common/opening_card.dart';
 import 'package:wonders/ui/common/wonders_timeline_builder.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_screen.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/range_selector.dart';
@@ -73,13 +74,15 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
               closedBuilder: (_) => _ClosedTimeRange(startYear: widget.startYear, endYear: widget.endYear),
               openBuilder: (_) => SizedBox(
                 width: constraints.maxWidth - pad * 2,
-                child: _OpenedTimeRange(
-                  startYear: widget.startYear,
-                  endYear: widget.endYear,
-                  onChange: widget.onChanged,
-                  wonder: widget.wonder,
-                  painter: _painter,
-                  onClose: widget.panelController.toggle,
+                child: Center(
+                  child: _OpenedTimeRange(
+                    startYear: widget.startYear,
+                    endYear: widget.endYear,
+                    onChange: widget.onChanged,
+                    wonder: widget.wonder,
+                    painter: _painter,
+                    onClose: widget.panelController.toggle,
+                  ),
                 ),
               ),
             ),
@@ -167,7 +170,7 @@ class _OpenedTimeRange extends StatelessWidget {
     double safeBottom = max($styles.insets.sm, MediaQuery.of(context).padding.bottom);
     List<Widget> timelineGrid = List.generate(5, (_) => Container(width: 1, color: $styles.colors.black));
 
-    final headingTextStyle = $styles.text.title1.copyWith(color: $styles.colors.offWhite, fontSize: 18);
+    final headingTextStyle = $styles.text.title1.copyWith(color: $styles.colors.offWhite, fontSize: 18 * $styles.scale);
     final captionTextStyle = $styles.text.bodySmall.copyWith(color: $styles.colors.greyMedium);
 
     final startYr = startYear.round(), endYr = endYear.round();
@@ -191,7 +194,7 @@ class _OpenedTimeRange extends StatelessWidget {
                 onPressed: onClose,
                 semanticLabel: $strings.expandingTimeSelectorSemanticSelector,
                 enableFeedback: false, // handled when panelController changes.
-                icon: Icons.close,
+                icon: AppIcons.close,
                 iconSize: 20,
                 padding: EdgeInsets.symmetric(vertical: $styles.insets.xxs),
                 bgColor: Colors.transparent,

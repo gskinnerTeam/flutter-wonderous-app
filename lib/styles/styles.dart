@@ -6,10 +6,34 @@ import 'package:wonders/common_libs.dart';
 
 export 'colors.dart';
 
-final $styles = AppStyle();
-
 @immutable
 class AppStyle {
+  AppStyle({Size? screenSize}) {
+    if (screenSize == null) {
+      scale = 1;
+      return;
+    }
+    final shortestSide = screenSize.shortestSide;
+    const tabletXl = 1000;
+    const tabletLg = 800;
+    const tabletSm = 600;
+    const phoneLg = 400;
+    if (shortestSide > tabletXl) {
+      scale = 1.25;
+    } else if (shortestSide > tabletLg) {
+      scale = 1.15;
+    } else if (shortestSide > tabletSm) {
+      scale = 1;
+    } else if (shortestSide > phoneLg) {
+      scale = .9; // phone
+    } else {
+      scale = .85; // small phone
+    }
+    debugPrint('screenSize=$screenSize, scale=$scale');
+  }
+
+  late final double scale;
+
   /// The current theme colors for the app
   final AppColors colors = AppColors();
 
@@ -19,17 +43,23 @@ class AppStyle {
   late final _Shadows shadows = _Shadows();
 
   /// Padding and margin values
-  late final _Insets insets = _Insets();
+  late final _Insets insets = _Insets(scale);
 
   /// Text styles
-  late final _Text text = _Text();
+  late final _Text text = _Text(scale);
 
   /// Animation Durations
   final _Times times = _Times();
+
+  /// Shared sizes
+  late final _Sizes sizes = _Sizes();
 }
 
 @immutable
 class _Text {
+  _Text(this._scale);
+  final double _scale;
+
   final Map<String, TextStyle> _titleFonts = {
     'en': TextStyle(fontFamily: 'Tenor'),
   };
@@ -68,35 +98,41 @@ class _Text {
   TextStyle get contentFont => _getFontForLocale(_contentFonts);
   TextStyle get monoTitleFont => _getFontForLocale(_monoTitleFonts);
 
-  late final TextStyle dropCase = copy(quoteFont, sizePx: 56, heightPx: 20);
+  late final TextStyle dropCase = _createFont(quoteFont, sizePx: 56, heightPx: 20);
 
-  late final TextStyle wonderTitle = copy(wonderTitleFont, sizePx: 64, heightPx: 56);
+  late final TextStyle wonderTitle = _createFont(wonderTitleFont, sizePx: 64, heightPx: 56);
 
-  late final TextStyle h1 = copy(titleFont, sizePx: 64, heightPx: 62);
-  late final TextStyle h2 = copy(titleFont, sizePx: 32, heightPx: 46);
-  late final TextStyle h3 = copy(titleFont, sizePx: 24, heightPx: 36, weight: FontWeight.w600);
-  late final TextStyle h4 = copy(contentFont, sizePx: 14, heightPx: 23, spacingPc: 5, weight: FontWeight.w600);
+  late final TextStyle h1 = _createFont(titleFont, sizePx: 64, heightPx: 62);
+  late final TextStyle h2 = _createFont(titleFont, sizePx: 32, heightPx: 46);
+  late final TextStyle h3 = _createFont(titleFont, sizePx: 24, heightPx: 36, weight: FontWeight.w600);
+  late final TextStyle h4 = _createFont(contentFont, sizePx: 14, heightPx: 23, spacingPc: 5, weight: FontWeight.w600);
 
-  late final TextStyle title1 = copy(titleFont, sizePx: 16, heightPx: 26, spacingPc: 5);
-  late final TextStyle title2 = copy(titleFont, sizePx: 14, heightPx: 16.38);
+  late final TextStyle title1 = _createFont(titleFont, sizePx: 16, heightPx: 26, spacingPc: 5);
+  late final TextStyle title2 = _createFont(titleFont, sizePx: 14, heightPx: 16.38);
 
-  late final TextStyle body = copy(contentFont, sizePx: 16, heightPx: 27);
-  late final TextStyle bodyBold = copy(contentFont, sizePx: 16, heightPx: 26, weight: FontWeight.w600);
-  late final TextStyle bodySmall = copy(contentFont, sizePx: 14, heightPx: 23);
-  late final TextStyle bodySmallBold = copy(contentFont, sizePx: 14, heightPx: 23, weight: FontWeight.w600);
+  late final TextStyle body = _createFont(contentFont, sizePx: 16, heightPx: 27);
+  late final TextStyle bodyBold = _createFont(contentFont, sizePx: 16, heightPx: 26, weight: FontWeight.w600);
+  late final TextStyle bodySmall = _createFont(contentFont, sizePx: 14, heightPx: 23);
+  late final TextStyle bodySmallBold = _createFont(contentFont, sizePx: 14, heightPx: 23, weight: FontWeight.w600);
 
-  late final TextStyle quote1 = copy(quoteFont, sizePx: 32, heightPx: 40, weight: FontWeight.w600, spacingPc: -3);
-  late final TextStyle quote2 = copy(quoteFont, sizePx: 21, heightPx: 32, weight: FontWeight.w400);
-  late final TextStyle quote2Sub = copy(body, sizePx: 16, heightPx: 40, weight: FontWeight.w400);
+  late final TextStyle quote1 =
+      _createFont(quoteFont, sizePx: 32, heightPx: 40, weight: FontWeight.w600, spacingPc: -3);
+  late final TextStyle quote2 = _createFont(quoteFont, sizePx: 21, heightPx: 32, weight: FontWeight.w400);
+  late final TextStyle quote2Sub = _createFont(body, sizePx: 16, heightPx: 40, weight: FontWeight.w400);
 
   late final TextStyle caption =
-      copy(contentFont, sizePx: 12, heightPx: 18, weight: FontWeight.w500).copyWith(fontStyle: FontStyle.italic);
+      _createFont(contentFont, sizePx: 12, heightPx: 18, weight: FontWeight.w500).copyWith(fontStyle: FontStyle.italic);
 
   late final TextStyle callout =
-      copy(contentFont, sizePx: 16, heightPx: 26, weight: FontWeight.w600).copyWith(fontStyle: FontStyle.italic);
-  late final TextStyle btn = copy(titleFont, sizePx: 12, weight: FontWeight.w600, heightPx: 13.2);
+      _createFont(contentFont, sizePx: 16, heightPx: 26, weight: FontWeight.w600).copyWith(fontStyle: FontStyle.italic);
+  late final TextStyle btn = _createFont(contentFont, sizePx: 12, weight: FontWeight.w600, heightPx: 14);
 
-  TextStyle copy(TextStyle style, {required double sizePx, double? heightPx, double? spacingPc, FontWeight? weight}) {
+  TextStyle _createFont(TextStyle style,
+      {required double sizePx, double? heightPx, double? spacingPc, FontWeight? weight}) {
+    sizePx *= _scale;
+    if (heightPx != null) {
+      heightPx *= _scale;
+    }
     return style.copyWith(
         fontSize: sizePx,
         height: heightPx != null ? (heightPx / sizePx) : style.height,
@@ -120,16 +156,27 @@ class _Corners {
   late final double lg = 32;
 }
 
+// TODO: add, @immutable when design is solidified
+class _Sizes {
+  double get maxContentWidth1 => 800;
+  double get maxContentWidth2 => 600;
+  double get maxContentWidth3 => 500;
+  final Size minAppSize = Size(380, 675);
+}
+
 @immutable
 class _Insets {
-  late final double xxs = 4;
-  late final double xs = 8;
-  late final double sm = 16;
-  late final double md = 24;
-  late final double lg = 32;
-  late final double xl = 48;
-  late final double xxl = 56;
-  late final double offset = 80;
+  _Insets(this._scale);
+  final double _scale;
+
+  late final double xxs = 4 * _scale;
+  late final double xs = 8 * _scale;
+  late final double sm = 16 * _scale;
+  late final double md = 24 * _scale;
+  late final double lg = 32 * _scale;
+  late final double xl = 48 * _scale;
+  late final double xxl = 56 * _scale;
+  late final double offset = 80 * _scale;
 }
 
 @immutable

@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/checkbox.dart';
@@ -142,7 +142,7 @@ class _WallpaperPhotoScreenState extends State<WallpaperPhotoScreen> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10.0, bottom: 10.0, right: 16.0),
                   child: CircleIconBtn(
-                    icon: defaultTargetPlatform == TargetPlatform.iOS ? AppIcons.share_ios : AppIcons.share_android,
+                    icon: PlatformInfo.isIOS ? AppIcons.share_ios : AppIcons.share_android,
                     bgColor: $styles.colors.offWhite,
                     color: $styles.colors.black,
                     onPressed: () => _handleSharePhoto(context, wonderData.title),

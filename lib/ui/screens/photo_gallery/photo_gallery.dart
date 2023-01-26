@@ -1,8 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/unsplash_photo_data.dart';
 import 'package:wonders/ui/common/controls/app_loading_indicator.dart';
 import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
@@ -108,15 +106,14 @@ class _PhotoGalleryState extends State<PhotoGallery> {
 
   Future<void> _handleImageTapped(int index) async {
     if (_index == index) {
-      int? newIndex = await Navigator.push(
+      final urls = _photoIds.value.map((e) {
+        return UnsplashPhotoData.getSelfHostedUrl(e, UnsplashPhotoSize.med);
+      }).toList();
+      int? newIndex = await appLogic.showFullscreenDialogRoute(
         context,
-        CupertinoPageRoute(builder: (_) {
-          final urls = _photoIds.value.map((e) {
-            return UnsplashPhotoData.getSelfHostedUrl(e, UnsplashPhotoSize.med);
-          }).toList();
-          return FullscreenUrlImgViewer(urls: urls, index: _index);
-        }),
+        FullscreenUrlImgViewer(urls: urls, index: _index),
       );
+
       if (newIndex != null) {
         _setIndex(newIndex, skipAnimation: true);
       }
@@ -137,16 +134,17 @@ class _PhotoGalleryState extends State<PhotoGallery> {
           if (value.isEmpty) {
             return Center(child: AppLoadingIndicator());
           }
-
-          Size imgSize = (widget.imageSize ?? Size(context.widthPx * .66, context.heightPx * .5)) * _scale;
+          Size imgSize = context.isLandscape
+              ? Size(context.widthPx * .5, context.heightPx * .66)
+              : Size(context.widthPx * .66, context.heightPx * .5);
+          imgSize = (widget.imageSize ?? imgSize) * _scale;
           // Get transform offset for the current _index
           final padding = $styles.insets.md;
-
           var gridOffset = _calculateCurrentOffset(padding, imgSize);
           gridOffset += Offset(0, -context.mq.padding.top / 2);
           final offsetTweenDuration = _skipNextOffsetTween ? Duration.zero : swipeDuration;
           final cutoutTweenDuration = _skipNextOffsetTween ? Duration.zero : swipeDuration * .5;
-          return  _AnimatedCutoutOverlay(
+          return _AnimatedCutoutOverlay(
             animationKey: ValueKey(_index),
             cutoutSize: imgSize,
             swipeDir: _lastSwipeDir,
@@ -198,14 +196,8 @@ class _PhotoGalleryState extends State<PhotoGallery> {
             semanticLbl = $strings.collectibleItemSemanticCollectible;
           } else {
             semanticLbl = !selected
-                ? StringUtils.supplant($strings.photoGallerySemanticFocus, {
-                    '{photoIndex}': (index + 1).toString(),
-                    '{photoTotal}': _imgCount.toString(),
-                  })
-                : StringUtils.supplant($strings.photoGallerySemanticFullscreen, {
-                    '{photoIndex}': (index + 1).toString(),
-                    '{photoTotal}': _imgCount.toString(),
-                  });
+                ? $strings.photoGallerySemanticFocus(index + 1, _imgCount)
+                : $strings.photoGallerySemanticFullscreen(index + 1, _imgCount);
           }
           return MergeSemantics(
             child: Semantics(

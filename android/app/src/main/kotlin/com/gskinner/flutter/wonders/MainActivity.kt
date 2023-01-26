@@ -1,4 +1,4 @@
-package com.gskinner.flutter.flutter_wonders_app
+package com.gskinner.flutter.wonders
 
 import io.flutter.embedding.android.FlutterActivity
 

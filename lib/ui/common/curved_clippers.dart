@@ -39,7 +39,7 @@ class ArchPoint {
 }
 
 List<ArchPoint> _getArchPts(Size size, ArchType type) {
-  double distanceFromTop = 100;
+  double distanceFromTop = size.width / 3;
   switch (type) {
     case ArchType.pyramid:
       return [
@@ -60,19 +60,19 @@ List<ArchPoint> _getArchPts(Size size, ArchType type) {
     case ArchType.arch:
       return [
         ArchPoint(Offset(0, size.height)),
-        ArchPoint(Offset(0, distanceFromTop * 2)),
+        ArchPoint(Offset(0, size.width / 2)),
         ArchPoint(Offset(size.width / 2, 0), Offset(0, 0)),
-        ArchPoint(Offset(size.width, distanceFromTop * 2), Offset(size.width, 0)),
+        ArchPoint(Offset(size.width, size.width / 2), Offset(size.width, 0)),
         ArchPoint(Offset(size.width, size.height)),
       ];
     case ArchType.wideArch:
       return [
         ArchPoint(Offset(0, size.height)),
-        ArchPoint(Offset(0, distanceFromTop * 2)),
+        ArchPoint(Offset(0, size.width / 2)),
         ArchPoint(Offset(0, distanceFromTop)),
         ArchPoint(Offset(size.width / 2, 0), Offset(0, 0)),
         ArchPoint(Offset(size.width, distanceFromTop), Offset(size.width, 0)),
-        ArchPoint(Offset(size.width, distanceFromTop * 2)),
+        ArchPoint(Offset(size.width, size.width / 2)),
         ArchPoint(Offset(size.width, size.height)),
       ];
     case ArchType.flatPyramid:
