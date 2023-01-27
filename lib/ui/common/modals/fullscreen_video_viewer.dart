@@ -3,7 +3,8 @@ import 'package:wonders/ui/common/controls/app_loading_indicator.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class FullscreenVideoPage extends StatefulWidget {
-  const FullscreenVideoPage({Key? key, required this.id}) : super(key: key);
+  const FullscreenVideoPage({super.key, required this.id});
+
   final String id;
 
   @override
@@ -11,19 +12,22 @@ class FullscreenVideoPage extends StatefulWidget {
 }
 
 class _FullscreenVideoPageState extends State<FullscreenVideoPage> {
-  late final _controller = YoutubePlayerController(
-    initialVideoId: widget.id,
-    params: const YoutubePlayerParams(autoPlay: true, startAt: Duration(seconds: 1)),
-  )..play();
+  late final YoutubePlayerController _controller;
 
   @override
   void initState() {
     super.initState();
+    _controller = YoutubePlayerController.fromVideoId(
+      videoId: widget.id,
+      autoPlay: true,
+      startSeconds: 1,
+    );
     appLogic.setDeviceOrientation(null);
   }
 
   @override
   void dispose() {
+    _controller.close();
     // when view closes, restore the supported orientations
     appLogic.setDeviceOrientation(appLogic.supportedOrientations);
     super.dispose();
@@ -31,7 +35,9 @@ class _FullscreenVideoPageState extends State<FullscreenVideoPage> {
 
   @override
   Widget build(BuildContext context) {
-    double aspect = context.isLandscape ? MediaQuery.of(context).size.aspectRatio : 9 / 9;
+    final aspect =
+        context.isLandscape ? MediaQuery.of(context).size.aspectRatio : 1.0;
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
@@ -42,7 +48,11 @@ class _FullscreenVideoPageState extends State<FullscreenVideoPage> {
               child: Stack(
                 children: [
                   const Center(child: AppLoadingIndicator()),
-                  YoutubePlayerIFrame(controller: _controller, aspectRatio: aspect),
+                  YoutubePlayer(
+                    controller: _controller,
+                    aspectRatio: aspect,
+                    backgroundColor: Colors.transparent,
+                  ),
                 ],
               ),
             ),
