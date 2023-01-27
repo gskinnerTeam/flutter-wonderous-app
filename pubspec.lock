@@ -1181,10 +1181,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher
-      sha256: "3c92b0efb5e9dcb8f846aefabf9f0f739f91682ed486b991ceda51c288e60896"
+      sha256: "698fa0b4392effdc73e9e184403b627362eb5fbf904483ac9defbb1c2191d809"
       url: "https://pub.dev"
     source: hosted
-    version: "6.1.7"
+    version: "6.1.8"
   url_launcher_android:
     dependency: transitive
     description:
@@ -1357,18 +1357,18 @@ packages:
     dependency: "direct main"
     description:
       name: youtube_player_iframe
-      sha256: "704bc2925c33d40f7a37341a11d2b1caa8128b398b5fa59b0d4619688ca19f1e"
+      sha256: "46f9c38c764c0702dd602baf9a5078bfbf247436cb17d3f7c4979e5c52f8f2f2"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.1"
+    version: "4.0.2"
   youtube_player_iframe_web:
     dependency: transitive
     description:
       name: youtube_player_iframe_web
-      sha256: "343d9c0e2f03e2755b8b8211a9974456e0ded0a6994a09ca533c191277713962"
+      sha256: a1bcf3118f1ab3efaa3f2b9f93c54fec8cb438a3379fe7e9c8aa3d4916e33890
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
 sdks:
   dart: ">=2.18.0 <4.0.0"
   flutter: ">=3.0.0"

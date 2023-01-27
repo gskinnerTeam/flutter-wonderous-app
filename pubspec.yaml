@@ -52,7 +52,7 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
   unsplash_client: ^2.1.0+3
   webview_flutter: ^4.0.2
-  youtube_player_iframe: ^4.0.1
+  youtube_player_iframe: ^4.0.2
 
 dev_dependencies:
   build_runner: ^2.2.0
