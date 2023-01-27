@@ -166,8 +166,7 @@ class _ScrollingContent extends StatelessWidget {
 }
 
 class _YouTubeThumbnail extends StatelessWidget {
-  const _YouTubeThumbnail({Key? key, required this.id, required this.caption})
-      : super(key: key);
+  const _YouTubeThumbnail({Key? key, required this.id, required this.caption}) : super(key: key);
 
   final String id;
   final String caption;

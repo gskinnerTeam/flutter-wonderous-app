@@ -35,8 +35,7 @@ class _FullscreenVideoPageState extends State<FullscreenVideoPage> {
 
   @override
   Widget build(BuildContext context) {
-    final aspect =
-        context.isLandscape ? MediaQuery.of(context).size.aspectRatio : 1.0;
+    final aspect = context.isLandscape ? MediaQuery.of(context).size.aspectRatio : 1.0;
 
     return Scaffold(
       backgroundColor: Colors.black,
