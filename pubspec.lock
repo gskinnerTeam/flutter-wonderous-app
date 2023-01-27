@@ -339,14 +339,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_inappwebview:
-    dependency: "direct main"
-    description:
-      name: flutter_inappwebview
-      sha256: "43319594a48b298b77c8ed9d2c91b83cbcb2bcb7c09761b33203eca58abaca7e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.7.2"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -1298,7 +1290,7 @@ packages:
     source: hosted
     version: "3.0.1"
   webview_flutter:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: webview_flutter
       sha256: f7ec234830f86d0ef2bd664e8460b0038b8c1a83ff076035cad74ac70273753c
