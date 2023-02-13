@@ -25,8 +25,9 @@ class AppLogic {
   /// Initialize the app and all main actors.
   /// Loads settings, sets up services etc.
   Future<void> bootstrap() async {
-    debugPrint('bootstrap app, deviceSize: $deviceSize, isTablet: $isLandscapeEnabled');
-
+    // TODO: Switch to `debugPrint` here once landscape issues on android have been resolved
+    print('bootstrap app, deviceSize: $deviceSize, isTablet: $isLandscapeEnabled');
+    print('supportedOrientations: ${supportedOrientations ?? 'All'}');
     // Set min-sizes for desktop apps
     if (PlatformInfo.isDesktop) {
       await DesktopWindow.setMinWindowSize($styles.sizes.minAppSize);
