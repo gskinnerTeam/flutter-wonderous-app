@@ -4,6 +4,7 @@ import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/platform_info.dart';
+import 'package:wonders/ui/common/modals/fullscreen_video_viewer.dart';
 import 'package:wonders/ui/common/utils/page_routes.dart';
 
 class AppLogic {
@@ -11,33 +12,30 @@ class AppLogic {
   /// The router will use this to prevent redirects while bootstrapping.
   bool isBootstrapComplete = false;
 
-  bool get isLandscapeEnabled => PlatformInfo.isDesktopOrWeb || deviceSize.shortestSide > 500;
+  /// Indicates which orientations the app will allow be default. Affects Android/iOS devices only.
+  /// Defaults to both landscape (hz) and portrait (vt)
+  List<Axis> supportedOrientations = [Axis.vertical, Axis.horizontal];
 
-  /// Support portrait and landscape on desktop, web and tablets. Stick to portrait for phones.
-  /// A return value of null indicated both orientations are supported.
-  Axis? get supportedOrientations => isLandscapeEnabled ? null : Axis.vertical;
-
-  Size get deviceSize {
-    final w = WidgetsBinding.instance.platformDispatcher.views.first;
-    return w.physicalSize / w.devicePixelRatio;
+  /// Allow a view to override the currently supported orientations. For example, [FullscreenVideoViewer] always wants to enable both landscape and portrait.
+  /// If a view sets this override, they are responsible for setting it back to null when finished.
+  List<Axis>? _supportedOrientationsOverride;
+  set supportedOrientationsOverride(List<Axis>? value) {
+    if (_supportedOrientationsOverride != value) {
+      _supportedOrientationsOverride = value;
+      _updateSystemOrientation();
+    }
   }
 
   /// Initialize the app and all main actors.
   /// Loads settings, sets up services etc.
   Future<void> bootstrap() async {
-    // TODO: Switch to `debugPrint` here once landscape issues on android have been resolved
-    print('bootstrap app, deviceSize: $deviceSize, isTablet: $isLandscapeEnabled');
-    print('supportedOrientations: ${supportedOrientations ?? 'All'}');
+    debugPrint('bootstrap start...');
     // Set min-sizes for desktop apps
     if (PlatformInfo.isDesktop) {
       await DesktopWindow.setMinWindowSize($styles.sizes.minAppSize);
     }
-
     // Load any bitmaps the views might need
     await AppBitmaps.init();
-
-    // Set the initial supported orientations
-    setDeviceOrientation(supportedOrientations);
 
     // Set preferred refresh rate to the max possible (the OS may ignore this)
     if (PlatformInfo.isAndroid) {
@@ -71,26 +69,39 @@ class AppLogic {
     }
   }
 
-  void setDeviceOrientation(Axis? axis) {
+  Future<T?> showFullscreenDialogRoute<T>(BuildContext context, Widget child, {bool transparent = false}) async {
+    return await Navigator.of(context).push<T>(
+      PageRoutes.dialog<T>(child, duration: $styles.times.pageTransition),
+    );
+  }
+
+  /// Called from the UI layer once a MediaQuery has been obtained
+  void handleAppSizeChanged(Size size) {
+    /// Disable landscape layout on smaller form factors
+    bool isSmall = size.shortestSide < 500 && size != Size.zero;
+    supportedOrientations = isSmall ? [Axis.vertical] : [Axis.vertical, Axis.horizontal];
+    _updateSystemOrientation();
+  }
+
+  /// Enable landscape, portrait or both. Views can call this method to override the default settings.
+  /// For example, the [FullscreenVideoViewer] always wants to enable both landscape and portrait.
+  /// If a view overrides this, it is responsible for setting it back to [supportedOrientations] when disposed.
+  void _updateSystemOrientation() {
+    final axisList = _supportedOrientationsOverride ?? supportedOrientations;
+    debugPrint('updateDeviceOrientation, supportedAxis: $axisList');
     final orientations = <DeviceOrientation>[];
-    if (axis == null || axis == Axis.vertical) {
+    if (axisList.contains(Axis.vertical)) {
       orientations.addAll([
         DeviceOrientation.portraitUp,
         DeviceOrientation.portraitDown,
       ]);
     }
-    if (axis == null || axis == Axis.horizontal) {
+    if (axisList.contains(Axis.horizontal)) {
       orientations.addAll([
         DeviceOrientation.landscapeLeft,
         DeviceOrientation.landscapeRight,
       ]);
     }
     SystemChrome.setPreferredOrientations(orientations);
-  }
-
-  Future<T?> showFullscreenDialogRoute<T>(BuildContext context, Widget child, {bool transparent = false}) async {
-    return await Navigator.of(context).push<T>(
-      PageRoutes.dialog<T>(child, duration: $styles.times.pageTransition),
-    );
   }
 }

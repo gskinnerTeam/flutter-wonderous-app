@@ -48,7 +48,7 @@ final appRouter = GoRouter(
       return TimelineScreen(type: _tryParseWonderType(s.queryParams['type']!));
     }),
     AppRoute('/video/:id', (s) {
-      return FullscreenVideoPage(id: s.params['id']!);
+      return FullscreenVideoViewer(id: s.params['id']!);
     }),
     AppRoute('/highlights/:type', (s) {
       return ArtifactCarouselScreen(type: _parseWonderType(s.params['type']));

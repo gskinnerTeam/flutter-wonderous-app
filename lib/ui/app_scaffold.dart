@@ -11,7 +11,8 @@ class WondersAppScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     // Listen to the device size, and update AppStyle when it changes
     _style = AppStyle(screenSize: context.sizePx);
-    Animate.defaultDuration = $styles.times.fast;
+    Animate.defaultDuration = _style.times.fast;
+    appLogic.handleAppSizeChanged(context.mq.size);
     return Stack(
       key: ValueKey($styles.scale),
       children: [
