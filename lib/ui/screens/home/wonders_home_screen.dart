@@ -25,7 +25,7 @@ class HomeScreen extends StatefulWidget with GetItStatefulWidgetMixin {
 /// Shows a horizontally scrollable list PageView sandwiched between Foreground and Background layers
 /// arranged in a parallax style.
 class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
-  late final _pageController;
+  late final PageController _pageController;
   List<WonderData> get _wonders => wondersLogic.all;
   bool _isMenuOpen = false;
 
