@@ -52,7 +52,7 @@ dependencies:
   sized_context: ^1.0.0+1
   smooth_page_indicator: ^1.0.0+2
   unsplash_client: ^2.1.0+3
-  youtube_player_iframe: 2.3.0
+#  youtube_player_iframe: 4.0.4
 
 dev_dependencies:
   build_runner: ^2.2.0
