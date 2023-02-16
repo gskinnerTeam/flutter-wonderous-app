@@ -14,7 +14,6 @@ dependencies:
     sdk: flutter
 
   collection: ^1.15.0
-  copy_with_extension: ^4.0.3
   desktop_window: ^0.4.0
   drop_cap_text: ^1.1.3
   equatable: ^2.0.5
@@ -37,13 +36,11 @@ dependencies:
   image_gallery_saver: ^1.7.1
   internet_connection_checker: ^0.0.1+3
   intl: ^0.17.0
-  json_annotation: ^4.6.0
   package_info_plus: ^1.4.3+1
   particle_field: ^0.0.1
   path_provider: ^2.0.11
   provider: ^6.0.2
   rnd: ^0.2.0
-  screenshot: ^1.2.3
   share_plus: ^6.3.0
   shared_preferences: ^2.0.15
   simple_rich_text: ^2.0.49
@@ -51,19 +48,16 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
   unsplash_client: ^2.1.0+3
   webview_flutter: ^4.0.2
-  youtube_player_iframe: 4.0.4
+  youtube_player_iframe: ^4.0.4
 
 dev_dependencies:
   build_runner: ^2.2.0
   copy_with_extension_gen: ^4.0.3
   icons_launcher: ^2.0.1
   flutter_lints: ^2.0.1
-  flutter_test:
-    sdk: flutter
-  integration_test:
-    sdk: flutter
   json_serializable: ^6.3.1
   dart_code_metrics: ^4.17.1
+  dependency_validator: ^3.0.0
 
 flutter_icons:
   ios: true
