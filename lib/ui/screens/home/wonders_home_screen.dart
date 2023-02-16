@@ -55,8 +55,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     super.initState();
     // Create page controller,
     // allow 'infinite' scrolling by starting at a very high page, or remember the previous value
-    final previousWonder = settingsLogic.currentWonder.value;
-    final initialPage = previousWonder ?? _numWonders * 9999;
+    final initialPage = _numWonders * 9999;
     _pageController = PageController(viewportFraction: 1, initialPage: initialPage);
     _wonderIndex = initialPage % _numWonders;
   }
@@ -64,8 +63,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   void _handlePageChanged(value) {
     setState(() {
       _wonderIndex = value % _numWonders;
-      // Save current wonder for next launch
-      settingsLogic.currentWonder.value = value;
     });
     AppHaptics.lightImpact();
   }
