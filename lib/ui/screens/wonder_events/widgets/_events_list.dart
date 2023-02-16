@@ -7,18 +7,23 @@ class _EventsList extends StatefulWidget {
     this.topHeight = 0,
     this.blurOnScroll = false,
     this.showTopGradient = true,
+    required this.initialScrollOffset,
+    required this.onScroll,
   }) : super(key: key);
   final WonderData data;
   final double topHeight;
   final bool blurOnScroll;
   final bool showTopGradient;
-
+  final double initialScrollOffset;
+  final void Function(double offset) onScroll;
   @override
   State<_EventsList> createState() => _EventsListState();
 }
 
 class _EventsListState extends State<_EventsList> {
-  final ScrollController _scroller = ScrollController();
+  late final ScrollController _scroller = ScrollController(initialScrollOffset: widget.initialScrollOffset)
+    ..addListener(() => widget.onScroll(_scroller.offset));
+
   @override
   void dispose() {
     _scroller.dispose();

@@ -24,6 +24,9 @@ class WonderEvents extends StatelessWidget {
   final WonderType type;
   late final _data = wondersLogic.getData(type);
 
+  double _scrollPos = 0;
+  void _handleScroll(double pos) => _scrollPos = pos;
+
   @override
   Widget build(BuildContext context) {
     void handleTimelineBtnPressed() => context.push(ScreenPaths.timeline(type));
@@ -102,6 +105,8 @@ class WonderEvents extends StatelessWidget {
               data: _data,
               topHeight: 100,
               blurOnScroll: false,
+              onScroll: _handleScroll,
+              initialScrollOffset: _scrollPos,
             ),
           ),
         ),
@@ -130,6 +135,8 @@ class WonderEvents extends StatelessWidget {
                     topHeight: topHeight,
                     blurOnScroll: true,
                     showTopGradient: false,
+                    onScroll: _handleScroll,
+                    initialScrollOffset: _scrollPos,
                   ),
                 ),
                 Gap($styles.insets.lg),
