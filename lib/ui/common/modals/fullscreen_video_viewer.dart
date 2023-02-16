@@ -11,10 +11,10 @@ class FullscreenVideoViewer extends StatefulWidget {
 }
 
 class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
-  late final _controller = YoutubePlayerController(
-    initialVideoId: widget.id,
-    params: const YoutubePlayerParams(autoPlay: true, startAt: Duration(seconds: 1)),
-  )..play();
+  late final _controller = YoutubePlayerController.fromVideoId(
+    videoId: widget.id,
+    params: const YoutubePlayerParams(showFullscreenButton: true),
+  );
 
   @override
   void initState() {
@@ -34,26 +34,20 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
     double aspect = context.isLandscape ? MediaQuery.of(context).size.aspectRatio : 9 / 9;
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          Center(
-            child: AspectRatio(
-              aspectRatio: aspect,
-              child: Stack(
-                children: [
-                  const Center(child: AppLoadingIndicator()),
-                  YoutubePlayerIFrame(controller: _controller, aspectRatio: aspect),
-                ],
+      body: YoutubePlayerScaffold(
+        controller: _controller,
+        aspectRatio: aspect,
+        builder: (_, player) => Stack(
+          children: [
+            player,
+            SafeArea(
+              child: Padding(
+                padding: EdgeInsets.all($styles.insets.md),
+                child: const BackBtn(),
               ),
             ),
-          ),
-          SafeArea(
-            child: Padding(
-              padding: EdgeInsets.all($styles.insets.md),
-              child: const BackBtn(),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
