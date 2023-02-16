@@ -75,7 +75,7 @@ class _AppBar extends StatelessWidget {
                             );
                           },
                         ),
-                      ).animate(delay: $styles.times.pageTransition).fadeIn(),
+                      ).animate(delay: $styles.times.pageTransition + 500.ms).fadeIn(duration: $styles.times.slow),
                     ),
                   ),
                 ),
