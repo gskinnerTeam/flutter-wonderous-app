@@ -63,17 +63,20 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
       child: Column(
         children: [
           Expanded(
-            child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-              AppHeader(title: $strings.collectionTitleCollection, isTransparent: true),
-              _NewlyDiscoveredItemsBtn(count: discovered, onPressed: _scrollToTarget),
-              Flexible(
-                child: _CollectionList(
-                  fromId: widget.fromId,
-                  scrollKey: _scrollKey,
-                  onReset: discovered + explored > 0 ? _handleReset : null,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                AppHeader(title: $strings.collectionTitleCollection, isTransparent: true),
+                _NewlyDiscoveredItemsBtn(count: discovered, onPressed: _scrollToTarget),
+                Flexible(
+                  child: _CollectionList(
+                    fromId: widget.fromId,
+                    scrollKey: _scrollKey,
+                    onReset: discovered + explored > 0 ? _handleReset : null,
+                  ),
                 ),
-              ),
-            ]),
+              ],
+            ),
           ),
           _CollectionFooter(count: discovered + explored, total: total),
         ],
