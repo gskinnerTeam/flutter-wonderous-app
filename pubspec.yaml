@@ -23,7 +23,7 @@ dependencies:
   flutter_animate: ^1.0.0
   flutter_circular_text: ^0.3.1
   flutter_displaymode: ^0.4.0
-  flutter_inappwebview: ^5.7.1
+#  flutter_inappwebview: ^5.7.1
   flutter_native_splash: ^2.2.7
   flutter_staggered_grid_view: ^0.6.2
   flutter_svg: ^1.1.4
@@ -52,7 +52,8 @@ dependencies:
   sized_context: ^1.0.0+1
   smooth_page_indicator: ^1.0.0+2
   unsplash_client: ^2.1.0+3
-#  youtube_player_iframe: 4.0.4
+  webview_flutter: ^4.0.2
+  youtube_player_iframe: 4.0.4
 
 dev_dependencies:
   build_runner: ^2.2.0
