@@ -1,3 +1,9 @@
+# 2.0.10
+- Fix: Issue with landscape not working on some tablets
+- Fix: Issue with app restarting when folded, or switching between multi-window mode.
+- Add: Events page remembers scroll position when changing layouts
+- Removed: Currently selected wonder persistence
+
 # 2.0.9
 - Remember currently selected wonder on home page
 - EventsView: switch to two-column layout at aspect ratios > .85
