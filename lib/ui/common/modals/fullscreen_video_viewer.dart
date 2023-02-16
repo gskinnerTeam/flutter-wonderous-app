@@ -1,5 +1,4 @@
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/common/controls/app_loading_indicator.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class FullscreenVideoViewer extends StatefulWidget {
@@ -13,7 +12,7 @@ class FullscreenVideoViewer extends StatefulWidget {
 class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
   late final _controller = YoutubePlayerController.fromVideoId(
     videoId: widget.id,
-    params: const YoutubePlayerParams(showFullscreenButton: true),
+    params: const YoutubePlayerParams(),
   );
 
   @override
@@ -34,20 +33,21 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
     double aspect = context.isLandscape ? MediaQuery.of(context).size.aspectRatio : 9 / 9;
     return Scaffold(
       backgroundColor: Colors.black,
-      body: YoutubePlayerScaffold(
-        controller: _controller,
-        aspectRatio: aspect,
-        builder: (_, player) => Stack(
-          children: [
-            player,
-            SafeArea(
-              child: Padding(
-                padding: EdgeInsets.all($styles.insets.md),
-                child: const BackBtn(),
-              ),
+      body: Stack(
+        children: [
+          Center(
+            child: YoutubePlayer(
+              controller: _controller,
+              aspectRatio: aspect,
             ),
-          ],
-        ),
+          ),
+          SafeArea(
+            child: Padding(
+              padding: EdgeInsets.all($styles.insets.md),
+              child: const BackBtn(),
+            ),
+          ),
+        ],
       ),
     );
   }
