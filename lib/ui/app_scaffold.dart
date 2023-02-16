@@ -13,22 +13,20 @@ class WondersAppScaffold extends StatelessWidget {
     _style = AppStyle(screenSize: context.sizePx);
     Animate.defaultDuration = _style.times.fast;
     appLogic.handleAppSizeChanged(context.mq.size);
-    return Stack(
+    return KeyedSubtree(
       key: ValueKey($styles.scale),
-      children: [
-        Theme(
-          data: $styles.colors.toThemeData(),
-          // Provide a default texts style to allow Hero's to render text properly
-          child: DefaultTextStyle(
-            style: $styles.text.body,
-            // Use a custom scroll behavior across entire app
-            child: ScrollConfiguration(
-              behavior: AppScrollBehavior(),
-              child: child,
-            ),
+      child: Theme(
+        data: $styles.colors.toThemeData(),
+        // Provide a default texts style to allow Hero's to render text properly
+        child: DefaultTextStyle(
+          style: $styles.text.body,
+          // Use a custom scroll behavior across entire app
+          child: ScrollConfiguration(
+            behavior: AppScrollBehavior(),
+            child: child,
           ),
         ),
-      ],
+      ),
     );
   }
 }
