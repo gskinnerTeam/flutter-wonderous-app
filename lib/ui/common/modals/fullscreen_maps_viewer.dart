@@ -15,11 +15,14 @@ class FullscreenMapsViewer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        GoogleMap(
-          mapType: MapType.hybrid,
-          markers: {getMapsMarker(startPos.target)},
-          initialCameraPosition: startPos,
-          myLocationButtonEnabled: false,
+        SafeArea(
+          top: false,
+          child: GoogleMap(
+            mapType: MapType.hybrid,
+            markers: {getMapsMarker(startPos.target)},
+            initialCameraPosition: startPos,
+            myLocationButtonEnabled: false,
+          ),
         ),
         AppHeader(isTransparent: true),
       ],
