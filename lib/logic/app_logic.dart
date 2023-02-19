@@ -34,6 +34,7 @@ class AppLogic {
     if (PlatformInfo.isDesktop) {
       await DesktopWindow.setMinWindowSize($styles.sizes.minAppSize);
     }
+
     // Load any bitmaps the views might need
     await AppBitmaps.init();
 
@@ -103,5 +104,13 @@ class AppLogic {
       ]);
     }
     SystemChrome.setPreferredOrientations(orientations);
+  }
+}
+
+class AppImageCache extends WidgetsFlutterBinding {
+  @override
+  ImageCache createImageCache() {
+    this.imageCache.maximumSizeBytes = 250 << 20; // 250mb
+    return super.createImageCache();
   }
 }
