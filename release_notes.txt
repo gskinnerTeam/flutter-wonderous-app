@@ -1,8 +1,9 @@
 # 2.0.10
-- Fix: Issue with landscape not working on some tablets
-- Fix: Issue with app restarting when folded, or switching between multi-window mode.
-- Add: Events page remembers scroll position when changing layouts
-- Removed: Currently selected wonder persistence
+- Fixed landscape not working on some tablets
+- Fixed app restarting when folded, or switching between multi-window mode.
+- Added Events page remembers scroll position when changing layouts
+- Removed currently selected wonder persistence
+- Reduced size of textures used on wonder home page
 
 # 2.0.9
 - Remember currently selected wonder on home page
