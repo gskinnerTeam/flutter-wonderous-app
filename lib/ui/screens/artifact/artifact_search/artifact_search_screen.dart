@@ -28,7 +28,9 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
   String _query = '';
 
   late final WonderData wonder = wondersLogic.getData(widget.type);
-  late final PanelController panelController = PanelController(true);
+  late final PanelController panelController = PanelController(
+    settingsLogic.isSearchPanelOpen.value,
+  )..addListener(_handlePanelControllerChanged);
   late final SearchVizController vizController = SearchVizController(
     _searchResults,
     minYear: wondersLogic.timelineStartYear,
@@ -45,6 +47,13 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
     super.initState();
   }
 
+  @override
+  void dispose() {
+    panelController.dispose();
+    vizController.dispose();
+    super.dispose();
+  }
+
   void _handleSearchSubmitted(String query) {
     _query = query;
     _updateResults();
@@ -57,6 +66,10 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
   }
 
   void _handleResultPressed(SearchData o) => context.push(ScreenPaths.artifact(o.id.toString()));
+
+  void _handlePanelControllerChanged() {
+    settingsLogic.isSearchPanelOpen.value = panelController.value;
+  }
 
   void _updateResults() {
     if (_query.isEmpty) {

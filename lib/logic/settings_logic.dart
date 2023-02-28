@@ -8,6 +8,7 @@ class SettingsLogic with ThrottledSaveLoadMixin {
 
   late final hasCompletedOnboarding = ValueNotifier<bool>(false)..addListener(scheduleSave);
   late final hasDismissedSearchMessage = ValueNotifier<bool>(false)..addListener(scheduleSave);
+  late final isSearchPanelOpen = ValueNotifier<bool>(true)..addListener(scheduleSave);
   late final currentLocale = ValueNotifier<String?>(null)..addListener(scheduleSave);
 
   final bool useBlurs = !PlatformInfo.isAndroid;
@@ -17,6 +18,7 @@ class SettingsLogic with ThrottledSaveLoadMixin {
     hasCompletedOnboarding.value = value['hasCompletedOnboarding'] ?? false;
     hasDismissedSearchMessage.value = value['hasDismissedSearchMessage'] ?? false;
     currentLocale.value = value['currentLocale'];
+    isSearchPanelOpen.value = value['isSearchPanelOpen'] ?? false;
   }
 
   @override
@@ -25,6 +27,7 @@ class SettingsLogic with ThrottledSaveLoadMixin {
       'hasCompletedOnboarding': hasCompletedOnboarding.value,
       'hasDismissedSearchMessage': hasDismissedSearchMessage.value,
       'currentLocale': currentLocale.value,
+      'isSearchPanelOpen': isSearchPanelOpen.value,
     };
   }
 
