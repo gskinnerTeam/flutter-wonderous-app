@@ -1,3 +1,7 @@
+# 2.0.12
+- Artifact search remembers open/closed panel state
+- Add focus state to all buttons
+
 # 2.0.11
 - Fixed landscape not working on some tablets
 - Fixed app restarting when folded, or switching between multi-window mode.

@@ -121,9 +121,10 @@ class AppBtn extends StatelessWidget {
       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       splashFactory: NoSplash.splashFactory,
       backgroundColor: ButtonStyleButton.allOrNull<Color>(bgColor ?? defaultColor),
-      overlayColor: ButtonStyleButton.allOrNull<Color>(Colors.transparent), // disable default press effect
+      overlayColor: ButtonStyleButton.allOrNull<Color>(Colors.white.withOpacity(.1)), // disable default press effect
       shape: ButtonStyleButton.allOrNull<OutlinedBorder>(shape),
       padding: ButtonStyleButton.allOrNull<EdgeInsetsGeometry>(padding ?? EdgeInsets.all($styles.insets.md)),
+
       enableFeedback: enableFeedback,
     );
 
