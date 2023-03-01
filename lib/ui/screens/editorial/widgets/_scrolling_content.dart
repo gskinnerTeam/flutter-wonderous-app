@@ -20,7 +20,7 @@ class _ScrollingContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Text buildText(String value) => Text(_fixNewlines(value), style: $styles.text.body);
+    Widget buildText(String value) => Focus(child: Text(_fixNewlines(value), style: $styles.text.body));
 
     Widget buildDropCapText(String value) {
       final TextStyle dropStyle = $styles.text.dropCase;

@@ -3,9 +3,11 @@ part of '../timeline_screen.dart';
 /// A vertically aligned stack of dots that represent global events
 /// The event closest to the [selectedYr] param will be visible selected
 class _EventMarkers extends StatefulWidget {
-  const _EventMarkers(this.selectedYr, {Key? key, required this.onEventChanged}) : super(key: key);
+  const _EventMarkers(this.selectedYr, {Key? key, required this.onEventChanged, required this.onMarkerPressed})
+      : super(key: key);
 
   final void Function(TimelineEvent? event) onEventChanged;
+  final void Function(TimelineEvent event) onMarkerPressed;
   final int selectedYr;
 
   @override
@@ -62,8 +64,12 @@ class _EventMarkersState extends State<_EventMarkers> {
         /// Create a marker for each event
         List<Widget> markers = timelineLogic.events.map((event) {
           double offsetY = _calculateOffsetY(event.year);
-          return _EventMarker(offsetY,
-              isSelected: event == selectedEvent, semanticLabel: '${event.year}: ${event.description}');
+          return _EventMarker(
+            offsetY,
+            event: event,
+            isSelected: event == selectedEvent,
+            onPressed: widget.onMarkerPressed,
+          );
         }).toList();
 
         /// Stack of fractionally positioned markers
@@ -110,11 +116,13 @@ class _EventMarker extends StatelessWidget {
     this.offset, {
     Key? key,
     required this.isSelected,
-    required this.semanticLabel,
+    required this.event,
+    required this.onPressed,
   }) : super(key: key);
   final double offset;
+  final TimelineEvent event;
   final bool isSelected;
-  final String semanticLabel;
+  final void Function(TimelineEvent event) onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -126,8 +134,9 @@ class _EventMarker extends StatelessWidget {
         height: 0,
         child: OverflowBox(
           maxHeight: 30,
-          child: Semantics(
-            label: semanticLabel,
+          child: AppBtn.basic(
+            semanticLabel: '${event.year}: ${event.description}',
+            onPressed: () => onPressed(event),
             child: Container(
               alignment: Alignment.center,
               height: 30,
