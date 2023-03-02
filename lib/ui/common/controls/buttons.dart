@@ -124,15 +124,32 @@ class AppBtn extends StatelessWidget {
       overlayColor: ButtonStyleButton.allOrNull<Color>(Colors.transparent), // disable default press effect
       shape: ButtonStyleButton.allOrNull<OutlinedBorder>(shape),
       padding: ButtonStyleButton.allOrNull<EdgeInsetsGeometry>(padding ?? EdgeInsets.all($styles.insets.md)),
+
       enableFeedback: enableFeedback,
     );
 
-    Widget button = TextButton(
-      onPressed: onPressed,
-      style: style,
-      child: DefaultTextStyle(
-        style: DefaultTextStyle.of(context).style.copyWith(color: textColor),
-        child: content,
+    Widget button = _CustomFocusBuilder(
+      builder: (context, focus) => Stack(
+        children: [
+          TextButton(
+            onPressed: onPressed,
+            style: style,
+            focusNode: focus,
+            child: DefaultTextStyle(
+              style: DefaultTextStyle.of(context).style.copyWith(color: textColor),
+              child: content,
+            ),
+          ),
+          if (focus.hasFocus)
+            Positioned.fill(
+              child: IgnorePointer(
+                child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular($styles.corners.md),
+                        border: Border.all(color: $styles.colors.accent1, width: 3))),
+              ),
+            )
+        ],
       ),
     );
 
@@ -178,5 +195,22 @@ class _ButtonPressEffectState extends State<_ButtonPressEffect> {
         child: ExcludeSemantics(child: widget.child),
       ),
     );
+  }
+}
+
+class _CustomFocusBuilder extends StatefulWidget {
+  const _CustomFocusBuilder({Key? key, required this.builder}) : super(key: key);
+  final Widget Function(BuildContext context, FocusNode focus) builder;
+
+  @override
+  State<_CustomFocusBuilder> createState() => _CustomFocusBuilderState();
+}
+
+class _CustomFocusBuilderState extends State<_CustomFocusBuilder> {
+  late final _focusNode = FocusNode()..addListener(() => setState(() {}));
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.builder.call(context, _focusNode);
   }
 }

@@ -32,7 +32,7 @@ class _EventsListState extends State<_EventsList> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.blurOnScroll ? _buildScrollingListWithBlur() : _buildScrollingList();
+    return FocusTraversalGroup(child: widget.blurOnScroll ? _buildScrollingListWithBlur() : _buildScrollingList());
   }
 
   /// The actual content of the scrolling list

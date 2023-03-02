@@ -45,6 +45,11 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
     AppHaptics.selectionClick();
   }
 
+  void _handleMarkerPressed(event) {
+    final pos = controller.calculateScrollPosFromYear(event.year);
+    controller.scroller.animateTo(pos, duration: $styles.times.med, curve: Curves.easeOutBack);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -132,6 +137,7 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
                       builder: (_, __) => _EventMarkers(
                         controller.calculateYearFromScrollPos(),
                         onEventChanged: _handleEventMarkerChanged,
+                        onMarkerPressed: _handleMarkerPressed,
                       ),
                     ),
                   ],
