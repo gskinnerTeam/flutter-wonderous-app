@@ -12,13 +12,21 @@ import 'package:wonders/logic/wallpaper_logic.dart';
 import 'package:wonders/logic/wonders_logic.dart';
 
 void main() async {
+  prepareApp();
+  runApp(WondersApp());
+  await initializeApp();
+}
+
+void prepareApp() {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   // Keep native splash screen up until app is finished bootstrapping
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   // Start app
   registerSingletons();
-  runApp(WondersApp());
+}
+
+Future<void> initializeApp() async {
   await appLogic.bootstrap();
 
   // Remove splash screen when bootstrap is complete
