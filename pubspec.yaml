@@ -61,6 +61,12 @@ dev_dependencies:
   json_serializable: ^6.3.1
   dart_code_metrics: ^4.17.1
   dependency_validator: ^3.0.0
+  patrol: ^1.0.4
+
+patrol:
+  app_name: Wonderous
+  android:
+    package_name: com.gskinner.flutter.wonders
 
 flutter_icons:
   ios: true
