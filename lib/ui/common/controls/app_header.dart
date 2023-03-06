@@ -1,4 +1,5 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/patrol_keys.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 
 class AppHeader extends StatelessWidget {
@@ -38,7 +39,7 @@ class AppHeader extends StatelessWidget {
                     Gap($styles.insets.sm),
                     if (showBackBtn)
                       BackBtn(
-                        key: Key('hamburgerMenuButton'),
+                        key: K.hamburgerMenuButton,
                         onPressed: onBack,
                         icon: backIcon,
                         semanticLabel: backBtnSemantics,
