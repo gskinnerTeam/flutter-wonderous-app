@@ -295,7 +295,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     alignment: Alignment.center,
 
                     /// Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
-                    key: ValueKey(_wonderIndex),
+                    key: ValueKey(currentWonder.type),
                     child: Stack(
                       children: [
                         /// Expanding rounded rect that grows in height as user swipes up

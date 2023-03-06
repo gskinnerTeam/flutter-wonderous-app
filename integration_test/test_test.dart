@@ -21,6 +21,11 @@ void main() {
           .scrollTo()
           .tap();
       await $(K.hamburgerMenuButton).waitUntilVisible();
+
+      await $(ValueKey(WonderType.chichenItza)).scrollTo().tap();
+      await $(K.collectible(WonderType.chichenItza, 0)).scrollTo().tap();
+      await $(K.hamburgerMenuButton).tap(); // to jest ten sam widget, tylko z inna ikona w roznych wywolaniach
+      await $.pump(Duration(seconds: 5));
     },
   );
 }
