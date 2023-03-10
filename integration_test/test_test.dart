@@ -10,11 +10,8 @@ void main() {
       prepareApp();
       await $.pumpWidget(WondersApp());
       await initializeApp();
+
       await $('Swipe left to continue').waitUntilVisible();
-
-      // await _swipeLeft($);
-      // await _swipeLeft($);
-
       await $(K.finishIntroButton)
           .which<AnimatedOpacity>((button) => button.opacity == 1)
           .$(CircleIconBtn)
@@ -22,9 +19,10 @@ void main() {
           .tap();
       await $(K.hamburgerMenuButton).waitUntilVisible();
 
-      await $(ValueKey(WonderType.chichenItza)).scrollTo().tap();
-      await $(K.collectible(WonderType.chichenItza, 0)).scrollTo().tap();
+      await $(K.wonderScreen(WonderType.chichenItza)).scrollTo().tap(andSettle: false);
+      await $(K.collectible(WonderType.chichenItza, 0)).scrollTo(andSettle: false).tap(andSettle: false);
       await $(K.hamburgerMenuButton).tap(); // to jest ten sam widget, tylko z inna ikona w roznych wywolaniach
+      await $(K.wonderHomeButton).waitUntilVisible();
       await $.pump(Duration(seconds: 5));
     },
   );

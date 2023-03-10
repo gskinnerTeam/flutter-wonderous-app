@@ -1,5 +1,6 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
+import 'package:wonders/patrol_keys.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
@@ -295,7 +296,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     alignment: Alignment.center,
 
                     /// Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
-                    key: ValueKey(currentWonder.type),
+                    key: ValueKey(_wonderIndex),
                     child: Stack(
                       children: [
                         /// Expanding rounded rect that grows in height as user swipes up
@@ -317,7 +318,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         )),
 
                         /// Arrow Btn that fades in and out
-                        _AnimatedArrowButton(onTap: _showDetailsPage, semanticTitle: currentWonder.title),
+                        _AnimatedArrowButton(
+                            key: K.wonderScreen(currentWonder.type),
+                            onTap: _showDetailsPage,
+                            semanticTitle: currentWonder.title),
                       ],
                     ),
                   ),

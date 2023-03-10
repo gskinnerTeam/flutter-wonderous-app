@@ -1,4 +1,5 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/patrol_keys.dart';
 
 class WonderDetailsTabMenu extends StatelessWidget {
   static const double buttonInset = 12;
@@ -77,6 +78,7 @@ class WonderDetailsTabMenu extends StatelessWidget {
                           ? EdgeInsets.only(left: $styles.insets.xs)
                           : EdgeInsets.only(bottom: $styles.insets.xs),
                       child: _WonderHomeBtn(
+                        key: K.wonderHomeButton,
                         size: homeBtnSize,
                         wonderType: wonderType,
                         borderSize: showBg ? 6 : 2,

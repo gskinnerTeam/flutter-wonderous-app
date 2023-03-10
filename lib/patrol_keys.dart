@@ -7,6 +7,7 @@ typedef K = PatrolKeys;
 class PatrolKeys {
   static const finishIntroButton = Key('finishIntroButton');
   static const hamburgerMenuButton = Key('hamburgerMenuButton');
+  static const wonderHomeButton = Key('wonderHomeButton');
 
   static Key wonderScreen(WonderType type) => Key(type.name);
   static Key collectible(WonderType type, int index) => Key('${type.name}_$index');
