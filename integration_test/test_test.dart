@@ -2,11 +2,14 @@ import 'package:patrol/patrol.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/patrol_keys.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 void main() {
   patrolTest(
     'first experimental test',
     nativeAutomation: true,
     ($) async {
+      await (await SharedPreferences.getInstance()).clear();
       prepareApp();
       await $.pumpWidget(WondersApp());
       await initializeApp();
