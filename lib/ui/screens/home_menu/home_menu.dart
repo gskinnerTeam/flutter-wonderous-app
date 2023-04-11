@@ -18,6 +18,8 @@ class HomeMenu extends StatefulWidget {
 }
 
 class _HomeMenuState extends State<HomeMenu> {
+  double _btnSize(BuildContext context) => (context.sizePx.shortestSide / 5).clamp(60, 100);
+
   void _handleAboutPressed(BuildContext context) async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     if (!mounted) return;
@@ -48,7 +50,7 @@ class _HomeMenuState extends State<HomeMenu> {
 
   @override
   Widget build(BuildContext context) {
-    final double gridWidth = (context.heightPx / 2).clamp(200, 350);
+    final double gridWidth = _btnSize(context) * 3 * 1.2;
     return Stack(
       children: [
         /// Backdrop / Underlay
@@ -66,29 +68,24 @@ class _HomeMenuState extends State<HomeMenu> {
         ),
 
         /// Content
-        Positioned.fill(
-          child: SafeArea(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: $styles.insets.lg).copyWith(top: $styles.insets.lg),
-              child: Center(
-                child: SizedBox(
-                  width: gridWidth,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Gap($styles.insets.md),
-                      Spacer(),
-                      _buildIconGrid(context)
-                          .animate()
-                          .fade(duration: $styles.times.fast)
-                          .scale(begin: .8, curve: Curves.easeOut),
-                      Gap($styles.insets.lg),
-                      _buildBottomBtns(context),
-                      Spacer(),
-                      Gap($styles.insets.md),
-                    ],
-                  ),
-                ),
+        SafeArea(
+          child: Center(
+            child: SizedBox(
+              width: gridWidth,
+              child: ExpandedScrollingColumn(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Gap(50),
+                  Gap($styles.insets.md),
+                  _buildIconGrid(context)
+                      .animate()
+                      .fade(duration: $styles.times.fast)
+                      .scale(begin: .8, curve: Curves.easeOut),
+                  Gap($styles.insets.lg),
+                  _buildBottomBtns(context),
+                  //Spacer(),
+                  Gap($styles.insets.md),
+                ],
               ),
             ),
           ),
@@ -98,26 +95,33 @@ class _HomeMenuState extends State<HomeMenu> {
   }
 
   Widget _buildIconGrid(BuildContext context) {
-    return GridView.count(
-      physics: NeverScrollableScrollPhysics(),
-      crossAxisCount: 3,
-      clipBehavior: Clip.none,
-      shrinkWrap: true,
-      crossAxisSpacing: $styles.insets.sm,
-      mainAxisSpacing: $styles.insets.sm,
+    Widget buildRow(List<Widget> children) => SeparatedRow(
+          mainAxisAlignment: MainAxisAlignment.center,
+          separatorBuilder: () => Gap($styles.insets.sm),
+          children: children,
+        );
+    return SeparatedColumn(
+      separatorBuilder: () => Gap($styles.insets.sm),
+      mainAxisSize: MainAxisSize.min,
       children: [
-        _buildGridBtn(context, wondersLogic.all[0]),
-        _buildGridBtn(context, wondersLogic.all[1]),
-        _buildGridBtn(context, wondersLogic.all[2]),
-        _buildGridBtn(context, wondersLogic.all[3]),
-        Padding(
-          padding: EdgeInsets.all($styles.insets.sm),
-          child: SvgPicture.asset(SvgPaths.compassFull, color: $styles.colors.offWhite),
-        ),
-        _buildGridBtn(context, wondersLogic.all[4]),
-        _buildGridBtn(context, wondersLogic.all[5]),
-        _buildGridBtn(context, wondersLogic.all[6]),
-        _buildGridBtn(context, wondersLogic.all[7]),
+        buildRow([
+          _buildGridBtn(context, wondersLogic.all[0]),
+          _buildGridBtn(context, wondersLogic.all[1]),
+          _buildGridBtn(context, wondersLogic.all[2]),
+        ]),
+        buildRow([
+          _buildGridBtn(context, wondersLogic.all[3]),
+          SizedBox(
+            width: _btnSize(context),
+            child: SvgPicture.asset(SvgPaths.compassFull, color: $styles.colors.offWhite),
+          ),
+          _buildGridBtn(context, wondersLogic.all[4]),
+        ]),
+        buildRow([
+          _buildGridBtn(context, wondersLogic.all[5]),
+          _buildGridBtn(context, wondersLogic.all[6]),
+          _buildGridBtn(context, wondersLogic.all[7]),
+        ]),
       ],
     );
   }
@@ -156,32 +160,31 @@ class _HomeMenuState extends State<HomeMenu> {
 
   Widget _buildGridBtn(BuildContext context, WonderData btnData) {
     bool isSelected = btnData == widget.data;
-    return AspectRatio(
-      aspectRatio: 1,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular($styles.corners.md),
-          boxShadow: !isSelected
-              ? null
-              : [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(.3),
-                    blurRadius: 3,
-                    spreadRadius: 3,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular($styles.corners.md),
-          child: AppBtn(
-            border: !isSelected ? null : BorderSide(color: $styles.colors.offWhite, width: 5),
-            bgColor: btnData.type.fgColor,
-            onPressed: () => _handleWonderPressed(context, btnData),
-            padding: EdgeInsets.zero,
-            semanticLabel: btnData.title,
-            child: SizedBox.expand(child: Image.asset(btnData.type.homeBtn, fit: BoxFit.cover)),
-          ),
+    return Container(
+      width: _btnSize(context),
+      height: _btnSize(context),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular($styles.corners.md),
+        boxShadow: !isSelected
+            ? null
+            : [
+                BoxShadow(
+                  color: Colors.black.withOpacity(.3),
+                  blurRadius: 3,
+                  spreadRadius: 3,
+                  offset: Offset(0, 2),
+                ),
+              ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular($styles.corners.md),
+        child: AppBtn(
+          border: !isSelected ? null : BorderSide(color: $styles.colors.offWhite, width: 5),
+          bgColor: btnData.type.fgColor,
+          onPressed: () => _handleWonderPressed(context, btnData),
+          padding: EdgeInsets.zero,
+          semanticLabel: btnData.title,
+          child: Image.asset(btnData.type.homeBtn, fit: BoxFit.cover),
         ),
       ),
     );
