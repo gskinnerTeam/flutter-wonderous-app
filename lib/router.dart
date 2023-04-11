@@ -31,43 +31,47 @@ class ScreenPaths {
 
 /// Routing table, matches string paths to UI Screens, optionally parses params from the paths
 final appRouter = GoRouter(
-  redirect: _handleRedirect,
-  navigatorBuilder: (_, __, child) => WondersAppScaffold(child: child),
   routes: [
-    AppRoute(ScreenPaths.splash, (_) => Container(color: $styles.colors.greyStrong)), // This will be hidden
-    AppRoute(ScreenPaths.home, (_) => HomeScreen()),
-    AppRoute(ScreenPaths.intro, (_) => IntroScreen()),
-    AppRoute('/wonder/:type', (s) {
-      int tab = int.tryParse(s.queryParams['t'] ?? '') ?? 0;
-      return WonderDetailsScreen(
-        type: _parseWonderType(s.params['type']),
-        initialTabIndex: tab,
-      );
-    }, useFade: true),
-    AppRoute('/timeline', (s) {
-      return TimelineScreen(type: _tryParseWonderType(s.queryParams['type']!));
-    }),
-    AppRoute('/video/:id', (s) {
-      return FullscreenVideoViewer(id: s.params['id']!);
-    }),
-    AppRoute('/highlights/:type', (s) {
-      return ArtifactCarouselScreen(type: _parseWonderType(s.params['type']));
-    }),
-    AppRoute('/search/:type', (s) {
-      return ArtifactSearchScreen(type: _parseWonderType(s.params['type']));
-    }),
-    AppRoute('/artifact/:id', (s) {
-      return ArtifactDetailsScreen(artifactId: s.params['id']!);
-    }),
-    AppRoute('/collection', (s) {
-      return CollectionScreen(fromId: s.queryParams['id'] ?? '');
-    }),
-    AppRoute('/maps/:type', (s) {
-      return FullscreenMapsViewer(type: _parseWonderType(s.params['type']));
-    }),
-    AppRoute('/wallpaperPhoto/:type', (s) {
-      return WallpaperPhotoScreen(type: _parseWonderType(s.params['type']));
-    }),
+    ShellRoute(
+        builder: (context, router, navigator) {
+          return WondersAppScaffold(child: navigator);
+        },
+        routes: [
+          AppRoute(ScreenPaths.splash, (_) => Container(color: $styles.colors.greyStrong)), // This will be hidden
+          AppRoute(ScreenPaths.home, (_) => HomeScreen()),
+          AppRoute(ScreenPaths.intro, (_) => IntroScreen()),
+          AppRoute('/wonder/:type', (s) {
+            int tab = int.tryParse(s.queryParams['t'] ?? '') ?? 0;
+            return WonderDetailsScreen(
+              type: _parseWonderType(s.params['type']),
+              initialTabIndex: tab,
+            );
+          }, useFade: true),
+          AppRoute('/timeline', (s) {
+            return TimelineScreen(type: _tryParseWonderType(s.queryParams['type']!));
+          }),
+          AppRoute('/video/:id', (s) {
+            return FullscreenVideoViewer(id: s.params['id']!);
+          }),
+          AppRoute('/highlights/:type', (s) {
+            return ArtifactCarouselScreen(type: _parseWonderType(s.params['type']));
+          }),
+          AppRoute('/search/:type', (s) {
+            return ArtifactSearchScreen(type: _parseWonderType(s.params['type']));
+          }),
+          AppRoute('/artifact/:id', (s) {
+            return ArtifactDetailsScreen(artifactId: s.params['id']!);
+          }),
+          AppRoute('/collection', (s) {
+            return CollectionScreen(fromId: s.queryParams['id'] ?? '');
+          }),
+          AppRoute('/maps/:type', (s) {
+            return FullscreenMapsViewer(type: _parseWonderType(s.params['type']));
+          }),
+          AppRoute('/wallpaperPhoto/:type', (s) {
+            return WallpaperPhotoScreen(type: _parseWonderType(s.params['type']));
+          }),
+        ]),
   ],
 );
 

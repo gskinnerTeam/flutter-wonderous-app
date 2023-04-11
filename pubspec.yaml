@@ -30,7 +30,7 @@ dependencies:
   get_it_mixin: ^3.1.4
   google_maps_flutter: ^2.2.3
   google_maps_flutter_web: ^0.4.0+5
-  go_router: ^4.2.8
+  go_router: ^6.5.5
   http: ^0.13.5
   image_fade: ^0.6.2
   image_gallery_saver: ^1.7.1
