@@ -37,7 +37,7 @@ class WondersApp extends StatelessWidget with GetItMixin {
       locale: locale == null ? null : Locale(locale),
       debugShowCheckedModeBanner: false,
       routerDelegate: appRouter.routerDelegate,
-      theme: ThemeData(fontFamily: $styles.text.body.fontFamily),
+      theme: ThemeData(fontFamily: $styles.text.body.fontFamily, useMaterial3: true),
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
