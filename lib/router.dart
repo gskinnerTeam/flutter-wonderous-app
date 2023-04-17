@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/modals//fullscreen_video_viewer.dart';
@@ -32,7 +34,6 @@ class ScreenPaths {
 /// Routing table, matches string paths to UI Screens, optionally parses params from the paths
 final appRouter = GoRouter(
   redirect: _handleRedirect,
-  navigatorBuilder: (_, __, child) => WondersAppScaffold(child: child),
   routes: [
     AppRoute(ScreenPaths.splash, (_) => Container(color: $styles.colors.greyStrong)), // This will be hidden
     AppRoute(ScreenPaths.home, (_) => HomeScreen()),
@@ -98,7 +99,8 @@ class AppRoute extends GoRoute {
   final bool useFade;
 }
 
-String? _handleRedirect(GoRouterState state) {
+FutureOr<String?> _handleRedirect(
+    BuildContext _, GoRouterState state) {
   // Prevent anyone from navigating away from `/` if app is starting up.
   if (!appLogic.isBootstrapComplete && state.location != ScreenPaths.splash) {
     return ScreenPaths.splash;
