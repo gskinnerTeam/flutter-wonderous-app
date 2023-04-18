@@ -29,7 +29,7 @@ class AppStyle {
     } else {
       scale = .85; // small phone
     }
-    debugPrint('screenSize=$screenSize, scale=$scale');
+    //debugPrint('screenSize=$screenSize, scale=$scale');
   }
 
   late final double scale;

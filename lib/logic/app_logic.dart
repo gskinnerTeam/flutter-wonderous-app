@@ -89,7 +89,7 @@ class AppLogic {
   /// If a view overrides this, it is responsible for setting it back to [supportedOrientations] when disposed.
   void _updateSystemOrientation() {
     final axisList = _supportedOrientationsOverride ?? supportedOrientations;
-    debugPrint('updateDeviceOrientation, supportedAxis: $axisList');
+    //debugPrint('updateDeviceOrientation, supportedAxis: $axisList');
     final orientations = <DeviceOrientation>[];
     if (axisList.contains(Axis.vertical)) {
       orientations.addAll([
