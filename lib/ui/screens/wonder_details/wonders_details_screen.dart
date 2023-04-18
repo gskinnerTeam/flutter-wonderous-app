@@ -57,6 +57,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
     bool showTabBarBg = tabIndex != 1;
     final tabBarSize = _tabBarSize ?? 0;
     final menuPadding = _useNavRail ? EdgeInsets.only(left: tabBarSize) : EdgeInsets.only(bottom: tabBarSize);
+
     return ColoredBox(
       color: Colors.black,
       child: Stack(
@@ -65,17 +66,16 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
           LazyIndexedStack(
             index: _tabController.index,
             children: [
-              WonderEditorialScreen(wonder, onScroll: _handleDetailsScrolled),
+              Padding(
+                padding: menuPadding,
+                child: WonderEditorialScreen(wonder, onScroll: _handleDetailsScrolled),
+              ),
               PhotoGallery(collectionId: wonder.unsplashCollectionId, wonderType: wonder.type),
-              AnimatedPadding(
-                duration: $styles.times.fast,
-                curve: Curves.easeOut,
+              Padding(
                 padding: menuPadding,
                 child: ArtifactCarouselScreen(type: wonder.type),
               ),
-              AnimatedPadding(
-                duration: $styles.times.fast,
-                curve: Curves.easeOut,
+              Padding(
                 padding: menuPadding,
                 child: WonderEvents(type: widget.type),
               ),
@@ -89,20 +89,11 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
               valueListenable: _detailsHasScrolled,
               builder: (_, value, ___) => MeasurableWidget(
                 onChange: _handleTabMenuSized,
-
-                /// Animate the menu in when the axis changes
-                child: Animate(
-                  key: ValueKey(_useNavRail),
-                  effects: [
-                    FadeEffect(begin: 0, delay: $styles.times.fast),
-                    SlideEffect(begin: _useNavRail ? Offset(-.2, 0) : Offset(0, .2)),
-                  ],
-                  child: WonderDetailsTabMenu(
-                      tabController: _tabController,
-                      wonderType: wonder.type,
-                      showBg: showTabBarBg,
-                      axis: _useNavRail ? Axis.vertical : Axis.horizontal),
-                ),
+                child: WonderDetailsTabMenu(
+                    tabController: _tabController,
+                    wonderType: wonder.type,
+                    showBg: showTabBarBg,
+                    axis: _useNavRail ? Axis.vertical : Axis.horizontal),
               ),
             ),
           ),
