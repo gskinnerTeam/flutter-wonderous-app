@@ -43,3 +43,7 @@ extension WonderColorExtensions on WonderType {
     }
   }
 }
+
+extension ColorFilterOnColor on Color {
+  ColorFilter get colorFilter => ColorFilter.mode(this, BlendMode.srcIn);
+}

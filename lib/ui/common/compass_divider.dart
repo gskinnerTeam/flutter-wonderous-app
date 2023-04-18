@@ -45,7 +45,7 @@ class CompassDivider extends StatelessWidget {
               width: 32,
               child: SvgPicture.asset(
                 SvgPaths.compassFull,
-                color: compassColor ?? $styles.colors.accent2,
+                colorFilter: (compassColor ?? $styles.colors.accent2).colorFilter,
               )),
         ),
         Gap($styles.insets.sm),

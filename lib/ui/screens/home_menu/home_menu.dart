@@ -113,7 +113,7 @@ class _HomeMenuState extends State<HomeMenu> {
           _buildGridBtn(context, wondersLogic.all[3]),
           SizedBox(
             width: _btnSize(context),
-            child: SvgPicture.asset(SvgPaths.compassFull, color: $styles.colors.offWhite),
+            child: SvgPicture.asset(SvgPaths.compassFull, colorFilter: $styles.colors.offWhite.colorFilter),
           ),
           _buildGridBtn(context, wondersLogic.all[4]),
         ]),

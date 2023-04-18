@@ -277,7 +277,7 @@ class _WonderousLogo extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ExcludeSemantics(
-          child: SvgPicture.asset(SvgPaths.compassSimple, color: $styles.colors.offWhite, height: 48),
+          child: SvgPicture.asset(SvgPaths.compassSimple, colorFilter: $styles.colors.offWhite.colorFilter, height: 48),
         ),
         Gap($styles.insets.xs),
         StaticTextScale(
