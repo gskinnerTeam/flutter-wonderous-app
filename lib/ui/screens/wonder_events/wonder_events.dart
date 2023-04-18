@@ -19,9 +19,9 @@ part 'widgets/_timeline_btn.dart';
 part 'widgets/_wonder_image_with_timeline.dart';
 
 class WonderEvents extends StatefulWidget {
-  const WonderEvents({Key? key, required this.type}) : super(key: key);
+  const WonderEvents({Key? key, required this.type, this.contentPadding = EdgeInsets.zero}) : super(key: key);
   final WonderType type;
-
+  final EdgeInsets contentPadding;
   @override
   State<WonderEvents> createState() => _WonderEventsState();
 }
@@ -51,7 +51,10 @@ class _WonderEventsState extends State<WonderEvents> {
               /// Main view
               Positioned.fill(
                 top: $styles.insets.sm,
-                child: useTwoColumnLayout ? _buildTwoColumn(context) : _buildSingleColumn(),
+                child: Padding(
+                  padding: widget.contentPadding,
+                  child: useTwoColumnLayout ? _buildTwoColumn(context) : _buildSingleColumn(),
+                ),
               ),
 
               /// Header w/ TimelineBtn

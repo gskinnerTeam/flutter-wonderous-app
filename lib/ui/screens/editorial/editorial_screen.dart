@@ -38,9 +38,11 @@ part 'widgets/_title_text.dart';
 part 'widgets/_top_illustration.dart';
 
 class WonderEditorialScreen extends StatefulWidget {
-  const WonderEditorialScreen(this.data, {Key? key, required this.onScroll}) : super(key: key);
+  const WonderEditorialScreen(this.data, {Key? key, required this.onScroll, required this.contentPadding})
+      : super(key: key);
   final WonderData data;
   final void Function(double scrollPos) onScroll;
+  final EdgeInsets contentPadding;
 
   @override
   State<WonderEditorialScreen> createState() => _WonderEditorialScreenState();
@@ -95,62 +97,71 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                     return Opacity(opacity: opacity, child: child);
                   },
                   // This is due to a bug: https://github.com/flutter/flutter/issues/101872
-                  child: RepaintBoundary(child: _TopIllustration(widget.data.type)),
+                  child: RepaintBoundary(
+                      child: _TopIllustration(
+                    widget.data.type,
+                    // Polish: Inject the content padding into the illustration as an offset, so it can center itself relative to the content
+                    // this allows the background to extend underneath the vertical side nav when it has rounded corners.
+                    fgOffset: Offset(widget.contentPadding.left / 2, 0),
+                  )),
                 ),
               ),
 
               /// Scrolling content - Includes an invisible gap at the top, and then scrolls over the illustration
               TopCenter(
-                child: SizedBox(
-                  child: FocusTraversalGroup(
-                    child: CustomScrollView(
-                      primary: false,
-                      controller: _scroller,
-                      scrollBehavior: ScrollConfiguration.of(context).copyWith(),
-                      key: PageStorageKey('editorial'),
-                      slivers: [
-                        /// Invisible padding at the top of the list, so the illustration shows through the btm
-                        SliverToBoxAdapter(
-                          child: SizedBox(height: illustrationHeight),
-                        ),
-
-                        /// Text content, animates itself to hide behind the app bar as it scrolls up
-                        SliverToBoxAdapter(
-                          child: ValueListenableBuilder<double>(
-                            valueListenable: _scrollPos,
-                            builder: (_, value, child) {
-                              double offsetAmt = max(0, value * .3);
-                              double opacity = (1 - offsetAmt / 150).clamp(0, 1);
-                              return Transform.translate(
-                                offset: Offset(0, offsetAmt),
-                                child: Opacity(opacity: opacity, child: child),
-                              );
-                            },
-                            child: _TitleText(widget.data, scroller: _scroller),
+                child: Padding(
+                  padding: widget.contentPadding,
+                  child: SizedBox(
+                    child: FocusTraversalGroup(
+                      child: CustomScrollView(
+                        primary: false,
+                        controller: _scroller,
+                        scrollBehavior: ScrollConfiguration.of(context).copyWith(),
+                        key: PageStorageKey('editorial'),
+                        slivers: [
+                          /// Invisible padding at the top of the list, so the illustration shows through the btm
+                          SliverToBoxAdapter(
+                            child: SizedBox(height: illustrationHeight),
                           ),
-                        ),
 
-                        /// Collapsing App bar, pins to the top of the list
-                        SliverAppBar(
-                          pinned: true,
-                          collapsedHeight: minAppBarHeight,
-                          toolbarHeight: minAppBarHeight,
-                          expandedHeight: maxAppBarHeight,
-                          backgroundColor: Colors.transparent,
-                          elevation: 0,
-                          leading: SizedBox.shrink(),
-                          flexibleSpace: SizedBox.expand(
-                            child: _AppBar(
-                              widget.data.type,
-                              scrollPos: _scrollPos,
-                              sectionIndex: _sectionIndex,
+                          /// Text content, animates itself to hide behind the app bar as it scrolls up
+                          SliverToBoxAdapter(
+                            child: ValueListenableBuilder<double>(
+                              valueListenable: _scrollPos,
+                              builder: (_, value, child) {
+                                double offsetAmt = max(0, value * .3);
+                                double opacity = (1 - offsetAmt / 150).clamp(0, 1);
+                                return Transform.translate(
+                                  offset: Offset(0, offsetAmt),
+                                  child: Opacity(opacity: opacity, child: child),
+                                );
+                              },
+                              child: _TitleText(widget.data, scroller: _scroller),
                             ),
                           ),
-                        ),
 
-                        /// Editorial content (text and images)
-                        _ScrollingContent(widget.data, scrollPos: _scrollPos, sectionNotifier: _sectionIndex),
-                      ],
+                          /// Collapsing App bar, pins to the top of the list
+                          SliverAppBar(
+                            pinned: true,
+                            collapsedHeight: minAppBarHeight,
+                            toolbarHeight: minAppBarHeight,
+                            expandedHeight: maxAppBarHeight,
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            leading: SizedBox.shrink(),
+                            flexibleSpace: SizedBox.expand(
+                              child: _AppBar(
+                                widget.data.type,
+                                scrollPos: _scrollPos,
+                                sectionIndex: _sectionIndex,
+                              ),
+                            ),
+                          ),
+
+                          /// Editorial content (text and images)
+                          _ScrollingContent(widget.data, scrollPos: _scrollPos, sectionNotifier: _sectionIndex),
+                        ],
+                      ),
                     ),
                   ),
                 ),

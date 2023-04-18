@@ -57,7 +57,6 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
     bool showTabBarBg = tabIndex != 1;
     final tabBarSize = _tabBarSize ?? 0;
     final menuPadding = _useNavRail ? EdgeInsets.only(left: tabBarSize) : EdgeInsets.only(bottom: tabBarSize);
-
     return ColoredBox(
       color: Colors.black,
       child: Stack(
@@ -66,19 +65,10 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
           LazyIndexedStack(
             index: _tabController.index,
             children: [
-              Padding(
-                padding: menuPadding,
-                child: WonderEditorialScreen(wonder, onScroll: _handleDetailsScrolled),
-              ),
+              WonderEditorialScreen(wonder, contentPadding: menuPadding, onScroll: _handleDetailsScrolled),
               PhotoGallery(collectionId: wonder.unsplashCollectionId, wonderType: wonder.type),
-              Padding(
-                padding: menuPadding,
-                child: ArtifactCarouselScreen(type: wonder.type),
-              ),
-              Padding(
-                padding: menuPadding,
-                child: WonderEvents(type: widget.type),
-              ),
+              ArtifactCarouselScreen(type: wonder.type, contentPadding: menuPadding),
+              WonderEvents(type: widget.type, contentPadding: menuPadding),
             ],
           ),
 

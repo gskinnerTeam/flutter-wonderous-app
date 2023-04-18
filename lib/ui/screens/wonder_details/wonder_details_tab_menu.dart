@@ -36,7 +36,12 @@ class WonderDetailsTabMenu extends StatelessWidget {
                 top: isVertical ? context.mq.viewPadding.top : buttonInset,
                 right: isVertical ? buttonInset : 0,
               ),
-              child: ColoredBox(color: $styles.colors.offWhite),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: $styles.colors.offWhite,
+                  borderRadius: isVertical ? BorderRadius.only(topRight: Radius.circular(32)) : null,
+                ),
+              ),
             ),
           ),
         ),

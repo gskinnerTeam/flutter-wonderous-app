@@ -12,8 +12,9 @@ part 'widgets/_bottom_text_content.dart';
 part 'widgets/_collapsing_carousel_item.dart';
 
 class ArtifactCarouselScreen extends StatefulWidget {
+  const ArtifactCarouselScreen({Key? key, required this.type, this.contentPadding = EdgeInsets.zero}) : super(key: key);
   final WonderType type;
-  const ArtifactCarouselScreen({Key? key, required this.type}) : super(key: key);
+  final EdgeInsets contentPadding;
 
   @override
   State<ArtifactCarouselScreen> createState() => _ArtifactScreenState();
@@ -82,55 +83,61 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
               }),
         ),
 
-        /// BgCircle
-        _buildBgCircle(bottomHeight),
+        Padding(
+            padding: widget.contentPadding,
+            child: Stack(
+              children: [
+                /// BgCircle
+                _buildBgCircle(bottomHeight),
 
-        /// Carousel Items
-        PageView.builder(
-          controller: _pageController,
-          itemBuilder: (_, index) {
-            final wrappedIndex = index % pages.length;
-            final child = pages[wrappedIndex];
-            return ValueListenableBuilder<double>(
-              valueListenable: _currentPage,
-              builder: (_, value, __) {
-                final int offset = (value.round() - index).abs();
-                return _CollapsingCarouselItem(
-                  width: itemWidth,
-                  indexOffset: min(3, offset),
-                  onPressed: () => _handleArtifactTap(index),
-                  title: _artifacts[wrappedIndex].title,
-                  child: child,
-                );
-              },
-            );
-          },
-        ),
+                /// Carousel Items
+                PageView.builder(
+                  controller: _pageController,
+                  itemBuilder: (_, index) {
+                    final wrappedIndex = index % pages.length;
+                    final child = pages[wrappedIndex];
+                    return ValueListenableBuilder<double>(
+                      valueListenable: _currentPage,
+                      builder: (_, value, __) {
+                        final int offset = (value.round() - index).abs();
+                        return _CollapsingCarouselItem(
+                          width: itemWidth,
+                          indexOffset: min(3, offset),
+                          onPressed: () => _handleArtifactTap(index),
+                          title: _artifacts[wrappedIndex].title,
+                          child: child,
+                        );
+                      },
+                    );
+                  },
+                ),
 
-        /// Bottom Text
-        BottomCenter(
-          child: ValueListenableBuilder<int>(
-            valueListenable: _currentArtifactIndex,
-            builder: (_, value, __) => _BottomTextContent(
-              artifact: _artifacts[value],
-              height: bottomHeight,
-              shortMode: shortMode,
-              state: this,
-            ),
-          ),
-        ),
+                /// Bottom Text
+                BottomCenter(
+                  child: ValueListenableBuilder<int>(
+                    valueListenable: _currentArtifactIndex,
+                    builder: (_, value, __) => _BottomTextContent(
+                      artifact: _artifacts[value],
+                      height: bottomHeight,
+                      shortMode: shortMode,
+                      state: this,
+                    ),
+                  ),
+                ),
 
-        /// Header
-        AppHeader(
-          title: $strings.artifactsTitleArtifacts,
-          showBackBtn: false,
-          isTransparent: true,
-          trailing: (context) => CircleBtn(
-            semanticLabel: $strings.artifactsButtonBrowse,
-            onPressed: _handleSearchTap,
-            child: AppIcon(AppIcons.search),
-          ),
-        ),
+                /// Header
+                AppHeader(
+                  title: $strings.artifactsTitleArtifacts,
+                  showBackBtn: false,
+                  isTransparent: true,
+                  trailing: (context) => CircleBtn(
+                    semanticLabel: $strings.artifactsButtonBrowse,
+                    onPressed: _handleSearchTap,
+                    child: AppIcon(AppIcons.search),
+                  ),
+                ),
+              ],
+            ))
       ],
     );
   }
