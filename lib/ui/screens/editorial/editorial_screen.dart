@@ -107,6 +107,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                       primary: false,
                       controller: _scroller,
                       scrollBehavior: ScrollConfiguration.of(context).copyWith(),
+                      key: PageStorageKey('editorial'),
                       slivers: [
                         /// Invisible padding at the top of the list, so the illustration shows through the btm
                         SliverToBoxAdapter(
