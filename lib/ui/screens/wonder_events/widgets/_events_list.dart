@@ -61,6 +61,7 @@ class _EventsListState extends State<_EventsList> {
       children: [
         SingleChildScrollView(
           controller: _scroller,
+          key: PageStorageKey('eventsList'),
           child: Column(
             children: [
               IgnorePointer(child: Gap(widget.topHeight)),

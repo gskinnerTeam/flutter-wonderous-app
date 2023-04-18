@@ -19,17 +19,24 @@ part 'widgets/_timeline_btn.dart';
 part 'widgets/_wonder_image_with_timeline.dart';
 
 //TODO: Maintain scroll position when switching from portrait to landscape
-class WonderEvents extends StatelessWidget {
+class WonderEvents extends StatefulWidget {
   WonderEvents({Key? key, required this.type}) : super(key: key);
   final WonderType type;
-  late final _data = wondersLogic.getData(type);
 
+  @override
+  State<WonderEvents> createState() => _WonderEventsState();
+}
+
+class _WonderEventsState extends State<WonderEvents> {
+  late final _data = wondersLogic.getData(widget.type);
+  final _eventsListKey = GlobalKey<_EventsListState>();
   double _scrollPos = 0;
+
   void _handleScroll(double pos) => _scrollPos = pos;
 
   @override
   Widget build(BuildContext context) {
-    void handleTimelineBtnPressed() => context.push(ScreenPaths.timeline(type));
+    void handleTimelineBtnPressed() => context.push(ScreenPaths.timeline(widget.type));
     // Main view content switches between 1 and 2 column layouts
     // On mobile, use the 2 column layout on screens close to landscape (>.85). This is primarily an optimization for foldable devices which have square-ish dimensions when opened.
     final twoColumnAspect = PlatformInfo.isMobile ? .85 : 1;
@@ -88,7 +95,7 @@ class WonderEvents extends StatelessWidget {
                         children: [
                           _WonderImageWithTimeline(data: _data, height: min(500, context.heightPx - 300)),
                           Gap($styles.insets.lg),
-                          SizedBox(width: 400, child: _TimelineBtn(type: type)),
+                          SizedBox(width: 400, child: _TimelineBtn(type: widget.type)),
                         ],
                       ),
                     ),
@@ -104,6 +111,7 @@ class WonderEvents extends StatelessWidget {
             child: CenteredBox(
               width: $styles.sizes.maxContentWidth2,
               child: _EventsList(
+                key: _eventsListKey,
                 data: _data,
                 topHeight: 100,
                 blurOnScroll: false,
@@ -132,8 +140,9 @@ class WonderEvents extends StatelessWidget {
             Column(
               children: [
                 Expanded(
-                  /// List
+                  /// EventsList
                   child: _EventsList(
+                    key: _eventsListKey,
                     data: _data,
                     topHeight: topHeight,
                     blurOnScroll: true,
@@ -144,7 +153,7 @@ class WonderEvents extends StatelessWidget {
                 ),
                 Gap($styles.insets.lg),
 
-                /// Btn
+                /// TimelineBtn
                 _TimelineBtn(type: _data.type, width: $styles.sizes.maxContentWidth2),
                 Gap($styles.insets.lg),
               ],
