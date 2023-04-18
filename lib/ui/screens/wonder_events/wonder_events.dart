@@ -18,9 +18,8 @@ part 'widgets/_events_list.dart';
 part 'widgets/_timeline_btn.dart';
 part 'widgets/_wonder_image_with_timeline.dart';
 
-//TODO: Maintain scroll position when switching from portrait to landscape
 class WonderEvents extends StatefulWidget {
-  WonderEvents({Key? key, required this.type}) : super(key: key);
+  const WonderEvents({Key? key, required this.type}) : super(key: key);
   final WonderType type;
 
   @override
