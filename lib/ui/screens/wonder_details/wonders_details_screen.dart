@@ -26,7 +26,8 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
   AnimationController? _fade;
 
   final _detailsHasScrolled = ValueNotifier(false);
-  double? _tabBarHeight;
+  double? _tabBarSize;
+  bool _useNavRail = false;
 
   @override
   void dispose() {
@@ -42,16 +43,20 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
   void _handleDetailsScrolled(double scrollPos) => _detailsHasScrolled.value = scrollPos > 0;
 
   void _handleTabMenuSized(Size size) {
-    setState(() => _tabBarHeight = size.height - WonderDetailsTabMenu.buttonInset);
+    setState(() {
+      _tabBarSize = (_useNavRail ? size.width : size.height) - WonderDetailsTabMenu.buttonInset;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    _useNavRail = context.isLandscape && context.heightPx < 900;
+
     final wonder = wondersLogic.getData(widget.type);
     int tabIndex = _tabController.index;
     bool showTabBarBg = tabIndex != 1;
-    final tabBarHeight = _tabBarHeight ?? 0;
-    //final double tabBarHeight = WonderDetailsTabMenu.bottomPadding + 60;
+    final tabBarSize = _tabBarSize ?? 0;
+    final menuPadding = _useNavRail ? EdgeInsets.only(left: tabBarSize) : EdgeInsets.only(bottom: tabBarSize);
     return ColoredBox(
       color: Colors.black,
       child: Stack(
@@ -62,21 +67,41 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
             children: [
               WonderEditorialScreen(wonder, onScroll: _handleDetailsScrolled),
               PhotoGallery(collectionId: wonder.unsplashCollectionId, wonderType: wonder.type),
-              Padding(padding: EdgeInsets.only(bottom: tabBarHeight), child: ArtifactCarouselScreen(type: wonder.type)),
-              Padding(padding: EdgeInsets.only(bottom: tabBarHeight), child: WonderEvents(type: widget.type)),
+              AnimatedPadding(
+                duration: $styles.times.fast,
+                curve: Curves.easeOut,
+                padding: menuPadding,
+                child: ArtifactCarouselScreen(type: wonder.type),
+              ),
+              AnimatedPadding(
+                duration: $styles.times.fast,
+                curve: Curves.easeOut,
+                padding: menuPadding,
+                child: WonderEvents(type: widget.type),
+              ),
             ],
           ),
 
           /// Tab menu
-          BottomCenter(
+          Align(
+            alignment: _useNavRail ? Alignment.centerLeft : Alignment.bottomCenter,
             child: ValueListenableBuilder<bool>(
               valueListenable: _detailsHasScrolled,
               builder: (_, value, ___) => MeasurableWidget(
                 onChange: _handleTabMenuSized,
-                child: WonderDetailsTabMenu(
-                  tabController: _tabController,
-                  wonderType: wonder.type,
-                  showBg: showTabBarBg,
+
+                /// Animate the menu in when the axis changes
+                child: Animate(
+                  key: ValueKey(_useNavRail),
+                  effects: [
+                    FadeEffect(begin: 0, delay: $styles.times.fast),
+                    SlideEffect(begin: _useNavRail ? Offset(-.2, 0) : Offset(0, .2)),
+                  ],
+                  child: WonderDetailsTabMenu(
+                      tabController: _tabController,
+                      wonderType: wonder.type,
+                      showBg: showTabBarBg,
+                      axis: _useNavRail ? Axis.vertical : Axis.horizontal),
                 ),
               ),
             ),

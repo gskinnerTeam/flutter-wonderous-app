@@ -68,49 +68,52 @@ class WonderEvents extends StatelessWidget {
 
   /// Landscape layout is a row, with the WonderImage on left and EventsList on the right
   Widget _buildTwoColumn(BuildContext context) {
-    return Row(
-      children: [
-        /// WonderImage w/ Timeline btn
-        Expanded(
-          child: CenteredBox(
-            width: $styles.sizes.maxContentWidth3,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Gap($styles.insets.lg),
-                Expanded(
-                  child: Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        _WonderImageWithTimeline(data: _data, height: min(500, context.heightPx - 300)),
-                        Gap($styles.insets.lg),
-                        SizedBox(width: 400, child: _TimelineBtn(type: type)),
-                      ],
+    return Padding(
+      padding: EdgeInsets.all($styles.insets.lg),
+      child: Row(
+        children: [
+          /// WonderImage w/ Timeline btn
+          Expanded(
+            child: CenteredBox(
+              width: $styles.sizes.maxContentWidth3,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Gap($styles.insets.lg),
+                  Expanded(
+                    child: Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          _WonderImageWithTimeline(data: _data, height: min(500, context.heightPx - 300)),
+                          Gap($styles.insets.lg),
+                          SizedBox(width: 400, child: _TimelineBtn(type: type)),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                Gap($styles.insets.lg),
-              ],
+                  Gap($styles.insets.lg),
+                ],
+              ),
             ),
           ),
-        ),
 
-        /// EventsList
-        Expanded(
-          child: CenteredBox(
-            width: $styles.sizes.maxContentWidth2,
-            child: _EventsList(
-              data: _data,
-              topHeight: 100,
-              blurOnScroll: false,
-              onScroll: _handleScroll,
-              initialScrollOffset: _scrollPos,
+          /// EventsList
+          Expanded(
+            child: CenteredBox(
+              width: $styles.sizes.maxContentWidth2,
+              child: _EventsList(
+                data: _data,
+                topHeight: 100,
+                blurOnScroll: false,
+                onScroll: _handleScroll,
+                initialScrollOffset: _scrollPos,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

@@ -4,12 +4,19 @@ class WonderDetailsTabMenu extends StatelessWidget {
   static double bottomPadding = 0;
   static double buttonInset = 12;
 
-  const WonderDetailsTabMenu({Key? key, required this.tabController, this.showBg = false, required this.wonderType})
+  const WonderDetailsTabMenu(
+      {Key? key,
+      required this.tabController,
+      this.showBg = false,
+      required this.wonderType,
+      this.axis = Axis.horizontal})
       : super(key: key);
 
   final TabController tabController;
   final bool showBg;
   final WonderType wonderType;
+  final Axis axis;
+  bool get isVertical => axis == Axis.vertical;
 
   @override
   Widget build(BuildContext context) {
@@ -19,53 +26,79 @@ class WonderDetailsTabMenu extends StatelessWidget {
     bottomPadding = max(context.mq.padding.bottom, $styles.insets.xs * 1.5);
     return Stack(
       children: [
-        //Background
+        /// Background, animates in and out based on `showBg`
         Positioned.fill(
           child: AnimatedOpacity(
             duration: $styles.times.fast,
             opacity: showBg ? 1 : 0,
             child: Padding(
-              padding: EdgeInsets.only(top: buttonInset),
+              padding: EdgeInsets.only(
+                top: isVertical ? context.mq.viewPadding.top : buttonInset,
+                right: isVertical ? buttonInset : 0,
+              ),
               child: ColoredBox(color: $styles.colors.offWhite),
             ),
           ),
         ),
-        // Buttons
+
+        /// Buttons
+        /// A Stack with a row or column of tabButtons, and an illustrated homeButton sitting on top.
         Padding(
           padding: EdgeInsets.only(left: $styles.insets.sm, right: $styles.insets.xxs, bottom: bottomPadding),
-          // TabButtons are a Stack with a row of icon buttons, and an illustrated home button sitting on top.
-          // The home buttons shows / hides itself based on `showHomeBtn`
-          // The row contains an animated placeholder gap which makes room for the icon as it transitions in.
-          child: IntrinsicHeight(
-            child: Stack(
-              children: [
-                // Main tab btns + animated gap
-                Center(
-                  child: FocusTraversalGroup(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        // Home btn
-                        _WonderHomeBtn(
-                          size: homeBtnSize,
-                          wonderType: wonderType,
-                          borderSize: showBg ? 6 : 2,
-                        ),
-                        _TabBtn(0, tabController,
-                            iconImg: 'editorial', label: $strings.wonderDetailsTabLabelInformation, color: iconColor),
-                        _TabBtn(1, tabController,
-                            iconImg: 'photos', label: $strings.wonderDetailsTabLabelImages, color: iconColor),
-                        _TabBtn(2, tabController,
-                            iconImg: 'artifacts', label: $strings.wonderDetailsTabLabelArtifacts, color: iconColor),
-                        _TabBtn(3, tabController,
-                            iconImg: 'timeline', label: $strings.wonderDetailsTabLabelEvents, color: iconColor),
-                      ],
-                    ),
+          child: Stack(
+            children: [
+              SizedBox(
+                width: isVertical ? null : double.infinity,
+                height: isVertical ? double.infinity : null,
+                child: FocusTraversalGroup(
+                  child: Flex(
+                    direction: axis,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: isVertical ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      /// Home btn
+                      _WonderHomeBtn(
+                        size: homeBtnSize,
+                        wonderType: wonderType,
+                        borderSize: showBg ? 6 : 2,
+                      ),
+
+                      /// Tabs
+                      _TabBtn(
+                        0,
+                        tabController,
+                        iconImg: 'editorial',
+                        label: $strings.wonderDetailsTabLabelInformation,
+                        color: iconColor,
+                        axis: axis,
+                      ),
+                      _TabBtn(
+                        1,
+                        tabController,
+                        iconImg: 'photos',
+                        label: $strings.wonderDetailsTabLabelImages,
+                        color: iconColor,
+                        axis: axis,
+                      ),
+                      _TabBtn(
+                        2,
+                        tabController,
+                        iconImg: 'artifacts',
+                        label: $strings.wonderDetailsTabLabelArtifacts,
+                        color: iconColor,
+                        axis: axis,
+                      ),
+                      _TabBtn(3, tabController,
+                          iconImg: 'timeline',
+                          label: $strings.wonderDetailsTabLabelEvents,
+                          color: iconColor,
+                          axis: axis),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ],
@@ -111,16 +144,21 @@ class _TabBtn extends StatelessWidget {
     required this.iconImg,
     required this.color,
     required this.label,
+    required this.axis,
   }) : super(key: key);
 
-  static const double _minWidth = 50;
-  static const double _maxWidth = 120;
+  static const double minSize = 50;
+  static const double maxSize = 100;
+  static const double crossBtnSize = 60;
 
   final int index;
   final TabController tabController;
   final String iconImg;
   final Color color;
   final String label;
+  final Axis axis;
+
+  bool get _isVertical => axis == Axis.vertical;
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +167,7 @@ class _TabBtn extends StatelessWidget {
     final iconImgPath = '${ImagePaths.common}/tab-$iconImg${selected ? '-active' : ''}.png';
     String tabLabel = localizations.tabLabel(tabIndex: index + 1, tabCount: tabController.length);
     tabLabel = '$label: $tabLabel';
-    final double btnWidth = (context.widthPx / 6).clamp(_minWidth, _maxWidth);
+    final double mainBtnSize = ((_isVertical ? context.heightPx : context.widthPx) / 6).clamp(minSize, maxSize);
     return MergeSemantics(
       child: Semantics(
         selected: selected,
@@ -139,7 +177,7 @@ class _TabBtn extends StatelessWidget {
             padding: EdgeInsets.only(top: $styles.insets.md + $styles.insets.xs, bottom: $styles.insets.sm),
             onPressed: () => tabController.index = index,
             semanticLabel: label,
-            minimumSize: Size(btnWidth, 0),
+            minimumSize: _isVertical ? Size(crossBtnSize, mainBtnSize) : Size(mainBtnSize, crossBtnSize),
             // Image icon
             child: Image.asset(iconImgPath, height: 32, width: 32, color: selected ? null : color),
           ),
