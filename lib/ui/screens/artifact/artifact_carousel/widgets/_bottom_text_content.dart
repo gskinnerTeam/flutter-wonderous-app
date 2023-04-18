@@ -24,7 +24,7 @@ class _BottomTextContent extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Gap($styles.insets.xl),
+              Gap($styles.insets.md),
               Column(
                 children: [
                   IgnorePointer(
