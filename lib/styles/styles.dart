@@ -160,7 +160,7 @@ class _Sizes {
   double get maxContentWidth1 => 800;
   double get maxContentWidth2 => 600;
   double get maxContentWidth3 => 500;
-  final Size minAppSize = Size(380, 380);
+  final Size minAppSize = Size(380, 250);
 }
 
 @immutable

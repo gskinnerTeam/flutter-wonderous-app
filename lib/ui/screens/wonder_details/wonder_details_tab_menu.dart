@@ -152,7 +152,7 @@ class _TabBtn extends StatelessWidget {
     required this.axis,
   }) : super(key: key);
 
-  static const double minSize = 50;
+  static const double minSize = 30;
   static const double maxSize = 100;
   static const double crossBtnSize = 60;
 
@@ -172,7 +172,10 @@ class _TabBtn extends StatelessWidget {
     final iconImgPath = '${ImagePaths.common}/tab-$iconImg${selected ? '-active' : ''}.png';
     String tabLabel = localizations.tabLabel(tabIndex: index + 1, tabCount: tabController.length);
     tabLabel = '$label: $tabLabel';
-    final double mainBtnSize = ((_isVertical ? context.heightPx : context.widthPx) / 6).clamp(minSize, maxSize);
+
+    final double mainBtnSize = (((_isVertical ? context.heightPx : context.widthPx) - 74) / 5).clamp(minSize, maxSize);
+    final double iconSize = min(mainBtnSize, 32);
+    print(context.heightPx);
     return MergeSemantics(
       child: Semantics(
         selected: selected,
@@ -184,7 +187,7 @@ class _TabBtn extends StatelessWidget {
             semanticLabel: label,
             minimumSize: _isVertical ? Size(crossBtnSize, mainBtnSize) : Size(mainBtnSize, crossBtnSize),
             // Image icon
-            child: Image.asset(iconImgPath, height: 32, width: 32, color: selected ? null : color),
+            child: Image.asset(iconImgPath, height: iconSize, width: iconSize, color: selected ? null : color),
           ),
         ),
       ),
