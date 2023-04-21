@@ -1,3 +1,7 @@
+# 2.0.13
+- Add navigation rail for some landscape views
+- Maintain scroll position for Wonder Events page when changing from portrait to landscape
+
 # 2.0.12
 - Artifact search remembers open/closed panel state
 - Add focus state to all buttons
