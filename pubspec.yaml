@@ -35,7 +35,6 @@ dependencies:
   image_fade: ^0.6.2
   image_gallery_saver: ^1.7.1
   internet_connection_checker: ^1.0.0+1
-  intl: ^0.18.0
   package_info_plus: ^3.0.3
   particle_field: ^0.0.1
   path_provider: ^2.0.12
