@@ -82,13 +82,13 @@ List<HighlightData> _highlights = [
     date: '7th–8th century',
   ),
   HighlightData(
-    title: 'Mirror-Bearer', 
+    title: 'Head of a Rain God',
     wonder: WonderType.chichenItza,
-    artifactId: '313256',
+    artifactId: '310480',
     culture: 'Maya',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ao/web-large/DP-24340-001.jpg',
-    imageUrl: 'https://images.metmuseum.org/CRDImages/ao/original/DP-24340-001.jpg',
-    date: '6th century',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ao/web-large/DP102948.jpg',
+    imageUrl: 'https://images.metmuseum.org/CRDImages/ao/original/DP102948.jpg',
+    date: '10th–11th century',
   ),
 
 // christRedeemer
@@ -256,8 +256,8 @@ List<HighlightData> _highlights = [
     wonder: WonderType.machuPicchu,
     artifactId: '313295',
     culture: 'Inca',
-    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ao/web-large/DT9410.jpg',
-    imageUrl: 'https://images.metmuseum.org/CRDImages/ao/original/DT9410.jpg',
+    imageUrlSmall: 'https://images.metmuseum.org/CRDImages/ao/web-large/DP-27120-001.jpg',
+    imageUrl: 'https://images.metmuseum.org/CRDImages/ao/original/DP-27120-001.jpg',
     date: '14th–early 16th century',
   ),
   HighlightData(
