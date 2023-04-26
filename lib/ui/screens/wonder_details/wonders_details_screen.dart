@@ -25,7 +25,6 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
   )..addListener(_handleTabChanged);
   AnimationController? _fade;
 
-  final _detailsHasScrolled = ValueNotifier(false);
   double? _tabBarSize;
   bool _useNavRail = false;
 
@@ -40,8 +39,6 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
     setState(() {});
   }
 
-  void _handleDetailsScrolled(double scrollPos) => _detailsHasScrolled.value = scrollPos > 0;
-
   void _handleTabMenuSized(Size size) {
     setState(() {
       _tabBarSize = (_useNavRail ? size.width : size.height) - WonderDetailsTabMenu.buttonInset;
@@ -50,7 +47,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
 
   @override
   Widget build(BuildContext context) {
-    _useNavRail = context.isLandscape && context.heightPx < 900;
+    _useNavRail = context.isLandscape && context.heightPx > 250;
 
     final wonder = wondersLogic.getData(widget.type);
     int tabIndex = _tabController.index;
@@ -65,7 +62,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
           LazyIndexedStack(
             index: _tabController.index,
             children: [
-              WonderEditorialScreen(wonder, contentPadding: menuPadding, onScroll: _handleDetailsScrolled),
+              WonderEditorialScreen(wonder, contentPadding: menuPadding),
               PhotoGallery(collectionId: wonder.unsplashCollectionId, wonderType: wonder.type),
               ArtifactCarouselScreen(type: wonder.type, contentPadding: menuPadding),
               WonderEvents(type: widget.type, contentPadding: menuPadding),
@@ -75,16 +72,13 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
           /// Tab menu
           Align(
             alignment: _useNavRail ? Alignment.centerLeft : Alignment.bottomCenter,
-            child: ValueListenableBuilder<bool>(
-              valueListenable: _detailsHasScrolled,
-              builder: (_, value, ___) => MeasurableWidget(
-                onChange: _handleTabMenuSized,
-                child: WonderDetailsTabMenu(
-                    tabController: _tabController,
-                    wonderType: wonder.type,
-                    showBg: showTabBarBg,
-                    axis: _useNavRail ? Axis.vertical : Axis.horizontal),
-              ),
+            child: MeasurableWidget(
+              onChange: _handleTabMenuSized,
+              child: WonderDetailsTabMenu(
+                  tabController: _tabController,
+                  wonderType: wonder.type,
+                  showBg: showTabBarBg,
+                  axis: _useNavRail ? Axis.vertical : Axis.horizontal),
             ),
           ),
         ],

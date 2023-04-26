@@ -38,10 +38,9 @@ part 'widgets/_title_text.dart';
 part 'widgets/_top_illustration.dart';
 
 class WonderEditorialScreen extends StatefulWidget {
-  const WonderEditorialScreen(this.data, {Key? key, required this.onScroll, required this.contentPadding})
-      : super(key: key);
+  const WonderEditorialScreen(this.data, {Key? key, required this.contentPadding}) : super(key: key);
   final WonderData data;
-  final void Function(double scrollPos) onScroll;
+  //final void Function(double scrollPos) onScroll;
   final EdgeInsets contentPadding;
 
   @override
@@ -62,7 +61,6 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
   /// Various [ValueListenableBuilders] are mapped to the _scrollPos and will rebuild when it changes
   void _handleScrollChanged() {
     _scrollPos.value = _scroller.position.pixels;
-    widget.onScroll.call(_scrollPos.value);
   }
 
   @override
@@ -168,16 +166,17 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
               ),
 
               /// Home Btn
-              AnimatedBuilder(
-                  animation: _scroller,
-                  builder: (_, child) {
-                    return AnimatedOpacity(
-                      opacity: _scrollPos.value > 0 ? 0 : 1,
-                      duration: $styles.times.med,
-                      child: child,
-                    );
-                  },
-                  child: AppHeader(backIcon: AppIcons.north, isTransparent: true)),
+              /// TODO: Decide when to show the back btn, probably whenever in tab view? This should be passed down from above somewhere...
+              // AnimatedBuilder(
+              //     animation: _scroller,
+              //     builder: (_, child) {
+              //       return AnimatedOpacity(
+              //         opacity: _scrollPos.value > 0 ? 0 : 1,
+              //         duration: $styles.times.med,
+              //         child: child,
+              //       );
+              //     },
+              //     child: AppHeader(backIcon: AppIcons.north, isTransparent: true)),
             ],
           ),
         ),
