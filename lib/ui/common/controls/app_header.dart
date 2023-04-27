@@ -38,6 +38,7 @@ class AppHeader extends StatelessWidget {
                     Gap($styles.insets.sm),
                     if (showBackBtn)
                       BackBtn(
+                        key: Key('hamburgerMenuButton'),
                         onPressed: onBack,
                         icon: backIcon,
                         semanticLabel: backBtnSemantics,

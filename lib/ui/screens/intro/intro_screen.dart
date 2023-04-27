@@ -196,6 +196,7 @@ class _IntroScreenState extends State<IntroScreen> {
           opacity: pageIndex == pageData.length - 1 ? 1 : 0,
           duration: $styles.times.fast,
           child: CircleIconBtn(
+            key: const Key('finishIntroButton'),
             icon: AppIcons.next_large,
             bgColor: $styles.colors.accent1,
             onPressed: _handleIntroCompletePressed,

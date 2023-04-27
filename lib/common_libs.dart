@@ -1,6 +1,6 @@
 /// Consolidate imports that are common across the app.
 
-export 'dart:math';
+export 'dart:math' hide interface;
 
 export 'package:collection/collection.dart';
 export 'package:extra_alignments/extra_alignments.dart';

@@ -1,4 +1,4 @@
-package com.gskinner.flutter.wonders; // replace "pl.leancode.patrol.example" with your app's package
+package com.gskinner.flutter.wonders;
 
 import org.junit.Rule;
 import org.junit.runner.RunWith;
