@@ -1,10 +1,9 @@
 import 'package:wonders/common_libs.dart';
 
 class WonderDetailsTabMenu extends StatelessWidget {
-  static double bottomPadding = 0;
-  static double buttonInset = 12;
+  static const double buttonInset = 12;
   static const double homeBtnSize = 74;
-  static double get minTabSize => 25;
+  static const double minTabSize = 25;
   static const double maxTabSize = 100;
 
   const WonderDetailsTabMenu(
@@ -24,27 +23,28 @@ class WonderDetailsTabMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color iconColor = showBg ? $styles.colors.black : $styles.colors.white;
-
+    // Measure available size after subtracting the home button size and insets
     final availableSize = ((isVertical ? context.heightPx : context.widthPx) - homeBtnSize - $styles.insets.md);
+    // Calculate tabBtnSize based on availableSize
     final double tabBtnSize = (availableSize / 4).clamp(minTabSize, maxTabSize);
-    final double homeBtnBorderSize = showBg ? 6 : 2;
+    // Figure out some extra gap, in the case that the tabBtns are wider than the homeBtn
     final double gapAmt = max(0, tabBtnSize - homeBtnSize);
-    // Use SafeArea padding if its more than the default padding.
-    bottomPadding = max(context.mq.padding.bottom, $styles.insets.xs * 1.5);
+    // Store off safe areas which we will need to respect in the layout below
+    final double safeAreaBtm = context.mq.padding.bottom, safeAreaTop = context.mq.padding.top;
+    // Insets the bg from the rounded wonder icon making it appear offset. The tab btns will use the same padding.
+    final buttonInsetPadding = isVertical ? EdgeInsets.only(right: buttonInset) : EdgeInsets.only(top: buttonInset);
     return Padding(
-      padding: EdgeInsets.only(
-        top: isVertical ? context.mq.viewPadding.top : buttonInset,
-        right: isVertical ? buttonInset : 0,
-      ),
+      padding: isVertical ? EdgeInsets.only(top: safeAreaTop) : EdgeInsets.zero,
       child: Stack(
         children: [
-          /// Background, animates in and out based on `showBg`
+          /// Background, animates in and out based on `showBg`,
+          /// has padding along the inside edge which makes the home-btn appear to hang over the edge.
           Positioned.fill(
-            child: AnimatedOpacity(
-              duration: $styles.times.fast,
-              opacity: showBg ? 1 : 0,
-              child: Padding(
-                padding: EdgeInsets.only(right: isVertical ? buttonInset : 0, top: isVertical ? 0 : buttonInset),
+            child: Padding(
+              padding: buttonInsetPadding,
+              child: AnimatedOpacity(
+                duration: $styles.times.fast,
+                opacity: showBg ? 1 : 0,
                 child: Container(
                   decoration: BoxDecoration(
                     color: $styles.colors.white,
@@ -56,71 +56,86 @@ class WonderDetailsTabMenu extends StatelessWidget {
           ),
 
           /// Buttons
-          /// A Stack with a row or column of tabButtons, and an illustrated homeButton sitting on top.
+          /// A centered row / column of tabButtons w/ an wonder home button
           Padding(
-            padding: EdgeInsets.only(left: $styles.insets.xs * 1.5, right: $styles.insets.xxs, bottom: bottomPadding),
-            child: Stack(
-              children: [
-                SizedBox(
-                  width: isVertical ? null : double.infinity,
-                  height: isVertical ? double.infinity : null,
-                  child: FocusTraversalGroup(
-                    child: Flex(
-                      direction: axis,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        /// Home btn
-                        _WonderHomeBtn(
-                          size: homeBtnSize,
-                          wonderType: wonderType,
-                          borderSize: homeBtnBorderSize,
-                        ),
-                        Gap(gapAmt),
-
-                        /// Tabs
-                        _TabBtn(
-                          0,
-                          tabController,
-                          iconImg: 'editorial',
-                          label: $strings.wonderDetailsTabLabelInformation,
-                          color: iconColor,
-                          axis: axis,
-                          mainAxisSize: tabBtnSize,
-                        ),
-                        _TabBtn(
-                          1,
-                          tabController,
-                          iconImg: 'photos',
-                          label: $strings.wonderDetailsTabLabelImages,
-                          color: iconColor,
-                          axis: axis,
-                          mainAxisSize: tabBtnSize,
-                        ),
-                        _TabBtn(
-                          2,
-                          tabController,
-                          iconImg: 'artifacts',
-                          label: $strings.wonderDetailsTabLabelArtifacts,
-                          color: iconColor,
-                          axis: axis,
-                          mainAxisSize: tabBtnSize,
-                        ),
-                        _TabBtn(
-                          3,
-                          tabController,
-                          iconImg: 'timeline',
-                          label: $strings.wonderDetailsTabLabelEvents,
-                          color: iconColor,
-                          axis: axis,
-                          mainAxisSize: tabBtnSize,
-                        ),
-                      ],
+            /// When in hz mode add safeArea bottom padding, vertical layout should not need it
+            padding: EdgeInsets.only(bottom: isVertical ? 0 : safeAreaBtm),
+            child: SizedBox(
+              width: isVertical ? null : double.infinity,
+              height: isVertical ? double.infinity : null,
+              child: FocusTraversalGroup(
+                child: Flex(
+                  direction: axis,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    /// Home btn
+                    Padding(
+                      /// Small amt of padding for home-btn
+                      padding: isVertical
+                          ? EdgeInsets.only(left: $styles.insets.xs)
+                          : EdgeInsets.only(bottom: $styles.insets.xs),
+                      child: _WonderHomeBtn(
+                        size: homeBtnSize,
+                        wonderType: wonderType,
+                        borderSize: showBg ? 6 : 2,
+                      ),
                     ),
-                  ),
+                    Gap(gapAmt),
+
+                    /// A second Row / Col holding tab buttons
+                    /// Add the btn inset padding so they will be centered on the colored background
+                    Padding(
+                      padding: buttonInsetPadding,
+                      child: Flex(
+                          direction: axis,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            /// Tabs
+                            _TabBtn(
+                              0,
+                              tabController,
+                              iconImg: 'editorial',
+                              label: $strings.wonderDetailsTabLabelInformation,
+                              color: iconColor,
+                              axis: axis,
+                              mainAxisSize: tabBtnSize,
+                            ),
+                            _TabBtn(
+                              1,
+                              tabController,
+                              iconImg: 'photos',
+                              label: $strings.wonderDetailsTabLabelImages,
+                              color: iconColor,
+                              axis: axis,
+                              mainAxisSize: tabBtnSize,
+                            ),
+                            _TabBtn(
+                              2,
+                              tabController,
+                              iconImg: 'artifacts',
+                              label: $strings.wonderDetailsTabLabelArtifacts,
+                              color: iconColor,
+                              axis: axis,
+                              mainAxisSize: tabBtnSize,
+                            ),
+                            _TabBtn(
+                              3,
+                              tabController,
+                              iconImg: 'timeline',
+                              label: $strings.wonderDetailsTabLabelEvents,
+                              color: iconColor,
+                              axis: axis,
+                              mainAxisSize: tabBtnSize,
+                            ),
+                          ]),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ],
@@ -185,9 +200,9 @@ class _TabBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _isVertical
-        ? SizedBox(height: mainAxisSize, width: crossBtnSize, child: Placeholder())
-        : SizedBox(height: crossBtnSize, width: mainAxisSize, child: Placeholder());
+    // return _isVertical
+    //     ? SizedBox(height: mainAxisSize, width: crossBtnSize, child: Placeholder())
+    //     : SizedBox(height: crossBtnSize, width: mainAxisSize, child: Placeholder());
     bool selected = tabController.index == index;
     final MaterialLocalizations localizations = MaterialLocalizations.of(context);
     final iconImgPath = '${ImagePaths.common}/tab-$iconImg${selected ? '-active' : ''}.png';
@@ -202,14 +217,16 @@ class _TabBtn extends StatelessWidget {
         label: tabLabel,
         child: ExcludeSemantics(
           child: AppBtn.basic(
-            padding: _isVertical
-                ? EdgeInsets.zero
-                : EdgeInsets.only(top: $styles.insets.md + $styles.insets.xs, bottom: $styles.insets.sm),
             onPressed: () => tabController.index = index,
             semanticLabel: label,
             minimumSize: _isVertical ? Size(crossBtnSize, mainAxisSize) : Size(mainAxisSize, crossBtnSize),
             // Image icon
-            child: Image.asset(iconImgPath, height: iconSize, width: iconSize, color: selected ? null : color),
+            child: Image.asset(
+              iconImgPath,
+              height: iconSize,
+              width: iconSize,
+              color: selected ? null : color,
+            ),
           ),
         ),
       ),
