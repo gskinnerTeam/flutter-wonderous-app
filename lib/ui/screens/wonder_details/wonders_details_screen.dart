@@ -47,7 +47,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
 
   @override
   Widget build(BuildContext context) {
-    _useNavRail = context.isLandscape && context.heightPx > 250;
+    _useNavRail = appLogic.shouldUseNavRail(context.mq.size);
 
     final wonder = wondersLogic.getData(widget.type);
     int tabIndex = _tabController.index;

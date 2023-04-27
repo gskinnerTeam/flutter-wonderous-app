@@ -84,6 +84,8 @@ class AppLogic {
     _updateSystemOrientation();
   }
 
+  bool shouldUseNavRail(Size size) => size.width > size.height && size.height > 250;
+
   /// Enable landscape, portrait or both. Views can call this method to override the default settings.
   /// For example, the [FullscreenVideoViewer] always wants to enable both landscape and portrait.
   /// If a view overrides this, it is responsible for setting it back to [supportedOrientations] when disposed.
