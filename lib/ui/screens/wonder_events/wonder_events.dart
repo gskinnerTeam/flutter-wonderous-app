@@ -77,6 +77,7 @@ class _WonderEventsState extends State<WonderEvents> {
 
   /// Landscape layout is a row, with the WonderImage on left and EventsList on the right
   Widget _buildTwoColumn(BuildContext context) {
+    final double timelineImageSize = (context.heightPx - 350).clamp(200, 500);
     return Padding(
       padding: EdgeInsets.all($styles.insets.lg),
       child: Row(
@@ -85,25 +86,16 @@ class _WonderEventsState extends State<WonderEvents> {
           Expanded(
             child: CenteredBox(
               width: $styles.sizes.maxContentWidth3,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Gap($styles.insets.lg),
-                  Expanded(
-                    child: Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          _WonderImageWithTimeline(data: _data, height: min(500, context.heightPx - 300)),
-                          Gap($styles.insets.lg),
-                          SizedBox(width: 400, child: _TimelineBtn(type: widget.type)),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Gap($styles.insets.lg),
-                ],
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: $styles.insets.lg),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _WonderImageWithTimeline(data: _data, height: timelineImageSize),
+                    Gap($styles.insets.lg),
+                    SizedBox(width: 400, child: _TimelineBtn(type: widget.type)),
+                  ],
+                ),
               ),
             ),
           ),
