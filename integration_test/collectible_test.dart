@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   patrolTest(
-    'first experimental test',
+    'discover pendant collectible in chichen itza',
     nativeAutomation: true,
     ($) async {
       await (await SharedPreferences.getInstance()).clear();
