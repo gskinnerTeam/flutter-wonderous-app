@@ -6,9 +6,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  // tearDown(() {
-
-  // });
   patrolTest(
     'first experimental test',
     nativeAutomation: true,

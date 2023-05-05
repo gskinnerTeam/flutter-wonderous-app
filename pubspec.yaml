@@ -58,6 +58,8 @@ dev_dependencies:
   copy_with_extension_gen: ^4.0.3
   icons_launcher: ^2.0.1
   flutter_lints: ^2.0.1
+  flutter_test:
+    sdk: flutter
   json_serializable: ^6.3.1
   dart_code_metrics: ^4.17.1
   dependency_validator: ^3.0.0
