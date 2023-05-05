@@ -22,6 +22,7 @@ class _BottomTextContent extends StatelessWidget {
         children: [
           /// Text
           Column(
+            key: Key(artifact.title),
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Gap($styles.insets.md),

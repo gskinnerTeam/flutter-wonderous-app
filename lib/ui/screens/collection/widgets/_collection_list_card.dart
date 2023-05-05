@@ -42,6 +42,7 @@ class _CollectionListCard extends StatelessWidget with GetItMixin {
                       int state = states[e.id] ?? CollectibleState.lost;
                       return Flexible(
                         child: _CollectibleImage(
+                          key: K.collectibleDetails(e.wonder, e.title),
                           collectible: e,
                           state: state,
                           onPressed: (c) => _showDetails(context, c),

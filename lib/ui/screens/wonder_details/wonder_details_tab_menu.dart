@@ -107,6 +107,7 @@ class WonderDetailsTabMenu extends StatelessWidget {
                               mainAxisSize: tabBtnSize,
                             ),
                             _TabBtn(
+                              key: K.photosSectionButton,
                               1,
                               tabController,
                               iconImg: 'photos',
@@ -116,6 +117,7 @@ class WonderDetailsTabMenu extends StatelessWidget {
                               mainAxisSize: tabBtnSize,
                             ),
                             _TabBtn(
+                              key: K.artifactsSectionButton,
                               2,
                               tabController,
                               iconImg: 'artifacts',

@@ -1,10 +1,14 @@
 import 'package:patrol/patrol.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/patrol_keys.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
+  // tearDown(() {
+
+  // });
   patrolTest(
     'first experimental test',
     nativeAutomation: true,
@@ -13,6 +17,7 @@ void main() {
       prepareApp();
       await $.pumpWidget(WondersApp());
       await initializeApp();
+      collectiblesLogic.reset();
 
       await $('Swipe left to continue').waitUntilVisible();
       await $(K.finishIntroButton)
@@ -23,10 +28,19 @@ void main() {
       await $(K.hamburgerMenuButton).waitUntilVisible();
 
       await $(K.wonderScreen(WonderType.chichenItza)).scrollTo().tap(andSettle: false);
-      await $(K.collectible(WonderType.chichenItza, 0)).scrollTo(andSettle: false).tap(andSettle: false);
-      await $(K.hamburgerMenuButton).tap(); // to jest ten sam widget, tylko z inna ikona w roznych wywolaniach
-      await $(K.wonderHomeButton).waitUntilVisible();
-      await $.pump(Duration(seconds: 5));
+      await $(K.collectible(WonderType.chichenItza, 0))
+          .scrollTo(
+            scrollable: $(PageStorageKey('editorial')).$(Scrollable),
+            andSettle: false,
+          )
+          .tap(andSettle: false); // trzeba było dodać scrollable, bo inaczej hot restart nie działał w tym miejscu
+      await $('VIEW IN MY COLLECTION').tap();
+      await $(K.collectibleDetails(WonderType.chichenItza, 'Pendant')).tap();
+      await $('Pendant').waitUntilVisible();
+
+      addTearDown(() async {
+        await $('Pendant').waitUntilVisible();
+      });
     },
   );
 }
