@@ -14,4 +14,6 @@ class PatrolKeys {
   static Key wonderScreen(WonderType type) => Key(type.name);
   static Key collectible(WonderType type, int index) => Key('${type.name}_$index');
   static Key collectibleDetails(WonderType type, String title) => Key('${type.name}_$title');
+  static Key artifact(String title) => Key(title);
+  static Key image(String title) => Key(title);
 }
