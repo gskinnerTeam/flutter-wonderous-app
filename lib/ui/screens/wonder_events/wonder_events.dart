@@ -79,7 +79,7 @@ class _WonderEventsState extends State<WonderEvents> {
   Widget _buildTwoColumn(BuildContext context) {
     final double timelineImageSize = (context.heightPx - 350).clamp(200, 500);
     return Padding(
-      padding: EdgeInsets.all($styles.insets.lg),
+      padding: EdgeInsets.symmetric(vertical: $styles.insets.lg, horizontal: $styles.insets.sm),
       child: Row(
         children: [
           /// WonderImage w/ Timeline btn
