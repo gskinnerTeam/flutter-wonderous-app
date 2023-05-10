@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
@@ -77,14 +78,16 @@ class AppLogic {
   }
 
   /// Called from the UI layer once a MediaQuery has been obtained
-  void handleAppSizeChanged(Size size) {
+  void handleAppSizeChanged() {
     /// Disable landscape layout on smaller form factors
-    bool isSmall = size.shortestSide < 500 && size != Size.zero;
+    bool isSmall = display.size.shortestSide / display.devicePixelRatio < 600;
     supportedOrientations = isSmall ? [Axis.vertical] : [Axis.vertical, Axis.horizontal];
     _updateSystemOrientation();
   }
 
-  bool shouldUseNavRail(Size size) => size.width > size.height && size.height > 250;
+  Display get display => PlatformDispatcher.instance.displays.first;
+
+  bool shouldUseNavRail() => true; //display.size.width > display.size.height && display.size.height > 250;
 
   /// Enable landscape, portrait or both. Views can call this method to override the default settings.
   /// For example, the [FullscreenVideoViewer] always wants to enable both landscape and portrait.

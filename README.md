@@ -23,15 +23,15 @@ To try the app you can download it from your favorite app store:
 
 If you're new to Flutter the first thing you'll need is to follow the [setup instructions](https://flutter.dev/docs/get-started/install).
 
-Once Flutter is setup, you can use the latest `beta` channel:
- * `flutter channel beta`
+Once Flutter is setup, you can use the latest `master` channel:
+ * `flutter channel master`
  * `flutter upgrade`
 
- Once on `beta` you're ready to run the app on your local device or simulator:
+ Once on `master` you're ready to run the app on your local device or simulator:
  * `flutter run -d ios`
  * `flutter run -d android`
 
-### Impeller Rendering  
+### Impeller Rendering
 
 This app uses the new [Impeller Runtime](https://docs.flutter.dev/perf/impeller) by default on iOS.
 

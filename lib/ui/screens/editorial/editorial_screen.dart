@@ -72,7 +72,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
 
       /// Attempt to maintain a similar aspect ratio for the image within the app-bar
       double maxAppBarHeight = min(context.widthPx, $styles.sizes.maxContentWidth1) * 1.2;
-      bool showBackBtn = appLogic.shouldUseNavRail(context.mq.size) == false;
+      bool showBackBtn = appLogic.shouldUseNavRail() == false;
       return PopRouterOnOverScroll(
         controller: _scroller,
         child: ColoredBox(
