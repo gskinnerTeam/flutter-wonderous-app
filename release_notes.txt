@@ -1,3 +1,8 @@
+# 2.0.14
+- Avoid letter boxing on foldable devices
+- Timeline: Maintain yr when changing orientation
+- YouTube View: Add play/pause keyboard support
+
 # 2.0.13
 - Add navigation rail for some landscape views
 - Maintain scroll position for Wonder Events and Editorial pages when changing from portrait to landscape
