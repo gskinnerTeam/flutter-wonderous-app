@@ -1,4 +1,6 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/platform_info.dart';
+import 'package:wonders/ui/common/modals/app_modals.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class FullscreenVideoViewer extends StatefulWidget {
@@ -15,17 +17,38 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
     params: const YoutubePlayerParams(),
   );
 
+  bool get _enableVideo => PlatformInfo.isMobile;
+
   @override
   void initState() {
     super.initState();
     appLogic.supportedOrientationsOverride = [Axis.horizontal, Axis.vertical];
+    RawKeyboard.instance.addListener(_handleKeyDown);
   }
 
   @override
   void dispose() {
     // when view closes, remove the override
     appLogic.supportedOrientationsOverride = null;
+    RawKeyboard.instance.removeListener(_handleKeyDown);
     super.dispose();
+  }
+
+  Future<void> _handleKeyDown(RawKeyEvent value) async {
+    if (value.repeat) return;
+    if (value is RawKeyDownEvent) {
+      final k = value.logicalKey;
+      if (k == LogicalKeyboardKey.enter || k == LogicalKeyboardKey.space) {
+        if (_enableVideo) {
+          final state = await _controller.playerState;
+          if (state == PlayerState.playing) {
+            _controller.pauseVideo();
+          } else {
+            _controller.playVideo();
+          }
+        }
+      }
+    }
   }
 
   @override
@@ -36,10 +59,12 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
       body: Stack(
         children: [
           Center(
-            child: YoutubePlayer(
-              controller: _controller,
-              aspectRatio: aspect,
-            ),
+            child: (PlatformInfo.isMobile)
+                ? YoutubePlayer(
+                    controller: _controller,
+                    aspectRatio: aspect,
+                  )
+                : Placeholder(),
           ),
           SafeArea(
             child: Padding(
