@@ -90,4 +90,7 @@ class _ScrollingViewportController extends ChangeNotifier {
   void _handleScaleUpdate(ScaleUpdateDetails details) {
     setZoom(details.scale * _zoomOnScaleStart);
   }
+
+  /// Maintain current yr when the app changes size
+  void _handleResize() => jumpToYear(_currentYr.value);
 }

@@ -26,6 +26,7 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
   late final _ScrollingViewportController controller = _ScrollingViewportController(this);
   static const double _minTimelineSize = 100;
   final _currentEventMarker = ValueNotifier<TimelineEvent?>(null);
+  Size? _prevSize;
 
   @override
   void initState() {
@@ -52,6 +53,10 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
 
   @override
   Widget build(BuildContext context) {
+    if (_prevSize != null && _prevSize != context.mq.size) {
+      scheduleMicrotask(controller._handleResize);
+    }
+    _prevSize = context.mq.size;
     return GestureDetector(
       // Handle pinch to zoom
       onScaleUpdate: controller._handleScaleUpdate,
