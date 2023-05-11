@@ -87,7 +87,7 @@ class AppLogic {
 
   Display get display => PlatformDispatcher.instance.displays.first;
 
-  bool shouldUseNavRail() => true; //display.size.width > display.size.height && display.size.height > 250;
+  bool shouldUseNavRail() => display.size.width > display.size.height && display.size.height > 250;
 
   /// Enable landscape, portrait or both. Views can call this method to override the default settings.
   /// For example, the [FullscreenVideoViewer] always wants to enable both landscape and portrait.
