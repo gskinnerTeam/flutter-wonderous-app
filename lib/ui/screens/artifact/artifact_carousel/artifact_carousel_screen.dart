@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/highlight_data.dart';
+import 'package:wonders/patrol_keys.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
@@ -101,6 +102,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                       builder: (_, value, __) {
                         final int offset = (value.round() - index).abs();
                         return _CollapsingCarouselItem(
+                          key: K.artifact(_artifacts[wrappedIndex].title),
                           width: itemWidth,
                           indexOffset: min(3, offset),
                           onPressed: () => _handleArtifactTap(index),

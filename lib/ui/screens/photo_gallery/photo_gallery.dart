@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/unsplash_photo_data.dart';
+import 'package:wonders/patrol_keys.dart';
 import 'package:wonders/ui/common/controls/app_loading_indicator.dart';
 import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
 import 'package:wonders/ui/common/hidden_collectible.dart';
@@ -159,6 +160,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                 alignment: Alignment.center,
                 // Detect swipes in order to change index
                 child: EightWaySwipeDetector(
+                  key: K.image('$_index'),
                   onSwipe: _handleSwipe,
                   threshold: 30,
                   // A tween animation builder moves from image to image based on current offset

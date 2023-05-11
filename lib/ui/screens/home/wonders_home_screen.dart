@@ -1,5 +1,6 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
+import 'package:wonders/patrol_keys.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
@@ -317,7 +318,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         )),
 
                         /// Arrow Btn that fades in and out
-                        _AnimatedArrowButton(onTap: _showDetailsPage, semanticTitle: currentWonder.title),
+                        _AnimatedArrowButton(
+                            key: K.wonderScreen(currentWonder.type),
+                            onTap: _showDetailsPage,
+                            semanticTitle: currentWonder.title),
                       ],
                     ),
                   ),

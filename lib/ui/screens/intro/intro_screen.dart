@@ -1,5 +1,6 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/patrol_keys.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
@@ -193,6 +194,7 @@ class _IntroScreenState extends State<IntroScreen> {
       valueListenable: _currentPage,
       builder: (_, pageIndex, __) {
         return AnimatedOpacity(
+          key: K.finishIntroButton,
           opacity: pageIndex == pageData.length - 1 ? 1 : 0,
           duration: $styles.times.fast,
           child: CircleIconBtn(
