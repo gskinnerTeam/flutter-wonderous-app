@@ -2,6 +2,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/logic/data/wonders_data/search/search_data.dart';
+import 'package:wonders/patrol_keys.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/static_text_scale.dart';
@@ -114,6 +115,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
               child: _filteredResults.isEmpty
                   ? _buildEmptyIndicator(context)
                   : _ResultsGrid(
+                      key: K.resultsGrid,
                       searchResults: _filteredResults,
                       onPressed: _handleResultPressed,
                     ),

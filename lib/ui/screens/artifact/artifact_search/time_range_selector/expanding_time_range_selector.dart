@@ -191,6 +191,7 @@ class _OpenedTimeRange extends StatelessWidget {
             },
             Spacer(),
             SizedBox(
+              key: K.closeTimelineSelectorButton,
               width: $styles.insets.xl,
               child: AppBtn.from(
                 onPressed: onClose,

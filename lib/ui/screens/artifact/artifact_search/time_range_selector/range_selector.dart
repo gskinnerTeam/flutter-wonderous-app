@@ -88,7 +88,7 @@ class _RangeSelectorState extends State<RangeSelector> {
               onUpdate: _handleMidDrag,
               dragWidth: dragWidth,
               child: Container(
-                key: K.dragArrow,
+                key: K.timelineRangeSelector,
                 decoration: BoxDecoration(
                   color: $styles.colors.offWhite.withOpacity(0),
                   border: Border.symmetric(
@@ -112,6 +112,7 @@ class _RangeSelectorState extends State<RangeSelector> {
       child: Transform.scale(
         scaleX: isRight ? 1 : -1,
         child: Container(
+          key: K.timelineRightArrow(isRight),
           alignment: Alignment.center,
           width: RangeSelector.handleWidth,
           decoration: BoxDecoration(

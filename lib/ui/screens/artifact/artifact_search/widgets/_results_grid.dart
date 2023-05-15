@@ -44,8 +44,8 @@ class _ResultsGridState extends State<_ResultsGrid> {
                 mainAxisSpacing: $styles.insets.sm,
                 crossAxisSpacing: $styles.insets.sm,
                 childCount: widget.searchResults.length,
-                itemBuilder: (context, index) =>
-                    _ResultTile(onPressed: widget.onPressed, data: widget.searchResults[index]),
+                itemBuilder: (context, index) => _ResultTile(
+                    key: K.resultTile(index), onPressed: widget.onPressed, data: widget.searchResults[index]),
               ),
             ),
           ],
