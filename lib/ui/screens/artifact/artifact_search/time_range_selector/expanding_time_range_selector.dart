@@ -1,6 +1,7 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
+import 'package:wonders/patrol_keys.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/opening_card.dart';
 import 'package:wonders/ui/common/wonders_timeline_builder.dart';
@@ -52,6 +53,7 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
           duration: $styles.times.fast,
           padding: isOpen ? EdgeInsets.zero : EdgeInsets.only(bottom: safeBottom + $styles.insets.xxs),
           child: AppBtn.basic(
+            key: K.timeRangeSelectorFloatingButton,
             onPressed: () => widget.panelController.toggle(),
             semanticLabel: '',
             pressEffect: false,

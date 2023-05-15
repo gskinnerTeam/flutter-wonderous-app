@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-
 import 'package:wonders/logic/data/wonder_type.dart';
 
 typedef K = PatrolKeys;
@@ -10,6 +9,9 @@ class PatrolKeys {
   static const wonderHomeButton = Key('wonderHomeButton');
   static const photosSectionButton = Key('photosSectionButton');
   static const artifactsSectionButton = Key('artifactsSectionButton');
+  static const browseAllArtifactsButton = Key('browseAllArtifactsButton');
+  static const timeRangeSelectorFloatingButton = Key('timeRangeSelectorFloatingButton');
+  static const dragArrow = Key('dragArrow');
 
   static Key wonderScreen(WonderType type) => Key(type.name);
   static Key collectible(WonderType type, int index) => Key('${type.name}_$index');

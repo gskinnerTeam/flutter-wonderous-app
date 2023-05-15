@@ -74,6 +74,7 @@ class _BottomTextContent extends StatelessWidget {
                 ),
               Gap($styles.insets.md),
               AppBtn.from(
+                key: K.browseAllArtifactsButton,
                 text: $strings.artifactsButtonBrowse,
                 expand: true,
                 onPressed: state._handleSearchTap,
