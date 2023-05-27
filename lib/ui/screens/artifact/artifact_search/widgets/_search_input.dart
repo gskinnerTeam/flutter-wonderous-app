@@ -44,30 +44,33 @@ class _SearchInput extends StatelessWidget {
           ),
         ),
         TopLeft(
-          child: Container(
-            margin: EdgeInsets.only(top: $styles.insets.xxs),
-            width: constraints.maxWidth,
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: $styles.colors.black.withOpacity(0.25),
-                  blurRadius: 4,
-                  offset: Offset(0, 4),
-                ),
-              ],
-            ),
+          child: Material(
+            color: Colors.transparent,
             child: Container(
-              padding: EdgeInsets.all($styles.insets.xs),
+              margin: EdgeInsets.only(top: $styles.insets.xxs),
+              width: constraints.maxWidth,
               decoration: BoxDecoration(
-                color: $styles.colors.offWhite.withOpacity(0.92),
-                borderRadius: BorderRadius.circular($styles.insets.xs),
+                boxShadow: [
+                  BoxShadow(
+                    color: $styles.colors.black.withOpacity(0.25),
+                    blurRadius: 4,
+                    offset: Offset(0, 4),
+                  ),
+                ],
               ),
-              child: ConstrainedBox(
-                constraints: BoxConstraints(maxHeight: 200),
-                child: ListView(
-                  padding: EdgeInsets.all($styles.insets.xs),
-                  shrinkWrap: true,
-                  children: items,
+              child: Container(
+                padding: EdgeInsets.all($styles.insets.xs),
+                decoration: BoxDecoration(
+                  color: $styles.colors.offWhite.withOpacity(0.92),
+                  borderRadius: BorderRadius.circular($styles.insets.xs),
+                ),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(maxHeight: 200),
+                  child: ListView(
+                    padding: EdgeInsets.all($styles.insets.xs),
+                    shrinkWrap: true,
+                    children: items,
+                  ),
                 ),
               ),
             ),
@@ -100,11 +103,13 @@ class _SearchInput extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all($styles.insets.xs),
         child: CenterLeft(
-          child: Text(
-            suggestion,
-            overflow: TextOverflow.ellipsis,
-            textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+          child: DefaultTextStyle(
             style: $styles.text.bodySmall.copyWith(color: $styles.colors.greyStrong),
+            child: Text(
+              suggestion,
+              overflow: TextOverflow.ellipsis,
+              textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+            ),
           ),
         ),
       ),
