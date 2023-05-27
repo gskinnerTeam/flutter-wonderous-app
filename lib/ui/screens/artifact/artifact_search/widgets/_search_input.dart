@@ -83,11 +83,13 @@ class _SearchInput extends StatelessWidget {
       margin: EdgeInsets.only(bottom: $styles.insets.xxs),
       decoration: BoxDecoration(border: Border(bottom: BorderSide(color: $styles.colors.greyStrong.withOpacity(0.1)))),
       child: CenterLeft(
-        child: Text(
-          $strings.searchInputTitleSuggestions.toUpperCase(),
-          overflow: TextOverflow.ellipsis,
-          textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+        child: DefaultTextStyle(
           style: $styles.text.title2.copyWith(color: $styles.colors.black),
+          child: Text(
+            $strings.searchInputTitleSuggestions.toUpperCase(),
+            overflow: TextOverflow.ellipsis,
+            textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+          ),
         ),
       ),
     );
@@ -100,11 +102,13 @@ class _SearchInput extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all($styles.insets.xs),
         child: CenterLeft(
-          child: Text(
-            suggestion,
-            overflow: TextOverflow.ellipsis,
-            textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+          child: DefaultTextStyle(
             style: $styles.text.bodySmall.copyWith(color: $styles.colors.greyStrong),
+            child: Text(
+              suggestion,
+              overflow: TextOverflow.ellipsis,
+              textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+            ),
           ),
         ),
       ),
