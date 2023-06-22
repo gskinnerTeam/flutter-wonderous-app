@@ -306,10 +306,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_animate
-      sha256: "1f6fdee1f63eda3c35e04c07664593c31b7fdae290b6b0dc513d2fdfb2d27c76"
+      sha256: be54662837a6e66cc53ee88549e808c625275e0faf5a43e11cf3182cb0bd1b02
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0"
+    version: "4.2.0"
   flutter_circular_text:
     dependency: "direct main"
     description:
@@ -396,10 +396,10 @@ packages:
     dependency: "direct main"
     description:
       name: gap
-      sha256: "6e35ee60d5bbc61b0bec97cc5ba7ed32f62f1f62449e281ea77677479418a15d"
+      sha256: "976fa1e405d7d8249b3d2ec0e18a1eac116f0a86430c29a7485dff6f5326f03a"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.1"
+    version: "3.0.0"
   get_it:
     dependency: "direct main"
     description:
@@ -1271,4 +1271,4 @@ packages:
     version: "2.0.2"
 sdks:
   dart: ">=3.0.0-0 <4.0.0"
-  flutter: ">=3.7.0-0"
+  flutter: ">=3.7.0"
