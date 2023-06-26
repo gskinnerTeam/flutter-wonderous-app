@@ -61,4 +61,10 @@ class _VerticalSwipeController {
       onVerticalDragCancel: handleVerticalSwipeCancelled,
       behavior: HitTestBehavior.translucent,
       child: child);
+
+  void dispose(){
+    swipeAmt.dispose();
+    isPointerDown.dispose();
+    swipeReleaseAnim.dispose();
+  }
 }

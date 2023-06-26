@@ -147,6 +147,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     ));
   }
 
+  @override
+  void dispose() {
+    _swipeController.dispose();
+    super.dispose();
+  }
+
   Widget _buildMgPageView() {
     return ExcludeSemantics(
       child: PageView.builder(
