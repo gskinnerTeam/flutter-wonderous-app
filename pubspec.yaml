@@ -1,7 +1,7 @@
 name: wonders
 description: Explore the famous wonders of the world.
 publish_to: "none"
-version: 2.0.14+1
+version: 2.0.14+2
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
@@ -64,6 +64,16 @@ dev_dependencies:
   json_serializable: ^6.3.1
   dart_code_metrics: ^4.17.1
   dependency_validator: ^3.0.0
+
+icons_launcher:
+  image_path: "assets/marketing/app-icon-1024.png"
+  platforms:
+    android:
+      enable: true
+    ios:
+      enable: true
+    macos:
+      enable: true
 
 flutter_icons:
   ios: true
