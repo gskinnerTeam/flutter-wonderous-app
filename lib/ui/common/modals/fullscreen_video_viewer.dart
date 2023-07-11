@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/ui/common/modals/app_modals.dart';
@@ -59,7 +60,7 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
       body: Stack(
         children: [
           Center(
-            child: (PlatformInfo.isMobile)
+            child: (PlatformInfo.isMobile || kIsWeb)
                 ? YoutubePlayer(
                     controller: _controller,
                     aspectRatio: aspect,
