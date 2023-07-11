@@ -13,14 +13,11 @@ class LocaleLogic {
 
   Future<void> load() async {
     Locale locale = _defaultLocal;
-    if (kIsWeb) return; // exit early on web as [findSystemLocale] throws errors as of Dec, 2022
+    final localeCode = settingsLogic.currentLocale.value ?? await findSystemLocale();
+    locale = Locale(localeCode.split('_')[0]);
     if (kDebugMode) {
       // locale = Locale('zh'); // uncomment to test chinese
     }
-    final localeCode = settingsLogic.currentLocale.value ?? await findSystemLocale();
-    // Try and find a supported locale
-    locale = Locale(localeCode.split('_')[0]);
-    // Fall back to default
     if (AppLocalizations.supportedLocales.contains(locale) == false) {
       locale = _defaultLocal;
     }
