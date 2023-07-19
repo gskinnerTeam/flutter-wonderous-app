@@ -1,7 +1,7 @@
 part of '../collection_screen.dart';
 
 @immutable
-class _CollectionList extends StatelessWidget with GetItMixin {
+class _CollectionList extends StatefulWidget with GetItStatefulWidgetMixin {
   _CollectionList({
     Key? key,
     this.onReset,
@@ -9,45 +9,69 @@ class _CollectionList extends StatelessWidget with GetItMixin {
     this.scrollKey,
   }) : super(key: key);
 
+  static const double _vtCardExtent = 300;
+  static const double _hzCardExtent = 600;
   final VoidCallback? onReset;
   final Key? scrollKey;
   final String fromId;
 
+  @override
+  State<_CollectionList> createState() => _CollectionListState();
+}
+
+class _CollectionListState extends State<_CollectionList> with GetItStateMixin {
+  final ScrollController scrollController = ScrollController();
+
+  late final ValueNotifier<bool> _vtMode = ValueNotifier(true)..addListener(_maintainScrollPos);
+
   WonderType? get scrollTargetWonder {
     CollectibleData? item;
-    if (fromId.isEmpty) {
+    if (widget.fromId.isEmpty) {
       item = collectiblesLogic.getFirstDiscoveredOrNull();
     } else {
-      item = collectiblesLogic.fromId(fromId);
+      item = collectiblesLogic.fromId(widget.fromId);
     }
     return item?.wonder;
+  }
+
+  // Maintain scroll position when switching between vertical and horizontal orientation.
+  // Multiplies or divides the current scroll position by the ratio of the vertical and horizontal card extents.
+  void _maintainScrollPos() {
+    const extentFactor = _CollectionList._vtCardExtent / _CollectionList._hzCardExtent;
+    final currentPx = scrollController.position.pixels;
+    if (_vtMode.value == true) {
+      scrollController.jumpTo(currentPx * extentFactor);
+    } else {
+      scrollController.jumpTo(currentPx / extentFactor);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     watchX((CollectiblesLogic o) => o.statesById);
     List<WonderData> wonders = wondersLogic.all;
-    bool vtMode = context.isLandscape == false;
+    _vtMode.value = context.isLandscape == false;
     final scrollWonder = scrollTargetWonder;
     // Create list of collections that is shared by both hz and vt layouts
     List<Widget> collections = [
       ...wonders.map((d) {
         return _CollectionListCard(
-          key: d.type == scrollWonder ? scrollKey : null,
-          height: vtMode ? 300 : 400,
-          width: vtMode ? null : 600,
-          fromId: fromId,
+          key: d.type == scrollWonder ? widget.scrollKey : null,
+          width: _vtMode.value ? null : _CollectionList._hzCardExtent,
+          height: _vtMode.value ? _CollectionList._vtCardExtent : 400,
+          fromId: widget.fromId,
           data: d,
         );
       }).toList()
     ];
     // Scroll view adapts to scroll vertically or horizontally
     return SingleChildScrollView(
-      scrollDirection: vtMode ? Axis.vertical : Axis.horizontal,
+      controller: scrollController,
+      scrollDirection: _vtMode.value ? Axis.vertical : Axis.horizontal,
       child: Padding(
         padding: EdgeInsets.all($styles.insets.lg),
         child: SeparatedFlex(
-          direction: vtMode ? Axis.vertical : Axis.horizontal,
+          direction: _vtMode.value ? Axis.vertical : Axis.horizontal,
           mainAxisSize: MainAxisSize.min,
           separatorBuilder: () => Gap($styles.insets.lg),
           children: [
@@ -62,11 +86,11 @@ class _CollectionList extends StatelessWidget with GetItMixin {
 
   Widget _buildResetBtn(BuildContext context) {
     Widget btn = AppBtn.from(
-      onPressed: onReset ?? () {},
+      onPressed: widget.onReset ?? () {},
       text: $strings.collectionButtonReset,
       isSecondary: true,
       expand: true,
     );
-    return AnimatedOpacity(opacity: onReset == null ? 0.25 : 1, duration: $styles.times.fast, child: btn);
+    return AnimatedOpacity(opacity: widget.onReset == null ? 0.25 : 1, duration: $styles.times.fast, child: btn);
   }
 }
