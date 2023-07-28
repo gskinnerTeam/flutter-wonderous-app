@@ -30,5 +30,7 @@
 	<string>NSApplication</string>
 	<key>LSApplicationCategoryType</key>
     <string>public.app-category.education</string>
+    <key>FLTEnableImpeller</key>
+    <true />
 </dict>
 </plist>
