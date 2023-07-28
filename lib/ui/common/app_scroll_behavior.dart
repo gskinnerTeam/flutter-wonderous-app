@@ -8,9 +8,7 @@ class AppScrollBehavior extends ScrollBehavior {
   // Add mouse drag on desktop for easier responsive testing
   Set<PointerDeviceKind> get dragDevices {
     final devices = Set<PointerDeviceKind>.from(super.dragDevices);
-    if (kDebugMode) {
-      devices.add(PointerDeviceKind.mouse);
-    }
+    devices.add(PointerDeviceKind.mouse);
     return devices;
   }
 
