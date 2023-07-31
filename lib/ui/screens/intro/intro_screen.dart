@@ -1,6 +1,7 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/common/app_icons.dart';
+  import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/static_text_scale.dart';
@@ -25,6 +26,8 @@ class _IntroScreenState extends State<IntroScreen> {
   late final PageController _pageController = PageController()..addListener(_handlePageChanged);
   final ValueNotifier<int> _currentPage = ValueNotifier(0);
   bool get _isOnLastPage => _currentPage.value.round() == pageData.length - 1;
+  bool get _isOnFirstPage => _currentPage.value.round() == 0;
+
   @override
   void dispose() {
     _pageController.dispose();
@@ -48,11 +51,16 @@ class _IntroScreenState extends State<IntroScreen> {
         duration: $styles.times.fast, curve: Curves.easeOut);
   }
 
-  void _handleNavTextDoubleTapped() {
+  void _handleNavTextSemanticTap() => _incrementPage(1);
+
+  void _incrementPage(int dir){
     final int current = _pageController.page!.round();
-    if (_isOnLastPage) return;
-    _pageController.animateToPage(current + 1, duration: 250.ms, curve: Curves.easeIn);
+    if (_isOnLastPage && dir > 0) return;
+    if (_isOnFirstPage && dir < 0) return;
+    _pageController.animateToPage(current + dir, duration: 250.ms, curve: Curves.easeIn);
   }
+
+  void _handleScrollWheel(double delta) => _incrementPage(delta >0? 1 : -1);
 
   @override
   Widget build(BuildContext context) {
@@ -70,96 +78,103 @@ class _IntroScreenState extends State<IntroScreen> {
     final List<Widget> pages = pageData.map((e) => _Page(data: e)).toList();
 
     /// Return resulting widget tree
-    return DefaultTextColor(
-      color: $styles.colors.offWhite,
-      child: Container(
-        color: $styles.colors.black,
-        child: SafeArea(
-          child: Animate(
-            delay: 500.ms,
-            effects: const [FadeEffect()],
-            child: Stack(
-              children: [
-                // page view with title & description:
-                MergeSemantics(
-                  child: Semantics(
-                    onIncrease: () => _handleSemanticSwipe(1),
-                    onDecrease: () => _handleSemanticSwipe(-1),
-                    child: PageView(
-                      controller: _pageController,
-                      children: pages,
-                      onPageChanged: (_) => AppHaptics.lightImpact(),
-                    ),
-                  ),
-                ),
-
-                IgnorePointer(
-                  ignoringSemantics: false,
-                  child: Column(children: [
-                    Spacer(),
-
-                    // logo:
-                    Semantics(
-                      header: true,
-                      child: Container(
-                        height: _logoHeight,
-                        alignment: Alignment.center,
-                        child: _WonderousLogo(),
+    return Listener(
+      onPointerSignal: (signal){
+        if(signal is PointerScrollEvent){
+          _handleScrollWheel(signal.scrollDelta.dy);
+        }
+      },
+      child: DefaultTextColor(
+        color: $styles.colors.offWhite,
+        child: Container(
+          color: $styles.colors.black,
+          child: SafeArea(
+            child: Animate(
+              delay: 500.ms,
+              effects: const [FadeEffect()],
+              child: Stack(
+                children: [
+                  // page view with title & description:
+                  MergeSemantics(
+                    child: Semantics(
+                      onIncrease: () => _handleSemanticSwipe(1),
+                      onDecrease: () => _handleSemanticSwipe(-1),
+                      child: PageView(
+                        controller: _pageController,
+                        children: pages,
+                        onPageChanged: (_) => AppHaptics.lightImpact(),
                       ),
                     ),
-
-                    // masked image:
-                    SizedBox(
-                      height: _imageSize,
-                      width: _imageSize,
-                      child: ValueListenableBuilder<int>(
-                        valueListenable: _currentPage,
-                        builder: (_, value, __) {
-                          return AnimatedSwitcher(
-                            duration: $styles.times.slow,
-                            child: KeyedSubtree(
-                              key: ValueKey(value), // so AnimatedSwitcher sees it as a different child.
-                              child: _PageImage(data: pageData[value]),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-
-                    // placeholder gap for text:
-                    Gap(_IntroScreenState._textHeight),
-
-                    // page indicator:
-                    Container(
-                      height: _pageIndicatorHeight,
-                      alignment: Alignment(0.0, 0),
-                      child: AppPageIndicator(
-                          count: pageData.length, controller: _pageController, color: $styles.colors.offWhite),
-                    ),
-
-                    Spacer(flex: 2),
-                  ]),
-                ),
-
-                // Build a cpl overlays to hide the content when swiping on very wide screens
-                _buildHzGradientOverlay(left: true),
-                _buildHzGradientOverlay(),
-
-                // finish button:
-                Positioned(
-                  right: $styles.insets.lg,
-                  bottom: $styles.insets.lg,
-                  child: _buildFinishBtn(context),
-                ),
-
-                // nav help text:
-                BottomCenter(
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: $styles.insets.lg),
-                    child: _buildNavText(context),
                   ),
-                ),
-              ],
+
+                  IgnorePointer(
+                    ignoringSemantics: false,
+                    child: Column(children: [
+                      Spacer(),
+
+                      // logo:
+                      Semantics(
+                        header: true,
+                        child: Container(
+                          height: _logoHeight,
+                          alignment: Alignment.center,
+                          child: _WonderousLogo(),
+                        ),
+                      ),
+
+                      // masked image:
+                      SizedBox(
+                        height: _imageSize,
+                        width: _imageSize,
+                        child: ValueListenableBuilder<int>(
+                          valueListenable: _currentPage,
+                          builder: (_, value, __) {
+                            return AnimatedSwitcher(
+                              duration: $styles.times.slow,
+                              child: KeyedSubtree(
+                                key: ValueKey(value), // so AnimatedSwitcher sees it as a different child.
+                                child: _PageImage(data: pageData[value]),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+
+                      // placeholder gap for text:
+                      Gap(_IntroScreenState._textHeight),
+
+                      // page indicator:
+                      Container(
+                        height: _pageIndicatorHeight,
+                        alignment: Alignment(0.0, 0),
+                        child: AppPageIndicator(
+                            count: pageData.length, controller: _pageController, color: $styles.colors.offWhite),
+                      ),
+
+                      Spacer(flex: 2),
+                    ]),
+                  ),
+
+                  // Build a cpl overlays to hide the content when swiping on very wide screens
+                  _buildHzGradientOverlay(left: true),
+                  _buildHzGradientOverlay(),
+
+                  // finish button:
+                  Positioned(
+                    right: $styles.insets.lg,
+                    bottom: $styles.insets.lg,
+                    child: _buildFinishBtn(context),
+                  ),
+
+                  // nav help text:
+                  BottomCenter(
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: $styles.insets.lg),
+                      child: _buildNavText(context),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -215,7 +230,7 @@ class _IntroScreenState extends State<IntroScreen> {
           duration: $styles.times.fast,
           child: Semantics(
             onTapHint: $strings.introSemanticNavigate,
-            onTap: _isOnLastPage ? null : _handleNavTextDoubleTapped,
+            onTap: _isOnLastPage ? null : _handleNavTextSemanticTap,
             child: Text($strings.introSemanticSwipeLeft, style: $styles.text.bodySmall),
           ),
         );
