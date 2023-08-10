@@ -14,7 +14,6 @@ export 'package:get_it_mixin/get_it_mixin.dart';
 export 'package:go_router/go_router.dart';
 export 'package:provider/provider.dart';
 export 'package:rnd/rnd.dart';
-export 'package:simple_rich_text/simple_rich_text.dart';
 export 'package:sized_context/sized_context.dart';
 export 'package:wonders/assets.dart';
 export 'package:wonders/logic/app_logic.dart';
