@@ -32,6 +32,33 @@ class AppHeader extends StatelessWidget {
           height: 64 * $styles.scale,
           child: Stack(
             children: [
+              MergeSemantics(
+                child: Semantics(
+                  header: true,
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (title != null)
+                          Text(
+                            title!.toUpperCase(),
+                            textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+                            style: $styles.text.h4.copyWith(
+                              color: $styles.colors.offWhite,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        if (subtitle != null)
+                          Text(
+                            subtitle!.toUpperCase(),
+                            textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+                            style: $styles.text.title1.copyWith(color: $styles.colors.accent1),
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
               Positioned.fill(
                 child: Center(
                   child: Row(children: [
@@ -49,31 +76,6 @@ class AppHeader extends StatelessWidget {
                   ]),
                 ),
               ),
-              MergeSemantics(
-                child: Semantics(
-                  header: true,
-                  child: Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (title != null)
-                          Text(
-                            title!.toUpperCase(),
-                            textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
-                            style:
-                                $styles.text.h4.copyWith(color: $styles.colors.offWhite, fontWeight: FontWeight.w500),
-                          ),
-                        if (subtitle != null)
-                          Text(
-                            subtitle!.toUpperCase(),
-                            textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
-                            style: $styles.text.title1.copyWith(color: $styles.colors.accent1),
-                          ),
-                      ],
-                    ),
-                  ),
-                ),
-              )
             ],
           ),
         ),
