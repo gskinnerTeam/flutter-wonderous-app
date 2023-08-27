@@ -395,12 +395,11 @@ packages:
   gap:
     dependency: "direct main"
     description:
-      path: "."
-      ref: dc980bf
-      resolved-ref: dc980bf4482ec5b8378aeb4c72e4face105c5d72
-      url: "https://github.com/esDotDev/gap.git"
-    source: git
-    version: "3.0.1+1"
+      name: gap
+      sha256: f19387d4e32f849394758b91377f9153a1b41d79513ef7668c088c77dbc6955d
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.1"
   get_it:
     dependency: "direct main"
     description:
