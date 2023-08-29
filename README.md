@@ -23,11 +23,11 @@ To try the app you can download it from your favorite app store:
 
 If you're new to Flutter the first thing you'll need is to follow the [setup instructions](https://flutter.dev/docs/get-started/install).
 
-Once Flutter is setup, you can use the latest `master` channel:
- * `flutter channel master`
+Once Flutter is setup, you can use the latest `stable` channel:
+ * `flutter channel stable`
  * `flutter upgrade`
 
- Once on `master` you're ready to run the app on your local device or simulator:
+ Once on `stable` you're ready to run the app on your local device or simulator:
  * `flutter run -d ios`
  * `flutter run -d android`
 

@@ -25,10 +25,7 @@ dependencies:
   flutter_native_splash: ^2.2.17
   flutter_staggered_grid_view: ^0.6.2
   flutter_svg: ^2.0.1
-  gap:
-    git:
-      url: https://github.com/esDotDev/gap.git
-      ref: dc980bf
+  gap: ^3.0.1
   get_it: ^7.2.0
   get_it_mixin: ^3.1.4
   google_maps_flutter: ^2.2.3
@@ -38,7 +35,6 @@ dependencies:
   image_fade: ^0.6.2
   image_gallery_saver: ^1.7.1
   internet_connection_checker: ^1.0.0+1
-  intl: ^0.18.1
   package_info_plus: ^3.0.3
   particle_field: ^0.0.1
   path_provider: ^2.0.12
@@ -52,9 +48,7 @@ dependencies:
   unsplash_client: ^2.1.0+3
   webview_flutter: ^4.0.2
   youtube_player_iframe: ^4.0.4
-
-dependency_overrides:
-  intl: ^0.18.1
+  cupertino_icons: ^1.0.5
 
 dev_dependencies:
   icons_launcher: ^2.1.3
