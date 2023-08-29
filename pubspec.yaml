@@ -34,6 +34,7 @@ dependencies:
   http: ^0.13.5
   image_fade: ^0.6.2
   image_gallery_saver: ^1.7.1
+  intl: ^0.18.1
   internet_connection_checker: ^1.0.0+1
   package_info_plus: ^3.0.3
   particle_field: ^0.0.1
@@ -42,7 +43,6 @@ dependencies:
   rnd: ^0.2.0
   share_plus: ^6.3.1
   shared_preferences: ^2.0.17
-  simple_rich_text: ^2.0.49
   sized_context: ^1.0.0+1
   smooth_page_indicator: ^1.0.1
   unsplash_client: ^2.1.0+3
