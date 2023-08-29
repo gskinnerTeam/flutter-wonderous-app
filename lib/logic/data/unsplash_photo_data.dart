@@ -29,7 +29,7 @@ class UnsplashPhotoData {
     if (PlatformInfo.pixelRatio >= 1.5 || PlatformInfo.isDesktop) {
       size *= 2;
     }
-    return 'https://wonderous.info/unsplash/$id-$size.jpg';
+    return 'https://www.wonderous.info/unsplash/$id-$size.jpg';
   }
 
   /// List of image ids by collection. This can be generated with the [UnsplashDownloadService].generateUnsplashCollectionsClass().
