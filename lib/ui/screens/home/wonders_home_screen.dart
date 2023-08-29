@@ -263,7 +263,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   /// Title Content
                   LightText(
                     child: IgnorePointer(
-                      ignoringSemantics: false,
                       child: Transform.translate(
                         offset: Offset(0, 30),
                         child: Column(

@@ -28,7 +28,6 @@ class _BottomTextContent extends StatelessWidget {
               Column(
                 children: [
                   IgnorePointer(
-                    ignoringSemantics: false,
                     child: Semantics(
                       button: true,
                       onIncrease: () => state._handleArtifactTap(_currentPage + 1),

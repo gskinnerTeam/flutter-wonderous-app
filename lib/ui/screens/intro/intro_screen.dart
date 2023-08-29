@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wonders/common_libs.dart';
-  import 'package:wonders/ui/common/app_icons.dart';
+import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/static_text_scale.dart';
@@ -53,14 +53,14 @@ class _IntroScreenState extends State<IntroScreen> {
 
   void _handleNavTextSemanticTap() => _incrementPage(1);
 
-  void _incrementPage(int dir){
+  void _incrementPage(int dir) {
     final int current = _pageController.page!.round();
     if (_isOnLastPage && dir > 0) return;
     if (_isOnFirstPage && dir < 0) return;
     _pageController.animateToPage(current + dir, duration: 250.ms, curve: Curves.easeIn);
   }
 
-  void _handleScrollWheel(double delta) => _incrementPage(delta >0? 1 : -1);
+  void _handleScrollWheel(double delta) => _incrementPage(delta > 0 ? 1 : -1);
 
   @override
   Widget build(BuildContext context) {
@@ -79,8 +79,8 @@ class _IntroScreenState extends State<IntroScreen> {
 
     /// Return resulting widget tree
     return Listener(
-      onPointerSignal: (signal){
-        if(signal is PointerScrollEvent){
+      onPointerSignal: (signal) {
+        if (signal is PointerScrollEvent) {
           _handleScrollWheel(signal.scrollDelta.dy);
         }
       },
@@ -108,7 +108,6 @@ class _IntroScreenState extends State<IntroScreen> {
                   ),
 
                   IgnorePointer(
-                    ignoringSemantics: false,
                     child: Column(children: [
                       Spacer(),
 

@@ -21,7 +21,6 @@ class TimelineSection extends StatelessWidget {
         StringUtils.formatYr(data.endYr),
       )}',
       child: IgnorePointer(
-        ignoringSemantics: false,
         child: Container(
           alignment: Alignment(0, -1 + fraction * 2),
           padding: EdgeInsets.all($styles.insets.xs),
