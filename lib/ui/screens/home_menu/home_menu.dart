@@ -61,12 +61,6 @@ class _HomeMenuState extends State<HomeMenu> {
 
         PopNavigatorUnderlay(),
 
-        AppHeader(
-          isTransparent: true,
-          backIcon: AppIcons.close,
-          trailing: (_) => LocaleSwitcher(),
-        ),
-
         /// Content
         SafeArea(
           child: Center(
@@ -89,6 +83,12 @@ class _HomeMenuState extends State<HomeMenu> {
               ),
             ),
           ),
+        ),
+
+        AppHeader(
+          isTransparent: true,
+          backIcon: AppIcons.close,
+          trailing: (_) => LocaleSwitcher(),
         ),
       ],
     );
