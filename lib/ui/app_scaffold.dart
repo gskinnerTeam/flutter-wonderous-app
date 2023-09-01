@@ -10,8 +10,8 @@ class WondersAppScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Listen to the device size, and update AppStyle when it changes
-    MediaQuery.of(context);
-    appLogic.handleAppSizeChanged();
+    final mq = MediaQuery.of(context);
+    appLogic.handleAppSizeChanged(mq.size);
     // Set default timing for animations in the app
     Animate.defaultDuration = _style.times.fast;
     // Create a style object that will be passed down the widget tree

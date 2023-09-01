@@ -9,6 +9,8 @@ import 'package:wonders/ui/common/modals/fullscreen_video_viewer.dart';
 import 'package:wonders/ui/common/utils/page_routes.dart';
 
 class AppLogic {
+  Size _appSize = Size.zero;
+
   /// Indicates to the rest of the app that bootstrap has not completed.
   /// The router will use this to prevent redirects while bootstrapping.
   bool isBootstrapComplete = false;
@@ -78,16 +80,17 @@ class AppLogic {
   }
 
   /// Called from the UI layer once a MediaQuery has been obtained
-  void handleAppSizeChanged() {
+  void handleAppSizeChanged(Size appSize) {
     /// Disable landscape layout on smaller form factors
     bool isSmall = display.size.shortestSide / display.devicePixelRatio < 600;
     supportedOrientations = isSmall ? [Axis.vertical] : [Axis.vertical, Axis.horizontal];
     _updateSystemOrientation();
+    _appSize = appSize;
   }
 
   Display get display => PlatformDispatcher.instance.displays.first;
 
-  bool shouldUseNavRail() => display.size.width > display.size.height && display.size.height > 250;
+  bool shouldUseNavRail() => _appSize.width > _appSize.height && _appSize.height > 250;
 
   /// Enable landscape, portrait or both. Views can call this method to override the default settings.
   /// For example, the [FullscreenVideoViewer] always wants to enable both landscape and portrait.
