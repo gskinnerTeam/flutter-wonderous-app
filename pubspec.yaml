@@ -33,7 +33,7 @@ dependencies:
   go_router: ^6.5.5
   http: ^0.13.5
   image_fade: ^0.6.2
-  image_gallery_saver: ^1.7.1
+  image_gallery_saver: ^2.0.3
   intl: ^0.18.1
   internet_connection_checker: ^1.0.0+1
   package_info_plus: ^3.0.3
