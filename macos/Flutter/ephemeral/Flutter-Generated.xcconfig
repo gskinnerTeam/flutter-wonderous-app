@@ -2,12 +2,10 @@
 FLUTTER_ROOT=/Users/shawn/Dev/flutter
 FLUTTER_APPLICATION_PATH=/Users/shawn/Dev/gskinner/flutter-wonders-app
 COCOAPODS_PARALLEL_CODE_SIGN=true
-FLUTTER_TARGET=/Users/shawn/Dev/gskinner/flutter-wonders-app/lib/main.dart
 FLUTTER_BUILD_DIR=build
-FLUTTER_BUILD_NAME=2.0.16
-FLUTTER_BUILD_NUMBER=5
-DART_DEFINES=Zmx1dHRlci5pbnNwZWN0b3Iuc3RydWN0dXJlZEVycm9ycz10cnVl,RkxVVFRFUl9XRUJfQVVUT19ERVRFQ1Q9dHJ1ZQ==,RkxVVFRFUl9XRUJfQ0FOVkFTS0lUX1VSTD1odHRwczovL3d3dy5nc3RhdGljLmNvbS9mbHV0dGVyLWNhbnZhc2tpdC9iODRhZDFhZDMwY2NhOGQzMDNiNGJjYjJiYmQ3NzU3M2U0ZDY2MTIyLw==
+FLUTTER_BUILD_NAME=2.0.18
+FLUTTER_BUILD_NUMBER=7
 DART_OBFUSCATION=false
 TRACK_WIDGET_CREATION=true
 TREE_SHAKE_ICONS=false
-PACKAGE_CONFIG=/Users/shawn/Dev/gskinner/flutter-wonders-app/.dart_tool/package_config.json
+PACKAGE_CONFIG=.dart_tool/package_config.json
