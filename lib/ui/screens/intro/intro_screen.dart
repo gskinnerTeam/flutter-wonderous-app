@@ -18,7 +18,7 @@ class IntroScreen extends StatefulWidget {
 class _IntroScreenState extends State<IntroScreen> {
   static const double _imageSize = 250;
   static const double _logoHeight = 126;
-  static const double _textHeight = 100;
+  static const double _textHeight = 110;
   static const double _pageIndicatorHeight = 55;
 
   static List<_PageData> pageData = [];
