@@ -1,6 +1,4 @@
 // ignore_for_file: constant_identifier_names
-
-import 'package:flutter/foundation.dart';
 import 'package:wonders/common_libs.dart';
 
 class AppIcon extends StatelessWidget {
@@ -11,9 +9,8 @@ class AppIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String i = describeEnum(icon).toLowerCase().replaceAll('_', '-');
+    String i = icon.name.toLowerCase().replaceAll('_', '-');
     String path = 'assets/images/_common/icons/icon-$i.png';
-    //print(path);
     return SizedBox(
       width: size,
       height: size,
