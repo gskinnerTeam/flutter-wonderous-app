@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:image_fade/image_fade.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/retry_image.dart';
@@ -50,7 +51,20 @@ class _AppImageState extends State<AppImage> {
   void _updateImage() {
     if (widget.image == _sourceImage) return;
     _sourceImage = widget.image;
+    /// Apply proxy to MET api images
+    if(kIsWeb && _sourceImage is NetworkImage){
+      final url = (_sourceImage as NetworkImage).url;
+      _sourceImage = NetworkImage(maybeAddMetProxy(url));
+    }
     _displayImage = _capImageSize(_addRetry(_sourceImage));
+  }
+
+  String maybeAddMetProxy(String url) {
+    if (url.contains('images.metmuseum.org')) {
+      url = 'https://proxy.wonderous.app:8081/$url';
+      return url;
+    }
+    return url;
   }
 
   @override
