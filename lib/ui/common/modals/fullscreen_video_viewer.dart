@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/platform_info.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
@@ -69,7 +70,10 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
           SafeArea(
             child: Padding(
               padding: EdgeInsets.all($styles.insets.md),
-              child: const BackBtn(),
+              // Wrap btn in a PointerInterceptor to prevent the HTML video player from intercepting the pointer (https://pub.dev/packages/pointer_interceptor)
+              child: PointerInterceptor(
+                child: const BackBtn(),
+              ),
             ),
           ),
         ],

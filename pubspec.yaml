@@ -39,7 +39,8 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   package_info_plus: ^3.0.3
   particle_field: ^0.0.1
-  path_provider: ^2.0.12
+  path_provider: ^2.1.1
+  pointer_interceptor: ^0.9.3+6
   provider: ^6.0.5
   rnd: ^0.2.0
   share_plus: ^6.3.1
