@@ -24,11 +24,9 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
       double offsetY = (imgHeight / 2 + outerPadding * .25) * (1 - collapseAmt);
       if (top) offsetY *= -1; // flip?
       return Transform.translate(
-          offset: Offset(0, offsetY),
-          child: BlendMask(
-            blendModes: const [BlendMode.colorBurn],
-            child: Text(value, style: quoteStyle, textAlign: TextAlign.center),
-          ));
+        offset: Offset(0, offsetY),
+        child:Text(value, style: quoteStyle, textAlign: TextAlign.center),
+      );
     }
 
     return ValueListenableBuilder<double>(
@@ -88,20 +86,23 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
                 Positioned.fill(
                   child: Container(
                     margin: const EdgeInsets.symmetric(horizontal: 24),
-                    child: StaticTextScale(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(height: 32), // push down vertical centre
-                          buildText(data.pullQuote1Top, collapseAmt, top: true),
-                          buildText(data.pullQuote1Bottom, collapseAmt, top: false),
-                          if (data.pullQuote1Author.isNotEmpty) ...[
-                            Container(
-                              margin: const EdgeInsets.only(top: 16),
-                              child: buildText('- ${data.pullQuote1Author}', collapseAmt, top: false, isAuthor: true),
-                            )
+                    child: BlendMask(
+                      blendModes: const [BlendMode.colorBurn],
+                      child: StaticTextScale(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(height: 32), // push down vertical centre
+                            buildText(data.pullQuote1Top, collapseAmt, top: true),
+                            buildText(data.pullQuote1Bottom, collapseAmt, top: false),
+                            if (data.pullQuote1Author.isNotEmpty) ...[
+                              Container(
+                                margin: const EdgeInsets.only(top: 16),
+                                child: buildText('- ${data.pullQuote1Author}', collapseAmt, top: false, isAuthor: true),
+                              )
+                            ],
                           ],
-                        ],
+                        ),
                       ),
                     ),
                   ),
