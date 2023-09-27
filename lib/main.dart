@@ -11,6 +11,8 @@ import 'package:wonders/logic/unsplash_logic.dart';
 import 'package:wonders/logic/wallpaper_logic.dart';
 import 'package:wonders/logic/wonders_logic.dart';
 
+import '_tools/artifact_download_helper.dart';
+
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   // Keep native splash screen up until app is finished bootstrapping
@@ -30,6 +32,7 @@ class WondersApp extends StatelessWidget with GetItMixin {
   WondersApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    return MaterialApp(home: ArtifactDownloadHelper());
     final locale = watchX((SettingsLogic s) => s.currentLocale);
     return MaterialApp.router(
       routeInformationProvider: appRouter.routeInformationProvider,

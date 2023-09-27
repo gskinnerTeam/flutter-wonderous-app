@@ -1,6 +1,6 @@
 class SearchData {
   static const String baseImagePath = 'https://images.metmuseum.org/CRDImages/';
-
+  static const missingIds = [313256, 327544, 327596, 545776, 38549, 38578, 38473, 38598, 38153, 38203, 64486, 64487];
   const SearchData(this.year, this.id, this.title, this.keywords, this.imagePath, [this.aspectRatio = 0]);
   final int year;
   final int id;
