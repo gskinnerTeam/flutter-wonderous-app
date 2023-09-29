@@ -28,36 +28,37 @@ class _ScrollingContent extends StatelessWidget {
       final String dropChar = value.substring(0, 1);
       final textScale = MediaQuery.of(context).textScaleFactor;
       final double dropCapWidth = StringUtils.measure(dropChar, dropStyle).width * textScale;
-      final bool isEnglish = localeLogic.strings.localeName == 'en'; //TODO EC: Helper method for localLogic.isEnglish?
-      final bool skipCaps = !isEnglish || MediaQuery.of(context).accessibleNavigation;
+      final bool skipCaps = !localeLogic.isEnglish;
       return Semantics(
         label: value,
-        child: !skipCaps
-            ? DropCapText(
-                _fixNewlines(value).substring(1),
-                dropCap: DropCap(
-                  width: dropCapWidth,
-                  height: $styles.text.body.fontSize! * $styles.text.body.height! * 2,
-                  child: Transform.translate(
-                    offset: Offset(0, bodyStyle.fontSize! * (bodyStyle.height! - 1) - 2),
-                    child: Text(
-                      dropChar,
-                      overflow: TextOverflow.visible,
-                      style: $styles.text.dropCase.copyWith(
-                        color: $styles.colors.accent1,
-                        height: 1,
+        child: ExcludeSemantics(
+          child: !skipCaps
+              ? DropCapText(
+                  _fixNewlines(value).substring(1),
+                  dropCap: DropCap(
+                    width: dropCapWidth,
+                    height: $styles.text.body.fontSize! * $styles.text.body.height! * 2,
+                    child: Transform.translate(
+                      offset: Offset(0, bodyStyle.fontSize! * (bodyStyle.height! - 1) - 2),
+                      child: Text(
+                        dropChar,
+                        overflow: TextOverflow.visible,
+                        style: $styles.text.dropCase.copyWith(
+                          color: $styles.colors.accent1,
+                          height: 1,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                style: $styles.text.body,
-                dropCapPadding: EdgeInsets.only(right: 6),
-                dropCapStyle: $styles.text.dropCase.copyWith(
-                  color: $styles.colors.accent1,
-                  height: 1,
-                ),
-              )
-            : Text(value, style: bodyStyle),
+                  style: $styles.text.body,
+                  dropCapPadding: EdgeInsets.only(right: 6),
+                  dropCapStyle: $styles.text.dropCase.copyWith(
+                    color: $styles.colors.accent1,
+                    height: 1,
+                  ),
+                )
+              : Text(value, style: bodyStyle),
+        ),
       );
     }
 
@@ -88,50 +89,58 @@ class _ScrollingContent extends StatelessWidget {
       sliver: SliverPadding(
         padding: EdgeInsets.symmetric(vertical: $styles.insets.md),
         sliver: SliverList(
-          delegate: SliverChildListDelegate([
-            ..._contentSection([
-              Center(child: buildHiddenCollectible(slot: 0)),
+          delegate: SliverChildListDelegate.fixed([
+            Center(
+              child: SizedBox(
+                width: $styles.sizes.maxContentWidth1,
+                child: Column(children: [
+                  ..._contentSection([
+                    Center(child: buildHiddenCollectible(slot: 0)),
 
-              /// History 1
-              buildDropCapText(data.historyInfo1),
+                    /// History 1
+                    buildDropCapText(data.historyInfo1),
 
-              /// Quote1
-              _CollapsingPullQuoteImage(data: data, scrollPos: scrollPos),
-              Center(child: buildHiddenCollectible(slot: 1)),
+                    /// Quote1
+                    _CollapsingPullQuoteImage(data: data, scrollPos: scrollPos),
+                    Center(child: buildHiddenCollectible(slot: 1)),
 
-              /// Callout1
-              _Callout(text: data.callout1),
+                    /// Callout1
+                    _Callout(text: data.callout1),
 
-              /// History 2
-              buildText(data.historyInfo2),
-              _SectionDivider(scrollPos, sectionNotifier, index: 1),
+                    /// History 2
+                    buildText(data.historyInfo2),
+                    _SectionDivider(scrollPos, sectionNotifier, index: 1),
 
-              /// Construction 1
-              buildDropCapText(data.constructionInfo1),
-              Center(child: buildHiddenCollectible(slot: 2)),
-            ]),
-            Gap($styles.insets.md),
-            _YouTubeThumbnail(id: data.videoId, caption: data.videoCaption),
-            Gap($styles.insets.md),
-            ..._contentSection([
-              /// Callout2
-              Gap($styles.insets.xs),
-              _Callout(text: data.callout2),
+                    /// Construction 1
+                    buildDropCapText(data.constructionInfo1),
+                    Center(child: buildHiddenCollectible(slot: 2)),
+                  ]),
+                  Gap($styles.insets.md),
+                  _YouTubeThumbnail(id: data.videoId, caption: data.videoCaption),
+                  Gap($styles.insets.md),
+                  ..._contentSection([
+                    /// Callout2
+                    Gap($styles.insets.xs),
+                    _Callout(text: data.callout2),
 
-              /// Construction 2
-              buildText(data.constructionInfo2),
-              _SlidingImageStack(scrollPos: scrollPos, type: data.type),
-              _SectionDivider(scrollPos, sectionNotifier, index: 2),
+                    /// Construction 2
+                    buildText(data.constructionInfo2),
+                    _SlidingImageStack(scrollPos: scrollPos, type: data.type),
+                    _SectionDivider(scrollPos, sectionNotifier, index: 2),
 
-              /// Location
-              buildDropCapText(data.locationInfo1),
-              _LargeSimpleQuote(text: data.pullQuote2, author: data.pullQuote2Author),
-              buildText(data.locationInfo2),
-            ]),
-            Gap($styles.insets.md),
-            _MapsThumbnail(data, height: 200),
-            Gap($styles.insets.md),
-            ..._contentSection([Center(child: buildHiddenCollectible(slot: 3))]),
+                    /// Location
+                    buildDropCapText(data.locationInfo1),
+                    _LargeSimpleQuote(text: data.pullQuote2, author: data.pullQuote2Author),
+                    buildText(data.locationInfo2),
+                  ]),
+                  Gap($styles.insets.md),
+                  AspectRatio(aspectRatio: 1.65, child: _MapsThumbnail(data)),
+                  Gap($styles.insets.md),
+                  ..._contentSection([Center(child: buildHiddenCollectible(slot: 3))]),
+                  Gap(150),
+                ]),
+              ),
+            ),
           ]),
         ),
       ),
@@ -206,9 +215,8 @@ class _YouTubeThumbnail extends StatelessWidget {
 }
 
 class _MapsThumbnail extends StatefulWidget {
-  const _MapsThumbnail(this.data, {Key? key, required this.height}) : super(key: key);
+  const _MapsThumbnail(this.data, {Key? key}) : super(key: key);
   final WonderData data;
-  final double height;
 
   @override
   State<_MapsThumbnail> createState() => _MapsThumbnailState();
@@ -220,11 +228,11 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
   @override
   Widget build(BuildContext context) {
     void handlePressed() => context.push(ScreenPaths.maps(widget.data.type));
+    if (PlatformInfo.isDesktop) return Placeholder();
     return MergeSemantics(
       child: Column(
         children: [
-          SizedBox(
-            height: widget.height,
+          Flexible(
             child: ClipRRect(
               borderRadius: BorderRadius.circular($styles.corners.md),
               child: AppBtn.basic(

@@ -7,9 +7,10 @@ import 'package:wonders/logic/data/wonder_data.dart';
 /// - of/the should be down-sized
 /// Accomplished using a set of TextSpans, and a white list of 'small words'
 class WonderTitleText extends StatelessWidget {
-  const WonderTitleText(this.data, {Key? key, this.enableShadows = false}) : super(key: key);
+  const WonderTitleText(this.data, {Key? key, this.enableShadows = false, this.enableHero = true}) : super(key: key);
   final WonderData data;
   final bool enableShadows;
+  final bool enableHero;
   @override
   Widget build(BuildContext context) {
     var textStyle = $styles.text.wonderTitle.copyWith(
@@ -17,7 +18,7 @@ class WonderTitleText extends StatelessWidget {
     );
     bool smallText = [WonderType.christRedeemer, WonderType.colosseum].contains(data.type);
     if (smallText) {
-      textStyle = textStyle.copyWith(fontSize: 48);
+      textStyle = textStyle.copyWith(fontSize: 56 * $styles.scale);
     }
 
     // First, get a list like: ['the\n', 'great wall']
@@ -36,17 +37,23 @@ class WonderTitleText extends StatelessWidget {
       }
       return TextSpan(
         text: '$text${addLinebreak ? '\n' : addSpace ? ' ' : ''}',
-        style: useSmallText ? textStyle.copyWith(fontSize: 20) : textStyle,
+        style: useSmallText ? textStyle.copyWith(fontSize: 20 * $styles.scale) : textStyle,
       );
     }
 
-    List<Shadow> shadows = enableShadows ? $styles.shadows.text : [];
-    return RichText(
+    List<Shadow> shadows = enableShadows ? $styles.shadows.textSoft : [];
+    var content = RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
         style: textStyle.copyWith(shadows: shadows),
         children: pieces.map(buildTextSpan).toList(),
       ),
     );
+    return enableHero
+        ? Hero(
+            tag: 'wonderTitle-$title',
+            child: content,
+          )
+        : content;
   }
 }

@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/collectibles_logic.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
-import 'package:wonders/ui/common/cards/opening_card.dart';
+import 'package:wonders/ui/common/opening_card.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
 import 'package:wonders/ui/screens/collectible_found/collectible_found_screen.dart';
 
@@ -18,12 +18,12 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
 
   void _handleTap(BuildContext context) async {
     final screen = CollectibleFoundScreen(collectible: collectible, imageProvider: _imageProvider);
-    appLogic.showFullscreenDialogRoute(context, screen);
+    appLogic.showFullscreenDialogRoute(context, screen, transparent: true);
     AppHaptics.mediumImpact();
 
     // wait to update the state, to ensure the hero works properly:
     await Future.delayed($styles.times.pageTransition);
-    collectiblesLogic.updateState(collectible.id, CollectibleState.discovered);
+    collectiblesLogic.setState(collectible.id, CollectibleState.discovered);
   }
 
   @override
@@ -52,13 +52,12 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
               ),
             )
                 .animate(onPlay: (controller) => controller.repeat())
-                // TODO SB (Aug 17, 2022): Temporarily removed on Jonahs request, due to a bug in Impeller which should be fixed soon. Re-enable when fixed.
-                //.shimmer(delay: 4000.ms, duration: $styles.times.med * 3)
-                .shake(delay: 4000.ms, duration: $styles.times.med * 3, curve: Curves.easeInOutCubic, hz: 4)
+                .shimmer(delay: 4000.ms, duration: $styles.times.med * 3)
+                .shake(curve: Curves.easeInOutCubic, hz: 4)
                 .scale(begin: 1.0, end: 1.1, duration: $styles.times.med)
                 .then(delay: $styles.times.med)
                 .scale(begin: 1.0, end: 1 / 1.1),
-            ),
+          ),
         ),
       ),
     );

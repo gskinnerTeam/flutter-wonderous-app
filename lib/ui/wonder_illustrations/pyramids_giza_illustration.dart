@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/fade_color_transition.dart';
+import 'package:wonders/ui/wonder_illustrations/common/illustration_piece.dart';
 import 'package:wonders/ui/wonder_illustrations/common/paint_textures.dart';
-import 'package:wonders/ui/wonder_illustrations/common/wonder_hero.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_builder.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 
@@ -15,6 +15,7 @@ class PyramidsGizaIllustration extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WonderIllustrationBuilder(
+      wonderType: WonderType.pyramidsGiza,
       config: config,
       bgBuilder: _buildBg,
       mgBuilder: _buildMg,
@@ -28,74 +29,58 @@ class PyramidsGizaIllustration extends StatelessWidget {
       Positioned.fill(
         child: IllustrationTexture(
           ImagePaths.roller2,
-          color: Colors.white,
-          opacity: anim.drive(Tween(begin: 0, end: .3)),
+          color: Color(0xFF797FD8),
+          opacity: anim.drive(Tween(begin: 0, end: .75)),
           flipY: true,
+          scale: config.shortMode ? 4 : 1.15,
         ),
       ),
-      Align(
-          alignment: Alignment(.75, config.shortMode ? -.2 : -.5),
-          child: FractionalTranslation(
-            translation: Offset(0, -.5 * anim.value),
-            child: WonderHero(
-              config,
-              'pyramids-moon',
-              child: Transform.scale(
-                scale: config.shortMode ? 0.8 : 1.2,
-                child: Image.asset('$assetPath/moon.png', opacity: anim),
-              ),
-            ),
-          )),
+      IllustrationPiece(
+        fileName: 'moon.png',
+        initialOffset: Offset(0, 50),
+        enableHero: true,
+        heightFactor: .15,
+        minHeight: 100,
+        offset: config.shortMode ? Offset(120, context.heightPx * -.05) : Offset(120, context.heightPx * -.35),
+        zoomAmt: .05,
+      ),
     ];
   }
 
   List<Widget> _buildMg(BuildContext context, Animation<double> anim) {
     return [
-      Align(
-        alignment: Alignment(0, config.shortMode ? 0.9 : 0),
-        child: WonderHero(config, 'pyramids-mg',
-            child: Transform.scale(
-              scale: 1 + config.zoom * .1,
-              child: FractionallySizedBox(
-                widthFactor: config.shortMode ? 1 : 1.94,
-                child: Image.asset('$assetPath/pyramids.png', fit: BoxFit.contain, opacity: anim),
-              ),
-            )),
-      ),
+      IllustrationPiece(
+        fileName: 'pyramids.png',
+        enableHero: true,
+        heightFactor: .5,
+        minHeight: 300,
+        zoomAmt: config.shortMode ? -.2 : -2,
+        fractionalOffset: Offset(config.shortMode ? .015 : 0, config.shortMode ? .17 : -.15),
+      )
     ];
   }
 
   List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
-    final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
-      Transform.scale(
-        scale: 1 + config.zoom * .2,
-        child: Transform.translate(
-          offset: Offset(0, 10 * (1 - curvedAnim)),
-          child: BottomCenter(
-            child: FractionallySizedBox(
-              widthFactor: 1.2,
-              child: FractionalTranslation(
-                  translation: Offset(0, -1.2),
-                  child: Image.asset('$assetPath/foreground-back.png', opacity: anim, fit: BoxFit.cover)),
-            ),
-          ),
-        ),
+      IllustrationPiece(
+        fileName: 'foreground-back.png',
+        alignment: Alignment.bottomCenter,
+        initialOffset: Offset(20, 40),
+        initialScale: .95,
+        heightFactor: .55,
+        fractionalOffset: Offset(.2, -.01),
+        zoomAmt: .1,
+        dynamicHzOffset: 150,
       ),
-      Transform.scale(
-        scale: 1 + config.zoom * .4,
-        child: Transform.translate(
-          offset: Offset(0, 30 * (1 - curvedAnim)),
-          child: BottomCenter(
-            child: FractionallySizedBox(
-              widthFactor: 1.52,
-              child: FractionalTranslation(
-                translation: Offset(0, 0.1),
-                child: Image.asset('$assetPath/foreground-front.png', opacity: anim, fit: BoxFit.cover),
-              ),
-            ),
-          ),
-        ),
+      IllustrationPiece(
+        fileName: 'foreground-front.png',
+        alignment: Alignment.bottomCenter,
+        initialScale: .9,
+        initialOffset: Offset(-40, 60),
+        heightFactor: .55,
+        fractionalOffset: Offset(-.09, 0.02),
+        zoomAmt: .25,
+        dynamicHzOffset: -150,
       ),
     ];
   }

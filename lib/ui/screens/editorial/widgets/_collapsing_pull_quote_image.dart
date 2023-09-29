@@ -9,18 +9,15 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
   Widget build(BuildContext context) {
     // Start transitioning when we are halfway up the screen
     final collapseStartPx = context.heightPx * 1;
-    final collapseEndPx = context.heightPx * .35;
-    const double imgHeight = 430;
+    final collapseEndPx = context.heightPx * .15;
+    const double imgHeight = 500;
     const double outerPadding = 100;
 
     /// A single piece of quote text, this widget has one on top, and one on bottom
     Widget buildText(String value, double collapseAmt, {required bool top, bool isAuthor = false}) {
-      var quoteStyle = $styles.text.quote1;
-      var quoteSize = quoteStyle.fontSize;
-      quoteStyle = quoteStyle.copyWith(
-        color: $styles.colors.caption,
-        fontSize: (quoteSize ??= 36), //dynamic font size for more consistent quote layout
-      );
+      /// Use a fixed font-size for this for consistent scaling
+      var quoteStyle = $styles.text.quote1.copyWith(fontSize: 32);
+      quoteStyle = quoteStyle.copyWith(color: $styles.colors.caption);
       if (isAuthor) {
         quoteStyle = quoteStyle.copyWith(fontSize: 20, fontWeight: FontWeight.w600);
       }
@@ -46,8 +43,9 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
 
         // The sized boxes in the column collapse to a zero height, allowing the quotes to naturally sit over top of the image
         return MergeSemantics(
-          child: Padding(
+          child: CenteredBox(
             padding: EdgeInsets.symmetric(vertical: outerPadding),
+            width: imgHeight * .66,
             child: Stack(
               children: [
                 Container(
@@ -116,7 +114,7 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
     );
   }
 
-  Stack _buildImage(double collapseAmt) {
+  Widget _buildImage(double collapseAmt) {
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -128,16 +126,13 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
             opacity: AlwaysStoppedAnimation(1 - collapseAmt * .7),
           ),
         ),
-        BlendMask(
-          blendModes: const [BlendMode.colorBurn],
-          opacity: .9,
-          child: VtGradient(
-            [
-              Color(0xFFBEABA1).withOpacity(1),
-              Color(0xFFA6958C).withOpacity(1),
-            ],
-            const [0, 1],
-          ),
+        GradientContainer(
+          [
+            Color(0xFFBEABA1).withOpacity(1),
+            Color(0xFFA6958C).withOpacity(1),
+          ],
+          const [0.0, 1.0],
+          blendMode: BlendMode.colorBurn,
         ),
       ],
     );

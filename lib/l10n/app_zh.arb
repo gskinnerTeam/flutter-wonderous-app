@@ -1,5 +1,6 @@
 {
     "appName": "Wonderous",
+	"localeSwapButton": "English",
 	"animatedArrowSemanticSwipe": "查看关于{title}的详细信息。",
 	"appBarTitleFactsHistory": "历史与细节",
 	"appBarTitleConstruction": "建造",
@@ -7,8 +8,8 @@
 	"bottomScrubberSemanticScrubber": "scrubber",
 	"bottomScrubberSemanticTimeline": "Timeline Scrubber，水平拖动可在历史年表中导航。",
 	"collectionLabelDiscovered": "已发现 {percentage}% ",
-	"collectionLabelCount": "{total} 之 {count}",
-	"collectionButtonReset": "重置集合",
+	"collectionLabelCount": "{count}/{total}",
+	"collectionButtonReset": "重置收藏夹",
 	"eventsListButtonOpenGlobal": "打开世界历史年表",
 	"newlyDiscoveredSemanticNew": "{count}要探索的新项目。滚动到新项目",
 	"newlyDiscoveredLabelNew": "{count}要探索的新项目",
@@ -383,7 +384,7 @@
 	"timelineEvent500ce": "蒂卡尔成为第一座伟大的玛雅都市",
 	"timelineEvent632ce": "伊斯兰教创始人穆罕默德 (61岁) 逝世",
 	"timelineEvent793ce": "维京人第一次入侵不列颠",
-	"timelineEvent800ce": "纸在中国唐代发明",
+	"timelineEvent800ce": "火药在中国唐代发明",
 	"timelineEvent1001ce": "莱夫·埃里克松于公元1001年冬天定居在今天的加拿大东部",
 	"timelineEvent1077ce": "伦敦塔开始建造",
 	"timelineEvent1117ce": "牛津大学成立",
@@ -402,6 +403,7 @@
 	"timelineEvent1929ce": "黑色星期二，大萧条的开始",
 	"timelineEvent1939ce": "第二次世界大战",
 	"timelineEvent1957ce": "苏联发射斯普特尼克1号",
-	"timelineEvent1969ce": "阿波罗11号在月球着陆"
+	"timelineEvent1969ce": "阿波罗11号在月球着陆",
+	"privacyPolicy": "隐私政策",
+	"privacyStatement": "gskinner 非常重视对用户隐私的保护，正如{privacyUrl}里所诉，gskinner 不会收集您的个人信息。"
 }
-  

@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/fade_color_transition.dart';
+import 'package:wonders/ui/wonder_illustrations/common/illustration_piece.dart';
 import 'package:wonders/ui/wonder_illustrations/common/paint_textures.dart';
-import 'package:wonders/ui/wonder_illustrations/common/wonder_hero.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_builder.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 
@@ -12,7 +12,13 @@ class ChichenItzaIllustration extends StatelessWidget {
   final fgColor = WonderType.chichenItza.fgColor;
   @override
   Widget build(BuildContext context) {
-    return WonderIllustrationBuilder(config: config, bgBuilder: _buildBg, mgBuilder: _buildMg, fgBuilder: _buildFg);
+    return WonderIllustrationBuilder(
+      config: config,
+      bgBuilder: _buildBg,
+      mgBuilder: _buildMg,
+      fgBuilder: _buildFg,
+      wonderType: WonderType.chichenItza,
+    );
   }
 
   List<Widget> _buildBg(BuildContext context, Animation<double> anim) {
@@ -21,112 +27,80 @@ class ChichenItzaIllustration extends StatelessWidget {
       Positioned.fill(
         child: IllustrationTexture(
           ImagePaths.roller2,
-          color: Colors.white,
+          color: Color(0xffDC762A),
           opacity: anim.drive(Tween(begin: 0, end: .5)),
           flipY: true,
+          scale: config.shortMode ? 4 : 1.15,
         ),
       ),
-      Align(
-        alignment: Alignment(config.shortMode ? .25 : .7, config.shortMode ? 1 : -.15),
-        child: WonderHero(
-          config,
-          'chichen-sun',
-          child: FractionalTranslation(
-            translation: Offset(0, -.2 * anim.value),
-            child: Image.asset(
-              '$assetPath/sun.png',
-              width: config.shortMode ? 100 : 200,
-              cacheWidth: context.widthPx.round() * 2,
-              opacity: anim,
-            ),
-          ),
-        ),
+      IllustrationPiece(
+        fileName: 'sun.png',
+        initialOffset: Offset(0, 50),
+        enableHero: true,
+        heightFactor: .4,
+        minHeight: 200,
+        fractionalOffset: Offset(.55, config.shortMode ? .2 : -.35),
       ),
     ];
   }
 
   List<Widget> _buildMg(BuildContext context, Animation<double> anim) {
+    // We want to size to the shortest side
     return [
-      Align(
-        alignment: Alignment(0, config.shortMode ? 1.2 : -.15),
-        child: FractionallySizedBox(
-          widthFactor: config.shortMode ? 1.5 : 2.6,
-          child: WonderHero(
-            config,
-            'chichen-mg',
-            child: Image.asset('$assetPath/chichen.png', opacity: anim, fit: BoxFit.contain),
-          ),
+      Transform.translate(
+        offset: Offset(0, config.shortMode ? 70 : -30),
+        child: IllustrationPiece(
+          fileName: 'chichen.png',
+          heightFactor: .4,
+          minHeight: 180,
+          zoomAmt: -.1,
+          enableHero: true,
         ),
       ),
     ];
   }
 
   List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
-    final curvedAnim = Curves.easeOut.transform(anim.value);
     return [
-      Stack(
-        children: [
-          Transform.scale(
-            scale: 1 + config.zoom * .2,
-            child: FractionalTranslation(
-              translation: Offset(-.2 * (1 - curvedAnim), 0),
-              child: BottomLeft(
-                child: FractionallySizedBox(
-                  heightFactor: .5,
-                  child: FractionalTranslation(
-                    translation: Offset(-.4, 0),
-                    child: Image.asset('$assetPath/foreground-left.png', opacity: anim, fit: BoxFit.cover),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Transform.scale(
-            scale: 1 + config.zoom * .1,
-            child: FractionalTranslation(
-              translation: Offset(.2 * (1 - curvedAnim), 0),
-              child: BottomRight(
-                child: FractionallySizedBox(
-                  heightFactor: .33,
-                  child: FractionalTranslation(
-                    translation: Offset(.5, -.32),
-                    child: Image.asset('$assetPath/foreground-right.png', opacity: anim, fit: BoxFit.cover),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Transform.scale(
-            scale: 1 + config.zoom * .15,
-            child: FractionalTranslation(
-              translation: Offset(-.2 * (1 - curvedAnim), 0),
-              child: TopLeft(
-                child: FractionallySizedBox(
-                  heightFactor: .55,
-                  child: FractionalTranslation(
-                    translation: Offset(-.3, -.45),
-                    child: Image.asset('$assetPath/top-left.png', opacity: anim, fit: BoxFit.cover),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Transform.scale(
-            scale: 1 + config.zoom * .3,
-            child: FractionalTranslation(
-              translation: Offset(.2 * (1 - curvedAnim), 0),
-              child: TopRight(
-                child: FractionallySizedBox(
-                  heightFactor: .65,
-                  child: FractionalTranslation(
-                    translation: Offset(.45, -.35),
-                    child: Image.asset('$assetPath/top-right.png', opacity: anim, fit: BoxFit.cover),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
+      IllustrationPiece(
+        fileName: 'foreground-right.png',
+        alignment: Alignment.bottomCenter,
+        initialOffset: Offset(20, 40),
+        initialScale: .95,
+        heightFactor: .4,
+        fractionalOffset: Offset(.5, -.1),
+        zoomAmt: .1,
+        dynamicHzOffset: 250,
+      ),
+      IllustrationPiece(
+        fileName: 'foreground-left.png',
+        alignment: Alignment.bottomCenter,
+        initialScale: .9,
+        initialOffset: Offset(-40, 60),
+        heightFactor: .65,
+        fractionalOffset: Offset(-.4, .2),
+        zoomAmt: .25,
+        dynamicHzOffset: -250,
+      ),
+      IllustrationPiece(
+        fileName: 'top-left.png',
+        alignment: Alignment.topLeft,
+        initialScale: .9,
+        initialOffset: Offset(-40, 60),
+        heightFactor: .65,
+        fractionalOffset: Offset(-.4, -.4),
+        zoomAmt: .05,
+        dynamicHzOffset: 100,
+      ),
+      IllustrationPiece(
+        fileName: 'top-right.png',
+        alignment: Alignment.topRight,
+        initialOffset: Offset(20, 40),
+        initialScale: .95,
+        heightFactor: .65,
+        fractionalOffset: Offset(.35, -.4),
+        zoomAmt: .05,
+        dynamicHzOffset: -100,
       ),
     ];
   }

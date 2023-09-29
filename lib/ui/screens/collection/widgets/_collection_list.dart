@@ -1,82 +1,63 @@
 part of '../collection_screen.dart';
 
 @immutable
-class _CollectionList extends StatelessWidget {
-  const _CollectionList({
+class _CollectionList extends StatelessWidget with GetItMixin {
+  _CollectionList({
     Key? key,
-    required this.states,
-    required this.onPressed,
     this.onReset,
-    this.fromId,
-    this.scrollWonder,
+    required this.fromId,
     this.scrollKey,
   }) : super(key: key);
 
-  final Map<String, int> states;
-  final ValueSetter<CollectibleData> onPressed;
   final VoidCallback? onReset;
   final Key? scrollKey;
-  final WonderType? scrollWonder;
-  final String? fromId;
+  final String fromId;
+
+  WonderType? get scrollTargetWonder {
+    CollectibleData? item;
+    if (fromId.isEmpty) {
+      item = collectiblesLogic.getFirstDiscoveredOrNull();
+    } else {
+      item = collectiblesLogic.fromId(fromId);
+    }
+    return item?.wonder;
+  }
 
   @override
   Widget build(BuildContext context) {
+    watchX((CollectiblesLogic o) => o.statesById);
     List<WonderData> wonders = wondersLogic.all;
-    List<Widget> children = [];
-    for (int i = 0; i < wonders.length; i++) {
-      WonderData data = wonders[i];
-      children.add(_buildCategoryTitle(context, data, data.type == scrollWonder ? scrollKey : null));
-      children.add(Gap($styles.insets.md));
-      children.add(_buildCollectibleRow(context, data.type, states));
-      children.add(Gap($styles.insets.xl));
-    }
-
-    children.add(_buildResetBtn(context));
-
-    return Flexible(
-      child: RepaintBoundary(
-        child: ScrollDecorator.shadow(
-          builder: (controller) => SingleChildScrollView(
-            controller: controller,
-            padding: EdgeInsets.all($styles.insets.md).copyWith(bottom: $styles.insets.offset * 2.5),
-            child: Column(
-              children: children,
-            ),
-          ),
+    bool vtMode = context.isLandscape == false;
+    final scrollWonder = scrollTargetWonder;
+    // Create list of collections that is shared by both hz and vt layouts
+    List<Widget> collections = [
+      ...wonders.map((d) {
+        return _CollectionListCard(
+          key: d.type == scrollWonder ? scrollKey : null,
+          height: vtMode ? 300 : 400,
+          width: vtMode ? null : 600,
+          fromId: fromId,
+          data: d,
+        );
+      }).toList()
+    ];
+    // Scroll view adapts to scroll vertically or horizontally
+    return SingleChildScrollView(
+      scrollDirection: vtMode ? Axis.vertical : Axis.horizontal,
+      child: Padding(
+        padding: EdgeInsets.all($styles.insets.lg),
+        child: SeparatedFlex(
+          direction: vtMode ? Axis.vertical : Axis.horizontal,
+          mainAxisSize: MainAxisSize.min,
+          separatorBuilder: () => Gap($styles.insets.lg),
+          children: [
+            ...collections,
+            Gap($styles.insets.sm),
+            if (kDebugMode) _buildResetBtn(context),
+          ],
         ),
       ),
     );
-  }
-
-  Widget _buildCategoryTitle(BuildContext context, WonderData data, Key? key) {
-    return Text(
-      data.title.toUpperCase(),
-      textAlign: TextAlign.left,
-      key: key,
-      style: $styles.text.title1.copyWith(color: $styles.colors.offWhite),
-    );
-  }
-
-  Widget _buildCollectibleRow(BuildContext context, WonderType wonder, Map<String, int> states) {
-    final double height = $styles.insets.lg * 6;
-    List<CollectibleData> list = collectiblesLogic.forWonder(wonder);
-    if (list.isEmpty) return Container(height: height, color: $styles.colors.black);
-
-    List<Widget> children = [];
-    for (int i = 0; i < list.length; i++) {
-      if (i > 0) children.add(Gap($styles.insets.md));
-      CollectibleData collectible = list[i];
-      int state = states[collectible.id] ?? CollectibleState.lost;
-      children.add(Flexible(
-        child: _CollectionTile(
-          collectible: collectible,
-          state: state,
-          onPressed: onPressed,
-          heroTag: collectible.id == fromId ? 'collectible_image_$fromId' : null,
-        ),
-      ));
-    }
-    return SizedBox(height: height, child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: children));
   }
 
   Widget _buildResetBtn(BuildContext context) {

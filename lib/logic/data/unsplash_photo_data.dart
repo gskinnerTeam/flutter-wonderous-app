@@ -26,7 +26,7 @@ class UnsplashPhotoData {
         size = 1200;
         break;
     }
-    if (PlatformInfo.pixelRatio >= 1.5) {
+    if (PlatformInfo.pixelRatio >= 1.5 || PlatformInfo.isDesktop) {
       size *= 2;
     }
     return 'https://wonderous.info/unsplash/$id-$size.jpg';

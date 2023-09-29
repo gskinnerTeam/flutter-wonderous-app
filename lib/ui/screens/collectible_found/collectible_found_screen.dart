@@ -1,6 +1,10 @@
+import 'package:particle_field/particle_field.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
-import 'package:particle_field/particle_field.dart';
+import 'package:wonders/ui/common/app_backdrop.dart';
+import 'package:wonders/ui/common/centered_box.dart';
+import 'package:wonders/ui/common/controls/app_header.dart';
+import 'package:wonders/ui/common/pop_navigator_underlay.dart';
 
 part 'widgets/_animated_ribbon.dart';
 part 'widgets/_celebration_particles.dart';
@@ -48,26 +52,47 @@ class CollectibleFoundScreen extends StatelessWidget {
   Widget _buildDetail(BuildContext context) {
     Duration t = $styles.times.fast;
     return Stack(key: ValueKey('detail'), children: [
-      Animate().custom(duration: t, builder: (context, ratio, _) => _buildGradient(context, 1, ratio)),
+      /// Background
+      AppBackdrop(
+        strength: .5,
+        child: Container(color: $styles.colors.greyStrong.withOpacity(.96)),
+      ).animate().fadeIn(),
+
+      /// Particles
       _CelebrationParticles(fadeMs: (t * 6).inMilliseconds),
+
+      /// invisible close btn
+      PopNavigatorUnderlay(),
+
+      /// Content
       SafeArea(
-        child: Column(children: [
-          Spacer(flex: 5),
-          Flexible(
-            flex: 18,
-            child: Center(child: Hero(tag: 'collectible_image_${collectible.id}', child: _buildImage(context))),
+        child: CenteredBox(
+          width: $styles.sizes.maxContentWidth3,
+          child: Column(
+            children: [
+              Gap($styles.insets.lg),
+              Spacer(),
+              SizedBox(
+                height: context.heightPx * .35,
+                child: Center(child: Hero(tag: 'collectible_image_${collectible.id}', child: _buildImage(context))),
+              ),
+              Gap($styles.insets.lg),
+              _buildRibbon(context),
+              Gap($styles.insets.sm),
+              _buildTitle(context, collectible.title, $styles.text.h2, $styles.colors.offWhite, t * 1.5),
+              Gap($styles.insets.xs),
+              _buildTitle(
+                  context, collectible.subtitle.toUpperCase(), $styles.text.title2, $styles.colors.accent1, t * 2),
+              Spacer(),
+              Gap($styles.insets.lg),
+              _buildCollectionButton(context),
+              Gap($styles.insets.lg),
+              Spacer(),
+            ],
           ),
-          Spacer(flex: 2),
-          _buildRibbon(context),
-          Spacer(flex: 2),
-          _buildTitle(context, collectible.title, $styles.text.h2, $styles.colors.offWhite, t * 1.5),
-          Gap($styles.insets.xs),
-          _buildTitle(context, collectible.subtitle.toUpperCase(), $styles.text.title2, $styles.colors.accent1, t * 2),
-          Spacer(flex: 2),
-          _buildCollectionButton(context),
-        ]),
+        ),
       ),
-      BackBtn.close().safe().animate().fade(delay: t * 4, duration: t * 2),
+      AppHeader(isTransparent: true).animate().fade(delay: t * 4, duration: t * 2),
     ]);
   }
 
@@ -145,19 +170,16 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   Widget _buildCollectionButton(BuildContext context) {
-    Duration t = $styles.times.fast;
-    return Container(
-      padding: EdgeInsets.all($styles.insets.lg),
-      child: AppBtn.from(
-        text: $strings.collectibleFoundButtonViewCollection,
-        isSecondary: true,
-        expand: true,
-        onPressed: () => _handleViewCollectionPressed(context),
-      ),
-    )
-        .animate()
-        .show(delay: t * 4)
-        .move(begin: Offset(0, $styles.insets.md), duration: t * 3, curve: Curves.easeOutCubic);
+    Duration t = $styles.times.med;
+    return AppBtn.from(
+      text: $strings.collectibleFoundButtonViewCollection,
+      isSecondary: true,
+      onPressed: () => _handleViewCollectionPressed(context),
+    ).animate().fadeIn(delay: t).move(
+          begin: Offset(0, 50),
+          duration: t,
+          curve: Curves.easeOutCubic,
+        );
   }
 
   void _handleViewCollectionPressed(BuildContext context) {

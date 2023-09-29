@@ -1,10 +1,13 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
 
 class FullscreenUrlImgViewer extends StatefulWidget {
   const FullscreenUrlImgViewer({Key? key, required this.urls, this.index = 0}) : super(key: key);
   final List<String> urls;
   final int index;
+
+  static const double imageScale = 2.5;
 
   @override
   State<FullscreenUrlImgViewer> createState() => _FullscreenUrlImgViewerState();
@@ -50,7 +53,7 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
       child: Stack(
         children: [
           Positioned.fill(child: content),
-          BackBtn.close(onPressed: _handleBackPressed).safe(),
+          AppHeader(onBack: _handleBackPressed, isTransparent: true),
         ],
       ),
     );
@@ -91,9 +94,12 @@ class _ViewerState extends State<_Viewer> with SingleTickerProviderStateMixin {
         child: Hero(
           tag: widget.url,
           child: AppImage(
-            image: NetworkImage(widget.url),
+            image: NetworkImage(
+              widget.url,
+            ),
             fit: BoxFit.contain,
-            scale: 2.5,
+            scale: FullscreenUrlImgViewer.imageScale,
+            progress: true,
           ),
         ),
       ),

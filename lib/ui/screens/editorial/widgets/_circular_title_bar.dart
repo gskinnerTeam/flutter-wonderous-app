@@ -134,7 +134,10 @@ class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with S
   }
 
   Widget _buildCircularText(String title) {
-    final textStyle = $styles.text.monoTitleFont.copyWith(fontSize: 22, color: $styles.colors.accent1);
+    final textStyle = $styles.text.monoTitleFont.copyWith(
+      fontSize: 22 * $styles.scale,
+      color: $styles.colors.accent1,
+    );
     return CircularText(
       position: CircularTextPosition.inside,
       children: [

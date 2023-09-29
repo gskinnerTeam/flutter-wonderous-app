@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/ui/common/utils/page_routes.dart';
 
 class AppLogic {
@@ -9,37 +11,57 @@ class AppLogic {
   /// The router will use this to prevent redirects while bootstrapping.
   bool isBootstrapComplete = false;
 
+  bool get isLandscapeEnabled => PlatformInfo.isDesktopOrWeb || deviceSize.shortestSide > 500;
+
+  /// Support portrait and landscape on desktop, web and tablets. Stick to portrait for phones.
+  /// A return value of null indicated both orientations are supported.
+  Axis? get supportedOrientations => isLandscapeEnabled ? null : Axis.vertical;
+
+  Size get deviceSize {
+    final w = WidgetsBinding.instance.platformDispatcher.views.first;
+    return w.physicalSize / w.devicePixelRatio;
+  }
+
   /// Initialize the app and all main actors.
   /// Loads settings, sets up services etc.
   Future<void> bootstrap() async {
-    // Default error handler
-    FlutterError.onError = _handleFlutterError;
+    debugPrint('bootstrap app, deviceSize: $deviceSize, isTablet: $isLandscapeEnabled');
+
+    // Set min-sizes for desktop apps
+    if (PlatformInfo.isDesktop) {
+      await DesktopWindow.setMinWindowSize($styles.sizes.minAppSize);
+    }
 
     // Load any bitmaps the views might need
     await AppBitmaps.init();
 
-    // Default to only allowing portrait mode
-    setDeviceOrientation(Axis.vertical);
+    // Set the initial supported orientations
+    setDeviceOrientation(supportedOrientations);
 
     // Set preferred refresh rate to the max possible (the OS may ignore this)
-    await FlutterDisplayMode.setHighRefreshRate();
-
-    // Localizations
-    await localeLogic.load();
-
-    // Timeline
-    await timelineLogic.init();
+    if (PlatformInfo.isAndroid) {
+      await FlutterDisplayMode.setHighRefreshRate();
+    }
 
     // Settings
     await settingsLogic.load();
 
+    // Localizations
+    await localeLogic.load();
+
+    // Wonders Data
+    wondersLogic.init();
+
+    // Events
+    timelineLogic.init();
+
     // Collectibles
     await collectiblesLogic.load();
 
-    // flag bootStrap as complete
+    // Flag bootStrap as complete
     isBootstrapComplete = true;
 
-    // load initial view (replace empty initial view which is covered by a native splash screen)
+    // Load initial view (replace empty initial view which is covered by a native splash screen)
     bool showIntro = settingsLogic.hasCompletedOnboarding.value == false;
     if (showIntro) {
       appRouter.go(ScreenPaths.intro);
@@ -65,13 +87,9 @@ class AppLogic {
     SystemChrome.setPreferredOrientations(orientations);
   }
 
-  void _handleFlutterError(FlutterErrorDetails details) {
-    FlutterError.dumpErrorToConsole(details);
-  }
-
-  Future<T?> showFullscreenDialogRoute<T>(BuildContext context, Widget child) async {
+  Future<T?> showFullscreenDialogRoute<T>(BuildContext context, Widget child, {bool transparent = false}) async {
     return await Navigator.of(context).push<T>(
-      PageRoutes.dialog<T>(child, $styles.times.pageTransition),
+      PageRoutes.dialog<T>(child, duration: $styles.times.pageTransition),
     );
   }
 }

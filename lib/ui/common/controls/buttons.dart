@@ -1,8 +1,9 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/ui/common/app_icons.dart';
 
 /// Shared methods across button types
-Widget _buildIcon(BuildContext context, IconData icon, {required bool isSecondary, required double? size}) =>
-    Icon(icon, color: isSecondary ? $styles.colors.black : $styles.colors.offWhite, size: size ?? 18);
+Widget _buildIcon(BuildContext context, AppIcons icon, {required bool isSecondary, required double? size}) =>
+    AppIcon(icon, color: isSecondary ? $styles.colors.black : $styles.colors.offWhite, size: size ?? 18);
 
 /// The core button that drives all other buttons.
 class AppBtn extends StatelessWidget {
@@ -37,7 +38,7 @@ class AppBtn extends StatelessWidget {
     this.border,
     String? semanticLabel,
     String? text,
-    IconData? icon,
+    AppIcons? icon,
     double? iconSize,
   })  : child = null,
         circular = false,
@@ -82,7 +83,7 @@ class AppBtn extends StatelessWidget {
         super(key: key);
 
   // interaction:
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   late final String semanticLabel;
   final bool enableFeedback;
 
@@ -127,7 +128,7 @@ class AppBtn extends StatelessWidget {
     );
 
     Widget button = TextButton(
-      onPressed: () => onPressed(),
+      onPressed: onPressed,
       style: style,
       child: DefaultTextStyle(
         style: DefaultTextStyle.of(context).style.copyWith(color: textColor),
@@ -138,19 +139,14 @@ class AppBtn extends StatelessWidget {
     // add press effect:
     if (pressEffect) button = _ButtonPressEffect(button);
 
-    // add semantics:
-    if (semanticLabel.isEmpty) {
-      button = ExcludeSemantics(child: button);
-    } else {
-      button = Semantics(
-        label: semanticLabel,
-        button: true,
-        container: true,
-        child: button,
-      );
-    }
-
-    return button;
+    // add semantics?
+    if (semanticLabel.isEmpty) return button;
+    return Semantics(
+      label: semanticLabel,
+      button: true,
+      container: true,
+      child: ExcludeSemantics(child: button),
+    );
   }
 }
 
@@ -182,39 +178,5 @@ class _ButtonPressEffectState extends State<_ButtonPressEffect> {
         child: ExcludeSemantics(child: widget.child),
       ),
     );
-  }
-}
-
-// TODO: this is currently unused, and can probably be removed:
-// This is a very simple button for elements that don't require button UI (states, focus, etc)
-// For example panel backgrounds.
-class BasicBtn extends StatelessWidget {
-  const BasicBtn({
-    required this.onPressed,
-    required this.semanticLabel,
-    this.behavior = HitTestBehavior.opaque,
-    this.enableFeedback = true,
-    this.child,
-    Key? key,
-  }) : super(key: key);
-
-  final VoidCallback onPressed;
-  final String? semanticLabel;
-  final HitTestBehavior behavior;
-  final bool enableFeedback;
-  final Widget? child;
-
-  @override
-  Widget build(BuildContext context) {
-    Widget button = GestureDetector(
-      excludeFromSemantics: true,
-      onTap: enableFeedback ? Feedback.wrapForTap(onPressed, context) : onPressed,
-      behavior: behavior,
-      child: child,
-    );
-
-    if (semanticLabel != null) button = Semantics(label: semanticLabel, button: true, container: true, child: button);
-
-    return button;
   }
 }

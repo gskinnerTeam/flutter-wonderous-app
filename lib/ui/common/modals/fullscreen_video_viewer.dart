@@ -24,7 +24,8 @@ class _FullscreenVideoPageState extends State<FullscreenVideoPage> {
 
   @override
   void dispose() {
-    appLogic.setDeviceOrientation(Axis.vertical);
+    // when view closes, restore the supported orientations
+    appLogic.setDeviceOrientation(appLogic.supportedOrientations);
     super.dispose();
   }
 
