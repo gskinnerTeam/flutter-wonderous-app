@@ -25,6 +25,7 @@ class Throttler {
 
   void _callAction() {
     _action?.call(); // If we have an action queued up, complete it.
+    _action = null; // Once an action is called, do not call the same action again unless another action is queued.
     _timer = null;
   }
 
