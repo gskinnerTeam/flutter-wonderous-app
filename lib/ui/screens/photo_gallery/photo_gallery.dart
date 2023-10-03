@@ -227,7 +227,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                             child: UnsplashPhoto(
                               imgUrl,
                               fit: BoxFit.cover,
-                              size: UnsplashPhotoSize.med,
+                              size: UnsplashPhotoSize.large,
                             ).animate().fade(),
                           ),
                         ),
