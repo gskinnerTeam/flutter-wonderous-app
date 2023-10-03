@@ -107,7 +107,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
   Future<void> _handleImageTapped(int index) async {
     if (_index == index) {
       final urls = _photoIds.value.map((e) {
-        return UnsplashPhotoData.getSelfHostedUrl(e, UnsplashPhotoSize.med);
+        return UnsplashPhotoData.getSelfHostedUrl(e, UnsplashPhotoSize.xl);
       }).toList();
       int? newIndex = await appLogic.showFullscreenDialogRoute(
         context,
