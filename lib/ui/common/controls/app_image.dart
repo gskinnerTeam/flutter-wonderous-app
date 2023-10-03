@@ -28,14 +28,6 @@ class AppImage extends StatefulWidget {
   final Color? color;
   final double? scale;
 
-  static String maybeAddImgProxy(String url) {
-    String proxyUrl = 'proxy.wonderous.app:8081/';
-    if (!url.contains(proxyUrl) && (url.contains('images.metmuseum.org') || url.contains('img.youtube.com'))) {
-      url = 'https://$proxyUrl$url';
-    }
-    return url;
-  }
-
   @override
   State<AppImage> createState() => _AppImageState();
 }
@@ -59,14 +51,8 @@ class _AppImageState extends State<AppImage> {
   void _updateImage() {
     if (widget.image == _sourceImage) return;
     _sourceImage = widget.image;
-    /// Apply proxy to MET api images
-    if(kIsWeb && _sourceImage is NetworkImage){
-      final url = (_sourceImage as NetworkImage).url;
-      _sourceImage = NetworkImage(AppImage.maybeAddImgProxy(url));
-    }
     _displayImage = _capImageSize(_addRetry(_sourceImage));
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +88,7 @@ class _AppImageState extends State<AppImage> {
 
   ImageProvider? _capImageSize(ImageProvider? image) {
     // Disable resizing for web as it is currently single-threaded and causes the UI to lock up when resizing large images
-    if(kIsWeb) return image; // TODO: Remove this when the web engine is updated to support non-blocking image resizing
+    if (kIsWeb) return image; // TODO: Remove this when the web engine is updated to support non-blocking image resizing
     if (image == null || widget.scale == null) return image;
     final MediaQueryData mq = MediaQuery.of(context);
     final Size screenSize = mq.size * mq.devicePixelRatio * widget.scale!;
