@@ -10,7 +10,7 @@ class _ResultTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final Widget image = AppImage(
       key: ValueKey(data.id),
-      image: NetworkImage(data.imageUrl),
+      image: NetworkImage(data.imageUrlSmall),
       fit: BoxFit.cover,
       scale: 0.5,
       distractor: true,
