@@ -4,14 +4,12 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/collectibles_logic.dart';
 import 'package:wonders/logic/locale_logic.dart';
-import 'package:wonders/logic/met_api_logic.dart';
-import 'package:wonders/logic/met_api_service.dart';
+import 'package:wonders/logic/artifact_api_logic.dart';
+import 'package:wonders/logic/artifact_api_service.dart';
 import 'package:wonders/logic/timeline_logic.dart';
 import 'package:wonders/logic/unsplash_logic.dart';
 import 'package:wonders/logic/wallpaper_logic.dart';
 import 'package:wonders/logic/wonders_logic.dart';
-
-import '_tools/artifact_download_helper.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +30,6 @@ class WondersApp extends StatelessWidget with GetItMixin {
   WondersApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: ArtifactDownloadHelper());
     final locale = watchX((SettingsLogic s) => s.currentLocale);
     return MaterialApp.router(
       routeInformationProvider: appRouter.routeInformationProvider,
@@ -61,8 +58,8 @@ void registerSingletons() {
   // Timeline / Events
   GetIt.I.registerLazySingleton<TimelineLogic>(() => TimelineLogic());
   // Search
-  GetIt.I.registerLazySingleton<MetAPILogic>(() => MetAPILogic());
-  GetIt.I.registerLazySingleton<MetAPIService>(() => MetAPIService());
+  GetIt.I.registerLazySingleton<ArtifactAPILogic>(() => ArtifactAPILogic());
+  GetIt.I.registerLazySingleton<ArtifactAPIService>(() => ArtifactAPIService());
   // Settings
   GetIt.I.registerLazySingleton<SettingsLogic>(() => SettingsLogic());
   // Unsplash
@@ -80,7 +77,7 @@ WondersLogic get wondersLogic => GetIt.I.get<WondersLogic>();
 TimelineLogic get timelineLogic => GetIt.I.get<TimelineLogic>();
 SettingsLogic get settingsLogic => GetIt.I.get<SettingsLogic>();
 UnsplashLogic get unsplashLogic => GetIt.I.get<UnsplashLogic>();
-MetAPILogic get metAPILogic => GetIt.I.get<MetAPILogic>();
+ArtifactAPILogic get metAPILogic => GetIt.I.get<ArtifactAPILogic>();
 CollectiblesLogic get collectiblesLogic => GetIt.I.get<CollectiblesLogic>();
 WallPaperLogic get wallpaperLogic => GetIt.I.get<WallPaperLogic>();
 LocaleLogic get localeLogic => GetIt.I.get<LocaleLogic>();
