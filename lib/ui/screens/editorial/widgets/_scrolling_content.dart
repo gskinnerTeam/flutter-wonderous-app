@@ -170,7 +170,7 @@ class _YouTubeThumbnail extends StatelessWidget {
   final String id;
   final String caption;
 
-  String get imageUrl => 'https://img.youtube.com/vi/$id/hqdefault.jpg';
+  String get imageUrl => 'https://www.wonderous.info/youtube/$id.jpg';
 
   @override
   Widget build(BuildContext context) {

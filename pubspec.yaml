@@ -33,6 +33,7 @@ dependencies:
   google_maps_flutter_web: ^0.5.4+2
   go_router: ^6.5.5
   http: ^0.13.5
+  image: ^4.1.3
   image_fade: ^0.6.2
   image_gallery_saver: ^2.0.3
   intl: ^0.18.1

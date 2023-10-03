@@ -14,6 +14,8 @@ class ArtifactData {
     required this.objectBeginYear,
     required this.objectEndYear,
   });
+  static const String baseSelfHostedImagePath = 'https://www.wonderous.info/met/';
+
   final String objectId; // Artifact ID, used to identify through MET server calls.
   final String title; // Artifact title / name
   final String image; // Artifact primary image URL (can have multiple)
@@ -28,4 +30,12 @@ class ArtifactData {
   final String dimension; // Width and height of physical artifact
   final String classification; // Type of artifact
   final String culture; // Culture of artifact
+
+  String get selfHostedImageUrl => getSelfHostedImageUrl(objectId);
+  String get selfHostedImageUrlSmall => getSelfHostedImageUrlSmall(objectId);
+  String get selfHostedImageUrlMedium => getSelfHostedImageUrlMedium(objectId);
+
+  static String getSelfHostedImageUrl(String id) => '$baseSelfHostedImagePath$id.jpg';
+  static String getSelfHostedImageUrlSmall(String id) => '$baseSelfHostedImagePath${id}_600.jpg';
+  static String getSelfHostedImageUrlMedium(String id) => '$baseSelfHostedImagePath${id}_2000.jpg';
 }

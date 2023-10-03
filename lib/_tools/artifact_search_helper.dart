@@ -164,12 +164,12 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
     if (year < minYear || year > maxYear) return _logError(id, 'year is out of range');
 
     String? imageUrlSmall = json['primaryImageSmall'];
-    if (imageUrlSmall == null) return _logError(id, 'no small image url');
-    if (!imageUrlSmall.startsWith(SearchData.baseImagePath)) {
-      return _logError(id, 'unexpected image uri: "$imageUrlSmall"');
-    }
-    String imagePath = imageUrlSmall.substring(SearchData.baseImagePath.length);
-    imagePath = imagePath.replaceFirst('/web-large/', '/mobile-large/');
+    if (imageUrlSmall == null || imageUrlSmall.isEmpty) return _logError(id, 'no small image url');
+    // if (!imageUrlSmall.startsWith(SearchData.baseImagePath)) {
+    //   return _logError(id, 'unexpected image uri: "$imageUrlSmall"');
+    // }
+    // String imageUrl = imageUrlSmall.substring(SearchData.baseImagePath.length);
+    // imageUrl = imageUrl.replaceFirst('/web-large/', '/mobile-large/');
 
     double? aspectRatio = 0;
     if (checkImages) aspectRatio = await _getAspectRatio(imageUrlSmall);
@@ -180,7 +180,6 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
       id,
       _escape(json['title']),
       _getKeywords(json),
-      imagePath,
       aspectRatio,
     );
 
@@ -229,12 +228,22 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
 
     String suggestions = _getSuggestions(entries);
 
+    const fileNames = {
+      WonderType.chichenItza: 'chichen_itza',
+      WonderType.christRedeemer: 'christ_redeemer',
+      WonderType.colosseum: 'colosseum',
+      WonderType.greatWall: 'great_wall',
+      WonderType.machuPicchu: 'machu_picchu',
+      WonderType.petra: 'petra',
+      WonderType.pyramidsGiza: 'pyramids_giza',
+      WonderType.tajMahal: 'taj_mahal',
+    };
     Directory dir = await getApplicationDocumentsDirectory();
-    String type = wonder!.type.toString().split('.').last;
-    String path = '${dir.path}/$type.dart';
+    String name = '${fileNames[wonder!.type]}_search_data.dart';
+    String path = '${dir.path}/$name';
     File file = File(path);
     await file.writeAsString('$suggestions\n\n$output');
-    _log('- Wrote file: $type.dart');
+    _log('- Wrote file: $name');
     debugPrint(path);
     _nextWonder();
   }

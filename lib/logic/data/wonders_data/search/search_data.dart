@@ -1,17 +1,17 @@
-class SearchData {
-  static const String baseImagePath = 'https://images.metmuseum.org/CRDImages/';
+import 'package:wonders/logic/data/artifact_data.dart';
 
-  const SearchData(this.year, this.id, this.title, this.keywords, this.imagePath, [this.aspectRatio = 0]);
+class SearchData {
+  const SearchData(this.year, this.id, this.title, this.keywords, [this.aspectRatio = 0]);
+
   final int year;
   final int id;
-  final String imagePath;
   final String keywords;
   final String title;
   final double aspectRatio;
 
-  String get imageUrl => baseImagePath + imagePath;
+  String get imageUrl => ArtifactData.getSelfHostedImageUrl('$id');
+  String get imageUrlSmall => ArtifactData.getSelfHostedImageUrlSmall('$id');
 
   // used by the search helper tool:
-  String write() =>
-      "SearchData($year, $id, '$title', '$keywords', '$imagePath'${aspectRatio == 0 ? '' : ', ${aspectRatio.toStringAsFixed(2)}'})";
+  String write() => "SearchData($year, $id, '$title', '$keywords')";
 }
