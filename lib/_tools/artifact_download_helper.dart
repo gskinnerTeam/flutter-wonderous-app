@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:http/http.dart';
 import 'package:image/image.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:wonders/logic/data/collectible_data.dart';
+import 'package:wonders/logic/data/highlight_data.dart';
 import 'package:wonders/logic/data/wonders_data/chichen_itza_data.dart';
 import 'package:wonders/logic/data/wonders_data/christ_redeemer_data.dart';
 import 'package:wonders/logic/data/wonders_data/great_wall_data.dart';
@@ -12,9 +14,8 @@ import 'package:wonders/logic/data/wonders_data/petra_data.dart';
 import 'package:wonders/logic/data/wonders_data/pyramids_giza_data.dart';
 import 'package:wonders/logic/data/wonders_data/taj_mahal_data.dart';
 
-import '../common_libs.dart';
-import '../logic/data/collectible_data.dart';
-import '../logic/data/wonders_data/colosseum_data.dart';
+import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/data/wonders_data/colosseum_data.dart';
 
 class ArtifactDownloadHelper extends StatefulWidget {
   const ArtifactDownloadHelper({super.key});
@@ -54,55 +55,22 @@ class _ArtifactDownloadHelperState extends State<ArtifactDownloadHelper> {
     );
   }
 
-  Future<bool> downloadImage(String id, String url) async {
-    //final sizes = [400, 800, 1600, 3000];
-    debugPrint('Downloading $url to $imagesDir');
-    final imgResponse = await get(Uri.parse(url));
-    // If the image is less than a KB, it's probably a 404 image.
-    if (imgResponse.bodyBytes.lengthInBytes < 2000) {
-      return false;
-    }
-    File file = File('$imagesDir/$id.jpg');
-    file.writeAsBytesSync(imgResponse.bodyBytes);
-    print('img saved @ ${file.path}');
-    return true;
-  }
-
-  Future<void> downloadImageAndJson(String id) async {
-    File imgFile = File('$imagesDir/$id.jpg');
-    if (imgFile.existsSync()) {
-      print('Skipping $id');
-      await resizeImage(id, 600);
-      return;
-    }
-    Uri uri = Uri.parse('https://collectionapi.metmuseum.org/public/collection/v1/objects/$id');
-    print('Downloading $id');
-    final response = await http.get(uri);
-    Map json = jsonDecode(response.body) as Map;
-    if (!json.containsKey('primaryImage') || json['primaryImage'].isEmpty) {
-      print('Missing $id');
-      missingIds.add(id);
-      return;
-    }
-    final url = json['primaryImage'] as String;
-    //bool isPublicDomain = json['isPublicDomain'] as bool;
-    final downloadSuccess = await downloadImage(id, url);
-    if (downloadSuccess) {
-      File file = File('$imagesDir/$id.json');
-      file.writeAsStringSync(response.body);
-      print('json saved @ ${file.path}');
-    } else {
-      print('Missing $id');
-      missingIds.add(id);
-    }
-  }
-
   void downloadArtifacts() async {
-    /// Download collectibles
-    // for (var c in collectiblesData) {
-    //   downloadImageAndJson(c.artifactId);
-    // }
     missingIds.clear();
+
+    /// Download collectibles
+    for (var c in collectiblesData) {
+      if (await downloadImageAndJson(c.artifactId) == false) {
+        missingIds.add(c.artifactId);
+      }
+    }
+
+    /// Download Highights
+    for (var h in HighlightData.all) {
+      if (await downloadImageAndJson(h.artifactId) == false) {
+        missingIds.add(h.artifactId);
+      }
+    }
 
     /// Download search artifacts
     final searchData = ChichenItzaData().searchData +
@@ -113,25 +81,94 @@ class _ArtifactDownloadHelperState extends State<ArtifactDownloadHelper> {
         PetraData().searchData +
         PyramidsGizaData().searchData +
         TajMahalData().searchData;
-    for (var a in searchData) {
-      await downloadImageAndJson(a.id.toString());
-      print('${searchData.indexOf(a) + 1}/${searchData.length}');
-    }
-    print('Missing IDs: $missingIds');
+
+    // for (var a in searchData) {
+    //   final id = a.id.toString();
+    //   if (await downloadImageAndJson(id) == false) {
+    //     missingIds.add(id);
+    //   }
+    //   final index = searchData.indexOf(a) + 1;
+    //   if (index % 100 == 0) {
+    //     debugPrint('$index/${searchData.length}');
+    //   }
+    // }
+    debugPrint('Download complete :) Missing IDs: $missingIds');
   }
 
-  Future<void> resizeImage(String id, int size) async {
-    final resizedFile = File('$imagesDir/${id}_$size.jpg');
-    final srcFile = File('$imagesDir/$id.jpg');
-    print('Resizing $id...');
-    if (resizedFile.existsSync() || !srcFile.existsSync()) return;
-    final img = decodeJpg(srcFile.readAsBytesSync());
-    if (img != null) {
-      final resizedImg = copyResize(img, width: size);
-      resizedFile.writeAsBytesSync(encodeJpg(resizedImg));
-      print('Resized $id');
+  Future<bool> downloadImageAndJson(String id) async {
+    File jsonFile = File('$imagesDir/$id.json');
+    late Map json;
+    if (jsonFile.existsSync()) {
+      json = jsonDecode(jsonFile.readAsStringSync()) as Map;
     } else {
-      print('Failed to resize $id');
+      debugPrint('Downloading $id');
+      // Fetch JSON for id
+      Uri uri = Uri.parse('https://collectionapi.metmuseum.org/public/collection/v1/objects/$id');
+      final response = await http.get(uri);
+      json = jsonDecode(response.body) as Map;
     }
+
+    // Check if primaryImage field is valid
+    if (!json.containsKey('primaryImage') || json['primaryImage'].isEmpty) {
+      return false;
+    }
+    // Download image
+    final url = json['primaryImage'] as String;
+    //bool isPublicDomain = json['isPublicDomain'] as bool;
+    File imgFile = File('$imagesDir/$id.jpg');
+    // If image does not already exist, download it
+    if (!imgFile.existsSync()) {
+      await downloadImage(id, url);
+      if (!imgFile.existsSync()) return false;
+    }
+    // Try to resize image
+    if (await resizeImage(id, [600, 2000]) == false) {
+      debugPrint('Failed to resize $id');
+      imgFile.deleteSync();
+      return false;
+    }
+    // Write JSON to file
+    if (!jsonFile.existsSync()) {
+      jsonFile.writeAsStringSync(jsonEncode(json));
+      debugPrint('json saved @ ${jsonFile.path}');
+    }
+    return true;
+  }
+
+  Future<bool> downloadImage(String id, String url) async {
+    //final sizes = [400, 800, 1600, 3000];
+    debugPrint('Downloading $url to $imagesDir');
+    final imgResponse = await get(Uri.parse(url));
+    // If the image is less than a KB, it's probably a 404 image.
+    if (imgResponse.bodyBytes.lengthInBytes < 2000) {
+      return false;
+    }
+    File file = File('$imagesDir/$id.jpg');
+    file.writeAsBytesSync(imgResponse.bodyBytes);
+    debugPrint('img saved @ ${file.path}');
+    return true;
+  }
+
+  Future<bool> resizeImage(String id, List<int> sizes) async {
+    final srcFile = File('$imagesDir/$id.jpg');
+    //debugPrint('Resizing $id...');
+    try {
+      final img = decodeJpg(srcFile.readAsBytesSync());
+      if (img != null) {
+        // Write various sizes to disk
+        for (var size in sizes) {
+          final resizedFile = File('$imagesDir/${id}_$size.jpg');
+          if (await resizedFile.exists()) continue;
+          final resizedImg = copyResize(img, width: size);
+          await resizedFile.writeAsBytes(encodeJpg(resizedImg, quality: 90));
+          debugPrint('Resized ${id}_$size');
+        }
+        return true;
+      }
+    } catch (e) {
+      debugPrint('Failed to resize $id');
+      debugPrint(e.toString());
+    }
+    return false;
   }
 }
