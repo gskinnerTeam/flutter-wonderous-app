@@ -20,18 +20,20 @@ class TimelineSection extends StatelessWidget {
         StringUtils.formatYr(data.startYr),
         StringUtils.formatYr(data.endYr),
       )}',
-      child: IgnorePointer(
-        ignoringSemantics: false,
-        child: Container(
-          alignment: Alignment(0, -1 + fraction * 2),
-          padding: EdgeInsets.all($styles.insets.xs),
-          decoration: BoxDecoration(color: data.type.fgColor),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(99),
-            child: BlendMask(
-              blendModes: isSelected ? [] : const [BlendMode.luminosity],
-              opacity: .6,
-              child: _buildWonderImage(),
+      child: ExcludeSemantics(
+        excluding: false,
+        child: IgnorePointer(
+          child: Container(
+            alignment: Alignment(0, -1 + fraction * 2),
+            padding: EdgeInsets.all($styles.insets.xs),
+            decoration: BoxDecoration(color: data.type.fgColor),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(99),
+              child: BlendMask(
+                blendModes: isSelected ? [] : const [BlendMode.luminosity],
+                opacity: .6,
+                child: _buildWonderImage(),
+              ),
             ),
           ),
         ),

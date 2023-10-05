@@ -262,33 +262,35 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
                   /// Title Content
                   LightText(
-                    child: IgnorePointer(
-                      ignoringSemantics: false,
-                      child: Transform.translate(
-                        offset: Offset(0, 30),
-                        child: Column(
-                          children: [
-                            Semantics(
-                              liveRegion: true,
-                              button: true,
-                              header: true,
-                              onIncrease: () => _setPageIndex(_wonderIndex + 1),
-                              onDecrease: () => _setPageIndex(_wonderIndex - 1),
-                              onTap: () => _showDetailsPage(),
-                              // Hide the title when the menu is open for visual polish
-                              child: WonderTitleText(currentWonder, enableShadows: true),
-                            ),
-                            Gap($styles.insets.md),
-                            AppPageIndicator(
-                              count: _numWonders,
-                              controller: _pageController,
-                              color: $styles.colors.white,
-                              dotSize: 8,
-                              onDotPressed: _handlePageIndicatorDotPressed,
-                              semanticPageTitle: $strings.homeSemanticWonder,
-                            ),
-                            Gap($styles.insets.md),
-                          ],
+                    child: ExcludeSemantics(
+                      excluding: false,
+                      child: IgnorePointer(
+                        child: Transform.translate(
+                          offset: Offset(0, 30),
+                          child: Column(
+                            children: [
+                              Semantics(
+                                liveRegion: true,
+                                button: true,
+                                header: true,
+                                onIncrease: () => _setPageIndex(_wonderIndex + 1),
+                                onDecrease: () => _setPageIndex(_wonderIndex - 1),
+                                onTap: () => _showDetailsPage(),
+                                // Hide the title when the menu is open for visual polish
+                                child: WonderTitleText(currentWonder, enableShadows: true),
+                              ),
+                              Gap($styles.insets.md),
+                              AppPageIndicator(
+                                count: _numWonders,
+                                controller: _pageController,
+                                color: $styles.colors.white,
+                                dotSize: 8,
+                                onDotPressed: _handlePageIndicatorDotPressed,
+                                semanticPageTitle: $strings.homeSemanticWonder,
+                              ),
+                              Gap($styles.insets.md),
+                            ],
+                          ),
                         ),
                       ),
                     ),

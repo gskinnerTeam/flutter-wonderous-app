@@ -27,39 +27,41 @@ class _BottomTextContent extends StatelessWidget {
               Gap($styles.insets.md),
               Column(
                 children: [
-                  IgnorePointer(
-                    ignoringSemantics: false,
-                    child: Semantics(
-                      button: true,
-                      onIncrease: () => state._handleArtifactTap(_currentPage + 1),
-                      onDecrease: () => state._handleArtifactTap(_currentPage - 1),
-                      onTap: () => state._handleArtifactTap(_currentPage),
-                      liveRegion: true,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          // Force column to stretch horizontally so text is centered
-                          SizedBox(width: double.infinity),
-                          // Stop text from scaling to make layout a little easier, it's already quite large
-                          StaticTextScale(
-                            child: Text(
-                              artifact.title,
-                              overflow: TextOverflow.ellipsis,
-                              style: $styles.text.h2.copyWith(color: $styles.colors.black, height: 1.2, fontSize: 32),
-                              textAlign: TextAlign.center,
-                              maxLines: 2,
+                  ExcludeSemantics(
+                    excluding: false,
+                    child: IgnorePointer(
+                      child: Semantics(
+                        button: true,
+                        onIncrease: () => state._handleArtifactTap(_currentPage + 1),
+                        onDecrease: () => state._handleArtifactTap(_currentPage - 1),
+                        onTap: () => state._handleArtifactTap(_currentPage),
+                        liveRegion: true,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            // Force column to stretch horizontally so text is centered
+                            SizedBox(width: double.infinity),
+                            // Stop text from scaling to make layout a little easier, it's already quite large
+                            StaticTextScale(
+                              child: Text(
+                                artifact.title,
+                                overflow: TextOverflow.ellipsis,
+                                style: $styles.text.h2.copyWith(color: $styles.colors.black, height: 1.2, fontSize: 32),
+                                textAlign: TextAlign.center,
+                                maxLines: 2,
+                              ),
                             ),
-                          ),
-                          if (!shortMode) ...[
-                            Gap($styles.insets.xxs),
-                            Text(
-                              artifact.date.isEmpty ? '--' : artifact.date,
-                              style: $styles.text.body,
-                              textAlign: TextAlign.center,
-                            ),
-                          ]
-                        ],
-                      ).animate(key: ValueKey(artifact.artifactId)).fadeIn(),
+                            if (!shortMode) ...[
+                              Gap($styles.insets.xxs),
+                              Text(
+                                artifact.date.isEmpty ? '--' : artifact.date,
+                                style: $styles.text.body,
+                                textAlign: TextAlign.center,
+                              ),
+                            ]
+                          ],
+                        ).animate(key: ValueKey(artifact.artifactId)).fadeIn(),
+                      ),
                     ),
                   ),
                 ],

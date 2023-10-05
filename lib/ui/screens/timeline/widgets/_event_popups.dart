@@ -35,33 +35,35 @@ class _EventPopupsState extends State<_EventPopups> {
     final evt = _eventToShow;
     return TopCenter(
       child: ClipRect(
-        child: IgnorePointer(
-          ignoringSemantics: false,
-          child: AnimatedSwitcher(
-            duration: $styles.times.fast,
-            child: evt == null
-                ? SizedBox.shrink()
-                : Semantics(
-                    liveRegion: true,
-                    child: Animate(
-                      effects: const [
-                        SlideEffect(begin: Offset(0, -.1)),
-                      ],
-                      key: ValueKey(_eventToShow?.year),
-                      child: IntrinsicHeight(
-                        child: SizedBox(
-                          width: $styles.sizes.maxContentWidth3,
-                          child: Padding(
-                            padding: EdgeInsets.all($styles.insets.md),
-                            child: TimelineEventCard(
-                              text: evt.description,
-                              year: evt.year,
+        child: ExcludeSemantics(
+          excluding: false,
+          child: IgnorePointer(
+            child: AnimatedSwitcher(
+              duration: $styles.times.fast,
+              child: evt == null
+                  ? SizedBox.shrink()
+                  : Semantics(
+                      liveRegion: true,
+                      child: Animate(
+                        effects: const [
+                          SlideEffect(begin: Offset(0, -.1)),
+                        ],
+                        key: ValueKey(_eventToShow?.year),
+                        child: IntrinsicHeight(
+                          child: SizedBox(
+                            width: $styles.sizes.maxContentWidth3,
+                            child: Padding(
+                              padding: EdgeInsets.all($styles.insets.md),
+                              child: TimelineEventCard(
+                                text: evt.description,
+                                year: evt.year,
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
+            ),
           ),
         ),
       ),
