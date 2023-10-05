@@ -184,7 +184,7 @@ class _HomeMenuState extends State<HomeMenu> {
           onPressed: () => _handleWonderPressed(context, btnData),
           padding: EdgeInsets.zero,
           semanticLabel: btnData.title,
-          child: Image.asset(btnData.type.homeBtn, fit: BoxFit.cover),
+          child: SizedBox.expand(child: Image.asset(btnData.type.homeBtn, fit: BoxFit.cover)),
         ),
       ),
     );

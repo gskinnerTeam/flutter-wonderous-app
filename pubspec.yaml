@@ -61,6 +61,10 @@ dev_dependencies:
 icons_launcher:
   image_path: "assets/marketing/app-icon-1024.png"
   platforms:
+    web:
+      enable: true
+      image_path: "assets/marketing/app-icon-512.png"
+      favicon_path: "assets/marketing/app-icon-512.png"
     android:
       enable: true
     ios:
