@@ -94,7 +94,7 @@ class ServiceResult<R> {
   ServiceResult(this.response, R Function(Map<String, dynamic>) parser) {
     if (StringUtils.isNotEmpty(response.body) && response.success) {
       try {
-        content = parser.call(jsonDecode(response.body!));
+        content = parser.call(jsonDecode(utf8.decode(response.raw!.bodyBytes)));
       } on FormatException catch (e) {
         dev.log('ParseError: ${e.message}');
       }
