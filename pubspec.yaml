@@ -31,6 +31,7 @@ dependencies:
   google_maps_flutter: ^2.5.0
   google_maps_flutter_web: ^0.5.4+2
   go_router: ^6.5.5
+  home_widget: ^0.3.0
   http: ^0.13.5
   image: ^4.1.3
   image_fade: ^0.6.2

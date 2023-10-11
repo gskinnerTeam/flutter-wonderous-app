@@ -2,7 +2,7 @@
 //  Wonderous_WidgetBundle.swift
 //  Wonderous Widget
 //
-//  Created by Shawn on 2023-06-08.
+//  Created by Shawn on 2023-10-06.
 //
 
 import WidgetKit
