@@ -58,6 +58,8 @@ struct WonderousWidgetView : View {
             switch(family) {
             case .systemSmall:
                 content.padding(16)
+            case .systemMedium:
+                content.padding(24)
             default:
                 content.padding(32)
             }
