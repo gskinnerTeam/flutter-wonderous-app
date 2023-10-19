@@ -10,12 +10,15 @@
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		297F6FC72AD06E0D00FF159E /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 297F6FC62AD06E0D00FF159E /* WidgetKit.framework */; };
 		297F6FC92AD06E0D00FF159E /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 297F6FC82AD06E0D00FF159E /* SwiftUI.framework */; };
-		297F6FCC2AD06E0D00FF159E /* Wonderous_WidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297F6FCB2AD06E0D00FF159E /* Wonderous_WidgetBundle.swift */; };
-		297F6FCE2AD06E0D00FF159E /* Wonderous_Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297F6FCD2AD06E0D00FF159E /* Wonderous_Widget.swift */; };
+		297F6FCC2AD06E0D00FF159E /* WonderousWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297F6FCB2AD06E0D00FF159E /* WonderousWidgetBundle.swift */; };
+		297F6FCE2AD06E0D00FF159E /* WonderousWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297F6FCD2AD06E0D00FF159E /* WonderousWidget.swift */; };
 		297F6FD12AD06E0F00FF159E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 297F6FD02AD06E0F00FF159E /* Assets.xcassets */; };
-		297F6FD32AD06E0F00FF159E /* Wonderous_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 297F6FCF2AD06E0D00FF159E /* Wonderous_Widget.intentdefinition */; };
-		297F6FD42AD06E0F00FF159E /* Wonderous_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 297F6FCF2AD06E0D00FF159E /* Wonderous_Widget.intentdefinition */; };
+		297F6FD32AD06E0F00FF159E /* WonderousWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 297F6FCF2AD06E0D00FF159E /* WonderousWidget.intentdefinition */; };
+		297F6FD42AD06E0F00FF159E /* WonderousWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 297F6FCF2AD06E0D00FF159E /* WonderousWidget.intentdefinition */; };
 		297F6FD72AD06E0F00FF159E /* Wonderous WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 297F6FC52AD06E0D00FF159E /* Wonderous WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		297FD5742AE18011008D8BFE /* WonderousWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297FD5732AE18011008D8BFE /* WonderousWidgetView.swift */; };
+		297FD5762AE19BD9008D8BFE /* WonderWidgetViewComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297FD5752AE19BD9008D8BFE /* WonderWidgetViewComponents.swift */; };
+		297FD5782AE19C25008D8BFE /* FlutterUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297FD5772AE19C25008D8BFE /* FlutterUtils.swift */; };
 		323DE3CFA8490EAB3C4E249C /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A44ACC5DE81A9C3E5BDA151 /* Pods_Runner.framework */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
@@ -72,11 +75,15 @@
 		297F6FC52AD06E0D00FF159E /* Wonderous WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Wonderous WidgetExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		297F6FC62AD06E0D00FF159E /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		297F6FC82AD06E0D00FF159E /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		297F6FCB2AD06E0D00FF159E /* Wonderous_WidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wonderous_WidgetBundle.swift; sourceTree = "<group>"; };
-		297F6FCD2AD06E0D00FF159E /* Wonderous_Widget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wonderous_Widget.swift; sourceTree = "<group>"; };
-		297F6FCF2AD06E0D00FF159E /* Wonderous_Widget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Wonderous_Widget.intentdefinition; sourceTree = "<group>"; };
+		297F6FCB2AD06E0D00FF159E /* WonderousWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WonderousWidgetBundle.swift; sourceTree = "<group>"; };
+		297F6FCD2AD06E0D00FF159E /* WonderousWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WonderousWidget.swift; sourceTree = "<group>"; };
+		297F6FCF2AD06E0D00FF159E /* WonderousWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = WonderousWidget.intentdefinition; sourceTree = "<group>"; };
 		297F6FD02AD06E0F00FF159E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		297F6FD22AD06E0F00FF159E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		297FD56C2ADF0DAB008D8BFE /* Wonderous WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Wonderous WidgetExtension.entitlements"; sourceTree = "<group>"; };
+		297FD5732AE18011008D8BFE /* WonderousWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WonderousWidgetView.swift; sourceTree = "<group>"; };
+		297FD5752AE19BD9008D8BFE /* WonderWidgetViewComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WonderWidgetViewComponents.swift; sourceTree = "<group>"; };
+		297FD5772AE19C25008D8BFE /* FlutterUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlutterUtils.swift; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		4A44ACC5DE81A9C3E5BDA151 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -126,11 +133,14 @@
 		297F6FCA2AD06E0D00FF159E /* Wonderous Widget */ = {
 			isa = PBXGroup;
 			children = (
-				297F6FCB2AD06E0D00FF159E /* Wonderous_WidgetBundle.swift */,
-				297F6FCD2AD06E0D00FF159E /* Wonderous_Widget.swift */,
-				297F6FCF2AD06E0D00FF159E /* Wonderous_Widget.intentdefinition */,
+				297F6FCB2AD06E0D00FF159E /* WonderousWidgetBundle.swift */,
+				297F6FCD2AD06E0D00FF159E /* WonderousWidget.swift */,
+				297F6FCF2AD06E0D00FF159E /* WonderousWidget.intentdefinition */,
 				297F6FD02AD06E0F00FF159E /* Assets.xcassets */,
 				297F6FD22AD06E0F00FF159E /* Info.plist */,
+				297FD5732AE18011008D8BFE /* WonderousWidgetView.swift */,
+				297FD5752AE19BD9008D8BFE /* WonderWidgetViewComponents.swift */,
+				297FD5772AE19C25008D8BFE /* FlutterUtils.swift */,
 			);
 			path = "Wonderous Widget";
 			sourceTree = "<group>";
@@ -159,6 +169,7 @@
 		97C146E51CF9000F007C117D = {
 			isa = PBXGroup;
 			children = (
+				297FD56C2ADF0DAB008D8BFE /* Wonderous WidgetExtension.entitlements */,
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
 				297F6FCA2AD06E0D00FF159E /* Wonderous Widget */,
@@ -437,9 +448,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				297F6FD32AD06E0F00FF159E /* Wonderous_Widget.intentdefinition in Sources */,
-				297F6FCE2AD06E0D00FF159E /* Wonderous_Widget.swift in Sources */,
-				297F6FCC2AD06E0D00FF159E /* Wonderous_WidgetBundle.swift in Sources */,
+				297FD5762AE19BD9008D8BFE /* WonderWidgetViewComponents.swift in Sources */,
+				297F6FD32AD06E0F00FF159E /* WonderousWidget.intentdefinition in Sources */,
+				297FD5742AE18011008D8BFE /* WonderousWidgetView.swift in Sources */,
+				297F6FCE2AD06E0D00FF159E /* WonderousWidget.swift in Sources */,
+				297FD5782AE19C25008D8BFE /* FlutterUtils.swift in Sources */,
+				297F6FCC2AD06E0D00FF159E /* WonderousWidgetBundle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,7 +461,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				297F6FD42AD06E0F00FF159E /* Wonderous_Widget.intentdefinition in Sources */,
+				297F6FD42AD06E0F00FF159E /* WonderousWidget.intentdefinition in Sources */,
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 			);
@@ -586,6 +600,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Wonderous WidgetExtension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -625,6 +640,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Wonderous WidgetExtension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -661,6 +677,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Wonderous WidgetExtension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;

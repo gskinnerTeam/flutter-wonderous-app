@@ -1,5 +1,5 @@
 //
-//  Wonderous_WidgetBundle.swift
+//  WonderousWidgetBundle.swift
 //  Wonderous Widget
 //
 //  Created by Shawn on 2023-10-06.
@@ -9,8 +9,8 @@ import WidgetKit
 import SwiftUI
 
 @main
-struct Wonderous_WidgetBundle: WidgetBundle {
+struct WonderousWidgetBundle: WidgetBundle {
     var body: some Widget {
-        Wonderous_Widget()
+        WonderousWidget()
     }
 }

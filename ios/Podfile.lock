@@ -77,9 +77,9 @@ SPEC CHECKSUMS:
   GoogleMaps: 20d7b12be49a14287f797e88e0e31bc4156aaeb4
   home_widget: 0434835a4c9a75704264feff6be17ea40e0f0d57
   image_gallery_saver: cb43cc43141711190510e92c460eb1655cd343cb
-  package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
+  package_info_plus: 115f4ad11e0698c8c1c5d8a689390df880f47e85
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
-  share_plus: 056a1e8ac890df3e33cb503afffaf1e9b4fbae68
+  share_plus: c3fef564749587fc939ef86ffb283ceac0baf9f5
   shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
   webview_flutter_wkwebview: 2e2d318f21a5e036e2c3f26171342e95908bd60a

@@ -96,6 +96,7 @@ flutter:
     - assets/images/pyramids/
     - assets/images/taj_mahal/
     - assets/images/collectibles/
+    - assets/images/widget/
 
   fonts:
     - family: Cinzel
