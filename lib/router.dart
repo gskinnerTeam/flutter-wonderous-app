@@ -9,7 +9,6 @@ import 'package:wonders/ui/screens/collection/collection_screen.dart';
 import 'package:wonders/ui/screens/home/wonders_home_screen.dart';
 import 'package:wonders/ui/screens/intro/intro_screen.dart';
 import 'package:wonders/ui/screens/timeline/timeline_screen.dart';
-import 'package:wonders/ui/screens/wallpaper_photo/wallpaper_photo_screen.dart';
 import 'package:wonders/ui/screens/wonder_details/wonders_details_screen.dart';
 
 /// Shared paths / urls used across the app
@@ -68,9 +67,6 @@ final appRouter = GoRouter(
           }),
           AppRoute('/maps/:type', (s) {
             return FullscreenMapsViewer(type: _parseWonderType(s.params['type']));
-          }),
-          AppRoute('/wallpaperPhoto/:type', (s) {
-            return WallpaperPhotoScreen(type: _parseWonderType(s.params['type']));
           }),
         ]),
   ],

@@ -43,7 +43,6 @@ dependencies:
   pointer_interceptor: ^0.9.3+6
   provider: ^6.0.5
   rnd: ^0.2.0
-  share_plus: ^8.0.0
   shared_preferences: ^2.0.17
   sized_context: ^1.0.0+1
   smooth_page_indicator: ^1.0.1
