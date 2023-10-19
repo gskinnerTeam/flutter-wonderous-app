@@ -10,16 +10,18 @@ struct WonderousWidgetView : View {
         let showTitle = family == .systemLarge
         let showIcon = family != .systemSmall
         let showTitleAndDesc = family != .systemSmall
-        let textColor:Color = .pink
+        let accentColor:Color = Color("AccentColor")
         let progress = 7.0 / 32.0;
+        let image = bundle.appending(path: "/assets/images/widget/wonderous-icon.png").path();
         let content = VStack{
             HStack {
                 if(showTitle) {
-                    Text("Collection").foregroundColor(textColor)
+                    Text("Collection").foregroundColor(accentColor)
                 }
                 Spacer();
-                if(showIcon) {
-                    Text("1").foregroundColor(textColor)
+                if(showIcon || true) {
+                    Image(uiImage: UIImage(contentsOfFile: image)!)
+                        .resizable().scaledToFit().frame(height: 24)
                 }
             }
             Spacer();
@@ -28,7 +30,7 @@ struct WonderousWidgetView : View {
                     VStack(alignment: .leading){
                         Text("Wonderous")
                             .font(.system(size: 22))
-                            .foregroundColor(textColor);
+                            .foregroundColor(accentColor);
                         Text("Search for hidden artifacts")
                             .font(.system(size: 15))
                             .foregroundColor(Color("GreyMediumColor"));
@@ -38,10 +40,10 @@ struct WonderousWidgetView : View {
                 ZStack{
                     ProgressView(value: progress)
                         .progressViewStyle(
-                            GaugeProgressStyle()
+                            GaugeProgressStyle(color: accentColor)
                         )
                         .frame(width: 48, height: 48)
-                    Text("\(Int(progress * 100))%").font(.system(size: 12)).foregroundColor(textColor)
+                    Text("\(Int(progress * 100))%").font(.system(size: 12)).foregroundColor(accentColor)
                 }
             }
             //NetImage(imageData: netImgData)

@@ -15,12 +15,12 @@ struct BgImage : View {
     var entry: WonderousEntry
     var body: some View {
         let image = bundle.appending(path: "/assets/images/widget/background-empty.jpg").path();
-        print(image)
+        //print(image)
         if let uiImage = UIImage(contentsOfFile: image) {
             let image = Image(uiImage: uiImage)
                 .resizable()
                 .aspectRatio(contentMode: .fill) // Fill the entire view
-               // .edgesIgnoringSafeArea(.all) // Ignore the safe area
+                .edgesIgnoringSafeArea(.all) // Ignore the safe area
             return AnyView(image)
         }
         print("The image file could not be loaded")
@@ -48,7 +48,7 @@ struct NetImage : View {
 }
 
 struct GaugeProgressStyle: ProgressViewStyle {
-    
+    let color:Color
     func makeBody(configuration: Configuration) -> some View {
         let fractionCompleted = configuration.fractionCompleted ?? 0
         
@@ -57,7 +57,7 @@ struct GaugeProgressStyle: ProgressViewStyle {
                 .stroke(.gray, style: StrokeStyle(lineWidth: 2))
             Circle()
                 .trim(from: 0, to: fractionCompleted)
-                .stroke(.red, style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                .stroke(color, style: StrokeStyle(lineWidth: 4, lineCap: .round))
                 .rotationEffect(.degrees(90))
         }
     }
