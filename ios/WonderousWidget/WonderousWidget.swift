@@ -12,6 +12,19 @@ import Intents
 var netImgData: Data? = nil
 
 
+/// Entry, is passed into the view and defines the data it needs
+struct WonderousEntry : TimelineEntry {
+    let date: Date
+    //let displaySize: CGSize
+    //let imageData: Data?
+    let discoveredCount:Int;
+    var title:String = "";
+    var subTitle:String = "";
+    var imageData:String = "";
+
+}
+
+
 // Widget, defines the display name and description, and also wraps the View
 struct WonderousWidget: Widget {
     let kind: String = "WonderousWidget"
@@ -30,44 +43,45 @@ struct WonderousWidget: Widget {
 struct Provider: TimelineProvider {
     // Provide an entry for a placeholder version of the widget
     func placeholder(in context: Context) -> WonderousEntry {
-        WonderousEntry(date: Date(), count: 0, displaySize: context.displaySize, imageData: netImgData)
+        WonderousEntry(date: Date(), discoveredCount: 0)
     }
     
     // Provide an entry for the current time and state of the widget
     func getSnapshot(in context: Context, completion: @escaping (WonderousEntry) -> ()) {
         let entry:WonderousEntry
-        if(context.isPreview){
-            //            entry = placeholder(in: context)
-            entry = WonderousEntry(date: Date(), count: 0, displaySize: context.displaySize, imageData: netImgData)
-        } else {
-            let userDefaults = UserDefaults(suiteName: "group.com.gskinner.homewidget")
-            let count = userDefaults?.integer(forKey: "counter") ?? 0;
-            entry = WonderousEntry(date: Date(), count: count, displaySize: context.displaySize, imageData: netImgData)
-        }
+        let userDefaults = UserDefaults(suiteName: "group.com.gskinner.flutter.wonders.widget")
+        let discoveredCount = userDefaults?.integer(forKey: "discoveredCount") ?? 0
+        let title = userDefaults?.string(forKey: "lastDiscoveredTitle") ?? ""
+        let subTitle = userDefaults?.string(forKey: "lastDiscoveredSubTitle") ?? ""
+        let imageData = userDefaults?.string(forKey: "lastDiscoveredImageData") ?? ""
+//        if(context.isPreview){
+//            entry = WonderousEntry(date: Date(), discoveredCount: discoveredCount)
+//        }
+        entry = WonderousEntry(
+            date: Date(),
+            discoveredCount:discoveredCount,
+            title: title,
+            subTitle: subTitle.prefix(1).capitalized + subTitle.dropFirst(),
+            imageData: imageData
+        )
         completion(entry);
     }
     
     // Provide an array of entries for the current time and, optionally, any future times
     func getTimeline(in context: Context, completion: @escaping (Timeline<WonderousEntry>) -> ()) {
         // Load a remote image so it can be shown later
-        netImgData = try? Data(
-            contentsOf: URL(string: "https://www.wonderous.info/unsplash/-e0u9SAFeP4-32.jpg")!
-        )
-        
+//        let userDefaults = UserDefaults(suiteName: "group.com.gskinner.flutter.wonders.widget")
+//        let url = userDefaults?.string(forKey: "lastDiscoveredImageUrl");
+//        if(url != nil){
+//            netImgData = try? Data(contentsOf: URL(string: url!)!)
+//        } else {
+//            netImgData = nil;
+//        }
         getSnapshot(in: context) { (entry) in
             let timeline = Timeline(entries: [entry], policy: .atEnd)
             completion(timeline)
         }
     }
-}
-
-
-/// Entry, is passed into the view and defines the data it needs
-struct WonderousEntry : TimelineEntry {
-    let date: Date
-    let count:Int;
-    let displaySize: CGSize
-    let imageData: Data?
 }
 
 

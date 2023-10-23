@@ -33,7 +33,7 @@
 			containerPortal = 97C146E61CF9000F007C117D /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 297F6FC42AD06E0D00FF159E;
-			remoteInfo = "Wonderous WidgetExtension";
+			remoteInfo = WonderousWidgetExtension;
 		};
 		E214FC8827C5A18E005F78FB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -72,7 +72,7 @@
 		1475293CB8660AC785DF56AB /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
-		297F6FC52AD06E0D00FF159E /* Wonderous WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Wonderous WidgetExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		297F6FC52AD06E0D00FF159E /* Wonderous WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; name = "Wonderous WidgetExtension.appex"; path = WonderousWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		297F6FC62AD06E0D00FF159E /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		297F6FC82AD06E0D00FF159E /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		297F6FCB2AD06E0D00FF159E /* WonderousWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WonderousWidgetBundle.swift; sourceTree = "<group>"; };
@@ -80,7 +80,7 @@
 		297F6FCF2AD06E0D00FF159E /* WonderousWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = WonderousWidget.intentdefinition; sourceTree = "<group>"; };
 		297F6FD02AD06E0F00FF159E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		297F6FD22AD06E0F00FF159E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		297FD56C2ADF0DAB008D8BFE /* Wonderous WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Wonderous WidgetExtension.entitlements"; sourceTree = "<group>"; };
+		297FD56C2ADF0DAB008D8BFE /* WonderousWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WonderousWidgetExtension.entitlements; sourceTree = "<group>"; };
 		297FD5732AE18011008D8BFE /* WonderousWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WonderousWidgetView.swift; sourceTree = "<group>"; };
 		297FD5752AE19BD9008D8BFE /* WonderWidgetViewComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WonderWidgetViewComponents.swift; sourceTree = "<group>"; };
 		297FD5772AE19C25008D8BFE /* FlutterUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlutterUtils.swift; sourceTree = "<group>"; };
@@ -130,7 +130,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		297F6FCA2AD06E0D00FF159E /* Wonderous Widget */ = {
+		297F6FCA2AD06E0D00FF159E /* WonderousWidget */ = {
 			isa = PBXGroup;
 			children = (
 				297F6FCB2AD06E0D00FF159E /* WonderousWidgetBundle.swift */,
@@ -142,7 +142,7 @@
 				297FD5752AE19BD9008D8BFE /* WonderWidgetViewComponents.swift */,
 				297FD5772AE19C25008D8BFE /* FlutterUtils.swift */,
 			);
-			path = "Wonderous Widget";
+			path = WonderousWidget;
 			sourceTree = "<group>";
 		};
 		5073AC1D92C10773F20D12A2 /* Frameworks */ = {
@@ -169,10 +169,10 @@
 		97C146E51CF9000F007C117D = {
 			isa = PBXGroup;
 			children = (
-				297FD56C2ADF0DAB008D8BFE /* Wonderous WidgetExtension.entitlements */,
+				297FD56C2ADF0DAB008D8BFE /* WonderousWidgetExtension.entitlements */,
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
-				297F6FCA2AD06E0D00FF159E /* Wonderous Widget */,
+				297F6FCA2AD06E0D00FF159E /* WonderousWidget */,
 				97C146EF1CF9000F007C117D /* Products */,
 				5073AC1D92C10773F20D12A2 /* Frameworks */,
 				E090BB04291350D10AF9DE4E /* Pods */,
@@ -218,9 +218,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		297F6FC42AD06E0D00FF159E /* Wonderous WidgetExtension */ = {
+		297F6FC42AD06E0D00FF159E /* WonderousWidgetExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 297F6FDC2AD06E0F00FF159E /* Build configuration list for PBXNativeTarget "Wonderous WidgetExtension" */;
+			buildConfigurationList = 297F6FDC2AD06E0F00FF159E /* Build configuration list for PBXNativeTarget "WonderousWidgetExtension" */;
 			buildPhases = (
 				297F6FC12AD06E0D00FF159E /* Sources */,
 				297F6FC22AD06E0D00FF159E /* Frameworks */,
@@ -230,8 +230,8 @@
 			);
 			dependencies = (
 			);
-			name = "Wonderous WidgetExtension";
-			productName = "Wonderous WidgetExtension";
+			name = WonderousWidgetExtension;
+			productName = WonderousWidgetExtension;
 			productReference = 297F6FC52AD06E0D00FF159E /* Wonderous WidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
@@ -319,7 +319,7 @@
 			targets = (
 				97C146ED1CF9000F007C117D /* Runner */,
 				E214FC8127C5A18D005F78FB /* wondersUITests */,
-				297F6FC42AD06E0D00FF159E /* Wonderous WidgetExtension */,
+				297F6FC42AD06E0D00FF159E /* WonderousWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -479,7 +479,7 @@
 /* Begin PBXTargetDependency section */
 		297F6FD62AD06E0F00FF159E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 297F6FC42AD06E0D00FF159E /* Wonderous WidgetExtension */;
+			target = 297F6FC42AD06E0D00FF159E /* WonderousWidgetExtension */;
 			targetProxy = 297F6FD52AD06E0F00FF159E /* PBXContainerItemProxy */;
 		};
 		E214FC8927C5A18E005F78FB /* PBXTargetDependency */ = {
@@ -600,14 +600,14 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "Wonderous WidgetExtension.entitlements";
+				CODE_SIGN_ENTITLEMENTS = WonderousWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = S3TL5AY6Y3;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Wonderous Widget/Info.plist";
+				INFOPLIST_FILE = WonderousWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Wonderous Widget";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -958,7 +958,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		297F6FDC2AD06E0F00FF159E /* Build configuration list for PBXNativeTarget "Wonderous WidgetExtension" */ = {
+		297F6FDC2AD06E0F00FF159E /* Build configuration list for PBXNativeTarget "WonderousWidgetExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				297F6FD92AD06E0F00FF159E /* Debug */,
