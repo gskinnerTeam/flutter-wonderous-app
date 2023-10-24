@@ -20,7 +20,7 @@ struct WonderousWidgetView : View {
                 if(showTitle) {
                     Text("Collection")
                         .font(.system(size: 15))
-                        .foregroundColor(Colors.offWhite)
+                        .foregroundColor(.offWhite)
                 }
                 Spacer();
                 if(showIcon) {
@@ -39,7 +39,7 @@ struct WonderousWidgetView : View {
                             .foregroundColor(.white);
                         Text(subTitle)
                             .font(.system(size: 15))
-                            .foregroundColor(Colors.mediumGrey);
+                            .foregroundColor(.mediumGrey);
                     }
                 }
                 Spacer();
@@ -52,8 +52,9 @@ struct WonderousWidgetView : View {
             }
         }
         
-        ZStack{
-            BgImage(entry: entry)
+        return ZStack{
+            Color.darkGrey
+            BgImage(entry: entry).opacity(0.8)
             LinearGradient(
                 gradient: Gradient(colors: [.black.opacity(0), .black]),
                 startPoint: .center,
