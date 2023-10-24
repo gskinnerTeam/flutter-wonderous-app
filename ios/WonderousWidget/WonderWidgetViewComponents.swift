@@ -3,18 +3,19 @@ import SwiftUI
 
 
 // Loads a default image from the flutter assets bundle,
-// or  displays a base64 encoded image
+// or  displays a base64 encoded image that has been saved from the flutter application
 struct BgImage : View {
     var entry: WonderousEntry
     var body: some View {
         var uiImage:UIImage?;
         if(entry.imageData.isEmpty){
-            let defaultImage = bundle.appending(path: "/assets/images/widget/background-empty.jpg").path();
+            let defaultImage = flutterAssetBundle.appending(path: "/assets/images/widget/background-empty.jpg").path();
             uiImage = UIImage(contentsOfFile: defaultImage);
         } else {
             uiImage = UIImage(data: Data(base64Encoded: entry.imageData)!)
         }
         if(uiImage != nil){
+            // Use geometry reader to prevent the image from pushing the other content out of the widgets bounds (https://stackoverflow.com/questions/57593552/swiftui-prevent-image-from-expanding-view-rect-outside-of-screen-bounds)
             let image = GeometryReader { geometry in
                 Image(uiImage: uiImage!)
                     .resizable()
@@ -24,14 +25,13 @@ struct BgImage : View {
             }
             return AnyView(image)
         }
-        print("The image file could not be loaded")
+        debugPrint("The image file could not be loaded")
         return AnyView(EmptyView())
     }
     
 }
 
 struct GaugeProgressStyle: ProgressViewStyle {
-    
     func makeBody(configuration: Configuration) -> some View {
         let fractionCompleted = configuration.fractionCompleted ?? 0
         

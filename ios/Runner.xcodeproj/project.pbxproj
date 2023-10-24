@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
+		296251252AE7410D00D574FF /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296251242AE7410D00D574FF /* Colors.swift */; };
 		297F6FC72AD06E0D00FF159E /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 297F6FC62AD06E0D00FF159E /* WidgetKit.framework */; };
 		297F6FC92AD06E0D00FF159E /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 297F6FC82AD06E0D00FF159E /* SwiftUI.framework */; };
 		297F6FCC2AD06E0D00FF159E /* WonderousWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297F6FCB2AD06E0D00FF159E /* WonderousWidgetBundle.swift */; };
@@ -18,7 +19,6 @@
 		297F6FD72AD06E0F00FF159E /* Wonderous WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 297F6FC52AD06E0D00FF159E /* Wonderous WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		297FD5742AE18011008D8BFE /* WonderousWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297FD5732AE18011008D8BFE /* WonderousWidgetView.swift */; };
 		297FD5762AE19BD9008D8BFE /* WonderWidgetViewComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297FD5752AE19BD9008D8BFE /* WonderWidgetViewComponents.swift */; };
-		297FD5782AE19C25008D8BFE /* FlutterUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297FD5772AE19C25008D8BFE /* FlutterUtils.swift */; };
 		323DE3CFA8490EAB3C4E249C /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A44ACC5DE81A9C3E5BDA151 /* Pods_Runner.framework */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
@@ -72,6 +72,7 @@
 		1475293CB8660AC785DF56AB /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
+		296251242AE7410D00D574FF /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		297F6FC52AD06E0D00FF159E /* Wonderous WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; name = "Wonderous WidgetExtension.appex"; path = WonderousWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		297F6FC62AD06E0D00FF159E /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		297F6FC82AD06E0D00FF159E /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -83,7 +84,6 @@
 		297FD56C2ADF0DAB008D8BFE /* WonderousWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WonderousWidgetExtension.entitlements; sourceTree = "<group>"; };
 		297FD5732AE18011008D8BFE /* WonderousWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WonderousWidgetView.swift; sourceTree = "<group>"; };
 		297FD5752AE19BD9008D8BFE /* WonderWidgetViewComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WonderWidgetViewComponents.swift; sourceTree = "<group>"; };
-		297FD5772AE19C25008D8BFE /* FlutterUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlutterUtils.swift; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		4A44ACC5DE81A9C3E5BDA151 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -140,7 +140,7 @@
 				297F6FD22AD06E0F00FF159E /* Info.plist */,
 				297FD5732AE18011008D8BFE /* WonderousWidgetView.swift */,
 				297FD5752AE19BD9008D8BFE /* WonderWidgetViewComponents.swift */,
-				297FD5772AE19C25008D8BFE /* FlutterUtils.swift */,
+				296251242AE7410D00D574FF /* Colors.swift */,
 			);
 			path = WonderousWidget;
 			sourceTree = "<group>";
@@ -449,10 +449,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				297FD5762AE19BD9008D8BFE /* WonderWidgetViewComponents.swift in Sources */,
+				296251252AE7410D00D574FF /* Colors.swift in Sources */,
 				297F6FD32AD06E0F00FF159E /* WonderousWidget.intentdefinition in Sources */,
 				297FD5742AE18011008D8BFE /* WonderousWidgetView.swift in Sources */,
 				297F6FCE2AD06E0D00FF159E /* WonderousWidget.swift in Sources */,
-				297FD5782AE19C25008D8BFE /* FlutterUtils.swift in Sources */,
 				297F6FCC2AD06E0D00FF159E /* WonderousWidgetBundle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

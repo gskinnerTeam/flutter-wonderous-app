@@ -2,13 +2,6 @@ import WidgetKit
 import SwiftUI
 import Intents
 
-struct Colors {
-    static let accentColor:Color = Color(red: 0.89, green: 0.58, blue: 0.36)
-    static let offWhiteColor:Color = Color(red: 0.97, green: 0.92, blue: 0.9)
-    static let mediumGrey:Color = Color(red: 0.62, green: 0.6, blue: 0.58)
-    static let darkGrey:Color = Color(red: 0.32, green: 0.31, blue: 0.3);
-}
-
 // Defines the view / layout of the widget
 struct WonderousWidgetView : View {
     @Environment(\.widgetFamily) var family: WidgetFamily
@@ -19,7 +12,7 @@ struct WonderousWidgetView : View {
         let showTitleAndDesc = family != .systemSmall
         
         let progress = Double(entry.discoveredCount) / 24.0
-        let iconImage = bundle.appending(path: "/assets/images/widget/wonderous-icon.png").path()
+        let iconImage = flutterAssetBundle.appending(path: "/assets/images/widget/wonderous-icon.png").path()
         let title:String = entry.title.isEmpty ? "Wonderous" : entry.title;
         let subTitle:String = entry.subTitle.isEmpty ? "Search for hidden artifacts" : entry.subTitle;
         let content = VStack{
@@ -69,4 +62,17 @@ struct WonderousWidgetView : View {
         }.widgetURL(URL(string: "wonderous://collection"))
         
     }
+}
+
+// Todo: Refactor to getFlutterAsset(String path), include /assets, or maybe just getFlutterImage(String path), include assets/images
+// Returns a file path to the location of the flutter assetBundle
+var flutterAssetBundle: URL {
+    let bundle = Bundle.main
+    if bundle.bundleURL.pathExtension == "appex" {
+        // Peel off two directory levels - MY_APP.app/PlugIns/MY_APP_EXTENSION.appex
+        var url = bundle.bundleURL.deletingLastPathComponent().deletingLastPathComponent()
+        url.append(component: "Frameworks/App.framework/flutter_assets")
+        return url
+    }
+    return bundle.bundleURL
 }
