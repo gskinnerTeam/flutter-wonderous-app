@@ -20,7 +20,7 @@ struct WonderousWidgetView : View {
                 if(showTitle) {
                     Text("Collection")
                         .font(.system(size: 15))
-                        .foregroundColor(Colors.offWhiteColor)
+                        .foregroundColor(Colors.offWhite)
                 }
                 Spacer();
                 if(showIcon) {

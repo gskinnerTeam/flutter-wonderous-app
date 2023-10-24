@@ -40,7 +40,7 @@ struct GaugeProgressStyle: ProgressViewStyle {
                 .stroke(Colors.darkGrey, style: StrokeStyle(lineWidth: 2))
             Circle()
                 .trim(from: 0, to: fractionCompleted)
-                .stroke(Colors.accentColor, style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                .stroke(Colors.accent, style: StrokeStyle(lineWidth: 4, lineCap: .round))
                 .rotationEffect(.degrees(90))
         }
     }
