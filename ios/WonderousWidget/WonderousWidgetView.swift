@@ -12,9 +12,11 @@ struct WonderousWidgetView : View {
         let showTitleAndDesc = family != .systemSmall
         
         let progress = Double(entry.discoveredCount) / 24.0
-        let iconImage = flutterAssetBundle.appending(path: "/assets/images/widget/wonderous-icon.png").path()
-        let title:String = entry.title.isEmpty ? "Wonderous" : entry.title;
-        let subTitle:String = entry.subTitle.isEmpty ? "Search for hidden artifacts" : entry.subTitle;
+        let iconImage = flutterAssetBundle.appending(
+            path: "/assets/images/widget/wonderous-icon.png"
+        ).path()
+        let title = entry.title.isEmpty ? "Wonderous" : entry.title;
+        let subTitle = entry.subTitle.isEmpty ? "Search for hidden artifacts" : entry.subTitle;
         let content = VStack{
             HStack {
                 if(showTitle) {
