@@ -5,13 +5,16 @@ import SwiftUI
 // Loads a default image from the flutter assets bundle,
 // or  displays a base64 encoded image that has been saved from the flutter application
 struct BgImage : View {
-    var entry: WonderousEntry
+    var entry: WonderousTimelineEntry
     var body: some View {
         var uiImage:UIImage?;
+        // If there is no saved imageData, use the default bg image
         if(entry.imageData.isEmpty){
             let defaultImage = flutterAssetBundle.appending(path: "/assets/images/widget/background-empty.jpg").path();
             uiImage = UIImage(contentsOfFile: defaultImage);
-        } else {
+        }
+        // Load a base64 encoded image that has been written by the flutter app
+        else {
             uiImage = UIImage(data: Data(base64Encoded: entry.imageData)!)
         }
         if(uiImage != nil){
@@ -34,7 +37,6 @@ struct BgImage : View {
 struct GaugeProgressStyle: ProgressViewStyle {
     func makeBody(configuration: Configuration) -> some View {
         let fractionCompleted = configuration.fractionCompleted ?? 0
-        
         return ZStack {
             Circle()
                 .stroke(Color.body, style: StrokeStyle(lineWidth: 2))

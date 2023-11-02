@@ -5,7 +5,7 @@ import Intents
 // Defines the view / layout of the widget
 struct WonderousWidgetView : View {
     @Environment(\.widgetFamily) var family: WidgetFamily
-    var entry: Provider.Entry
+    var entry: WonderousTimelineProvider.Entry
     var body: some View {
         let showTitle = family == .systemLarge
         let showIcon = family != .systemSmall
@@ -62,7 +62,7 @@ struct WonderousWidgetView : View {
                 startPoint: .center,
                 endPoint: .bottom)
             content.padding(16)
-        }.widgetURL(URL(string: "wonderous://collection"))
+        }.widgetURL(URL(string: "wonderous:///collection"))
         
     }
 }
