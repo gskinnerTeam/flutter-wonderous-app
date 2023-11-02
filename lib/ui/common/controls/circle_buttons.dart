@@ -109,7 +109,14 @@ class BackBtn extends StatelessWidget {
       icon: icon,
       bgColor: bgColor,
       color: iconColor,
-      onPressed: onPressed ?? () => Navigator.pop(context),
+      onPressed: onPressed ?? () {
+        final nav = Navigator.of(context);
+        if(nav.canPop()){
+          Navigator.pop(context);
+        } else {
+          context.go(ScreenPaths.home);
+        }
+      },
       semanticLabel: semanticLabel ?? $strings.circleButtonsSemanticBack,
     );
   }
