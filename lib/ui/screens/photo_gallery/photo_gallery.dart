@@ -213,7 +213,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                   _handleImageTapped(index);
                 },
                 child: _checkCollectibleIndex(index)
-                    ? HiddenCollectible(widget.wonderType, index: 1, size: 100)
+                    ? Center(child: HiddenCollectible(widget.wonderType, index: 1, size: 100))
                     : ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: SizedBox(
