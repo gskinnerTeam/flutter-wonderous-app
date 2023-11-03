@@ -92,9 +92,6 @@ class AppLogic {
 
   bool shouldUseNavRail() => _appSize.width > _appSize.height && _appSize.height > 250;
 
-  /// Enable landscape, portrait or both. Views can call this method to override the default settings.
-  /// For example, the [FullscreenVideoViewer] always wants to enable both landscape and portrait.
-  /// If a view overrides this, it is responsible for setting it back to [supportedOrientations] when disposed.
   void _updateSystemOrientation() {
     final axisList = _supportedOrientationsOverride ?? supportedOrientations;
     //debugPrint('updateDeviceOrientation, supportedAxis: $axisList');
