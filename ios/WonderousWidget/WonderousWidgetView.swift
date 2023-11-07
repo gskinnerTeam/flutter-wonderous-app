@@ -55,14 +55,15 @@ struct WonderousWidgetView : View {
         }
         
         return ZStack{
-            Color.darkGrey
             BgImage(entry: entry).opacity(0.8)
             LinearGradient(
                 gradient: Gradient(colors: [.black.opacity(0), .black]),
                 startPoint: .center,
                 endPoint: .bottom)
             content.padding(16)
-        }.widgetURL(URL(string: "wonderous:///collection"))
+        }
+        .widgetBackground(Color.darkGrey)
+        .widgetURL(URL(string: "wonderous:///collection"))
         
     }
 }

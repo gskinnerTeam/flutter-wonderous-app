@@ -47,3 +47,17 @@ struct GaugeProgressStyle: ProgressViewStyle {
         }
     }
 }
+
+// Create an extension to support new containerBackground API on
+// iOS 17 while still supporting iOS 16 and less (https://nemecek.be/blog/192/hotfixing-widgets-for-ios-17-containerbackground-padding)
+extension View {
+    func widgetBackground(_ backgroundView: some View) -> some View {
+        if #available(iOSApplicationExtension 17.0, *) {
+            return containerBackground(for: .widget) {
+                backgroundView
+            }
+        } else {
+            return background(backgroundView)
+        }
+    }
+}
