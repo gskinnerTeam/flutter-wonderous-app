@@ -57,8 +57,9 @@ class CollectiblesLogic with ThrottledSaveLoadMixin {
       if (state == CollectibleState.discovered) _discoveredCount++;
       if (state == CollectibleState.explored) _exploredCount++;
     });
-    HomeWidget.saveWidgetData<int>('discoveredCount', _discoveredCount);
-    HomeWidget.updateWidget(iOSName: _appName);
+    HomeWidget.saveWidgetData<int>('discoveredCount', _discoveredCount).then((value){
+      HomeWidget.updateWidget(iOSName: _appName);
+    });
     debugPrint('setting discovered count for home widget $_discoveredCount');
   }
 
