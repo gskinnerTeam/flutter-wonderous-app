@@ -9,7 +9,6 @@ struct WonderousTimelineEntry : TimelineEntry {
     var title:String = "";
     var subTitle:String = "";
     var imageData:String = "";
-
 }
 
 // Widget, defines the display name and description and also declared the main View
@@ -20,6 +19,7 @@ struct WonderousWidget: Widget {
         StaticConfiguration(kind: kind, provider: WonderousTimelineProvider()) { entry in
             WonderousWidgetView(entry: entry)
         }
+        .contentMarginsDisabled()
         .configurationDisplayName("Wonderous Widget")
         .description("Track your collected artifacts!")
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
@@ -41,9 +41,6 @@ struct WonderousTimelineProvider: TimelineProvider {
         let title = userDefaults?.string(forKey: "lastDiscoveredTitle") ?? ""
         let subTitle = userDefaults?.string(forKey: "lastDiscoveredSubTitle") ?? ""
         let imageData = userDefaults?.string(forKey: "lastDiscoveredImageData") ?? ""
-//        if(context.isPreview){
-//            entry = WonderousEntry(date: Date(), discoveredCount: discoveredCount)
-//        }
         entry = WonderousTimelineEntry(
             date: Date(),
             discoveredCount:discoveredCount,

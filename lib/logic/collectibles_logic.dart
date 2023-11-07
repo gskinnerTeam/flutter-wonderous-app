@@ -96,7 +96,6 @@ class CollectiblesLogic with ThrottledSaveLoadMixin {
     scheduleSave();
   }
 
-  // TODO: Optimize to send both network requests simultaneously
   Future<void> _updateHomeWidgetTextData({String title = '', String id = '', String imageUrl = ''}) async {
     // Save title
     HomeWidget.saveWidgetData<String>('lastDiscoveredTitle', title);
