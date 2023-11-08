@@ -63,7 +63,7 @@ struct WonderousWidgetView : View {
             content.padding(16)
         }
         .widgetBackground(Color.darkGrey)
-        .widgetURL(URL(string: "wonderous:///collection"))
+        .widgetURL(URL(string: "wonderous:///home/collection"))
         
     }
 }
