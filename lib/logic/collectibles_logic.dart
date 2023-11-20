@@ -38,6 +38,8 @@ class CollectiblesLogic with ThrottledSaveLoadMixin {
 
   void setState(String id, int state) {
     Map<String, int> states = Map.of(statesById.value);
+    states[id] = state;
+    statesById.value = states;
     if (state == CollectibleState.discovered) {
       final data = fromId(id)!;
       _updateHomeWidgetTextData(
@@ -46,8 +48,6 @@ class CollectiblesLogic with ThrottledSaveLoadMixin {
         imageUrl: data.imageUrlSmall,
       );
     }
-    states[id] = state;
-    statesById.value = states;
     scheduleSave();
   }
 
@@ -99,14 +99,14 @@ class CollectiblesLogic with ThrottledSaveLoadMixin {
 
   Future<void> _updateHomeWidgetTextData({String title = '', String id = '', String imageUrl = ''}) async {
     // Save title
-    HomeWidget.saveWidgetData<String>('lastDiscoveredTitle', title);
+    await HomeWidget.saveWidgetData<String>('lastDiscoveredTitle', title);
     // Subtitle
     String subTitle = '';
     if(id.isNotEmpty){
       final artifactData = await artifactLogic.getArtifactByID(id);
       subTitle = artifactData?.date ?? '';
     }
-    HomeWidget.saveWidgetData<String>('lastDiscoveredSubTitle', subTitle);
+    await HomeWidget.saveWidgetData<String>('lastDiscoveredSubTitle', subTitle);
     // Image,
     // Download, convert to base64 string and write to shared widget data
     String imageBase64 = '';
@@ -115,8 +115,8 @@ class CollectiblesLogic with ThrottledSaveLoadMixin {
       imageBase64 = base64Encode(bytes);
       debugPrint('Saving base64 bytes: $imageBase64');
     }
-    HomeWidget.saveWidgetData<String>('lastDiscoveredImageData', imageBase64);
-    HomeWidget.updateWidget(iOSName: _appName);
+    await HomeWidget.saveWidgetData<String>('lastDiscoveredImageData', imageBase64);
+    await HomeWidget.updateWidget(iOSName: _appName);
   }
 
   @override
