@@ -1,5 +1,7 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_header.dart';
+import 'package:wonders/ui/common/fullscreen_keyboard_listener.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
 
 class FullscreenUrlImgViewer extends StatefulWidget {
@@ -15,7 +17,8 @@ class FullscreenUrlImgViewer extends StatefulWidget {
 
 class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
   final _isZoomed = ValueNotifier(false);
-  late final _controller = PageController(initialPage: widget.index);
+  late final _controller = PageController(initialPage: widget.index)..addListener(_handlePageChanged);
+  late final ValueNotifier<int> _currentPage = ValueNotifier(widget.index);
 
   @override
   void dispose() {
@@ -23,7 +26,30 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
     super.dispose();
   }
 
+  bool _handleKeyDown(KeyDownEvent event) {
+    int dir = 0;
+    if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
+      dir = -1;
+    }
+    if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
+      dir = 1;
+    }
+    if (dir != 0) {
+      _animateToPage(_currentPage.value + dir);
+      return true;
+    }
+    return false;
+  }
+
+  void _handlePageChanged() => _currentPage.value = _controller.page!.round();
+
   void _handleBackPressed() => Navigator.pop(context, _controller.page!.round());
+
+  void _animateToPage(int page) {
+    if (page >= 0 || page < widget.urls.length) {
+      _controller.animateToPage(page, duration: 300.ms, curve: Curves.easeOut);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,13 +74,48 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
       child: ExcludeSemantics(child: content),
     );
 
-    return Container(
-      color: $styles.colors.black,
-      child: Stack(
-        children: [
-          Positioned.fill(child: content),
-          AppHeader(onBack: _handleBackPressed, isTransparent: true),
-        ],
+    return FullScreenKeyboardListener(
+      onKeyDown: _handleKeyDown,
+      child: Container(
+        color: $styles.colors.black,
+        child: Stack(
+          children: [
+            Positioned.fill(child: content),
+            AppHeader(onBack: _handleBackPressed, isTransparent: true),
+            // Show next/previous btns if there are more than one image
+            if (widget.urls.length > 1) ...{
+              BottomCenter(
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: $styles.insets.md),
+                  child: ValueListenableBuilder(
+                    valueListenable: _currentPage,
+                    builder: (_, int page, __) {
+                      return Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          CircleIconBtn(
+                            icon: AppIcons.prev,
+                            onPressed: page == 0 ? null : () => _animateToPage(page - 1),
+                            semanticLabel: $strings.semanticsNext(''),
+                          ),
+                          Gap($styles.insets.xs),
+                          Transform.scale(
+                            scaleX: -1,
+                            child: CircleIconBtn(
+                              icon: AppIcons.prev,
+                              onPressed: page == widget.urls.length - 1 ? null : () => _animateToPage(page + 1),
+                              semanticLabel: $strings.semanticsNext(''),
+                            ),
+                          )
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              )
+            }
+          ],
+        ),
       ),
     );
   }
