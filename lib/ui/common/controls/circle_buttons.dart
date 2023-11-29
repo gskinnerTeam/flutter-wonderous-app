@@ -14,7 +14,7 @@ class CircleBtn extends StatelessWidget {
 
   static double defaultSize = 48;
 
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Color? bgColor;
   final BorderSide? border;
   final Widget child;
@@ -54,7 +54,7 @@ class CircleIconBtn extends StatelessWidget {
   static double defaultSize = 28;
 
   final AppIcons icon;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final BorderSide? border;
   final Color? bgColor;
   final Color? color;
@@ -103,6 +103,7 @@ class BackBtn extends StatelessWidget {
             semanticLabel: $strings.circleButtonsSemanticClose,
             bgColor: bgColor,
             iconColor: iconColor);
+
   @override
   Widget build(BuildContext context) {
     return CircleIconBtn(

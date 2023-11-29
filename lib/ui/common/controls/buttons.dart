@@ -22,6 +22,8 @@ class AppBtn extends StatelessWidget {
     this.minimumSize,
     this.bgColor,
     this.border,
+    this.focusNode,
+    this.onFocusChanged,
   })  : _builder = null,
         super(key: key);
 
@@ -36,6 +38,8 @@ class AppBtn extends StatelessWidget {
     this.minimumSize,
     this.bgColor,
     this.border,
+    this.focusNode,
+    this.onFocusChanged,
     String? semanticLabel,
     String? text,
     AppIcons? icon,
@@ -76,6 +80,8 @@ class AppBtn extends StatelessWidget {
     this.isSecondary = false,
     this.circular = false,
     this.minimumSize,
+    this.focusNode,
+    this.onFocusChanged,
   })  : expand = false,
         bgColor = Colors.transparent,
         border = null,
@@ -86,6 +92,8 @@ class AppBtn extends StatelessWidget {
   final VoidCallback? onPressed;
   late final String semanticLabel;
   final bool enableFeedback;
+  final FocusNode? focusNode;
+  final void Function(bool hasFocus)? onFocusChanged;
 
   // content:
   late final Widget? child;
@@ -129,15 +137,20 @@ class AppBtn extends StatelessWidget {
     );
 
     Widget button = _CustomFocusBuilder(
+      focusNode: focusNode,
+      onFocusChanged: onFocusChanged,
       builder: (context, focus) => Stack(
         children: [
-          TextButton(
-            onPressed: onPressed,
-            style: style,
-            focusNode: focus,
-            child: DefaultTextStyle(
-              style: DefaultTextStyle.of(context).style.copyWith(color: textColor),
-              child: content,
+          Opacity(
+            opacity: onPressed == null ? 0.5 : 1.0,
+            child: TextButton(
+              onPressed: onPressed,
+              style: style,
+              focusNode: focus,
+              child: DefaultTextStyle(
+                style: DefaultTextStyle.of(context).style.copyWith(color: textColor),
+                child: content,
+              ),
             ),
           ),
           if (focus.hasFocus)
@@ -154,7 +167,7 @@ class AppBtn extends StatelessWidget {
     );
 
     // add press effect:
-    if (pressEffect) button = _ButtonPressEffect(button);
+    if (pressEffect && onPressed != null) button = _ButtonPressEffect(button);
 
     // add semantics?
     if (semanticLabel.isEmpty) return button;
@@ -199,15 +212,28 @@ class _ButtonPressEffectState extends State<_ButtonPressEffect> {
 }
 
 class _CustomFocusBuilder extends StatefulWidget {
-  const _CustomFocusBuilder({Key? key, required this.builder}) : super(key: key);
+  const _CustomFocusBuilder({Key? key, required this.builder, this.focusNode, this.onFocusChanged}) : super(key: key);
   final Widget Function(BuildContext context, FocusNode focus) builder;
-
+  final void Function(bool hasFocus)? onFocusChanged;
+  final FocusNode? focusNode;
   @override
   State<_CustomFocusBuilder> createState() => _CustomFocusBuilderState();
 }
 
 class _CustomFocusBuilderState extends State<_CustomFocusBuilder> {
-  late final _focusNode = FocusNode()..addListener(() => setState(() {}));
+  late final FocusNode _focusNode;
+
+  @override
+  void initState() {
+    _focusNode = widget.focusNode ?? FocusNode();
+    _focusNode.addListener(_handleFocusChanged);
+    super.initState();
+  }
+
+  void _handleFocusChanged() {
+    widget.onFocusChanged?.call(_focusNode.hasFocus);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
