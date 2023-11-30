@@ -55,41 +55,43 @@ class _EventMarkersState extends State<_EventMarkers> {
 
   @override
   Widget build(BuildContext context) {
-    return IgnorePointer(
-      ignoringSemantics: false,
-      child: LayoutBuilder(builder: (_, constraints) {
-        /// Figure out which event is "selected"
-        _updateSelectedEvent(constraints.maxHeight);
+    return ExcludeSemantics(
+      excluding: false,
+      child: IgnorePointer(
+        child: LayoutBuilder(builder: (_, constraints) {
+          /// Figure out which event is "selected"
+          _updateSelectedEvent(constraints.maxHeight);
 
-        /// Create a marker for each event
-        List<Widget> markers = timelineLogic.events.map((event) {
-          double offsetY = _calculateOffsetY(event.year);
-          return _EventMarker(
-            offsetY,
-            event: event,
-            isSelected: event == selectedEvent,
-            onPressed: widget.onMarkerPressed,
-          );
-        }).toList();
+          /// Create a marker for each event
+          List<Widget> markers = timelineLogic.events.map((event) {
+            double offsetY = _calculateOffsetY(event.year);
+            return _EventMarker(
+              offsetY,
+              event: event,
+              isSelected: event == selectedEvent,
+              onPressed: widget.onMarkerPressed,
+            );
+          }).toList();
 
-        /// Stack of fractionally positioned markers
-        return FocusTraversalGroup(
-          policy: WidgetOrderTraversalPolicy(),
-          child: Container(
-            alignment: Alignment.topLeft,
-            padding: EdgeInsets.only(left: 75),
-            child: SizedBox(
-              width: 20,
-              child: Stack(
-                children: [
-                  ...markers,
-                  if (showReferenceMarkers) ..._buildReferenceMarkers(),
-                ],
+          /// Stack of fractionally positioned markers
+          return FocusTraversalGroup(
+            policy: WidgetOrderTraversalPolicy(),
+            child: Container(
+              alignment: Alignment.topLeft,
+              padding: EdgeInsets.only(left: 75),
+              child: SizedBox(
+                width: 20,
+                child: Stack(
+                  children: [
+                    ...markers,
+                    if (showReferenceMarkers) ..._buildReferenceMarkers(),
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      }),
+          );
+        }),
+      ),
     );
   }
 

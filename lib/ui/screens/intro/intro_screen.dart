@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wonders/common_libs.dart';
-  import 'package:wonders/ui/common/app_icons.dart';
+import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/static_text_scale.dart';
@@ -53,14 +53,14 @@ class _IntroScreenState extends State<IntroScreen> {
 
   void _handleNavTextSemanticTap() => _incrementPage(1);
 
-  void _incrementPage(int dir){
+  void _incrementPage(int dir) {
     final int current = _pageController.page!.round();
     if (_isOnLastPage && dir > 0) return;
     if (_isOnFirstPage && dir < 0) return;
     _pageController.animateToPage(current + dir, duration: 250.ms, curve: Curves.easeIn);
   }
 
-  void _handleScrollWheel(double delta) => _incrementPage(delta >0? 1 : -1);
+  void _handleScrollWheel(double delta) => _incrementPage(delta > 0 ? 1 : -1);
 
   @override
   Widget build(BuildContext context) {
@@ -79,8 +79,8 @@ class _IntroScreenState extends State<IntroScreen> {
 
     /// Return resulting widget tree
     return Listener(
-      onPointerSignal: (signal){
-        if(signal is PointerScrollEvent){
+      onPointerSignal: (signal) {
+        if (signal is PointerScrollEvent) {
           _handleScrollWheel(signal.scrollDelta.dy);
         }
       },
@@ -107,52 +107,54 @@ class _IntroScreenState extends State<IntroScreen> {
                     ),
                   ),
 
-                  IgnorePointer(
-                    ignoringSemantics: false,
-                    child: Column(children: [
-                      Spacer(),
+                  ExcludeSemantics(
+                    excluding: false,
+                    child: IgnorePointer(
+                      child: Column(children: [
+                        Spacer(),
 
-                      // logo:
-                      Semantics(
-                        header: true,
-                        child: Container(
-                          height: _logoHeight,
-                          alignment: Alignment.center,
-                          child: _WonderousLogo(),
+                        // logo:
+                        Semantics(
+                          header: true,
+                          child: Container(
+                            height: _logoHeight,
+                            alignment: Alignment.center,
+                            child: _WonderousLogo(),
+                          ),
                         ),
-                      ),
 
-                      // masked image:
-                      SizedBox(
-                        height: _imageSize,
-                        width: _imageSize,
-                        child: ValueListenableBuilder<int>(
-                          valueListenable: _currentPage,
-                          builder: (_, value, __) {
-                            return AnimatedSwitcher(
-                              duration: $styles.times.slow,
-                              child: KeyedSubtree(
-                                key: ValueKey(value), // so AnimatedSwitcher sees it as a different child.
-                                child: _PageImage(data: pageData[value]),
-                              ),
-                            );
-                          },
+                        // masked image:
+                        SizedBox(
+                          height: _imageSize,
+                          width: _imageSize,
+                          child: ValueListenableBuilder<int>(
+                            valueListenable: _currentPage,
+                            builder: (_, value, __) {
+                              return AnimatedSwitcher(
+                                duration: $styles.times.slow,
+                                child: KeyedSubtree(
+                                  key: ValueKey(value), // so AnimatedSwitcher sees it as a different child.
+                                  child: _PageImage(data: pageData[value]),
+                                ),
+                              );
+                            },
+                          ),
                         ),
-                      ),
 
-                      // placeholder gap for text:
-                      Gap(_IntroScreenState._textHeight),
+                        // placeholder gap for text:
+                        Gap(_IntroScreenState._textHeight),
 
-                      // page indicator:
-                      Container(
-                        height: _pageIndicatorHeight,
-                        alignment: Alignment(0.0, 0),
-                        child: AppPageIndicator(
-                            count: pageData.length, controller: _pageController, color: $styles.colors.offWhite),
-                      ),
+                        // page indicator:
+                        Container(
+                          height: _pageIndicatorHeight,
+                          alignment: Alignment(0.0, 0),
+                          child: AppPageIndicator(
+                              count: pageData.length, controller: _pageController, color: $styles.colors.offWhite),
+                        ),
 
-                      Spacer(flex: 2),
-                    ]),
+                        Spacer(flex: 2),
+                      ]),
+                    ),
                   ),
 
                   // Build a cpl overlays to hide the content when swiping on very wide screens
