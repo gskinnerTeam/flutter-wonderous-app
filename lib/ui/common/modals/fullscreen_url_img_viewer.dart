@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_header.dart';
@@ -35,7 +37,11 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
       dir = 1;
     }
     if (dir != 0) {
+      final focus = FocusManager.instance.primaryFocus;
       _animateToPage(_currentPage.value + dir);
+      scheduleMicrotask(() {
+        focus?.requestFocus();
+      });
       return true;
     }
     return false;
