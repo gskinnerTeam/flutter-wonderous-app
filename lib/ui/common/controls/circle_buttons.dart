@@ -47,6 +47,7 @@ class CircleIconBtn extends StatelessWidget {
     this.color,
     this.size,
     this.iconSize,
+    this.flipIcon = false,
     required this.semanticLabel,
   }) : super(key: key);
 
@@ -61,6 +62,7 @@ class CircleIconBtn extends StatelessWidget {
   final String semanticLabel;
   final double? size;
   final double? iconSize;
+  final bool flipIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +74,10 @@ class CircleIconBtn extends StatelessWidget {
       size: size,
       bgColor: bgColor ?? defaultColor,
       semanticLabel: semanticLabel,
-      child: AppIcon(icon, size: iconSize ?? defaultSize, color: iconColor),
+      child: Transform.scale(
+        scaleX: flipIcon ? -1 : 1,
+        child: AppIcon(icon, size: iconSize ?? defaultSize, color: iconColor),
+      ),
     );
   }
 
