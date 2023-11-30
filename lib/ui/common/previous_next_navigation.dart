@@ -30,7 +30,7 @@ class PreviousNextNavigation extends StatelessWidget {
         child: Align(
           alignment: align,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
+            padding: EdgeInsets.symmetric(horizontal: $styles.insets.sm),
             child: CircleIconBtn(
               icon: AppIcons.prev,
               onPressed: onPressed,
