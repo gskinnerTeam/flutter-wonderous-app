@@ -105,13 +105,11 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
                             semanticLabel: $strings.semanticsNext(''),
                           ),
                           Gap($styles.insets.xs),
-                          Transform.scale(
-                            scaleX: -1,
-                            child: CircleIconBtn(
-                              icon: AppIcons.prev,
-                              onPressed: page == widget.urls.length - 1 ? null : () => _animateToPage(page + 1),
-                              semanticLabel: $strings.semanticsNext(''),
-                            ),
+                          CircleIconBtn(
+                            icon: AppIcons.prev,
+                            flipIcon: true,
+                            onPressed: page == widget.urls.length - 1 ? null : () => _animateToPage(page + 1),
+                            semanticLabel: $strings.semanticsNext(''),
                           )
                         ],
                       );
