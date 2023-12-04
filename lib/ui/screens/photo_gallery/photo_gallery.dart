@@ -175,7 +175,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
 
   @override
   Widget build(BuildContext context) {
-    return FullScreenKeyboardListener(
+    return FullscreenKeyboardListener(
       onKeyDown: _handleKeyDown,
       child: ValueListenableBuilder<List<String>>(
           valueListenable: _photoIds,
