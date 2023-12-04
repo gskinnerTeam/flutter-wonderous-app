@@ -1,12 +1,11 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/collectibles_logic.dart';
-import 'package:wonders/logic/locale_logic.dart';
 import 'package:wonders/logic/artifact_api_logic.dart';
 import 'package:wonders/logic/artifact_api_service.dart';
+import 'package:wonders/logic/collectibles_logic.dart';
+import 'package:wonders/logic/locale_logic.dart';
 import 'package:wonders/logic/timeline_logic.dart';
 import 'package:wonders/logic/unsplash_logic.dart';
 import 'package:wonders/logic/wonders_logic.dart';
