@@ -44,6 +44,8 @@ class AppLogic {
       print(
         'Thanks for checking out Wonderous on the web!\nIf you encounter any issues please report them at https://github.com/gskinnerTeam/flutter-wonderous-app/issues.',
       );
+      // Required on web to automatically enable accessibility features
+      WidgetsFlutterBinding.ensureInitialized().ensureSemantics();
     }
 
     // Load any bitmaps the views might need
