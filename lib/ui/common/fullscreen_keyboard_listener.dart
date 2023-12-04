@@ -1,16 +1,17 @@
 import 'package:wonders/common_libs.dart';
 
-class FullScreenKeyboardListener extends StatefulWidget {
-  const FullScreenKeyboardListener({super.key, required this.child, this.onKeyDown, this.onKeyUp});
+class FullscreenKeyboardListener extends StatefulWidget {
+  const FullscreenKeyboardListener({super.key, required this.child, this.onKeyDown, this.onKeyUp, this.onKeyRepeat});
   final Widget child;
   final bool Function(KeyDownEvent event)? onKeyDown;
   final bool Function(KeyUpEvent event)? onKeyUp;
+  final bool Function(KeyRepeatEvent event)? onKeyRepeat;
 
   @override
-  State<FullScreenKeyboardListener> createState() => _FullScreenKeyboardListenerState();
+  State<FullscreenKeyboardListener> createState() => _FullscreenKeyboardListenerState();
 }
 
-class _FullScreenKeyboardListenerState extends State<FullScreenKeyboardListener> {
+class _FullscreenKeyboardListenerState extends State<FullscreenKeyboardListener> {
   @override
   void initState() {
     super.initState();
@@ -30,6 +31,9 @@ class _FullScreenKeyboardListenerState extends State<FullScreenKeyboardListener>
     }
     if (event is KeyUpEvent && widget.onKeyUp != null) {
       result = widget.onKeyUp!.call(event);
+    }
+    if (event is KeyRepeatEvent && widget.onKeyRepeat != null) {
+      result = widget.onKeyRepeat!.call(event);
     }
     return result;
   }
