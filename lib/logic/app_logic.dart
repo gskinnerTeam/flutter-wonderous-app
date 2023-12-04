@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:desktop_window/desktop_window.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/platform_info.dart';
@@ -36,6 +37,13 @@ class AppLogic {
     // Set min-sizes for desktop apps
     if (PlatformInfo.isDesktop) {
       await DesktopWindow.setMinWindowSize($styles.sizes.minAppSize);
+    }
+
+    if (kIsWeb) {
+      // SB: This is intentionally not a debugPrint, as it's a message for users who open the console on web.
+      print(
+        'Thanks for checking out Wonderous on the web!\nIf you encounter any issues please report them at https://github.com/gskinnerTeam/flutter-wonderous-app/issues.',
+      );
     }
 
     // Load any bitmaps the views might need
