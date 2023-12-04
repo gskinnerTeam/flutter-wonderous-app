@@ -80,7 +80,7 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
       child: ExcludeSemantics(child: content),
     );
 
-    return FullScreenKeyboardListener(
+    return FullscreenKeyboardListener(
       onKeyDown: _handleKeyDown,
       child: Container(
         color: $styles.colors.black,
