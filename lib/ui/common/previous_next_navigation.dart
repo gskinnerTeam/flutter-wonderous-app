@@ -4,10 +4,20 @@ import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/fullscreen_keyboard_listener.dart';
 
 class PreviousNextNavigation extends StatelessWidget {
-  const PreviousNextNavigation({super.key, this.onPreviousPressed, this.onNextPressed, required this.child});
+  const PreviousNextNavigation(
+      {super.key,
+      required this.onPreviousPressed,
+      required this.onNextPressed,
+      required this.child,
+      this.maxWidth = 1000,
+      this.nextBtnColor,
+      this.previousBtnColor});
   final VoidCallback? onPreviousPressed;
   final VoidCallback? onNextPressed;
+  final Color? nextBtnColor;
+  final Color? previousBtnColor;
   final Widget child;
+  final double? maxWidth;
 
   bool _handleKeyDown(KeyDownEvent event) {
     if (event.logicalKey == LogicalKeyboardKey.arrowLeft && onPreviousPressed != null) {
@@ -23,32 +33,40 @@ class PreviousNextNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget buildBtn(String semanticLabel, VoidCallback? onPressed, Alignment align, {bool isNext = false}) {
-      if (PlatformInfo.isMobile) return child;
-      return FullScreenKeyboardListener(
-        onKeyDown: _handleKeyDown,
-        child: Align(
-          alignment: align,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: $styles.insets.sm),
-            child: CircleIconBtn(
-              icon: AppIcons.prev,
-              onPressed: onPressed,
-              semanticLabel: semanticLabel,
-              flipIcon: isNext,
+    if (PlatformInfo.isMobile) return child;
+    return FullscreenKeyboardListener(
+      onKeyDown: _handleKeyDown,
+      child: Stack(
+        children: [
+          child,
+          Center(
+            child: SizedBox(
+              width: maxWidth ?? double.infinity,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: $styles.insets.sm),
+                child: Row(
+                  children: [
+                    CircleIconBtn(
+                      icon: AppIcons.prev,
+                      onPressed: onPreviousPressed,
+                      semanticLabel: 'Previous',
+                      bgColor: previousBtnColor,
+                    ),
+                    Spacer(),
+                    CircleIconBtn(
+                      icon: AppIcons.prev,
+                      onPressed: onNextPressed,
+                      semanticLabel: 'Next',
+                      flipIcon: true,
+                      bgColor: nextBtnColor,
+                    )
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
-      );
-    }
-
-    return Stack(
-      children: [
-        child,
-        //TODO-LOC: Add localization
-        buildBtn('previous', onPreviousPressed, Alignment.centerLeft),
-        buildBtn('next', onNextPressed, Alignment.centerRight, isNext: true),
-      ],
+        ],
+      ),
     );
   }
 }
