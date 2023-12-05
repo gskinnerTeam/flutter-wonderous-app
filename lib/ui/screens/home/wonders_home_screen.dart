@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/app_icons.dart';
@@ -88,6 +89,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   void _handlePageIndicatorDotPressed(int index) => _setPageIndex(index);
 
+  void _handlePrevNext(int i) => _setPageIndex(_wonderIndex + i, animate: true);
+
   void _setPageIndex(int index, {bool animate = false}) {
     if (index == _wonderIndex) return;
     // To support infinite scrolling, we can't jump directly to the pressed index. Instead, make it relative to our current position.
@@ -132,8 +135,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     return _swipeController.wrapGestureDetector(Container(
       color: $styles.colors.black,
       child: PreviousNextNavigation(
-        onPreviousPressed: () => _setPageIndex(_wonderIndex - 1, animate: true),
-        onNextPressed: () => _setPageIndex(_wonderIndex + 1, animate: true),
+        listenToMouseWheel: false,
+        onPreviousPressed: () => _handlePrevNext(-1),
+        onNextPressed: () => _handlePrevNext(1),
         child: Stack(
           children: [
             /// Background
