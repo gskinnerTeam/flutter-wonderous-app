@@ -1,5 +1,6 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/app_icons.dart';
+import 'package:wonders/ui/common/fullscreen_keyboard_listener.dart';
 
 class CircleBtn extends StatelessWidget {
   const CircleBtn({
@@ -109,18 +110,37 @@ class BackBtn extends StatelessWidget {
             bgColor: bgColor,
             iconColor: iconColor);
 
+  bool _handleKeyDown(BuildContext context, KeyDownEvent event) {
+    if (event.logicalKey == LogicalKeyboardKey.escape) {
+      _handleOnPressed(context);
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return CircleIconBtn(
-      icon: icon,
-      bgColor: bgColor,
-      color: iconColor,
-      onPressed: onPressed ?? () => Navigator.pop(context),
-      semanticLabel: semanticLabel ?? $strings.circleButtonsSemanticBack,
+    return FullscreenKeyboardListener(
+      onKeyDown: (event) => _handleKeyDown(context, event),
+      child: CircleIconBtn(
+        icon: icon,
+        bgColor: bgColor,
+        color: iconColor,
+        onPressed: () => _handleOnPressed(context),
+        semanticLabel: semanticLabel ?? $strings.circleButtonsSemanticBack,
+      ),
     );
   }
 
   Widget safe() => _SafeAreaWithPadding(child: this);
+
+  void _handleOnPressed(BuildContext context) {
+    if (onPressed != null) {
+      onPressed?.call();
+    } else {
+      Navigator.of(context).pop();
+    }
+  }
 }
 
 class _SafeAreaWithPadding extends StatelessWidget {
