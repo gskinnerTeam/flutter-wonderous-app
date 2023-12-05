@@ -37,6 +37,7 @@ class _CollectionListState extends State<_CollectionList> with GetItStateMixin {
   // Maintain scroll position when switching between vertical and horizontal orientation.
   // Multiplies or divides the current scroll position by the ratio of the vertical and horizontal card extents.
   void _maintainScrollPos() {
+    if (scrollController.hasClients == false) return;
     const extentFactor = _CollectionList._vtCardExtent / _CollectionList._hzCardExtent;
     final currentPx = scrollController.position.pixels;
     if (_vtMode.value == true) {
