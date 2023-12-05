@@ -26,6 +26,10 @@ class _FullscreenKeyboardListenerState extends State<FullscreenKeyboardListener>
 
   bool _handleKey(KeyEvent event) {
     bool result = false;
+
+    /// Exit early if we are not the current;y focused route (dialog on top?)
+    if (ModalRoute.of(context)?.isCurrent == false) return false;
+
     if (event is KeyDownEvent && widget.onKeyDown != null) {
       result = widget.onKeyDown!.call(event);
     }
