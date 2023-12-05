@@ -73,7 +73,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
 
       /// Attempt to maintain a similar aspect ratio for the image within the app-bar
       double maxAppBarHeight = min(context.widthPx, $styles.sizes.maxContentWidth1) * 1.2;
-      bool showBackBtn = appLogic.shouldUseNavRail() == false;
+      final backBtnAlign = appLogic.shouldUseNavRail() ? Alignment.topRight : Alignment.topLeft;
       return PopRouterOnOverScroll(
         controller: _scroller,
         child: ColoredBox(
@@ -169,18 +169,23 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
               ),
 
               /// Home Btn
-              if (showBackBtn) ...[
-                AnimatedBuilder(
-                    animation: _scroller,
-                    builder: (_, child) {
-                      return AnimatedOpacity(
-                        opacity: _scrollPos.value > 0 ? 0 : 1,
-                        duration: $styles.times.med,
-                        child: child,
-                      );
-                    },
-                    child: AppHeader(backIcon: AppIcons.north, isTransparent: true))
-              ],
+              AnimatedBuilder(
+                animation: _scroller,
+                builder: (_, child) {
+                  return AnimatedOpacity(
+                    opacity: _scrollPos.value > 0 ? 0 : 1,
+                    duration: $styles.times.med,
+                    child: child,
+                  );
+                },
+                child: Align(
+                  alignment: backBtnAlign,
+                  child: Padding(
+                    padding: EdgeInsets.all($styles.insets.sm),
+                    child: BackBtn(icon: AppIcons.north),
+                  ),
+                ),
+              )
             ],
           ),
         ),
