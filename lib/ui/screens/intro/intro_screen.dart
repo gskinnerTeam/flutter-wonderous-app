@@ -1,6 +1,7 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/platform_info.dart';
+import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/previous_next_navigation.dart';
@@ -165,6 +166,13 @@ class _IntroScreenState extends State<IntroScreen> {
 
                   // nav help text:
                   if (PlatformInfo.isMobile) ...[
+                    // finish button:
+                    Positioned(
+                      right: $styles.insets.lg,
+                      bottom: $styles.insets.lg,
+                      child: _buildFinishBtn(context),
+                    ),
+
                     BottomCenter(
                       child: Padding(
                         padding: EdgeInsets.only(bottom: $styles.insets.lg),
@@ -178,6 +186,24 @@ class _IntroScreenState extends State<IntroScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildFinishBtn(BuildContext context) {
+    return ValueListenableBuilder<int>(
+      valueListenable: _currentPage,
+      builder: (_, pageIndex, __) {
+        return AnimatedOpacity(
+          opacity: pageIndex == pageData.length - 1 ? 1 : 0,
+          duration: $styles.times.fast,
+          child: CircleIconBtn(
+            icon: AppIcons.next_large,
+            bgColor: $styles.colors.accent1,
+            onPressed: _handleIntroCompletePressed,
+            semanticLabel: $strings.introSemanticEnterApp,
+          ),
+        );
+      },
     );
   }
 
