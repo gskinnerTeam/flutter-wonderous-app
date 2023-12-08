@@ -104,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   void _showDetailsPage() async {
     _swipeOverride = _swipeController.swipeAmt.value;
-    context.push(ScreenPaths.wonderDetails(currentWonder.type));
+    context.go('${ScreenPaths.home}${ScreenPaths.wonderDetails(currentWonder.type)}');
     await Future.delayed(100.ms);
     _swipeOverride = null;
     _fadeInOnNextBuild = true;

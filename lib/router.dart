@@ -38,7 +38,15 @@ final appRouter = GoRouter(
         },
         routes: [
           AppRoute(ScreenPaths.splash, (_) => Container(color: $styles.colors.greyStrong)), // This will be hidden
-          AppRoute(ScreenPaths.home, (_) => HomeScreen()),
+          AppRoute(ScreenPaths.home, (_) => HomeScreen(), routes: [
+            AppRoute('wonder/:type', (s) {
+              int tab = int.tryParse(s.queryParams['t'] ?? '') ?? 0;
+              return WonderDetailsScreen(
+                type: _parseWonderType(s.params['type']),
+                initialTabIndex: tab,
+              );
+            }, useFade: true),
+          ]),
           AppRoute(ScreenPaths.intro, (_) => IntroScreen()),
           AppRoute('/wonder/:type', (s) {
             int tab = int.tryParse(s.queryParams['t'] ?? '') ?? 0;
