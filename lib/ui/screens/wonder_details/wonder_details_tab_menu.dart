@@ -155,7 +155,7 @@ class _WonderHomeBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleBtn(
-      onPressed: () => Navigator.of(context).pop(),
+      onPressed: () => context.go(ScreenPaths.home),
       bgColor: $styles.colors.white,
       semanticLabel: $strings.wonderDetailsTabSemanticBack,
       child: AnimatedContainer(
