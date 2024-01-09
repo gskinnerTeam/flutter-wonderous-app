@@ -54,7 +54,7 @@ class AppLogic {
 
     // Set preferred refresh rate to the max possible (the OS may ignore this)
     if (PlatformInfo.isAndroid) {
-      await FlutterDisplayMode.setHighRefreshRate();
+      FlutterDisplayMode.setHighRefreshRate();
     }
 
     // Settings
@@ -77,10 +77,10 @@ class AppLogic {
 
     // Load initial view (replace empty initial view which is covered by a native splash screen)
     bool showIntro = settingsLogic.hasCompletedOnboarding.value == false;
-    if (showIntro || true) {
+    if (showIntro) {
       appRouter.go(ScreenPaths.intro);
     } else {
-      appRouter.go(ScreenPaths.home);
+      appRouter.go(initialDeeplink ?? ScreenPaths.home);
     }
   }
 

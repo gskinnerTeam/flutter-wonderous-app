@@ -16,16 +16,54 @@ class ScreenPaths {
   static String splash = '/';
   static String intro = '/welcome';
   static String home = '/home';
+
   static String settings = '/settings';
-  static String wonderDetails(WonderType type, {int tabIndex = 0}) => '/wonder/${type.name}?t=$tabIndex';
-  static String video(String id) => '/video/$id';
-  static String highlights(WonderType type) => '/highlights/${type.name}';
+
+  // editorial
+  static String wonderDetails(WonderType type, {required int tabIndex}) => '$home/wonder/${type.name}?t=$tabIndex';
+  // add /home/wonderType/
+  static String video(String id, {String? currentPath}) {
+    var value = '${currentPath ?? ''}/video/$id';
+    // if(currentPath != null) {
+    //
+    //   value = '${context.go}/$value';
+    // }
+    return value;
+  }
+
   static String search(WonderType type) => '/search/${type.name}';
-  static String artifact(String id) => '/artifact/$id';
-  static String collection(String id) => '/collection?id=$id';
   static String maps(WonderType type) => '/maps/${type.name}';
+
+  // both home/timeline and /home/wonderType/timeline
   static String timeline(WonderType? type) => '/timeline?type=${type?.name ?? ''}';
-  static String wallpaperPhoto(WonderType type) => '/wallpaperPhoto/${type.name}';
+
+  // /collection, /search, /carousel, this should be a dialog... but then it can't be deep-linked?
+  static String artifact(String id) => '/artifact/$id';
+
+  static String collection(String id) => '/collection?id=$id';
+}
+
+// Routes that are used multiple times
+AppRoute get _artifactRoute => AppRoute(
+      'artifact/:id',
+      (s) => ArtifactDetailsScreen(artifactId: s.pathParameters['id']!),
+    );
+
+AppRoute get _timelineRoute {
+  return AppRoute(
+    'timeline',
+    (s) => TimelineScreen(type: _tryParseWonderType(s.uri.queryParameters['type']!)),
+  );
+}
+
+AppRoute get _collectionRoute {
+  return AppRoute(
+    'collection',
+    (s) => CollectionScreen(fromId: s.uri.queryParameters['id'] ?? ''),
+    routes: [
+      _artifactRoute,
+    ],
+  );
 }
 
 /// Routing table, matches string paths to UI Screens, optionally parses params from the paths
@@ -38,44 +76,45 @@ final appRouter = GoRouter(
         },
         routes: [
           AppRoute(ScreenPaths.splash, (_) => Container(color: $styles.colors.greyStrong)), // This will be hidden
-          AppRoute(ScreenPaths.home, (_) => HomeScreen(), routes: [
-            AppRoute('wonder/:type', (s) {
-              int tab = int.tryParse(s.queryParams['t'] ?? '') ?? 0;
-              return WonderDetailsScreen(
-                type: _parseWonderType(s.params['type']),
-                initialTabIndex: tab,
-              );
-            }, useFade: true),
-          ]),
           AppRoute(ScreenPaths.intro, (_) => IntroScreen()),
-          AppRoute('/wonder/:type', (s) {
-            int tab = int.tryParse(s.queryParams['t'] ?? '') ?? 0;
-            return WonderDetailsScreen(
-              type: _parseWonderType(s.params['type']),
-              initialTabIndex: tab,
-            );
-          }, useFade: true),
-          AppRoute('/timeline', (s) {
-            return TimelineScreen(type: _tryParseWonderType(s.queryParams['type']!));
-          }),
-          AppRoute('/video/:id', (s) {
-            return FullscreenVideoViewer(id: s.params['id']!);
-          }),
-          AppRoute('/highlights/:type', (s) {
-            return ArtifactCarouselScreen(type: _parseWonderType(s.params['type']));
-          }),
-          AppRoute('/search/:type', (s) {
-            return ArtifactSearchScreen(type: _parseWonderType(s.params['type']));
-          }),
-          AppRoute('/artifact/:id', (s) {
-            return ArtifactDetailsScreen(artifactId: s.params['id']!);
-          }),
-          AppRoute('/collection', (s) {
-            return CollectionScreen(fromId: s.queryParams['id'] ?? '');
-          }),
-          AppRoute('/maps/:type', (s) {
-            return FullscreenMapsViewer(type: _parseWonderType(s.params['type']));
-          }),
+          AppRoute(ScreenPaths.home, (_) => HomeScreen(), routes: [
+            AppRoute(
+              'wonder/:type',
+              (s) {
+                int tab = int.tryParse(s.uri.queryParameters['t'] ?? '') ?? 0;
+                return WonderDetailsScreen(
+                  type: _parseWonderType(s.pathParameters['type']),
+                  tabIndex: tab,
+                );
+              },
+              useFade: true,
+              // Wonder sub-routes
+              routes: [
+                _timelineRoute,
+                _collectionRoute,
+                // Youtube Video
+                AppRoute('video/:id', (s) {
+                  return FullscreenVideoViewer(id: s.pathParameters['id']!);
+                }),
+
+                // Search
+                AppRoute(
+                  'search/:type',
+                  (s) {
+                    return ArtifactSearchScreen(type: _parseWonderType(s.pathParameters['type']));
+                  },
+                  routes: [
+                    _artifactRoute,
+                  ],
+                ),
+
+                // Maps
+                AppRoute('maps/:type', (s) {
+                  return FullscreenMapsViewer(type: _parseWonderType(s.pathParameters['type']));
+                }),
+              ],
+            ),
+          ]),
         ]),
   ],
 );
@@ -107,12 +146,17 @@ class AppRoute extends GoRoute {
   final bool useFade;
 }
 
+String? get initialDeeplink => _initialDeeplink;
+String? _initialDeeplink;
+
 String? _handleRedirect(BuildContext context, GoRouterState state) {
   // Prevent anyone from navigating away from `/` if app is starting up.
-  if (!appLogic.isBootstrapComplete && state.location != ScreenPaths.splash) {
+  if (!appLogic.isBootstrapComplete && state.uri.path != ScreenPaths.splash) {
+    debugPrint('Redirecting from ${state.uri.path} to ${ScreenPaths.splash}');
+    _initialDeeplink ??= state.uri.toString();
     return ScreenPaths.splash;
   }
-  debugPrint('Navigate to: ${state.location}');
+  debugPrint('Navigate to: ${state.uri.path}');
   return null; // do nothing
 }
 
