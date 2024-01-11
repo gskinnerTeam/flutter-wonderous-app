@@ -9,17 +9,23 @@ import 'package:wonders/logic/locale_logic.dart';
 import 'package:wonders/logic/timeline_logic.dart';
 import 'package:wonders/logic/unsplash_logic.dart';
 import 'package:wonders/logic/wonders_logic.dart';
+import 'package:wonders/nav_spike.dart';
 import 'package:wonders/ui/common/app_shortcuts.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   // Keep native splash screen up until app is finished bootstrapping
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  GoRouter.optionURLReflectsImperativeAPIs = true;
 
   // Start app
   registerSingletons();
-  runApp(WondersApp());
-  await appLogic.bootstrap();
+
+  // Spike:
+  runApp(NavSpikeApp());
+
+  //runApp(WondersApp());
+  //await appLogic.bootstrap();
 
   // Remove splash screen when bootstrap is complete
   FlutterNativeSplash.remove();
