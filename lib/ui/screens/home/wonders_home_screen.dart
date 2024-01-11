@@ -54,16 +54,20 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
+    // Load previously saved wonderIndex if we have one
+    _wonderIndex = settingsLogic.prevWonderIndex.value ?? 0;
+    // allow 'infinite' scrolling by starting at a very high page number, add wonderIndex to start on the correct page
+    final initialPage = _numWonders * 100 + _wonderIndex;
     // Create page controller,
-    // allow 'infinite' scrolling by starting at a very high page, or remember the previous value
-    final initialPage = _numWonders * 9999;
     _pageController = PageController(viewportFraction: 1, initialPage: initialPage);
-    _wonderIndex = initialPage % _numWonders;
   }
 
   void _handlePageChanged(value) {
+    final newIndex = value % _numWonders;
+    if (newIndex == _wonderIndex) return; // Exit early if we're already on this page
     setState(() {
-      _wonderIndex = value % _numWonders;
+      _wonderIndex = newIndex;
+      settingsLogic.prevWonderIndex.value = _wonderIndex;
     });
     AppHaptics.lightImpact();
   }
@@ -104,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   void _showDetailsPage() async {
     _swipeOverride = _swipeController.swipeAmt.value;
-    context.go('${ScreenPaths.home}${ScreenPaths.wonderDetails(currentWonder.type)}');
+    context.go(ScreenPaths.wonderDetails(currentWonder.type, tabIndex: 0));
     await Future.delayed(100.ms);
     _swipeOverride = null;
     _fadeInOnNextBuild = true;
