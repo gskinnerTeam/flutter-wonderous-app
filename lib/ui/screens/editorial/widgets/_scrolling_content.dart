@@ -166,15 +166,19 @@ class _ScrollingContent extends StatelessWidget {
 }
 
 class _YouTubeThumbnail extends StatelessWidget {
-  const _YouTubeThumbnail({Key? key, required this.id, required this.caption}) : super(key: key);
+  const _YouTubeThumbnail({Key? key, required this.id, required this.caption, this.wonderType}) : super(key: key);
   final String id;
   final String caption;
+  final WonderType? wonderType;
 
   String get imageUrl => 'https://www.wonderous.info/youtube/$id.jpg';
 
   @override
   Widget build(BuildContext context) {
-    void handlePressed() => context.push(ScreenPaths.video(id));
+    void handlePressed() {
+      context.go(ScreenPaths.video(id));
+    }
+
     return MergeSemantics(
       child: ConstrainedBox(
         constraints: BoxConstraints(maxWidth: 400),
@@ -227,7 +231,7 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
 
   @override
   Widget build(BuildContext context) {
-    void handlePressed() => context.push(ScreenPaths.maps(widget.data.type));
+    void handlePressed() => context.go(ScreenPaths.maps(widget.data.type));
     if (PlatformInfo.isDesktop) return SizedBox.shrink();
     return AspectRatio(
       aspectRatio: 1.65,

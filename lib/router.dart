@@ -19,28 +19,21 @@ class ScreenPaths {
 
   static String settings = '/settings';
 
-  // editorial
   static String wonderDetails(WonderType type, {required int tabIndex}) => '$home/wonder/${type.name}?t=$tabIndex';
-  // add /home/wonderType/
-  static String video(String id, {String? currentPath}) {
-    var value = '${currentPath ?? ''}/video/$id';
-    // if(currentPath != null) {
-    //
-    //   value = '${context.go}/$value';
-    // }
-    return value;
+
+  /// Dynamically nested pages, always added on to the existing path
+  static String video(String id) => _appendToCurrentPath('/video/$id');
+  static String search(WonderType type) => _appendToCurrentPath('/search/${type.name}');
+  static String maps(WonderType type) => _appendToCurrentPath('/maps/${type.name}');
+  static String timeline(WonderType? type) => _appendToCurrentPath('/timeline?type=${type?.name ?? ''}');
+  static String artifact(String id) => _appendToCurrentPath('/artifact/$id');
+  static String collection(String id) => _appendToCurrentPath('/collection?id=$id');
+
+  static String _appendToCurrentPath(String newPath) {
+    final uri = appRouter.routeInformationProvider.value.uri;
+    Uri? loc = Uri(path: '${uri.path}$newPath', queryParameters: uri.queryParameters);
+    return loc.toString();
   }
-
-  static String search(WonderType type) => '/search/${type.name}';
-  static String maps(WonderType type) => '/maps/${type.name}';
-
-  // both home/timeline and /home/wonderType/timeline
-  static String timeline(WonderType? type) => '/timeline?type=${type?.name ?? ''}';
-
-  // /collection, /search, /carousel, this should be a dialog... but then it can't be deep-linked?
-  static String artifact(String id) => '/artifact/$id';
-
-  static String collection(String id) => '/collection?id=$id';
 }
 
 // Routes that are used multiple times
@@ -92,6 +85,7 @@ final appRouter = GoRouter(
               routes: [
                 _timelineRoute,
                 _collectionRoute,
+                _artifactRoute,
                 // Youtube Video
                 AppRoute('video/:id', (s) {
                   return FullscreenVideoViewer(id: s.pathParameters['id']!);
