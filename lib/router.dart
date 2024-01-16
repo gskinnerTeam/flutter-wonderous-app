@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/modals//fullscreen_video_viewer.dart';
 import 'package:wonders/ui/common/modals/fullscreen_maps_viewer.dart';
-import 'package:wonders/ui/screens/artifact/artifact_carousel/artifact_carousel_screen.dart';
 import 'package:wonders/ui/screens/artifact/artifact_details/artifact_details_screen.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_screen.dart';
 import 'package:wonders/ui/screens/collection/collection_screen.dart';
@@ -16,7 +15,6 @@ class ScreenPaths {
   static String splash = '/';
   static String intro = '/welcome';
   static String home = '/home';
-
   static String settings = '/settings';
 
   static String wonderDetails(WonderType type, {required int tabIndex}) => '$home/wonder/${type.name}?t=$tabIndex';
@@ -26,12 +24,16 @@ class ScreenPaths {
   static String search(WonderType type) => _appendToCurrentPath('/search/${type.name}');
   static String maps(WonderType type) => _appendToCurrentPath('/maps/${type.name}');
   static String timeline(WonderType? type) => _appendToCurrentPath('/timeline?type=${type?.name ?? ''}');
-  static String artifact(String id) => _appendToCurrentPath('/artifact/$id');
-  static String collection(String id) => _appendToCurrentPath('/collection?id=$id');
+  static String artifact(String id, {bool append = true}) =>
+      append ? _appendToCurrentPath('/artifact/$id') : '/artifact/$id';
+  static String collection(String id) => _appendToCurrentPath('/collection${id.isEmpty ? '' : '?id=$id'}');
 
   static String _appendToCurrentPath(String newPath) {
-    final uri = appRouter.routeInformationProvider.value.uri;
-    Uri? loc = Uri(path: '${uri.path}$newPath', queryParameters: uri.queryParameters);
+    final newPathUri = Uri.parse(newPath);
+    final currentUri = appRouter.routeInformationProvider.value.uri;
+    Map<String, dynamic> params = Map.of(newPathUri.queryParameters);
+    params.addAll(newPathUri.queryParameters);
+    Uri? loc = Uri(path: '${currentUri.path}/${newPathUri.path}'.replaceAll('//', '/'), queryParameters: params);
     return loc.toString();
   }
 }
@@ -71,6 +73,8 @@ final appRouter = GoRouter(
           AppRoute(ScreenPaths.splash, (_) => Container(color: $styles.colors.greyStrong)), // This will be hidden
           AppRoute(ScreenPaths.intro, (_) => IntroScreen()),
           AppRoute(ScreenPaths.home, (_) => HomeScreen(), routes: [
+            _timelineRoute,
+            _collectionRoute,
             AppRoute(
               'wonder/:type',
               (s) {
@@ -149,6 +153,10 @@ String? _handleRedirect(BuildContext context, GoRouterState state) {
     debugPrint('Redirecting from ${state.uri.path} to ${ScreenPaths.splash}');
     _initialDeeplink ??= state.uri.toString();
     return ScreenPaths.splash;
+  }
+  if (appLogic.isBootstrapComplete && state.uri.path == ScreenPaths.splash) {
+    debugPrint('Redirecting from ${state.uri.path} to ${ScreenPaths.home}');
+    return ScreenPaths.home;
   }
   debugPrint('Navigate to: ${state.uri.path}');
   return null; // do nothing
