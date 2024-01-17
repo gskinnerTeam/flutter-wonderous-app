@@ -21,7 +21,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
   late final _tabController = TabController(
     length: 4,
     vsync: this,
-    initialIndex: widget.tabIndex,
+    initialIndex: _clampIndex(widget.tabIndex),
   )..addListener(_handleTabChanged);
   AnimationController? _fade;
 
@@ -31,7 +31,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
   @override
   void didUpdateWidget(covariant WonderDetailsScreen oldWidget) {
     if (oldWidget.tabIndex != widget.tabIndex) {
-      _tabController.index = widget.tabIndex;
+      _tabController.index = _clampIndex(widget.tabIndex);
     }
     super.didUpdateWidget(oldWidget);
   }
@@ -41,6 +41,8 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
     _tabController.dispose();
     super.dispose();
   }
+
+  int _clampIndex(int index) => index.clamp(0, 3);
 
   void _handleTabChanged() {
     _fade?.forward(from: 0);
