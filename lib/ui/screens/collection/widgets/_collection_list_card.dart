@@ -9,7 +9,7 @@ class _CollectionListCard extends StatelessWidget with GetItMixin {
   final String fromId;
 
   void _showDetails(BuildContext context, CollectibleData collectible) {
-    context.push(ScreenPaths.artifact(collectible.artifactId));
+    context.go(ScreenPaths.artifact(collectible.artifactId));
     Future.delayed(300.ms).then((_) => collectiblesLogic.setState(collectible.id, CollectibleState.explored));
   }
 
