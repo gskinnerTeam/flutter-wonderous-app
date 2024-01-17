@@ -31,7 +31,7 @@ class ScreenPaths {
   static String _appendToCurrentPath(String newPath) {
     final newPathUri = Uri.parse(newPath);
     final currentUri = appRouter.routeInformationProvider.value.uri;
-    Map<String, dynamic> params = Map.of(newPathUri.queryParameters);
+    Map<String, dynamic> params = Map.of(currentUri.queryParameters);
     params.addAll(newPathUri.queryParameters);
     Uri? loc = Uri(path: '${currentUri.path}/${newPathUri.path}'.replaceAll('//', '/'), queryParameters: params);
     return loc.toString();
@@ -40,8 +40,8 @@ class ScreenPaths {
 
 // Routes that are used multiple times
 AppRoute get _artifactRoute => AppRoute(
-      'artifact/:id',
-      (s) => ArtifactDetailsScreen(artifactId: s.pathParameters['id']!),
+      'artifact/:artifactId',
+      (s) => ArtifactDetailsScreen(artifactId: s.pathParameters['artifactId']!),
     );
 
 AppRoute get _timelineRoute {
@@ -55,9 +55,7 @@ AppRoute get _collectionRoute {
   return AppRoute(
     'collection',
     (s) => CollectionScreen(fromId: s.uri.queryParameters['id'] ?? ''),
-    routes: [
-      _artifactRoute,
-    ],
+    routes: [_artifactRoute],
   );
 }
 
@@ -76,11 +74,11 @@ final appRouter = GoRouter(
             _timelineRoute,
             _collectionRoute,
             AppRoute(
-              'wonder/:type',
+              'wonder/:detailsType',
               (s) {
                 int tab = int.tryParse(s.uri.queryParameters['t'] ?? '') ?? 0;
                 return WonderDetailsScreen(
-                  type: _parseWonderType(s.pathParameters['type']),
+                  type: _parseWonderType(s.pathParameters['detailsType']),
                   tabIndex: tab,
                 );
               },
@@ -91,15 +89,15 @@ final appRouter = GoRouter(
                 _collectionRoute,
                 _artifactRoute,
                 // Youtube Video
-                AppRoute('video/:id', (s) {
-                  return FullscreenVideoViewer(id: s.pathParameters['id']!);
+                AppRoute('video/:videoId', (s) {
+                  return FullscreenVideoViewer(id: s.pathParameters['videoId']!);
                 }),
 
                 // Search
                 AppRoute(
-                  'search/:type',
+                  'search/:searchType',
                   (s) {
-                    return ArtifactSearchScreen(type: _parseWonderType(s.pathParameters['type']));
+                    return ArtifactSearchScreen(type: _parseWonderType(s.pathParameters['searchType']));
                   },
                   routes: [
                     _artifactRoute,
@@ -107,9 +105,11 @@ final appRouter = GoRouter(
                 ),
 
                 // Maps
-                AppRoute('maps/:type', (s) {
-                  return FullscreenMapsViewer(type: _parseWonderType(s.pathParameters['type']));
-                }),
+                AppRoute(
+                    'maps/:mapsType',
+                    (s) => FullscreenMapsViewer(
+                          type: _parseWonderType(s.pathParameters['mapsType']),
+                        )),
               ],
             ),
           ]),
@@ -150,7 +150,7 @@ String? _initialDeeplink;
 String? _handleRedirect(BuildContext context, GoRouterState state) {
   // Prevent anyone from navigating away from `/` if app is starting up.
   if (!appLogic.isBootstrapComplete && state.uri.path != ScreenPaths.splash) {
-    debugPrint('Redirecting from ${state.uri.path} to ${ScreenPaths.splash}');
+    debugPrint('Redirecting from ${state.uri.path} to ${ScreenPaths.splash}.');
     _initialDeeplink ??= state.uri.toString();
     return ScreenPaths.splash;
   }
@@ -158,7 +158,7 @@ String? _handleRedirect(BuildContext context, GoRouterState state) {
     debugPrint('Redirecting from ${state.uri.path} to ${ScreenPaths.home}');
     return ScreenPaths.home;
   }
-  debugPrint('Navigate to: ${state.uri.path}');
+  debugPrint('Navigate to: ${state.uri}');
   return null; // do nothing
 }
 
