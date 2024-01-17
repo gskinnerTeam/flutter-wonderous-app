@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/lazy_indexed_stack.dart';
 import 'package:wonders/ui/common/measurable_widget.dart';
@@ -43,9 +45,13 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
   }
 
   void _handleTabChanged() {
-    context.go(ScreenPaths.wonderDetails(widget.type, tabIndex: _tabController.index));
     _fade?.forward(from: 0);
     setState(() {});
+  }
+
+  void _handleTabTapped(int index) {
+    _tabController.index = index;
+    context.go(ScreenPaths.wonderDetails(widget.type, tabIndex: _tabController.index));
   }
 
   void _handleTabMenuSized(Size size) {
@@ -85,6 +91,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
               onChange: _handleTabMenuSized,
               child: WonderDetailsTabMenu(
                   tabController: _tabController,
+                  onTap: _handleTabTapped,
                   wonderType: wonder.type,
                   showBg: showTabBarBg,
                   axis: _useNavRail ? Axis.vertical : Axis.horizontal),
