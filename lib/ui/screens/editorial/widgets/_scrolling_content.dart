@@ -166,18 +166,16 @@ class _ScrollingContent extends StatelessWidget {
 }
 
 class _YouTubeThumbnail extends StatelessWidget {
-  const _YouTubeThumbnail({Key? key, required this.id, required this.caption, this.wonderType}) : super(key: key);
+  const _YouTubeThumbnail({Key? key, required this.id, required this.caption}) : super(key: key);
   final String id;
   final String caption;
-  final WonderType? wonderType;
 
   String get imageUrl => 'https://www.wonderous.info/youtube/$id.jpg';
 
   @override
   Widget build(BuildContext context) {
-    void handlePressed() {
-      context.go(ScreenPaths.video(id));
-    }
+    // On btn pressed:
+    void handlePressed() => context.go(ScreenPaths.video(id));
 
     return MergeSemantics(
       child: ConstrainedBox(
