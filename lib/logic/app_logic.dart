@@ -53,8 +53,8 @@ class AppLogic {
     await AppBitmaps.init();
 
     // Set preferred refresh rate to the max possible (the OS may ignore this)
-    if (PlatformInfo.isAndroid) {
-      FlutterDisplayMode.setHighRefreshRate();
+    if (!kIsWeb && PlatformInfo.isAndroid) {
+      await FlutterDisplayMode.setHighRefreshRate();
     }
 
     // Settings

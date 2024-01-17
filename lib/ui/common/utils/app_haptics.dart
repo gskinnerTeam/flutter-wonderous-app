@@ -12,7 +12,7 @@ class AppHaptics {
 
   static void buttonPress() {
     // Android/Fuchsia expect haptics on all button presses, iOS does not.
-    if (PlatformInfo.isAndroid) {
+    if (!kIsWeb && PlatformInfo.isAndroid) {
       lightImpact();
     }
   }
