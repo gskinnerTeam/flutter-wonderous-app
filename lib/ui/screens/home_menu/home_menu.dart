@@ -42,9 +42,9 @@ class _HomeMenuState extends State<HomeMenu> {
     );
   }
 
-  void _handleCollectionPressed(BuildContext context) => context.push(ScreenPaths.collection(''));
+  void _handleCollectionPressed(BuildContext context) => context.go(ScreenPaths.collection(''));
 
-  void _handleTimelinePressed(BuildContext context) => context.push(ScreenPaths.timeline(widget.data.type));
+  void _handleTimelinePressed(BuildContext context) => context.go(ScreenPaths.timeline(widget.data.type));
 
   void _handleWonderPressed(BuildContext context, WonderData data) => Navigator.pop(context, data.type);
 
