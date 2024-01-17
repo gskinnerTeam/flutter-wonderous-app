@@ -9,7 +9,6 @@ import 'package:wonders/logic/locale_logic.dart';
 import 'package:wonders/logic/timeline_logic.dart';
 import 'package:wonders/logic/unsplash_logic.dart';
 import 'package:wonders/logic/wonders_logic.dart';
-import 'package:wonders/nav_spike.dart';
 import 'package:wonders/ui/common/app_shortcuts.dart';
 
 void main() async {
@@ -21,11 +20,8 @@ void main() async {
   // Start app
   registerSingletons();
 
-  // Spike:
-  runApp(NavSpikeApp());
-
-  //runApp(WondersApp());
-  //await appLogic.bootstrap();
+  runApp(WondersApp());
+  await appLogic.bootstrap();
 
   // Remove splash screen when bootstrap is complete
   FlutterNativeSplash.remove();
