@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/modals//fullscreen_video_viewer.dart';
 import 'package:wonders/ui/common/modals/fullscreen_maps_viewer.dart';
@@ -7,10 +8,9 @@ import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_scre
 import 'package:wonders/ui/screens/collection/collection_screen.dart';
 import 'package:wonders/ui/screens/home/wonders_home_screen.dart';
 import 'package:wonders/ui/screens/intro/intro_screen.dart';
+import 'package:wonders/ui/screens/page_not_found/page_not_found.dart';
 import 'package:wonders/ui/screens/timeline/timeline_screen.dart';
 import 'package:wonders/ui/screens/wonder_details/wonders_details_screen.dart';
-
-import 'ui/screens/page_not_found/page_not_found.dart';
 
 /// Shared paths / urls used across the app
 class ScreenPaths {
@@ -161,7 +161,7 @@ String? _handleRedirect(BuildContext context, GoRouterState state) {
     debugPrint('Redirecting from ${state.uri.path} to ${ScreenPaths.home}');
     return ScreenPaths.home;
   }
-  debugPrint('Navigate to: ${state.uri}');
+  if (!kIsWeb) debugPrint('Navigate to: ${state.uri}');
   return null; // do nothing
 }
 
