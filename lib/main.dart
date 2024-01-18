@@ -5,6 +5,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/artifact_api_logic.dart';
 import 'package:wonders/logic/artifact_api_service.dart';
 import 'package:wonders/logic/collectibles_logic.dart';
+import 'package:wonders/logic/native_widget_service.dart';
 import 'package:wonders/logic/locale_logic.dart';
 import 'package:wonders/logic/timeline_logic.dart';
 import 'package:wonders/logic/unsplash_logic.dart';
@@ -69,6 +70,8 @@ void registerSingletons() {
   GetIt.I.registerLazySingleton<CollectiblesLogic>(() => CollectiblesLogic());
   // Localizations
   GetIt.I.registerLazySingleton<LocaleLogic>(() => LocaleLogic());
+  // Home Widget Service
+  GetIt.I.registerLazySingleton<NativeWidgetService>(() => NativeWidgetService());
 }
 
 /// Add syntax sugar for quickly accessing the main "logic" controllers in the app

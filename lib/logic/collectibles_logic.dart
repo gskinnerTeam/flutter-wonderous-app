@@ -2,15 +2,15 @@ import 'dart:convert';
 
 import 'package:home_widget/home_widget.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/logic/common/save_load_mixin.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:http/http.dart' as http;
+import 'package:wonders/logic/native_widget_service.dart';
 
 class CollectiblesLogic with ThrottledSaveLoadMixin {
   @override
   String get fileName => 'collectibles.dat';
-  static const _appGroupId = 'group.com.gskinner.flutter.wonders.widget';
-  static const _appName = 'WonderousWidget';
 
   /// Holds all collectibles that the views should care about
   final List<CollectibleData> all = collectiblesData;
@@ -26,9 +26,9 @@ class CollectiblesLogic with ThrottledSaveLoadMixin {
 
   int get exploredCount => _exploredCount;
 
-  void init() {
-    HomeWidget.setAppGroupId(_appGroupId);
-  }
+  late final _nativeWidget = GetIt.I<NativeWidgetService>();
+
+  void init() => _nativeWidget.init();
 
   CollectibleData? fromId(String? id) => id == null ? null : all.firstWhereOrNull((o) => o.id == id);
 
@@ -58,9 +58,12 @@ class CollectiblesLogic with ThrottledSaveLoadMixin {
       if (state == CollectibleState.explored) _exploredCount++;
     });
     final foundCount = discoveredCount + exploredCount;
-    HomeWidget.saveWidgetData<int>('discoveredCount', foundCount).then((value) {
-      HomeWidget.updateWidget(iOSName: _appName);
-    });
+    if (PlatformInfo.isIOS) {
+      _nativeWidget.save<int>('discoveredCount', foundCount).then((value) {
+        _nativeWidget.markDirty();
+      });
+    }
+
     debugPrint('setting discoveredCount for home widget $foundCount');
   }
 
@@ -100,14 +103,14 @@ class CollectiblesLogic with ThrottledSaveLoadMixin {
 
   Future<void> _updateHomeWidgetTextData({String title = '', String id = '', String imageUrl = ''}) async {
     // Save title
-    await HomeWidget.saveWidgetData<String>('lastDiscoveredTitle', title);
+    await _nativeWidget.save<String>('lastDiscoveredTitle', title);
     // Subtitle
     String subTitle = '';
     if (id.isNotEmpty) {
       final artifactData = await artifactLogic.getArtifactByID(id);
       subTitle = artifactData?.date ?? '';
     }
-    await HomeWidget.saveWidgetData<String>('lastDiscoveredSubTitle', subTitle);
+    await _nativeWidget.save<String>('lastDiscoveredSubTitle', subTitle);
     // Image,
     // Download, convert to base64 string and write to shared widget data
     String imageBase64 = '';
@@ -116,8 +119,8 @@ class CollectiblesLogic with ThrottledSaveLoadMixin {
       imageBase64 = base64Encode(bytes);
       debugPrint('Saving base64 bytes: $imageBase64');
     }
-    await HomeWidget.saveWidgetData<String>('lastDiscoveredImageData', imageBase64);
-    await HomeWidget.updateWidget(iOSName: _appName);
+    await _nativeWidget.save<String>('lastDiscoveredImageData', imageBase64);
+    await _nativeWidget.markDirty();
   }
 
   @override
