@@ -52,7 +52,6 @@ class CircleIconBtn extends StatelessWidget {
     required this.semanticLabel,
   }) : super(key: key);
 
-  //TODO: Reduce size if design re-exports icon-images without padding
   static double defaultSize = 28;
 
   final AppIcons icon;

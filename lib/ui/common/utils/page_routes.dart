@@ -9,7 +9,6 @@ class PageRoutes {
       return CupertinoPageRoute(builder: (_) => child);
     }
 
-    // SB: Removed this in favor of Cupertino routes, we could restore with a `useFade` option
     return PageRouteBuilder<T>(
       transitionDuration: duration,
       reverseTransitionDuration: duration,

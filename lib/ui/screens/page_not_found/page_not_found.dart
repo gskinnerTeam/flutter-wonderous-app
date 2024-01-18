@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/wonderous_logo.dart';
 
 class PageNotFound extends StatelessWidget {
-  const PageNotFound(String url, {super.key});
+  const PageNotFound(this.url, {super.key});
+
+  final String url;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +30,9 @@ class PageNotFound extends StatelessWidget {
               'The page you are looking for does not exist.',
               style: $styles.text.body.copyWith(color: $styles.colors.offWhite),
             ),
+            if (PlatformInfo.isDesktop) ...{
+              LightText(child: Text('Path: $url', style: $styles.text.bodySmall)),
+            },
             Gap(70),
             AppBtn(
               minimumSize: Size(200, 0),

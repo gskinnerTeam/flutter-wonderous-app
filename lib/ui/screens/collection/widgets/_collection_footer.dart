@@ -10,15 +10,6 @@ class _CollectionFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      // TODO SB: Maybe restore this gradient? Need to come up with alternate approach since list can now scroll horizontally
-      // Transform.translate(
-      //   offset: Offset(0, -$styles.insets.xl),
-      //   child: VtGradient(
-      //     [$styles.colors.greyStrong.withOpacity(0), $styles.colors.greyStrong],
-      //     const [0, 1],
-      //     height: $styles.insets.xl,
-      //   ),
-      // ),
       Container(
         padding: EdgeInsets.symmetric(horizontal: $styles.insets.md, vertical: $styles.insets.sm),
         color: $styles.colors.greyStrong,
