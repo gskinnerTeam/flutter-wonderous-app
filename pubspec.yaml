@@ -29,8 +29,8 @@ dependencies:
   gap: ^3.0.1
   get_it: ^7.2.0
   get_it_mixin: ^4.2.2
-  google_maps_flutter: ^2.5.0
-  google_maps_flutter_web: ^0.5.4+2
+  google_maps_flutter: ^2.5.3
+  google_maps_flutter_web: ^0.5.4+3
   go_router: ^13.0.1
   http: ^1.1.0
   image: ^4.1.3
