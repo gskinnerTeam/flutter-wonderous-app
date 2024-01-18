@@ -72,6 +72,14 @@ final appRouter = GoRouter(
         },
         routes: [
           AppRoute(ScreenPaths.splash, (_) => Container(color: $styles.colors.greyStrong)), // This will be hidden
+<<<<<<< HEAD
+=======
+          AppRoute(ScreenPaths.home, (_) => HomeScreen(), routes: [
+            AppRoute('collection', (s) {
+              return CollectionScreen(fromId: s.queryParams['id'] ?? '');
+            }),
+          ]),
+>>>>>>> main
           AppRoute(ScreenPaths.intro, (_) => IntroScreen()),
           AppRoute(ScreenPaths.home, (_) => HomeScreen(), routes: [
             _timelineRoute,
