@@ -57,10 +57,11 @@ class CollectiblesLogic with ThrottledSaveLoadMixin {
       if (state == CollectibleState.discovered) _discoveredCount++;
       if (state == CollectibleState.explored) _exploredCount++;
     });
-    HomeWidget.saveWidgetData<int>('discoveredCount', _discoveredCount).then((value){
+    final foundCount = discoveredCount + exploredCount;
+    HomeWidget.saveWidgetData<int>('discoveredCount', foundCount).then((value) {
       HomeWidget.updateWidget(iOSName: _appName);
     });
-    debugPrint('setting discovered count for home widget $_discoveredCount');
+    debugPrint('setting discoveredCount for home widget $foundCount');
   }
 
   /// Get a discovered item, sorted by the order of wondersLogic.all
@@ -102,7 +103,7 @@ class CollectiblesLogic with ThrottledSaveLoadMixin {
     await HomeWidget.saveWidgetData<String>('lastDiscoveredTitle', title);
     // Subtitle
     String subTitle = '';
-    if(id.isNotEmpty){
+    if (id.isNotEmpty) {
       final artifactData = await artifactLogic.getArtifactByID(id);
       subTitle = artifactData?.date ?? '';
     }
@@ -110,7 +111,7 @@ class CollectiblesLogic with ThrottledSaveLoadMixin {
     // Image,
     // Download, convert to base64 string and write to shared widget data
     String imageBase64 = '';
-    if(imageUrl.isNotEmpty){
+    if (imageUrl.isNotEmpty) {
       var bytes = await http.readBytes(Uri.parse(imageUrl));
       imageBase64 = base64Encode(bytes);
       debugPrint('Saving base64 bytes: $imageBase64');
