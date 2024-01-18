@@ -1,13 +1,15 @@
 part of 'wonders_home_screen.dart';
 
 class _VerticalSwipeController {
-  _VerticalSwipeController(this.ticker, this.onSwipeComplete);
+  _VerticalSwipeController(this.ticker, this.onSwipeComplete){
+    swipeReleaseAnim = AnimationController(vsync: ticker)..addListener(handleSwipeReleaseAnimTick);
+  }
   final TickerProvider ticker;
   final swipeAmt = ValueNotifier<double>(0);
   final isPointerDown = ValueNotifier<bool>(false);
-  late final swipeReleaseAnim = AnimationController(vsync: ticker)..addListener(handleSwipeReleaseAnimTick);
   final double _pullToViewDetailsThreshold = 150;
   final VoidCallback onSwipeComplete;
+  late final AnimationController swipeReleaseAnim;
 
   /// When the _swipeReleaseAnim plays, sync its value to _swipeUpAmt
   void handleSwipeReleaseAnimTick() => swipeAmt.value = swipeReleaseAnim.value;

@@ -18,7 +18,7 @@ class ArtifactDetailsScreen extends StatefulWidget {
 }
 
 class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
-  late final _future = metAPILogic.getArtifactByID(widget.artifactId, selfHosted: true);
+  late final _future = artifactLogic.getArtifactByID(widget.artifactId, selfHosted: true);
 
   @override
   Widget build(BuildContext context) {

@@ -70,6 +70,7 @@ class AppLogic {
     timelineLogic.init();
 
     // Collectibles
+    collectiblesLogic.init();
     await collectiblesLogic.load();
 
     // Flag bootStrap as complete

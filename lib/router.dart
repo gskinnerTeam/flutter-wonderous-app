@@ -38,7 +38,11 @@ final appRouter = GoRouter(
         },
         routes: [
           AppRoute(ScreenPaths.splash, (_) => Container(color: $styles.colors.greyStrong)), // This will be hidden
-          AppRoute(ScreenPaths.home, (_) => HomeScreen()),
+          AppRoute(ScreenPaths.home, (_) => HomeScreen(), routes: [
+            AppRoute('collection', (s) {
+              return CollectionScreen(fromId: s.queryParams['id'] ?? '');
+            }),
+          ]),
           AppRoute(ScreenPaths.intro, (_) => IntroScreen()),
           AppRoute('/wonder/:type', (s) {
             int tab = int.tryParse(s.queryParams['t'] ?? '') ?? 0;

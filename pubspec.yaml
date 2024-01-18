@@ -1,7 +1,7 @@
 name: wonders
 description: Explore the famous wonders of the world.
 publish_to: "none"
-version: 2.0.19+8
+version: 2.1.1
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
@@ -32,6 +32,7 @@ dependencies:
   google_maps_flutter: ^2.5.3
   google_maps_flutter_web: ^0.5.4+3
   go_router: ^6.5.5
+  home_widget: ^0.3.0
   http: ^1.1.0
   image: ^4.1.3
   image_fade: ^0.6.2
@@ -94,6 +95,7 @@ flutter:
     - assets/images/pyramids/
     - assets/images/taj_mahal/
     - assets/images/collectibles/
+    - assets/images/widget/
 
   fonts:
     - family: Cinzel
