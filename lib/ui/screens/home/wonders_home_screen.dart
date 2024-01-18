@@ -4,6 +4,7 @@ import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
+import 'package:wonders/ui/common/previous_next_navigation.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
 import 'package:wonders/ui/screens/home_menu/home_menu.dart';
@@ -87,11 +88,18 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   void _handlePageIndicatorDotPressed(int index) => _setPageIndex(index);
 
-  void _setPageIndex(int index) {
+  void _handlePrevNext(int i) => _setPageIndex(_wonderIndex + i, animate: true);
+
+  void _setPageIndex(int index, {bool animate = false}) {
     if (index == _wonderIndex) return;
     // To support infinite scrolling, we can't jump directly to the pressed index. Instead, make it relative to our current position.
     final pos = ((_pageController.page ?? 0) / _numWonders).floor() * _numWonders;
-    _pageController.jumpToPage(pos + index);
+    final newIndex = pos + index;
+    if (animate == true) {
+      _pageController.animateToPage(newIndex, duration: $styles.times.med, curve: Curves.easeOutCubic);
+    } else {
+      _pageController.jumpToPage(newIndex);
+    }
   }
 
   void _showDetailsPage() async {
@@ -125,24 +133,25 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
     return _swipeController.wrapGestureDetector(Container(
       color: $styles.colors.black,
-      child: Stack(
-        children: [
-          Stack(
-            children: [
-              /// Background
-              ..._buildBgAndClouds(),
+      child: PreviousNextNavigation(
+        listenToMouseWheel: false,
+        onPreviousPressed: () => _handlePrevNext(-1),
+        onNextPressed: () => _handlePrevNext(1),
+        child: Stack(
+          children: [
+            /// Background
+            ..._buildBgAndClouds(),
 
-              /// Wonders Illustrations (main content)
-              _buildMgPageView(),
+            /// Wonders Illustrations (main content)
+            _buildMgPageView(),
 
-              /// Foreground illustrations and gradients
-              _buildFgAndGradients(),
+            /// Foreground illustrations and gradients
+            _buildFgAndGradients(),
 
-              /// Controls that float on top of the various illustrations
-              _buildFloatingUi(),
-            ],
-          ).animate().fadeIn(),
-        ],
+            /// Controls that float on top of the various illustrations
+            _buildFloatingUi(),
+          ],
+        ).animate().fadeIn(),
       ),
     ));
   }

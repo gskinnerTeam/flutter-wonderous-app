@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:wonders/common_libs.dart';
@@ -12,12 +11,11 @@ class AboutDialogContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void handleTap(String url) {
-      if(PlatformInfo.isDesktopOrWeb){
+      if (PlatformInfo.isDesktopOrWeb) {
         launchUrl(Uri.parse(url));
       } else {
         Navigator.push(context, CupertinoPageRoute(builder: (_) => FullscreenWebView(url)));
       }
-
     }
 
     List<TextSpan> buildSpan(String text, {Map<String, List<String>>? linkSupplants}) {

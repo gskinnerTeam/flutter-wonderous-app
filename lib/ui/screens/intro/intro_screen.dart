@@ -1,9 +1,10 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wonders/common_libs.dart';
-  import 'package:wonders/ui/common/app_icons.dart';
+import 'package:wonders/logic/common/platform_info.dart';
+import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
+import 'package:wonders/ui/common/previous_next_navigation.dart';
 import 'package:wonders/ui/common/static_text_scale.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
@@ -24,13 +25,14 @@ class _IntroScreenState extends State<IntroScreen> {
   static List<_PageData> pageData = [];
 
   late final PageController _pageController = PageController()..addListener(_handlePageChanged);
-  final ValueNotifier<int> _currentPage = ValueNotifier(0);
+  late final ValueNotifier<int> _currentPage = ValueNotifier(0)..addListener(() => setState(() {}));
   bool get _isOnLastPage => _currentPage.value.round() == pageData.length - 1;
   bool get _isOnFirstPage => _currentPage.value.round() == 0;
 
   @override
   void dispose() {
     _pageController.dispose();
+    _currentPage.dispose();
     super.dispose();
   }
 
@@ -53,14 +55,12 @@ class _IntroScreenState extends State<IntroScreen> {
 
   void _handleNavTextSemanticTap() => _incrementPage(1);
 
-  void _incrementPage(int dir){
+  void _incrementPage(int dir) {
     final int current = _pageController.page!.round();
     if (_isOnLastPage && dir > 0) return;
     if (_isOnFirstPage && dir < 0) return;
     _pageController.animateToPage(current + dir, duration: 250.ms, curve: Curves.easeIn);
   }
-
-  void _handleScrollWheel(double delta) => _incrementPage(delta >0? 1 : -1);
 
   @override
   Widget build(BuildContext context) {
@@ -78,20 +78,25 @@ class _IntroScreenState extends State<IntroScreen> {
     final List<Widget> pages = pageData.map((e) => _Page(data: e)).toList();
 
     /// Return resulting widget tree
-    return Listener(
-      onPointerSignal: (signal){
-        if(signal is PointerScrollEvent){
-          _handleScrollWheel(signal.scrollDelta.dy);
-        }
-      },
-      child: DefaultTextColor(
-        color: $styles.colors.offWhite,
-        child: Container(
-          color: $styles.colors.black,
-          child: SafeArea(
-            child: Animate(
-              delay: 500.ms,
-              effects: const [FadeEffect()],
+    return DefaultTextColor(
+      color: $styles.colors.offWhite,
+      child: ColoredBox(
+        color: $styles.colors.black,
+        child: SafeArea(
+          child: Animate(
+            delay: 500.ms,
+            effects: const [FadeEffect()],
+            child: PreviousNextNavigation(
+              maxWidth: 600,
+              nextBtnColor: _isOnLastPage ? $styles.colors.accent1 : null,
+              onPreviousPressed: _isOnFirstPage ? null : () => _incrementPage(-1),
+              onNextPressed: () {
+                if (_isOnLastPage) {
+                  _handleIntroCompletePressed();
+                } else {
+                  _incrementPage(1);
+                }
+              },
               child: Stack(
                 children: [
                   // page view with title & description:
@@ -159,26 +164,46 @@ class _IntroScreenState extends State<IntroScreen> {
                   _buildHzGradientOverlay(left: true),
                   _buildHzGradientOverlay(),
 
-                  // finish button:
-                  Positioned(
-                    right: $styles.insets.lg,
-                    bottom: $styles.insets.lg,
-                    child: _buildFinishBtn(context),
-                  ),
-
                   // nav help text:
-                  BottomCenter(
-                    child: Padding(
-                      padding: EdgeInsets.only(bottom: $styles.insets.lg),
-                      child: _buildNavText(context),
+                  if (PlatformInfo.isMobile) ...[
+                    // finish button:
+                    Positioned(
+                      right: $styles.insets.lg,
+                      bottom: $styles.insets.lg,
+                      child: _buildFinishBtn(context),
                     ),
-                  ),
+
+                    BottomCenter(
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: $styles.insets.lg),
+                        child: _buildNavText(context),
+                      ),
+                    ),
+                  ]
                 ],
               ),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildFinishBtn(BuildContext context) {
+    return ValueListenableBuilder<int>(
+      valueListenable: _currentPage,
+      builder: (_, pageIndex, __) {
+        return AnimatedOpacity(
+          opacity: pageIndex == pageData.length - 1 ? 1 : 0,
+          duration: $styles.times.fast,
+          child: CircleIconBtn(
+            icon: AppIcons.next_large,
+            bgColor: $styles.colors.accent1,
+            onPressed: _handleIntroCompletePressed,
+            semanticLabel: $strings.introSemanticEnterApp,
+          ),
+        );
+      },
     );
   }
 
@@ -200,24 +225,6 @@ class _IntroScreenState extends State<IntroScreen> {
               ])),
         ),
       ),
-    );
-  }
-
-  Widget _buildFinishBtn(BuildContext context) {
-    return ValueListenableBuilder<int>(
-      valueListenable: _currentPage,
-      builder: (_, pageIndex, __) {
-        return AnimatedOpacity(
-          opacity: pageIndex == pageData.length - 1 ? 1 : 0,
-          duration: $styles.times.fast,
-          child: CircleIconBtn(
-            icon: AppIcons.next_large,
-            bgColor: $styles.colors.accent1,
-            onPressed: _handleIntroCompletePressed,
-            semanticLabel: $strings.introSemanticEnterApp,
-          ),
-        );
-      },
     );
   }
 

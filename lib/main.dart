@@ -2,14 +2,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/collectibles_logic.dart';
-import 'package:wonders/logic/locale_logic.dart';
 import 'package:wonders/logic/artifact_api_logic.dart';
 import 'package:wonders/logic/artifact_api_service.dart';
+import 'package:wonders/logic/collectibles_logic.dart';
+import 'package:wonders/logic/locale_logic.dart';
 import 'package:wonders/logic/timeline_logic.dart';
 import 'package:wonders/logic/unsplash_logic.dart';
-import 'package:wonders/logic/wallpaper_logic.dart';
 import 'package:wonders/logic/wonders_logic.dart';
+import 'package:wonders/ui/common/app_shortcuts.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -37,6 +37,7 @@ class WondersApp extends StatelessWidget with GetItMixin {
       locale: locale == null ? null : Locale(locale),
       debugShowCheckedModeBanner: false,
       routerDelegate: appRouter.routerDelegate,
+      shortcuts: AppShortcuts.defaults,
       theme: ThemeData(fontFamily: $styles.text.body.fontFamily, useMaterial3: true),
       localizationsDelegates: const [
         AppLocalizations.delegate,
@@ -79,7 +80,6 @@ SettingsLogic get settingsLogic => GetIt.I.get<SettingsLogic>();
 UnsplashLogic get unsplashLogic => GetIt.I.get<UnsplashLogic>();
 ArtifactAPILogic get artifactLogic => GetIt.I.get<ArtifactAPILogic>();
 CollectiblesLogic get collectiblesLogic => GetIt.I.get<CollectiblesLogic>();
-WallPaperLogic get wallpaperLogic => GetIt.I.get<WallPaperLogic>();
 LocaleLogic get localeLogic => GetIt.I.get<LocaleLogic>();
 
 /// Global helpers for readability

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:desktop_window/desktop_window.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/platform_info.dart';
@@ -38,11 +39,21 @@ class AppLogic {
       await DesktopWindow.setMinWindowSize($styles.sizes.minAppSize);
     }
 
+    if (kIsWeb) {
+      // SB: This is intentionally not a debugPrint, as it's a message for users who open the console on web.
+      print(
+        '''Thanks for checking out Wonderous on the web!
+        If you encounter any issues please report them at https://github.com/gskinnerTeam/flutter-wonderous-app/issues.''',
+      );
+      // Required on web to automatically enable accessibility features
+      WidgetsFlutterBinding.ensureInitialized().ensureSemantics();
+    }
+
     // Load any bitmaps the views might need
     await AppBitmaps.init();
 
     // Set preferred refresh rate to the max possible (the OS may ignore this)
-    if (PlatformInfo.isAndroid) {
+    if (!kIsWeb && PlatformInfo.isAndroid) {
       await FlutterDisplayMode.setHighRefreshRate();
     }
 
@@ -93,9 +104,6 @@ class AppLogic {
 
   bool shouldUseNavRail() => _appSize.width > _appSize.height && _appSize.height > 250;
 
-  /// Enable landscape, portrait or both. Views can call this method to override the default settings.
-  /// For example, the [FullscreenVideoViewer] always wants to enable both landscape and portrait.
-  /// If a view overrides this, it is responsible for setting it back to [supportedOrientations] when disposed.
   void _updateSystemOrientation() {
     final axisList = _supportedOrientationsOverride ?? supportedOrientations;
     //debugPrint('updateDeviceOrientation, supportedAxis: $axisList');

@@ -4,23 +4,26 @@ part of '../photo_gallery.dart';
 /// When animationKey changes, the box animates its size, shrinking then returning to its original size.
 /// Uses[_CutoutClipper] to create the cutout.
 class _AnimatedCutoutOverlay extends StatelessWidget {
-  const _AnimatedCutoutOverlay(
-      {Key? key,
-      required this.child,
-      required this.cutoutSize,
-      required this.animationKey,
-      this.duration,
-      required this.swipeDir,
-      required this.opacity})
-      : super(key: key);
+  const _AnimatedCutoutOverlay({
+    Key? key,
+    required this.child,
+    required this.cutoutSize,
+    required this.animationKey,
+    this.duration,
+    required this.swipeDir,
+    required this.opacity,
+    required this.enabled,
+  }) : super(key: key);
   final Widget child;
   final Size cutoutSize;
   final Key animationKey;
   final Offset swipeDir;
   final Duration? duration;
   final double opacity;
+  final bool enabled;
   @override
   Widget build(BuildContext context) {
+    if (!enabled) return child;
     return Stack(
       children: [
         child,

@@ -13,9 +13,9 @@ import 'package:wonders/logic/data/wonders_data/machu_picchu_data.dart';
 import 'package:wonders/logic/data/wonders_data/petra_data.dart';
 import 'package:wonders/logic/data/wonders_data/pyramids_giza_data.dart';
 import 'package:wonders/logic/data/wonders_data/taj_mahal_data.dart';
+import 'package:wonders/logic/data/wonders_data/colosseum_data.dart';
 
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/logic/data/wonders_data/colosseum_data.dart';
 
 class ArtifactDownloadHelper extends StatefulWidget {
   const ArtifactDownloadHelper({super.key});
@@ -82,16 +82,16 @@ class _ArtifactDownloadHelperState extends State<ArtifactDownloadHelper> {
         PyramidsGizaData().searchData +
         TajMahalData().searchData;
 
-    // for (var a in searchData) {
-    //   final id = a.id.toString();
-    //   if (await downloadImageAndJson(id) == false) {
-    //     missingIds.add(id);
-    //   }
-    //   final index = searchData.indexOf(a) + 1;
-    //   if (index % 100 == 0) {
-    //     debugPrint('$index/${searchData.length}');
-    //   }
-    // }
+    for (var a in searchData) {
+      final id = a.id.toString();
+      if (await downloadImageAndJson(id) == false) {
+        missingIds.add(id);
+      }
+      final index = searchData.indexOf(a) + 1;
+      if (index % 100 == 0) {
+        debugPrint('$index/${searchData.length}');
+      }
+    }
     debugPrint('Download complete :) Missing IDs: $missingIds');
   }
 
