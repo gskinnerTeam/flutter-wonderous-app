@@ -10,6 +10,8 @@ import 'package:wonders/ui/screens/intro/intro_screen.dart';
 import 'package:wonders/ui/screens/timeline/timeline_screen.dart';
 import 'package:wonders/ui/screens/wonder_details/wonders_details_screen.dart';
 
+import 'ui/screens/page_not_found/page_not_found.dart';
+
 /// Shared paths / urls used across the app
 class ScreenPaths {
   static String splash = '/';
@@ -62,6 +64,7 @@ AppRoute get _collectionRoute {
 /// Routing table, matches string paths to UI Screens, optionally parses params from the paths
 final appRouter = GoRouter(
   redirect: _handleRedirect,
+  errorPageBuilder: (context, state) => MaterialPage(child: PageNotFound(state.uri.toString())),
   routes: [
     ShellRoute(
         builder: (context, router, navigator) {
