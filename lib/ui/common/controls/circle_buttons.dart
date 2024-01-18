@@ -120,8 +120,8 @@ class BackBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-    return CircleIconBtn(
+    return FullscreenKeyboardListener(
+    onKeyDown: (event) => _handleKeyDown(context, event), child: CircleIconBtn(
       icon: icon,
       bgColor: bgColor,
       color: iconColor,
@@ -134,18 +134,7 @@ class BackBtn extends StatelessWidget {
         }
       },
       semanticLabel: semanticLabel ?? $strings.circleButtonsSemanticBack,
-=======
-    return FullscreenKeyboardListener(
-      onKeyDown: (event) => _handleKeyDown(context, event),
-      child: CircleIconBtn(
-        icon: icon,
-        bgColor: bgColor,
-        color: iconColor,
-        onPressed: () => _handleOnPressed(context),
-        semanticLabel: semanticLabel ?? $strings.circleButtonsSemanticBack,
-      ),
->>>>>>> main
-    );
+    ),);
   }
 
   Widget safe() => _SafeAreaWithPadding(child: this);
