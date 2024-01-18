@@ -27,7 +27,7 @@ class PageNotFound extends StatelessWidget {
             ),
             Gap(70),
             Text(
-              'The page you are looking for does not exist.',
+              $strings.pageNotFoundMessage,
               style: $styles.text.body.copyWith(color: $styles.colors.offWhite),
             ),
             if (PlatformInfo.isDesktop) ...{
@@ -41,7 +41,7 @@ class PageNotFound extends StatelessWidget {
               semanticLabel: 'Back',
               child: DarkText(
                 child: Text(
-                  'Back to civilization',
+                  $strings.pageNotFoundBackButton,
                   style: $styles.text.btn.copyWith(fontSize: 12),
                 ),
               ),
