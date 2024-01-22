@@ -35,7 +35,7 @@ class _WonderEventsState extends State<WonderEvents> {
 
   @override
   Widget build(BuildContext context) {
-    void handleTimelineBtnPressed() => context.push(ScreenPaths.timeline(widget.type));
+    void handleTimelineBtnPressed() => context.go(ScreenPaths.timeline(widget.type));
     // Main view content switches between 1 and 2 column layouts
     // On mobile, use the 2 column layout on screens close to landscape (>.85). This is primarily an optimization for foldable devices which have square-ish dimensions when opened.
     final twoColumnAspect = PlatformInfo.isMobile ? .85 : 1;

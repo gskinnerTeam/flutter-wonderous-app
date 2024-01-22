@@ -7,7 +7,7 @@ class _TimelineBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void handleBtnPressed() => context.push(ScreenPaths.timeline(type));
+    void handleBtnPressed() => context.go(ScreenPaths.timeline(type));
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
       child: SizedBox(

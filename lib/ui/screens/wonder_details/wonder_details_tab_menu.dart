@@ -6,19 +6,22 @@ class WonderDetailsTabMenu extends StatelessWidget {
   static const double minTabSize = 25;
   static const double maxTabSize = 100;
 
-  const WonderDetailsTabMenu(
-      {Key? key,
-      required this.tabController,
-      this.showBg = false,
-      required this.wonderType,
-      this.axis = Axis.horizontal})
-      : super(key: key);
+  const WonderDetailsTabMenu({
+    Key? key,
+    required this.tabController,
+    this.showBg = false,
+    required this.wonderType,
+    this.axis = Axis.horizontal,
+    required this.onTap,
+  }) : super(key: key);
 
   final TabController tabController;
   final bool showBg;
   final WonderType wonderType;
   final Axis axis;
   bool get isVertical => axis == Axis.vertical;
+
+  final void Function(int index) onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -103,6 +106,7 @@ class WonderDetailsTabMenu extends StatelessWidget {
                               color: iconColor,
                               axis: axis,
                               mainAxisSize: tabBtnSize,
+                              onTap: onTap,
                             ),
                             _TabBtn(
                               1,
@@ -112,6 +116,7 @@ class WonderDetailsTabMenu extends StatelessWidget {
                               color: iconColor,
                               axis: axis,
                               mainAxisSize: tabBtnSize,
+                              onTap: onTap,
                             ),
                             _TabBtn(
                               2,
@@ -121,6 +126,7 @@ class WonderDetailsTabMenu extends StatelessWidget {
                               color: iconColor,
                               axis: axis,
                               mainAxisSize: tabBtnSize,
+                              onTap: onTap,
                             ),
                             _TabBtn(
                               3,
@@ -130,6 +136,7 @@ class WonderDetailsTabMenu extends StatelessWidget {
                               color: iconColor,
                               axis: axis,
                               mainAxisSize: tabBtnSize,
+                              onTap: onTap,
                             ),
                           ]),
                     ),
@@ -155,7 +162,7 @@ class _WonderHomeBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleBtn(
-      onPressed: () => Navigator.of(context).pop(),
+      onPressed: () => context.go(ScreenPaths.home),
       bgColor: $styles.colors.white,
       semanticLabel: $strings.wonderDetailsTabSemanticBack,
       child: AnimatedContainer(
@@ -184,6 +191,7 @@ class _TabBtn extends StatelessWidget {
     required this.label,
     required this.axis,
     required this.mainAxisSize,
+    required this.onTap,
   }) : super(key: key);
 
   static const double crossBtnSize = 60;
@@ -195,14 +203,12 @@ class _TabBtn extends StatelessWidget {
   final String label;
   final Axis axis;
   final double mainAxisSize;
+  final void Function(int index) onTap;
 
   bool get _isVertical => axis == Axis.vertical;
 
   @override
   Widget build(BuildContext context) {
-    // return _isVertical
-    //     ? SizedBox(height: mainAxisSize, width: crossBtnSize, child: Placeholder())
-    //     : SizedBox(height: crossBtnSize, width: mainAxisSize, child: Placeholder());
     bool selected = tabController.index == index;
     final MaterialLocalizations localizations = MaterialLocalizations.of(context);
     final iconImgPath = '${ImagePaths.common}/tab-$iconImg${selected ? '-active' : ''}.png';
@@ -217,7 +223,7 @@ class _TabBtn extends StatelessWidget {
         label: tabLabel,
         child: ExcludeSemantics(
           child: AppBtn.basic(
-            onPressed: () => tabController.index = index,
+            onPressed: () => onTap(index),
             semanticLabel: label,
             minimumSize: _isVertical ? Size(crossBtnSize, mainAxisSize) : Size(mainAxisSize, crossBtnSize),
             // Image icon

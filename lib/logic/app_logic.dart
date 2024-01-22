@@ -81,7 +81,7 @@ class AppLogic {
     if (showIntro) {
       appRouter.go(ScreenPaths.intro);
     } else {
-      appRouter.go(ScreenPaths.home);
+      appRouter.go(initialDeeplink ?? ScreenPaths.home);
     }
   }
 

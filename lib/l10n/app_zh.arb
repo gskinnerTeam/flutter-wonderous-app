@@ -405,5 +405,7 @@
 	"timelineEvent1957ce": "苏联发射斯普特尼克1号",
 	"timelineEvent1969ce": "阿波罗11号在月球着陆",
 	"privacyPolicy": "隐私政策",
-	"privacyStatement": "gskinner 非常重视对用户隐私的保护，正如{privacyUrl}里所诉，gskinner 不会收集您的个人信息。"
+	"privacyStatement": "gskinner 非常重视对用户隐私的保护，正如{privacyUrl}里所诉，gskinner 不会收集您的个人信息。",
+    "pageNotFoundBackButton": "回到文明",
+    "pageNotFoundMessage": "您正在寻找的页面不存在"
 }

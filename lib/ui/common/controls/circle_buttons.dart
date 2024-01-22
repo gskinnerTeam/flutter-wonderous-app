@@ -143,7 +143,11 @@ class BackBtn extends StatelessWidget {
     if (onPressed != null) {
       onPressed?.call();
     } else {
-      Navigator.of(context).pop();
+      if (context.canPop()) {
+        context.pop();
+      } else {
+        context.go(ScreenPaths.home);
+      }
     }
   }
 }

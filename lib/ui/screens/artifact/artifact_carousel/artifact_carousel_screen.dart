@@ -34,13 +34,13 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     _currentArtifactIndex.value = _wrappedPageIndex;
   }
 
-  void _handleSearchTap() => context.push(ScreenPaths.search(widget.type));
+  void _handleSearchTap() => context.go(ScreenPaths.search(widget.type));
 
   void _handleArtifactTap(int index) {
     int delta = index - _currentPage.value.round();
     if (delta == 0) {
       HighlightData data = _artifacts[index % _artifacts.length];
-      context.push(ScreenPaths.artifact(data.artifactId));
+      context.go(ScreenPaths.artifact(data.artifactId));
     } else {
       _pageController?.animateToPage(
         _currentPage.value.round() + delta,

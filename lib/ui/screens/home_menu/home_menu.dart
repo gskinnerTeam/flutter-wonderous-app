@@ -7,6 +7,7 @@ import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/controls/locale_switcher.dart';
 import 'package:wonders/ui/common/pop_navigator_underlay.dart';
+import 'package:wonders/ui/common/wonderous_logo.dart';
 import 'package:wonders/ui/screens/home_menu/about_dialog_content.dart';
 
 class HomeMenu extends StatefulWidget {
@@ -32,19 +33,14 @@ class _HomeMenuState extends State<HomeMenu> {
       applicationIcon: Container(
         color: $styles.colors.black,
         padding: EdgeInsets.all($styles.insets.xs),
-        child: Image.asset(
-          ImagePaths.appLogoPlain,
-          fit: BoxFit.cover,
-          width: 52,
-          filterQuality: FilterQuality.high,
-        ),
+        child: WonderousLogo(width: 52),
       ),
     );
   }
 
-  void _handleCollectionPressed(BuildContext context) => context.push(ScreenPaths.collection(''));
+  void _handleCollectionPressed(BuildContext context) => context.go(ScreenPaths.collection(''));
 
-  void _handleTimelinePressed(BuildContext context) => context.push(ScreenPaths.timeline(widget.data.type));
+  void _handleTimelinePressed(BuildContext context) => context.go(ScreenPaths.timeline(widget.data.type));
 
   void _handleWonderPressed(BuildContext context, WonderData data) => Navigator.pop(context, data.type);
 

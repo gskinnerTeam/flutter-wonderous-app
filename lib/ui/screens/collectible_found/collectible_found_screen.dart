@@ -184,6 +184,6 @@ class CollectibleFoundScreen extends StatelessWidget {
 
   void _handleViewCollectionPressed(BuildContext context) {
     Navigator.pop(context);
-    context.push(ScreenPaths.collection(collectible.id));
+    context.go(ScreenPaths.collection(collectible.id));
   }
 }

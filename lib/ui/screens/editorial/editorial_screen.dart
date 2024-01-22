@@ -63,6 +63,8 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
     _scrollPos.value = _scroller.position.pixels;
   }
 
+  void _handleBackPressed() => context.go(ScreenPaths.home);
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (_, constraints) {
@@ -181,7 +183,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                   alignment: backBtnAlign,
                   child: Padding(
                     padding: EdgeInsets.all($styles.insets.sm),
-                    child: BackBtn(icon: AppIcons.north),
+                    child: BackBtn(icon: AppIcons.north, onPressed: _handleBackPressed),
                   ),
                 ),
               )

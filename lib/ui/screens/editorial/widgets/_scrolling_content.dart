@@ -174,7 +174,9 @@ class _YouTubeThumbnail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void handlePressed() => context.push(ScreenPaths.video(id));
+    // On btn pressed:
+    void handlePressed() => context.go(ScreenPaths.video(id));
+
     return MergeSemantics(
       child: ConstrainedBox(
         constraints: BoxConstraints(maxWidth: 400),
@@ -227,7 +229,7 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
 
   @override
   Widget build(BuildContext context) {
-    void handlePressed() => context.push(ScreenPaths.maps(widget.data.type));
+    void handlePressed() => context.go(ScreenPaths.maps(widget.data.type));
     if (PlatformInfo.isDesktop) return SizedBox.shrink();
     return AspectRatio(
       aspectRatio: 1.65,

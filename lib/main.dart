@@ -16,9 +16,11 @@ void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   // Keep native splash screen up until app is finished bootstrapping
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  GoRouter.optionURLReflectsImperativeAPIs = true;
 
   // Start app
   registerSingletons();
+
   runApp(WondersApp());
   await appLogic.bootstrap();
 

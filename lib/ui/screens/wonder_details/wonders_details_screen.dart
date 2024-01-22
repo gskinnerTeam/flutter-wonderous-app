@@ -8,9 +8,9 @@ import 'package:wonders/ui/screens/wonder_details/wonder_details_tab_menu.dart';
 import 'package:wonders/ui/screens/wonder_events/wonder_events.dart';
 
 class WonderDetailsScreen extends StatefulWidget with GetItStatefulWidgetMixin {
-  WonderDetailsScreen({Key? key, required this.type, this.initialTabIndex = 0}) : super(key: key);
+  WonderDetailsScreen({Key? key, required this.type, this.tabIndex = 0}) : super(key: key);
   final WonderType type;
-  final int initialTabIndex;
+  final int tabIndex;
 
   @override
   State<WonderDetailsScreen> createState() => _WonderDetailsScreenState();
@@ -21,7 +21,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
   late final _tabController = TabController(
     length: 4,
     vsync: this,
-    initialIndex: widget.initialTabIndex,
+    initialIndex: _clampIndex(widget.tabIndex),
   )..addListener(_handleTabChanged);
   AnimationController? _fade;
 
@@ -29,14 +29,29 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
   bool _useNavRail = false;
 
   @override
+  void didUpdateWidget(covariant WonderDetailsScreen oldWidget) {
+    if (oldWidget.tabIndex != widget.tabIndex) {
+      _tabController.index = _clampIndex(widget.tabIndex);
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
   }
 
+  int _clampIndex(int index) => index.clamp(0, 3);
+
   void _handleTabChanged() {
     _fade?.forward(from: 0);
     setState(() {});
+  }
+
+  void _handleTabTapped(int index) {
+    _tabController.index = index;
+    context.go(ScreenPaths.wonderDetails(widget.type, tabIndex: _tabController.index));
   }
 
   void _handleTabMenuSized(Size size) {
@@ -76,6 +91,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
               onChange: _handleTabMenuSized,
               child: WonderDetailsTabMenu(
                   tabController: _tabController,
+                  onTap: _handleTabTapped,
                   wonderType: wonder.type,
                   showBg: showTabBarBg,
                   axis: _useNavRail ? Axis.vertical : Axis.horizontal),
