@@ -1,11 +1,10 @@
 import 'dart:convert';
 
-import 'package:home_widget/home_widget.dart';
+import 'package:http/http.dart' as http;
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/logic/common/save_load_mixin.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
-import 'package:http/http.dart' as http;
 import 'package:wonders/logic/native_widget_service.dart';
 
 class CollectiblesLogic with ThrottledSaveLoadMixin {
@@ -42,7 +41,7 @@ class CollectiblesLogic with ThrottledSaveLoadMixin {
     statesById.value = states;
     if (state == CollectibleState.discovered) {
       final data = fromId(id)!;
-      _updateHomeWidgetTextData(
+      _updateNativeWidgetTextData(
         title: data.title,
         id: data.id,
         imageUrl: data.imageUrlSmall,
@@ -58,11 +57,9 @@ class CollectiblesLogic with ThrottledSaveLoadMixin {
       if (state == CollectibleState.explored) _exploredCount++;
     });
     final foundCount = discoveredCount + exploredCount;
-    if (PlatformInfo.isIOS) {
-      _nativeWidget.save<int>('discoveredCount', foundCount).then((value) {
-        _nativeWidget.markDirty();
-      });
-    }
+    _nativeWidget.save<int>('discoveredCount', foundCount).then((value) {
+      _nativeWidget.markDirty();
+    });
 
     debugPrint('setting discoveredCount for home widget $foundCount');
   }
@@ -95,13 +92,15 @@ class CollectiblesLogic with ThrottledSaveLoadMixin {
     for (int i = 0; i < all.length; i++) {
       states[all[i].id] = CollectibleState.lost;
     }
-    _updateHomeWidgetTextData(); // clear home widget data
+    if (_nativeWidget.isSupported) {
+      _updateNativeWidgetTextData(); // clear home widget data
+    }
     statesById.value = states;
     debugPrint('collection reset');
     scheduleSave();
   }
 
-  Future<void> _updateHomeWidgetTextData({String title = '', String id = '', String imageUrl = ''}) async {
+  Future<void> _updateNativeWidgetTextData({String title = '', String id = '', String imageUrl = ''}) async {
     // Save title
     await _nativeWidget.save<String>('lastDiscoveredTitle', title);
     // Subtitle
