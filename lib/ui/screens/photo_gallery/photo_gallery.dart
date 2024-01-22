@@ -99,8 +99,6 @@ class _PhotoGalleryState extends State<PhotoGallery> {
   }
 
   bool _handleKeyDown(KeyDownEvent event) {
-    var newIndex = -1;
-    bool handled = false;
     final key = event.logicalKey;
     Map<LogicalKeyboardKey, int> keyActions = {
       LogicalKeyboardKey.arrowUp: -_gridSize,
@@ -109,24 +107,22 @@ class _PhotoGalleryState extends State<PhotoGallery> {
       LogicalKeyboardKey.arrowLeft: -1,
     };
 
-    int? action = keyActions[key];
-    if (action != null) {
-      newIndex = _index + action;
-      handled = true;
-      bool isRightSide = _index % _gridSize == _gridSize - 1;
-      if (isRightSide && key == LogicalKeyboardKey.arrowRight) {
-        newIndex = -1;
-      }
-      bool isLeftSide = _index % _gridSize == 0;
-      if (isLeftSide && key == LogicalKeyboardKey.arrowLeft) newIndex = -1;
-      if (newIndex > _gridSize * _gridSize) {
-        newIndex = -1;
-      }
-      if (newIndex >= 0) {
-        _setIndex(newIndex);
-      }
+    // Apply key action, exit early if no action is defined
+    int? actionValue = keyActions[key];
+    if (actionValue == null) return false;
+    int newIndex = _index + actionValue;
+
+    // Block actions along edges of the grid
+    bool isRightSide = _index % _gridSize == _gridSize - 1;
+    bool isLeftSide = _index % _gridSize == 0;
+    bool outOfBounds = newIndex < 0 || newIndex >= _imgCount;
+    if ((isRightSide && key == LogicalKeyboardKey.arrowRight) ||
+        (isLeftSide && key == LogicalKeyboardKey.arrowLeft) ||
+        outOfBounds) {
+      return false;
     }
-    return handled;
+    _setIndex(newIndex);
+    return true;
   }
 
   /// Converts a swipe direction into a new index
@@ -274,14 +270,16 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                 liveRegion: isSelected,
                 onIncrease: () => _handleImageTapped(_index + 1, false),
                 onDecrease: () => _handleImageTapped(_index - 1, false),
-                child: AppBtn.basic(
-                  semanticLabel: semanticLbl,
-                  focusNode: _focusNodes[index],
-                  onFocusChanged: (isFocused) => _handleImageFocusChanged(index, isFocused),
-                  onPressed: () => _handleImageTapped(index, isSelected),
-                  child: _checkCollectibleIndex(index)
-                      ? Center(child: HiddenCollectible(widget.wonderType, index: 1, size: 100))
-                      : ClipRRect(
+                child: _checkCollectibleIndex(index)
+                    ? Center(
+                        child: HiddenCollectible(widget.wonderType, index: 1, size: 100, focus: _focusNodes[index]),
+                      )
+                    : AppBtn.basic(
+                        semanticLabel: semanticLbl,
+                        focusNode: _focusNodes[index],
+                        onFocusChanged: (isFocused) => _handleImageFocusChanged(index, isFocused),
+                        onPressed: () => _handleImageTapped(index, isSelected),
+                        child: ClipRRect(
                           borderRadius: BorderRadius.circular(8),
                           child: SizedBox(
                             width: imgSize.width,
@@ -303,7 +301,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                                   ),
                           ),
                         ),
-                ),
+                      ),
               ),
             );
           }),

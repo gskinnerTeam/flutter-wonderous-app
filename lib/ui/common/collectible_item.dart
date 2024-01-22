@@ -6,7 +6,7 @@ import 'package:wonders/ui/common/utils/app_haptics.dart';
 import 'package:wonders/ui/screens/collectible_found/collectible_found_screen.dart';
 
 class CollectibleItem extends StatelessWidget with GetItMixin {
-  CollectibleItem(this.collectible, {this.size = 64.0, Key? key}) : super(key: key) {
+  CollectibleItem(this.collectible, {this.size = 64.0, Key? key, this.focus}) : super(key: key) {
     // pre-fetch the image, so it's ready if we show the collectible found screen.
     _imageProvider = NetworkImage(collectible.imageUrl);
     _imageProvider.resolve(ImageConfiguration()).addListener(ImageStreamListener((_, __) {}));
@@ -15,6 +15,7 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
   final CollectibleData collectible;
   final double size;
   late final ImageProvider _imageProvider;
+  final FocusNode? focus;
 
   void _handleTap(BuildContext context) async {
     final screen = CollectibleFoundScreen(collectible: collectible, imageProvider: _imageProvider);
@@ -39,6 +40,7 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
           // Note: In order for the collapse animation to run properly, we must return a non-zero height or width.
           closedBuilder: (_) => SizedBox(width: 1, height: 0),
           openBuilder: (_) => AppBtn.basic(
+            focusNode: focus,
             semanticLabel: $strings.collectibleItemSemanticCollectible,
             onPressed: () => _handleTap(context),
             enableFeedback: false,
