@@ -232,7 +232,9 @@ class _CustomFocusBuilderState extends State<_CustomFocusBuilder> {
 
   void _handleFocusChanged() {
     widget.onFocusChanged?.call(_focusNode.hasFocus);
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override
