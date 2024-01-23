@@ -39,7 +39,9 @@ class LazyIndexedStackState extends State<LazyIndexedStack> {
     // Mark current index as active
     _activated[widget.index] = true;
     final children = List.generate(_activated.length, (i) {
-      return _activated[i] ? widget.children[i] : const SizedBox.shrink();
+      Widget child = _activated[i] ? widget.children[i] : const SizedBox.shrink();
+      bool isSelected = widget.index == i;
+      return ExcludeFocus(excluding: !isSelected, child: child);
     });
     return IndexedStack(
       alignment: widget.alignment,
