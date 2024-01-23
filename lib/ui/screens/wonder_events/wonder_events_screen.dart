@@ -18,15 +18,15 @@ part 'widgets/_events_list.dart';
 part 'widgets/_timeline_btn.dart';
 part 'widgets/_wonder_image_with_timeline.dart';
 
-class WonderEvents extends StatefulWidget {
-  const WonderEvents({Key? key, required this.type, this.contentPadding = EdgeInsets.zero}) : super(key: key);
+class WonderEventsScreen extends StatefulWidget {
+  const WonderEventsScreen({Key? key, required this.type, this.contentPadding = EdgeInsets.zero}) : super(key: key);
   final WonderType type;
   final EdgeInsets contentPadding;
   @override
-  State<WonderEvents> createState() => _WonderEventsState();
+  State<WonderEventsScreen> createState() => _WonderEventsScreenState();
 }
 
-class _WonderEventsState extends State<WonderEvents> {
+class _WonderEventsScreenState extends State<WonderEventsScreen> {
   late final _data = wondersLogic.getData(widget.type);
   final _eventsListKey = GlobalKey<_EventsListState>();
   double _scrollPos = 0;
