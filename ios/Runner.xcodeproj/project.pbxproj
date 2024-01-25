@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		296251252AE7410D00D574FF /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296251242AE7410D00D574FF /* Colors.swift */; };
+		2978ECDD2B62D00C00E36CE8 /* FlutterAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2978ECDC2B62D00C00E36CE8 /* FlutterAssets.swift */; };
 		297F6FC72AD06E0D00FF159E /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 297F6FC62AD06E0D00FF159E /* WidgetKit.framework */; };
 		297F6FC92AD06E0D00FF159E /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 297F6FC82AD06E0D00FF159E /* SwiftUI.framework */; };
 		297F6FCC2AD06E0D00FF159E /* WonderousWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297F6FCB2AD06E0D00FF159E /* WonderousWidgetBundle.swift */; };
@@ -73,6 +74,7 @@
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
 		296251242AE7410D00D574FF /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		2978ECDC2B62D00C00E36CE8 /* FlutterAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlutterAssets.swift; sourceTree = "<group>"; };
 		297F6FC52AD06E0D00FF159E /* Wonderous WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; name = "Wonderous WidgetExtension.appex"; path = WonderousWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		297F6FC62AD06E0D00FF159E /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		297F6FC82AD06E0D00FF159E /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -141,6 +143,7 @@
 				297FD5732AE18011008D8BFE /* WonderousWidgetView.swift */,
 				297FD5752AE19BD9008D8BFE /* WonderWidgetViewComponents.swift */,
 				296251242AE7410D00D574FF /* Colors.swift */,
+				2978ECDC2B62D00C00E36CE8 /* FlutterAssets.swift */,
 			);
 			path = WonderousWidget;
 			sourceTree = "<group>";
@@ -451,6 +454,7 @@
 				297FD5762AE19BD9008D8BFE /* WonderWidgetViewComponents.swift in Sources */,
 				296251252AE7410D00D574FF /* Colors.swift in Sources */,
 				297F6FD32AD06E0F00FF159E /* WonderousWidget.intentdefinition in Sources */,
+				2978ECDD2B62D00C00E36CE8 /* FlutterAssets.swift in Sources */,
 				297FD5742AE18011008D8BFE /* WonderousWidgetView.swift in Sources */,
 				297F6FCE2AD06E0D00FF159E /* WonderousWidget.swift in Sources */,
 				297F6FCC2AD06E0D00FF159E /* WonderousWidgetBundle.swift in Sources */,
@@ -640,14 +644,14 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "WonderousWidgetExtension.entitlements";
+				CODE_SIGN_ENTITLEMENTS = WonderousWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = S3TL5AY6Y3;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "WonderousWidget/Info.plist";
+				INFOPLIST_FILE = WonderousWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Wonderous Widget";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;

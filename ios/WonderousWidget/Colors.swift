@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 
+/// Define some custom extensions on the Color class, so we can use the shorthand syntax `..myColor`
 extension Color {
     public static let accent = Color(red: 0.89, green: 0.58, blue: 0.36)
     public static let offWhite = Color(red: 0.97, green: 0.92, blue: 0.9)

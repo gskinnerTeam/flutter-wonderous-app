@@ -2,19 +2,20 @@ import WidgetKit
 import SwiftUI
 import Intents
 
-/// Entry, is passed into the view and defines the data it needs
+/// Every home-widget requires a TimelineEntry. This is passed into the view and propvides any data it needs
 struct WonderousTimelineEntry : TimelineEntry {
+    // Date is a mandatory field for all TimelineEntries
     let date: Date
+    // Custom field for the wonderous view
     let discoveredCount:Int;
     var title:String = "";
     var subTitle:String = "";
     var imageData:String = "";
 }
 
-// Widget, defines the display name and description and also declared the main View
+/// Widget, defines some high level configuration options as well as the primary view that will display the widget.
 struct WonderousWidget: Widget {
     let kind: String = "WonderousWidget"
-    
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: WonderousTimelineProvider()) { entry in
             WonderousWidgetView(entry: entry)
@@ -26,7 +27,12 @@ struct WonderousWidget: Widget {
     }
 }
 
-// Provider,returns various WonderousEntry configs based on current context
+struct WonderousConfig {
+    let iosKey = "group.com.gskinner.flutter.wonders.widget"
+    let discoveredCountKey = "dicoveredCount"
+}
+
+/// TimelineProvider, returns various WonderousTimelineEntry configurations for different contexts
 struct WonderousTimelineProvider: TimelineProvider {
     // Provide an entry for a placeholder version of the widget
     func placeholder(in context: Context) -> WonderousTimelineEntry {

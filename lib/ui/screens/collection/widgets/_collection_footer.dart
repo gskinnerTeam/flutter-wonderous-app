@@ -42,9 +42,10 @@ class _CollectionFooter extends StatelessWidget {
   }
 
   Widget _buildProgressRow(BuildContext context) {
+    int percent = (count / total * 100).round();
     return Row(children: [
       Text(
-        $strings.collectionLabelDiscovered((count / total * 100).round()),
+        $strings.collectionLabelDiscovered(percent),
         style: $styles.text.body.copyWith(color: $styles.colors.accent1),
       ),
       Spacer(),

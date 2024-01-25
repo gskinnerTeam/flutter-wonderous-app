@@ -10,15 +10,14 @@ struct BgImage : View {
         var uiImage:UIImage?;
         // If there is no saved imageData, use the default bg image
         if(entry.imageData.isEmpty){
-            let defaultImage = flutterAssetBundle.appending(path: "/assets/images/widget/background-empty.jpg").path();
-            uiImage = UIImage(contentsOfFile: defaultImage);
+            uiImage = UIImage(contentsOfFile: FlutterImages.bgEmpty);
         }
         // Load a base64 encoded image that has been written by the flutter app
         else {
             uiImage = UIImage(data: Data(base64Encoded: entry.imageData)!)
         }
         if(uiImage != nil){
-            // Use geometry reader to prevent the image from pushing the other content out of the widgets bounds (https://stackoverflow.com/questions/57593552/swiftui-prevent-image-from-expanding-view-rect-outside-of-screen-bounds)
+            // Use geometry reader to prevent an oversized bg image from pushing the other content out of the widgets bounds (https://stackoverflow.com/questions/57593552/swiftui-prevent-image-from-expanding-view-rect-outside-of-screen-bounds)
             let image = GeometryReader { geometry in
                 Image(uiImage: uiImage!)
                     .resizable()
@@ -34,6 +33,7 @@ struct BgImage : View {
     
 }
 
+// Declares a restyled version of the native ProgressView
 struct GaugeProgressStyle: ProgressViewStyle {
     func makeBody(configuration: Configuration) -> some View {
         let fractionCompleted = configuration.fractionCompleted ?? 0
