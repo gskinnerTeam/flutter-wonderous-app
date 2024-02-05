@@ -10,39 +10,42 @@ class TimelineEventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MergeSemantics(
-      child: Padding(
-        padding: EdgeInsets.only(bottom: $styles.insets.sm),
-        child: DefaultTextColor(
-          color: darkMode ? Colors.white : Colors.black,
-          child: Container(
-            color: darkMode ? $styles.colors.greyStrong : $styles.colors.offWhite,
-            padding: EdgeInsets.all($styles.insets.sm),
-            child: IntrinsicHeight(
-              child: Row(
-                children: [
-                  /// Date
-                  SizedBox(
-                    width: 75,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('${year.abs()}', style: $styles.text.h3.copyWith(fontWeight: FontWeight.w400, height: 1)),
-                        Text(StringUtils.getYrSuffix(year), style: $styles.text.bodySmall),
-                      ],
+    return Focus(
+      child: MergeSemantics(
+        child: Padding(
+          padding: EdgeInsets.only(bottom: $styles.insets.sm),
+          child: DefaultTextColor(
+            color: darkMode ? Colors.white : Colors.black,
+            child: Container(
+              color: darkMode ? $styles.colors.greyStrong : $styles.colors.offWhite,
+              padding: EdgeInsets.all($styles.insets.sm),
+              child: IntrinsicHeight(
+                child: Row(
+                  children: [
+                    /// Date
+                    SizedBox(
+                      width: 75,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('${year.abs()}',
+                              style: $styles.text.h3.copyWith(fontWeight: FontWeight.w400, height: 1)),
+                          Text(StringUtils.getYrSuffix(year), style: $styles.text.bodySmall),
+                        ],
+                      ),
                     ),
-                  ),
 
-                  /// Divider
-                  Container(width: 1, color: darkMode ? Colors.white : $styles.colors.black),
+                    /// Divider
+                    Container(width: 1, color: darkMode ? Colors.white : $styles.colors.black),
 
-                  Gap($styles.insets.sm),
+                    Gap($styles.insets.sm),
 
-                  /// Text content
-                  Expanded(
-                    child: Focus(child: Text(text, style: $styles.text.body)),
-                  ),
-                ],
+                    /// Text content
+                    Expanded(
+                      child: Text(text, style: $styles.text.body),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
