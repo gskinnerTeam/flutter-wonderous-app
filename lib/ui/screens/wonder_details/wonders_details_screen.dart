@@ -51,6 +51,7 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
 
   void _handleTabTapped(int index) {
     _tabController.index = index;
+    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
     context.go(ScreenPaths.wonderDetails(widget.type, tabIndex: _tabController.index));
   }
 
