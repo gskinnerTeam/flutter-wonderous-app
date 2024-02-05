@@ -170,20 +170,22 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
               ),
 
               /// Home Btn
-              AnimatedBuilder(
-                animation: _scroller,
-                builder: (_, child) {
-                  return AnimatedOpacity(
-                    opacity: _scrollPos.value > 0 ? 0 : 1,
-                    duration: $styles.times.med,
-                    child: child,
-                  );
-                },
-                child: Align(
-                  alignment: backBtnAlign,
-                  child: Padding(
-                    padding: EdgeInsets.all($styles.insets.sm),
-                    child: BackBtn(icon: AppIcons.north, onPressed: _handleBackPressed),
+              SafeArea(
+                child: AnimatedBuilder(
+                  animation: _scroller,
+                  builder: (_, child) {
+                    return AnimatedOpacity(
+                      opacity: _scrollPos.value > 0 ? 0 : 1,
+                      duration: $styles.times.med,
+                      child: child,
+                    );
+                  },
+                  child: Align(
+                    alignment: backBtnAlign,
+                    child: Padding(
+                      padding: EdgeInsets.all($styles.insets.sm),
+                      child: BackBtn(icon: AppIcons.north, onPressed: _handleBackPressed),
+                    ),
                   ),
                 ),
               )
