@@ -98,6 +98,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
     }
   }
 
+  // Manually handle keyboard arrow-keys so we can control how the navigation behaves
   bool _handleKeyDown(KeyDownEvent event) {
     final key = event.logicalKey;
     Map<LogicalKeyboardKey, int> keyActions = {
@@ -112,20 +113,20 @@ class _PhotoGalleryState extends State<PhotoGallery> {
     if (actionValue == null) return false;
     int newIndex = _index + actionValue;
 
-    // Block actions along edges of the grid
+    // Allow free movement across the grid of items but block actions that try and go outside the bounds
     bool isRightSide = _index % _gridSize == _gridSize - 1;
     bool isLeftSide = _index % _gridSize == 0;
-    bool outOfBounds = newIndex < 0 || newIndex >= _imgCount;
+    bool outOfRange = newIndex < 0 || newIndex >= _imgCount;
     if ((isRightSide && key == LogicalKeyboardKey.arrowRight) ||
         (isLeftSide && key == LogicalKeyboardKey.arrowLeft) ||
-        outOfBounds) {
+        outOfRange) {
       return false;
     }
     _setIndex(newIndex);
     return true;
   }
 
-  /// Converts a swipe direction into a new index
+  // Converts a swipe direction into a new index
   void _handleSwipe(Offset dir) {
     // Calculate new index, y swipes move by an entire row, x swipes move one index at a time
     int newIndex = _index;
