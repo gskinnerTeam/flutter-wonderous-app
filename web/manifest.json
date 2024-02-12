@@ -1,11 +1,11 @@
 {
-    "name": "flutter_wonders_app",
-    "short_name": "flutter_wonders_app",
+    "name": "Wonderous: Flutter Web Example",
+    "short_name": "Wonderous",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Navigate the intersection of history, art, and culture. Be educated and entertained as your learn about world-famous structures.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
