@@ -70,7 +70,7 @@ class _HomeMenuState extends State<HomeMenu> {
                   _buildIconGrid(context)
                       .animate()
                       .fade(duration: $styles.times.fast)
-                      .scale(begin: .8, curve: Curves.easeOut),
+                      .scale(begin: Offset(.8, .8), curve: Curves.easeOut),
                   Gap($styles.insets.lg),
                   _buildBottomBtns(context),
                   //Spacer(),

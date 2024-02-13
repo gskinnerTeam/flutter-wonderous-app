@@ -20,7 +20,7 @@ dependencies:
   equatable: ^2.0.5
   extra_alignments: ^1.0.0+1
   flextras: ^1.0.0
-  flutter_animate: ^1.0.0
+  flutter_animate: ^4.5.0
   flutter_circular_text: ^0.3.1
   flutter_displaymode: ^0.6.0
   flutter_native_splash: ^2.3.3
