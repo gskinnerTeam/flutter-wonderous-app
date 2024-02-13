@@ -32,7 +32,9 @@ dependencies:
   google_maps_flutter: ^2.5.3
   google_maps_flutter_web: ^0.5.4+3
   go_router: ^13.0.1
-  home_widget: ^0.3.0
+  home_widget: ^0.4.1 # use the forked version when on `main` flutter branch
+#    git:
+#      url: https://github.com/gskinnerTeam/flutter_home_widget_fork.git
   http: ^1.1.0
   image: ^4.1.3
   image_fade: ^0.6.2
