@@ -13,6 +13,9 @@ class AppColors {
   final Color greyStrong = const Color(0xFF272625);
   final Color greyMedium = const Color(0xFF9D9995);
   final Color white = Colors.white;
+  // NOTE: If this color is changed, also change it in
+  // - web/manifest.json
+  // - web/index.html -
   final Color black = const Color(0xFF1E1B18);
 
   final bool isDark = false;
