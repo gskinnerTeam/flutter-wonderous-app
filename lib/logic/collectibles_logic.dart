@@ -40,7 +40,7 @@ class CollectiblesLogic with ThrottledSaveLoadMixin {
     statesById.value = states;
     if (state == CollectibleState.discovered) {
       final data = fromId(id)!;
-      _updateNativeWidgetTextData(
+      _updateNativeHomeWidgetData(
         title: data.title,
         id: data.id,
         imageUrl: data.imageUrlSmall,
@@ -91,15 +91,14 @@ class CollectiblesLogic with ThrottledSaveLoadMixin {
     for (int i = 0; i < all.length; i++) {
       states[all[i].id] = CollectibleState.lost;
     }
-    if (_nativeWidget.isSupported) {
-      _updateNativeWidgetTextData(); // clear home widget data
-    }
+    _updateNativeHomeWidgetData(); // clear home widget data
     statesById.value = states;
     debugPrint('collection reset');
     scheduleSave();
   }
 
-  Future<void> _updateNativeWidgetTextData({String title = '', String id = '', String imageUrl = ''}) async {
+  Future<void> _updateNativeHomeWidgetData({String title = '', String id = '', String imageUrl = ''}) async {
+    if(!_nativeWidget.isSupported) return;
     // Save title
     await _nativeWidget.save<String>('lastDiscoveredTitle', title);
     // Subtitle
@@ -115,7 +114,7 @@ class CollectiblesLogic with ThrottledSaveLoadMixin {
     if (imageUrl.isNotEmpty) {
       var bytes = await http.readBytes(Uri.parse(imageUrl));
       imageBase64 = base64Encode(bytes);
-      debugPrint('Saving base64 bytes: $imageBase64');
+      debugPrint('Saving base64 bytes for homeWidget');
     }
     await _nativeWidget.save<String>('lastDiscoveredImageData', imageBase64);
     await _nativeWidget.markDirty();
