@@ -2,7 +2,7 @@ part of '../collection_screen.dart';
 
 @immutable
 class _CollectionFooter extends StatelessWidget {
-  const _CollectionFooter({Key? key, required this.count, required this.total}) : super(key: key);
+  const _CollectionFooter({super.key, required this.count, required this.total});
 
   final int count;
   final int total;

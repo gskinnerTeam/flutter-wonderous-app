@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
 
 class PopRouterOnOverScroll extends StatefulWidget {
-  const PopRouterOnOverScroll({Key? key, required this.child, required this.controller}) : super(key: key);
+  const PopRouterOnOverScroll({super.key, required this.child, required this.controller});
   final ScrollController controller;
   final Widget child;
 

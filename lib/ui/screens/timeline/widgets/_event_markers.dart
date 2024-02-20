@@ -3,8 +3,7 @@ part of '../timeline_screen.dart';
 /// A vertically aligned stack of dots that represent global events
 /// The event closest to the [selectedYr] param will be visible selected
 class _EventMarkers extends StatefulWidget {
-  const _EventMarkers(this.selectedYr, {Key? key, required this.onEventChanged, required this.onMarkerPressed})
-      : super(key: key);
+  const _EventMarkers(this.selectedYr, {super.key, required this.onEventChanged, required this.onMarkerPressed});
 
   final void Function(TimelineEvent? event) onEventChanged;
   final void Function(TimelineEvent event) onMarkerPressed;
@@ -114,11 +113,11 @@ class _EventMarkersState extends State<_EventMarkers> {
 class _EventMarker extends StatelessWidget {
   const _EventMarker(
     this.offset, {
-    Key? key,
+    super.key,
     required this.isSelected,
     required this.event,
     required this.onPressed,
-  }) : super(key: key);
+  });
   final double offset;
   final TimelineEvent event;
   final bool isSelected;

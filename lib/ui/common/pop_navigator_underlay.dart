@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
 
 class PopNavigatorUnderlay extends StatelessWidget {
-  const PopNavigatorUnderlay({Key? key}) : super(key: key);
+  const PopNavigatorUnderlay({super.key});
 
   @override
   Widget build(BuildContext context) {

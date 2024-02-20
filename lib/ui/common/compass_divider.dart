@@ -2,8 +2,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wonders/common_libs.dart';
 
 class CompassDivider extends StatelessWidget {
-  const CompassDivider({Key? key, required this.isExpanded, this.duration, this.linesColor, this.compassColor})
-      : super(key: key);
+  const CompassDivider({super.key, required this.isExpanded, this.duration, this.linesColor, this.compassColor});
   final bool isExpanded;
   final Duration? duration;
   final Color? linesColor;

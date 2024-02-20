@@ -11,7 +11,7 @@ import 'package:wonders/ui/common/wonderous_logo.dart';
 import 'package:wonders/ui/screens/home_menu/about_dialog_content.dart';
 
 class HomeMenu extends StatefulWidget {
-  const HomeMenu({Key? key, required this.data}) : super(key: key);
+  const HomeMenu({super.key, required this.data});
   final WonderData data;
 
   @override
@@ -188,7 +188,7 @@ class _HomeMenuState extends State<HomeMenu> {
 }
 
 class _MenuTextBtn extends StatelessWidget {
-  const _MenuTextBtn({Key? key, required this.label, required this.onPressed, required this.icon}) : super(key: key);
+  const _MenuTextBtn({required this.label, required this.onPressed, required this.icon});
   final String label;
   final VoidCallback onPressed;
   final AppIcons icon;

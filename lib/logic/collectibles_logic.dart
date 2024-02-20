@@ -98,7 +98,7 @@ class CollectiblesLogic with ThrottledSaveLoadMixin {
   }
 
   Future<void> _updateNativeHomeWidgetData({String title = '', String id = '', String imageUrl = ''}) async {
-    if(!_nativeWidget.isSupported) return;
+    if (!_nativeWidget.isSupported) return;
     // Save title
     await _nativeWidget.save<String>('lastDiscoveredTitle', title);
     // Subtitle

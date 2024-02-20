@@ -2,7 +2,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/static_text_scale.dart';
 
 class DiagonalTextPageIndicator extends StatelessWidget {
-  const DiagonalTextPageIndicator({Key? key, required this.current, required this.total}) : super(key: key);
+  const DiagonalTextPageIndicator({super.key, required this.current, required this.total});
   final int current;
   final int total;
   static final _fontSize = 26 * $styles.scale;

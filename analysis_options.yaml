@@ -9,6 +9,11 @@
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
+analyzer:
+  errors:
+    prefer_const_constructors: ignore
+    unused_element: ignore # mostly because of super.key
+
 linter:
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`
@@ -22,9 +27,8 @@ linter:
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
   rules:
-    always_declare_return_types: true
-    always_use_package_imports: true
-    prefer_const_constructors: false
-    prefer_single_quotes: true
+    - always_declare_return_types
+    - always_use_package_imports
+    - prefer_single_quotes
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

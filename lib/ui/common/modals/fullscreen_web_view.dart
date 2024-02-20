@@ -2,7 +2,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:wonders/common_libs.dart';
 
 class FullscreenWebView extends StatelessWidget {
-  FullscreenWebView(this.url, {Key? key}) : super(key: key);
+  FullscreenWebView(this.url, {super.key});
   final String url;
 
   late final controller = WebViewController()

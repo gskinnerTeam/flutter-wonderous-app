@@ -11,7 +11,7 @@ Future<bool?> showModal(BuildContext context, {required Widget child}) async {
 }
 
 class LoadingModal extends StatelessWidget {
-  const LoadingModal({Key? key, this.title, this.msg, this.child}) : super(key: key);
+  const LoadingModal({super.key, this.title, this.msg, this.child});
   final String? title;
   final String? msg;
   final Widget? child;
@@ -28,7 +28,7 @@ class LoadingModal extends StatelessWidget {
 }
 
 class OkModal extends StatelessWidget {
-  const OkModal({Key? key, this.title, this.msg, this.child}) : super(key: key);
+  const OkModal({super.key, this.title, this.msg, this.child});
   final String? title;
   final String? msg;
   final Widget? child;
@@ -51,7 +51,7 @@ class OkModal extends StatelessWidget {
 }
 
 class OkCancelModal extends StatelessWidget {
-  const OkCancelModal({Key? key, this.title, this.msg, this.child}) : super(key: key);
+  const OkCancelModal({super.key, this.title, this.msg, this.child});
   final String? title;
   final String? msg;
   final Widget? child;
@@ -83,7 +83,7 @@ class _BaseContentModal extends StatelessWidget {
   final Widget? child;
   final List<Widget> buttons;
 
-  const _BaseContentModal({Key? key, this.title, this.msg, required this.buttons, this.child}) : super(key: key);
+  const _BaseContentModal({this.title, this.msg, required this.buttons, this.child});
 
   @override
   Widget build(BuildContext context) {

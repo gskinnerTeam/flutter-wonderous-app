@@ -1,7 +1,7 @@
 part of '../editorial_screen.dart';
 
 class _AppBar extends StatelessWidget {
-  _AppBar(this.wonderType, {Key? key, required this.sectionIndex, required this.scrollPos}) : super(key: key);
+  _AppBar(this.wonderType, {super.key, required this.sectionIndex, required this.scrollPos});
   final WonderType wonderType;
   final ValueNotifier<int> sectionIndex;
   final ValueNotifier<double> scrollPos;
@@ -18,24 +18,16 @@ class _AppBar extends StatelessWidget {
   ];
 
   ArchType _getArchType() {
-    switch (wonderType) {
-      case WonderType.chichenItza:
-        return ArchType.flatPyramid;
-      case WonderType.christRedeemer:
-        return ArchType.wideArch;
-      case WonderType.colosseum:
-        return ArchType.arch;
-      case WonderType.greatWall:
-        return ArchType.arch;
-      case WonderType.machuPicchu:
-        return ArchType.pyramid;
-      case WonderType.petra:
-        return ArchType.wideArch;
-      case WonderType.pyramidsGiza:
-        return ArchType.pyramid;
-      case WonderType.tajMahal:
-        return ArchType.spade;
-    }
+    return switch (wonderType) {
+      WonderType.chichenItza => ArchType.flatPyramid,
+      WonderType.christRedeemer => ArchType.wideArch,
+      WonderType.colosseum => ArchType.arch,
+      WonderType.greatWall => ArchType.arch,
+      WonderType.machuPicchu => ArchType.pyramid,
+      WonderType.petra => ArchType.wideArch,
+      WonderType.pyramidsGiza => ArchType.pyramid,
+      WonderType.tajMahal => ArchType.spade
+    };
   }
 
   @override

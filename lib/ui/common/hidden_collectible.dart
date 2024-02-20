@@ -6,9 +6,8 @@ import 'package:wonders/ui/common/collectible_item.dart';
 /// If `wonders` is empty, then the collectible is always shown.
 class HiddenCollectible extends StatelessWidget with GetItMixin {
   HiddenCollectible(this.currentWonder,
-      {Key? key, required this.index, this.matches = const [], this.size = 64, this.focus})
-      : assert(index <= 2, 'index should not exceed 2'),
-        super(key: key);
+      {super.key, required this.index, this.matches = const [], this.size = 64, this.focus})
+      : assert(index <= 2, 'index should not exceed 2');
   final int index;
   final double size;
   final List<WonderType> matches;

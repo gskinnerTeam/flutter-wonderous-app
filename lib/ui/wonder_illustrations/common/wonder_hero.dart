@@ -3,7 +3,7 @@ import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_confi
 
 /// Utility class that wraps a normal [Hero] widget, but respects WonderIllustrationConfig.enableHero setting
 class WonderHero extends StatelessWidget {
-  const WonderHero(this.config, this.tag, {Key? key, required this.child}) : super(key: key);
+  const WonderHero(this.config, this.tag, {super.key, required this.child});
   final WonderIllustrationConfig config;
   final Widget child;
   final String tag;

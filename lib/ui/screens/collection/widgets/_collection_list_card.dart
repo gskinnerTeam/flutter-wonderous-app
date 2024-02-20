@@ -1,7 +1,7 @@
 part of '../collection_screen.dart';
 
 class _CollectionListCard extends StatelessWidget with GetItMixin {
-  _CollectionListCard({Key? key, this.width, this.height, required this.data, required this.fromId}) : super(key: key);
+  _CollectionListCard({super.key, this.width, this.height, required this.data, required this.fromId});
 
   final double? width;
   final double? height;
@@ -48,7 +48,7 @@ class _CollectionListCard extends StatelessWidget with GetItMixin {
                           heroTag: e.id == fromId ? 'collectible_image_$fromId' : null,
                         ),
                       );
-                    }).toList()
+                    })
                   ]),
             )
           ],

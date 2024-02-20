@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class GradientContainer extends StatelessWidget {
   const GradientContainer(this.colors, this.stops,
-      {Key? key,
+      {super.key,
       this.child,
       this.width,
       this.height,
@@ -10,8 +10,7 @@ class GradientContainer extends StatelessWidget {
       this.begin,
       this.end,
       this.blendMode,
-      this.borderRadius})
-      : super(key: key);
+      this.borderRadius});
   final List<Color> colors;
   final List<double> stops;
   final double? width;
@@ -45,41 +44,12 @@ class GradientContainer extends StatelessWidget {
 }
 
 class HzGradient extends GradientContainer {
-  const HzGradient(List<Color> colors, List<double> stops,
-      {Key? key,
-      Widget? child,
-      double? width,
-      double? height,
-      Alignment? alignment,
-      BlendMode? blendMode,
-      BorderRadius? borderRadius})
-      : super(colors, stops,
-            key: key,
-            child: child,
-            width: width,
-            height: height,
-            alignment: alignment,
-            blendMode: blendMode,
-            borderRadius: borderRadius);
+  const HzGradient(super.colors, super.stops,
+      {super.key, super.child, super.width, super.height, super.alignment, super.blendMode, super.borderRadius});
 }
 
 class VtGradient extends GradientContainer {
-  const VtGradient(List<Color> colors, List<double> stops,
-      {Key? key,
-      Widget? child,
-      double? width,
-      double? height,
-      Alignment? alignment,
-      BlendMode? blendMode,
-      BorderRadius? borderRadius})
-      : super(colors, stops,
-            key: key,
-            child: child,
-            width: width,
-            height: height,
-            alignment: alignment,
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            blendMode: blendMode,
-            borderRadius: borderRadius);
+  const VtGradient(super.colors, super.stops,
+      {super.key, super.child, super.width, super.height, super.alignment, super.blendMode, super.borderRadius})
+      : super(begin: Alignment.topCenter, end: Alignment.bottomCenter);
 }

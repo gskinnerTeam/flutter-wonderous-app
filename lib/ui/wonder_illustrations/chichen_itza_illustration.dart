@@ -6,7 +6,7 @@ import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_build
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 
 class ChichenItzaIllustration extends StatelessWidget {
-  ChichenItzaIllustration({Key? key, required this.config}) : super(key: key);
+  ChichenItzaIllustration({super.key, required this.config});
   final WonderIllustrationConfig config;
   final assetPath = WonderType.chichenItza.assetPath;
   final fgColor = WonderType.chichenItza.fgColor;

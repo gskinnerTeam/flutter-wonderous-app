@@ -4,7 +4,7 @@ import 'package:wonders/ui/common/gradient_container.dart';
 /// Used for situations where the list content should blend into a background color.
 /// Can be placed at the top or bottom of a list, using the `flip' option when on the bottom
 class ListOverscollGradient extends StatelessWidget {
-  const ListOverscollGradient({Key? key, this.size = 100, this.color, this.bottomUp = false}) : super(key: key);
+  const ListOverscollGradient({super.key, this.size = 100, this.color, this.bottomUp = false});
   final bool bottomUp;
   final double size;
   final Color? color;

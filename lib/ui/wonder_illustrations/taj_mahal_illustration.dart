@@ -6,7 +6,7 @@ import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_build
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 
 class TajMahalIllustration extends StatelessWidget {
-  TajMahalIllustration({Key? key, required this.config}) : super(key: key);
+  TajMahalIllustration({super.key, required this.config});
   final WonderIllustrationConfig config;
 
   final fgColor = WonderType.tajMahal.fgColor;

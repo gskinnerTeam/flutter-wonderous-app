@@ -8,5 +8,4 @@ class UnsplashLogic {
   UnsplashService get service => GetIt.I.get<UnsplashService>();
 
   List<String>? getCollectionPhotos(String collectionId) => _idsByCollection[collectionId];
-
 }

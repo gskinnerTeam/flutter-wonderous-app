@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
 
 class StaticTextScale extends StatelessWidget {
-  const StaticTextScale({Key? key, required this.child, this.scale = 1}) : super(key: key);
+  const StaticTextScale({super.key, required this.child, this.scale = 1});
   final Widget child;
   final double scale;
 

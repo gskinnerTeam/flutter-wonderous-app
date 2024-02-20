@@ -4,7 +4,7 @@ publish_to: "none"
 version: 2.2.2+9
 
 environment:
-  sdk: ">=2.17.0 <3.0.0"
+  sdk: ^3.3.0
 
 dependencies:
   flutter:
@@ -55,7 +55,7 @@ dependencies:
 
 dev_dependencies:
   icons_launcher: ^2.1.3
-  flutter_lints: ^2.0.2
+  flutter_lints: ^3.0.0
   dependency_validator: ^3.2.2
 
 icons_launcher:

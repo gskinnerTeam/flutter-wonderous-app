@@ -6,7 +6,7 @@ import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/ui/common/modals/fullscreen_web_view.dart';
 
 class AboutDialogContent extends StatelessWidget {
-  const AboutDialogContent({Key? key}) : super(key: key);
+  const AboutDialogContent({super.key});
 
   @override
   Widget build(BuildContext context) {

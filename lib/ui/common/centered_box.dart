@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
 
 class CenteredBox extends StatelessWidget {
-  const CenteredBox({Key? key, required this.child, this.width, this.height, this.padding}) : super(key: key);
+  const CenteredBox({super.key, required this.child, this.width, this.height, this.padding});
   final Widget child;
   final double? width;
   final double? height;

@@ -2,7 +2,7 @@ part of '../timeline_screen.dart';
 
 class _ScrollingViewport extends StatefulWidget {
   const _ScrollingViewport({
-    Key? key,
+    super.key,
     // ignore: unused_element
     this.onInit,
     required this.scroller,
@@ -10,7 +10,7 @@ class _ScrollingViewport extends StatefulWidget {
     required this.maxSize,
     required this.selectedWonder,
     this.onYearChanged,
-  }) : super(key: key);
+  });
   final double minSize;
   final double maxSize;
   final ScrollController scroller;

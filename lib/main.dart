@@ -30,7 +30,7 @@ void main() async {
 
 /// Creates an app using the [MaterialApp.router] constructor and the global `appRouter`, an instance of [GoRouter].
 class WondersApp extends StatelessWidget with GetItMixin {
-  WondersApp({Key? key}) : super(key: key);
+  WondersApp({super.key});
   @override
   Widget build(BuildContext context) {
     final locale = watchX((SettingsLogic s) => s.currentLocale);

@@ -10,7 +10,7 @@ import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
 
 class IntroScreen extends StatefulWidget {
-  const IntroScreen({Key? key}) : super(key: key);
+  const IntroScreen({super.key});
 
   @override
   State<IntroScreen> createState() => _IntroScreenState();
@@ -257,7 +257,7 @@ class _PageData {
 }
 
 class _Page extends StatelessWidget {
-  const _Page({Key? key, required this.data}) : super(key: key);
+  const _Page({required this.data});
 
   final _PageData data;
 
@@ -314,7 +314,7 @@ class _WonderousLogo extends StatelessWidget {
 }
 
 class _PageImage extends StatelessWidget {
-  const _PageImage({Key? key, required this.data}) : super(key: key);
+  const _PageImage({required this.data});
 
   final _PageData data;
 

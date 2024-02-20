@@ -5,7 +5,7 @@ import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/google_maps_marker.dart';
 
 class FullscreenMapsViewer extends StatelessWidget {
-  FullscreenMapsViewer({Key? key, required this.type}) : super(key: key);
+  FullscreenMapsViewer({super.key, required this.type});
   final WonderType type;
 
   WonderData get data => wondersLogic.getData(type);

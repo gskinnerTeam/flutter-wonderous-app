@@ -8,7 +8,7 @@ import 'package:wonders/ui/screens/wonder_details/wonder_details_tab_menu.dart';
 import 'package:wonders/ui/screens/wonder_events/wonder_events.dart';
 
 class WonderDetailsScreen extends StatefulWidget with GetItStatefulWidgetMixin {
-  WonderDetailsScreen({Key? key, required this.type, this.tabIndex = 0}) : super(key: key);
+  WonderDetailsScreen({super.key, required this.type, this.tabIndex = 0});
   final WonderType type;
   final int tabIndex;
 

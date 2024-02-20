@@ -1,7 +1,5 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'dart:ui';
-
 import 'package:wonders/common_libs.dart';
 
 export 'colors.dart';

@@ -1,7 +1,7 @@
 part of '../editorial_screen.dart';
 
 class _TopIllustration extends StatelessWidget {
-  const _TopIllustration(this.type, {Key? key, this.fgOffset = Offset.zero}) : super(key: key);
+  const _TopIllustration(this.type, {super.key, this.fgOffset = Offset.zero});
   final WonderType type;
   final Offset fgOffset;
 

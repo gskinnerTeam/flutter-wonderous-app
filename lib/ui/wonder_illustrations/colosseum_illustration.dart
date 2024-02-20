@@ -6,7 +6,7 @@ import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_build
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 
 class ColosseumIllustration extends StatelessWidget {
-  ColosseumIllustration({Key? key, required this.config}) : super(key: key);
+  ColosseumIllustration({super.key, required this.config});
   final WonderIllustrationConfig config;
   final String assetPath = WonderType.colosseum.assetPath;
   final bgColor = WonderType.colosseum.bgColor;

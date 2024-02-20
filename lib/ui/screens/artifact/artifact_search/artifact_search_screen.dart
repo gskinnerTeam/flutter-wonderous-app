@@ -15,7 +15,7 @@ part 'widgets/_search_input.dart';
 /// User can use this screen to search the MET server for an artifact by name or timeline. Artifacts results will
 /// appear as images, which the user can click on to being up the details view for more information.
 class ArtifactSearchScreen extends StatefulWidget with GetItStatefulWidgetMixin {
-  ArtifactSearchScreen({Key? key, required this.type}) : super(key: key);
+  ArtifactSearchScreen({super.key, required this.type});
   final WonderType type;
 
   @override
@@ -203,7 +203,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
 }
 
 class PanelController extends ValueNotifier<bool> {
-  PanelController(bool value) : super(value);
+  PanelController(super.value);
   void toggle() => value = !value;
 }
 

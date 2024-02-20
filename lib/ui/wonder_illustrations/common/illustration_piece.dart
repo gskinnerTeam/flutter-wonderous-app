@@ -7,7 +7,7 @@ import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_build
 /// to standardize behavior across the various wonder illustrations
 class IllustrationPiece extends StatefulWidget {
   const IllustrationPiece({
-    Key? key,
+    super.key,
     required this.fileName,
     required this.heightFactor,
     this.alignment = Alignment.center,
@@ -21,7 +21,7 @@ class IllustrationPiece extends StatefulWidget {
     this.dynamicHzOffset = 0,
     this.top,
     this.bottom,
-  }) : super(key: key);
+  });
 
   final String fileName;
 

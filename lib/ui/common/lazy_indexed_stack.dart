@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 /// A lazy-loading [IndexedStack] that loads [children] accordingly.
 class LazyIndexedStack extends StatefulWidget {
   const LazyIndexedStack({
-    Key? key,
+    super.key,
     this.alignment = AlignmentDirectional.topStart,
     this.textDirection,
     this.sizing = StackFit.loose,
     this.index = 0,
     this.children = const [],
-  }) : super(key: key);
+  });
 
   final AlignmentGeometry alignment;
   final TextDirection? textDirection;

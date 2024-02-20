@@ -1,7 +1,7 @@
 part of '../wonder_events.dart';
 
 class _TimelineBtn extends StatelessWidget {
-  const _TimelineBtn({Key? key, required this.type, this.width}) : super(key: key);
+  const _TimelineBtn({super.key, required this.type, this.width});
   final WonderType type;
   final double? width;
 

@@ -2,14 +2,14 @@ part of '../wonder_events.dart';
 
 class _EventsList extends StatefulWidget {
   const _EventsList({
-    Key? key,
+    super.key,
     required this.data,
     this.topHeight = 0,
     this.blurOnScroll = false,
     this.showTopGradient = true,
     required this.initialScrollOffset,
     required this.onScroll,
-  }) : super(key: key);
+  });
   final WonderData data;
   final double topHeight;
   final bool blurOnScroll;

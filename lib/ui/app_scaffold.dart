@@ -2,7 +2,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/app_scroll_behavior.dart';
 
 class WondersAppScaffold extends StatelessWidget {
-  const WondersAppScaffold({Key? key, required this.child}) : super(key: key);
+  const WondersAppScaffold({super.key, required this.child});
   final Widget child;
   static AppStyle get style => _style;
   static AppStyle _style = AppStyle();

@@ -11,12 +11,12 @@ import 'package:wonders/common_libs.dart';
 ///
 class StackedPageViewBuilder extends StatefulWidget {
   const StackedPageViewBuilder({
-    Key? key,
+    super.key,
     this.initialIndex = 0,
     required this.pageCount,
     required this.builder,
     this.onInit,
-  }) : super(key: key);
+  });
   final int initialIndex;
   final int pageCount;
   final Widget Function(BuildContext builder, PageController controller, PageController follower) builder;

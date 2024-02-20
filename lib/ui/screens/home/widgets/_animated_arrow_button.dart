@@ -2,7 +2,7 @@ part of '../wonders_home_screen.dart';
 
 /// An arrow that fades out, then fades back in and slides down, ending in it's original position with full opacity.
 class _AnimatedArrowButton extends StatelessWidget {
-  _AnimatedArrowButton({Key? key, required this.onTap, required this.semanticTitle}) : super(key: key);
+  _AnimatedArrowButton({required this.onTap, required this.semanticTitle});
 
   final String semanticTitle;
   final VoidCallback onTap;

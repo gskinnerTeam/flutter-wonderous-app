@@ -19,7 +19,7 @@ part 'widgets/_timeline_btn.dart';
 part 'widgets/_wonder_image_with_timeline.dart';
 
 class WonderEvents extends StatefulWidget {
-  const WonderEvents({Key? key, required this.type, this.contentPadding = EdgeInsets.zero}) : super(key: key);
+  const WonderEvents({super.key, required this.type, this.contentPadding = EdgeInsets.zero});
   final WonderType type;
   final EdgeInsets contentPadding;
   @override

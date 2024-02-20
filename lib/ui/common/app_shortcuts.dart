@@ -34,14 +34,11 @@ class AppShortcuts {
   };
 
   static Map<ShortcutActivator, Intent>? get defaults {
-    switch (defaultTargetPlatform) {
+    return switch (defaultTargetPlatform) {
       // fall back to default shortcuts for ios and android
-      case TargetPlatform.iOS:
-      case TargetPlatform.android:
-        return null;
+      TargetPlatform.iOS || TargetPlatform.android => null,
       // unify shortcuts for desktop/web
-      default:
-        return _defaultWebAndDesktopShortcuts;
-    }
+      _ => _defaultWebAndDesktopShortcuts
+    };
   }
 }

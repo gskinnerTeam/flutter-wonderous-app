@@ -6,7 +6,7 @@ import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_build
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 
 class ChristRedeemerIllustration extends StatelessWidget {
-  ChristRedeemerIllustration({Key? key, required this.config}) : super(key: key);
+  ChristRedeemerIllustration({super.key, required this.config});
   final WonderIllustrationConfig config;
   final String assetPath = WonderType.christRedeemer.assetPath;
   final fgColor = WonderType.christRedeemer.fgColor;

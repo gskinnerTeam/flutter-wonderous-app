@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
 
 class LocaleSwitcher extends StatelessWidget with GetItMixin {
-  LocaleSwitcher({Key? key}) : super(key: key);
+  LocaleSwitcher({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,6 +11,7 @@ class LocaleSwitcher extends StatelessWidget with GetItMixin {
       await settingsLogic.changeLocale(newLocale);
     }
 
-    return AppBtn.from(text: $strings.localeSwapButton, onPressed: handleSwapLocale, padding: EdgeInsets.all($styles.insets.sm));
+    return AppBtn.from(
+        text: $strings.localeSwapButton, onPressed: handleSwapLocale, padding: EdgeInsets.all($styles.insets.sm));
   }
 }

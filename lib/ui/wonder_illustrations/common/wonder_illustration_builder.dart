@@ -8,13 +8,13 @@ import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_confi
 /// Also manages an AnimationController that is passed to each layer if it would like to animate itself on or off screen.
 class WonderIllustrationBuilder extends StatefulWidget {
   const WonderIllustrationBuilder({
-    Key? key,
+    super.key,
     required this.config,
     required this.fgBuilder,
     required this.mgBuilder,
     required this.bgBuilder,
     required this.wonderType,
-  }) : super(key: key);
+  });
   final List<Widget> Function(BuildContext context, Animation<double> animation) fgBuilder;
   final List<Widget> Function(BuildContext context, Animation<double> animation) mgBuilder;
   final List<Widget> Function(BuildContext context, Animation<double> animation) bgBuilder;

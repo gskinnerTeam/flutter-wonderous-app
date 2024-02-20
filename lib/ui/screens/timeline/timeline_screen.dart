@@ -29,7 +29,7 @@ part 'widgets/_year_markers.dart';
 class TimelineScreen extends StatefulWidget {
   final WonderType? type;
 
-  const TimelineScreen({Key? key, required this.type}) : super(key: key);
+  const TimelineScreen({super.key, required this.type});
 
   @override
   State<TimelineScreen> createState() => _TimelineScreenState();

@@ -5,7 +5,7 @@ import 'package:wonders/logic/common/platform_info.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class FullscreenVideoViewer extends StatefulWidget {
-  const FullscreenVideoViewer({Key? key, required this.id}) : super(key: key);
+  const FullscreenVideoViewer({super.key, required this.id});
   final String id;
 
   @override
