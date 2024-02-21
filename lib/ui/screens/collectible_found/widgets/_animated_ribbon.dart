@@ -1,7 +1,7 @@
 part of '../collectible_found_screen.dart';
 
 class _AnimatedRibbon extends StatelessWidget {
-  const _AnimatedRibbon(this.text, {Key? key}) : super(key: key);
+  const _AnimatedRibbon(this.text, {super.key});
 
   final String text;
   static const double height = 48;

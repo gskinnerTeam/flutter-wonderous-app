@@ -2,8 +2,7 @@ part of '../timeline_screen.dart';
 
 class _BottomScrubber extends StatelessWidget {
   const _BottomScrubber(this.scroller,
-      {Key? key, required this.timelineMinSize, required this.size, required this.selectedWonder})
-      : super(key: key);
+      {super.key, required this.timelineMinSize, required this.size, required this.selectedWonder});
   final ScrollController? scroller;
   final double timelineMinSize;
   final double size;

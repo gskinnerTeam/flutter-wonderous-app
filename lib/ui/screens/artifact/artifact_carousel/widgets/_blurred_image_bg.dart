@@ -2,7 +2,7 @@ part of '../artifact_carousel_screen.dart';
 
 /// Blurry image background for the Artifact Highlights view. Contains horizontal and vertical gradients that stack overtop the blended image.
 class _BlurredImageBg extends StatelessWidget {
-  const _BlurredImageBg({Key? key, this.url}) : super(key: key);
+  const _BlurredImageBg({super.key, this.url});
   final String? url;
 
   @override

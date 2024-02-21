@@ -9,8 +9,7 @@ import 'package:wonders/ui/common/utils/context_utils.dart';
 // Uses a random seed system, to make sure we get the same set of clouds for each wonder, without actually having to hand-position them.
 class AnimatedClouds extends StatefulWidget with GetItStatefulWidgetMixin {
   AnimatedClouds(
-      {Key? key, this.enableAnimations = true, required this.wonderType, required this.opacity, this.cloudSize = 500})
-      : super(key: key);
+      {super.key, this.enableAnimations = true, required this.wonderType, required this.opacity, this.cloudSize = 500});
   final WonderType wonderType;
   final bool enableAnimations;
   final double opacity;
@@ -50,24 +49,16 @@ class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProvid
   }
 
   int _getCloudSeed(WonderType type) {
-    switch (type) {
-      case WonderType.chichenItza:
-        return 2;
-      case WonderType.christRedeemer:
-        return 78;
-      case WonderType.colosseum:
-        return 1;
-      case WonderType.greatWall:
-        return 500;
-      case WonderType.machuPicchu:
-        return 37;
-      case WonderType.petra:
-        return 111;
-      case WonderType.pyramidsGiza:
-        return 15;
-      case WonderType.tajMahal:
-        return 2;
-    }
+    return switch (type) {
+      WonderType.chichenItza => 2,
+      WonderType.christRedeemer => 78,
+      WonderType.colosseum => 1,
+      WonderType.greatWall => 500,
+      WonderType.machuPicchu => 37,
+      WonderType.petra => 111,
+      WonderType.pyramidsGiza => 15,
+      WonderType.tajMahal => 2
+    };
   }
 
   /// Starts playing the clouds animation, or jumps right to the end, based on [AnimatedClouds.enableAnimations]

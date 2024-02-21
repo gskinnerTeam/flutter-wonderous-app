@@ -1,7 +1,7 @@
 part of '../timeline_screen.dart';
 
 class _YearMarkers extends StatelessWidget {
-  _YearMarkers({Key? key}) : super(key: key);
+  _YearMarkers({super.key});
 
   int get startYr => wondersLogic.timelineStartYear;
   int get endYr => wondersLogic.timelineEndYear;
@@ -48,7 +48,7 @@ class _YearMarkers extends StatelessWidget {
 }
 
 class _YearMarker extends StatelessWidget {
-  const _YearMarker(this.yr, this.offset, {Key? key}) : super(key: key);
+  const _YearMarker(this.yr, this.offset, {super.key});
   final int yr;
   final double offset;
 

@@ -12,7 +12,7 @@ part 'widgets/_bottom_text_content.dart';
 part 'widgets/_collapsing_carousel_item.dart';
 
 class ArtifactCarouselScreen extends StatefulWidget {
-  const ArtifactCarouselScreen({Key? key, required this.type, this.contentPadding = EdgeInsets.zero}) : super(key: key);
+  const ArtifactCarouselScreen({super.key, required this.type, this.contentPadding = EdgeInsets.zero});
   final WonderType type;
   final EdgeInsets contentPadding;
 

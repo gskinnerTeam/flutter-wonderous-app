@@ -2,7 +2,7 @@
 import 'package:wonders/common_libs.dart';
 
 class AppIcon extends StatelessWidget {
-  const AppIcon(this.icon, {Key? key, this.size = 22, this.color}) : super(key: key);
+  const AppIcon(this.icon, {super.key, this.size = 22, this.color});
   final AppIcons icon;
   final double size;
   final Color? color;

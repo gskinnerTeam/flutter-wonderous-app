@@ -2,7 +2,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/utils/context_utils.dart';
 
 class AnimatedListItem extends StatelessWidget {
-  const AnimatedListItem({Key? key, required this.scrollPos, required this.builder}) : super(key: key);
+  const AnimatedListItem({super.key, required this.scrollPos, required this.builder});
   final ValueNotifier<double> scrollPos;
   final Widget Function(BuildContext context, double pctVisible) builder;
 
@@ -35,7 +35,7 @@ class AnimatedListItem extends StatelessWidget {
 /// Takes a scroll position notifier and a child.
 /// Scales its child as it scrolls onto screen for a nice effect.
 class ScalingListItem extends StatelessWidget {
-  const ScalingListItem({Key? key, required this.scrollPos, required this.child}) : super(key: key);
+  const ScalingListItem({super.key, required this.scrollPos, required this.child});
   final ValueNotifier<double> scrollPos;
   final Widget child;
 

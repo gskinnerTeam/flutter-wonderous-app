@@ -10,7 +10,7 @@ part 'widgets/_info_column.dart';
 part 'widgets/_artifact_image_btn.dart';
 
 class ArtifactDetailsScreen extends StatefulWidget {
-  const ArtifactDetailsScreen({Key? key, required this.artifactId}) : super(key: key);
+  const ArtifactDetailsScreen({super.key, required this.artifactId});
   final String artifactId;
 
   @override

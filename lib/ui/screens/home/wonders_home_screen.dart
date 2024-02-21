@@ -17,7 +17,7 @@ part '_vertical_swipe_controller.dart';
 part 'widgets/_animated_arrow_button.dart';
 
 class HomeScreen extends StatefulWidget with GetItStatefulWidgetMixin {
-  HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -64,7 +64,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   void _handlePageChanged(value) {
     final newIndex = value % _numWonders;
-    if (newIndex == _wonderIndex) return; // Exit early if we're already on this page
+    if (newIndex == _wonderIndex) {
+      return; // Exit early if we're already on this page
+    }
     setState(() {
       _wonderIndex = newIndex;
       settingsLogic.prevWonderIndex.value = _wonderIndex;
@@ -195,7 +197,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       ..._wonders.map((e) {
         final config = WonderIllustrationConfig.bg(isShowing: _isSelected(e.type));
         return WonderIllustration(e.type, config: config);
-      }).toList(),
+      }),
       // Clouds
       FractionallySizedBox(
         widthFactor: 1,
@@ -248,7 +250,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               onPlay: _handleFadeAnimInit,
               child: IgnorePointer(child: WonderIllustration(e.type, config: config)));
         });
-      }).toList(),
+      }),
 
       /// Foreground gradient-2, gets darker when swiping up
       BottomCenter(

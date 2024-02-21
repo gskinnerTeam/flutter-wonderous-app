@@ -43,24 +43,16 @@ class SvgPaths {
 /// For wonder specific assets, add an extension to [WonderType] for easy lookup
 extension WonderAssetExtensions on WonderType {
   String get assetPath {
-    switch (this) {
-      case WonderType.pyramidsGiza:
-        return '${ImagePaths.root}/pyramids';
-      case WonderType.greatWall:
-        return '${ImagePaths.root}/great_wall_of_china';
-      case WonderType.petra:
-        return '${ImagePaths.root}/petra';
-      case WonderType.colosseum:
-        return '${ImagePaths.root}/colosseum';
-      case WonderType.chichenItza:
-        return '${ImagePaths.root}/chichen_itza';
-      case WonderType.machuPicchu:
-        return '${ImagePaths.root}/machu_picchu';
-      case WonderType.tajMahal:
-        return '${ImagePaths.root}/taj_mahal';
-      case WonderType.christRedeemer:
-        return '${ImagePaths.root}/christ_the_redeemer';
-    }
+    return switch (this) {
+      WonderType.pyramidsGiza => '${ImagePaths.root}/pyramids',
+      WonderType.greatWall => '${ImagePaths.root}/great_wall_of_china',
+      WonderType.petra => '${ImagePaths.root}/petra',
+      WonderType.colosseum => '${ImagePaths.root}/colosseum',
+      WonderType.chichenItza => '${ImagePaths.root}/chichen_itza',
+      WonderType.machuPicchu => '${ImagePaths.root}/machu_picchu',
+      WonderType.tajMahal => '${ImagePaths.root}/taj_mahal',
+      WonderType.christRedeemer => '${ImagePaths.root}/christ_the_redeemer'
+    };
   }
 
   String get homeBtn => '$assetPath/wonder-button.png';

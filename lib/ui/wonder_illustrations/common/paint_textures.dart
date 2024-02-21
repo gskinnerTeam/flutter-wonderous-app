@@ -2,8 +2,7 @@ import 'package:wonders/common_libs.dart';
 
 class IllustrationTexture extends StatelessWidget {
   const IllustrationTexture(this.path,
-      {Key? key, this.scale = 1, this.color, this.flipX = false, this.flipY = false, this.opacity})
-      : super(key: key);
+      {super.key, this.scale = 1, this.color, this.flipX = false, this.flipY = false, this.opacity});
   final Color? color;
   final double scale;
   final bool flipX;

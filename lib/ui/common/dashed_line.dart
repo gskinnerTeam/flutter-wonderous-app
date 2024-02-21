@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
 
 class DashedLine extends StatelessWidget {
-  const DashedLine({Key? key, this.vertical = false}) : super(key: key);
+  const DashedLine({super.key, this.vertical = false});
   final bool vertical;
 
   @override

@@ -11,14 +11,14 @@ import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/
 // Expandable timerange selector component that further refines Artifact Search based on date range.
 class ExpandingTimeRangeSelector extends StatefulWidget {
   const ExpandingTimeRangeSelector({
-    Key? key,
+    super.key,
     required this.wonder,
     required this.startYear,
     required this.endYear,
     required this.onChanged,
     required this.panelController,
     required this.vizController,
-  }) : super(key: key);
+  });
   final WonderData wonder;
   final double startYear;
   final double endYear;
@@ -95,10 +95,9 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
 
 class _ClosedTimeRange extends StatelessWidget {
   const _ClosedTimeRange({
-    Key? key,
     required this.startYear,
     required this.endYear,
-  }) : super(key: key);
+  });
   final double startYear, endYear;
 
   @override
@@ -120,14 +119,13 @@ class _ClosedTimeRange extends StatelessWidget {
 
 class _OpenedTimeRange extends StatelessWidget {
   const _OpenedTimeRange({
-    Key? key,
     required this.onChange,
     required this.startYear,
     required this.endYear,
     required this.wonder,
     required this.painter,
     required this.onClose,
-  }) : super(key: key);
+  });
   final double startYear;
   final double endYear;
   final void Function(double start, double end) onChange;

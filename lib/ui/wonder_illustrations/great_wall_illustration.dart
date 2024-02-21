@@ -6,7 +6,7 @@ import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_build
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 
 class GreatWallIllustration extends StatelessWidget {
-  GreatWallIllustration({Key? key, required this.config}) : super(key: key);
+  GreatWallIllustration({super.key, required this.config});
   final WonderIllustrationConfig config;
   final String assetPath = WonderType.greatWall.assetPath;
   final fgColor = WonderType.greatWall.fgColor;

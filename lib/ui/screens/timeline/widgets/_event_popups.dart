@@ -1,7 +1,7 @@
 part of '../timeline_screen.dart';
 
 class _EventPopups extends StatefulWidget {
-  const _EventPopups({Key? key, required this.currentEvent}) : super(key: key);
+  const _EventPopups({super.key, required this.currentEvent});
   final TimelineEvent? currentEvent;
 
   @override

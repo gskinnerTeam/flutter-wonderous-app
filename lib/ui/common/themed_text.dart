@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
 
 class DefaultTextColor extends StatelessWidget {
-  const DefaultTextColor({Key? key, required this.color, required this.child}) : super(key: key);
+  const DefaultTextColor({super.key, required this.color, required this.child});
   final Color color;
   final Widget child;
 
@@ -15,7 +15,7 @@ class DefaultTextColor extends StatelessWidget {
 }
 
 class LightText extends StatelessWidget {
-  const LightText({Key? key, required this.child}) : super(key: key);
+  const LightText({super.key, required this.child});
   final Widget child;
 
   @override
@@ -26,7 +26,7 @@ class LightText extends StatelessWidget {
 }
 
 class DarkText extends StatelessWidget {
-  const DarkText({Key? key, required this.child}) : super(key: key);
+  const DarkText({super.key, required this.child});
   final Widget child;
 
   @override

@@ -6,7 +6,7 @@ import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_build
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_config.dart';
 
 class PyramidsGizaIllustration extends StatelessWidget {
-  PyramidsGizaIllustration({Key? key, required this.config}) : super(key: key);
+  PyramidsGizaIllustration({super.key, required this.config});
   final WonderIllustrationConfig config;
   final String assetPath = WonderType.pyramidsGiza.assetPath;
   final fgColor = WonderType.pyramidsGiza.fgColor;

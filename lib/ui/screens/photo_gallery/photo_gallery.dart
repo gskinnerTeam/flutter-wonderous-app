@@ -14,8 +14,7 @@ import 'package:wonders/ui/common/utils/app_haptics.dart';
 part 'widgets/_animated_cutout_overlay.dart';
 
 class PhotoGallery extends StatefulWidget {
-  const PhotoGallery({Key? key, this.imageSize, required this.collectionId, required this.wonderType})
-      : super(key: key);
+  const PhotoGallery({super.key, this.imageSize, required this.collectionId, required this.wonderType});
   final Size? imageSize;
   final String collectionId;
   final WonderType wonderType;
@@ -82,20 +81,12 @@ class _PhotoGalleryState extends State<PhotoGallery> {
 
   /// Used for hiding collectibles around the photo grid.
   int _getCollectibleIndex() {
-    switch (widget.wonderType) {
-      case WonderType.chichenItza:
-      case WonderType.petra:
-        return 0;
-      case WonderType.colosseum:
-      case WonderType.pyramidsGiza:
-        return _gridSize - 1;
-      case WonderType.christRedeemer:
-      case WonderType.machuPicchu:
-        return _imgCount - 1;
-      case WonderType.greatWall:
-      case WonderType.tajMahal:
-        return _imgCount - _gridSize;
-    }
+    return switch (widget.wonderType) {
+      WonderType.chichenItza || WonderType.petra => 0,
+      WonderType.colosseum || WonderType.pyramidsGiza => _gridSize - 1,
+      WonderType.christRedeemer || WonderType.machuPicchu => _imgCount - 1,
+      WonderType.greatWall || WonderType.tajMahal => _imgCount - _gridSize
+    };
   }
 
   bool _handleKeyDown(KeyDownEvent event) {
@@ -132,9 +123,15 @@ class _PhotoGalleryState extends State<PhotoGallery> {
     if (dir.dy != 0) newIndex += _gridSize * (dir.dy > 0 ? -1 : 1);
     if (dir.dx != 0) newIndex += (dir.dx > 0 ? -1 : 1);
     // After calculating new index, exit early if we don't like it...
-    if (newIndex < 0 || newIndex > _imgCount - 1) return; // keep the index in range
-    if (dir.dx < 0 && newIndex % _gridSize == 0) return; // prevent right-swipe when at right side
-    if (dir.dx > 0 && newIndex % _gridSize == _gridSize - 1) return; // prevent left-swipe when at left side
+    if (newIndex < 0 || newIndex > _imgCount - 1) {
+      return; // keep the index in range
+    }
+    if (dir.dx < 0 && newIndex % _gridSize == 0) {
+      return; // prevent right-swipe when at right side
+    }
+    if (dir.dx > 0 && newIndex % _gridSize == _gridSize - 1) {
+      return; // prevent left-swipe when at left side
+    }
     _lastSwipeDir = dir;
     AppHaptics.lightImpact();
     _setIndex(newIndex);

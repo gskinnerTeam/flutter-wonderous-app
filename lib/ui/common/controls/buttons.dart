@@ -9,7 +9,7 @@ Widget _buildIcon(BuildContext context, AppIcons icon, {required bool isSecondar
 class AppBtn extends StatelessWidget {
   // ignore: prefer_const_constructors_in_immutables
   AppBtn({
-    Key? key,
+    super.key,
     required this.onPressed,
     required this.semanticLabel,
     this.enableFeedback = true,
@@ -24,11 +24,10 @@ class AppBtn extends StatelessWidget {
     this.border,
     this.focusNode,
     this.onFocusChanged,
-  })  : _builder = null,
-        super(key: key);
+  }) : _builder = null;
 
   AppBtn.from({
-    Key? key,
+    super.key,
     required this.onPressed,
     this.enableFeedback = true,
     this.pressEffect = true,
@@ -45,9 +44,10 @@ class AppBtn extends StatelessWidget {
     AppIcons? icon,
     double? iconSize,
   })  : child = null,
-        circular = false,
-        super(key: key) {
-    if (semanticLabel == null && text == null) throw ('AppBtn.from must include either text or semanticLabel');
+        circular = false {
+    if (semanticLabel == null && text == null) {
+      throw ('AppBtn.from must include either text or semanticLabel');
+    }
     this.semanticLabel = semanticLabel ?? text ?? '';
     _builder = (context) {
       if (text == null && icon == null) return SizedBox.shrink();
@@ -70,7 +70,7 @@ class AppBtn extends StatelessWidget {
 
   // ignore: prefer_const_constructors_in_immutables
   AppBtn.basic({
-    Key? key,
+    super.key,
     required this.onPressed,
     required this.semanticLabel,
     this.enableFeedback = true,
@@ -85,8 +85,7 @@ class AppBtn extends StatelessWidget {
   })  : expand = false,
         bgColor = Colors.transparent,
         border = null,
-        _builder = null,
-        super(key: key);
+        _builder = null;
 
   // interaction:
   final VoidCallback? onPressed;
@@ -185,7 +184,7 @@ class AppBtn extends StatelessWidget {
 /// Add a transparency-based press effect to buttons.
 /// //////////////////////////////////////////////////
 class _ButtonPressEffect extends StatefulWidget {
-  const _ButtonPressEffect(this.child, {Key? key}) : super(key: key);
+  const _ButtonPressEffect(this.child);
   final Widget child;
 
   @override
@@ -212,7 +211,7 @@ class _ButtonPressEffectState extends State<_ButtonPressEffect> {
 }
 
 class _CustomFocusBuilder extends StatefulWidget {
-  const _CustomFocusBuilder({Key? key, required this.builder, this.focusNode, this.onFocusChanged}) : super(key: key);
+  const _CustomFocusBuilder({required this.builder, this.focusNode, this.onFocusChanged});
   final Widget Function(BuildContext context, FocusNode focus) builder;
   final void Function(bool hasFocus)? onFocusChanged;
   final FocusNode? focusNode;

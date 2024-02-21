@@ -3,15 +3,14 @@ import 'package:wonders/common_libs.dart';
 
 class AppPageIndicator extends StatefulWidget {
   AppPageIndicator({
-    Key? key,
+    super.key,
     required this.count,
     required this.controller,
     this.onDotPressed,
     this.color,
     this.dotSize,
     String? semanticPageTitle,
-  })  : semanticPageTitle = semanticPageTitle ?? $strings.appPageDefaultTitlePage,
-        super(key: key);
+  }) : semanticPageTitle = semanticPageTitle ?? $strings.appPageDefaultTitlePage;
   final int count;
   final PageController controller;
   final void Function(int index)? onDotPressed;

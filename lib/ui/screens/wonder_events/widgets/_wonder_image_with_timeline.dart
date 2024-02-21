@@ -1,7 +1,7 @@
 part of '../wonder_events.dart';
 
 class _WonderImageWithTimeline extends StatelessWidget {
-  const _WonderImageWithTimeline({Key? key, required this.data, required this.height}) : super(key: key);
+  const _WonderImageWithTimeline({super.key, required this.data, required this.height});
   final WonderData data;
   final double height;
 
@@ -47,7 +47,9 @@ class _WonderImageWithTimeline extends StatelessWidget {
                         return Container(
                           decoration: BoxDecoration(
                             color: isSelected ? _fixLuminance(data.type.fgColor) : Colors.transparent,
-                            border: isSelected ? Border.all(color: Colors.transparent) : Border.all(color: $styles.colors.greyMedium),
+                            border: isSelected
+                                ? Border.all(color: Colors.transparent)
+                                : Border.all(color: $styles.colors.greyMedium),
                             borderRadius: BorderRadius.circular($styles.corners.md),
                           ),
                         );

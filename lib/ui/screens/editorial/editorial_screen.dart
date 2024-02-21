@@ -38,7 +38,7 @@ part 'widgets/_title_text.dart';
 part 'widgets/_top_illustration.dart';
 
 class WonderEditorialScreen extends StatefulWidget {
-  const WonderEditorialScreen(this.data, {Key? key, required this.contentPadding}) : super(key: key);
+  const WonderEditorialScreen(this.data, {super.key, required this.contentPadding});
   final WonderData data;
   //final void Function(double scrollPos) onScroll;
   final EdgeInsets contentPadding;

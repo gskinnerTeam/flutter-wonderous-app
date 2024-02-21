@@ -2,7 +2,7 @@ part of '../artifact_search_screen.dart';
 
 /// Autopopulating textfield used for searching for Artifacts by name.
 class _SearchInput extends StatelessWidget {
-  const _SearchInput({Key? key, required this.onSubmit, required this.wonder}) : super(key: key);
+  const _SearchInput({super.key, required this.onSubmit, required this.wonder});
   final void Function(String) onSubmit;
   final WonderData wonder;
 
@@ -23,7 +23,9 @@ class _SearchInput extends StatelessWidget {
   }
 
   Iterable<String> _getSuggestions(TextEditingValue textEditingValue) {
-    if (textEditingValue.text == '') return wonder.searchSuggestions.getRange(0, 10);
+    if (textEditingValue.text == '') {
+      return wonder.searchSuggestions.getRange(0, 10);
+    }
 
     return wonder.searchSuggestions.where((str) {
       return str.startsWith(textEditingValue.text.toLowerCase());

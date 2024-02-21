@@ -1,7 +1,7 @@
 part of 'wonders_home_screen.dart';
 
 class _VerticalSwipeController {
-  _VerticalSwipeController(this.ticker, this.onSwipeComplete){
+  _VerticalSwipeController(this.ticker, this.onSwipeComplete) {
     swipeReleaseAnim = AnimationController(vsync: ticker)..addListener(handleSwipeReleaseAnimTick);
   }
   final TickerProvider ticker;
@@ -64,7 +64,7 @@ class _VerticalSwipeController {
       behavior: HitTestBehavior.translucent,
       child: child);
 
-  void dispose(){
+  void dispose() {
     swipeAmt.dispose();
     isPointerDown.dispose();
     swipeReleaseAnim.dispose();

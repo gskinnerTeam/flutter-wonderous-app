@@ -16,7 +16,7 @@ final int maxYear = wondersLogic.timelineEndYear;
 const int maxRequests = 32;
 
 class ArtifactSearchHelper extends StatefulWidget {
-  const ArtifactSearchHelper({Key? key}) : super(key: key);
+  const ArtifactSearchHelper({super.key});
 
   @override
   State<ArtifactSearchHelper> createState() => _ArtifactSearchHelperState();
@@ -161,10 +161,14 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
     //if (!json.containsKey('isPublicDomain') || !json['isPublicDomain']) return _logError(id, 'not public domain')
 
     final int year = ((json['objectBeginDate'] as int) + (json['objectEndDate'] as int)) ~/ 2;
-    if (year < minYear || year > maxYear) return _logError(id, 'year is out of range');
+    if (year < minYear || year > maxYear) {
+      return _logError(id, 'year is out of range');
+    }
 
     String? imageUrlSmall = json['primaryImageSmall'];
-    if (imageUrlSmall == null || imageUrlSmall.isEmpty) return _logError(id, 'no small image url');
+    if (imageUrlSmall == null || imageUrlSmall.isEmpty) {
+      return _logError(id, 'no small image url');
+    }
     // if (!imageUrlSmall.startsWith(SearchData.baseImagePath)) {
     //   return _logError(id, 'unexpected image uri: "$imageUrlSmall"');
     // }

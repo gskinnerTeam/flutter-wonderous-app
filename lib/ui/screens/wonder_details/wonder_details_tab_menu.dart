@@ -7,13 +7,13 @@ class WonderDetailsTabMenu extends StatelessWidget {
   static const double maxTabSize = 100;
 
   const WonderDetailsTabMenu({
-    Key? key,
+    super.key,
     required this.tabController,
     this.showBg = false,
     required this.wonderType,
     this.axis = Axis.horizontal,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   final TabController tabController;
   final bool showBg;
@@ -152,8 +152,7 @@ class WonderDetailsTabMenu extends StatelessWidget {
 }
 
 class _WonderHomeBtn extends StatelessWidget {
-  const _WonderHomeBtn({Key? key, required this.size, required this.wonderType, required this.borderSize})
-      : super(key: key);
+  const _WonderHomeBtn({required this.size, required this.wonderType, required this.borderSize});
 
   final double size;
   final WonderType wonderType;
@@ -185,14 +184,13 @@ class _TabBtn extends StatelessWidget {
   const _TabBtn(
     this.index,
     this.tabController, {
-    Key? key,
     required this.iconImg,
     required this.color,
     required this.label,
     required this.axis,
     required this.mainAxisSize,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   static const double crossBtnSize = 60;
 

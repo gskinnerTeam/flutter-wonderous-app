@@ -1,7 +1,7 @@
 part of '../editorial_screen.dart';
 
 class _CollapsingPullQuoteImage extends StatelessWidget {
-  const _CollapsingPullQuoteImage({Key? key, required this.scrollPos, required this.data}) : super(key: key);
+  const _CollapsingPullQuoteImage({super.key, required this.scrollPos, required this.data});
   final ValueNotifier<double> scrollPos;
   final WonderData data;
 
@@ -25,7 +25,7 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
       if (top) offsetY *= -1; // flip?
       return Transform.translate(
         offset: Offset(0, offsetY),
-        child:Text(value, style: quoteStyle, textAlign: TextAlign.center),
+        child: Text(value, style: quoteStyle, textAlign: TextAlign.center),
       );
     }
 

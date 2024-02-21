@@ -2,12 +2,12 @@ part of '../collection_screen.dart';
 
 class _CollectibleImage extends StatelessWidget {
   const _CollectibleImage({
-    Key? key,
+    super.key,
     required this.collectible,
     required this.state,
     required this.onPressed,
     this.heroTag,
-  }) : super(key: key);
+  });
 
   final CollectibleData collectible;
   final ValueSetter<CollectibleData> onPressed;

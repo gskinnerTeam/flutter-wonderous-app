@@ -14,18 +14,11 @@ class UnsplashPhotoData {
   String getUnsplashUrl(int size) => '$url?q=90&fm=jpg&w=$size&fit=max';
 
   static String getSelfHostedUrl(String id, UnsplashPhotoSize targetSize) {
-    late int size;
-    switch (targetSize) {
-      case UnsplashPhotoSize.med:
-        size = 400;
-        break;
-      case UnsplashPhotoSize.large:
-        size = 800;
-        break;
-      case UnsplashPhotoSize.xl:
-        size = 1200;
-        break;
-    }
+    int size = switch (targetSize) {
+      UnsplashPhotoSize.med => 400,
+      UnsplashPhotoSize.large => 800,
+      UnsplashPhotoSize.xl => 1200
+    };
     if (PlatformInfo.pixelRatio >= 1.5 || PlatformInfo.isDesktop) {
       size *= 2;
     }

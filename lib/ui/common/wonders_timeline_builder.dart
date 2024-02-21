@@ -6,13 +6,13 @@ import 'package:wonders/logic/data/wonder_data.dart';
 /// Provides a builder, so the visual representation of each track entry can be customized
 class WondersTimelineBuilder extends StatelessWidget {
   const WondersTimelineBuilder({
-    Key? key,
+    super.key,
     this.selectedWonders = const [],
     this.timelineBuilder,
     this.axis = Axis.horizontal,
     this.crossAxisGap,
     this.minSize = 10,
-  }) : super(key: key);
+  });
   final List<WonderType> selectedWonders;
   final Widget Function(BuildContext, WonderData type, bool isSelected)? timelineBuilder;
   final Axis axis;
@@ -96,7 +96,7 @@ class WondersTimelineBuilder extends StatelessWidget {
 }
 
 class _DefaultTrackEntry extends StatelessWidget {
-  const _DefaultTrackEntry({Key? key, required this.isSelected}) : super(key: key);
+  const _DefaultTrackEntry({required this.isSelected});
   final bool isSelected;
 
   @override

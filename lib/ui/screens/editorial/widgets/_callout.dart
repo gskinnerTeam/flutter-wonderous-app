@@ -3,7 +3,7 @@ part of '../editorial_screen.dart';
 class _Callout extends StatelessWidget {
   final String text;
 
-  const _Callout({Key? key, required this.text}) : super(key: key);
+  const _Callout({super.key, required this.text});
   @override
   Widget build(BuildContext context) {
     return IntrinsicHeight(

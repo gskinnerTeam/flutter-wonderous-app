@@ -7,7 +7,7 @@ import 'package:wonders/logic/data/wonder_data.dart';
 /// - of/the should be down-sized
 /// Accomplished using a set of TextSpans, and a white list of 'small words'
 class WonderTitleText extends StatelessWidget {
-  const WonderTitleText(this.data, {Key? key, this.enableShadows = false, this.enableHero = true}) : super(key: key);
+  const WonderTitleText(this.data, {super.key, this.enableShadows = false, this.enableHero = true});
   final WonderData data;
   final bool enableShadows;
   final bool enableHero;

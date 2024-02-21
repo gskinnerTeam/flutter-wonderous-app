@@ -1,7 +1,7 @@
 part of '../editorial_screen.dart';
 
 class _TitleText extends StatelessWidget {
-  const _TitleText(this.data, {Key? key, required this.scroller}) : super(key: key);
+  const _TitleText(this.data, {super.key, required this.scroller});
   final WonderData data;
   final ScrollController scroller;
 

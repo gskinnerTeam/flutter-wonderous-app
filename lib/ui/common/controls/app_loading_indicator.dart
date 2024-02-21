@@ -1,7 +1,7 @@
 import 'package:wonders/common_libs.dart';
 
 class AppLoadingIndicator extends StatelessWidget {
-  const AppLoadingIndicator({Key? key, this.value, this.color}) : super(key: key);
+  const AppLoadingIndicator({super.key, this.value, this.color});
   final Color? color;
   final double? value;
 

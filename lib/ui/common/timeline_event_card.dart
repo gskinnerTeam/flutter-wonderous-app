@@ -3,7 +3,7 @@ import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 
 class TimelineEventCard extends StatelessWidget {
-  const TimelineEventCard({Key? key, required this.year, required this.text, this.darkMode = false}) : super(key: key);
+  const TimelineEventCard({super.key, required this.year, required this.text, this.darkMode = false});
   final int year;
   final String text;
   final bool darkMode;

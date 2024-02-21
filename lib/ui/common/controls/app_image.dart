@@ -6,7 +6,7 @@ import 'package:wonders/ui/common/controls/app_loading_indicator.dart';
 
 class AppImage extends StatefulWidget {
   const AppImage({
-    Key? key,
+    super.key,
     required this.image,
     this.fit = BoxFit.scaleDown,
     this.alignment = Alignment.center,
@@ -16,7 +16,7 @@ class AppImage extends StatefulWidget {
     this.progress = false,
     this.color,
     this.scale,
-  }) : super(key: key);
+  });
 
   final ImageProvider? image;
   final BoxFit fit;
@@ -88,7 +88,9 @@ class _AppImageState extends State<AppImage> {
 
   ImageProvider? _capImageSize(ImageProvider? image) {
     // Disable resizing for web as it is currently single-threaded and causes the UI to lock up when resizing large images
-    if (kIsWeb) return image; // TODO: Remove this when the web engine is updated to support non-blocking image resizing
+    if (kIsWeb) {
+      return image; // TODO: Remove this when the web engine is updated to support non-blocking image resizing
+    }
     if (image == null || widget.scale == null) return image;
     final MediaQueryData mq = MediaQuery.of(context);
     final Size screenSize = mq.size * mq.devicePixelRatio * widget.scale!;

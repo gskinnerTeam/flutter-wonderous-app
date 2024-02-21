@@ -12,7 +12,7 @@ part 'widgets/_celebration_particles.dart';
 class CollectibleFoundScreen extends StatelessWidget {
   // CollectibleItem passes in a (theoretically) pre-loaded imageProvider.
   // we could check for load completion, and hold after introT, but that shouldn't be necessary in a real-world scenario.
-  const CollectibleFoundScreen({required this.collectible, required this.imageProvider, Key? key}) : super(key: key);
+  const CollectibleFoundScreen({required this.collectible, required this.imageProvider, super.key});
 
   final CollectibleData collectible;
   final ImageProvider imageProvider;

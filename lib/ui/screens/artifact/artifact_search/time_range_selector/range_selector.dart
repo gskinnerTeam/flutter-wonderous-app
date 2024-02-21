@@ -6,7 +6,7 @@ class RangeSelector extends StatefulWidget {
   static const double handleWidth = 20;
 
   const RangeSelector({
-    Key? key,
+    super.key,
     required this.start,
     required this.end,
     required this.min,
@@ -15,7 +15,7 @@ class RangeSelector extends StatefulWidget {
     this.isLocked = false,
     this.onUpdated,
     this.onChanged,
-  }) : super(key: key);
+  });
   final double start;
   final double end;
   final double min;

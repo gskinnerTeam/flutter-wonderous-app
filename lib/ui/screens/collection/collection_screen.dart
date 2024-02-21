@@ -16,7 +16,7 @@ part 'widgets/_collection_list_card.dart';
 part 'widgets/_newly_discovered_items_btn.dart';
 
 class CollectionScreen extends StatefulWidget with GetItStatefulWidgetMixin {
-  CollectionScreen({required this.fromId, Key? key}) : super(key: key);
+  CollectionScreen({required this.fromId, super.key});
 
   final String fromId;
 

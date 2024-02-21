@@ -1,7 +1,7 @@
 part of '../artifact_details_screen.dart';
 
 class _InfoColumn extends StatelessWidget {
-  const _InfoColumn({Key? key, required this.data}) : super(key: key);
+  const _InfoColumn({super.key, required this.data});
   final ArtifactData data;
 
   @override
@@ -67,7 +67,7 @@ class _InfoColumn extends StatelessWidget {
 }
 
 class _InfoRow extends StatelessWidget {
-  const _InfoRow(this.label, this.value, {Key? key}) : super(key: key);
+  const _InfoRow(this.label, this.value, {super.key});
 
   final String label;
   final String value;

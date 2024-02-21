@@ -3,7 +3,7 @@ import 'package:wonders/ui/common/app_icons.dart';
 
 class AppHeader extends StatelessWidget {
   const AppHeader(
-      {Key? key,
+      {super.key,
       this.title,
       this.subtitle,
       this.showBackBtn = true,
@@ -11,8 +11,7 @@ class AppHeader extends StatelessWidget {
       this.onBack,
       this.trailing,
       this.backIcon = AppIcons.prev,
-      this.backBtnSemantics})
-      : super(key: key);
+      this.backBtnSemantics});
   final String? title;
   final String? subtitle;
   final bool showBackBtn;

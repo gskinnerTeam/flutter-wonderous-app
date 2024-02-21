@@ -5,7 +5,7 @@ part of '../photo_gallery.dart';
 /// Uses[_CutoutClipper] to create the cutout.
 class _AnimatedCutoutOverlay extends StatelessWidget {
   const _AnimatedCutoutOverlay({
-    Key? key,
+    super.key,
     required this.child,
     required this.cutoutSize,
     required this.animationKey,
@@ -13,7 +13,7 @@ class _AnimatedCutoutOverlay extends StatelessWidget {
     required this.swipeDir,
     required this.opacity,
     required this.enabled,
-  }) : super(key: key);
+  });
   final Widget child;
   final Size cutoutSize;
   final Key animationKey;
