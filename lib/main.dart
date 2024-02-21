@@ -42,6 +42,7 @@ class WondersApp extends StatelessWidget with GetItMixin {
       routerDelegate: appRouter.routerDelegate,
       shortcuts: AppShortcuts.defaults,
       theme: ThemeData(fontFamily: $styles.text.body.fontFamily, useMaterial3: true),
+      color: $styles.colors.black,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
