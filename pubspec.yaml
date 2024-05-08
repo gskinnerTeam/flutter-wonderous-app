@@ -5,6 +5,7 @@ version: 2.2.2+9
 
 environment:
   sdk: ^3.3.0
+  flutter: ^3.22.0-0.3.pre
 
 dependencies:
   flutter:
@@ -15,7 +16,10 @@ dependencies:
 
   collection: ^1.17.0
   desktop_window: ^0.4.0
-  drop_cap_text: ^1.1.3
+  drop_cap_text:
+    git:
+      url: https://github.com/parlough/drop_cap_text
+      ref: feat/adapt-for-deprecations
   equatable: ^2.0.5
   extra_alignments: ^1.0.0+1
   flextras: ^1.0.0
@@ -37,7 +41,7 @@ dependencies:
   http: ^1.1.0
   image: ^4.1.3
   image_fade: ^0.6.2
-  intl: ^0.18.1
+  intl: ^0.19.0
   internet_connection_checker: ^1.0.0+1
   package_info_plus: ^5.0.0
   particle_field: ^1.0.0
