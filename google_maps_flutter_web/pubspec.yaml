@@ -1,0 +1,22 @@
+name: google_maps_flutter_web
+description: Noop web platform implementation of google_maps_flutter
+publish_to: none
+
+environment:
+  sdk: ^3.3.0
+  flutter: ">=3.19.0"
+
+flutter:
+  plugin:
+    implements: google_maps_flutter
+    platforms:
+      web:
+        pluginClass: NoopGoogleMapsPlugin
+        fileName: google_maps_flutter_web.dart
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+  google_maps_flutter_platform_interface: ^2.6.0

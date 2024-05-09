@@ -32,8 +32,7 @@ dependencies:
   gap: ^3.0.1
   get_it: ^7.2.0
   get_it_mixin: ^4.2.2
-#  google_maps_flutter: ^2.5.3
-#  google_maps_flutter_web: ^0.5.4+3
+  google_maps_flutter: ^2.5.3
   go_router: ^13.0.1
   home_widget: ^0.6.0 # use the forked version when on `main` flutter branch
 #    git:
@@ -56,6 +55,11 @@ dependencies:
   url_launcher: ^6.1.14
   webview_flutter: ^4.0.2
   youtube_player_iframe: ^5.1.2
+
+dependency_overrides:
+  # Noop web version
+  google_maps_flutter_web:
+    path: google_maps_flutter_web
 
 dev_dependencies:
   icons_launcher: ^2.1.3
