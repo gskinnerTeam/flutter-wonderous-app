@@ -108,11 +108,13 @@ final appRouter = GoRouter(
                 ),
 
                 // Maps
-                AppRoute(
-                    'maps/:mapsType',
-                    (s) => FullscreenMapsViewer(
-                          type: _parseWonderType(s.pathParameters['mapsType']),
-                        )),
+                if (kIsWeb == false) ...[
+                  // AppRoute(
+                  //     'maps/:mapsType',
+                  //     (s) => FullscreenMapsViewer(
+                  //           type: _parseWonderType(s.pathParameters['mapsType']),
+                  //         )),
+                ]
               ],
             ),
           ]),

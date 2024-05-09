@@ -1,4 +1,4 @@
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/controls/app_header.dart';
@@ -9,7 +9,7 @@ class FullscreenMapsViewer extends StatelessWidget {
   final WonderType type;
 
   WonderData get data => wondersLogic.getData(type);
-  late final startPos = CameraPosition(target: LatLng(data.lat, data.lng), zoom: 17);
+  // late final startPos = CameraPosition(target: LatLng(data.lat, data.lng), zoom: 17);
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +17,13 @@ class FullscreenMapsViewer extends StatelessWidget {
       children: [
         SafeArea(
           top: false,
-          child: GoogleMap(
-            mapType: MapType.hybrid,
-            markers: {getMapsMarker(startPos.target)},
-            initialCameraPosition: startPos,
-            myLocationButtonEnabled: false,
-          ),
+          child: Placeholder(),
+          // child: GoogleMap(
+          //   mapType: MapType.hybrid,
+          //   markers: {getMapsMarker(startPos.target)},
+          //   initialCameraPosition: startPos,
+          //   myLocationButtonEnabled: false,
+          // ),
         ),
         AppHeader(isTransparent: true),
       ],

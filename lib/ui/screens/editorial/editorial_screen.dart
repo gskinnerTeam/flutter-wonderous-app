@@ -1,9 +1,10 @@
 import 'dart:async';
 
 import 'package:drop_cap_text/drop_cap_text.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_circular_text/circular_text.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/logic/common/string_utils.dart';

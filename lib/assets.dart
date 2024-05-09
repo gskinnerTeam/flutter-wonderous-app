@@ -1,16 +1,19 @@
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter/foundation.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/platform_info.dart';
 
 /// Loads bitmap assets into memory that may be required later
 class AppBitmaps {
-  static late final BitmapDescriptor mapMarker;
+  static late final dynamic mapMarker;
 
   static Future<void> init() async {
-    mapMarker = await BitmapDescriptor.fromAssetImage(
-      ImageConfiguration(devicePixelRatio: PlatformInfo.pixelRatio),
-      '${ImagePaths.common}/location-pin.png',
-    );
+    // if (kIsWeb == false) {
+    //   mapMarker = await BitmapDescriptor.fromAssetImage(
+    //     ImageConfiguration(devicePixelRatio: PlatformInfo.pixelRatio),
+    //     '${ImagePaths.common}/location-pin.png',
+    //   );
+    // }
   }
 }
 

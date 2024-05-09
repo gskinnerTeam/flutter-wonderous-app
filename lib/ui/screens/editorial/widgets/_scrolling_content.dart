@@ -128,8 +128,10 @@ class _ScrollingContent extends StatelessWidget {
                     _LargeSimpleQuote(text: data.pullQuote2, author: data.pullQuote2Author),
                     buildText(data.locationInfo2),
                   ]),
-                  Gap($styles.insets.md),
-                  _MapsThumbnail(data),
+                  if (kIsWeb == false) ...[
+                    Gap($styles.insets.md),
+                    _MapsThumbnail(data),
+                  ],
                   Gap($styles.insets.md),
                   ..._contentSection([Center(child: buildHiddenCollectible(slot: 3))]),
                   Gap(150),
@@ -220,7 +222,7 @@ class _MapsThumbnail extends StatefulWidget {
 }
 
 class _MapsThumbnailState extends State<_MapsThumbnail> {
-  CameraPosition get startPos => CameraPosition(target: LatLng(widget.data.lat, widget.data.lng), zoom: 3);
+  // CameraPosition get startPos => CameraPosition(target: LatLng(widget.data.lat, widget.data.lng), zoom: 3);
 
   @override
   Widget build(BuildContext context) {
@@ -243,14 +245,15 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
                     children: [
                       Positioned.fill(child: ColoredBox(color: Colors.transparent)),
                       IgnorePointer(
-                        child: GoogleMap(
-                          markers: {getMapsMarker(startPos.target)},
-                          zoomControlsEnabled: false,
-                          mapType: MapType.normal,
-                          mapToolbarEnabled: false,
-                          initialCameraPosition: startPos,
-                          myLocationButtonEnabled: false,
-                        ),
+                        child: Placeholder(),
+                        // child: GoogleMap(
+                        //   markers: {getMapsMarker(startPos.target)},
+                        //   zoomControlsEnabled: false,
+                        //   mapType: MapType.normal,
+                        //   mapToolbarEnabled: false,
+                        //   initialCameraPosition: startPos,
+                        //   myLocationButtonEnabled: false,
+                        // ),
                       ),
                     ],
                   ),
