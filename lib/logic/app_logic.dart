@@ -73,6 +73,9 @@ class AppLogic {
     collectiblesLogic.init();
     await collectiblesLogic.load();
 
+    // Wait at least 1 frame to give GoRouter time to catch the initial deeplink
+    await Future.delayed(1.milliseconds);
+
     // Flag bootStrap as complete
     isBootstrapComplete = true;
 
