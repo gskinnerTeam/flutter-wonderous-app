@@ -19,12 +19,20 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
   );
 
   bool get _enableVideo => PlatformInfo.isMobile;
+  // SB: This is a temp-fix for a rendering issue on web, https://github.com/flutter/flutter/issues/146539
+  bool _hideVideo = kIsWeb;
 
   @override
   void initState() {
     super.initState();
     appLogic.supportedOrientationsOverride = [Axis.horizontal, Axis.vertical];
     RawKeyboard.instance.addListener(_handleKeyDown);
+    if (_hideVideo) {
+      Future.delayed(300.milliseconds, () {
+        if (!mounted) return;
+        setState(() => _hideVideo = false);
+      });
+    }
   }
 
   @override
@@ -61,10 +69,12 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
         children: [
           Center(
             child: (PlatformInfo.isMobile || kIsWeb)
-                ? YoutubePlayer(
-                    controller: _controller,
-                    aspectRatio: aspect,
-                  )
+                ? _hideVideo
+                    ? SizedBox.shrink()
+                    : YoutubePlayer(
+                        controller: _controller,
+                        aspectRatio: aspect,
+                      )
                 : Placeholder(),
           ),
           SafeArea(
