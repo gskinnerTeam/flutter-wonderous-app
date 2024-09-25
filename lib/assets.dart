@@ -5,7 +5,7 @@ import 'package:wonders/logic/common/platform_info.dart';
 
 /// Loads bitmap assets into memory that may be required later
 class AppBitmaps {
-  static late final dynamic mapMarker;
+  static late final BitmapDescriptor mapMarker;
 
   static Future<void> init() async {
     mapMarker = await BitmapDescriptor.fromAssetImage(
