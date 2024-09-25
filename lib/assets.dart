@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-// import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/platform_info.dart';
 
@@ -8,12 +8,10 @@ class AppBitmaps {
   static late final dynamic mapMarker;
 
   static Future<void> init() async {
-    // if (kIsWeb == false) {
-    //   mapMarker = await BitmapDescriptor.fromAssetImage(
-    //     ImageConfiguration(devicePixelRatio: PlatformInfo.pixelRatio),
-    //     '${ImagePaths.common}/location-pin.png',
-    //   );
-    // }
+    mapMarker = await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(devicePixelRatio: PlatformInfo.pixelRatio),
+      '${ImagePaths.common}/location-pin.png',
+    );
   }
 }
 

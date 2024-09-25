@@ -5,7 +5,7 @@ version: 2.2.2+9
 
 environment:
   sdk: ^3.3.0
-  flutter: ^3.22.0-0.3.pre
+  flutter: ^3.23.0
 
 dependencies:
   flutter:
@@ -32,10 +32,9 @@ dependencies:
   gap: ^3.0.1
   get_it: ^7.2.0
   get_it_mixin: ^4.2.2
-#  google_maps_flutter: ^2.5.3
-#  google_maps_flutter_web: ^0.5.4+3
-  go_router: ^13.0.1
-  home_widget: ^0.6.0 # use the forked version when on `main` flutter branch
+  google_maps_flutter: ^2.9.0
+  go_router: ^14.2.8
+  home_widget: ^0.7.0 # use the forked version when on `main` flutter branch
 #    git:
 #      url: https://github.com/gskinnerTeam/flutter_home_widget_fork.git
   http: ^1.1.0
@@ -46,7 +45,7 @@ dependencies:
   package_info_plus: ^8.0.0
   particle_field: ^1.0.0
   path_provider: ^2.1.1
-  pointer_interceptor: ^0.10.1
+  pointer_interceptor: ^0.10.1+1
   provider: ^6.0.5
   rnd: ^0.2.0
   shared_preferences: ^2.0.17
@@ -58,8 +57,8 @@ dependencies:
   youtube_player_iframe: ^5.1.2
 
 dev_dependencies:
-  icons_launcher: ^2.1.3
-  flutter_lints: ^3.0.0
+  icons_launcher: ^3.0.0
+  flutter_lints: ^4.0.0
   dependency_validator: ^4.0.0
 
 icons_launcher:
