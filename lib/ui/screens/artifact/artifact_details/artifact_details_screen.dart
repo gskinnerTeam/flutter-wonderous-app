@@ -6,8 +6,8 @@ import 'package:wonders/ui/common/controls/app_loading_indicator.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/modals/fullscreen_url_img_viewer.dart';
 
-part 'widgets/_info_column.dart';
 part 'widgets/_artifact_image_btn.dart';
+part 'widgets/_info_column.dart';
 
 class ArtifactDetailsScreen extends StatefulWidget {
   const ArtifactDetailsScreen({super.key, required this.artifactId});
