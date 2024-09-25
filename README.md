@@ -19,6 +19,8 @@ To try the app you can download it from your favorite app store:
 * [Google Play](https://play.google.com/store/apps/details?id=com.gskinner.flutter.wonders)
 * [Apple App Store](https://apps.apple.com/us/app/wonderous/id1612491897)
 
+Or you can try it on the web at https://wonderous.app/web/
+
 # Installation
 
 If you're new to Flutter the first thing you'll need is to follow the [setup instructions](https://flutter.dev/docs/get-started/install).
@@ -30,6 +32,10 @@ Once Flutter is setup, you can use the latest `stable` channel:
  Once on `stable` you're ready to run the app on your local device or simulator:
  * `flutter run -d ios`
  * `flutter run -d android`
+
+### WASM
+
+[Wonderous](https://wonderous.app/web/) is deployed using the Web Assembly target for Flutter Web (WASM). To test WASM locally, switch to the `/feature/wasm` branch and follow the instructions here: https://docs.flutter.dev/platform-integration/web/wasm#try-it-out
 
 ### Impeller Rendering
 
