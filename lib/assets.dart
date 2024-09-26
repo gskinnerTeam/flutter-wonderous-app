@@ -7,7 +7,7 @@ class AppBitmaps {
   static late final BitmapDescriptor mapMarker;
 
   static Future<void> init() async {
-    mapMarker = await BitmapDescriptor.fromAssetImage(
+    mapMarker = await BitmapDescriptor.asset(
       ImageConfiguration(devicePixelRatio: PlatformInfo.pixelRatio),
       '${ImagePaths.common}/location-pin.png',
     );
