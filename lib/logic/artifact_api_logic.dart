@@ -1,9 +1,9 @@
 import 'dart:collection';
 
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/artifact_api_service.dart';
 import 'package:wonders/logic/common/http_client.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
-import 'package:wonders/logic/artifact_api_service.dart';
 
 class ArtifactAPILogic {
   final HashMap<String, ArtifactData?> _artifactCache = HashMap();

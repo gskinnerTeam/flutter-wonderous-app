@@ -5,6 +5,7 @@ version: 2.2.2+9
 
 environment:
   sdk: ^3.3.0
+  flutter: ^3.23.0
 
 dependencies:
   flutter:
@@ -15,10 +16,10 @@ dependencies:
 
   collection: ^1.17.0
   desktop_window: ^0.4.0
-  #drop_cap_text: ^1.1.3
   drop_cap_text:
     git:
-      https://github.com/gskinnerTeam/drop_cap_text.git
+      url: https://github.com/parlough/drop_cap_text
+      ref: feat/adapt-for-deprecations
   equatable: ^2.0.5
   extra_alignments: ^1.0.0+1
   flextras: ^1.0.0
@@ -31,22 +32,20 @@ dependencies:
   gap: ^3.0.1
   get_it: ^7.2.0
   get_it_mixin: ^4.2.2
-  google_maps_flutter: ^2.5.3
-  google_maps_flutter_web: ^0.5.4+3
-  go_router: ^13.0.1
-#  home_widget: ^0.4.1 # use the forked version when on `main` flutter branch
-  home_widget:
-    git:
-      url: https://github.com/gskinnerTeam/flutter_home_widget_fork.git
+  google_maps_flutter: ^2.9.0
+  go_router: ^14.2.8
+  home_widget: ^0.7.0 # use the forked version when on `main` flutter branch
+#    git:
+#      url: https://github.com/gskinnerTeam/flutter_home_widget_fork.git
   http: ^1.1.0
   image: ^4.1.3
   image_fade: ^0.6.2
-  intl: 0.19.0
+  intl: ^0.19.0
   internet_connection_checker: ^1.0.0+1
-  package_info_plus: ^5.0.0
+  package_info_plus: ^8.0.0
   particle_field: ^1.0.0
   path_provider: ^2.1.1
-  pointer_interceptor: ^0.9.3+6
+  pointer_interceptor: ^0.10.1+1
   provider: ^6.0.5
   rnd: ^0.2.0
   shared_preferences: ^2.0.17
@@ -55,15 +54,12 @@ dependencies:
   unsplash_client: ^2.1.0+3
   url_launcher: ^6.1.14
   webview_flutter: ^4.0.2
-  youtube_player_iframe: ^4.0.4
-
-dependency_overrides:
-  intl: ^0.18.1
+  youtube_player_iframe: ^5.1.2
 
 dev_dependencies:
-  icons_launcher: ^2.1.3
-  flutter_lints: ^3.0.0
-  dependency_validator: ^3.2.2
+  icons_launcher: ^3.0.0
+  flutter_lints: ^4.0.0
+  dependency_validator: ^4.0.0
 
 icons_launcher:
   image_path: "assets/marketing/app-icon-1024.png"

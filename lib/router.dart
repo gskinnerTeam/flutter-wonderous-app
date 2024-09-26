@@ -94,7 +94,7 @@ final appRouter = GoRouter(
                 // Youtube Video
                 AppRoute('video/:videoId', (s) {
                   return FullscreenVideoViewer(id: s.pathParameters['videoId']!);
-                }),
+                }, useFade: true),
 
                 // Search
                 AppRoute(
