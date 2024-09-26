@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
 
 env:
-  BASE_HREF: "web-staging"
-  REMOTE_DIR: "web-staging"
+  BASE_HREF: "web"
+  REMOTE_DIR: "staging.wonderous.app"
 jobs:
   build:
     uses: ./.github/workflows/build_web.yml
@@ -31,5 +31,5 @@ jobs:
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
         local_path: ./build/web/*
-        remote_path: wonderous.app/${{ env.REMOTE_DIR }}
+        remote_path: ${{ env.REMOTE_DIR }}/web
         sftp_only: true
