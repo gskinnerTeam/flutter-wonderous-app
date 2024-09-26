@@ -1,0 +1,35 @@
+name: Build and Deploy to Production
+
+on:
+  workflow_dispatch:
+
+env:
+  BASE_HREF: "web"
+  REMOTE_DIR: "wonderous.app"
+jobs:
+  build:
+    uses: ./.github/workflows/build_web.yml
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: web-build
+          path: build/web
+
+      - name: Update base href in index.html
+        run: sed -i 's|<base href="/">|<base href="/${{ env.BASE_HREF }}/">|g' build/web/index.html
+
+      - name: Upload to SFTP
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local_path: ./build/web/*
+          remote_path: ${{ env.REMOTE_DIR }}/web
+          sftp_only: true
