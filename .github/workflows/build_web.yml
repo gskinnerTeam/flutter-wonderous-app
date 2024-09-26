@@ -1,13 +1,11 @@
-name: Build and Deploy Flutter Web App
+name: Build Flutter Web
 
 on:
-  # push:
-  #   branches:
-  #     - main
   workflow_dispatch:
-
+  workflow_call:
+  
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,14 +25,11 @@ jobs:
       run: flutter config --enable-web
 
     - name: Build Flutter web app
-      run: flutter build web --release --wasm
+      run: flutter build web --wasm
 
-    - name: Upload to SFTP
-      uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v4
       with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        local_path: build/web/
-        remote_path: /wonderous.app/web_test/
-        sftp_only: true
+        name: web-build
+        path: build/web
+        retention-days: 1  # Adjust as needed
