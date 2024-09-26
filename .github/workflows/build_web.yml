@@ -27,13 +27,14 @@ jobs:
       run: flutter config --enable-web
 
     - name: Build Flutter web app
-      run: flutter build web --release
+      run: flutter build web --release --wasm
 
-    - name: Upload to FTP
-      uses: SamKirkland/FTP-Deploy-Action@4.3.3
+    - name: Upload to SFTP
+      uses: wlixcc/SFTP-Deploy-Action@v1.2.4
       with:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: build/web/
-        server-dir: /wonderous.app/web_test/
+        local_path: build/web/
+        remote_path: /wonderous.app/web_test/
+        sftp_only: true
