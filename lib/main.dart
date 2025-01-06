@@ -28,14 +28,26 @@ void main() async {
   await appLogic.bootstrap();
 
   // Remove splash screen when bootstrap is complete
-  if (!kIsWeb) {
-    FlutterNativeSplash.remove();
-  }
+  FlutterNativeSplash.remove();
 }
 
 /// Creates an app using the [MaterialApp.router] constructor and the global `appRouter`, an instance of [GoRouter].
-class WondersApp extends StatelessWidget with GetItMixin {
+class WondersApp extends StatefulWidget with GetItStatefulWidgetMixin {
   WondersApp({super.key});
+
+  @override
+  State<WondersApp> createState() => _WondersAppState();
+}
+
+class _WondersAppState extends State<WondersApp> with GetItStateMixin {
+  @override
+  void initState() {
+    if (kIsWeb) {
+      appLogic.precacheWonderImages(context);
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final locale = watchX((SettingsLogic s) => s.currentLocale);

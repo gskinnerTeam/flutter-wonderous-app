@@ -125,6 +125,42 @@ class AppLogic {
     }
     SystemChrome.setPreferredOrientations(orientations);
   }
+
+  void precacheWonderImages(BuildContext context) {
+    debugPrint('Skipping precache, need to figure out why it\'s not working on web.');
+    return;
+    precacheImage(AssetImage('images/chichen_itza/chichen.png'), context);
+    precacheImage(AssetImage('images/chichen_itza/foreground-left.png'), context);
+    precacheImage(AssetImage('images/chichen_itza/foreground-right.png'), context);
+
+    precacheImage(AssetImage('images/christ_the_redeemer/redeemer.png'), context);
+    precacheImage(AssetImage('images/christ_the_redeemer/foreground-left.png'), context);
+    precacheImage(AssetImage('images/christ_the_redeemer/foreground-right.png'), context);
+
+    precacheImage(AssetImage('images/colosseum/colosseum.png'), context);
+    precacheImage(AssetImage('images/colosseum/foreground-left.png'), context);
+    precacheImage(AssetImage('images/colosseum/foreground-right.png'), context);
+
+    precacheImage(AssetImage('images/great_wall_of_china/great-wall.png'), context);
+    precacheImage(AssetImage('images/great_wall_of_china/foreground-left.png'), context);
+    precacheImage(AssetImage('images/great_wall_of_china/foreground-right.png'), context);
+
+    precacheImage(AssetImage('images/machu_picchu/machu-picchu.png'), context);
+    precacheImage(AssetImage('images/machu_picchu/foreground-back.png'), context);
+    precacheImage(AssetImage('images/machu_picchu/foreground-front.png'), context);
+
+    precacheImage(AssetImage('images/petra/petra.png'), context);
+    precacheImage(AssetImage('images/petra/foreground-left.png'), context);
+    precacheImage(AssetImage('images/petra/foreground-right.png'), context);
+
+    precacheImage(AssetImage('images/pyramids/pyramids.png'), context);
+    precacheImage(AssetImage('images/pyramids/foreground-back.png'), context);
+    precacheImage(AssetImage('images/pyramids/foreground-front.png'), context);
+
+    precacheImage(AssetImage('images/taj_mahal/taj-mahal.png'), context);
+    precacheImage(AssetImage('images/taj_mahal/foreground-left.png'), context);
+    precacheImage(AssetImage('images/taj_mahal/foreground-right.png'), context);
+  }
 }
 
 class AppImageCache extends WidgetsFlutterBinding {

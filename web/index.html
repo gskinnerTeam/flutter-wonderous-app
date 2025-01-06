@@ -1,36 +1,26 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <base href="/">
-  <script src="flutter.js"></script>
-
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-24FD0ZMQPW"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-24FD0ZMQPW');
-  </script>
-  <!-- Google Maps -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApU8L3yhkxmlwBer2x0HIvXW0JyGlf_Hg"></script>
-
-  <!-- Metadata -->
+  <!-- app info -->
   <title>Wonderous</title>
   <meta name="description" content="Explore the famous wonders of the world.">
-  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <!-- iOS meta tags & icons -->
+  <!-- meta tags & icons -->
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="flutter_wonders_app">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png">
+  <!-- flutter config -->
+  <base href="$FLUTTER_BASE_HREF">
+  <link rel="manifest" href="manifest.json">
+
+  <!-- maps -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApU8L3yhkxmlwBer2x0HIvXW0JyGlf_Hg"></script>
 
   <!-- Splashscreen -->
   <style id="splash-screen-style">
@@ -100,14 +90,13 @@
   </script>
 </head>
 <body>
-<picture id="splash">
-  <source srcset="splash/img/light-1x.png 1x, splash/img/light-2x.png 2x, splash/img/light-3x.png 3x, splash/img/light-4x.png 4x" media="(prefers-color-scheme: light)">
-  <source srcset="splash/img/dark-1x.png 1x, splash/img/dark-2x.png 2x, splash/img/dark-3x.png 3x, splash/img/dark-4x.png 4x" media="(prefers-color-scheme: dark)">
-  <img class="center" aria-hidden="true" src="splash/img/light-1x.png" alt="">
-</picture>
-<script>
-    {{flutter_build_config}}
-    _flutter.loader.load();
-  </script>
+  <!-- Splashscreen -->
+  <picture id="splash">
+    <source srcset="splash/img/light-1x.png 1x, splash/img/light-2x.png 2x, splash/img/light-3x.png 3x, splash/img/light-4x.png 4x" media="(prefers-color-scheme: light)">
+    <source srcset="splash/img/dark-1x.png 1x, splash/img/dark-2x.png 2x, splash/img/dark-3x.png 3x, splash/img/dark-4x.png 4x" media="(prefers-color-scheme: dark)">
+    <img class="center" aria-hidden="true" src="splash/img/light-1x.png" alt="">
+  </picture>
+  <!-- Flutter -->
+  <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
