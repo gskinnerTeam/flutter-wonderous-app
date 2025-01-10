@@ -35,7 +35,8 @@ class AppLogic {
   Future<void> bootstrap() async {
     debugPrint('bootstrap start...');
     // Set min-sizes for desktop apps
-    if (PlatformInfo.isDesktop) {
+    // TODO: Test on Linux and confirm whether it's safe to call there, according to issue #183 its not.
+    if (PlatformInfo.isWindows || PlatformInfo.isMacOS) {
       await DesktopWindow.setMinWindowSize($styles.sizes.minAppSize);
     }
 
