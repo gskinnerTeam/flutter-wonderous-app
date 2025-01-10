@@ -291,7 +291,7 @@
 					New,
 				);
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1510;
 				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					297F6FC42AD06E0D00FF159E = {
