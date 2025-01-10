@@ -35,8 +35,7 @@ Once Flutter is setup, you can use the latest `stable` channel:
 
 ### WASM
 
-[Wonderous](https://wonderous.app/web/) is deployed using the Web Assembly target for Flutter Web (WASM). To test WASM locally, switch to the `/feature/wasm` branch and follow the instructions here: https://docs.flutter.dev/platform-integration/web/wasm#try-it-out
-
+[Wonderous](https://wonderous.app/web/) is deployed using the Web Assembly target for Flutter Web (WASM). To test WASM locally you can use the command `flutter run -d chrome --wasm`.
 ### Impeller Rendering
 
 This app uses the new [Impeller Runtime](https://docs.flutter.dev/perf/impeller) by default on iOS.
