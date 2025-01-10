@@ -1,21 +1,22 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gskinner.flutter.wonders">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET" />
-   <application
+    <application
         android:label="Wonderous"
         android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher"
+        android:name="${applicationName}"
         android:roundIcon="@mipmap/ic_launcher_round">
 
-       <meta-data android:name="com.google.android.geo.API_KEY"
-           android:value="AIzaSyDectGpXKc04T6U5MyccC7L5DVl0xbUFY4"/>
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDectGpXKc04T6U5MyccC7L5DVl0xbUFY4"/>
 
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:launchMode="singleTop"
+            android:taskAffinity=""
             android:theme="@style/LaunchTheme"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
             <!-- Specifies an Android theme to apply to this Activity as soon as
@@ -37,4 +38,15 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+    <!-- Required to query activities that can process text, see:
+         https://developer.android.com/training/package-visibility and
+         https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
+
+         In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.PROCESS_TEXT"/>
+            <data android:mimeType="text/plain"/>
+        </intent>
+    </queries>
 </manifest>
