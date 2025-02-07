@@ -36,7 +36,7 @@ class AppLogic {
     debugPrint('bootstrap start...');
     // Set min-sizes for desktop apps
     // TODO: Test on Linux and confirm whether it's safe to call there, according to issue #183 its not.
-    if (PlatformInfo.isWindows || PlatformInfo.isMacOS) {
+    if (!kIsWeb && (PlatformInfo.isWindows || PlatformInfo.isMacOS)) {
       await DesktopWindow.setMinWindowSize($styles.sizes.minAppSize);
     }
 
