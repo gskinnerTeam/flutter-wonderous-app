@@ -325,6 +325,7 @@ class _PageImage extends StatelessWidget {
         SizedBox.expand(
           child: Image.asset(
             '${ImagePaths.common}/intro-${data.img}.jpg',
+            excludeFromSemantics: true,
             fit: BoxFit.cover,
             alignment: Alignment.centerRight,
           ),
@@ -332,6 +333,7 @@ class _PageImage extends StatelessWidget {
         Positioned.fill(
             child: Image.asset(
           '${ImagePaths.common}/intro-mask-${data.mask}.png',
+          excludeFromSemantics: true,
           fit: BoxFit.fill,
         )),
       ],
