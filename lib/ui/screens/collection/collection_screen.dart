@@ -38,7 +38,7 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
 
   void _scrollToTarget([bool animate = true]) {
     if (_scrollKey.currentContext != null) {
-      Scrollable.ensureVisible(_scrollKey.currentContext!, alignment: 0.15, duration: animate ? 300.ms : 0.ms);
+      Scrollable.ensureVisible(_scrollKey.currentContext!, alignment: 0.15, duration: animate ? $styles.times.fast : 0.ms);
     }
   }
 

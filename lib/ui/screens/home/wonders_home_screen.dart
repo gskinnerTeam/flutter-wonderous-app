@@ -104,8 +104,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     final newIndex = pos + index;
     if (animate == true) {
       _pageController.animateToPage(newIndex, duration: $styles.times.med, curve: Curves.easeOutCubic);
-    } else {
-      _pageController.jumpToPage(newIndex);
     }
   }
 

@@ -28,7 +28,6 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   Widget _buildIntro(BuildContext context) {
-    Duration t = $styles.times.fast;
     return Stack(children: [
       Animate().custom(duration: t * 5, builder: (context, ratio, _) => _buildGradient(context, ratio, 0)),
 
@@ -46,14 +45,13 @@ class CollectibleFoundScreen extends StatelessWidget {
           ),
         )
             .animate()
-            .scale(begin: Offset(1.5, 1.5), end: Offset(3, 3), curve: Curves.easeInExpo, delay: t, duration: t * 3)
+            .scale(begin: Offset(1.5, 1.5), end: Offset(3, 3), curve: Curves.easeInExpo, delay: $styles.times.fast, duration: $styles.times.slow)
             .fadeOut(),
       )
     ]);
   }
 
   Widget _buildDetail(BuildContext context) {
-    Duration t = $styles.times.fast;
     return Stack(key: ValueKey('detail'), children: [
       /// Background
       AppBackdrop(
@@ -62,7 +60,7 @@ class CollectibleFoundScreen extends StatelessWidget {
       ).animate().fadeIn(),
 
       /// Particles
-      _CelebrationParticles(fadeMs: (t * 6).inMilliseconds),
+      _CelebrationParticles(fadeMs: ($styles.times.extraExtraExtraSlow).inMilliseconds),
 
       /// invisible close btn
       PopNavigatorUnderlay(),
@@ -82,10 +80,10 @@ class CollectibleFoundScreen extends StatelessWidget {
               Gap($styles.insets.lg),
               _buildRibbon(context),
               Gap($styles.insets.sm),
-              _buildTitle(context, collectible.title, $styles.text.h2, $styles.colors.offWhite, t * 1.5),
+              _buildTitle(context, collectible.title, $styles.text.h2, $styles.colors.offWhite, $styles.times.med * 0.75),
               Gap($styles.insets.xs),
               _buildTitle(
-                  context, collectible.subtitle.toUpperCase(), $styles.text.title2, $styles.colors.accent1, t * 2),
+                  context, collectible.subtitle.toUpperCase(), $styles.text.title2, $styles.colors.accent1, $styles.times.med),
               Spacer(),
               Gap($styles.insets.lg),
               _buildCollectionButton(context),
@@ -95,7 +93,7 @@ class CollectibleFoundScreen extends StatelessWidget {
           ),
         ),
       ),
-      AppHeader(isTransparent: true).animate().fade(delay: t * 4, duration: t * 2),
+      AppHeader(isTransparent: true).animate().fade(delay: $styles.times.extraSlow, duration: $styles.times.med),
     ]);
   }
 
@@ -120,12 +118,11 @@ class CollectibleFoundScreen extends StatelessWidget {
   }
 
   Widget _buildImage(BuildContext context) {
-    Duration t = $styles.times.fast;
     // build an image with animated shadows and scaling
     return AppImage(image: imageProvider, scale: 1.0)
         .animate()
         .custom(
-          duration: t * 6,
+          duration: $styles.times.extraExtraExtraSlow,
           builder: (_, ratio, child) => Container(
             padding: EdgeInsets.all($styles.insets.xxs),
             margin: EdgeInsets.symmetric(horizontal: $styles.insets.xl),
@@ -143,24 +140,22 @@ class CollectibleFoundScreen extends StatelessWidget {
             child: child,
           ),
         )
-        .scale(begin: Offset(0.3, 0.3), duration: t * 2, curve: Curves.easeOutExpo, alignment: Alignment(0, 0.7));
+        .scale(begin: Offset(0.3, 0.3), duration: $styles.times.med, curve: Curves.easeOutExpo, alignment: Alignment(0, 0.7));
   }
 
   Widget _buildRibbon(BuildContext context) {
-    Duration t = $styles.times.fast;
     return _AnimatedRibbon($strings.collectibleFoundTitleArtifactDiscovered.toUpperCase())
         .animate()
-        .scale(begin: Offset(0.3, 0.3), duration: t * 2, curve: Curves.easeOutExpo, alignment: Alignment(0, -1));
+        .scale(begin: Offset(0.3, 0.3), duration: $styles.times.med, curve: Curves.easeOutExpo, alignment: Alignment(0, -1));
   }
 
   Widget _buildTitle(BuildContext context, String text, TextStyle style, Color color, Duration delay) {
-    Duration t = $styles.times.fast;
     // because this is a performance-sensitive screen, we are fading in the text by adjusting color:
     return Container(
       padding: EdgeInsets.symmetric(horizontal: $styles.insets.lg),
       child: Animate().custom(
         delay: delay,
-        duration: t * 2,
+        duration: $styles.times.med,
         builder: (_, m, __) => Text(
           text,
           maxLines: 2,

@@ -6,7 +6,8 @@ export 'colors.dart';
 
 @immutable
 class AppStyle {
-  AppStyle({Size? screenSize}) {
+  AppStyle({Size? screenSize, bool? disableAnimations}) {
+    animationsDisabled = true; //disableAnimations ?? false;
     if (screenSize == null) {
       scale = 1;
       return;
@@ -24,6 +25,7 @@ class AppStyle {
   }
 
   late final double scale;
+  late final bool animationsDisabled;
 
   /// The current theme colors for the app
   final AppColors colors = AppColors();
@@ -40,7 +42,7 @@ class AppStyle {
   late final _Text text = _Text(scale);
 
   /// Animation Durations
-  final _Times times = _Times();
+  late final _Times times = _Times(animationsDisabled);
 
   /// Shared sizes
   late final _Sizes sizes = _Sizes();
@@ -133,10 +135,19 @@ class _Text {
 
 @immutable
 class _Times {
-  final Duration fast = Duration(milliseconds: 300);
-  final Duration med = Duration(milliseconds: 600);
-  final Duration slow = Duration(milliseconds: 900);
-  final Duration pageTransition = Duration(milliseconds: 200);
+  _Times(this.disabled);
+  final bool disabled;
+  late final Duration extraFast = Duration(milliseconds: disabled ? 1 : 100);
+  late final Duration fast = Duration(milliseconds: disabled ? 1 : 300);
+  late final Duration med = Duration(milliseconds: disabled ? 1 : 600);
+  late final Duration slow = Duration(milliseconds: disabled ? 1 : 900);
+  late final Duration extraSlow = Duration(milliseconds: disabled ? 1 : 1200);
+  late final Duration extraExtraSlow = Duration(milliseconds: disabled ? 1 : 1500);
+  late final Duration extraExtraExtraSlow = Duration(milliseconds: disabled ? 1 : 1800);
+  late final Duration pageTransition = Duration(milliseconds: disabled ? 1 : 200);
+  late final Duration introPageTransition = Duration(milliseconds: disabled ? 1 : 250);
+  late final Duration zoom = Duration(milliseconds: disabled ? 1 : 1350);
+  late final Duration ribbon = Duration(milliseconds: disabled ? 1 : 400);
 }
 
 @immutable

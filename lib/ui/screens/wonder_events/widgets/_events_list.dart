@@ -49,7 +49,7 @@ class _EventsListState extends State<_EventsList> {
 
     final listItems = <Widget>[];
     for (var e in events.entries) {
-      final delay = 100.ms + (100 * listItems.length).ms;
+      final delay = $styles.times.extraFast + ($styles.times.extraFast.inMilliseconds * listItems.length).ms;
       listItems.add(
         TimelineEventCard(year: e.key, text: e.value, darkMode: true)
             .animate()

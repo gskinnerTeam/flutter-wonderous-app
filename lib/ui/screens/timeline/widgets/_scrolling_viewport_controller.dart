@@ -25,7 +25,7 @@ class _ScrollingViewportController extends ChangeNotifier {
         final data = wondersLogic.getData(w);
         final pos = calculateScrollPosFromYear(data.startYr);
         scroller.jumpTo(pos - 200);
-        scroller.animateTo(pos, duration: 1.35.seconds, curve: Curves.easeOutCubic);
+        scroller.animateTo(pos, duration: $styles.times.zoom, curve: Curves.easeOutCubic);
         scroller.addListener(_updateCurrentYear);
       }
     });
@@ -53,11 +53,7 @@ class _ScrollingViewportController extends ChangeNotifier {
     double yrRatio = (yr - startYr) / (endYr - startYr);
     double newMaxScroll = calculateContentHeight();
     final newPos = newMaxScroll * yrRatio;
-    if (animate) {
-      scroller.animateTo(newPos, duration: $styles.times.med, curve: Curves.easeOut);
-    } else {
-      scroller.jumpTo(newPos);
-    }
+    scroller.animateTo(newPos, duration: $styles.times.med, curve: Curves.easeOut);
   }
 
   /// Calculates current content height, taking zoom into account.

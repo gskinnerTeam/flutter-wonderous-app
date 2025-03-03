@@ -18,7 +18,7 @@ class _InfoColumn extends StatelessWidget {
                 Text(
                   data.culture.toUpperCase(),
                   style: $styles.text.titleFont.copyWith(color: $styles.colors.accent1),
-                ).animate().fade(delay: 150.ms, duration: 600.ms),
+                ).animate().fade(delay: 150.ms, duration: $styles.times.med),
                 Gap($styles.insets.xs),
               ],
               Semantics(
@@ -29,7 +29,7 @@ class _InfoColumn extends StatelessWidget {
                   style: $styles.text.h2.copyWith(color: $styles.colors.offWhite, height: 1.2),
                   maxLines: 5,
                   overflow: TextOverflow.ellipsis,
-                ).animate().fade(delay: 250.ms, duration: 600.ms),
+                ).animate().fade(delay: 250.ms, duration: $styles.times.med),
               ),
               Gap($styles.insets.lg),
               Animate().toggle(
