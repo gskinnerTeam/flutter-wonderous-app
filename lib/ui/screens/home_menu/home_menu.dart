@@ -128,10 +128,10 @@ class _HomeMenuState extends State<HomeMenu> {
         builder: (_, __, ___) {
           return SeparatedColumn(
             separatorBuilder: () => Divider(thickness: 1.5, height: 1).animate().scale(
-                  duration: $styles.times.slow,
-                  delay: $styles.times.pageTransition + 200.ms,
-                  curve: Curves.easeOutBack,
-                ),
+              duration: $styles.times.slow,
+              delay: $styles.times.ribbon,
+              curve: Curves.easeOutBack,
+            ),
             children: [
               _MenuTextBtn(
                   label: $strings.homeMenuButtonExplore,
@@ -147,8 +147,8 @@ class _HomeMenuState extends State<HomeMenu> {
                 onPressed: () => _handleAboutPressed(context),
               ),
             ]
-                .animate(interval: 50.ms)
-                .fade(delay: $styles.times.pageTransition + 50.ms)
+                .animate(interval: $styles.times.xxxFast)
+                .fade(delay: $styles.times.introPageTransition)
                 .slide(begin: Offset(0, .1), curve: Curves.easeOut),
           );
         });

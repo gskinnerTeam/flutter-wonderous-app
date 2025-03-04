@@ -18,7 +18,7 @@ class _InfoColumn extends StatelessWidget {
                 Text(
                   data.culture.toUpperCase(),
                   style: $styles.text.titleFont.copyWith(color: $styles.colors.accent1),
-                ).animate().fade(delay: 150.ms, duration: $styles.times.med),
+                ).animate().fade(delay: $styles.times.xFast, duration: $styles.times.med),
                 Gap($styles.insets.xs),
               ],
               Semantics(
@@ -29,11 +29,11 @@ class _InfoColumn extends StatelessWidget {
                   style: $styles.text.h2.copyWith(color: $styles.colors.offWhite, height: 1.2),
                   maxLines: 5,
                   overflow: TextOverflow.ellipsis,
-                ).animate().fade(delay: 250.ms, duration: $styles.times.med),
+                ).animate().fade(delay: $styles.times.delayFast, duration: $styles.times.med),
               ),
               Gap($styles.insets.lg),
               Animate().toggle(
-                  delay: 500.ms,
+                  delay: $styles.times.delayMed,
                   builder: (_, value, __) {
                     return CompassDivider(isExpanded: !value, duration: $styles.times.med);
                   }),
@@ -49,8 +49,8 @@ class _InfoColumn extends StatelessWidget {
                     _InfoRow($strings.artifactDetailsLabelDimension, data.dimension),
                     _InfoRow($strings.artifactDetailsLabelClassification, data.classification),
                   ]
-                      .animate(interval: 100.ms)
-                      .fadeIn(delay: 600.ms, duration: $styles.times.med)
+                      .animate(interval: $styles.times.xxFast)
+                      .fadeIn(delay: $styles.times.med, duration: $styles.times.med)
                       .slide(begin: Offset(0.2, 0), curve: Curves.easeOut),
                 ],
               ),
@@ -58,7 +58,7 @@ class _InfoColumn extends StatelessWidget {
               Text(
                 $strings.homeMenuAboutMet,
                 style: $styles.text.caption.copyWith(color: $styles.colors.accent2),
-              ).animate(delay: 1.5.seconds).fadeIn().slide(begin: Offset(0.2, 0), curve: Curves.easeOut),
+              ).animate(delay: $styles.times.xxSlow).fadeIn().slide(begin: Offset(0.2, 0), curve: Curves.easeOut),
               Gap($styles.insets.offset),
             ],
           ),

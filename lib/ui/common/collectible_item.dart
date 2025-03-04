@@ -30,6 +30,7 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
   @override
   Widget build(BuildContext context) {
     final states = watchX((CollectiblesLogic c) => c.statesById);
+    final mq = MediaQuery.of(context);
     bool isLost = states[collectible.id] == CollectibleState.lost;
     // Use an OpeningCard to let the collectible smoothly collapse its size once it has been found
     return SizedBox(
@@ -44,21 +45,32 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
             semanticLabel: $strings.collectibleItemSemanticCollectible,
             onPressed: () => _handleTap(context),
             enableFeedback: false,
-            child: Hero(
-              tag: 'collectible_icon_${collectible.id}',
-              child: Image(
-                image: collectible.icon,
-                width: size,
-                height: size,
-                fit: BoxFit.contain,
-              ),
-            )
-                .animate(onPlay: (controller) => controller.repeat())
-                .shimmer(delay: 4000.ms, duration: $styles.times.med * 3)
-                .shake(curve: Curves.easeInOutCubic, hz: 4)
-                .scale(begin: Offset(1.0, 1.0), end: Offset(1.1, 1.1), duration: $styles.times.med)
-                .then(delay: $styles.times.med)
-                .scale(begin: Offset(1.0, 1.0), end: Offset(1 / 1.1, 1 / 1.1)),
+            child: true ?
+              Hero(
+                tag: 'collectible_icon_${collectible.id}',
+                child: Image(
+                  image: collectible.icon,
+                  width: size,
+                  height: size,
+                  fit: BoxFit.contain,
+                ),
+              )
+              :
+              Hero(
+                tag: 'collectible_icon_${collectible.id}',
+                child: Image(
+                  image: collectible.icon,
+                  width: size,
+                  height: size,
+                  fit: BoxFit.contain,
+                ),
+              )
+                  .animate(onPlay: (controller) => controller.repeat())
+                  .shimmer(delay: $styles.times.delayXXSlow, duration: $styles.times.xxxSlow)
+                  .shake(curve: Curves.easeInOutCubic, hz: 4)
+                  .scale(begin: Offset(1.0, 1.0), end: Offset(1.1, 1.1), duration: $styles.times.med)
+                  .then(delay: $styles.times.med)
+                  .scale(begin: Offset(1.0, 1.0), end: Offset(1 / 1.1, 1 / 1.1))
           ),
         ),
       ),

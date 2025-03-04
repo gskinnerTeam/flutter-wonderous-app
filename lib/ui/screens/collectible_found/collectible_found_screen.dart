@@ -21,7 +21,7 @@ class CollectibleFoundScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepaintBoundary(
       child: _buildIntro(context).animate().swap(
-            delay: $styles.times.fast * 3.5,
+            delay: $styles.times.delayXSlow,
             builder: (_, __) => _buildDetail(context),
           ),
     );
@@ -29,7 +29,7 @@ class CollectibleFoundScreen extends StatelessWidget {
 
   Widget _buildIntro(BuildContext context) {
     return Stack(children: [
-      Animate().custom(duration: t * 5, builder: (context, ratio, _) => _buildGradient(context, ratio, 0)),
+      Animate().custom(duration: $styles.times.med, builder: (context, ratio, _) => _buildGradient(context, ratio, 0)),
 
       // icon is handled by Hero initially, then scales slowly:
       Center(
@@ -60,7 +60,7 @@ class CollectibleFoundScreen extends StatelessWidget {
       ).animate().fadeIn(),
 
       /// Particles
-      _CelebrationParticles(fadeMs: ($styles.times.extraExtraExtraSlow).inMilliseconds),
+      _CelebrationParticles(fadeMs: ($styles.times.xxxSlow).inMilliseconds),
 
       /// invisible close btn
       PopNavigatorUnderlay(),
@@ -80,7 +80,7 @@ class CollectibleFoundScreen extends StatelessWidget {
               Gap($styles.insets.lg),
               _buildRibbon(context),
               Gap($styles.insets.sm),
-              _buildTitle(context, collectible.title, $styles.text.h2, $styles.colors.offWhite, $styles.times.med * 0.75),
+              _buildTitle(context, collectible.title, $styles.text.h2, $styles.colors.offWhite, $styles.times.medFast),
               Gap($styles.insets.xs),
               _buildTitle(
                   context, collectible.subtitle.toUpperCase(), $styles.text.title2, $styles.colors.accent1, $styles.times.med),
@@ -93,7 +93,7 @@ class CollectibleFoundScreen extends StatelessWidget {
           ),
         ),
       ),
-      AppHeader(isTransparent: true).animate().fade(delay: $styles.times.extraSlow, duration: $styles.times.med),
+      AppHeader(isTransparent: true).animate().fade(delay: $styles.times.xSlow, duration: $styles.times.med),
     ]);
   }
 
@@ -122,7 +122,7 @@ class CollectibleFoundScreen extends StatelessWidget {
     return AppImage(image: imageProvider, scale: 1.0)
         .animate()
         .custom(
-          duration: $styles.times.extraExtraExtraSlow,
+          duration: $styles.times.xxxSlow,
           builder: (_, ratio, child) => Container(
             padding: EdgeInsets.all($styles.insets.xxs),
             margin: EdgeInsets.symmetric(horizontal: $styles.insets.xl),

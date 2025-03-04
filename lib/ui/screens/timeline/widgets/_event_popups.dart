@@ -9,7 +9,7 @@ class _EventPopups extends StatefulWidget {
 }
 
 class _EventPopupsState extends State<_EventPopups> {
-  final _debouncer = Debouncer(500.ms);
+  final _debouncer = Debouncer($styles.times.delayMed);
   TimelineEvent? _eventToShow;
 
   @override

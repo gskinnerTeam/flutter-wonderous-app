@@ -85,7 +85,7 @@ class _IntroScreenState extends State<IntroScreen> {
         color: $styles.colors.black,
         child: SafeArea(
           child: Animate(
-            delay: 500.ms,
+            delay: $styles.times.delayMed,
             effects: const [FadeEffect()],
             child: PreviousNextNavigation(
               maxWidth: 600,
