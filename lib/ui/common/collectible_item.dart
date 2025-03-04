@@ -30,7 +30,6 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
   @override
   Widget build(BuildContext context) {
     final states = watchX((CollectiblesLogic c) => c.statesById);
-    final mq = MediaQuery.of(context);
     bool isLost = states[collectible.id] == CollectibleState.lost;
     // Use an OpeningCard to let the collectible smoothly collapse its size once it has been found
     return SizedBox(
@@ -45,7 +44,7 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
             semanticLabel: $strings.collectibleItemSemanticCollectible,
             onPressed: () => _handleTap(context),
             enableFeedback: false,
-            child: true ?
+            child: $styles.animationsDisabled ?
               Hero(
                 tag: 'collectible_icon_${collectible.id}',
                 child: Image(
