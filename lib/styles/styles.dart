@@ -7,7 +7,7 @@ export 'colors.dart';
 @immutable
 class AppStyle {
   AppStyle({Size? screenSize, bool? disableAnimations}) {
-    animationsDisabled = true; //disableAnimations ?? false; A43
+    animationsDisabled = disableAnimations ?? false;
     if (screenSize == null) {
       scale = 1;
       return;
