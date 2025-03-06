@@ -7,7 +7,6 @@ class FullscreenKeyboardListScroller extends StatelessWidget {
 
   static const int _scrollAmountOnPress = 75;
   static const int _scrollAmountOnHold = 30;
-  static final Duration _keyPressAnimationDuration = $styles.times.xFast;
 
   final Widget child;
   final ScrollController scrollController;
@@ -18,7 +17,7 @@ class FullscreenKeyboardListScroller extends StatelessWidget {
   void _handleKeyDown(int px) {
     scrollController.animateTo(
       clampOffset(scrollController.offset + px),
-      duration: _keyPressAnimationDuration,
+      duration: $styles.customTime.duration(150),
       curve: Curves.easeOut,
     );
   }

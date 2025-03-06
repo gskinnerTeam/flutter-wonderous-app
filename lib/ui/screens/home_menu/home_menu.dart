@@ -129,7 +129,7 @@ class _HomeMenuState extends State<HomeMenu> {
           return SeparatedColumn(
             separatorBuilder: () => Divider(thickness: 1.5, height: 1).animate().scale(
               duration: $styles.times.slow,
-              delay: $styles.times.ribbon,
+              delay: $styles.customTime.delay(400),
               curve: Curves.easeOutBack,
             ),
             children: [
@@ -147,8 +147,8 @@ class _HomeMenuState extends State<HomeMenu> {
                 onPressed: () => _handleAboutPressed(context),
               ),
             ]
-                .animate(interval: $styles.times.xxxFast)
-                .fade(delay: $styles.times.introPageTransition)
+                .animate(interval: $styles.customTime.delay(50))
+                .fade(delay: $styles.customTime.delay(250))
                 .slide(begin: Offset(0, .1), curve: Curves.easeOut),
           );
         });

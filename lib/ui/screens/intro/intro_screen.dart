@@ -60,7 +60,7 @@ class _IntroScreenState extends State<IntroScreen> {
     final int current = _pageController.page!.round();
     if (_isOnLastPage && dir > 0) return;
     if (_isOnFirstPage && dir < 0) return;
-    _pageController.animateToPage(current + dir, duration: $styles.times.introPageTransition, curve: Curves.easeIn);
+    _pageController.animateToPage(current + dir, duration: $styles.customTime.duration(250), curve: Curves.easeIn);
   }
 
   @override
@@ -85,7 +85,7 @@ class _IntroScreenState extends State<IntroScreen> {
         color: $styles.colors.black,
         child: SafeArea(
           child: Animate(
-            delay: $styles.times.delayMed,
+            delay: $styles.customTime.delay(500),
             effects: const [FadeEffect()],
             child: PreviousNextNavigation(
               maxWidth: 600,

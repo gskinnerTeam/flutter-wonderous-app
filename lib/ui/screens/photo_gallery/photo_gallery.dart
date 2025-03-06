@@ -31,7 +31,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
   Offset _lastSwipeDir = Offset.zero;
   final double _scale = 1;
   bool _skipNextOffsetTween = false;
-  late Duration swipeDuration = $styles.times.swipeDuration;
+  late Duration swipeDuration = $styles.customTime.duration(240);
   final _photoIds = ValueNotifier<List<String>>([]);
   int get _imgCount => pow(_gridSize, 2).round();
 

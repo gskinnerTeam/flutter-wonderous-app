@@ -21,7 +21,7 @@ class CollectibleFoundScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepaintBoundary(
       child: _buildIntro(context).animate().swap(
-            delay: $styles.times.delayXSlow,
+            delay: $styles.customTime.delay(1050),
             builder: (_, __) => _buildDetail(context),
           ),
     );
@@ -60,7 +60,7 @@ class CollectibleFoundScreen extends StatelessWidget {
       ).animate().fadeIn(),
 
       /// Particles
-      _CelebrationParticles(fadeMs: ($styles.times.xxxSlow).inMilliseconds),
+      _CelebrationParticles(fadeMs: ($styles.customTime.delay(1800)).inMilliseconds),
 
       /// invisible close btn
       PopNavigatorUnderlay(),
@@ -80,7 +80,7 @@ class CollectibleFoundScreen extends StatelessWidget {
               Gap($styles.insets.lg),
               _buildRibbon(context),
               Gap($styles.insets.sm),
-              _buildTitle(context, collectible.title, $styles.text.h2, $styles.colors.offWhite, $styles.times.medFast),
+              _buildTitle(context, collectible.title, $styles.text.h2, $styles.colors.offWhite, $styles.customTime.delay(450)),
               Gap($styles.insets.xs),
               _buildTitle(
                   context, collectible.subtitle.toUpperCase(), $styles.text.title2, $styles.colors.accent1, $styles.times.med),
@@ -93,7 +93,7 @@ class CollectibleFoundScreen extends StatelessWidget {
           ),
         ),
       ),
-      AppHeader(isTransparent: true).animate().fade(delay: $styles.times.xSlow, duration: $styles.times.med),
+      AppHeader(isTransparent: true).animate().fade(delay: $styles.customTime.delay(1200), duration: $styles.times.med),
     ]);
   }
 
@@ -122,7 +122,7 @@ class CollectibleFoundScreen extends StatelessWidget {
     return AppImage(image: imageProvider, scale: 1.0)
         .animate()
         .custom(
-          duration: $styles.times.xxxSlow,
+          duration: $styles.customTime.duration(1800),
           builder: (_, ratio, child) => Container(
             padding: EdgeInsets.all($styles.insets.xxs),
             margin: EdgeInsets.symmetric(horizontal: $styles.insets.xl),

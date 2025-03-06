@@ -43,6 +43,7 @@ class AppStyle {
 
   /// Animation Durations
   late final _Times times = _Times(animationsDisabled);
+  late final _CustomTime customTime = _CustomTime(animationsDisabled);
 
   /// Shared sizes
   late final _Sizes sizes = _Sizes();
@@ -137,26 +138,17 @@ class _Text {
 class _Times {
   _Times(this.disabled);
   final bool disabled;
-  late final Duration xxxFast = Duration(milliseconds: disabled ? 1 : 50);
-  late final Duration xxFast = Duration(milliseconds: disabled ? 1 : 100);
-  late final Duration xFast = Duration(milliseconds: disabled ? 1 : 150);
   late final Duration fast = Duration(milliseconds: disabled ? 1 : 300);
-  late final Duration medFast = Duration(milliseconds: disabled ? 1 : 450);
   late final Duration med = Duration(milliseconds: disabled ? 1 : 600);
   late final Duration slow = Duration(milliseconds: disabled ? 1 : 900);
-  late final Duration xSlow = Duration(milliseconds: disabled ? 1 : 1200);
-  late final Duration xxSlow = Duration(milliseconds: disabled ? 1 : 1500);
-  late final Duration xxxSlow = Duration(milliseconds: disabled ? 1 : 1800);
   late final Duration pageTransition = Duration(milliseconds: disabled ? 1 : 200);
-  late final Duration introPageTransition = Duration(milliseconds: disabled ? 1 : 250);
-  late final Duration zoom = Duration(milliseconds: disabled ? 1 : 1350);
-  late final Duration ribbon = Duration(milliseconds: disabled ? 1 : 400);
-  late final Duration swipeDuration = Duration(milliseconds: disabled ? 1 : 240);
-  late final Duration delayFast = Duration(milliseconds: disabled ? 0 : 250);
-  late final Duration delayMed = Duration(milliseconds: disabled ? 0 : 500);
-  late final Duration delaySlow = Duration(milliseconds: disabled ? 0 : 700);
-  late final Duration delayXSlow = Duration(milliseconds: disabled ? 0 : 1050);
-  late final Duration delayXXSlow = Duration(milliseconds: disabled ? 0 : 4000);
+}
+
+class _CustomTime {
+  _CustomTime(this.disabled);
+  final bool disabled;
+  Duration delay(int ms) => Duration(milliseconds: disabled ? 0 : ms);
+  Duration duration(int ms) => Duration(milliseconds: disabled ? 1 : ms);
 }
 
 @immutable

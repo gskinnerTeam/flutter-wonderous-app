@@ -69,13 +69,16 @@ class _CollectionFooter extends StatelessWidget {
             color: $styles.colors.accent1,
             borderRadius: BorderRadius.circular(1000),
           ),
-        ).animate().fade(duration: $styles.times.xxSlow, curve: Curves.easeOutExpo).custom(
-              builder: (_, m, child) => FractionallySizedBox(
-                alignment: Alignment.centerLeft,
-                widthFactor: m * count / total,
-                child: child,
-              ),
-            ),
+        ).animate().fade(
+          duration: $styles.customTime.duration(1500), 
+          curve: Curves.easeOutExpo
+        ).custom(
+          builder: (_, m, child) => FractionallySizedBox(
+            alignment: Alignment.centerLeft,
+            widthFactor: m * count / total,
+            child: child,
+          ),
+        ),
       ),
     );
   }

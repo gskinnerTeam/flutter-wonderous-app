@@ -10,7 +10,7 @@ class CompassDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Duration duration = this.duration ?? $styles.times.xxSlow;
+    Duration duration = this.duration ?? $styles.customTime.duration(1500);
     Widget buildHzAnimatedDivider({bool alignLeft = false}) {
       return TweenAnimationBuilder<double>(
         duration: duration,
