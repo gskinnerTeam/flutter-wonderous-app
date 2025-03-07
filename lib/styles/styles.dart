@@ -149,6 +149,7 @@ class _CustomTime {
   final bool disabled;
   Duration delay(int ms) => Duration(milliseconds: disabled ? 0 : ms);
   Duration duration(int ms) => Duration(milliseconds: disabled ? 1 : ms);
+  Duration always(int ms) => Duration(milliseconds: ms);
 }
 
 @immutable
