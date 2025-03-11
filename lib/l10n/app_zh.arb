@@ -58,6 +58,7 @@
 	"collectionPopupResetConfirm": "您确定要重置您的收藏吗?",
 	"eightWaySemanticSwipeDetector": "八方滑动识别器",
 	"expandingTimeSelectorSemanticSelector": "日期范围选择器",
+	"expandingTimeSelectorYears": "从{startYrSuffix}{startYr}年到{endYrSuffix}{endYr}年",
 	"fullscreenImageViewerSemanticFull": "全屏图像，没有描述信息",
 	"homeMenuButtonExplore": "探索历史年表",
 	"homeMenuButtonView": "观看您的收藏",
