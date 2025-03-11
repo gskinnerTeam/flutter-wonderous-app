@@ -70,8 +70,6 @@
 	"collectionPopupResetConfirm": "Are you sure you want to reset your collection?",
 	"eightWaySemanticSwipeDetector": "eight-way swipe detector",
 	"expandingTimeSelectorSemanticSelector": "time range selector",
-	"expandingTimeSelectorYears": "from {startYr} {startYrSuffix} to {endYr} {endYrSuffix}",
-	"@expandingTimeSelectorYears": {"placeholders": {"startYr": {}, "startYrSuffix": {}, "endYr": {}, "endYrSuffix": {}}},
 	"fullscreenImageViewerSemanticFull": "full screen image, no description available",
 	"homeMenuButtonExplore": "Explore the timeline",
 	"homeMenuButtonView": "View your collection",

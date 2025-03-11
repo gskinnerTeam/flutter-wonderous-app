@@ -134,8 +134,7 @@ class _OpenedTimeRange extends StatelessWidget {
   final void Function() onClose;
 
   Widget _buildChineseDateLayout(TextStyle headingTextStyle, TextStyle captionTextStyle, int startYr, int endYr) {
-    return Semantics(
-      label: $strings.expandingTimeSelectorYears(startYr.abs(), StringUtils.getYrSuffix(startYr), endYr.abs(), StringUtils.getYrSuffix(endYr)),
+    return MergeSemantics(
       child: Row(
         children: [
           Text(StringUtils.getYrSuffix(startYr), style: captionTextStyle),
@@ -149,14 +148,13 @@ class _OpenedTimeRange extends StatelessWidget {
           Gap($styles.insets.xxs),
           Text(endYr.abs().toString(), style: headingTextStyle),
           Text($strings.year, style: captionTextStyle),
-        ]
-      )
+        ],
+      ),
     );
   }
 
   Widget _buildDefaultDateLayout(TextStyle headingTextStyle, TextStyle captionTextStyle, int startYr, int endYr) {
-    return Semantics(
-      label: $strings.expandingTimeSelectorYears(startYr.abs(), StringUtils.getYrSuffix(startYr), endYr.abs(), StringUtils.getYrSuffix(endYr)),
+    return MergeSemantics(
       child: Row(
         children: [
           Text(startYr.abs().toString(), style: headingTextStyle),
@@ -168,8 +166,8 @@ class _OpenedTimeRange extends StatelessWidget {
           Text(endYr.abs().toString(), style: headingTextStyle),
           Gap($styles.insets.xxs),
           Text(StringUtils.getYrSuffix(endYr.round()), style: captionTextStyle),
-        ]
-      )
+        ],
+      ),
     );
   }
 
@@ -216,10 +214,8 @@ class _OpenedTimeRange extends StatelessWidget {
         // Timeframe slider
         SizedBox(
           height: $styles.insets.lg * 2,
-          child: Semantics(
-            label: $strings.expandingTimeSelectorSemanticSelector,
-            excludeSemantics: true,
-            child: Stack(children: [
+          child: Stack(
+            children: [
               // grid lines:
               Container(
                 decoration: BoxDecoration(
@@ -262,18 +258,23 @@ class _OpenedTimeRange extends StatelessWidget {
 
               // Time slider itself
               Positioned.fill(
-                child: RangeSelector(
-                  key: ValueKey('RangeSelectorIsWonderTime'),
-                  min: wondersLogic.timelineStartYear * 1.0,
-                  max: wondersLogic.timelineEndYear * 1.0,
-                  minDelta: 500,
-                  start: startYear,
-                  end: endYear,
-                  onUpdated: onChange,
+                child: MergeSemantics(
+                  child: Semantics(
+                    label: $strings.bottomScrubberSemanticTimeline,
+                    child: RangeSelector(
+                      key: ValueKey('RangeSelectorIsWonderTime'),
+                      min: wondersLogic.timelineStartYear * 1.0,
+                      max: wondersLogic.timelineEndYear * 1.0,
+                      minDelta: 500,
+                      start: startYear,
+                      end: endYear,
+                      onUpdated: onChange,
+                    ),
+                  ),
                 ),
-              )
-            ]),
-          )
+              ),
+            ],
+          ),
         ),
 
         Gap(safeBottom),
