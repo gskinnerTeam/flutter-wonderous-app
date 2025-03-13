@@ -53,7 +53,7 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
 
   void _animateToPage(int page) {
     if (page >= 0 || page < widget.urls.length) {
-      _controller.animateToPage(page, duration: 300.ms, curve: Curves.easeOut);
+      _controller.animateToPage(page, duration: $styles.times.fast, curve: Curves.easeOut);
     }
   }
 

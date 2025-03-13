@@ -104,15 +104,13 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     final newIndex = pos + index;
     if (animate == true) {
       _pageController.animateToPage(newIndex, duration: $styles.times.med, curve: Curves.easeOutCubic);
-    } else {
-      _pageController.jumpToPage(newIndex);
     }
   }
 
   void _showDetailsPage() async {
     _swipeOverride = _swipeController.swipeAmt.value;
     context.go(ScreenPaths.wonderDetails(currentWonder.type, tabIndex: 0));
-    await Future.delayed(100.ms);
+    await Future.delayed($styles.customTime.delay(100));
     _swipeOverride = null;
     _fadeInOnNextBuild = true;
   }
@@ -122,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       for (var a in _fadeAnims) {
         a.value = 0;
       }
-      await Future.delayed(300.ms);
+      await Future.delayed($styles.times.fast);
       for (var a in _fadeAnims) {
         a.forward();
       }

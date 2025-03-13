@@ -44,21 +44,32 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
             semanticLabel: $strings.collectibleItemSemanticCollectible,
             onPressed: () => _handleTap(context),
             enableFeedback: false,
-            child: Hero(
-              tag: 'collectible_icon_${collectible.id}',
-              child: Image(
-                image: collectible.icon,
-                width: size,
-                height: size,
-                fit: BoxFit.contain,
-              ),
-            )
-                .animate(onPlay: (controller) => controller.repeat())
-                .shimmer(delay: 4000.ms, duration: $styles.times.med * 3)
-                .shake(curve: Curves.easeInOutCubic, hz: 4)
-                .scale(begin: Offset(1.0, 1.0), end: Offset(1.1, 1.1), duration: $styles.times.med)
-                .then(delay: $styles.times.med)
-                .scale(begin: Offset(1.0, 1.0), end: Offset(1 / 1.1, 1 / 1.1)),
+            child: $styles.animationsDisabled ?
+              Hero(
+                tag: 'collectible_icon_${collectible.id}',
+                child: Image(
+                  image: collectible.icon,
+                  width: size,
+                  height: size,
+                  fit: BoxFit.contain,
+                ),
+              )
+              :
+              Hero(
+                tag: 'collectible_icon_${collectible.id}',
+                child: Image(
+                  image: collectible.icon,
+                  width: size,
+                  height: size,
+                  fit: BoxFit.contain,
+                ),
+              )
+                  .animate(onPlay: (controller) => controller.repeat())
+                  .shimmer(delay: $styles.customTime.delay(4000), duration: $styles.customTime.duration(1800))
+                  .shake(curve: Curves.easeInOutCubic, hz: 4)
+                  .scale(begin: Offset(1.0, 1.0), end: Offset(1.1, 1.1), duration: $styles.times.med)
+                  .then(delay: $styles.customTime.delay(600))
+                  .scale(begin: Offset(1.0, 1.0), end: Offset(1 / 1.1, 1 / 1.1))
           ),
         ),
       ),
