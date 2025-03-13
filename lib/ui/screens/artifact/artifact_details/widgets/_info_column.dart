@@ -50,7 +50,7 @@ class _InfoColumn extends StatelessWidget {
                     _InfoRow($strings.artifactDetailsLabelClassification, data.classification),
                   ]
                       .animate(interval: $styles.customTime.duration(100))
-                      .fadeIn(delay: $styles.times.med, duration: $styles.times.med)
+                      .fadeIn(delay: $styles.customTime.delay(600), duration: $styles.times.med)
                       .slide(begin: Offset(0.2, 0), curve: Curves.easeOut),
                 ],
               ),

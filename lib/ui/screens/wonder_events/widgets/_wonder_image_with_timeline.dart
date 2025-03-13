@@ -108,7 +108,7 @@ class _WonderImageWithTimeline extends StatelessWidget {
         _buildDot(context),
         Text(StringUtils.getEra(data.startYr), style: textStyle),
       ],
-    ).animate().fade(delay: $styles.times.pageTransition);
+    ).animate().fade(delay: $styles.customTime.delay(200));
   }
 
   Widget _buildDot(BuildContext context) {

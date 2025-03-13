@@ -45,7 +45,7 @@ class CollectibleFoundScreen extends StatelessWidget {
           ),
         )
             .animate()
-            .scale(begin: Offset(1.5, 1.5), end: Offset(3, 3), curve: Curves.easeInExpo, delay: $styles.times.fast, duration: $styles.times.slow)
+            .scale(begin: Offset(1.5, 1.5), end: Offset(3, 3), curve: Curves.easeInExpo, delay: $styles.customTime.delay(300), duration: $styles.times.slow)
             .fadeOut(),
       )
     ]);

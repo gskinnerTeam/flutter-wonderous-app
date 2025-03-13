@@ -68,7 +68,7 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
                   .shimmer(delay: $styles.customTime.delay(4000), duration: $styles.customTime.duration(1800))
                   .shake(curve: Curves.easeInOutCubic, hz: 4)
                   .scale(begin: Offset(1.0, 1.0), end: Offset(1.1, 1.1), duration: $styles.times.med)
-                  .then(delay: $styles.times.med)
+                  .then(delay: $styles.customTime.delay(600))
                   .scale(begin: Offset(1.0, 1.0), end: Offset(1 / 1.1, 1 / 1.1))
           ),
         ),
