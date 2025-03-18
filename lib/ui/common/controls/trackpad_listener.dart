@@ -1,11 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:wonders/common_libs.dart';
 
-class TrackpadReader extends StatefulWidget {
+class TrackpadListener extends StatefulWidget {
   static const int swipeSensitivity = 15;
   static const int scrollSensitivity = 100;
 
-  const TrackpadReader({
+  const TrackpadListener({
     super.key,
     required this.child,
     this.swipeUp,
@@ -29,30 +29,21 @@ class TrackpadReader extends StatefulWidget {
   final void Function()? scrollRight;
 
   @override
-  State<TrackpadReader> createState() => _TrackpadReaderState();
+  State<TrackpadListener> createState() => _TrackpadListenerState();
 }
 
-class _TrackpadReaderState extends State<TrackpadReader> {
+class _TrackpadListenerState extends State<TrackpadListener> {
   void _handleTrackpadEvent(PointerSignalEvent event) {
     GestureBinding.instance.pointerSignalResolver.register(event, (PointerSignalEvent event) {
       if (event is PointerScrollEvent && event.kind == PointerDeviceKind.trackpad) {
-        debugPrint(' - TrackpadReader: ${event}');
-        debugPrint(' - TrackpadReader A: ${event.scrollDelta}');
-        debugPrint(' - TrackpadReader B: ${event.platformData}');
-        debugPrint(' - TrackpadReader C: ${event.buttons}');
-        debugPrint(' - TrackpadReader D: ${event.delta}');
-        debugPrint(' - TrackpadReader E: ${event.device}');
-        debugPrint(' - TrackpadReader F: ${event.kind}');
-        debugPrint(' - TrackpadReader G: ${event.timeStamp}');
-        debugPrint(' - TrackpadReader H: ${event.size}');
-        if (event.scrollDelta.dy > TrackpadReader.swipeSensitivity) {
-          widget.swipeUp?.call();
-        } else if (event.scrollDelta.dy < TrackpadReader.swipeSensitivity) {
+        if (event.scrollDelta.dy > TrackpadListener.swipeSensitivity) {
           widget.swipeDown?.call();
+        } else if (event.scrollDelta.dy < -TrackpadListener.swipeSensitivity) {
+          widget.swipeUp?.call();
         }
-        if (event.scrollDelta.dx > TrackpadReader.swipeSensitivity) {
+        if (event.scrollDelta.dx > TrackpadListener.swipeSensitivity) {
           widget.swipeLeft?.call();
-        } else if (event.scrollDelta.dx < TrackpadReader.swipeSensitivity) {
+        } else if (event.scrollDelta.dx < -TrackpadListener.swipeSensitivity) {
           widget.swipeRight?.call();
         }
       }
