@@ -5,6 +5,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/unsplash_photo_data.dart';
 import 'package:wonders/ui/common/controls/app_loading_indicator.dart';
 import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
+import 'package:wonders/ui/common/controls/trackpad_reader.dart';
 import 'package:wonders/ui/common/fullscreen_keyboard_listener.dart';
 import 'package:wonders/ui/common/hidden_collectible.dart';
 import 'package:wonders/ui/common/ignore_pointer.dart';
@@ -169,9 +170,14 @@ class _PhotoGalleryState extends State<PhotoGallery> {
 
   @override
   Widget build(BuildContext context) {
-    return FullscreenKeyboardListener(
-      onKeyDown: _handleKeyDown,
-      child: ValueListenableBuilder<List<String>>(
+    return TrackpadReader(
+      swipeLeft: () => _handleSwipe(Offset(-1, 0)),
+      swipeRight: () => _handleSwipe(Offset(1, 0)),
+      swipeDown: () => _handleSwipe(Offset(0, -1)),
+      swipeUp: () => _handleSwipe(Offset(0, 1)),
+      child: FullscreenKeyboardListener(
+        onKeyDown: _handleKeyDown,
+        child: ValueListenableBuilder<List<String>>(
           valueListenable: _photoIds,
           builder: (_, value, __) {
             if (value.isEmpty) {
@@ -227,7 +233,9 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                 ),
               ),
             );
-          }),
+          },
+        ),
+      ),
     );
   }
 
