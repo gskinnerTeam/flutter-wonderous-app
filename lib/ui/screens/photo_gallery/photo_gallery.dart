@@ -5,7 +5,6 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/unsplash_photo_data.dart';
 import 'package:wonders/ui/common/controls/app_loading_indicator.dart';
 import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
-import 'package:wonders/ui/common/controls/trackpad_listener.dart';
 import 'package:wonders/ui/common/fullscreen_keyboard_listener.dart';
 import 'package:wonders/ui/common/hidden_collectible.dart';
 import 'package:wonders/ui/common/ignore_pointer.dart';
@@ -170,83 +169,65 @@ class _PhotoGalleryState extends State<PhotoGallery> {
 
   @override
   Widget build(BuildContext context) {
-    return TrackpadListener(
-      swipeLeft: () {
-        debugPrint('LEFT!');
-        _handleSwipe(Offset(-1, 0));
-      },
-      swipeRight: () {
-        debugPrint('RIGHT!');
-        _handleSwipe(Offset(1, 0));
-      },
-      swipeDown: () {
-        debugPrint('DOWN!');
-        _handleSwipe(Offset(0, -1));
-      },
-      swipeUp: () {
-        debugPrint('UP!');
-        _handleSwipe(Offset(0, 1));
-      },
-      child: FullscreenKeyboardListener(
-        onKeyDown: _handleKeyDown,
-        child: ValueListenableBuilder<List<String>>(
-          valueListenable: _photoIds,
-          builder: (_, value, __) {
-            if (value.isEmpty) {
-              return Center(child: AppLoadingIndicator());
-            }
-            Size imgSize = context.isLandscape
-                ? Size(context.widthPx * .5, context.heightPx * .66)
-                : Size(context.widthPx * .66, context.heightPx * .5);
-            imgSize = (widget.imageSize ?? imgSize) * _scale;
-            // Get transform offset for the current _index
-            final padding = $styles.insets.md;
-            var gridOffset = _calculateCurrentOffset(padding, imgSize);
-            gridOffset += Offset(0, -context.mq.padding.top / 2);
-            final offsetTweenDuration = _skipNextOffsetTween ? Duration.zero : swipeDuration;
-            final cutoutTweenDuration = _skipNextOffsetTween ? Duration.zero : swipeDuration * .5;
-            return _AnimatedCutoutOverlay(
-              animationKey: ValueKey(_index),
-              cutoutSize: imgSize,
-              swipeDir: _lastSwipeDir,
-              duration: cutoutTweenDuration,
-              opacity: _scale == 1 ? .7 : .5,
-              enabled: useClipPathWorkAroundForWeb == false,
-              child: SafeArea(
-                bottom: false,
-                // Place content in overflow box, to allow it to flow outside the parent
-                child: OverflowBox(
-                  maxWidth: _gridSize * imgSize.width + padding * (_gridSize - 1),
-                  maxHeight: _gridSize * imgSize.height + padding * (_gridSize - 1),
-                  alignment: Alignment.center,
-                  // Detect swipes in order to change index
-                  child: EightWaySwipeDetector(
-                    onSwipe: _handleSwipe,
-                    threshold: 30,
-                    // A tween animation builder moves from image to image based on current offset
-                    child: TweenAnimationBuilder<Offset>(
-                      tween: Tween(begin: gridOffset, end: gridOffset),
-                      duration: offsetTweenDuration,
-                      curve: Curves.easeOut,
-                      builder: (_, value, child) => Transform.translate(offset: value, child: child),
-                      child: FocusTraversalGroup(
-                        //policy: OrderedTraversalPolicy(),
-                        child: GridView.count(
-                          physics: NeverScrollableScrollPhysics(),
-                          crossAxisCount: _gridSize,
-                          childAspectRatio: imgSize.aspectRatio,
-                          mainAxisSpacing: padding,
-                          crossAxisSpacing: padding,
-                          children: List.generate(_imgCount, (i) => _buildImage(i, swipeDuration, imgSize)),
-                        ),
+    return FullscreenKeyboardListener(
+      onKeyDown: _handleKeyDown,
+      child: ValueListenableBuilder<List<String>>(
+        valueListenable: _photoIds,
+        builder: (_, value, __) {
+          if (value.isEmpty) {
+            return Center(child: AppLoadingIndicator());
+          }
+          Size imgSize = context.isLandscape
+              ? Size(context.widthPx * .5, context.heightPx * .66)
+              : Size(context.widthPx * .66, context.heightPx * .5);
+          imgSize = (widget.imageSize ?? imgSize) * _scale;
+          // Get transform offset for the current _index
+          final padding = $styles.insets.md;
+          var gridOffset = _calculateCurrentOffset(padding, imgSize);
+          gridOffset += Offset(0, -context.mq.padding.top / 2);
+          final offsetTweenDuration = _skipNextOffsetTween ? Duration.zero : swipeDuration;
+          final cutoutTweenDuration = _skipNextOffsetTween ? Duration.zero : swipeDuration * .5;
+          return _AnimatedCutoutOverlay(
+            animationKey: ValueKey(_index),
+            cutoutSize: imgSize,
+            swipeDir: _lastSwipeDir,
+            duration: cutoutTweenDuration,
+            opacity: _scale == 1 ? .7 : .5,
+            enabled: useClipPathWorkAroundForWeb == false,
+            child: SafeArea(
+              bottom: false,
+              // Place content in overflow box, to allow it to flow outside the parent
+              child: OverflowBox(
+                maxWidth: _gridSize * imgSize.width + padding * (_gridSize - 1),
+                maxHeight: _gridSize * imgSize.height + padding * (_gridSize - 1),
+                alignment: Alignment.center,
+                // Detect swipes in order to change index
+                child: EightWaySwipeDetector(
+                  onSwipe: _handleSwipe,
+                  threshold: 30,
+                  // A tween animation builder moves from image to image based on current offset
+                  child: TweenAnimationBuilder<Offset>(
+                    tween: Tween(begin: gridOffset, end: gridOffset),
+                    duration: offsetTweenDuration,
+                    curve: Curves.easeOut,
+                    builder: (_, value, child) => Transform.translate(offset: value, child: child),
+                    child: FocusTraversalGroup(
+                      //policy: OrderedTraversalPolicy(),
+                      child: GridView.count(
+                        physics: NeverScrollableScrollPhysics(),
+                        crossAxisCount: _gridSize,
+                        childAspectRatio: imgSize.aspectRatio,
+                        mainAxisSpacing: padding,
+                        crossAxisSpacing: padding,
+                        children: List.generate(_imgCount, (i) => _buildImage(i, swipeDuration, imgSize)),
                       ),
                     ),
                   ),
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }
