@@ -64,21 +64,23 @@ class _EightWaySwipeDetectorState extends State<EightWaySwipeDetector> {
   @override
   Widget build(BuildContext context) {
     return TrackpadListener(
+      scrollSensitivity: 70,
       onScroll: _trackpadSwipe,
       child: GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onPanStart: _handleSwipeStart,
-          onPanUpdate: _handleSwipeUpdate,
-          onPanCancel: _resetSwipe,
-          onPanEnd: _handleSwipeEnd,
-          supportedDevices: const {
-            // Purposely omitting PointerDeviceKind.trackpad.
-            PointerDeviceKind.mouse,
-            PointerDeviceKind.stylus,
-            PointerDeviceKind.touch,
-            PointerDeviceKind.unknown,
-          },
-          child: widget.child),
+        behavior: HitTestBehavior.translucent,
+        onPanStart: _handleSwipeStart,
+        onPanUpdate: _handleSwipeUpdate,
+        onPanCancel: _resetSwipe,
+        onPanEnd: _handleSwipeEnd,
+        supportedDevices: const {
+          // Purposely omitting PointerDeviceKind.trackpad.
+          PointerDeviceKind.mouse,
+          PointerDeviceKind.stylus,
+          PointerDeviceKind.touch,
+          PointerDeviceKind.unknown,
+        },
+        child: widget.child,
+      ),
     );
   }
 }

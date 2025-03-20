@@ -132,6 +132,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     }
   }
 
+  void _handleTrackpadScroll(Offset direction) {
+    if (direction.dy < 0) {
+      _showDetailsPage();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_fadeInOnNextBuild == true) {
@@ -143,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       color: $styles.colors.black,
       child: TrackpadListener(
         scrollSensitivity: 60,
-        onScrollDown: () => _showDetailsPage(),
+        onScroll: _handleTrackpadScroll,
         child: PreviousNextNavigation(
           listenToMouseWheel: false,
           onPreviousPressed: () => _handlePrevNext(-1),

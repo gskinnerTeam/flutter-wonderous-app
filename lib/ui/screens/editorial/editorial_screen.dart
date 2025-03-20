@@ -65,9 +65,9 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
     _scrollPos.value = _scroller.position.pixels;
   }
 
-  void _handleSwipeUp() {
+  void _handleTrackpadScroll(Offset direction) {
     // Trackpad swipe up. Return to home if at the top.
-    if (_scroller.position.pixels == 0) {
+    if (_scroller.position.pixels == 0 && direction.dy > 0) {
       _handleBackPressed();
     }
   }
@@ -89,7 +89,7 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
         child: ColoredBox(
           color: $styles.colors.offWhite,
           child: TrackpadListener(
-            onScrollUp: _handleSwipeUp,
+            onScroll: _handleTrackpadScroll,
             scrollSensitivity: 120,
             child: Stack(
               children: [
