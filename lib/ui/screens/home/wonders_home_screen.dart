@@ -3,6 +3,7 @@ import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
+import 'package:wonders/ui/common/controls/trackpad_listener.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/ignore_pointer.dart';
 import 'package:wonders/ui/common/previous_next_navigation.dart';
@@ -131,6 +132,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     }
   }
 
+  void _handleTrackpadScroll(Offset direction) {
+    if (direction.dy < 0) {
+      _showDetailsPage();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_fadeInOnNextBuild == true) {
@@ -140,25 +147,29 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
     return _swipeController.wrapGestureDetector(Container(
       color: $styles.colors.black,
-      child: PreviousNextNavigation(
-        listenToMouseWheel: false,
-        onPreviousPressed: () => _handlePrevNext(-1),
-        onNextPressed: () => _handlePrevNext(1),
-        child: Stack(
-          children: [
-            /// Background
-            ..._buildBgAndClouds(),
+      child: TrackpadListener(
+        scrollSensitivity: 60,
+        onScroll: _handleTrackpadScroll,
+        child: PreviousNextNavigation(
+          listenToMouseWheel: false,
+          onPreviousPressed: () => _handlePrevNext(-1),
+          onNextPressed: () => _handlePrevNext(1),
+          child: Stack(
+            children: [
+              /// Background
+              ..._buildBgAndClouds(),
 
-            /// Wonders Illustrations (main content)
-            _buildMgPageView(),
+              /// Wonders Illustrations (main content)
+              _buildMgPageView(),
 
-            /// Foreground illustrations and gradients
-            _buildFgAndGradients(),
+              /// Foreground illustrations and gradients
+              _buildFgAndGradients(),
 
-            /// Controls that float on top of the various illustrations
-            _buildFloatingUi(),
-          ],
-        ).animate().fadeIn(),
+              /// Controls that float on top of the various illustrations
+              _buildFloatingUi(),
+            ],
+          ).animate().fadeIn(),
+        ),
       ),
     ));
   }
