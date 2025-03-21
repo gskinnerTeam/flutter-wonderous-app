@@ -128,8 +128,6 @@ class AppLogic {
   }
 
   void precacheWonderImages(BuildContext context) {
-    debugPrint('Skipping precache, need to figure out why it\'s not working on web.');
-    return;
     precacheImage(AssetImage('images/chichen_itza/chichen.png'), context);
     precacheImage(AssetImage('images/chichen_itza/foreground-left.png'), context);
     precacheImage(AssetImage('images/chichen_itza/foreground-right.png'), context);
