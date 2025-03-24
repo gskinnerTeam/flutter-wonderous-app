@@ -31,5 +31,63 @@
             "type": "image/png",
             "purpose": "maskable"
         }
+    ],
+    "screenshots": [
+        {
+            "src": "screenshots/screen1.png",
+            "sizes": "800x600",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "Wonderous Welcome Screen"
+        },
+        {
+            "src": "screenshots/screen2.png",
+            "sizes": "800x600",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "Read about 8 amazing man-made wonders"
+        },
+        {
+            "src": "screenshots/screen3.png",
+            "sizes": "800x600",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "Enjoy photos and videos from all around the world"
+        },
+        {
+            "src": "screenshots/screen4.png",
+            "sizes": "800x600",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "Explore artifacts and relics from the past"
+        },
+        {
+            "src": "screenshots/mobile1.png",
+            "sizes": "864x1872",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Wonderous Welcome Screen"
+        },
+        {
+            "src": "screenshots/mobile2.png",
+            "sizes": "864x1872",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Read about 8 amazing man-made wonders"
+        },
+        {
+            "src": "screenshots/mobile3.png",
+            "sizes": "864x1872",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Enjoy photos and videos from all around the world"
+        },
+        {
+            "src": "screenshots/mobile4.png",
+            "sizes": "864x1872",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Explore artifacts and relics from the past"
+        }
     ]
 }
