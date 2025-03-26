@@ -86,7 +86,12 @@ class _IllustrationPieceState extends State<IllustrationPiece> {
             final anim = wonderBuilder.anim;
             final curvedAnim = Curves.easeOut.transform(anim.value);
             final config = wonderBuilder.widget.config;
-            Widget img = Image.asset(imgPath, opacity: anim, fit: BoxFit.fitHeight);
+            Widget img = Image.asset(
+              imgPath, 
+              excludeFromSemantics: true,
+              opacity: anim, 
+              fit: BoxFit.fitHeight
+            );
             // Add overflow box so image doesn't get clipped as we translate it around
             img = OverflowBox(maxWidth: 2500, child: img);
 

@@ -11,6 +11,7 @@ import 'package:wonders/ui/common/blend_mask.dart';
 import 'package:wonders/ui/common/centered_box.dart';
 import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/dashed_line.dart';
+import 'package:wonders/ui/common/ignore_pointer.dart';
 import 'package:wonders/ui/common/list_gradient.dart';
 import 'package:wonders/ui/common/timeline_event_card.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';

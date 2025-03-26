@@ -102,7 +102,7 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
                           CircleIconBtn(
                             icon: AppIcons.prev,
                             onPressed: page == 0 ? null : () => _animateToPage(page - 1),
-                            semanticLabel: $strings.semanticsNext(''),
+                            semanticLabel: $strings.semanticsPrevious(''),
                           ),
                           Gap($styles.insets.xs),
                           CircleIconBtn(

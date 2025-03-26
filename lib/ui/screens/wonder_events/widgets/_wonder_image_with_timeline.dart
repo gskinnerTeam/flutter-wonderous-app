@@ -73,6 +73,7 @@ class _WonderImageWithTimeline extends StatelessWidget {
             clipper: CurvedTopClipper(),
             child: Image.asset(
               data.type.flattened,
+              excludeFromSemantics: true,
               width: 200,
               fit: BoxFit.cover,
               alignment: Alignment(0, -.5),
