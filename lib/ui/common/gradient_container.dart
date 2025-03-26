@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wonders/ui/common/ignore_pointer.dart';
 
 class GradientContainer extends StatelessWidget {
   const GradientContainer(this.colors, this.stops,
@@ -23,24 +24,26 @@ class GradientContainer extends StatelessWidget {
   final BorderRadius? borderRadius;
 
   @override
-  Widget build(BuildContext context) => IgnorePointer(
-        child: Container(
-          width: width,
-          height: height,
-          alignment: alignment,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: begin ?? Alignment.centerLeft,
-              end: end ?? Alignment.centerRight,
-              colors: colors,
-              stops: stops,
-            ),
-            backgroundBlendMode: blendMode,
-            borderRadius: borderRadius,
+  Widget build(BuildContext context) => ExcludeSemantics(
+    child: IgnorePointerWithSemantics(
+      child: Container(
+        width: width,
+        height: height,
+        alignment: alignment,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: begin ?? Alignment.centerLeft,
+            end: end ?? Alignment.centerRight,
+            colors: colors,
+            stops: stops,
           ),
-          child: child,
+          backgroundBlendMode: blendMode,
+          borderRadius: borderRadius,
         ),
-      );
+        child: child,
+      ),
+    )
+  );
 }
 
 class HzGradient extends GradientContainer {

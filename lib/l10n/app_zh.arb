@@ -25,7 +25,7 @@
 	"appModalsButtonOk": "确定",
 	"appModalsButtonCancel": "取消",
 	"appPageDefaultTitlePage": "页",
-	"appPageSemanticSwipe": "{pageTitle} {total} 之 {count}.",
+	"appPageSemanticSwipe": "{pageTitle} {total} 之 {current}.",
 	"artifactsTitleArtifacts": "文物",
 	"semanticsPrevious": "之前的文物{title}",
 	"semanticsNext": "下一个文物{title}",
