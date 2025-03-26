@@ -138,6 +138,7 @@ class _Cloud extends StatelessWidget {
         scaleY: scale * (flipY ? -1 : 1),
         child: Image.asset(
           ImagePaths.cloud,
+          excludeFromSemantics: true,
           opacity: AlwaysStoppedAnimation(.4 * opacity),
           width: size * scale,
           fit: BoxFit.fitWidth,
