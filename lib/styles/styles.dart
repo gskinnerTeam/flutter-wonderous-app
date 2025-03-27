@@ -43,7 +43,6 @@ class AppStyle {
 
   /// Animation Durations
   late final _Times times = _Times(disableAnimations);
-  late final _CustomTime customTime = _CustomTime(disableAnimations);
 
   /// Shared sizes
   late final _Sizes sizes = _Sizes();
