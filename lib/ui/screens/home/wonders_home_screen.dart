@@ -1,4 +1,5 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/animate_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_header.dart';
@@ -158,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             /// Controls that float on top of the various illustrations
             _buildFloatingUi(),
           ],
-        ).animate().fadeIn(),
+        ).maybeAnimate().fadeIn(),
       ),
     ));
   }

@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/animate_utils.dart';
 import 'package:wonders/logic/common/debouncer.dart';
 import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/timeline_data.dart';
