@@ -60,7 +60,7 @@ class _IntroScreenState extends State<IntroScreen> {
     final int current = _pageController.page!.round();
     if (_isOnLastPage && dir > 0) return;
     if (_isOnFirstPage && dir < 0) return;
-    _pageController.animateToPage(current + dir, duration: 250.ms, curve: Curves.easeIn);
+    _pageController.animateToPage(current + dir, duration: $styles.times.fast, curve: Curves.easeIn);
   }
 
   @override
