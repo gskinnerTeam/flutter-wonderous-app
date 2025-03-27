@@ -1,5 +1,18 @@
 import 'package:wonders/common_libs.dart';
 
+// ignore: must_be_immutable
+class NeverAnimate extends Animate {
+  NeverAnimate({super.key, super.child});
+
+  @override
+  State<NeverAnimate> createState() => _NeverAnimateState();
+}
+
+class _NeverAnimateState extends State<NeverAnimate> {
+  @override
+  Widget build(BuildContext context) => widget.child;
+}
+
 extension MaybeAnimateExtension on Widget {
   Animate maybeAnimate({
     Key? key,
@@ -14,7 +27,7 @@ extension MaybeAnimateExtension on Widget {
     double? target,
     double? value,
   }) => $styles.disableAnimations
-    ? Animate(child: this)
+    ? NeverAnimate(child: this)
     : Animate(
         key: key,
         effects: effects,
@@ -30,26 +43,3 @@ extension MaybeAnimateExtension on Widget {
         child: this,
       );
 }
-extension MaybeAnimateListExtension on List<Widget> {
-  AnimateList<Widget> maybeAnimateList({
-    List<Effect>? effects,
-    AnimateCallback? onInit,
-    AnimateCallback? onPlay,
-    AnimateCallback? onComplete,
-    bool? autoPlay,
-    Duration? delay,
-    Duration? interval
-  }) => $styles.disableAnimations ? 
-    AnimateList<Widget>(children: this) : 
-    AnimateList<Widget>(
-      effects: effects,
-      onInit: onInit,
-      onPlay: onPlay,
-      onComplete: onComplete,
-      autoPlay: autoPlay,
-      delay: delay,
-      interval: interval,
-      children: this
-    );
-}
-

@@ -148,7 +148,7 @@ class _HomeMenuState extends State<HomeMenu> {
                 onPressed: () => _handleAboutPressed(context),
               ),
             ]
-                .maybeAnimateList(interval: 50.ms)
+                .animate(interval: 50.ms)
                 .fade(delay: $styles.times.pageTransition + 50.ms)
                 .slide(begin: Offset(0, .1), curve: Curves.easeOut),
           );
