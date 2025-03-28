@@ -21,7 +21,7 @@ class AnimatedClouds extends StatefulWidget with GetItStatefulWidgetMixin {
 class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProviderStateMixin, GetItStateMixin {
   late List<_Cloud> _clouds = [];
   List<_Cloud> _oldClouds = [];
-  late final AnimationController _anim = AnimationController(vsync: this, duration: 1500.ms);
+  late final AnimationController _anim = AnimationController(vsync: this, duration: $styles.customTime.ms(1500));
 
   @override
   void initState() {

@@ -43,6 +43,9 @@ class AppStyle {
   /// Animation Durations
   late final _Times times = _Times(disableAnimations);
 
+  // Custom durations / delays
+  late final _CustomTime customTime = _CustomTime(disableAnimations);
+
   /// Shared sizes
   late final _Sizes sizes = _Sizes();
 }
@@ -141,6 +144,12 @@ class _Times {
   late final Duration slow = Duration(milliseconds: disabled ? 1 : 900);
   late final Duration extraSlow = Duration(milliseconds: disabled ? 1 : 1300);
   late final Duration pageTransition = Duration(milliseconds: disabled ? 1 : 200);
+}
+
+class _CustomTime {
+  _CustomTime(this.disabled);
+  final bool disabled;
+  Duration ms(int ms) => Duration(milliseconds: disabled ? 1 : ms);
 }
 
 @immutable
