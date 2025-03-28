@@ -1,9 +1,11 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/animate_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
+import 'package:wonders/ui/common/ignore_pointer.dart';
 import 'package:wonders/ui/common/previous_next_navigation.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
@@ -157,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             /// Controls that float on top of the various illustrations
             _buildFloatingUi(),
           ],
-        ).animate().fadeIn(),
+        ).maybeAnimate().fadeIn(),
       ),
     ));
   }
@@ -210,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   Widget _buildFgAndGradients() {
     Widget buildSwipeableBgGradient(Color fgColor) {
       return _swipeController.buildListener(builder: (swipeAmt, isPointerDown, _) {
-        return IgnorePointer(
+        return IgnorePointerWithSemantics(
           child: FractionallySizedBox(
             heightFactor: .6,
             child: Container(
@@ -248,7 +250,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           return Animate(
               effects: const [FadeEffect()],
               onPlay: _handleFadeAnimInit,
-              child: IgnorePointer(child: WonderIllustration(e.type, config: config)));
+              child: IgnorePointerWithSemantics(child: WonderIllustration(e.type, config: config)));
         });
       }),
 
@@ -277,8 +279,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
                   /// Title Content
                   LightText(
-                    child: IgnorePointer(
-                      ignoringSemantics: false,
+                    child: IgnorePointerWithSemantics(
                       child: Transform.translate(
                         offset: Offset(0, 30),
                         child: Column(

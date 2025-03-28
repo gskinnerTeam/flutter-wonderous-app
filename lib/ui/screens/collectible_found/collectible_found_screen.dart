@@ -1,5 +1,6 @@
 import 'package:particle_field/particle_field.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/animate_utils.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:wonders/ui/common/app_backdrop.dart';
 import 'package:wonders/ui/common/centered_box.dart';
@@ -20,7 +21,7 @@ class CollectibleFoundScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RepaintBoundary(
-      child: _buildIntro(context).animate().swap(
+      child: _buildIntro(context).maybeAnimate().swap(
             delay: $styles.times.fast * 3.5,
             builder: (_, __) => _buildDetail(context),
           ),
@@ -45,7 +46,7 @@ class CollectibleFoundScreen extends StatelessWidget {
             ),
           ),
         )
-            .animate()
+            .maybeAnimate()
             .scale(begin: Offset(1.5, 1.5), end: Offset(3, 3), curve: Curves.easeInExpo, delay: t, duration: t * 3)
             .fadeOut(),
       )
@@ -59,7 +60,7 @@ class CollectibleFoundScreen extends StatelessWidget {
       AppBackdrop(
         strength: .5,
         child: Container(color: $styles.colors.greyStrong.withOpacity(.96)),
-      ).animate().fadeIn(),
+      ).maybeAnimate().fadeIn(),
 
       /// Particles
       _CelebrationParticles(fadeMs: (t * 6).inMilliseconds),
@@ -95,7 +96,7 @@ class CollectibleFoundScreen extends StatelessWidget {
           ),
         ),
       ),
-      AppHeader(isTransparent: true).animate().fade(delay: t * 4, duration: t * 2),
+      AppHeader(isTransparent: true).maybeAnimate().fade(delay: t * 4, duration: t * 2),
     ]);
   }
 
@@ -123,7 +124,7 @@ class CollectibleFoundScreen extends StatelessWidget {
     Duration t = $styles.times.fast;
     // build an image with animated shadows and scaling
     return AppImage(image: imageProvider, scale: 1.0)
-        .animate()
+        .maybeAnimate()
         .custom(
           duration: t * 6,
           builder: (_, ratio, child) => Container(
@@ -149,7 +150,7 @@ class CollectibleFoundScreen extends StatelessWidget {
   Widget _buildRibbon(BuildContext context) {
     Duration t = $styles.times.fast;
     return _AnimatedRibbon($strings.collectibleFoundTitleArtifactDiscovered.toUpperCase())
-        .animate()
+        .maybeAnimate()
         .scale(begin: Offset(0.3, 0.3), duration: t * 2, curve: Curves.easeOutExpo, alignment: Alignment(0, -1));
   }
 
@@ -178,7 +179,7 @@ class CollectibleFoundScreen extends StatelessWidget {
       text: $strings.collectibleFoundButtonViewCollection,
       isSecondary: true,
       onPressed: () => _handleViewCollectionPressed(context),
-    ).animate().fadeIn(delay: t).move(
+    ).maybeAnimate().fadeIn(delay: t).move(
           begin: Offset(0, 50),
           duration: t,
           curve: Curves.easeOutCubic,

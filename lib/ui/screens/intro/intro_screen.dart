@@ -4,6 +4,7 @@ import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
+import 'package:wonders/ui/common/ignore_pointer.dart';
 import 'package:wonders/ui/common/previous_next_navigation.dart';
 import 'package:wonders/ui/common/static_text_scale.dart';
 import 'package:wonders/ui/common/themed_text.dart';
@@ -59,7 +60,7 @@ class _IntroScreenState extends State<IntroScreen> {
     final int current = _pageController.page!.round();
     if (_isOnLastPage && dir > 0) return;
     if (_isOnFirstPage && dir < 0) return;
-    _pageController.animateToPage(current + dir, duration: 250.ms, curve: Curves.easeIn);
+    _pageController.animateToPage(current + dir, duration: $styles.times.fast, curve: Curves.easeIn);
   }
 
   @override
@@ -112,8 +113,7 @@ class _IntroScreenState extends State<IntroScreen> {
                     ),
                   ),
 
-                  IgnorePointer(
-                    ignoringSemantics: false,
+                  IgnorePointerWithSemantics(
                     child: Column(children: [
                       Spacer(),
 
@@ -325,6 +325,7 @@ class _PageImage extends StatelessWidget {
         SizedBox.expand(
           child: Image.asset(
             '${ImagePaths.common}/intro-${data.img}.jpg',
+            excludeFromSemantics: true,
             fit: BoxFit.cover,
             alignment: Alignment.centerRight,
           ),
@@ -332,6 +333,7 @@ class _PageImage extends StatelessWidget {
         Positioned.fill(
             child: Image.asset(
           '${ImagePaths.common}/intro-mask-${data.mask}.png',
+          excludeFromSemantics: true,
           fit: BoxFit.fill,
         )),
       ],

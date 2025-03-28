@@ -52,7 +52,7 @@ class _EventsListState extends State<_EventsList> {
       final delay = 100.ms + (100 * listItems.length).ms;
       listItems.add(
         TimelineEventCard(year: e.key, text: e.value, darkMode: true)
-            .animate()
+            .maybeAnimate()
             .fade(delay: delay, duration: $styles.times.med * 1.5)
             .slide(begin: Offset(0, 1), curve: Curves.easeOutBack),
       );
@@ -64,7 +64,7 @@ class _EventsListState extends State<_EventsList> {
           key: PageStorageKey('eventsList'),
           child: Column(
             children: [
-              IgnorePointer(child: Gap(widget.topHeight)),
+              IgnorePointerWithSemantics(child: Gap(widget.topHeight)),
               Container(
                 decoration: BoxDecoration(
                   color: $styles.colors.black,
@@ -120,7 +120,7 @@ class _EventsListState extends State<_EventsList> {
             if (showBackdrop) ...[
               AppBackdrop(
                   strength: backdropAmt,
-                  child: IgnorePointer(
+                  child: IgnorePointerWithSemantics(
                     child: Container(
                       color: $styles.colors.black.withOpacity(backdropAmt * .6),
                     ),
