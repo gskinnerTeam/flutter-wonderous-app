@@ -13,6 +13,7 @@ import 'package:wonders/ui/common/ignore_pointer.dart';
 import 'package:wonders/ui/common/list_gradient.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/timeline_event_card.dart';
+import 'package:wonders/ui/common/utils/duration_utils.dart';
 import 'package:wonders/ui/common/wonders_timeline_builder.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_title_text.dart';
 

@@ -16,6 +16,7 @@ import 'package:wonders/ui/common/ignore_pointer.dart';
 import 'package:wonders/ui/common/list_gradient.dart';
 import 'package:wonders/ui/common/timeline_event_card.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
+import 'package:wonders/ui/common/utils/duration_utils.dart';
 import 'package:wonders/ui/common/wonders_timeline_builder.dart';
 
 part 'widgets/_animated_era_text.dart';

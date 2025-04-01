@@ -8,6 +8,7 @@ import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/controls/locale_switcher.dart';
 import 'package:wonders/ui/common/pop_navigator_underlay.dart';
+import 'package:wonders/ui/common/utils/duration_utils.dart';
 import 'package:wonders/ui/common/wonderous_logo.dart';
 import 'package:wonders/ui/screens/home_menu/about_dialog_content.dart';
 
@@ -130,7 +131,7 @@ class _HomeMenuState extends State<HomeMenu> {
           return SeparatedColumn(
             separatorBuilder: () => Divider(thickness: 1.5, height: 1).maybeAnimate().scale(
                   duration: $styles.times.slow,
-                  delay: $styles.times.pageTransition + 200.ms,
+                  delay: $styles.times.pageTransition + 200.delayMs,
                   curve: Curves.easeOutBack,
                 ),
             children: [
@@ -148,8 +149,8 @@ class _HomeMenuState extends State<HomeMenu> {
                 onPressed: () => _handleAboutPressed(context),
               ),
             ]
-                .animate(interval: 50.ms)
-                .fade(delay: $styles.times.pageTransition + 50.ms)
+                .animate(interval: 50.delayMs)
+                .fade(delay: $styles.times.pageTransition + 50.delayMs)
                 .slide(begin: Offset(0, .1), curve: Curves.easeOut),
           );
         });

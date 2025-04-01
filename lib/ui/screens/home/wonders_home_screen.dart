@@ -9,6 +9,7 @@ import 'package:wonders/ui/common/ignore_pointer.dart';
 import 'package:wonders/ui/common/previous_next_navigation.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
+import 'package:wonders/ui/common/utils/duration_utils.dart';
 import 'package:wonders/ui/screens/home_menu/home_menu.dart';
 import 'package:wonders/ui/wonder_illustrations/common/animated_clouds.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration.dart';
@@ -113,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   void _showDetailsPage() async {
     _swipeOverride = _swipeController.swipeAmt.value;
     context.go(ScreenPaths.wonderDetails(currentWonder.type, tabIndex: 0));
-    await Future.delayed(100.ms);
+    await Future.delayed(100.delayMs);
     _swipeOverride = null;
     _fadeInOnNextBuild = true;
   }
@@ -123,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       for (var a in _fadeAnims) {
         a.value = 0;
       }
-      await Future.delayed(300.ms);
+      await Future.delayed(300.delayMs);
       for (var a in _fadeAnims) {
         a.forward();
       }

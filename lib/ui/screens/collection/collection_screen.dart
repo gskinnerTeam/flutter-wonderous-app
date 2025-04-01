@@ -9,6 +9,7 @@ import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/centered_box.dart';
 import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/modals/app_modals.dart';
+import 'package:wonders/ui/common/utils/duration_utils.dart';
 
 part 'widgets/_collectible_image.dart';
 part 'widgets/_collection_footer.dart';
@@ -39,7 +40,7 @@ class _CollectionScreenState extends State<CollectionScreen> with GetItStateMixi
 
   void _scrollToTarget([bool animate = true]) {
     if (_scrollKey.currentContext != null) {
-      Scrollable.ensureVisible(_scrollKey.currentContext!, alignment: 0.15, duration: animate ? 300.ms : 0.ms);
+      Scrollable.ensureVisible(_scrollKey.currentContext!, alignment: 0.15, duration: (animate ? 300 : 0).animateMs);
     }
   }
 

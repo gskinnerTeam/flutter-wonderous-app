@@ -39,6 +39,6 @@ class _AnimatedRibbon extends StatelessWidget {
     double m = flip ? 1 : -1;
     return end
         .maybeAnimate()
-        .move(begin: Offset(m * 8, 2), end: Offset(m * 32, 10), duration: 400.ms, curve: Curves.easeOut);
+        .move(begin: Offset(m * 8, 2), end: Offset(m * 32, 10), duration: 400.animateMs, curve: Curves.easeOut);
   }
 }

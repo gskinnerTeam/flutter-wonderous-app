@@ -18,7 +18,7 @@ class _InfoColumn extends StatelessWidget {
                 Text(
                   data.culture.toUpperCase(),
                   style: $styles.text.titleFont.copyWith(color: $styles.colors.accent1),
-                ).maybeAnimate().fade(delay: 150.ms, duration: 600.ms),
+                ).maybeAnimate().fade(delay: 150.delayMs, duration: 600.animateMs),
                 Gap($styles.insets.xs),
               ],
               Semantics(
@@ -29,11 +29,11 @@ class _InfoColumn extends StatelessWidget {
                   style: $styles.text.h2.copyWith(color: $styles.colors.offWhite, height: 1.2),
                   maxLines: 5,
                   overflow: TextOverflow.ellipsis,
-                ).maybeAnimate().fade(delay: 250.ms, duration: 600.ms),
+                ).maybeAnimate().fade(delay: 250.delayMs, duration: 600.animateMs),
               ),
               Gap($styles.insets.lg),
               Animate().toggle(
-                  delay: 500.ms,
+                  delay: 500.delayMs,
                   builder: (_, value, __) {
                     return CompassDivider(isExpanded: !value, duration: $styles.times.med);
                   }),
@@ -49,8 +49,8 @@ class _InfoColumn extends StatelessWidget {
                     _InfoRow($strings.artifactDetailsLabelDimension, data.dimension),
                     _InfoRow($strings.artifactDetailsLabelClassification, data.classification),
                   ]
-                      .animate(interval: 100.ms)
-                      .fadeIn(delay: 600.ms, duration: $styles.times.med)
+                      .animate(interval: 100.delayMs)
+                      .fadeIn(delay: 600.delayMs, duration: $styles.times.med)
                       .slide(begin: Offset(0.2, 0), curve: Curves.easeOut),
                 ],
               ),

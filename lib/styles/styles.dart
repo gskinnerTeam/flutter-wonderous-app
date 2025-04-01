@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/ui/common/utils/duration_utils.dart';
 
 export 'colors.dart';
 
@@ -41,10 +42,7 @@ class AppStyle {
   late final _Text text = _Text(scale);
 
   /// Animation Durations
-  late final _Times times = _Times(disableAnimations);
-
-  // Custom durations / delays
-  late final _CustomTime customTime = _CustomTime(disableAnimations);
+  late final _Times times = _Times();
 
   /// Shared sizes
   late final _Sizes sizes = _Sizes();
@@ -137,19 +135,12 @@ class _Text {
 
 @immutable
 class _Times {
-  _Times(this.disabled);
-  final bool disabled;
-  late final Duration fast = Duration(milliseconds: disabled ? 1 : 300);
-  late final Duration med = Duration(milliseconds: disabled ? 1 : 600);
-  late final Duration slow = Duration(milliseconds: disabled ? 1 : 900);
-  late final Duration extraSlow = Duration(milliseconds: disabled ? 1 : 1300);
-  late final Duration pageTransition = Duration(milliseconds: disabled ? 1 : 200);
-}
-
-class _CustomTime {
-  _CustomTime(this.disabled);
-  final bool disabled;
-  Duration ms(int ms) => Duration(milliseconds: disabled ? 1 : ms);
+  _Times();
+  late final Duration fast = 300.animateMs;
+  late final Duration med = 600.animateMs;
+  late final Duration slow = 900.animateMs;
+  late final Duration extraSlow = 1300.animateMs;
+  late final Duration pageTransition = 200.animateMs;
 }
 
 @immutable
