@@ -1,6 +1,6 @@
 //
 //  FlutterUtils.swift
-//  Wonderous WidgetExtension
+//  WonderousWidgetExtension
 //
 //  Created by Shawn on 2023-10-19.
 //
