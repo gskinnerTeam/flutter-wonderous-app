@@ -66,7 +66,7 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
       child: Stack(
         children: [
           // Main content area
-          _buildScrollingArea(context).animate().fadeIn(),
+          _buildScrollingArea(context).maybeAnimate().fadeIn(),
 
           // Dashed line with a year that changes as we scroll
           IgnorePointerWithSemantics(

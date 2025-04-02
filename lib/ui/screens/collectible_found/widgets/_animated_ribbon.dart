@@ -38,7 +38,7 @@ class _AnimatedRibbon extends StatelessWidget {
     if (flip) end = Transform.scale(scaleX: -1, child: end);
     double m = flip ? 1 : -1;
     return end
-        .animate()
-        .move(begin: Offset(m * 8, 2), end: Offset(m * 32, 10), duration: 400.ms, curve: Curves.easeOut);
+        .maybeAnimate()
+        .move(begin: Offset(m * 8, 2), end: Offset(m * 32, 10), duration: 400.animateMs, curve: Curves.easeOut);
   }
 }

@@ -9,6 +9,7 @@ import 'package:wonders/ui/common/previous_next_navigation.dart';
 import 'package:wonders/ui/common/static_text_scale.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
+import 'package:wonders/ui/common/utils/duration_utils.dart';
 
 class IntroScreen extends StatefulWidget {
   const IntroScreen({super.key});
@@ -60,7 +61,7 @@ class _IntroScreenState extends State<IntroScreen> {
     final int current = _pageController.page!.round();
     if (_isOnLastPage && dir > 0) return;
     if (_isOnFirstPage && dir < 0) return;
-    _pageController.animateToPage(current + dir, duration: 250.ms, curve: Curves.easeIn);
+    _pageController.animateToPage(current + dir, duration: $styles.times.fast, curve: Curves.easeIn);
   }
 
   @override
@@ -85,7 +86,7 @@ class _IntroScreenState extends State<IntroScreen> {
         color: $styles.colors.black,
         child: SafeArea(
           child: Animate(
-            delay: 500.ms,
+            delay: 500.delayMs,
             effects: const [FadeEffect()],
             child: PreviousNextNavigation(
               maxWidth: 600,

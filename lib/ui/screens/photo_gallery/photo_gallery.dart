@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/animate_utils.dart';
 import 'package:wonders/logic/data/unsplash_photo_data.dart';
 import 'package:wonders/ui/common/controls/app_loading_indicator.dart';
 import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
@@ -259,7 +260,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                 imgUrl,
                 fit: BoxFit.cover,
                 size: UnsplashPhotoSize.large,
-              ).animate().fade(),
+              ).maybeAnimate().fade(),
             );
 
             return MergeSemantics(
