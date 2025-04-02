@@ -69,7 +69,7 @@ class _CollectionFooter extends StatelessWidget {
             color: $styles.colors.accent1,
             borderRadius: BorderRadius.circular(1000),
           ),
-        ).animate().fade(duration: 1500.ms, curve: Curves.easeOutExpo).custom(
+        ).maybeAnimate().fade(duration: 1500.animateMs, curve: Curves.easeOutExpo).custom(
               builder: (_, m, child) => FractionallySizedBox(
                 alignment: Alignment.centerLeft,
                 widthFactor: m * count / total,

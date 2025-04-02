@@ -27,7 +27,7 @@ class _TitleText extends StatelessWidget {
                       Expanded(
                         child: Divider(
                           color: data.type.fgColor,
-                        ).animate().scale(curve: Curves.easeOut, delay: 500.ms),
+                        ).maybeAnimate().scale(curve: Curves.easeOut, delay: 500.delayMs),
                       ),
                       Semantics(
                         header: true,
@@ -35,12 +35,12 @@ class _TitleText extends StatelessWidget {
                         child: Text(
                           data.subTitle.toUpperCase(),
                           style: $styles.text.title2,
-                        ).animate().fade(delay: 100.ms),
+                        ).maybeAnimate().fade(delay: 100.delayMs),
                       ),
                       Expanded(
                         child: Divider(
                           color: data.type.fgColor,
-                        ).animate().scale(curve: Curves.easeOut, delay: 500.ms),
+                        ).maybeAnimate().scale(curve: Curves.easeOut, delay: 500.delayMs),
                       ),
                     ],
                   ),

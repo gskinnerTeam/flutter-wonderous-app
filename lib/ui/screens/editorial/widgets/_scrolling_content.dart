@@ -31,7 +31,7 @@ class _ScrollingContent extends StatelessWidget {
           label: value,
           child: ExcludeSemantics(
             child: skipCaps
-                ? Text(_fixNewlines(value), style: bodyStyle)
+                ? Text(_fixNewlines(value), style: bodyStyle )
                 : DropCapText(
                     _fixNewlines(value).substring(1),
                     dropCap: DropCap(

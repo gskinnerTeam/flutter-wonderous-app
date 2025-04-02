@@ -57,7 +57,7 @@ class _BottomTextContent extends StatelessWidget {
                             ),
                           ]
                         ],
-                      ).animate(key: ValueKey(artifact.artifactId)).fadeIn(),
+                      ).maybeAnimate(key: ValueKey(artifact.artifactId)).fadeIn(),
                     ),
                   ),
                 ],
