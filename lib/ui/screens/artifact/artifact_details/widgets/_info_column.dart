@@ -58,7 +58,7 @@ class _InfoColumn extends StatelessWidget {
               Text(
                 $strings.homeMenuAboutMet,
                 style: $styles.text.caption.copyWith(color: $styles.colors.accent2),
-              ).maybeAnimate(delay: 1.5.seconds).fadeIn().slide(begin: Offset(0.2, 0), curve: Curves.easeOut),
+              ).maybeAnimate(delay: 1500.delayMs).fadeIn().slide(begin: Offset(0.2, 0), curve: Curves.easeOut),
               Gap($styles.insets.offset),
             ],
           ),

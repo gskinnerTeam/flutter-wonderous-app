@@ -53,7 +53,7 @@ class _EventsListState extends State<_EventsList> {
       listItems.add(
         TimelineEventCard(year: e.key, text: e.value, darkMode: true)
             .maybeAnimate()
-            .fade(delay: delay, duration: $styles.times.med * 1.5)
+            .fade(delay: delay, duration: $styles.times.slow)
             .slide(begin: Offset(0, 1), curve: Curves.easeOutBack),
       );
     }
