@@ -73,6 +73,7 @@ class _WonderImageWithTimeline extends StatelessWidget {
             clipper: CurvedTopClipper(),
             child: Image.asset(
               data.type.flattened,
+              excludeFromSemantics: true,
               width: 200,
               fit: BoxFit.cover,
               alignment: Alignment(0, -.5),
@@ -107,7 +108,7 @@ class _WonderImageWithTimeline extends StatelessWidget {
         _buildDot(context),
         Text(StringUtils.getEra(data.startYr), style: textStyle),
       ],
-    ).animate().fade(delay: $styles.times.pageTransition);
+    ).maybeAnimate().fade(delay: $styles.times.pageTransition);
   }
 
   Widget _buildDot(BuildContext context) {

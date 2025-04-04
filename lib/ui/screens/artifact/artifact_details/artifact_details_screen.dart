@@ -1,10 +1,12 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/animate_utils.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
 import 'package:wonders/ui/common/compass_divider.dart';
 import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/controls/app_loading_indicator.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/modals/fullscreen_url_img_viewer.dart';
+import 'package:wonders/ui/common/utils/duration_utils.dart';
 
 part 'widgets/_artifact_image_btn.dart';
 part 'widgets/_info_column.dart';
@@ -85,6 +87,6 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
           ),
         ),
       ],
-    ).animate().fadeIn();
+    ).maybeAnimate().fadeIn();
   }
 }

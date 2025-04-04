@@ -42,24 +42,20 @@ class ScreenPaths {
 
 // Routes that are used multiple times
 AppRoute get _artifactRoute => AppRoute(
-      'artifact/:artifactId',
-      (s) => ArtifactDetailsScreen(artifactId: s.pathParameters['artifactId']!),
-    );
+  'artifact/:artifactId',
+  (s) => ArtifactDetailsScreen(artifactId: s.pathParameters['artifactId']!),
+);
 
-AppRoute get _timelineRoute {
-  return AppRoute(
-    'timeline',
-    (s) => TimelineScreen(type: _tryParseWonderType(s.uri.queryParameters['type']!)),
-  );
-}
+AppRoute get _timelineRoute => AppRoute(
+  'timeline',
+  (s) => TimelineScreen(type: _tryParseWonderType(s.uri.queryParameters['type']!)),
+);
 
-AppRoute get _collectionRoute {
-  return AppRoute(
-    'collection',
-    (s) => CollectionScreen(fromId: s.uri.queryParameters['id'] ?? ''),
-    routes: [_artifactRoute],
-  );
-}
+AppRoute get _collectionRoute => AppRoute(
+  'collection',
+  (s) => CollectionScreen(fromId: s.uri.queryParameters['id'] ?? ''),
+  routes: [_artifactRoute],
+);
 
 /// Routing table, matches string paths to UI Screens, optionally parses params from the paths
 final appRouter = GoRouter(
@@ -132,7 +128,7 @@ class AppRoute extends GoRoute {
               body: builder(state),
               resizeToAvoidBottomInset: false,
             );
-            if (useFade) {
+            if (useFade || $styles.disableAnimations) {
               return CustomTransitionPage(
                 key: state.pageKey,
                 child: pageContent,

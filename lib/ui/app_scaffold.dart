@@ -15,7 +15,7 @@ class WondersAppScaffold extends StatelessWidget {
     // Set default timing for animations in the app
     Animate.defaultDuration = _style.times.fast;
     // Create a style object that will be passed down the widget tree
-    _style = AppStyle(screenSize: context.sizePx);
+    _style = AppStyle(screenSize: context.sizePx, disableAnimations: mq.disableAnimations, highContrast: mq.highContrast);
     return KeyedSubtree(
       key: ValueKey($styles.scale),
       child: Theme(

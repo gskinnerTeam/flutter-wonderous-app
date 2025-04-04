@@ -1,10 +1,12 @@
 import 'package:particle_field/particle_field.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/animate_utils.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:wonders/ui/common/app_backdrop.dart';
 import 'package:wonders/ui/common/centered_box.dart';
 import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/pop_navigator_underlay.dart';
+import 'package:wonders/ui/common/utils/duration_utils.dart';
 
 part 'widgets/_animated_ribbon.dart';
 part 'widgets/_celebration_particles.dart';
@@ -21,7 +23,7 @@ class CollectibleFoundScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepaintBoundary(
       child: _buildIntro(context).animate().swap(
-            delay: $styles.times.fast * 3.5,
+            delay: 1050.animateMs,
             builder: (_, __) => _buildDetail(context),
           ),
     );
