@@ -1,6 +1,7 @@
 part of '../artifact_search_screen.dart';
 
 /// Autopopulating textfield used for searching for Artifacts by name.
+const double _inputWidth = 400;
 class _SearchInput extends StatelessWidget {
   const _SearchInput({super.key, required this.onSubmit, required this.wonder});
   final void Function(String) onSubmit;
@@ -49,6 +50,7 @@ class _SearchInput extends StatelessWidget {
           child: Container(
             margin: EdgeInsets.only(top: $styles.insets.xxs),
             width: constraints.maxWidth,
+            constraints: BoxConstraints(maxWidth: _inputWidth),
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
@@ -120,6 +122,7 @@ class _SearchInput extends StatelessWidget {
   Widget _buildInput(BuildContext context, TextEditingController textController, FocusNode focusNode, _) {
     Color captionColor = $styles.colors.caption;
     return Container(
+      constraints: BoxConstraints(maxWidth: _inputWidth),
       height: $styles.insets.xl,
       decoration: BoxDecoration(
         color: $styles.colors.offWhite,
@@ -134,7 +137,7 @@ class _SearchInput extends StatelessWidget {
               onSubmitted: onSubmit,
               controller: textController,
               focusNode: focusNode,
-              style: TextStyle(color: captionColor),
+              style: TextStyle(color: captionColor, ),
               textAlignVertical: TextAlignVertical.top,
               decoration: InputDecoration(
                 isDense: true,

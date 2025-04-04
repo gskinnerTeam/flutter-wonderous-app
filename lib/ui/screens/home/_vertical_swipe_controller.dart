@@ -17,7 +17,7 @@ class _VerticalSwipeController {
   void handleTapCancelled() => isPointerDown.value = false;
 
   void handleVerticalSwipeCancelled() {
-    swipeReleaseAnim.duration = swipeAmt.value.seconds * .5;
+    swipeReleaseAnim.duration = $styles.disableAnimations ? 1.ms : swipeAmt.value.seconds * .5;
     swipeReleaseAnim.reverse(from: swipeAmt.value);
     isPointerDown.value = false;
   }

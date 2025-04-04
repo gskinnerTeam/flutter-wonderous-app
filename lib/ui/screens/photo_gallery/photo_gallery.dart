@@ -2,11 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/animate_utils.dart';
 import 'package:wonders/logic/data/unsplash_photo_data.dart';
 import 'package:wonders/ui/common/controls/app_loading_indicator.dart';
 import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
 import 'package:wonders/ui/common/fullscreen_keyboard_listener.dart';
 import 'package:wonders/ui/common/hidden_collectible.dart';
+import 'package:wonders/ui/common/ignore_pointer.dart';
 import 'package:wonders/ui/common/modals/fullscreen_url_img_viewer.dart';
 import 'package:wonders/ui/common/unsplash_photo.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
@@ -257,7 +259,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                 imgUrl,
                 fit: BoxFit.cover,
                 size: UnsplashPhotoSize.large,
-              ).animate().fade(),
+              ).maybeAnimate().fade(),
             );
 
             return MergeSemantics(
@@ -290,7 +292,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                                       Positioned.fill(
                                         child: AnimatedOpacity(
                                           duration: $styles.times.med,
-                                          opacity: isSelected ? 0 : .7,
+                                          opacity: isSelected ? 0 : ($styles.highContrast ? 0.4 : 0.7),
                                           child: ColoredBox(color: $styles.colors.black),
                                         ),
                                       ),
