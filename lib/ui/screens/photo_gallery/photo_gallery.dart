@@ -293,7 +293,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                                       Positioned.fill(
                                         child: AnimatedOpacity(
                                           duration: $styles.times.med,
-                                          opacity: isSelected ? 0 : .7,
+                                          opacity: isSelected ? 0 : ($styles.highContrast ? 0.4 : 0.7),
                                           child: ColoredBox(color: $styles.colors.black),
                                         ),
                                       ),
