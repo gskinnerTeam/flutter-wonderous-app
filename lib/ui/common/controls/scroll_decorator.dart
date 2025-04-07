@@ -65,7 +65,7 @@ class ScrollDecorator extends StatefulWidget {
     bgBuilder = null;
     fgBuilder = (controller) {
       final double ratio = controller.hasClients ? min(1, controller.position.extentBefore / 60) : 0;
-      return IgnorePointerWithSemantics(
+      return IgnorePointerKeepSemantics(
         child: Container(
           height: 24,
           decoration: BoxDecoration(

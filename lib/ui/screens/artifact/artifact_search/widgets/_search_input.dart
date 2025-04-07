@@ -131,19 +131,19 @@ class _SearchInput extends StatelessWidget {
       child: Row(
         children: [
           Gap($styles.insets.xs * 1.5),
-          Icon(Icons.search, color: $styles.colors.caption),
+          Icon(Icons.search, color: captionColor),
           Expanded(
             child: TextField(
               onSubmitted: onSubmit,
               controller: textController,
               focusNode: focusNode,
-              style: TextStyle(color: captionColor, ),
+              style: TextStyle(color: $styles.colors.greyStrong),
               textAlignVertical: TextAlignVertical.top,
               decoration: InputDecoration(
                 isDense: true,
                 contentPadding: EdgeInsets.all($styles.insets.xs),
                 labelStyle: TextStyle(color: captionColor),
-                hintStyle: TextStyle(color: captionColor.withOpacity(0.5)),
+                hintStyle: TextStyle(color: $styles.colors.body),
                 prefixStyle: TextStyle(color: captionColor),
                 focusedBorder: OutlineInputBorder(borderSide: BorderSide.none),
                 enabledBorder: UnderlineInputBorder(borderSide: BorderSide.none),
