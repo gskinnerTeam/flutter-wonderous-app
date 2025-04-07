@@ -1,16 +1,14 @@
-import 'dart:async';
-
 import 'package:flutter/gestures.dart';
-import 'package:wonders/common_libs.dart';
+import 'package:flutter/material.dart';
 
 class TrackpadListener extends StatefulWidget {
-  final Widget child;
+  final Widget? child;
   final double scrollSensitivity;
-  final void Function(Offset delta)? onScroll;
+  final ValueChanged<Offset>? onScroll;
 
   const TrackpadListener({
     super.key,
-    required this.child,
+    this.child,
     this.scrollSensitivity = 100,
     this.onScroll,
   });
@@ -23,18 +21,16 @@ class _TrackpadListenerState extends State<TrackpadListener> {
   Offset _scrollOffset = Offset.zero;
 
   void _handleTrackpadEvent(PointerSignalEvent event) {
-    GestureBinding.instance.pointerSignalResolver.register(event, (PointerSignalEvent event) {
-      // Only handle trackpad events here.
-      if (event is PointerScrollEvent && event.kind == PointerDeviceKind.trackpad) {
-        Offset newScroll = _scrollOffset + event.scrollDelta;
-        newScroll = Offset(
-          newScroll.dx.clamp(-widget.scrollSensitivity, widget.scrollSensitivity),
-          newScroll.dy.clamp(-widget.scrollSensitivity, widget.scrollSensitivity),
-        );
-        _scrollOffset = newScroll;
-        _update();
-      }
-    });
+    // Directly process the event here.
+    if (event is PointerScrollEvent && event.kind == PointerDeviceKind.trackpad) {
+      Offset newScroll = _scrollOffset + event.scrollDelta;
+      newScroll = Offset(
+        newScroll.dx.clamp(-widget.scrollSensitivity, widget.scrollSensitivity),
+        newScroll.dy.clamp(-widget.scrollSensitivity, widget.scrollSensitivity),
+      );
+      _scrollOffset = newScroll;
+      _update();
+    }
   }
 
   void _update() {
