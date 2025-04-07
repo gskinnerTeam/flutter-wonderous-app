@@ -24,25 +24,23 @@ class GradientContainer extends StatelessWidget {
   final BorderRadius? borderRadius;
 
   @override
-  Widget build(BuildContext context) => ExcludeSemantics(
-    child: IgnorePointerWithSemantics(
-      child: Container(
-        width: width,
-        height: height,
-        alignment: alignment,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: begin ?? Alignment.centerLeft,
-            end: end ?? Alignment.centerRight,
-            colors: colors,
-            stops: stops,
-          ),
-          backgroundBlendMode: blendMode,
-          borderRadius: borderRadius,
+  Widget build(BuildContext context) => IgnorePointerAndSemantics(
+    child: Container(
+      width: width,
+      height: height,
+      alignment: alignment,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: begin ?? Alignment.centerLeft,
+          end: end ?? Alignment.centerRight,
+          colors: colors,
+          stops: stops,
         ),
-        child: child,
+        backgroundBlendMode: blendMode,
+        borderRadius: borderRadius,
       ),
-    )
+      child: child,
+    ),
   );
 }
 

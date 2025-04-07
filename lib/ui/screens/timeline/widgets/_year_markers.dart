@@ -13,7 +13,7 @@ class _YearMarkers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IgnorePointerWithSemantics(
+    return IgnorePointerKeepSemantics(
       child: LayoutBuilder(builder: (_, constraints) {
         int interval = 100;
         if (constraints.maxHeight < 800) {

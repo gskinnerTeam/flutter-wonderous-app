@@ -26,7 +26,7 @@ class _BottomTextContent extends StatelessWidget {
               Gap($styles.insets.md),
               Column(
                 children: [
-                  IgnorePointerWithSemantics(
+                  IgnorePointerKeepSemantics(
                     child: Semantics(
                       button: true,
                       onIncrease: () => state._handleArtifactTap(_currentPage + 1),

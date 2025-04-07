@@ -43,7 +43,7 @@ class _ScrollingContent extends StatelessWidget {
                           dropChar,
                           overflow: TextOverflow.visible,
                           style: $styles.text.dropCase.copyWith(
-                            color: $styles.colors.accent1,
+                            color: $styles.colors.accent3,
                             height: 1,
                           ),
                         ),
@@ -52,7 +52,7 @@ class _ScrollingContent extends StatelessWidget {
                     style: $styles.text.body,
                     dropCapPadding: EdgeInsets.only(right: 6),
                     dropCapStyle: $styles.text.dropCase.copyWith(
-                      color: $styles.colors.accent1,
+                      color: $styles.colors.accent3,
                       height: 1,
                     ),
                   )
@@ -242,7 +242,7 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
                   child: Stack(
                     children: [
                       Positioned.fill(child: ColoredBox(color: Colors.transparent)),
-                      IgnorePointerWithSemantics(
+                      IgnorePointerKeepSemantics(
                         child: GoogleMap(
                           markers: {getMapsMarker(startPos.target)},
                           zoomControlsEnabled: false,

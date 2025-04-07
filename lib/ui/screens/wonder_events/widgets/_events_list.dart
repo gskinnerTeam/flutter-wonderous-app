@@ -64,7 +64,7 @@ class _EventsListState extends State<_EventsList> {
           key: PageStorageKey('eventsList'),
           child: Column(
             children: [
-              IgnorePointerWithSemantics(child: Gap(widget.topHeight)),
+              IgnorePointerKeepSemantics(child: Gap(widget.topHeight)),
               Container(
                 decoration: BoxDecoration(
                   color: $styles.colors.black,
@@ -120,7 +120,7 @@ class _EventsListState extends State<_EventsList> {
             if (showBackdrop) ...[
               AppBackdrop(
                   strength: backdropAmt,
-                  child: IgnorePointerWithSemantics(
+                  child: IgnorePointerKeepSemantics(
                     child: Container(
                       color: $styles.colors.black.withOpacity(backdropAmt * .6),
                     ),
