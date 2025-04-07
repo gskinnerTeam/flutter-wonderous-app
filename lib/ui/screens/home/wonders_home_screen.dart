@@ -224,7 +224,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   Widget _buildFgAndGradients() {
     Widget buildSwipeableBgGradient(Color fgColor) {
       return _swipeController.buildListener(builder: (swipeAmt, isPointerDown, _) {
-        return IgnorePointerKeepSemantics(
+        return IgnorePointerAndSemantics(
           child: FractionallySizedBox(
             heightFactor: .6,
             child: Container(
@@ -262,7 +262,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           return Animate(
               effects: const [FadeEffect()],
               onPlay: _handleFadeAnimInit,
-              child: IgnorePointerKeepSemantics(child: WonderIllustration(e.type, config: config)));
+              child: IgnorePointerAndSemantics(child: WonderIllustration(e.type, config: config)));
         });
       }),
 

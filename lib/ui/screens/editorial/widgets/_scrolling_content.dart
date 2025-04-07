@@ -242,7 +242,7 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
                   child: Stack(
                     children: [
                       Positioned.fill(child: ColoredBox(color: Colors.transparent)),
-                      IgnorePointerKeepSemantics(
+                      IgnorePointerAndSemantics(
                         child: GoogleMap(
                           markers: {getMapsMarker(startPos.target)},
                           zoomControlsEnabled: false,

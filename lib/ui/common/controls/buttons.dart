@@ -155,7 +155,7 @@ class AppBtn extends StatelessWidget {
           ),
           if (focus.hasFocus)
             Positioned.fill(
-              child: IgnorePointerKeepSemantics(
+              child: IgnorePointerAndSemantics(
                 child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular($styles.corners.md),

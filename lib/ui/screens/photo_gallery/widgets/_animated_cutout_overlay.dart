@@ -31,7 +31,7 @@ class _AnimatedCutoutOverlay extends StatelessWidget {
           effects: [CustomEffect(builder: _buildAnimatedCutout, curve: Curves.easeOut, duration: duration)],
           key: animationKey,
           onComplete: (c) => c.reverse(),
-          child: IgnorePointerKeepSemantics(child: Container(color: Colors.black.withOpacity(opacity))),
+          child: IgnorePointerAndSemantics(child: Container(color: Colors.black.withOpacity(opacity))),
         ),
       ],
     );
