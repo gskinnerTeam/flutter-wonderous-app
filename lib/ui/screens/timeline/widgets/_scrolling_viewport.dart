@@ -69,7 +69,7 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
           _buildScrollingArea(context).maybeAnimate().fadeIn(),
 
           // Dashed line with a year that changes as we scroll
-          IgnorePointerWithSemantics(
+          IgnorePointerKeepSemantics(
             child: AnimatedBuilder(
               animation: controller.scroller,
               builder: (_, __) {

@@ -35,7 +35,7 @@ class _EventPopupsState extends State<_EventPopups> {
     final evt = _eventToShow;
     return TopCenter(
       child: ClipRect(
-        child: IgnorePointerWithSemantics(
+        child: IgnorePointerKeepSemantics(
           child: AnimatedSwitcher(
             duration: $styles.times.fast,
             child: evt == null
