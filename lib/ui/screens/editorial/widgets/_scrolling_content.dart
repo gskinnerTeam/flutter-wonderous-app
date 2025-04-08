@@ -19,45 +19,45 @@ class _ScrollingContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget buildText(String value) => Focus(child: Text(_fixNewlines(value), style: $styles.text.body));
-
-    Widget buildDropCapText(String value) {
+    Widget buildText(String value, bool useDropCaps) {
+      final bool skipCaps = !localeLogic.isEnglish || !useDropCaps;
       final TextStyle dropStyle = $styles.text.dropCase;
       final TextStyle bodyStyle = $styles.text.body;
       final String dropChar = value.substring(0, 1);
       final textScale = MediaQuery.of(context).textScaleFactor;
       final double dropCapWidth = StringUtils.measure(dropChar, dropStyle).width * textScale;
-      final bool skipCaps = !localeLogic.isEnglish;
-      return Semantics(
-        label: value,
-        child: ExcludeSemantics(
-          child: !skipCaps
-              ? DropCapText(
-                  _fixNewlines(value).substring(1),
-                  dropCap: DropCap(
-                    width: dropCapWidth,
-                    height: $styles.text.body.fontSize! * $styles.text.body.height! * 2,
-                    child: Transform.translate(
-                      offset: Offset(0, bodyStyle.fontSize! * (bodyStyle.height! - 1) - 2),
-                      child: Text(
-                        dropChar,
-                        overflow: TextOverflow.visible,
-                        style: $styles.text.dropCase.copyWith(
-                          color: $styles.colors.accent1,
-                          height: 1,
+      return Focus(
+        child: Semantics(
+          label: value,
+          child: ExcludeSemantics(
+            child: skipCaps
+                ? Text(_fixNewlines(value), style: bodyStyle )
+                : DropCapText(
+                    _fixNewlines(value).substring(1),
+                    dropCap: DropCap(
+                      width: dropCapWidth,
+                      height: $styles.text.body.fontSize! * $styles.text.body.height! * 2,
+                      child: Transform.translate(
+                        offset: Offset(0, bodyStyle.fontSize! * (bodyStyle.height! - 1) - 2),
+                        child: Text(
+                          dropChar,
+                          overflow: TextOverflow.visible,
+                          style: $styles.text.dropCase.copyWith(
+                            color: $styles.colors.accent3,
+                            height: 1,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  style: $styles.text.body,
-                  dropCapPadding: EdgeInsets.only(right: 6),
-                  dropCapStyle: $styles.text.dropCase.copyWith(
-                    color: $styles.colors.accent1,
-                    height: 1,
-                  ),
-                )
-              : Text(value, style: bodyStyle),
-        ),
+                    style: $styles.text.body,
+                    dropCapPadding: EdgeInsets.only(right: 6),
+                    dropCapStyle: $styles.text.dropCase.copyWith(
+                      color: $styles.colors.accent3,
+                      height: 1,
+                    ),
+                  )
+          ),
+        )
       );
     }
 
@@ -93,7 +93,7 @@ class _ScrollingContent extends StatelessWidget {
                     Center(child: buildHiddenCollectible(slot: 0)),
 
                     /// History 1
-                    buildDropCapText(data.historyInfo1),
+                    buildText(data.historyInfo1, true),
 
                     /// Quote1
                     _CollapsingPullQuoteImage(data: data, scrollPos: scrollPos),
@@ -103,11 +103,11 @@ class _ScrollingContent extends StatelessWidget {
                     _Callout(text: data.callout1),
 
                     /// History 2
-                    buildText(data.historyInfo2),
+                    buildText(data.historyInfo2, false),
                     _SectionDivider(scrollPos, sectionNotifier, index: 1),
 
                     /// Construction 1
-                    buildDropCapText(data.constructionInfo1),
+                    buildText(data.constructionInfo1, true),
                     Center(child: buildHiddenCollectible(slot: 2)),
                   ]),
                   Gap($styles.insets.md),
@@ -119,14 +119,14 @@ class _ScrollingContent extends StatelessWidget {
                     _Callout(text: data.callout2),
 
                     /// Construction 2
-                    buildText(data.constructionInfo2),
+                    buildText(data.constructionInfo2, false),
                     _SlidingImageStack(scrollPos: scrollPos, type: data.type),
                     _SectionDivider(scrollPos, sectionNotifier, index: 2),
 
                     /// Location
-                    buildDropCapText(data.locationInfo1),
+                    buildText(data.locationInfo1, true),
                     _LargeSimpleQuote(text: data.pullQuote2, author: data.pullQuote2Author),
-                    buildText(data.locationInfo2),
+                    buildText(data.locationInfo2, false),
                   ]),
                   Gap($styles.insets.md),
                   _MapsThumbnail(data),

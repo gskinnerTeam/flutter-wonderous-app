@@ -54,8 +54,7 @@ class _EventMarkersState extends State<_EventMarkers> {
 
   @override
   Widget build(BuildContext context) {
-    return IgnorePointer(
-      ignoringSemantics: false,
+    return IgnorePointerKeepSemantics(
       child: LayoutBuilder(builder: (_, constraints) {
         /// Figure out which event is "selected"
         _updateSelectedEvent(constraints.maxHeight);

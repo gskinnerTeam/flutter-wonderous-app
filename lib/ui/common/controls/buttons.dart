@@ -1,5 +1,6 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/app_icons.dart';
+import 'package:wonders/ui/common/ignore_pointer.dart';
 
 /// Shared methods across button types
 Widget _buildIcon(BuildContext context, AppIcons icon, {required bool isSecondary, required double? size}) =>
@@ -154,7 +155,7 @@ class AppBtn extends StatelessWidget {
           ),
           if (focus.hasFocus)
             Positioned.fill(
-              child: IgnorePointer(
+              child: IgnorePointerAndSemantics(
                 child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular($styles.corners.md),

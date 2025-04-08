@@ -6,20 +6,22 @@ class _Callout extends StatelessWidget {
   const _Callout({super.key, required this.text});
   @override
   Widget build(BuildContext context) {
-    return IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(color: $styles.colors.accent1, width: 1),
-          Gap($styles.insets.sm),
-          Expanded(
-            child: Text(
-              text,
-              style: $styles.text.callout,
-            ),
-          )
-        ],
-      ),
+    return Focus( 
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(color: $styles.colors.accent1, width: 1),
+            Gap($styles.insets.sm),
+            Expanded(
+              child: Text(
+                text,
+                style: $styles.text.callout,
+              ),
+            )
+          ],
+        ),
+      )
     );
   }
 }

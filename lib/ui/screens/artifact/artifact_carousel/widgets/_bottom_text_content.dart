@@ -26,8 +26,7 @@ class _BottomTextContent extends StatelessWidget {
               Gap($styles.insets.md),
               Column(
                 children: [
-                  IgnorePointer(
-                    ignoringSemantics: false,
+                  IgnorePointerKeepSemantics(
                     child: Semantics(
                       button: true,
                       onIncrease: () => state._handleArtifactTap(_currentPage + 1),
@@ -58,7 +57,7 @@ class _BottomTextContent extends StatelessWidget {
                             ),
                           ]
                         ],
-                      ).animate(key: ValueKey(artifact.artifactId)).fadeIn(),
+                      ).maybeAnimate(key: ValueKey(artifact.artifactId)).fadeIn(),
                     ),
                   ),
                 ],
