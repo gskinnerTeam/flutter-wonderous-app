@@ -24,7 +24,7 @@ class GradientContainer extends StatelessWidget {
   final BorderRadius? borderRadius;
 
   @override
-  Widget build(BuildContext context) => IgnorePointerAndSemantics(
+  Widget build(BuildContext context) => IgnorePointer(
     child: Container(
       width: width,
       height: height,
