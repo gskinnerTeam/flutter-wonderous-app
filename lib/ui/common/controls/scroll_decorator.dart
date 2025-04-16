@@ -1,4 +1,5 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/ui/common/ignore_pointer.dart';
 
 /// Easily add visual decorations to a scrolling widget based on the state of its controller.
 class ScrollDecorator extends StatefulWidget {
@@ -64,7 +65,7 @@ class ScrollDecorator extends StatefulWidget {
     bgBuilder = null;
     fgBuilder = (controller) {
       final double ratio = controller.hasClients ? min(1, controller.position.extentBefore / 60) : 0;
-      return IgnorePointer(
+      return IgnorePointerAndSemantics(
         child: Container(
           height: 24,
           decoration: BoxDecoration(

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/utils/context_utils.dart';
+import 'package:wonders/ui/common/utils/duration_utils.dart';
 
 // TODO: Clouds should fade in and out
 // Shows a set of clouds that animated onto stage.
@@ -21,7 +22,7 @@ class AnimatedClouds extends StatefulWidget with GetItStatefulWidgetMixin {
 class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProviderStateMixin, GetItStateMixin {
   late List<_Cloud> _clouds = [];
   List<_Cloud> _oldClouds = [];
-  late final AnimationController _anim = AnimationController(vsync: this, duration: 1500.ms);
+  late final AnimationController _anim = AnimationController(vsync: this, duration: 1500.animateMs);
 
   @override
   void initState() {
@@ -138,6 +139,7 @@ class _Cloud extends StatelessWidget {
         scaleY: scale * (flipY ? -1 : 1),
         child: Image.asset(
           ImagePaths.cloud,
+          excludeFromSemantics: true,
           opacity: AlwaysStoppedAnimation(.4 * opacity),
           width: size * scale,
           fit: BoxFit.fitWidth,

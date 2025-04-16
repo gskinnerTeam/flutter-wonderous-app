@@ -11,6 +11,6 @@ class _AnimatedEraText extends StatelessWidget {
     return Semantics(
       liveRegion: true,
       child: Text(era, style: style),
-    ).animate(key: ValueKey(era)).fadeIn().slide(begin: Offset(0, .2));
+    ).maybeAnimate(key: ValueKey(era)).fadeIn().slide(begin: Offset(0, .2));
   }
 }

@@ -133,34 +133,42 @@ class _OpenedTimeRange extends StatelessWidget {
   final TimeRangePainter painter;
   final void Function() onClose;
 
-  List<Widget> _buildChineseDateLayout(TextStyle headingTextStyle, TextStyle captionTextStyle, int startYr, int endYr) {
-    return [
-      Text(StringUtils.getYrSuffix(startYr), style: captionTextStyle),
-      Gap($styles.insets.xxs),
-      Text(startYr.abs().toString(), style: headingTextStyle),
-      Text($strings.year, style: captionTextStyle),
-      Gap($styles.insets.xs),
-      Text('~', style: captionTextStyle),
-      Gap($styles.insets.xs),
-      Text(StringUtils.getYrSuffix(endYr.round()), style: captionTextStyle),
-      Gap($styles.insets.xxs),
-      Text(endYr.abs().toString(), style: headingTextStyle),
-      Text($strings.year, style: captionTextStyle),
-    ];
+  Widget _buildChineseDateLayout(TextStyle headingTextStyle, TextStyle captionTextStyle, int startYr, int endYr) {
+    return MergeSemantics(
+      child: Row(
+        children: [
+          Text(StringUtils.getYrSuffix(startYr), style: captionTextStyle),
+          Gap($styles.insets.xxs),
+          Text(startYr.abs().toString(), style: headingTextStyle),
+          Text($strings.year, style: captionTextStyle),
+          Gap($styles.insets.xs),
+          Text('~', style: captionTextStyle),
+          Gap($styles.insets.xs),
+          Text(StringUtils.getYrSuffix(endYr.round()), style: captionTextStyle),
+          Gap($styles.insets.xxs),
+          Text(endYr.abs().toString(), style: headingTextStyle),
+          Text($strings.year, style: captionTextStyle),
+        ],
+      ),
+    );
   }
 
-  List<Widget> _buildDefaultDateLayout(TextStyle headingTextStyle, TextStyle captionTextStyle, int startYr, int endYr) {
-    return [
-      Text(startYr.abs().toString(), style: headingTextStyle),
-      Gap($styles.insets.xxs),
-      Text(StringUtils.getYrSuffix(startYr), style: captionTextStyle),
-      Gap($styles.insets.xs),
-      Text('—', style: captionTextStyle),
-      Gap($styles.insets.xs),
-      Text(endYr.abs().toString(), style: headingTextStyle),
-      Gap($styles.insets.xxs),
-      Text(StringUtils.getYrSuffix(endYr.round()), style: captionTextStyle),
-    ];
+  Widget _buildDefaultDateLayout(TextStyle headingTextStyle, TextStyle captionTextStyle, int startYr, int endYr) {
+    return MergeSemantics(
+      child: Row(
+        children: [
+          Text(startYr.abs().toString(), style: headingTextStyle),
+          Gap($styles.insets.xxs),
+          Text(StringUtils.getYrSuffix(startYr), style: captionTextStyle),
+          Gap($styles.insets.xs),
+          Text('—', style: captionTextStyle),
+          Gap($styles.insets.xs),
+          Text(endYr.abs().toString(), style: headingTextStyle),
+          Gap($styles.insets.xxs),
+          Text(StringUtils.getYrSuffix(endYr.round()), style: captionTextStyle),
+        ],
+      ),
+    );
   }
 
   @override
@@ -181,16 +189,16 @@ class _OpenedTimeRange extends StatelessWidget {
             Gap($styles.insets.xl),
             Spacer(),
             if (localeLogic.strings.localeName == 'zh') ...{
-              ..._buildChineseDateLayout(headingTextStyle, captionTextStyle, startYr, endYr),
+              _buildChineseDateLayout(headingTextStyle, captionTextStyle, startYr, endYr),
             } else ...{
-              ..._buildDefaultDateLayout(headingTextStyle, captionTextStyle, startYr, endYr),
+              _buildDefaultDateLayout(headingTextStyle, captionTextStyle, startYr, endYr),
             },
             Spacer(),
             SizedBox(
               width: $styles.insets.xl,
               child: AppBtn.from(
                 onPressed: onClose,
-                semanticLabel: $strings.expandingTimeSelectorSemanticSelector,
+                semanticLabel: $strings.circleButtonsSemanticClose,
                 enableFeedback: false, // handled when panelController changes.
                 icon: AppIcons.close,
                 iconSize: 20,
@@ -206,60 +214,67 @@ class _OpenedTimeRange extends StatelessWidget {
         // Timeframe slider
         SizedBox(
           height: $styles.insets.lg * 2,
-          child: Stack(children: [
-            // grid lines:
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular($styles.corners.md),
-                color: Color.lerp($styles.colors.black, Colors.black, 0.2),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: timelineGrid,
-              ),
-            ),
-
-            // results visualization:
-            Positioned.fill(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: RangeSelector.handleWidth),
-                child: RepaintBoundary(
-                  child: CustomPaint(painter: painter),
+          child: Stack(
+            children: [
+              // grid lines:
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular($styles.corners.md),
+                  color: Color.lerp($styles.colors.black, Colors.black, 0.2),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: timelineGrid,
                 ),
               ),
-            ),
 
-            // wonder minimap:
-            Positioned.fill(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: RangeSelector.handleWidth, vertical: 12),
-                child: WondersTimelineBuilder(
-                  crossAxisGap: 6,
-                  minSize: 16,
-                  selectedWonders: [wonder.type],
-                  timelineBuilder: (_, __, sel) => Container(
-                    decoration: BoxDecoration(
-                      color: $styles.colors.offWhite.withOpacity(sel ? 0.75 : 0.25),
-                      borderRadius: BorderRadius.circular(999),
+              // results visualization:
+              Positioned.fill(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: RangeSelector.handleWidth),
+                  child: RepaintBoundary(
+                    child: CustomPaint(painter: painter),
+                  ),
+                ),
+              ),
+
+              // wonder minimap:
+              Positioned.fill(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: RangeSelector.handleWidth, vertical: 12),
+                  child: WondersTimelineBuilder(
+                    crossAxisGap: 6,
+                    minSize: 16,
+                    selectedWonders: [wonder.type],
+                    timelineBuilder: (_, __, sel) => Container(
+                      decoration: BoxDecoration(
+                        color: $styles.colors.offWhite.withOpacity(sel ? 0.75 : 0.25),
+                        borderRadius: BorderRadius.circular(999),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
 
-            // Time slider itself
-            Positioned.fill(
-              child: RangeSelector(
-                key: ValueKey('RangeSelectorIsWonderTime'),
-                min: wondersLogic.timelineStartYear * 1.0,
-                max: wondersLogic.timelineEndYear * 1.0,
-                minDelta: 500,
-                start: startYear,
-                end: endYear,
-                onUpdated: onChange,
+              // Time slider itself
+              Positioned.fill(
+                child: MergeSemantics(
+                  child: Semantics(
+                    label: $strings.bottomScrubberSemanticTimeline,
+                    child: RangeSelector(
+                      key: ValueKey('RangeSelectorIsWonderTime'),
+                      min: wondersLogic.timelineStartYear * 1.0,
+                      max: wondersLogic.timelineEndYear * 1.0,
+                      minDelta: 500,
+                      start: startYear,
+                      end: endYear,
+                      onUpdated: onChange,
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ]),
+            ],
+          ),
         ),
 
         Gap(safeBottom),

@@ -34,7 +34,7 @@ class _CircularTitleBar extends StatelessWidget {
             BottomCenter(
               child: Padding(
                 padding: EdgeInsets.only(bottom: 20),
-                child: Image.asset('${ImagePaths.common}/${icons[index]}').animate(key: ValueKey(index)).fade().scale(
+                child: Image.asset('${ImagePaths.common}/${icons[index]}').maybeAnimate(key: ValueKey(index)).fade().scale(
                     begin: Offset(.5, .5), end: Offset(1, 1), curve: Curves.easeOutBack, duration: $styles.times.med),
               ),
             ),
@@ -133,7 +133,7 @@ class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with S
   Widget _buildCircularText(String title) {
     final textStyle = $styles.text.monoTitleFont.copyWith(
       fontSize: 22 * $styles.scale,
-      color: $styles.colors.accent1,
+      color: $styles.colors.accent3,
     );
     return CircularText(
       position: CircularTextPosition.inside,

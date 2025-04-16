@@ -1,12 +1,16 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/animate_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
+import 'package:wonders/ui/common/controls/trackpad_listener.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
+import 'package:wonders/ui/common/ignore_pointer.dart';
 import 'package:wonders/ui/common/previous_next_navigation.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
+import 'package:wonders/ui/common/utils/duration_utils.dart';
 import 'package:wonders/ui/screens/home_menu/home_menu.dart';
 import 'package:wonders/ui/wonder_illustrations/common/animated_clouds.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration.dart';
@@ -111,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   void _showDetailsPage() async {
     _swipeOverride = _swipeController.swipeAmt.value;
     context.go(ScreenPaths.wonderDetails(currentWonder.type, tabIndex: 0));
-    await Future.delayed(100.ms);
+    await Future.delayed(100.delayMs);
     _swipeOverride = null;
     _fadeInOnNextBuild = true;
   }
@@ -121,12 +125,18 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       for (var a in _fadeAnims) {
         a.value = 0;
       }
-      await Future.delayed(300.ms);
+      await Future.delayed(300.delayMs);
       for (var a in _fadeAnims) {
         a.forward();
       }
     } on Exception catch (e) {
       debugPrint(e.toString());
+    }
+  }
+
+  void _handleTrackpadScroll(Offset direction) {
+    if (direction.dy < 0) {
+      _showDetailsPage();
     }
   }
 
@@ -139,25 +149,29 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
     return _swipeController.wrapGestureDetector(Container(
       color: $styles.colors.black,
-      child: PreviousNextNavigation(
-        listenToMouseWheel: false,
-        onPreviousPressed: () => _handlePrevNext(-1),
-        onNextPressed: () => _handlePrevNext(1),
-        child: Stack(
-          children: [
-            /// Background
-            ..._buildBgAndClouds(),
+      child: TrackpadListener(
+        scrollSensitivity: 60,
+        onScroll: _handleTrackpadScroll,
+        child: PreviousNextNavigation(
+          listenToMouseWheel: false,
+          onPreviousPressed: () => _handlePrevNext(-1),
+          onNextPressed: () => _handlePrevNext(1),
+          child: Stack(
+            children: [
+              /// Background
+              ..._buildBgAndClouds(),
 
-            /// Wonders Illustrations (main content)
-            _buildMgPageView(),
+              /// Wonders Illustrations (main content)
+              _buildMgPageView(),
 
-            /// Foreground illustrations and gradients
-            _buildFgAndGradients(),
+              /// Foreground illustrations and gradients
+              _buildFgAndGradients(),
 
-            /// Controls that float on top of the various illustrations
-            _buildFloatingUi(),
-          ],
-        ).animate().fadeIn(),
+              /// Controls that float on top of the various illustrations
+              _buildFloatingUi(),
+            ],
+          ).maybeAnimate().fadeIn(),
+        ),
       ),
     ));
   }
@@ -210,7 +224,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   Widget _buildFgAndGradients() {
     Widget buildSwipeableBgGradient(Color fgColor) {
       return _swipeController.buildListener(builder: (swipeAmt, isPointerDown, _) {
-        return IgnorePointer(
+        return IgnorePointerAndSemantics(
           child: FractionallySizedBox(
             heightFactor: .6,
             child: Container(
@@ -248,7 +262,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           return Animate(
               effects: const [FadeEffect()],
               onPlay: _handleFadeAnimInit,
-              child: IgnorePointer(child: WonderIllustration(e.type, config: config)));
+              child: IgnorePointerAndSemantics(child: WonderIllustration(e.type, config: config)));
         });
       }),
 
@@ -277,8 +291,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
                   /// Title Content
                   LightText(
-                    child: IgnorePointer(
-                      ignoringSemantics: false,
+                    child: IgnorePointerKeepSemantics(
                       child: Transform.translate(
                         offset: Offset(0, 30),
                         child: Column(
