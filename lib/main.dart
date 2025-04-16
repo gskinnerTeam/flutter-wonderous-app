@@ -40,12 +40,18 @@ class WondersApp extends StatefulWidget with GetItStatefulWidgetMixin {
 }
 
 class _WondersAppState extends State<WondersApp> with GetItStateMixin {
+  bool _imagesCached = false;
+
   @override
-  void initState() {
-    if (kIsWeb) {
-      appLogic.precacheWonderImages(context);
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_imagesCached) {
+      appLogic.precacheIcons(context);
+      if (kIsWeb) {
+        appLogic.precacheWonderImages(context);
+      }
+      _imagesCached = true;
     }
-    super.initState();
   }
 
   @override

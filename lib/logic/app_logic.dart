@@ -127,9 +127,17 @@ class AppLogic {
     SystemChrome.setPreferredOrientations(orientations);
   }
 
+  void precacheIcons(BuildContext context) {
+    // Precache the active and idle icons for the navigation bar.
+    for (var i = 0; i < 2; i++) {
+      precacheImage(AssetImage('${ImagePaths.common}/tab-editorial${i == 0 ? '-active' : ''}.png'), context);
+      precacheImage(AssetImage('${ImagePaths.common}/tab-photos${i == 0 ? '-active' : ''}.png'), context);
+      precacheImage(AssetImage('${ImagePaths.common}/tab-artifacts${i == 0 ? '-active' : ''}.png'), context);
+      precacheImage(AssetImage('${ImagePaths.common}/tab-timeline${i == 0 ? '-active' : ''}.png'), context);
+    }
+  }
+
   void precacheWonderImages(BuildContext context) {
-    debugPrint('Skipping precache, need to figure out why it\'s not working on web.');
-    return;
     precacheImage(AssetImage('images/chichen_itza/chichen.png'), context);
     precacheImage(AssetImage('images/chichen_itza/foreground-left.png'), context);
     precacheImage(AssetImage('images/chichen_itza/foreground-right.png'), context);
