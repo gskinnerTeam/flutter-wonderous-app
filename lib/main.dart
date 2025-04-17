@@ -45,11 +45,9 @@ class _WondersAppState extends State<WondersApp> with GetItStateMixin {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (!_imagesCached) {
+    if (!_imagesCached && kIsWeb) {
       appLogic.precacheIcons(context);
-      if (kIsWeb) {
-        appLogic.precacheWonderImages(context);
-      }
+      appLogic.precacheWonderImages(context);
       _imagesCached = true;
     }
   }
