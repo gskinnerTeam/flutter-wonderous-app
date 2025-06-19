@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Flutter Web WASM main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
+    <option name="additionalArgs" value="--dart-define WEATHER_API_KEY=3f4d6e7bf868e5d14487ff4c06466e36 --dart-define OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318 --dart-define OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf --web-port 8080 --web-hostname localhost --wasm" />
+    <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
+    <option name="targetName" value="chrome" />
+    <method v="2" />
+  </configuration>
+</component>

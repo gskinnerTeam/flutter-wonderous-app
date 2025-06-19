@@ -1,5 +1,5 @@
 name: wonders
-description: Explore the famous wonders of the world.
+description: Explore the famous wonders of the world - Observed with Dartastic.io.
 publish_to: "none"
 version: 2.2.2+9
 
@@ -14,6 +14,10 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
+  flutterrific_opentelemetry: ^0.3.1
+  device_info_plus: ^11.3.2
+  battery_plus: ^6.2.1
+  #The rest of the dependencies are wonderous original dependencies
   collection: ^1.17.0
   desktop_window: ^0.4.0
   drop_cap_text:

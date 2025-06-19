@@ -1,6 +1,8 @@
+import 'package:flutterrific_opentelemetry/flutterrific_opentelemetry.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/otel/metrics/wonder_metrics.dart';
 import 'package:wonders/ui/common/modals//fullscreen_video_viewer.dart';
 import 'package:wonders/ui/common/modals/fullscreen_maps_viewer.dart';
 import 'package:wonders/ui/screens/artifact/artifact_details/artifact_details_screen.dart';
@@ -59,7 +61,8 @@ AppRoute get _collectionRoute => AppRoute(
 
 /// Routing table, matches string paths to UI Screens, optionally parses params from the paths
 final appRouter = GoRouter(
-  redirect: _handleRedirect,
+  observers: [WonderMetrics.instance.metricsObserver],
+  redirect: OTelGoRouterRedirect(_handleRedirect).callRedirect,
   errorPageBuilder: (context, state) => MaterialPage(child: PageNotFound(state.uri.toString())),
   routes: [
     ShellRoute(

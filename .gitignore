@@ -46,3 +46,7 @@ app.*.map.json
 /android/app/release
 
 macos/Flutter/ephemeral
+/tools/add_header.sh
+/android/app/.cxx/
+/debug-symbols/
+/archive/

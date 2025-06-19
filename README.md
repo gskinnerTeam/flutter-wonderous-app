@@ -1,4 +1,60 @@
-# Wonderous
+# Wonderous OpenTelemetry
+
+This is a fork of the Wondrous app that adds OpenTelemetry
+via [Flutterific OTel](https://pub.dev/flutterific_otel) and [Dartastic.io](https://dartastic.io)
+
+This Wondrous app reports user interactions and app metrics to an OpenTelemetry backend.
+
+This app reports startup times, Apdex scores, page rendering times, component paint times, navigations and user interactions
+such as swipes and clicks on the photo grid.
+
+This fork adds a weather widget to Wondrous to demonstrate otel traces through the backend.
+
+## OpenTelemetry Demo
+
+## 1. Run an otel collector
+
+### Run otelcol binary
+
+Most simply, [download the otelcol for your platform](https://opentelemetry.io/docs/collector/installation/),
+add the otelcol binary to your path, and run `./tools/otel-demo/otelcol-demo.sh`.
+
+This will run `otelcol` with the demo config: `tools/otel-demo/otelcol-demo-config.yaml`.
+
+### Run Grafana via Docker
+
+Using docker, you can run this instrumented Wondrous app against a local Grafana OpenTelemetry stack.  You'll need
+Docker Desktop or similar running.  Run the following command to launch a Grafana OTel stack locally.
+Go to localhost:3000 and sign in to Grafana as admin/admin.
+```
+docker run -p 3000:3000 -p 4317:4317 -p 4318:4318 --rm -ti grafana/otel-lgtm
+```
+
+
+## 2. Run Wondrous pointed at the collector
+
+Run the Wondrous app configured to send OpenTelemetry data to the otel collector running on the localhost.
+```
+flutter run -d ios --dart-define WEATHER_API_KEY=3f4d6e7bf868e5d14487ff4c06466e36 --dart-define OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317 --dart-define OTEL_EXPORTER_OTLP_PROTOCOL=http/gRPC
+```
+
+
+Run this Wondrous app locally by building and running for a target platfrom such as web,
+iOS, Android, etc.
+
+Navigate around the app and you'll see Metrics (under Drilldown).
+
+![img.png](grafana-metrics.png)
+
+
+Traces can be found under Explore, Choose Tempo, a reasonable time (Last 1 hr), and for the Query Type, click Search.
+![img.png](grafana-traces.png)
+
+
+Thank you to the fabulous designers and developers of Wondrous.
+
+
+# Wonderous 
 <p align="center">
 <img width="215" src="https://user-images.githubusercontent.com/736973/187334196-b79e48b2-dbb8-4ea7-8aac-04dbc7e5159f.png#gh-dark-mode-only">
 <img width="215" src="https://user-images.githubusercontent.com/736973/187334195-9821c031-a566-4f8e-b4e3-3158f733c6e5.png#gh-light-mode-only">
