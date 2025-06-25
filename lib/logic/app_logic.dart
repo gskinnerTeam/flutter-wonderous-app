@@ -162,9 +162,7 @@ class AppLogic {
       'assets/images/taj_mahal/foreground-right.png',
     ];
 
-    urls.forEach((url) { 
-      precacheImage(AssetImage(url), context);
-    });
+    urls.forEach((url) => precacheImage(AssetImage(url), context));
   }
 }
 
