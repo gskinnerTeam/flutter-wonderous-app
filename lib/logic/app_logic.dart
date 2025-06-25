@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer' as Debug;
 import 'dart:ui';
 
 import 'package:desktop_window/desktop_window.dart';
@@ -165,7 +164,6 @@ class AppLogic {
 
     urls.forEach((url) { 
       precacheImage(AssetImage(url), context);
-      debugPrint(AssetImage(url).toString());
     });
   }
 }
