@@ -163,7 +163,7 @@ class AppLogic {
     ];
 
     urls.forEach((url) => precacheImage(AssetImage(url), context, onError: (error, stackTrace) {
-      debugPrint('Loading $url failed - ${error.toString()}');
+      print('Loading $url failed - ${error.toString()}');
     }));
   }
 }
