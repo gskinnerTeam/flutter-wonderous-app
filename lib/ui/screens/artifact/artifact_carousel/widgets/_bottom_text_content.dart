@@ -1,8 +1,12 @@
 part of '../artifact_carousel_screen.dart';
 
 class _BottomTextContent extends StatelessWidget {
-  const _BottomTextContent(
-      {super.key, required this.artifact, required this.height, required this.state, required this.shortMode});
+  const _BottomTextContent({
+    required this.artifact,
+    required this.height,
+    required this.state,
+    required this.shortMode,
+  });
 
   final HighlightData artifact;
   final double height;
@@ -55,7 +59,7 @@ class _BottomTextContent extends StatelessWidget {
                               style: $styles.text.body,
                               textAlign: TextAlign.center,
                             ),
-                          ]
+                          ],
                         ],
                       ).maybeAnimate(key: ValueKey(artifact.artifactId)).fadeIn(),
                     ),
@@ -71,11 +75,7 @@ class _BottomTextContent extends StatelessWidget {
                   semanticPageTitle: $strings.artifactsSemanticArtifact,
                 ),
               Gap($styles.insets.md),
-              AppBtn.from(
-                text: $strings.artifactsButtonBrowse,
-                expand: true,
-                onPressed: state._handleSearchTap,
-              ),
+              AppBtn.from(text: $strings.artifactsButtonBrowse, expand: true, onPressed: state._handleSearchTap),
               Gap($styles.insets.lg),
             ],
           ),

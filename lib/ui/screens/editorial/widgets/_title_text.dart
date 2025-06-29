@@ -1,7 +1,7 @@
 part of '../editorial_screen.dart';
 
 class _TitleText extends StatelessWidget {
-  const _TitleText(this.data, {super.key, required this.scroller});
+  const _TitleText(this.data, {required this.scroller});
   final WonderData data;
   final ScrollController scroller;
 
@@ -50,21 +50,18 @@ class _TitleText extends StatelessWidget {
                   Semantics(
                     sortKey: OrdinalSortKey(0),
                     child: AnimatedBuilder(
-                        animation: scroller,
-                        builder: (_, __) {
-                          final yPos = ContextUtils.getGlobalPos(context)?.dy ?? 0;
-                          bool enableHero = yPos > -100;
-                          return WonderTitleText(data, enableHero: enableHero);
-                        }),
+                      animation: scroller,
+                      builder: (_, _) {
+                        final yPos = ContextUtils.getGlobalPos(context)?.dy ?? 0;
+                        bool enableHero = yPos > -100;
+                        return WonderTitleText(data, enableHero: enableHero);
+                      },
+                    ),
                   ),
                   Gap($styles.insets.xs),
 
                   /// Region
-                  Text(
-                    data.regionTitle.toUpperCase(),
-                    style: $styles.text.title1,
-                    textAlign: TextAlign.center,
-                  ),
+                  Text(data.regionTitle.toUpperCase(), style: $styles.text.title1, textAlign: TextAlign.center),
                   Gap($styles.insets.md),
 
                   /// Compass divider
@@ -73,7 +70,7 @@ class _TitleText extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: $styles.insets.sm),
                       child: AnimatedBuilder(
                         animation: scroller,
-                        builder: (_, __) => CompassDivider(
+                        builder: (_, _) => CompassDivider(
                           isExpanded: scroller.position.pixels <= 0,
                           linesColor: data.type.fgColor,
                           compassColor: $styles.colors.offWhite,

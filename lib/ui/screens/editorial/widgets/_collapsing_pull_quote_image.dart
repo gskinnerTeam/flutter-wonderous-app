@@ -1,7 +1,7 @@
 part of '../editorial_screen.dart';
 
 class _CollapsingPullQuoteImage extends StatelessWidget {
-  const _CollapsingPullQuoteImage({super.key, required this.scrollPos, required this.data});
+  const _CollapsingPullQuoteImage({required this.scrollPos, required this.data});
   final ValueNotifier<double> scrollPos;
   final WonderData data;
 
@@ -31,7 +31,7 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
 
     return ValueListenableBuilder<double>(
       valueListenable: scrollPos,
-      builder: (context, value, __) {
+      builder: (context, value, _) {
         double collapseAmt = 1.0;
         final yPos = ContextUtils.getGlobalPos(context)?.dy;
         if (yPos != null && yPos < collapseStartPx) {
@@ -71,10 +71,7 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
                           Container(
                             alignment: Alignment.topRight,
                             margin: const EdgeInsets.all(12),
-                            child: ClipPath(
-                              clipper: CurvedTopClipper(),
-                              child: _buildImage(collapseAmt),
-                            ),
+                            child: ClipPath(clipper: CurvedTopClipper(), child: _buildImage(collapseAmt)),
                           ),
                         ],
                       ),
@@ -99,7 +96,7 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
                               Container(
                                 margin: const EdgeInsets.only(top: 16),
                                 child: buildText('- ${data.pullQuote1Author}', collapseAmt, top: false, isAuthor: true),
-                              )
+                              ),
                             ],
                           ],
                         ),
@@ -128,10 +125,7 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
           ),
         ),
         GradientContainer(
-          [
-            Color(0xFFBEABA1).withOpacity(1),
-            Color(0xFFA6958C).withOpacity(1),
-          ],
+          [Color(0xFFBEABA1).withValues(alpha: 1), Color(0xFFA6958C).withValues(alpha: 1)],
           const [0.0, 1.0],
           blendMode: BlendMode.colorBurn,
         ),

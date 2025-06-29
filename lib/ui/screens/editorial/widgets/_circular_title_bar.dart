@@ -1,8 +1,8 @@
 part of '../editorial_screen.dart';
 
 class _CircularTitleBar extends StatelessWidget {
-  const _CircularTitleBar({super.key, required this.titles, required this.icons, required this.index})
-      : assert(titles.length == icons.length, 'The number of titles and icons do not match.');
+  const _CircularTitleBar({required this.titles, required this.icons, required this.index})
+    : assert(titles.length == icons.length, 'The number of titles and icons do not match.');
   final List<String> titles;
   final List<String> icons;
   final int index;
@@ -21,7 +21,9 @@ class _CircularTitleBar extends StatelessWidget {
         child: Stack(
           children: [
             // Bg
-            BottomCenter(child: Container(height: barSize - barTopPadding, color: $styles.colors.offWhite)),
+            BottomCenter(
+              child: Container(height: barSize - barTopPadding, color: $styles.colors.offWhite),
+            ),
 
             ClipRect(
               child: OverflowBox(
@@ -34,8 +36,15 @@ class _CircularTitleBar extends StatelessWidget {
             BottomCenter(
               child: Padding(
                 padding: EdgeInsets.only(bottom: 20),
-                child: Image.asset('${ImagePaths.common}/${icons[index]}').maybeAnimate(key: ValueKey(index)).fade().scale(
-                    begin: Offset(.5, .5), end: Offset(1, 1), curve: Curves.easeOutBack, duration: $styles.times.med),
+                child: Image.asset('${ImagePaths.common}/${icons[index]}')
+                    .maybeAnimate(key: ValueKey(index))
+                    .fade()
+                    .scale(
+                      begin: Offset(.5, .5),
+                      end: Offset(1, 1),
+                      curve: Curves.easeOutBack,
+                      duration: $styles.times.med,
+                    ),
               ),
             ),
           ],
@@ -46,11 +55,7 @@ class _CircularTitleBar extends StatelessWidget {
 }
 
 class _AnimatedCircleWithText extends StatefulWidget {
-  const _AnimatedCircleWithText({
-    super.key,
-    required this.titles,
-    required this.index,
-  });
+  const _AnimatedCircleWithText({required this.titles, required this.index});
 
   final List<String> titles;
   final int index;
@@ -63,10 +68,7 @@ class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with S
   int _prevIndex = -1;
   String get oldTitle => _prevIndex == -1 ? '' : widget.titles[_prevIndex];
   String get newTitle => widget.titles[widget.index];
-  late final _anim = AnimationController(
-    vsync: this,
-    duration: $styles.times.med,
-  )..forward();
+  late final _anim = AnimationController(vsync: this, duration: $styles.times.med)..forward();
 
   bool get isAnimStopped => _anim.value == 0 || _anim.value == _anim.upperBound;
 
@@ -93,7 +95,7 @@ class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with S
   Widget build(_) {
     return AnimatedBuilder(
       animation: _anim,
-      builder: (_, __) {
+      builder: (_, _) {
         var rot = _prevIndex > widget.index ? -pi : pi;
         return Transform.rotate(
           angle: Curves.easeInOut.transform(_anim.value) * rot,
@@ -119,7 +121,7 @@ class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with S
                         angle: _anim.isCompleted ? 0 : rot,
                         child: _buildCircularText(_anim.isCompleted ? oldTitle : newTitle),
                       ),
-                    ]
+                    ],
                   ],
                 ),
               ),
@@ -131,10 +133,7 @@ class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with S
   }
 
   Widget _buildCircularText(String title) {
-    final textStyle = $styles.text.monoTitleFont.copyWith(
-      fontSize: 22 * $styles.scale,
-      color: $styles.colors.accent3,
-    );
+    final textStyle = $styles.text.monoTitleFont.copyWith(fontSize: 22 * $styles.scale, color: $styles.colors.accent3);
     return CircularText(
       position: CircularTextPosition.inside,
       children: [

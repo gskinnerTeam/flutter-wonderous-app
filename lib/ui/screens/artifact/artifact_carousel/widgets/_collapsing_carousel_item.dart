@@ -3,13 +3,13 @@ part of '../artifact_carousel_screen.dart';
 /// Handles the carousel specific logic, like setting the height and vertical alignment of each item.
 /// This lets the child simply render it's contents
 class _CollapsingCarouselItem extends StatelessWidget {
-  const _CollapsingCarouselItem(
-      {super.key,
-      required this.child,
-      required this.indexOffset,
-      required this.width,
-      required this.onPressed,
-      required this.title});
+  const _CollapsingCarouselItem({
+    required this.child,
+    required this.indexOffset,
+    required this.width,
+    required this.onPressed,
+    required this.title,
+  });
   final Widget child;
   final int indexOffset;
   final double width;
@@ -48,12 +48,7 @@ class _CollapsingCarouselItem extends StatelessWidget {
 }
 
 class _AnimatedTranslate extends StatelessWidget {
-  const _AnimatedTranslate({
-    super.key,
-    required this.duration,
-    required this.offset,
-    required this.child,
-  });
+  const _AnimatedTranslate({required this.duration, required this.offset, required this.child});
   final Duration duration;
   final Offset offset;
   final Widget child;
@@ -70,26 +65,26 @@ class _AnimatedTranslate extends StatelessWidget {
 }
 
 class _DoubleBorderImage extends StatelessWidget {
-  const _DoubleBorderImage(this.data, {super.key});
+  const _DoubleBorderImage(this.data);
   final HighlightData data;
   @override
   Widget build(BuildContext context) => Container(
-        // Add an outer border with the rounded ends.
-        decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-          border: Border.all(color: $styles.colors.offWhite, width: 1),
-          borderRadius: BorderRadius.all(Radius.circular(999)),
-        ),
+    // Add an outer border with the rounded ends.
+    decoration: BoxDecoration(
+      shape: BoxShape.rectangle,
+      border: Border.all(color: $styles.colors.offWhite, width: 1),
+      borderRadius: BorderRadius.all(Radius.circular(999)),
+    ),
 
-        child: Padding(
-          padding: EdgeInsets.all($styles.insets.xs),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(999),
-            child: ColoredBox(
-              color: $styles.colors.greyMedium,
-              child: AppImage(image: NetworkImage(data.imageUrlSmall), fit: BoxFit.cover, scale: 0.5),
-            ),
-          ),
+    child: Padding(
+      padding: EdgeInsets.all($styles.insets.xs),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(999),
+        child: ColoredBox(
+          color: $styles.colors.greyMedium,
+          child: AppImage(image: NetworkImage(data.imageUrlSmall), fit: BoxFit.cover, scale: 0.5),
         ),
-      );
+      ),
+    ),
+  );
 }

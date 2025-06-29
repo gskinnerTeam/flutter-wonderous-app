@@ -1,7 +1,7 @@
 part of '../editorial_screen.dart';
 
 class _SectionDivider extends StatefulWidget {
-  const _SectionDivider(this.scrollNotifier, this.sectionNotifier, {super.key, required this.index});
+  const _SectionDivider(this.scrollNotifier, this.sectionNotifier, {required this.index});
   final int index;
   final ValueNotifier<double> scrollNotifier;
   final ValueNotifier<int> sectionNotifier;
@@ -39,7 +39,7 @@ class _SectionDividerState extends State<_SectionDivider> with SingleTickerProvi
         _checkPosition(context);
         return ValueListenableBuilder<bool>(
           valueListenable: _isActivated,
-          builder: (_, value, __) => Padding(
+          builder: (_, value, _) => Padding(
             padding: EdgeInsets.symmetric(vertical: $styles.insets.xl * 2),
             child: CompassDivider(isExpanded: value),
           ),

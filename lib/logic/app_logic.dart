@@ -162,9 +162,11 @@ class AppLogic {
       'assets/images/taj_mahal/foreground-right.png',
     ];
 
-    urls.forEach((url) => precacheImage(AssetImage(url), context, onError: (error, stackTrace) {
+    for (var url in urls) {
+      precacheImage(AssetImage(url), context, onError: (error, stackTrace) {
       print('Loading $url failed - ${error.toString()}');
-    }));
+    });
+    }
   }
 }
 

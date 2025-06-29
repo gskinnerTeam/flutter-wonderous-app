@@ -1,7 +1,7 @@
 part of '../collectible_found_screen.dart';
 
 class _CelebrationParticles extends StatelessWidget {
-  const _CelebrationParticles({super.key, this.fadeMs = 1000});
+  const _CelebrationParticles({this.fadeMs = 1000});
 
   final int fadeMs;
 
@@ -14,11 +14,7 @@ class _CelebrationParticles extends StatelessWidget {
       child: RepaintBoundary(
         child: ParticleField(
           blendMode: BlendMode.dstIn,
-          spriteSheet: SpriteSheet(
-            image: AssetImage(ImagePaths.particle),
-            frameWidth: 21,
-            scale: 0.75,
-          ),
+          spriteSheet: SpriteSheet(image: AssetImage(ImagePaths.particle), frameWidth: 21, scale: 0.75),
           onTick: (controller, elapsed, size) {
             List<Particle> particles = controller.particles;
 
@@ -35,14 +31,16 @@ class _CelebrationParticles extends StatelessWidget {
             particleCount -= addCount;
             while (--addCount > 0) {
               final double angle = rnd.getRad();
-              particles.add(Particle(
-                // adding random variation makes it more visually interesting:
-                x: cos(angle) * d * rnd(0.8, 1),
-                y: sin(angle) * d * rnd(0.8, 1),
-                vx: cos(angle) * v * rnd(0.5, 1.5),
-                vy: sin(angle) * v * rnd(0.5, 1.5),
-                color: color.withOpacity(rnd(0.5, 1)),
-              ));
+              particles.add(
+                Particle(
+                  // adding random variation makes it more visually interesting:
+                  x: cos(angle) * d * rnd(0.8, 1),
+                  y: sin(angle) * d * rnd(0.8, 1),
+                  vx: cos(angle) * v * rnd(0.5, 1.5),
+                  vy: sin(angle) * v * rnd(0.5, 1.5),
+                  color: color.withValues(alpha: rnd(0.5, 1)),
+                ),
+              );
             }
 
             // update existing particles & remove old ones:

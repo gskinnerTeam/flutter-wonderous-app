@@ -1,7 +1,7 @@
 part of '../editorial_screen.dart';
 
 class _SlidingImageStack extends StatelessWidget {
-  const _SlidingImageStack({super.key, required this.scrollPos, required this.type});
+  const _SlidingImageStack({required this.scrollPos, required this.type});
 
   final ValueNotifier<double> scrollPos;
   final WonderType type;
@@ -43,22 +43,13 @@ class _SlidingImageStack extends StatelessWidget {
                 TopRight(
                   child: FractionalTranslation(
                     translation: Offset(0, -.1 + .2 * pctVisible),
-                    child: buildPhoto(
-                      .73,
-                      type.photo3,
-                      Alignment(0, -.3 + .6 * pctVisible),
-                    ),
+                    child: buildPhoto(.73, type.photo3, Alignment(0, -.3 + .6 * pctVisible)),
                   ),
                 ),
                 BottomLeft(
                   child: FractionalTranslation(
                     translation: Offset(0, -.14 * pctVisible),
-                    child: buildPhoto(
-                      .45,
-                      type.photo4,
-                      Alignment(0, .3 - .6 * pctVisible),
-                      top: false,
-                    ),
+                    child: buildPhoto(.45, type.photo4, Alignment(0, .3 - .6 * pctVisible), top: false),
                   ),
                 ),
               ],

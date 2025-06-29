@@ -2,14 +2,12 @@ part of '../timeline_screen.dart';
 
 class _ScrollingViewport extends StatefulWidget {
   const _ScrollingViewport({
-    super.key,
-    // ignore: unused_element
-    this.onInit,
     required this.scroller,
     required this.minSize,
     required this.maxSize,
     required this.selectedWonder,
     this.onYearChanged,
+    this.onInit,
   });
   final double minSize;
   final double maxSize;
@@ -72,7 +70,7 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
           IgnorePointerKeepSemantics(
             child: AnimatedBuilder(
               animation: controller.scroller,
-              builder: (_, __) {
+              builder: (_, _) {
                 return _DashedDividerWithYear(controller.calculateYearFromScrollPos());
               },
             ),
@@ -90,11 +88,8 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
         borderRadius: BorderRadius.circular(99),
         child: AnimatedBuilder(
           animation: controller.scroller,
-          builder: (_, __) => TimelineSection(
-            data,
-            controller.calculateYearFromScrollPos(),
-            selectedWonder: widget.selectedWonder,
-          ),
+          builder: (_, _) =>
+              TimelineSection(data, controller.calculateYearFromScrollPos(), selectedWonder: widget.selectedWonder),
         ),
       );
     }
@@ -130,7 +125,7 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
                           axis: Axis.vertical,
                           crossAxisGap: max(6, (width - (120 * 3)) / 2),
                           minSize: _minTimelineSize,
-                          timelineBuilder: (_, data, __) => buildTimelineSection(data),
+                          timelineBuilder: (_, data, _) => buildTimelineSection(data),
                         ),
                       ),
                     ),
@@ -138,7 +133,7 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
                     /// Event Markers, rebuilds on scroll
                     AnimatedBuilder(
                       animation: controller.scroller,
-                      builder: (_, __) => _EventMarkers(
+                      builder: (_, _) => _EventMarkers(
                         controller.calculateYearFromScrollPos(),
                         onEventChanged: _handleEventMarkerChanged,
                         onMarkerPressed: _handleMarkerPressed,
@@ -151,16 +146,15 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
 
             /// Top and bottom gradients for visual style
             ListOverscollGradient(),
-            BottomCenter(
-              child: ListOverscollGradient(bottomUp: true),
-            ),
+            BottomCenter(child: ListOverscollGradient(bottomUp: true)),
 
             /// Event Popups, rebuilds when [_currentEventMarker] changes
             ValueListenableBuilder<TimelineEvent?>(
-                valueListenable: _currentEventMarker,
-                builder: (_, data, __) {
-                  return _EventPopups(currentEvent: data);
-                })
+              valueListenable: _currentEventMarker,
+              builder: (_, data, _) {
+                return _EventPopups(currentEvent: data);
+              },
+            ),
           ],
         );
       },

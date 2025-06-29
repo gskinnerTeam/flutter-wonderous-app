@@ -2,12 +2,7 @@ part of '../collection_screen.dart';
 
 @immutable
 class _CollectionList extends StatefulWidget with GetItStatefulWidgetMixin {
-  _CollectionList({
-    super.key,
-    this.onReset,
-    required this.fromId,
-    this.scrollKey,
-  });
+  _CollectionList({this.onReset, required this.fromId, this.scrollKey});
 
   static const double _vtCardExtent = 300;
   static const double _hzCardExtent = 600;
@@ -63,7 +58,7 @@ class _CollectionListState extends State<_CollectionList> with GetItStateMixin {
           fromId: widget.fromId,
           data: d,
         );
-      })
+      }),
     ];
     // Scroll view adapts to scroll vertically or horizontally
     return SingleChildScrollView(
@@ -75,11 +70,7 @@ class _CollectionListState extends State<_CollectionList> with GetItStateMixin {
           direction: _vtMode.value ? Axis.vertical : Axis.horizontal,
           mainAxisSize: MainAxisSize.min,
           separatorBuilder: () => Gap($styles.insets.lg),
-          children: [
-            ...collections,
-            Gap($styles.insets.sm),
-            if (kDebugMode) _buildResetBtn(context),
-          ],
+          children: [...collections, Gap($styles.insets.sm), if (kDebugMode) _buildResetBtn(context)],
         ),
       ),
     );

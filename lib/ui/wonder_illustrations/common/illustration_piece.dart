@@ -1,4 +1,3 @@
-import 'dart:ui' as ui;
 
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration_builder.dart';
@@ -134,7 +133,7 @@ class _IllustrationPieceState extends State<IllustrationPiece> {
             children: [
               if (widget.bottom != null) Positioned.fill(child: widget.bottom!.call(context)),
               ...[
-                widget.enableHero && !$styles.disableAnimations ? Hero(tag: '$type-${widget.fileName}', child: content!) : content!,
+                widget.enableHero && !$styles.disableAnimations ? Hero(tag: '$type-${widget.fileName}', child: content) : content,
               ],
               if (widget.top != null) Positioned.fill(child: widget.top!.call(context)),
             ],

@@ -1,7 +1,7 @@
 part of '../editorial_screen.dart';
 
 class _LargeSimpleQuote extends StatelessWidget {
-  const _LargeSimpleQuote({super.key, required this.text, required this.author});
+  const _LargeSimpleQuote({required this.text, required this.author});
   final String text;
   final String author;
 
@@ -24,16 +24,9 @@ class _LargeSimpleQuote extends StatelessWidget {
                 ),
               ),
             ),
-            Text(
-              text,
-              style: $styles.text.quote2,
-              textAlign: TextAlign.center,
-            ),
+            Text(text, style: $styles.text.quote2, textAlign: TextAlign.center),
             Gap($styles.insets.md),
-            Text(
-              '- $author',
-              style: $styles.text.quote2Sub.copyWith(color: $styles.colors.accent3),
-            ),
+            Text('- $author', style: $styles.text.quote2Sub.copyWith(color: $styles.colors.accent3)),
           ],
         ),
       ),

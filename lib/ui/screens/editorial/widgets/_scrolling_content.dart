@@ -1,7 +1,7 @@
 part of '../editorial_screen.dart';
 
 class _ScrollingContent extends StatelessWidget {
-  const _ScrollingContent(this.data, {super.key, required this.scrollPos, required this.sectionNotifier});
+  const _ScrollingContent(this.data, {required this.scrollPos, required this.sectionNotifier});
   final WonderData data;
   final ValueNotifier<double> scrollPos;
   final ValueNotifier<int> sectionNotifier;
@@ -24,14 +24,14 @@ class _ScrollingContent extends StatelessWidget {
       final TextStyle dropStyle = $styles.text.dropCase;
       final TextStyle bodyStyle = $styles.text.body;
       final String dropChar = value.substring(0, 1);
-      final textScale = MediaQuery.of(context).textScaleFactor;
+      final textScale = MediaQuery.of(context).textScaler.scale(dropStyle.fontSize ?? 14);
       final double dropCapWidth = StringUtils.measure(dropChar, dropStyle).width * textScale;
       return Focus(
         child: Semantics(
           label: value,
           child: ExcludeSemantics(
             child: skipCaps
-                ? Text(_fixNewlines(value), style: bodyStyle )
+                ? Text(_fixNewlines(value), style: bodyStyle)
                 : DropCapText(
                     _fixNewlines(value).substring(1),
                     dropCap: DropCap(
@@ -42,22 +42,16 @@ class _ScrollingContent extends StatelessWidget {
                         child: Text(
                           dropChar,
                           overflow: TextOverflow.visible,
-                          style: $styles.text.dropCase.copyWith(
-                            color: $styles.colors.accent3,
-                            height: 1,
-                          ),
+                          style: $styles.text.dropCase.copyWith(color: $styles.colors.accent3, height: 1),
                         ),
                       ),
                     ),
                     style: $styles.text.body,
                     dropCapPadding: EdgeInsets.only(right: 6),
-                    dropCapStyle: $styles.text.dropCase.copyWith(
-                      color: $styles.colors.accent3,
-                      height: 1,
-                    ),
-                  )
+                    dropCapStyle: $styles.text.dropCase.copyWith(color: $styles.colors.accent3, height: 1),
+                  ),
           ),
-        )
+        ),
       );
     }
 
@@ -67,16 +61,11 @@ class _ScrollingContent extends StatelessWidget {
           0 => [WonderType.chichenItza, WonderType.colosseum],
           1 => [WonderType.pyramidsGiza, WonderType.petra],
           2 => [WonderType.machuPicchu, WonderType.christRedeemer],
-          _ => [WonderType.tajMahal, WonderType.greatWall]
+          _ => [WonderType.tajMahal, WonderType.greatWall],
         };
       }
 
-      return HiddenCollectible(
-        data.type,
-        index: 0,
-        matches: getTypesForSlot(slot),
-        size: 128,
-      );
+      return HiddenCollectible(data.type, index: 0, matches: getTypesForSlot(slot), size: 128);
     }
 
     return SliverBackgroundColor(
@@ -88,52 +77,54 @@ class _ScrollingContent extends StatelessWidget {
             Center(
               child: SizedBox(
                 width: $styles.sizes.maxContentWidth1,
-                child: Column(children: [
-                  ..._contentSection([
-                    Center(child: buildHiddenCollectible(slot: 0)),
+                child: Column(
+                  children: [
+                    ..._contentSection([
+                      Center(child: buildHiddenCollectible(slot: 0)),
 
-                    /// History 1
-                    buildText(data.historyInfo1, true),
+                      /// History 1
+                      buildText(data.historyInfo1, true),
 
-                    /// Quote1
-                    _CollapsingPullQuoteImage(data: data, scrollPos: scrollPos),
-                    Center(child: buildHiddenCollectible(slot: 1)),
+                      /// Quote1
+                      _CollapsingPullQuoteImage(data: data, scrollPos: scrollPos),
+                      Center(child: buildHiddenCollectible(slot: 1)),
 
-                    /// Callout1
-                    _Callout(text: data.callout1),
+                      /// Callout1
+                      _Callout(text: data.callout1),
 
-                    /// History 2
-                    buildText(data.historyInfo2, false),
-                    _SectionDivider(scrollPos, sectionNotifier, index: 1),
+                      /// History 2
+                      buildText(data.historyInfo2, false),
+                      _SectionDivider(scrollPos, sectionNotifier, index: 1),
 
-                    /// Construction 1
-                    buildText(data.constructionInfo1, true),
-                    Center(child: buildHiddenCollectible(slot: 2)),
-                  ]),
-                  Gap($styles.insets.md),
-                  _YouTubeThumbnail(id: data.videoId, caption: data.videoCaption),
-                  Gap($styles.insets.md),
-                  ..._contentSection([
-                    /// Callout2
-                    Gap($styles.insets.xs),
-                    _Callout(text: data.callout2),
+                      /// Construction 1
+                      buildText(data.constructionInfo1, true),
+                      Center(child: buildHiddenCollectible(slot: 2)),
+                    ]),
+                    Gap($styles.insets.md),
+                    _YouTubeThumbnail(id: data.videoId, caption: data.videoCaption),
+                    Gap($styles.insets.md),
+                    ..._contentSection([
+                      /// Callout2
+                      Gap($styles.insets.xs),
+                      _Callout(text: data.callout2),
 
-                    /// Construction 2
-                    buildText(data.constructionInfo2, false),
-                    _SlidingImageStack(scrollPos: scrollPos, type: data.type),
-                    _SectionDivider(scrollPos, sectionNotifier, index: 2),
+                      /// Construction 2
+                      buildText(data.constructionInfo2, false),
+                      _SlidingImageStack(scrollPos: scrollPos, type: data.type),
+                      _SectionDivider(scrollPos, sectionNotifier, index: 2),
 
-                    /// Location
-                    buildText(data.locationInfo1, true),
-                    _LargeSimpleQuote(text: data.pullQuote2, author: data.pullQuote2Author),
-                    buildText(data.locationInfo2, false),
-                  ]),
-                  Gap($styles.insets.md),
-                  _MapsThumbnail(data),
-                  Gap($styles.insets.md),
-                  ..._contentSection([Center(child: buildHiddenCollectible(slot: 3))]),
-                  Gap(150),
-                ]),
+                      /// Location
+                      buildText(data.locationInfo1, true),
+                      _LargeSimpleQuote(text: data.pullQuote2, author: data.pullQuote2Author),
+                      buildText(data.locationInfo2, false),
+                    ]),
+                    Gap($styles.insets.md),
+                    _MapsThumbnail(data),
+                    Gap($styles.insets.md),
+                    ..._contentSection([Center(child: buildHiddenCollectible(slot: 3))]),
+                    Gap(150),
+                  ],
+                ),
               ),
             ),
           ]),
@@ -150,7 +141,7 @@ class _ScrollingContent extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
           child: children[i],
         ),
-        Gap($styles.insets.md)
+        Gap($styles.insets.md),
       ],
       Padding(
         padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
@@ -161,7 +152,7 @@ class _ScrollingContent extends StatelessWidget {
 }
 
 class _YouTubeThumbnail extends StatelessWidget {
-  const _YouTubeThumbnail({super.key, required this.id, required this.caption});
+  const _YouTubeThumbnail({required this.id, required this.caption});
   final String id;
   final String caption;
 
@@ -180,30 +171,29 @@ class _YouTubeThumbnail extends StatelessWidget {
             AppBtn.basic(
               semanticLabel: $strings.scrollingContentSemanticYoutube,
               onPressed: handlePressed,
-              child: Stack(children: [
-                AppImage(image: NetworkImage(imageUrl), fit: BoxFit.cover, scale: 1.0),
-                Positioned.fill(
-                  child: Center(
-                    child: Container(
-                      padding: EdgeInsets.all($styles.insets.xs),
-                      decoration: BoxDecoration(
-                        color: $styles.colors.black.withOpacity(0.66),
-                        borderRadius: BorderRadius.circular(999),
-                      ),
-                      child: Icon(
-                        Icons.play_arrow,
-                        color: $styles.colors.white,
-                        size: $styles.insets.xl,
+              child: Stack(
+                children: [
+                  AppImage(image: NetworkImage(imageUrl), fit: BoxFit.cover, scale: 1.0),
+                  Positioned.fill(
+                    child: Center(
+                      child: Container(
+                        padding: EdgeInsets.all($styles.insets.xs),
+                        decoration: BoxDecoration(
+                          color: $styles.colors.black.withValues(alpha: 0.66),
+                          borderRadius: BorderRadius.circular(999),
+                        ),
+                        child: Icon(Icons.play_arrow, color: $styles.colors.white, size: $styles.insets.xl),
                       ),
                     ),
                   ),
-                ),
-              ]),
+                ],
+              ),
             ),
             Gap($styles.insets.xs),
             Padding(
-                padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
-                child: Text(caption, style: $styles.text.caption)),
+              padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
+              child: Text(caption, style: $styles.text.caption),
+            ),
           ],
         ),
       ),
@@ -212,7 +202,7 @@ class _YouTubeThumbnail extends StatelessWidget {
 }
 
 class _MapsThumbnail extends StatefulWidget {
-  const _MapsThumbnail(this.data, {super.key});
+  const _MapsThumbnail(this.data);
   final WonderData data;
 
   @override
@@ -273,19 +263,13 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
 }
 
 class SliverBackgroundColor extends SingleChildRenderObjectWidget {
-  const SliverBackgroundColor({
-    super.key,
-    required this.color,
-    Widget? sliver,
-  }) : super(child: sliver);
+  const SliverBackgroundColor({super.key, required this.color, Widget? sliver}) : super(child: sliver);
 
   final Color color;
 
   @override
   RenderSliverBackgroundColor createRenderObject(BuildContext context) {
-    return RenderSliverBackgroundColor(
-      color,
-    );
+    return RenderSliverBackgroundColor(color);
   }
 
   @override
@@ -314,10 +298,11 @@ class RenderSliverBackgroundColor extends RenderProxySliver {
       final Rect childRect =
           offset + childParentData.paintOffset & Size(constraints.crossAxisExtent, child!.geometry!.paintExtent);
       context.canvas.drawRect(
-          childRect,
-          Paint()
-            ..style = PaintingStyle.fill
-            ..color = color);
+        childRect,
+        Paint()
+          ..style = PaintingStyle.fill
+          ..color = color,
+      );
       context.paintChild(child!, offset + childParentData.paintOffset);
     }
   }

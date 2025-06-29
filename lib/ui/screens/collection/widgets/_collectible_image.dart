@@ -1,13 +1,7 @@
 part of '../collection_screen.dart';
 
 class _CollectibleImage extends StatelessWidget {
-  const _CollectibleImage({
-    super.key,
-    required this.collectible,
-    required this.state,
-    required this.onPressed,
-    this.heroTag,
-  });
+  const _CollectibleImage({required this.collectible, required this.state, required this.onPressed, this.heroTag});
 
   final CollectibleData collectible;
   final ValueSetter<CollectibleData> onPressed;
@@ -49,20 +43,13 @@ class _CollectibleImage extends StatelessWidget {
       decoration: BoxDecoration(
         color: $styles.colors.black,
         border: isNew ? Border.all(color: $styles.colors.accent1, width: 3) : null,
-        boxShadow:
-            !isNew ? null : [BoxShadow(color: $styles.colors.accent1.withOpacity(0.6), blurRadius: $styles.insets.sm)],
+        boxShadow: !isNew
+            ? null
+            : [BoxShadow(color: $styles.colors.accent1.withValues(alpha: 0.6), blurRadius: $styles.insets.sm)],
       ),
-      child: AppImage(
-        image: NetworkImage(collectible.imageUrlSmall),
-        fit: BoxFit.cover,
-        scale: 0.5,
-      ),
+      child: AppImage(image: NetworkImage(collectible.imageUrlSmall), fit: BoxFit.cover, scale: 0.5),
     );
 
-    return AppBtn.basic(
-      semanticLabel: collectible.title,
-      onPressed: () => onPressed(collectible),
-      child: content,
-    );
+    return AppBtn.basic(semanticLabel: collectible.title, onPressed: () => onPressed(collectible), child: content);
   }
 }
