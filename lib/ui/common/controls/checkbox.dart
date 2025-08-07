@@ -15,19 +15,18 @@ class SimpleCheckbox extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular($styles.corners.sm)),
-          ),
+          decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular($styles.corners.sm))),
           child: Checkbox(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular($styles.corners.sm))),
-              value: active,
-              visualDensity: VisualDensity(horizontal: 0.5, vertical: 0.5),
-              checkColor: $styles.colors.black.withOpacity(0.75),
-              activeColor: $styles.colors.white.withOpacity(0.75),
-              onChanged: (bool? active) {
-                AppHaptics.mediumImpact();
-                onToggled.call(active);
-              }),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular($styles.corners.sm))),
+            value: active,
+            visualDensity: VisualDensity(horizontal: 0.5, vertical: 0.5),
+            checkColor: $styles.colors.black.withValues(alpha: 0.75),
+            activeColor: $styles.colors.white.withValues(alpha: 0.75),
+            onChanged: (bool? active) {
+              AppHaptics.mediumImpact();
+              onToggled.call(active);
+            },
+          ),
         ),
         Gap($styles.insets.xs),
         Text(label, style: $styles.text.body.copyWith(color: $styles.colors.offWhite)),

@@ -23,9 +23,10 @@ class HomeMenu extends StatefulWidget {
 class _HomeMenuState extends State<HomeMenu> {
   double _btnSize(BuildContext context) => (context.sizePx.shortestSide / 5).clamp(60, 100);
 
-  void _handleAboutPressed(BuildContext context) async {
+  void _handleAboutPressed() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     if (!mounted) return;
+    if (!context.mounted) return;
     showAboutDialog(
       context: context,
       applicationName: $strings.appName,
@@ -52,10 +53,7 @@ class _HomeMenuState extends State<HomeMenu> {
     return Stack(
       children: [
         /// Backdrop / Underlay
-        AppBackdrop(
-          strength: .5,
-          child: Container(color: $styles.colors.greyStrong.withOpacity(.5)),
-        ),
+        AppBackdrop(strength: .5, child: Container(color: $styles.colors.greyStrong.withValues(alpha: .5))),
 
         PopNavigatorUnderlay(),
 
@@ -83,21 +81,17 @@ class _HomeMenuState extends State<HomeMenu> {
           ),
         ),
 
-        AppHeader(
-          isTransparent: true,
-          backIcon: AppIcons.close,
-          trailing: (_) => LocaleSwitcher(),
-        ),
+        AppHeader(isTransparent: true, backIcon: AppIcons.close, trailing: (_) => LocaleSwitcher()),
       ],
     );
   }
 
   Widget _buildIconGrid(BuildContext context) {
     Widget buildRow(List<Widget> children) => SeparatedRow(
-          mainAxisAlignment: MainAxisAlignment.center,
-          separatorBuilder: () => Gap($styles.insets.sm),
-          children: children,
-        );
+      mainAxisAlignment: MainAxisAlignment.center,
+      separatorBuilder: () => Gap($styles.insets.sm),
+      children: children,
+    );
     return SeparatedColumn(
       separatorBuilder: () => Gap($styles.insets.sm),
       mainAxisSize: MainAxisSize.min,
@@ -126,34 +120,38 @@ class _HomeMenuState extends State<HomeMenu> {
 
   Widget _buildBottomBtns(BuildContext context) {
     return ValueListenableBuilder(
-        valueListenable: settingsLogic.currentLocale,
-        builder: (_, __, ___) {
-          return SeparatedColumn(
-            separatorBuilder: () => Divider(thickness: 1.5, height: 1).maybeAnimate().scale(
-                  duration: $styles.times.slow,
-                  delay: $styles.times.pageTransition + 200.delayMs,
-                  curve: Curves.easeOutBack,
-                ),
-            children: [
-              _MenuTextBtn(
-                  label: $strings.homeMenuButtonExplore,
-                  icon: AppIcons.timeline,
-                  onPressed: () => _handleTimelinePressed(context)),
-              _MenuTextBtn(
-                  label: $strings.homeMenuButtonView,
-                  icon: AppIcons.collection,
-                  onPressed: () => _handleCollectionPressed(context)),
-              _MenuTextBtn(
-                label: $strings.homeMenuButtonAbout,
-                icon: AppIcons.info,
-                onPressed: () => _handleAboutPressed(context),
-              ),
-            ]
-                .animate(interval: 50.delayMs)
-                .fade(delay: $styles.times.pageTransition + 50.delayMs)
-                .slide(begin: Offset(0, .1), curve: Curves.easeOut),
-          );
-        });
+      valueListenable: settingsLogic.currentLocale,
+      builder: (context, locale, child) {
+        return SeparatedColumn(
+          separatorBuilder: () => Divider(thickness: 1.5, height: 1).maybeAnimate().scale(
+            duration: $styles.times.slow,
+            delay: $styles.times.pageTransition + 200.delayMs,
+            curve: Curves.easeOutBack,
+          ),
+          children:
+              [
+                    _MenuTextBtn(
+                      label: $strings.homeMenuButtonExplore,
+                      icon: AppIcons.timeline,
+                      onPressed: () => _handleTimelinePressed(context),
+                    ),
+                    _MenuTextBtn(
+                      label: $strings.homeMenuButtonView,
+                      icon: AppIcons.collection,
+                      onPressed: () => _handleCollectionPressed(context),
+                    ),
+                    _MenuTextBtn(
+                      label: $strings.homeMenuButtonAbout,
+                      icon: AppIcons.info,
+                      onPressed: () => _handleAboutPressed(),
+                    ),
+                  ]
+                  .animate(interval: 50.delayMs)
+                  .fade(delay: $styles.times.pageTransition + 50.delayMs)
+                  .slide(begin: Offset(0, .1), curve: Curves.easeOut),
+        );
+      },
+    );
   }
 
   Widget _buildGridBtn(BuildContext context, WonderData btnData) {
@@ -167,7 +165,7 @@ class _HomeMenuState extends State<HomeMenu> {
             ? null
             : [
                 BoxShadow(
-                  color: Colors.black.withOpacity(.3),
+                  color: Colors.black.withValues(alpha: .3),
                   blurRadius: 3,
                   spreadRadius: 3,
                   offset: Offset(0, 2),

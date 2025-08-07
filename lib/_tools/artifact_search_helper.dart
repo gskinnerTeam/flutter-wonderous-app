@@ -47,10 +47,7 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Padding(
-          padding: EdgeInsets.all(32.0),
-          child: _buildContent(context),
-        ),
+        body: Padding(padding: EdgeInsets.all(32.0), child: _buildContent(context)),
       ),
     );
   }
@@ -179,13 +176,7 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
     if (checkImages) aspectRatio = await _getAspectRatio(imageUrlSmall);
     if (aspectRatio == null) return _logError(id, 'image failed to load');
 
-    SearchData entry = SearchData(
-      year,
-      id,
-      _escape(json['title']),
-      _getKeywords(json),
-      aspectRatio,
-    );
+    SearchData entry = SearchData(year, id, _escape(json['title']), _getKeywords(json), aspectRatio);
 
     entries.add(entry);
   }
@@ -194,10 +185,12 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
     Completer<double?> completer = Completer<double?>();
     NetworkImage image = NetworkImage(imagePath);
     ImageStream stream = image.resolve(ImageConfiguration());
-    stream.addListener(ImageStreamListener(
-      (info, _) => completer.complete(info.image.width / info.image.height),
-      onError: (_, __) => completer.complete(null),
-    ));
+    stream.addListener(
+      ImageStreamListener(
+        (info, _) => completer.complete(info.image.width / info.image.height),
+        onError: (_, _) => completer.complete(null),
+      ),
+    );
     return completer.future;
   }
 
@@ -308,7 +301,7 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
         'four',
         'part',
         'called',
-        'over'
+        'over',
       ]);
       SearchData o = data[i];
       RegExp re = RegExp(r'\b\w{3,}\b');
@@ -341,35 +334,35 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
         // input:
         SizedBox(
           width: 200,
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text('Wonder to run:'),
-            _buildWonderPicker(context),
-            Gap(16),
-            Text('Max items:'),
-            TextFormField(
-              initialValue: maxIds.toString(),
-              onChanged: (s) => setState(() => maxIds = int.parse(s)),
-            ),
-            Gap(16),
-            Text('Max priority items:'),
-            TextFormField(
-              initialValue: maxPriority.toString(),
-              onChanged: (s) => setState(() => maxPriority = int.parse(s)),
-            ),
-            Gap(16),
-            CheckboxListTile(
-                title: Text('check images'), value: checkImages, onChanged: (b) => setState(() => checkImages = b!)),
-            Gap(32),
-            MaterialButton(onPressed: () => _run(), child: Text('RUN')),
-          ]),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Wonder to run:'),
+              _buildWonderPicker(context),
+              Gap(16),
+              Text('Max items:'),
+              TextFormField(initialValue: maxIds.toString(), onChanged: (s) => setState(() => maxIds = int.parse(s))),
+              Gap(16),
+              Text('Max priority items:'),
+              TextFormField(
+                initialValue: maxPriority.toString(),
+                onChanged: (s) => setState(() => maxPriority = int.parse(s)),
+              ),
+              Gap(16),
+              CheckboxListTile(
+                title: Text('check images'),
+                value: checkImages,
+                onChanged: (b) => setState(() => checkImages = b!),
+              ),
+              Gap(32),
+              MaterialButton(onPressed: () => _run(), child: Text('RUN')),
+            ],
+          ),
         ),
         Gap(40),
 
         // output:
-        Expanded(
-            child: ListView(
-          children: log.map<Widget>((o) => Text(o)).toList(growable: false),
-        )),
+        Expanded(child: ListView(children: log.map<Widget>((o) => Text(o)).toList(growable: false))),
       ],
     );
   }
@@ -383,20 +376,14 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
       icon: const Icon(Icons.arrow_downward),
       elevation: 16,
       style: const TextStyle(color: Colors.deepPurple),
-      underline: Container(
-        height: 2,
-        color: Colors.deepPurpleAccent,
-      ),
+      underline: Container(height: 2, color: Colors.deepPurpleAccent),
       onChanged: (String? newValue) {
         setState(() {
           selectedWonder = newValue!;
         });
       },
       items: items.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
+        return DropdownMenuItem<String>(value: value, child: Text(value));
       }).toList(),
     );
   }

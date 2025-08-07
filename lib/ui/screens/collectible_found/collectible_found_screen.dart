@@ -22,83 +22,98 @@ class CollectibleFoundScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RepaintBoundary(
-      child: _buildIntro(context).animate().swap(
-            delay: 1050.animateMs,
-            builder: (_, __) => _buildDetail(context),
-          ),
+      child: _buildIntro(
+        context,
+      ).animate().swap(delay: 1050.animateMs, builder: (context, child) => _buildDetail(context)),
     );
   }
 
   Widget _buildIntro(BuildContext context) {
     Duration t = $styles.times.fast;
-    return Stack(children: [
-      Animate().custom(duration: t * 5, builder: (context, ratio, _) => _buildGradient(context, ratio, 0)),
+    return Stack(
+      children: [
+        Animate().custom(duration: t * 5, builder: (context, ratio, _) => _buildGradient(context, ratio, 0)),
 
-      // icon is handled by Hero initially, then scales slowly:
-      Center(
-        child: FractionallySizedBox(
-          widthFactor: 0.33,
-          heightFactor: 0.33,
-          child: Hero(
-            tag: 'collectible_icon_${collectible.id}',
-            child: Image(
-              image: collectible.icon,
-              fit: BoxFit.contain,
-            ),
-          ),
-        )
-            .animate()
-            .scale(begin: Offset(1.5, 1.5), end: Offset(3, 3), curve: Curves.easeInExpo, delay: t, duration: t * 3)
-            .fadeOut(),
-      )
-    ]);
+        // icon is handled by Hero initially, then scales slowly:
+        Center(
+          child:
+              FractionallySizedBox(
+                    widthFactor: 0.33,
+                    heightFactor: 0.33,
+                    child: Hero(
+                      tag: 'collectible_icon_${collectible.id}',
+                      child: Image(image: collectible.icon, fit: BoxFit.contain),
+                    ),
+                  )
+                  .animate()
+                  .scale(
+                    begin: Offset(1.5, 1.5),
+                    end: Offset(3, 3),
+                    curve: Curves.easeInExpo,
+                    delay: t,
+                    duration: t * 3,
+                  )
+                  .fadeOut(),
+        ),
+      ],
+    );
   }
 
   Widget _buildDetail(BuildContext context) {
     Duration t = $styles.times.fast;
-    return Stack(key: ValueKey('detail'), children: [
-      /// Background
-      AppBackdrop(
-        strength: .5,
-        child: Container(color: $styles.colors.greyStrong.withOpacity(.96)),
-      ).animate().fadeIn(),
+    return Stack(
+      key: ValueKey('detail'),
+      children: [
+        /// Background
+        AppBackdrop(
+          strength: .5,
+          child: Container(color: $styles.colors.greyStrong.withValues(alpha: .96)),
+        ).animate().fadeIn(),
 
-      /// Particles
-      _CelebrationParticles(fadeMs: (t * 6).inMilliseconds),
+        /// Particles
+        _CelebrationParticles(fadeMs: (t * 6).inMilliseconds),
 
-      /// invisible close btn
-      PopNavigatorUnderlay(),
+        /// invisible close btn
+        PopNavigatorUnderlay(),
 
-      /// Content
-      SafeArea(
-        child: CenteredBox(
-          width: $styles.sizes.maxContentWidth3,
-          child: Column(
-            children: [
-              Gap($styles.insets.lg),
-              Spacer(),
-              SizedBox(
-                height: context.heightPx * .35,
-                child: Center(child: Hero(tag: 'collectible_image_${collectible.id}', child: _buildImage(context))),
-              ),
-              Gap($styles.insets.lg),
-              _buildRibbon(context),
-              Gap($styles.insets.sm),
-              _buildTitle(context, collectible.title, $styles.text.h2, $styles.colors.offWhite, t * 1.5),
-              Gap($styles.insets.xs),
-              _buildTitle(
-                  context, collectible.subtitle.toUpperCase(), $styles.text.title2, $styles.colors.accent1, t * 2),
-              Spacer(),
-              Gap($styles.insets.lg),
-              _buildCollectionButton(context),
-              Gap($styles.insets.lg),
-              Spacer(),
-            ],
+        /// Content
+        SafeArea(
+          child: CenteredBox(
+            width: $styles.sizes.maxContentWidth3,
+            child: Column(
+              children: [
+                Gap($styles.insets.lg),
+                Spacer(),
+                SizedBox(
+                  height: context.heightPx * .35,
+                  child: Center(
+                    child: Hero(tag: 'collectible_image_${collectible.id}', child: _buildImage(context)),
+                  ),
+                ),
+                Gap($styles.insets.lg),
+                _buildRibbon(context),
+                Gap($styles.insets.sm),
+                _buildTitle(context, collectible.title, $styles.text.h2, $styles.colors.offWhite, t * 1.5),
+                Gap($styles.insets.xs),
+                _buildTitle(
+                  context,
+                  collectible.subtitle.toUpperCase(),
+                  $styles.text.title2,
+                  $styles.colors.accent1,
+                  t * 2,
+                ),
+                Spacer(),
+                Gap($styles.insets.lg),
+                _buildCollectionButton(context),
+                Gap($styles.insets.lg),
+                Spacer(),
+              ],
+            ),
           ),
         ),
-      ),
-      AppHeader(isTransparent: true).animate().fade(delay: t * 4, duration: t * 2),
-    ]);
+        AppHeader(isTransparent: true).animate().fade(delay: t * 4, duration: t * 2),
+      ],
+    );
   }
 
   Widget _buildGradient(BuildContext context, double ratioIn, double ratioOut) {
@@ -109,12 +124,15 @@ class CollectibleFoundScreen extends StatelessWidget {
     final Color dark = $styles.colors.black;
 
     // final state is a solid fill, so optimize that case:
-    if (ratioOut == 1) return Container(color: dark.withOpacity(opacity));
+    if (ratioOut == 1) return Container(color: dark.withValues(alpha: opacity));
 
     return Container(
       decoration: BoxDecoration(
         gradient: RadialGradient(
-          colors: [Color.lerp(light, dark, ratioOut)!.withOpacity(opacity), dark.withOpacity(opacity)],
+          colors: [
+            Color.lerp(light, dark, ratioOut)!.withValues(alpha: opacity),
+            dark.withValues(alpha: opacity),
+          ],
           stops: [0.2, min(1, 0.25 + ratioIn * 0.5 + ratioOut * 0.5)],
         ),
       ),
@@ -131,17 +149,20 @@ class CollectibleFoundScreen extends StatelessWidget {
           builder: (_, ratio, child) => Container(
             padding: EdgeInsets.all($styles.insets.xxs),
             margin: EdgeInsets.symmetric(horizontal: $styles.insets.xl),
-            decoration: BoxDecoration(color: $styles.colors.offWhite, boxShadow: [
-              BoxShadow(
-                color: $styles.colors.accent1.withOpacity(ratio * 0.75),
-                blurRadius: $styles.insets.xl * 2,
-              ),
-              BoxShadow(
-                color: $styles.colors.black.withOpacity(ratio * 0.75),
-                offset: Offset(0, $styles.insets.xxs),
-                blurRadius: $styles.insets.sm,
-              ),
-            ]),
+            decoration: BoxDecoration(
+              color: $styles.colors.offWhite,
+              boxShadow: [
+                BoxShadow(
+                  color: $styles.colors.accent1.withValues(alpha: ratio * 0.75),
+                  blurRadius: $styles.insets.xl * 2,
+                ),
+                BoxShadow(
+                  color: $styles.colors.black.withValues(alpha: ratio * 0.75),
+                  offset: Offset(0, $styles.insets.xxs),
+                  blurRadius: $styles.insets.sm,
+                ),
+              ],
+            ),
             child: child,
           ),
         )
@@ -150,9 +171,9 @@ class CollectibleFoundScreen extends StatelessWidget {
 
   Widget _buildRibbon(BuildContext context) {
     Duration t = $styles.times.fast;
-    return _AnimatedRibbon($strings.collectibleFoundTitleArtifactDiscovered.toUpperCase())
-        .animate()
-        .scale(begin: Offset(0.3, 0.3), duration: t * 2, curve: Curves.easeOutExpo, alignment: Alignment(0, -1));
+    return _AnimatedRibbon(
+      $strings.collectibleFoundTitleArtifactDiscovered.toUpperCase(),
+    ).animate().scale(begin: Offset(0.3, 0.3), duration: t * 2, curve: Curves.easeOutExpo, alignment: Alignment(0, -1));
   }
 
   Widget _buildTitle(BuildContext context, String text, TextStyle style, Color color, Duration delay) {
@@ -163,12 +184,12 @@ class CollectibleFoundScreen extends StatelessWidget {
       child: Animate().custom(
         delay: delay,
         duration: t * 2,
-        builder: (_, m, __) => Text(
+        builder: (context, value, child) => Text(
           text,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.center,
-          style: style.copyWith(color: color.withOpacity(m)),
+          style: style.copyWith(color: color.withValues(alpha: value)),
         ),
       ),
     );
@@ -180,11 +201,7 @@ class CollectibleFoundScreen extends StatelessWidget {
       text: $strings.collectibleFoundButtonViewCollection,
       isSecondary: true,
       onPressed: () => _handleViewCollectionPressed(context),
-    ).animate().fadeIn(delay: t).move(
-          begin: Offset(0, 50),
-          duration: t,
-          curve: Curves.easeOutCubic,
-        );
+    ).animate().fadeIn(delay: t).move(begin: Offset(0, 50), duration: t, curve: Curves.easeOutCubic);
   }
 
   void _handleViewCollectionPressed(BuildContext context) {

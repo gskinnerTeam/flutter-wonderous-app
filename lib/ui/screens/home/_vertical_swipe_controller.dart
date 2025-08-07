@@ -39,14 +39,16 @@ class _VerticalSwipeController {
 
   /// Utility method to wrap a couple of ValueListenableBuilders and pass the values into a builder methods.
   /// Saves the UI some boilerplate when subscribing to changes.
-  Widget buildListener(
-      {required Widget Function(double swipeUpAmt, bool isPointerDown, Widget? child) builder, Widget? child}) {
+  Widget buildListener({
+    required Widget Function(double swipeUpAmt, bool isPointerDown, Widget? child) builder,
+    Widget? child,
+  }) {
     return ValueListenableBuilder<double>(
       valueListenable: swipeAmt,
-      builder: (_, swipeAmt, __) => ValueListenableBuilder<bool>(
+      builder: (context, value, child) => ValueListenableBuilder<bool>(
         valueListenable: isPointerDown,
-        builder: (_, isPointerDown, __) {
-          return builder(swipeAmt, isPointerDown, child);
+        builder: (context, isPointerDown, child) {
+          return builder(value, isPointerDown, child);
         },
       ),
     );
@@ -54,15 +56,16 @@ class _VerticalSwipeController {
 
   /// Utility method to wrap a gesture detector and wire up the required handlers.
   Widget wrapGestureDetector(Widget child, {Key? key}) => GestureDetector(
-      key: key,
-      excludeFromSemantics: true,
-      onTapDown: (_) => handleTapDown(),
-      onTapUp: (_) => handleTapCancelled(),
-      onVerticalDragUpdate: handleVerticalSwipeUpdate,
-      onVerticalDragEnd: (_) => handleVerticalSwipeCancelled(),
-      onVerticalDragCancel: handleVerticalSwipeCancelled,
-      behavior: HitTestBehavior.translucent,
-      child: child);
+    key: key,
+    excludeFromSemantics: true,
+    onTapDown: (_) => handleTapDown(),
+    onTapUp: (_) => handleTapCancelled(),
+    onVerticalDragUpdate: handleVerticalSwipeUpdate,
+    onVerticalDragEnd: (_) => handleVerticalSwipeCancelled(),
+    onVerticalDragCancel: handleVerticalSwipeCancelled,
+    behavior: HitTestBehavior.translucent,
+    child: child,
+  );
 
   void dispose() {
     swipeAmt.dispose();

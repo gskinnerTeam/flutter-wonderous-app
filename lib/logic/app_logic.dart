@@ -42,7 +42,7 @@ class AppLogic {
 
     if (kIsWeb) {
       // SB: This is intentionally not a debugPrint, as it's a message for users who open the console on web.
-      print(
+      debugPrint(
         '''Thanks for checking out Wonderous on the web!
         If you encounter any issues please report them at https://github.com/gskinnerTeam/flutter-wonderous-app/issues.''',
       );
@@ -90,9 +90,7 @@ class AppLogic {
   }
 
   Future<T?> showFullscreenDialogRoute<T>(BuildContext context, Widget child, {bool transparent = false}) async {
-    return await Navigator.of(context).push<T>(
-      PageRoutes.dialog<T>(child, duration: $styles.times.pageTransition),
-    );
+    return await Navigator.of(context).push<T>(PageRoutes.dialog<T>(child, duration: $styles.times.pageTransition));
   }
 
   /// Called from the UI layer once a MediaQuery has been obtained
@@ -113,16 +111,10 @@ class AppLogic {
     //debugPrint('updateDeviceOrientation, supportedAxis: $axisList');
     final orientations = <DeviceOrientation>[];
     if (axisList.contains(Axis.vertical)) {
-      orientations.addAll([
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-      ]);
+      orientations.addAll([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     }
     if (axisList.contains(Axis.horizontal)) {
-      orientations.addAll([
-        DeviceOrientation.landscapeLeft,
-        DeviceOrientation.landscapeRight,
-      ]);
+      orientations.addAll([DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
     }
     SystemChrome.setPreferredOrientations(orientations);
   }
@@ -132,7 +124,7 @@ class AppLogic {
       'assets/images/chichen_itza/chichen.png',
       'assets/images/chichen_itza/foreground-left.png',
       'assets/images/chichen_itza/foreground-right.png',
-      
+
       'assets/images/christ_the_redeemer/redeemer.png',
       'assets/images/christ_the_redeemer/foreground-left.png',
       'assets/images/christ_the_redeemer/foreground-right.png',
@@ -163,9 +155,13 @@ class AppLogic {
     ];
 
     for (var url in urls) {
-      precacheImage(AssetImage(url), context, onError: (error, stackTrace) {
-      print('Loading $url failed - ${error.toString()}');
-    });
+      precacheImage(
+        AssetImage(url),
+        context,
+        onError: (error, stackTrace) {
+          debugPrint('Loading $url failed - ${error.toString()}');
+        },
+      );
     }
   }
 }

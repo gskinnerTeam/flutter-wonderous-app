@@ -74,7 +74,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
               /// Era Text (classical, modern etc)
               ValueListenableBuilder<int>(
                 valueListenable: _year,
-                builder: (_, value, __) => _AnimatedEraText(value),
+                builder: (context, value, child) => _AnimatedEraText(value),
               ),
               Gap($styles.insets.xs),
 

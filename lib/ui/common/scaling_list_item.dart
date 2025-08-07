@@ -10,9 +10,9 @@ class AnimatedListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     // Use Animate.toggle to build the child twice, this will allow it to properly measure its size and position.
     return Animate().toggle(
-      builder: (_, value, __) => ValueListenableBuilder(
+      builder: (context, value, child) => ValueListenableBuilder(
         valueListenable: scrollPos,
-        builder: (_, value, __) {
+        builder: (context, value, child) {
           return LayoutBuilder(
             builder: (_, constraints) {
               Offset? pos = ContextUtils.getGlobalPos(context);

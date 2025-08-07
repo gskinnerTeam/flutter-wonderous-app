@@ -27,14 +27,11 @@ class _PopRouterOnOverScrollState extends State<PopRouterOnOverScroll> {
     super.didUpdateWidget(oldWidget);
   }
 
-  bool _checkPointerIsDown(d) => _isPointerDown = d.dragDetails != null;
+  bool _checkPointerIsDown(ScrollUpdateNotification d) => _isPointerDown = d.dragDetails != null;
 
   @override
   Widget build(BuildContext context) {
-    return NotificationListener<ScrollUpdateNotification>(
-      onNotification: _checkPointerIsDown,
-      child: widget.child,
-    );
+    return NotificationListener<ScrollUpdateNotification>(onNotification: _checkPointerIsDown, child: widget.child);
   }
 
   void _handleScrollChanged() {

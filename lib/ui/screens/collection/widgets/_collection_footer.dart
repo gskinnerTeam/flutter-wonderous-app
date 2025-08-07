@@ -15,7 +15,7 @@ class _CollectionFooter extends StatelessWidget {
         // Transform.translate(
         //   offset: Offset(0, -$styles.insets.xl),
         //   child: VtGradient(
-        //     [$styles.colors.greyStrong.withOpacity(0), $styles.colors.greyStrong],
+        //     [$styles.colors.greyStrong.withValues(alpha: 0), $styles.colors.greyStrong],
         //     const [0, 1],
         //     height: $styles.insets.xl,
         //   ),

@@ -33,10 +33,7 @@ class _EightWaySwipeDetectorState extends State<EightWaySwipeDetector> {
       // Normalize the dx/dy values between -1 and 1
       moveDelta /= distance;
       // Round the dx/dy values to snap them to -1, 0 or 1, creating an 8-way directional vector.
-      Offset dir = Offset(
-        moveDelta.dx.roundToDouble(),
-        moveDelta.dy.roundToDouble(),
-      );
+      Offset dir = Offset(moveDelta.dx.roundToDouble(), moveDelta.dy.roundToDouble());
       widget.onSwipe?.call(dir);
       _resetSwipe();
     }
@@ -56,7 +53,7 @@ class _EightWaySwipeDetectorState extends State<EightWaySwipeDetector> {
     _maybeTriggerSwipe();
   }
 
-  void _handleSwipeEnd(d) {
+  void _handleSwipeEnd(DragEndDetails d) {
     _maybeTriggerSwipe();
     _resetSwipe();
   }

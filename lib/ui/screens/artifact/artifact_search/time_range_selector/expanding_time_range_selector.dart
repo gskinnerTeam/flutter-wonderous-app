@@ -46,58 +46,57 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
     final bool isOpen = widget.panelController.value;
     double safeBottom = max($styles.insets.md, MediaQuery.of(context).padding.bottom);
 
-    return LayoutBuilder(builder: (_, constraints) {
-      return BottomCenter(
-        child: AnimatedPadding(
-          duration: $styles.times.fast,
-          padding: isOpen ? EdgeInsets.zero : EdgeInsets.only(bottom: safeBottom + $styles.insets.xxs),
-          child: AppBtn.basic(
-            onPressed: () => widget.panelController.toggle(),
-            semanticLabel: '',
-            pressEffect: false,
-            child: OpeningCard(
-              isOpen: isOpen,
-              padding: EdgeInsets.symmetric(horizontal: pad, vertical: $styles.insets.xs),
-              background: Container(
-                decoration: BoxDecoration(
-                  color: $styles.colors.black.withOpacity(0.85),
-                  borderRadius: BorderRadius.circular($styles.corners.md),
-                  boxShadow: [
-                    BoxShadow(
-                      color: $styles.colors.black.withOpacity(0.66),
-                      offset: Offset(0, 4),
-                      blurRadius: 4,
-                    )
-                  ],
+    return LayoutBuilder(
+      builder: (_, constraints) {
+        return BottomCenter(
+          child: AnimatedPadding(
+            duration: $styles.times.fast,
+            padding: isOpen ? EdgeInsets.zero : EdgeInsets.only(bottom: safeBottom + $styles.insets.xxs),
+            child: AppBtn.basic(
+              onPressed: () => widget.panelController.toggle(),
+              semanticLabel: '',
+              pressEffect: false,
+              child: OpeningCard(
+                isOpen: isOpen,
+                padding: EdgeInsets.symmetric(horizontal: pad, vertical: $styles.insets.xs),
+                background: Container(
+                  decoration: BoxDecoration(
+                    color: $styles.colors.black.withValues(alpha: 0.85),
+                    borderRadius: BorderRadius.circular($styles.corners.md),
+                    boxShadow: [
+                      BoxShadow(
+                        color: $styles.colors.black.withValues(alpha: 0.66),
+                        offset: Offset(0, 4),
+                        blurRadius: 4,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              closedBuilder: (_) => _ClosedTimeRange(startYear: widget.startYear, endYear: widget.endYear),
-              openBuilder: (_) => SizedBox(
-                width: constraints.maxWidth - pad * 2,
-                child: Center(
-                  child: _OpenedTimeRange(
-                    startYear: widget.startYear,
-                    endYear: widget.endYear,
-                    onChange: widget.onChanged,
-                    wonder: widget.wonder,
-                    painter: _painter,
-                    onClose: widget.panelController.toggle,
+                closedBuilder: (_) => _ClosedTimeRange(startYear: widget.startYear, endYear: widget.endYear),
+                openBuilder: (_) => SizedBox(
+                  width: constraints.maxWidth - pad * 2,
+                  child: Center(
+                    child: _OpenedTimeRange(
+                      startYear: widget.startYear,
+                      endYear: widget.endYear,
+                      onChange: widget.onChanged,
+                      wonder: widget.wonder,
+                      painter: _painter,
+                      onClose: widget.panelController.toggle,
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }
 
 class _ClosedTimeRange extends StatelessWidget {
-  const _ClosedTimeRange({
-    required this.startYear,
-    required this.endYear,
-  });
+  const _ClosedTimeRange({required this.startYear, required this.endYear});
   final double startYear, endYear;
 
   @override
@@ -222,19 +221,14 @@ class _OpenedTimeRange extends StatelessWidget {
                   borderRadius: BorderRadius.circular($styles.corners.md),
                   color: Color.lerp($styles.colors.black, Colors.black, 0.2),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: timelineGrid,
-                ),
+                child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: timelineGrid),
               ),
 
               // results visualization:
               Positioned.fill(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: RangeSelector.handleWidth),
-                  child: RepaintBoundary(
-                    child: CustomPaint(painter: painter),
-                  ),
+                  child: RepaintBoundary(child: CustomPaint(painter: painter)),
                 ),
               ),
 
@@ -246,9 +240,9 @@ class _OpenedTimeRange extends StatelessWidget {
                     crossAxisGap: 6,
                     minSize: 16,
                     selectedWonders: [wonder.type],
-                    timelineBuilder: (_, __, sel) => Container(
+                    timelineBuilder: (context, data, sel) => Container(
                       decoration: BoxDecoration(
-                        color: $styles.colors.offWhite.withOpacity(sel ? 0.75 : 0.25),
+                        color: $styles.colors.offWhite.withValues(alpha: sel ? 0.75 : 0.25),
                         borderRadius: BorderRadius.circular(999),
                       ),
                     ),

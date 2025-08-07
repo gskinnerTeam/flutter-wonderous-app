@@ -61,7 +61,7 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
   Widget build(BuildContext context) {
     Widget content = AnimatedBuilder(
       animation: _isZoomed,
-      builder: (_, __) {
+      builder: (context, child) {
         final bool enableSwipe = !_isZoomed.value && widget.urls.length > 1;
         return PageView.builder(
           physics: enableSwipe ? PageScrollPhysics() : NeverScrollableScrollPhysics(),
@@ -95,7 +95,7 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
                   padding: EdgeInsets.only(bottom: $styles.insets.md),
                   child: ValueListenableBuilder(
                     valueListenable: _currentPage,
-                    builder: (_, int page, __) {
+                    builder: (context, int page, child) {
                       return Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -110,14 +110,14 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
                             flipIcon: true,
                             onPressed: page == widget.urls.length - 1 ? null : () => _animateToPage(page + 1),
                             semanticLabel: $strings.semanticsNext(''),
-                          )
+                          ),
                         ],
                       );
                     },
                   ),
                 ),
-              )
-            }
+              ),
+            },
           ],
         ),
       ),
@@ -159,9 +159,7 @@ class _ViewerState extends State<_Viewer> with SingleTickerProviderStateMixin {
         child: Hero(
           tag: widget.url,
           child: AppImage(
-            image: NetworkImage(
-              widget.url,
-            ),
+            image: NetworkImage(widget.url),
             fit: BoxFit.contain,
             scale: FullscreenUrlImgViewer.imageScale,
             progress: true,

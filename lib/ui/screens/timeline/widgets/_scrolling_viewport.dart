@@ -7,14 +7,12 @@ class _ScrollingViewport extends StatefulWidget {
     required this.maxSize,
     required this.selectedWonder,
     this.onYearChanged,
-    this.onInit,
   });
   final double minSize;
   final double maxSize;
   final ScrollController scroller;
   final WonderType? selectedWonder;
   final void Function(int year)? onYearChanged;
-  final void Function(_ScrollingViewportController controller)? onInit;
 
   @override
   State<_ScrollingViewport> createState() => _ScalingViewportState();
@@ -30,7 +28,6 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
   void initState() {
     super.initState();
     controller.init();
-    widget.onInit?.call(controller);
   }
 
   @override
@@ -44,7 +41,7 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
     AppHaptics.selectionClick();
   }
 
-  void _handleMarkerPressed(event) {
+  void _handleMarkerPressed(TimelineEvent event) {
     final pos = controller.calculateScrollPosFromYear(event.year);
     controller.scroller.animateTo(pos, duration: $styles.times.med, curve: Curves.easeOutBack);
   }

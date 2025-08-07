@@ -21,17 +21,11 @@ class _KeyboardArrowsListenerState extends State<KeyboardArrowsListener> {
 
   @override
   Widget build(BuildContext context) {
-    return RawKeyboardListener(
-      autofocus: true,
-      focusNode: _focusNode,
-      onKey: _handleKey,
-      child: widget.child,
-    );
+    return KeyboardListener(autofocus: true, focusNode: _focusNode, onKeyEvent: _handleKey, child: widget.child);
   }
 
-  void _handleKey(RawKeyEvent event) {
-    if (event is! RawKeyDownEvent) return;
-    if (event.repeat) return;
+  void _handleKey(KeyEvent event) {
+    if (event is! KeyDownEvent) return;
     final arrowDir = ArrowDir(0, 0);
     if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
       arrowDir.hz = -1;

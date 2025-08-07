@@ -68,10 +68,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
     );
     _pageController?.addListener(_handlePageChanged);
     final pages = _artifacts.map((e) {
-      return Padding(
-        padding: EdgeInsets.all(10),
-        child: _DoubleBorderImage(e),
-      );
+      return Padding(padding: EdgeInsets.all(10), child: _DoubleBorderImage(e));
     }).toList();
 
     return Stack(
@@ -79,67 +76,69 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
         /// Blurred Bg
         Positioned.fill(
           child: ValueListenableBuilder<int>(
-              valueListenable: _currentArtifactIndex,
-              builder: (_, value, __) {
-                return _BlurredImageBg(url: _artifacts[value].imageUrl);
-              }),
+            valueListenable: _currentArtifactIndex,
+            builder: (context, value, child) {
+              return _BlurredImageBg(url: _artifacts[value].imageUrl);
+            },
+          ),
         ),
 
         Padding(
-            padding: widget.contentPadding,
-            child: Stack(
-              children: [
-                /// BgCircle
-                _buildBgCircle(bottomHeight),
+          padding: widget.contentPadding,
+          child: Stack(
+            children: [
+              /// BgCircle
+              _buildBgCircle(bottomHeight),
 
-                /// Carousel Items
-                PageView.builder(
-                  controller: _pageController,
-                  itemBuilder: (_, index) {
-                    final wrappedIndex = index % pages.length;
-                    final child = pages[wrappedIndex];
-                    return ValueListenableBuilder<double>(
-                      valueListenable: _currentPage,
-                      builder: (_, value, __) {
-                        final int offset = (value.round() - index).abs();
-                        return _CollapsingCarouselItem(
-                          width: itemWidth,
-                          indexOffset: min(3, offset),
-                          onPressed: () => _handleArtifactTap(index),
-                          title: _artifacts[wrappedIndex].title,
-                          child: child,
-                        );
-                      },
-                    );
-                  },
-                ),
+              /// Carousel Items
+              PageView.builder(
+                controller: _pageController,
+                itemBuilder: (_, index) {
+                  final wrappedIndex = index % pages.length;
+                  final pageChild = pages[wrappedIndex];
+                  return ValueListenableBuilder<double>(
+                    valueListenable: _currentPage,
+                    builder: (context, value, child) {
+                      final int offset = (value.round() - index).abs();
+                      return _CollapsingCarouselItem(
+                        width: itemWidth,
+                        indexOffset: min(3, offset),
+                        onPressed: () => _handleArtifactTap(index),
+                        title: _artifacts[wrappedIndex].title,
+                        child: pageChild,
+                      );
+                    },
+                  );
+                },
+              ),
 
-                /// Bottom Text
-                BottomCenter(
-                  child: ValueListenableBuilder<int>(
-                    valueListenable: _currentArtifactIndex,
-                    builder: (_, value, __) => _BottomTextContent(
-                      artifact: _artifacts[value],
-                      height: bottomHeight,
-                      shortMode: shortMode,
-                      state: this,
-                    ),
+              /// Bottom Text
+              BottomCenter(
+                child: ValueListenableBuilder<int>(
+                  valueListenable: _currentArtifactIndex,
+                  builder: (context, value, child) => _BottomTextContent(
+                    artifact: _artifacts[value],
+                    height: bottomHeight,
+                    shortMode: shortMode,
+                    state: this,
                   ),
                 ),
+              ),
 
-                /// Header
-                AppHeader(
-                  title: $strings.artifactsTitleArtifacts,
-                  showBackBtn: false,
-                  isTransparent: true,
-                  trailing: (context) => CircleBtn(
-                    semanticLabel: $strings.artifactsButtonBrowse,
-                    onPressed: _handleSearchTap,
-                    child: AppIcon(AppIcons.search),
-                  ),
+              /// Header
+              AppHeader(
+                title: $strings.artifactsTitleArtifacts,
+                showBackBtn: false,
+                isTransparent: true,
+                trailing: (context) => CircleBtn(
+                  semanticLabel: $strings.artifactsButtonBrowse,
+                  onPressed: _handleSearchTap,
+                  child: AppIcon(AppIcons.search),
                 ),
-              ],
-            ))
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }
@@ -153,7 +152,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
         offset: Offset(0, size / 2),
         child: Container(
           decoration: BoxDecoration(
-            color: $styles.colors.offWhite.withOpacity(0.8),
+            color: $styles.colors.offWhite.withValues(alpha: 0.8),
             borderRadius: BorderRadius.vertical(top: Radius.circular(size)),
           ),
         ),

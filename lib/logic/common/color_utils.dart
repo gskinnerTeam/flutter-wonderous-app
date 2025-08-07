@@ -11,9 +11,9 @@ class ColorUtils {
   static Color blend(Color dst, Color src, double opacity) {
     return Color.fromARGB(
       255,
-      (dst.red.toDouble() * (1.0 - opacity) + src.red.toDouble() * opacity).toInt(),
-      (dst.green.toDouble() * (1.0 - opacity) + src.green.toDouble() * opacity).toInt(),
-      (dst.blue.toDouble() * (1.0 - opacity) + src.blue.toDouble() * opacity).toInt(),
+      ((dst.r * 255.0).round() * (1.0 - opacity) + (src.r * 255.0).round() * opacity).toInt(),
+      ((dst.g * 255.0).round() * (1.0 - opacity) + (src.g * 255.0).round() * opacity).toInt(),
+      ((dst.b * 255.0).round() * (1.0 - opacity) + (src.b * 255.0).round() * opacity).toInt(),
     );
   }
 }

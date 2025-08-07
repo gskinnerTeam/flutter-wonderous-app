@@ -6,14 +6,7 @@ class ScrollDecorator extends StatefulWidget {
   /// Creates a widget that builds foreground and/or background decorations for a scrolling widget based on the state of
   /// its ScrollController.
   // ignore: prefer_const_constructors_in_immutables
-  ScrollDecorator({
-    super.key,
-    required this.builder,
-    this.fgBuilder,
-    this.bgBuilder,
-    this.controller,
-    this.onInit,
-  });
+  ScrollDecorator({super.key, required this.builder, this.fgBuilder, this.bgBuilder, this.controller, this.onInit});
 
   /// Creates a ScrollDecorator that fades a widget in at the begin or end of the scrolling widget based on the scroll
   /// position. For example on a vertical list, it would fade in the `begin` widget when the list is not scrolled to the
@@ -70,7 +63,10 @@ class ScrollDecorator extends StatefulWidget {
           height: 24,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [color.withOpacity(ratio * color.opacity), Colors.transparent],
+              colors: [
+                color.withValues(alpha: ratio * color.a),
+                Colors.transparent,
+              ],
               stops: [0, ratio],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
@@ -125,20 +121,17 @@ class _ScrollDecoratorState extends State<ScrollDecorator> {
   Widget build(BuildContext context) {
     content = widget.builder(currentController);
     return AnimatedBuilder(
-        animation: currentController,
-        builder: (_, __) {
-          return Stack(
-            children: [
-              if (widget.bgBuilder != null) ...[
-                widget.bgBuilder!(currentController),
-              ],
-              content,
-              if (widget.fgBuilder != null) ...[
-                widget.fgBuilder!(currentController),
-              ],
-            ],
-          );
-        });
+      animation: currentController,
+      builder: (context, child) {
+        return Stack(
+          children: [
+            if (widget.bgBuilder != null) ...[widget.bgBuilder!(currentController)],
+            content,
+            if (widget.fgBuilder != null) ...[widget.fgBuilder!(currentController)],
+          ],
+        );
+      },
+    );
   }
 }
 

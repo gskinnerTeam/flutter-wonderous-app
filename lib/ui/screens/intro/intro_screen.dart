@@ -51,8 +51,11 @@ class _IntroScreenState extends State<IntroScreen> {
   }
 
   void _handleSemanticSwipe(int dir) {
-    _pageController.animateToPage((_pageController.page ?? 0).round() + dir,
-        duration: $styles.times.fast, curve: Curves.easeOut);
+    _pageController.animateToPage(
+      (_pageController.page ?? 0).round() + dir,
+      duration: $styles.times.fast,
+      curve: Curves.easeOut,
+    );
   }
 
   void _handleNavTextSemanticTap() => _incrementPage(1);
@@ -115,50 +118,51 @@ class _IntroScreenState extends State<IntroScreen> {
                   ),
 
                   IgnorePointerKeepSemantics(
-                    child: Column(children: [
-                      Spacer(),
+                    child: Column(
+                      children: [
+                        Spacer(),
 
-                      // logo:
-                      Semantics(
-                        header: true,
-                        child: Container(
-                          height: _logoHeight,
-                          alignment: Alignment.center,
-                          child: _WonderousLogo(),
+                        // logo:
+                        Semantics(
+                          header: true,
+                          child: Container(height: _logoHeight, alignment: Alignment.center, child: _WonderousLogo()),
                         ),
-                      ),
 
-                      // masked image:
-                      SizedBox(
-                        height: _imageSize,
-                        width: _imageSize,
-                        child: ValueListenableBuilder<int>(
-                          valueListenable: _currentPage,
-                          builder: (_, value, __) {
-                            return AnimatedSwitcher(
-                              duration: $styles.times.slow,
-                              child: KeyedSubtree(
-                                key: ValueKey(value), // so AnimatedSwitcher sees it as a different child.
-                                child: _PageImage(data: pageData[value]),
-                              ),
-                            );
-                          },
+                        // masked image:
+                        SizedBox(
+                          height: _imageSize,
+                          width: _imageSize,
+                          child: ValueListenableBuilder<int>(
+                            valueListenable: _currentPage,
+                            builder: (context, value, child) {
+                              return AnimatedSwitcher(
+                                duration: $styles.times.slow,
+                                child: KeyedSubtree(
+                                  key: ValueKey(value), // so AnimatedSwitcher sees it as a different child.
+                                  child: _PageImage(data: pageData[value]),
+                                ),
+                              );
+                            },
+                          ),
                         ),
-                      ),
 
-                      // placeholder gap for text:
-                      Gap(_IntroScreenState._textHeight),
+                        // placeholder gap for text:
+                        Gap(_IntroScreenState._textHeight),
 
-                      // page indicator:
-                      Container(
-                        height: _pageIndicatorHeight,
-                        alignment: Alignment(0.0, 0),
-                        child: AppPageIndicator(
-                            count: pageData.length, controller: _pageController, color: $styles.colors.offWhite),
-                      ),
+                        // page indicator:
+                        Container(
+                          height: _pageIndicatorHeight,
+                          alignment: Alignment(0.0, 0),
+                          child: AppPageIndicator(
+                            count: pageData.length,
+                            controller: _pageController,
+                            color: $styles.colors.offWhite,
+                          ),
+                        ),
 
-                      Spacer(flex: 2),
-                    ]),
+                        Spacer(flex: 2),
+                      ],
+                    ),
                   ),
 
                   // Build a cpl overlays to hide the content when swiping on very wide screens
@@ -168,11 +172,7 @@ class _IntroScreenState extends State<IntroScreen> {
                   // nav help text:
                   if (PlatformInfo.isMobile) ...[
                     // finish button:
-                    Positioned(
-                      right: $styles.insets.lg,
-                      bottom: $styles.insets.lg,
-                      child: _buildFinishBtn(context),
-                    ),
+                    Positioned(right: $styles.insets.lg, bottom: $styles.insets.lg, child: _buildFinishBtn(context)),
 
                     BottomCenter(
                       child: Padding(
@@ -180,7 +180,7 @@ class _IntroScreenState extends State<IntroScreen> {
                         child: _buildNavText(context),
                       ),
                     ),
-                  ]
+                  ],
                 ],
               ),
             ),
@@ -193,7 +193,7 @@ class _IntroScreenState extends State<IntroScreen> {
   Widget _buildFinishBtn(BuildContext context) {
     return ValueListenableBuilder<int>(
       valueListenable: _currentPage,
-      builder: (_, pageIndex, __) {
+      builder: (context, pageIndex, child) {
         return AnimatedOpacity(
           opacity: pageIndex == pageData.length - 1 ? 1 : 0,
           duration: $styles.times.fast,
@@ -216,14 +216,9 @@ class _IntroScreenState extends State<IntroScreen> {
         child: Padding(
           padding: EdgeInsets.only(left: left ? 0 : 200, right: left ? 200 : 0),
           child: Transform.scale(
-              scaleX: left ? -1 : 1,
-              child: HzGradient([
-                $styles.colors.black.withOpacity(0),
-                $styles.colors.black,
-              ], const [
-                0,
-                .2
-              ])),
+            scaleX: left ? -1 : 1,
+            child: HzGradient([$styles.colors.black.withValues(alpha: 0), $styles.colors.black], const [0, .2]),
+          ),
         ),
       ),
     );
@@ -232,7 +227,7 @@ class _IntroScreenState extends State<IntroScreen> {
   Widget _buildNavText(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: _currentPage,
-      builder: (_, pageIndex, __) {
+      builder: (context, pageIndex, child) {
         return AnimatedOpacity(
           opacity: pageIndex == pageData.length - 1 ? 0 : 1,
           duration: $styles.times.fast,
@@ -268,26 +263,28 @@ class _Page extends StatelessWidget {
       liveRegion: true,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
-        child: Column(children: [
-          Spacer(),
-          Gap(_IntroScreenState._imageSize + _IntroScreenState._logoHeight),
-          SizedBox(
-            height: _IntroScreenState._textHeight,
-            width: 400,
-            child: StaticTextScale(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(data.title, style: $styles.text.wonderTitle.copyWith(fontSize: 24 * $styles.scale)),
-                  Gap($styles.insets.sm),
-                  Text(data.desc, style: $styles.text.body, textAlign: TextAlign.center),
-                ],
+        child: Column(
+          children: [
+            Spacer(),
+            Gap(_IntroScreenState._imageSize + _IntroScreenState._logoHeight),
+            SizedBox(
+              height: _IntroScreenState._textHeight,
+              width: 400,
+              child: StaticTextScale(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(data.title, style: $styles.text.wonderTitle.copyWith(fontSize: 24 * $styles.scale)),
+                    Gap($styles.insets.sm),
+                    Text(data.desc, style: $styles.text.body, textAlign: TextAlign.center),
+                  ],
+                ),
               ),
             ),
-          ),
-          Gap(_IntroScreenState._pageIndicatorHeight),
-          Spacer(flex: 2),
-        ]),
+            Gap(_IntroScreenState._pageIndicatorHeight),
+            Spacer(flex: 2),
+          ],
+        ),
       ),
     );
   }
@@ -308,7 +305,7 @@ class _WonderousLogo extends StatelessWidget {
             $strings.introSemanticWonderous,
             style: $styles.text.wonderTitle.copyWith(fontSize: 32 * $styles.scale, color: $styles.colors.offWhite),
           ),
-        )
+        ),
       ],
     );
   }
@@ -332,11 +329,12 @@ class _PageImage extends StatelessWidget {
           ),
         ),
         Positioned.fill(
-            child: Image.asset(
-          '${ImagePaths.common}/intro-mask-${data.mask}.png',
-          excludeFromSemantics: true,
-          fit: BoxFit.fill,
-        )),
+          child: Image.asset(
+            '${ImagePaths.common}/intro-mask-${data.mask}.png',
+            excludeFromSemantics: true,
+            fit: BoxFit.fill,
+          ),
+        ),
       ],
     );
   }

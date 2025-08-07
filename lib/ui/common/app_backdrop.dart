@@ -3,11 +3,7 @@ import 'dart:ui';
 import 'package:wonders/common_libs.dart';
 
 class AppBackdrop extends StatelessWidget {
-  const AppBackdrop({
-    super.key,
-    this.strength = 1,
-    this.child,
-  });
+  const AppBackdrop({super.key, this.strength = 1, this.child});
 
   final double strength;
   final Widget? child;
@@ -21,7 +17,7 @@ class AppBackdrop extends StatelessWidget {
         child: child ?? SizedBox.expand(),
       );
     }
-    final fill = Container(color: $styles.colors.black.withOpacity(.8 * strength));
+    final fill = Container(color: $styles.colors.black.withValues(alpha: 0.8 * strength));
     return child == null
         ? fill
         : Stack(

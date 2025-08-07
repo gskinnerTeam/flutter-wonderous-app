@@ -13,7 +13,7 @@ class FullscreenKeyboardListScroller extends StatelessWidget {
   final ScrollController scrollController;
   final Throttler _throttler = Throttler(32.milliseconds);
 
-  double clampOffset(px) => px.clamp(0, scrollController.position.maxScrollExtent).toDouble();
+  double clampOffset(double px) => px.clamp(0, scrollController.position.maxScrollExtent).toDouble();
 
   void _handleKeyDown(int px) {
     scrollController.animateTo(
