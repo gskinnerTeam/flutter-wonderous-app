@@ -127,47 +127,64 @@ class AppLogic {
     SystemChrome.setPreferredOrientations(orientations);
   }
 
+  void precacheUrl(String url, BuildContext context) async {
+    await precacheImage(AssetImage(url), context, onError: (error, stackTrace) {
+      print('Loading $url failed - ${error.toString()}');
+    });
+  }
+
   void precacheIcons(BuildContext context) {
     // Precache the active and idle icons for the navigation bar.
+    List<String> urls = [];
     for (var i = 0; i < 2; i++) {
-      precacheImage(AssetImage('${ImagePaths.common}/tab-editorial${i == 0 ? '-active' : ''}.png'), context);
-      precacheImage(AssetImage('${ImagePaths.common}/tab-photos${i == 0 ? '-active' : ''}.png'), context);
-      precacheImage(AssetImage('${ImagePaths.common}/tab-artifacts${i == 0 ? '-active' : ''}.png'), context);
-      precacheImage(AssetImage('${ImagePaths.common}/tab-timeline${i == 0 ? '-active' : ''}.png'), context);
+      urls.add('${ImagePaths.common}/tab-editorial${i == 0 ? '-active' : ''}.png');
+      urls.add('${ImagePaths.common}/tab-photos${i == 0 ? '-active' : ''}.png');
+      urls.add('${ImagePaths.common}/tab-artifacts${i == 0 ? '-active' : ''}.png');
+      urls.add('${ImagePaths.common}/tab-timeline${i == 0 ? '-actÍive' : ''}.png');
     }
+    urls.forEach((url) => precacheUrl(url, context));
   }
 
   void precacheWonderImages(BuildContext context) {
-    final List<String> urls = [
-      'assets/images/chichen_itza/chichen.png',
-      'assets/images/chichen_itza/foreground-left.png',
-      'assets/images/chichen_itza/foreground-right.png',
-      'assets/images/christ_the_redeemer/redeemer.png',
-      'assets/images/christ_the_redeemer/foreground-left.png',
-      'assets/images/christ_the_redeemer/foreground-right.png',
-      'assets/images/colosseum/colosseum.png',
-      'assets/images/colosseum/foreground-left.png',
-      'assets/images/colosseum/foreground-right.png',
-      'assets/images/great_wall_of_china/great-wall.png',
-      'assets/images/great_wall_of_china/foreground-left.png',
-      'assets/images/great_wall_of_china/foreground-right.png',
-      'assets/images/machu_picchu/machu-picchu.png',
-      'assets/images/machu_picchu/foreground-back.png',
-      'assets/images/machu_picchu/foreground-front.png',
-      'assets/images/petra/petra.png',
-      'assets/images/petra/foreground-left.png',
-      'assets/images/petra/foreground-right.png',
-      'assets/images/pyramids/pyramids.png',
-      'assets/images/pyramids/foreground-back.png',
-      'assets/images/pyramids/foreground-front.png',
-      'assets/images/taj_mahal/taj-mahal.png',
-      'assets/images/taj_mahal/foreground-left.png',
-      'assets/images/taj_mahal/foreground-right.png',
+    List<String> urls = [
+      '${ImagePaths.root}/chichen_itza/chichen.png',
+      '${ImagePaths.root}/chichen_itza/foreground-left.png',
+      '${ImagePaths.root}/chichen_itza/foreground-right.png',
+      '${ImagePaths.root}/chichen_itza/top-left.png',
+      '${ImagePaths.root}/chichen_itza/top-right.png',
+      '${ImagePaths.root}/chichen_itza/sun.png',
+      '${ImagePaths.root}/christ_the_redeemer/redeemer.png',
+      '${ImagePaths.root}/christ_the_redeemer/foreground-left.png',
+      '${ImagePaths.root}/christ_the_redeemer/foreground-right.png',
+      '${ImagePaths.root}/christ_the_redeemer/sun.png',
+      '${ImagePaths.root}/colosseum/colosseum.png',
+      '${ImagePaths.root}/colosseum/foreground-left.png',
+      '${ImagePaths.root}/colosseum/foreground-right.png',
+      '${ImagePaths.root}/colosseum/sun.png',
+      '${ImagePaths.root}/great_wall_of_china/great-wall.png',
+      '${ImagePaths.root}/great_wall_of_china/foreground-left.png',
+      '${ImagePaths.root}/great_wall_of_china/foreground-right.png',
+      '${ImagePaths.root}/great_wall_of_china/sun.png',
+      '${ImagePaths.root}/machu_picchu/machu-picchu.png',
+      '${ImagePaths.root}/machu_picchu/foreground-back.png',
+      '${ImagePaths.root}/machu_picchu/foreground-front.png',
+      '${ImagePaths.root}/machu_picchu/sun.png',
+      '${ImagePaths.root}/petra/petra.png',
+      '${ImagePaths.root}/petra/foreground-left.png',
+      '${ImagePaths.root}/petra/foreground-right.png',
+      '${ImagePaths.root}/petra/moon.png',
+      '${ImagePaths.root}/pyramids/pyramids.png',
+      '${ImagePaths.root}/pyramids/foreground-back.png',
+      '${ImagePaths.root}/pyramids/foreground-front.png',
+      '${ImagePaths.root}/pyramids/moon.png',
+      '${ImagePaths.root}/taj_mahal/taj-mahal.png',
+      '${ImagePaths.root}/taj_mahal/foreground-left.png',
+      '${ImagePaths.root}/taj_mahal/foreground-right.png',
+      '${ImagePaths.root}/taj_mahal/sun.png',
+      '${ImagePaths.root}/taj_mahal/pool.png',
     ];
 
-    urls.forEach((url) => precacheImage(AssetImage(url), context, onError: (error, stackTrace) {
-          print('Loading $url failed - ${error.toString()}');
-        }));
+    urls.forEach((url) => precacheUrl(url, context));
   }
 }
 
