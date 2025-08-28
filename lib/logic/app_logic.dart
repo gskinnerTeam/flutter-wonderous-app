@@ -183,6 +183,26 @@ class AppLogic {
       '${ImagePaths.root}/taj_mahal/sun.png',
       '${ImagePaths.root}/taj_mahal/pool.png',
     ];
+    List<String> folderNames = [
+      'chichen_itza',
+      'christ_the_redeemer',
+      'colosseum',
+      'great_wall_of_china',
+      'machu_picchu',
+      'petra',
+      'pyramids',
+      'taj_mahal'
+    ];
+
+    // Universals.
+    folderNames.forEach((name) {
+      urls.add('${ImagePaths.root}/$name/flattened.jpg');
+      urls.add('${ImagePaths.root}/$name/wonder-button.png');
+      urls.add('${ImagePaths.root}/$name/photo-1.jpg');
+      urls.add('${ImagePaths.root}/$name/photo-2.jpg');
+      urls.add('${ImagePaths.root}/$name/photo-3.jpg');
+      urls.add('${ImagePaths.root}/$name/photo-4.jpg');
+    });
 
     urls.forEach((url) => precacheUrl(url, context));
   }
