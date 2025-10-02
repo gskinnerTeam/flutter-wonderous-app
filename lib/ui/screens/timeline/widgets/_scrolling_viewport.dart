@@ -57,28 +57,35 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
       scheduleMicrotask(controller._handleResize);
     }
     _prevSize = context.mq.size;
-    return GestureDetector(
-      // Handle pinch to zoom
-      onScaleUpdate: controller._handleScaleUpdate,
-      onScaleStart: controller._handleScaleStart,
-      behavior: HitTestBehavior.translucent,
-      // Fade in entire view when first shown
-      child: Stack(
-        children: [
-          // Main content area
-          _buildScrollingArea(context).maybeAnimate().fadeIn(),
+    return Listener(
+      onPointerSignal: (PointerSignalEvent e) {
+        if (HardwareKeyboard.instance.isControlPressed) {
+          controller._handleScaleUpdateMouse(((e as PointerScaleEvent).scale - 1) * 0.25);
+        }
+      },
+      child: GestureDetector(
+        // Handle pinch to zoom
+        onScaleUpdate: controller._handleScaleUpdate,
+        onScaleStart: controller._handleScaleStart,
+        behavior: HitTestBehavior.translucent,
+        // Fade in entire view when first shown
+        child: Stack(
+          children: [
+            // Main content area
+            _buildScrollingArea(context).maybeAnimate().fadeIn(),
 
-          // Dashed line with a year that changes as we scroll
-          IgnorePointerKeepSemantics(
-            child: AnimatedBuilder(
-              animation: controller.scroller,
-              builder: (_, __) {
-                return _DashedDividerWithYear(controller.calculateYearFromScrollPos());
-              },
+            // Dashed line with a year that changes as we scroll
+            IgnorePointerKeepSemantics(
+              child: AnimatedBuilder(
+                animation: controller.scroller,
+                builder: (_, __) {
+                  return _DashedDividerWithYear(controller.calculateYearFromScrollPos());
+                },
+              ),
             ),
-          ),
-        ],
-      ),
+          ],
+        ),
+      )
     );
   }
 
