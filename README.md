@@ -61,4 +61,4 @@ During each monthly maintenance round, it would be ideal to get out a new build 
 5: In Repository > Repo Settings, switch back to flutter-wonderous-app-private.
 6: Call a fetch, and then you should be able to push that to the latest build.
 7: Don't forget to update the version number.
-8: Use the Github site's actions to build.
+8: Locally make a build from the private-builds branch via `flutter build appbundle` to upload to Play Store / Test Flight.
