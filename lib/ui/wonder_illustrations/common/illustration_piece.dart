@@ -91,10 +91,20 @@ class _IllustrationPieceState extends State<IllustrationPiece> {
             imgPath, 
             excludeFromSemantics: true,
             opacity: anim, 
-            fit: BoxFit.fitHeight
+            fit: BoxFit.fitHeight,
+            /* Test - used to check whether images are loaded by the cache or from file.
+            frameBuilder: (BuildContext context, Widget child, int? frame, bool wasSynchronouslyLoaded) {
+              if (wasSynchronouslyLoaded) {
+                debugPrint('--- Cache loaded!');
+              } else {
+                debugPrint(imgPath + ' - File loaded: ' + frame.toString());
+              }
+              return child;
+            },*/
           );
+
           // Add overflow box so image doesn't get clipped as we translate it around
-          // https://github.com/gskinnerTeam/flutter-wonderous-app/issues/231
+          // https://github.com/gskinnerTeam/flutter-wonderous-app/issues/231 - increased max size to 10000px to prevent BoxContraint errors on larger screens.
           img = OverflowBox(maxWidth: 10000, child: img,);
 
           final double introZoom = (widget.initialScale - 1) * (1 - curvedAnim);
