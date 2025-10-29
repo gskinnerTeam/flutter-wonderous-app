@@ -94,7 +94,8 @@ class _IllustrationPieceState extends State<IllustrationPiece> {
             fit: BoxFit.fitHeight
           );
           // Add overflow box so image doesn't get clipped as we translate it around
-          img = OverflowBox(maxWidth: 2500, child: img);
+          // https://github.com/gskinnerTeam/flutter-wonderous-app/issues/231
+          img = OverflowBox(maxWidth: 10000, child: img,);
 
           final double introZoom = (widget.initialScale - 1) * (1 - curvedAnim);
 
