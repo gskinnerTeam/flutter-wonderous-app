@@ -17,7 +17,6 @@ jobs:
       with:
         flutter-version: '3.35.7'
         channel: 'stable'
-        cache-key: 'flutter-${{ runner.os }}-3.35.7'
 
     - name: Get dependencies
       run: flutter pub get
