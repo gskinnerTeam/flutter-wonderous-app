@@ -140,7 +140,7 @@ class AppLogic {
       urls.add('${ImagePaths.common}/tab-editorial${i == 0 ? '-active' : ''}.png');
       urls.add('${ImagePaths.common}/tab-photos${i == 0 ? '-active' : ''}.png');
       urls.add('${ImagePaths.common}/tab-artifacts${i == 0 ? '-active' : ''}.png');
-      urls.add('${ImagePaths.common}/tab-timeline${i == 0 ? '-actÍive' : ''}.png');
+      urls.add('${ImagePaths.common}/tab-timeline${i == 0 ? '-active' : ''}.png');
     }
     urls.forEach((url) => precacheUrl(url, context));
   }
