@@ -91,11 +91,11 @@ class _IllustrationPieceState extends State<IllustrationPiece> {
             imgPath, 
             excludeFromSemantics: true,
             opacity: anim, 
-            fit: BoxFit.fitHeight,
+            fit: BoxFit.fitHeight
           );
 
           // Add overflow box so image doesn't get clipped as we translate it around
-          img = OverflowBox(maxWidth: 2500, child: img,);
+          img = OverflowBox(maxWidth: 2500, child: img);
 
           final double introZoom = (widget.initialScale - 1) * (1 - curvedAnim);
 
