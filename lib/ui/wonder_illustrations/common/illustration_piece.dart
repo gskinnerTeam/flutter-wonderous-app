@@ -93,7 +93,6 @@ class _IllustrationPieceState extends State<IllustrationPiece> {
             opacity: anim, 
             fit: BoxFit.fitHeight
           );
-
           // Add overflow box so image doesn't get clipped as we translate it around
           img = OverflowBox(maxWidth: 2500, child: img);
 
