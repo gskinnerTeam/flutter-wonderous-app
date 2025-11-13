@@ -32,7 +32,7 @@ dependencies:
   gap: ^3.0.1
   get_it: ^7.2.0
   get_it_mixin: ^4.2.2
-  google_maps_flutter: ^2.9.0
+  google_maps_flutter: ^2.13.1
   go_router: ^14.2.8
   home_widget: ^0.7.0 # use the forked version when on `main` flutter branch
 #    git:
