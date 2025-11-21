@@ -82,64 +82,61 @@ class _IllustrationPieceState extends State<IllustrationPiece> {
     return Align(
       alignment: widget.alignment,
       child: LayoutBuilder(
-        key: ValueKey(aspectRatio),
-        builder: (_, constraints) {
-          final anim = wonderBuilder.anim;
-          final curvedAnim = Curves.easeOut.transform(anim.value);
-          final config = wonderBuilder.widget.config;
-          Widget img = Image.asset(
-            imgPath, 
-            excludeFromSemantics: true,
-            opacity: anim, 
-            fit: BoxFit.fitHeight
-          );
-          // Add overflow box so image doesn't get clipped as we translate it around
-          img = OverflowBox(maxWidth: 2500, child: img);
+          key: ValueKey(aspectRatio),
+          builder: (_, constraints) {
+            final anim = wonderBuilder.anim;
+            final curvedAnim = Curves.easeOut.transform(anim.value);
+            final config = wonderBuilder.widget.config;
+            Widget img = Image.asset(imgPath, excludeFromSemantics: true, opacity: anim, fit: BoxFit.fitHeight);
+            // Add overflow box so image doesn't get clipped as we translate it around
+            img = OverflowBox(maxWidth: 2500, child: img);
 
-          final double introZoom = (widget.initialScale - 1) * (1 - curvedAnim);
+            final double introZoom = (widget.initialScale - 1) * (1 - curvedAnim);
 
-          /// Determine target height
-          final double height = max(widget.minHeight ?? 0, constraints.maxHeight * widget.heightFactor);
+            /// Determine target height
+            final double height = max(widget.minHeight ?? 0, constraints.maxHeight * widget.heightFactor);
 
-          /// Combine all the translations, initial + offset + dynamicHzOffset + fractionalOffset
-          Offset finalTranslation = widget.offset;
-          // Initial
-          if (widget.initialOffset != Offset.zero) {
-            finalTranslation += widget.initialOffset * (1 - curvedAnim);
-          }
-          // Dynamic
-          final dynamicOffsetAmt = ((context.widthPx - 400) / 1100).clamp(0, 1);
-          finalTranslation += Offset(dynamicOffsetAmt * widget.dynamicHzOffset, 0);
-          // Fractional
-          final width = height * (aspectRatio ?? 0);
-          if (widget.fractionalOffset != null) {
-            finalTranslation += Offset(
-              widget.fractionalOffset!.dx * width,
-              height * widget.fractionalOffset!.dy,
-            );
-          }
-          Widget? content = Transform.translate(
-            offset: finalTranslation,
-            child: Transform.scale(
-              scale: 1 + (widget.zoomAmt * config.zoom) + introZoom,
-              child: SizedBox(
-                height: height,
-                width: height * aspectRatio!,
-                child: img,
+            /// Combine all the translations, initial + offset + dynamicHzOffset + fractionalOffset
+            Offset finalTranslation = widget.offset;
+            // Initial
+            if (widget.initialOffset != Offset.zero) {
+              finalTranslation += widget.initialOffset * (1 - curvedAnim);
+            }
+            // Dynamic
+            final dynamicOffsetAmt = ((context.widthPx - 400) / 1100).clamp(0, 1);
+            finalTranslation += Offset(dynamicOffsetAmt * widget.dynamicHzOffset, 0);
+            // Fractional
+            final width = height * (aspectRatio ?? 0);
+            if (widget.fractionalOffset != null) {
+              finalTranslation += Offset(
+                widget.fractionalOffset!.dx * width,
+                height * widget.fractionalOffset!.dy,
+              );
+            }
+            Widget? content = Transform.translate(
+              offset: finalTranslation,
+              child: Transform.scale(
+                scale: 1 + (widget.zoomAmt * config.zoom) + introZoom,
+                child: SizedBox(
+                  height: height,
+                  width: height * aspectRatio!,
+                  child: img,
+                ),
               ),
-            ),
-          );
+            );
 
-          return Stack(
-            children: [
-              if (widget.bottom != null) Positioned.fill(child: widget.bottom!.call(context)),
-              ...[
-                widget.enableHero && !$styles.disableAnimations ? Hero(tag: '$type-${widget.fileName}', child: content!) : content!,
+            return Stack(
+              children: [
+                if (widget.bottom != null) Positioned.fill(child: widget.bottom!.call(context)),
+                ...[
+                  widget.enableHero && !$styles.disableAnimations
+                      ? Hero(tag: '$type-${widget.fileName}', child: content)
+                      : content,
+                ],
+                if (widget.top != null) Positioned.fill(child: widget.top!.call(context)),
               ],
-              if (widget.top != null) Positioned.fill(child: widget.top!.call(context)),
-            ],
-          );
-        }),
+            );
+          }),
     );
   }
 }

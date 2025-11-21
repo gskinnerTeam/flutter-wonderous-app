@@ -122,7 +122,7 @@ class _EventsListState extends State<_EventsList> {
                   strength: backdropAmt,
                   child: IgnorePointer(
                     child: Container(
-                      color: $styles.colors.black.withOpacity(backdropAmt * .6),
+                      color: $styles.colors.black.withValues(alpha: backdropAmt * .6),
                     ),
                   )),
             ],

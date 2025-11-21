@@ -218,7 +218,7 @@ class _IntroScreenState extends State<IntroScreen> {
           child: Transform.scale(
               scaleX: left ? -1 : 1,
               child: HzGradient([
-                $styles.colors.black.withOpacity(0),
+                $styles.colors.black.withValues(alpha: 0),
                 $styles.colors.black,
               ], const [
                 0,

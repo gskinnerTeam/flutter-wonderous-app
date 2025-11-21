@@ -63,7 +63,7 @@ class _ResultsGridState extends State<_ResultsGrid> {
           onPressed: () => settingsLogic.hasDismissedSearchMessage.value = true,
           semanticLabel: $strings.resultsSemanticDismiss,
           child: Container(
-            color: $styles.colors.offWhite.withOpacity(0.1),
+            color: $styles.colors.offWhite.withValues(alpha: 0.1),
             padding: EdgeInsets.all($styles.insets.sm),
             child: Row(
               children: [

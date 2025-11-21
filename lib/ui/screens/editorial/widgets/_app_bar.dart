@@ -67,7 +67,9 @@ class _AppBar extends StatelessWidget {
                             );
                           },
                         ),
-                      ).maybeAnimate(delay: $styles.times.pageTransition + 500.delayMs).fadeIn(duration: $styles.times.slow),
+                      )
+                          .maybeAnimate(delay: $styles.times.pageTransition + 500.delayMs)
+                          .fadeIn(duration: $styles.times.slow),
                     ),
                   ),
                 ),
@@ -76,7 +78,7 @@ class _AppBar extends StatelessWidget {
                 if (showOverlay) ...[
                   AnimatedContainer(
                     duration: $styles.times.med,
-                    color: wonderType.bgColor.withOpacity(showOverlay ? .8 : 0),
+                    color: wonderType.bgColor.withValues(alpha: showOverlay ? .8 : 0),
                   ),
                 ],
               ],
