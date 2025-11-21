@@ -25,7 +25,7 @@ class _HomeMenuState extends State<HomeMenu> {
 
   void _handleAboutPressed(BuildContext context) async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    if (!mounted) return;
+    if (!context.mounted) return;
     showAboutDialog(
       context: context,
       applicationName: $strings.appName,
@@ -54,7 +54,7 @@ class _HomeMenuState extends State<HomeMenu> {
         /// Backdrop / Underlay
         AppBackdrop(
           strength: .5,
-          child: Container(color: $styles.colors.greyStrong.withOpacity(.5)),
+          child: Container(color: $styles.colors.greyStrong.withValues(alpha: 0.5)),
         ),
 
         PopNavigatorUnderlay(),
@@ -167,7 +167,7 @@ class _HomeMenuState extends State<HomeMenu> {
             ? null
             : [
                 BoxShadow(
-                  color: Colors.black.withOpacity(.3),
+                  color: Colors.black.withValues(alpha: .3),
                   blurRadius: 3,
                   spreadRadius: 3,
                   offset: Offset(0, 2),

@@ -60,11 +60,11 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
               padding: EdgeInsets.symmetric(horizontal: pad, vertical: $styles.insets.xs),
               background: Container(
                 decoration: BoxDecoration(
-                  color: $styles.colors.black.withOpacity(0.85),
+                  color: $styles.colors.black.withValues(alpha: 0.85),
                   borderRadius: BorderRadius.circular($styles.corners.md),
                   boxShadow: [
                     BoxShadow(
-                      color: $styles.colors.black.withOpacity(0.66),
+                      color: $styles.colors.black.withValues(alpha: 0.66),
                       offset: Offset(0, 4),
                       blurRadius: 4,
                     )
@@ -248,7 +248,7 @@ class _OpenedTimeRange extends StatelessWidget {
                     selectedWonders: [wonder.type],
                     timelineBuilder: (_, __, sel) => Container(
                       decoration: BoxDecoration(
-                        color: $styles.colors.offWhite.withOpacity(sel ? 0.75 : 0.25),
+                        color: $styles.colors.offWhite.withValues(alpha: sel ? 0.75 : 0.25),
                         borderRadius: BorderRadius.circular(999),
                       ),
                     ),

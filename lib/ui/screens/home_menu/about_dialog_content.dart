@@ -47,7 +47,7 @@ class AboutDialogContent extends StatelessWidget {
     }
 
     double fontSize = $styles.text.body.fontSize!;
-    fontSize *= MediaQuery.textScaleFactorOf(context);
+    fontSize = MediaQuery.textScalerOf(context).scale(fontSize);
     return SingleChildScrollView(
       child: Column(children: [
         Gap($styles.insets.sm),

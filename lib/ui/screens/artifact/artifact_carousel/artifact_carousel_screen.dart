@@ -153,7 +153,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
         offset: Offset(0, size / 2),
         child: Container(
           decoration: BoxDecoration(
-            color: $styles.colors.offWhite.withOpacity(0.8),
+            color: $styles.colors.offWhite.withValues(alpha: 0.8),
             borderRadius: BorderRadius.vertical(top: Radius.circular(size)),
           ),
         ),
