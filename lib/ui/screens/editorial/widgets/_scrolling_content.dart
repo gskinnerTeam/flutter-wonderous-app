@@ -27,11 +27,11 @@ class _ScrollingContent extends StatelessWidget {
       final scaleFactor = MediaQuery.textScalerOf(context).scale(1.0);
       final double dropCapWidth = StringUtils.measure(dropChar, dropStyle).width * scaleFactor;
       return Focus(
-          child: Semantics(
-        label: value,
-        child: ExcludeSemantics(
+        child: Semantics(
+          label: value,
+          child: ExcludeSemantics(
             child: skipCaps
-                ? Text(_fixNewlines(value), style: bodyStyle)
+                ? Text(_fixNewlines(value), style: bodyStyle )
                 : DropCapText(
                     _fixNewlines(value).substring(1),
                     dropCap: DropCap(
@@ -55,8 +55,10 @@ class _ScrollingContent extends StatelessWidget {
                       color: $styles.colors.accent3,
                       height: 1,
                     ),
-                  )),
-      ));
+                  )
+          ),
+        )
+      );
     }
 
     Widget buildHiddenCollectible({required int slot}) {
