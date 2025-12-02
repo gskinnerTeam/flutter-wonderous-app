@@ -41,7 +41,7 @@ class _CelebrationParticles extends StatelessWidget {
                 y: sin(angle) * d * rnd(0.8, 1),
                 vx: cos(angle) * v * rnd(0.5, 1.5),
                 vy: sin(angle) * v * rnd(0.5, 1.5),
-                color: color.withOpacity(rnd(0.5, 1)),
+                color: color.withValues(alpha: rnd(0.5, 1)),
               ));
             }
 

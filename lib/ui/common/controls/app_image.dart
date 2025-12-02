@@ -74,7 +74,7 @@ class _AppImageState extends State<AppImage> {
           if (size < 16) return SizedBox();
           return Icon(
             Icons.image_not_supported_outlined,
-            color: $styles.colors.white.withOpacity(0.1),
+            color: $styles.colors.white.withValues(alpha: 0.1),
             size: min(size, $styles.insets.lg),
           );
         }),

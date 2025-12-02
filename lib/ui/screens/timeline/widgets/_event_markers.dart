@@ -92,7 +92,7 @@ class _EventMarkersState extends State<_EventMarkers> {
   }
 
   List<Widget> _buildReferenceMarkers() {
-    final marker = Container(color: Colors.red.withOpacity(.4), width: 10, height: 10);
+    final marker = Container(color: Colors.red.withValues(alpha: .4), width: 10, height: 10);
     return [
       Align(
         alignment: Alignment.topCenter,
@@ -148,7 +148,9 @@ class _EventMarker extends StatelessWidget {
                   color: $styles.colors.accent1,
                   boxShadow: [
                     BoxShadow(
-                        color: $styles.colors.accent1.withOpacity(isSelected ? .5 : 0), spreadRadius: 3, blurRadius: 3),
+                        color: $styles.colors.accent1.withValues(alpha: isSelected ? .5 : 0),
+                        spreadRadius: 3,
+                        blurRadius: 3),
                   ],
                 ),
               ),

@@ -18,7 +18,7 @@ class TimeRangePainter extends CustomPainter {
     int l = results.length;
     if (l == 0) return;
 
-    Paint fill = Paint()..color = controller.color.withOpacity(0.25);
+    Paint fill = Paint()..color = controller.color.withValues(alpha: 0.25);
     var positions = Float32List(12 * l);
 
     double height = size.height, width = size.width;

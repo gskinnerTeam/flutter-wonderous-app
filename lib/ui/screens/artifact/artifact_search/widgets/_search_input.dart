@@ -2,6 +2,7 @@ part of '../artifact_search_screen.dart';
 
 /// Autopopulating textfield used for searching for Artifacts by name.
 const double _inputWidth = 400;
+
 class _SearchInput extends StatelessWidget {
   const _SearchInput({super.key, required this.onSubmit, required this.wonder});
   final void Function(String) onSubmit;
@@ -54,7 +55,7 @@ class _SearchInput extends StatelessWidget {
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: $styles.colors.black.withOpacity(0.25),
+                  color: $styles.colors.black.withValues(alpha: 0.25),
                   blurRadius: 4,
                   offset: Offset(0, 4),
                 ),
@@ -63,7 +64,7 @@ class _SearchInput extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.all($styles.insets.xs),
               decoration: BoxDecoration(
-                color: $styles.colors.offWhite.withOpacity(0.92),
+                color: $styles.colors.offWhite.withValues(alpha: 0.92),
                 borderRadius: BorderRadius.circular($styles.insets.xs),
               ),
               child: ConstrainedBox(
@@ -85,7 +86,8 @@ class _SearchInput extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all($styles.insets.xs).copyWith(top: 0),
       margin: EdgeInsets.only(bottom: $styles.insets.xxs),
-      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: $styles.colors.greyStrong.withOpacity(0.1)))),
+      decoration:
+          BoxDecoration(border: Border(bottom: BorderSide(color: $styles.colors.greyStrong.withValues(alpha: 0.1)))),
       child: CenterLeft(
         child: DefaultTextStyle(
           style: $styles.text.title2.copyWith(color: $styles.colors.black),

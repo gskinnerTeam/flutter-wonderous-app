@@ -60,7 +60,7 @@ class CollectibleFoundScreen extends StatelessWidget {
       /// Background
       AppBackdrop(
         strength: .5,
-        child: Container(color: $styles.colors.greyStrong.withOpacity(.96)),
+        child: Container(color: $styles.colors.greyStrong.withValues(alpha: .96)),
       ).animate().fadeIn(),
 
       /// Particles
@@ -109,12 +109,12 @@ class CollectibleFoundScreen extends StatelessWidget {
     final Color dark = $styles.colors.black;
 
     // final state is a solid fill, so optimize that case:
-    if (ratioOut == 1) return Container(color: dark.withOpacity(opacity));
+    if (ratioOut == 1) return Container(color: dark.withValues(alpha: opacity));
 
     return Container(
       decoration: BoxDecoration(
         gradient: RadialGradient(
-          colors: [Color.lerp(light, dark, ratioOut)!.withOpacity(opacity), dark.withOpacity(opacity)],
+          colors: [Color.lerp(light, dark, ratioOut)!.withValues(alpha: opacity), dark.withValues(alpha: opacity)],
           stops: [0.2, min(1, 0.25 + ratioIn * 0.5 + ratioOut * 0.5)],
         ),
       ),
@@ -133,11 +133,11 @@ class CollectibleFoundScreen extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: $styles.insets.xl),
             decoration: BoxDecoration(color: $styles.colors.offWhite, boxShadow: [
               BoxShadow(
-                color: $styles.colors.accent1.withOpacity(ratio * 0.75),
+                color: $styles.colors.accent1.withValues(alpha: ratio * 0.75),
                 blurRadius: $styles.insets.xl * 2,
               ),
               BoxShadow(
-                color: $styles.colors.black.withOpacity(ratio * 0.75),
+                color: $styles.colors.black.withValues(alpha: ratio * 0.75),
                 offset: Offset(0, $styles.insets.xxs),
                 blurRadius: $styles.insets.sm,
               ),
@@ -168,7 +168,7 @@ class CollectibleFoundScreen extends StatelessWidget {
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.center,
-          style: style.copyWith(color: color.withOpacity(m)),
+          style: style.copyWith(color: color.withValues(alpha: m)),
         ),
       ),
     );

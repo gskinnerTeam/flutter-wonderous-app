@@ -8,7 +8,10 @@ class _WonderImageWithTimeline extends StatelessWidget {
   Color _fixLuminance(Color color, [double luminance = 0.2]) {
     double d = luminance - color.computeLuminance();
     if (d <= 0) return color;
-    int r = color.red, g = color.green, b = color.blue;
+
+    int r = (color.r * 255).toInt();
+    int g = (color.g * 255).toInt();
+    int b = (color.b * 255).toInt();
     return Color.fromARGB(255, (r + (255 - r) * d).toInt(), (g + (255 - g) * d).toInt(), (b + (255 - b) * d).toInt());
   }
 
