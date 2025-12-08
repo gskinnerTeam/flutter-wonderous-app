@@ -1,6 +1,7 @@
 {
     "name": "Wonderous: Flutter Web Example",
     "short_name": "Wonderous",
+    "id": "/web/",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#1e1b18",
