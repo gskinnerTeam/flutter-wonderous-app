@@ -146,6 +146,12 @@ abstract class AppLocalizations {
   /// **'Timeline Scrubber, drag horizontally to navigate the timeline.'**
   String get bottomScrubberSemanticTimeline;
 
+  /// No description provided for @rangeSelector.
+  ///
+  /// In en, this message translates to:
+  /// **'Range selector, drag horizontally to adjust the range.'**
+  String get rangeSelector;
+
   /// No description provided for @collectionLabelDiscovered.
   ///
   /// In en, this message translates to:

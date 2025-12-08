@@ -258,7 +258,7 @@ class _OpenedTimeRange extends StatelessWidget {
 
               // Time slider itself
               Positioned.fill(
-                child: MergeSemantics(
+                //child: MergeSemantics(
                   child: Semantics(
                     label: $strings.bottomScrubberSemanticTimeline,
                     child: RangeSelector(
@@ -271,7 +271,7 @@ class _OpenedTimeRange extends StatelessWidget {
                       onUpdated: onChange,
                     ),
                   ),
-                ),
+                //),
               ),
             ],
           ),
