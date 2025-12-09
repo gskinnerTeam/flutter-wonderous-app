@@ -175,6 +175,7 @@ class AppBtn extends StatelessWidget {
       label: semanticLabel,
       button: true,
       container: true,
+      onTap: () => onPressed?.call(),
       child: ExcludeSemantics(child: button),
     );
   }
