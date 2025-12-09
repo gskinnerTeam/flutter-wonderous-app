@@ -55,7 +55,8 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   @override
   Widget build(BuildContext context) {
     bool shortMode = context.heightPx <= 800;
-    final double bottomHeight = context.heightPx / 2.75; // Prev 340, dynamic seems to work better
+    bool overlapMode = context.heightPx <= 450;
+    final double bottomHeight = context.heightPx / (overlapMode ? 2 : 2.75); // Prev 340, dynamic seems to work better
     // Allow objects to become wider as the screen becomes tall, this allows
     // them to grow taller as well, filling the available space better.
     double itemHeight = (context.heightPx - 200 - bottomHeight).clamp(250, 400);
@@ -122,6 +123,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                       artifact: _artifacts[value],
                       height: bottomHeight,
                       shortMode: shortMode,
+                      overlapMode: overlapMode,
                       state: this,
                     ),
                   ),
