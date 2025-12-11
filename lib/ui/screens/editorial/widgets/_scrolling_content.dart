@@ -220,7 +220,14 @@ class _MapsThumbnail extends StatefulWidget {
 }
 
 class _MapsThumbnailState extends State<_MapsThumbnail> {
-  CameraPosition get startPos => CameraPosition(target: LatLng(widget.data.lat, widget.data.lng), zoom: 3);
+  late Future<void> _loadGoogleMap;
+  late dynamic startPos;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadGoogleMap = googleMap.loadLibrary();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -243,14 +250,26 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
                     children: [
                       Positioned.fill(child: ColoredBox(color: Colors.transparent)),
                       IgnorePointer(
-                        child: GoogleMap(
-                          markers: {getMapsMarker(startPos.target)},
-                          zoomControlsEnabled: false,
-                          mapType: MapType.normal,
-                          mapToolbarEnabled: false,
-                          initialCameraPosition: startPos,
-                          myLocationButtonEnabled: false,
-                        ),
+                        child: FutureBuilder<void>(
+                          future: _loadGoogleMap,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState == ConnectionState.done) {
+                              if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              }
+                              startPos = googleMap.CameraPosition(target: googleMap.LatLng(widget.data.lat, widget.data.lng), zoom: 3);
+                              return googleMap.GoogleMap(
+                                markers: {getMapsMarker(startPos.target)},
+                                zoomControlsEnabled: false,
+                                mapType: googleMap.MapType.normal,
+                                mapToolbarEnabled: false,
+                                initialCameraPosition: startPos,
+                                myLocationButtonEnabled: false,
+                              );
+                            }
+                            return const CircularProgressIndicator();
+                          }
+                        )
                       ),
                     ],
                   ),
