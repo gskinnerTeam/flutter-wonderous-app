@@ -255,7 +255,7 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
                           builder: (context, snapshot) {
                             if (snapshot.connectionState == ConnectionState.done) {
                               if (snapshot.hasError) {
-                                return Text('Error: ${snapshot.error}');
+                                return Text('Google Map Load Error: ${snapshot.error}', style: $styles.text.bodySmallBold.copyWith(color: $styles.colors.accent3));
                               }
                               startPos = googleMap.CameraPosition(target: googleMap.LatLng(widget.data.lat, widget.data.lng), zoom: 3);
                               return googleMap.GoogleMap(
