@@ -17,7 +17,6 @@ class AppBtn extends StatelessWidget {
     this.enableFeedback = true,
     this.pressEffect = true,
     this.hoverEffect = true,
-    this.hoverColor,
     this.child,
     this.padding,
     this.expand = false,
@@ -36,7 +35,6 @@ class AppBtn extends StatelessWidget {
     this.enableFeedback = true,
     this.pressEffect = true,
     this.hoverEffect = true,
-    this.hoverColor,
     this.padding,
     this.expand = false,
     this.isSecondary = false,
@@ -82,7 +80,6 @@ class AppBtn extends StatelessWidget {
     this.enableFeedback = true,
     this.pressEffect = true,
     this.hoverEffect = true,
-    this.hoverColor,
     this.child,
     this.padding = EdgeInsets.zero,
     this.isSecondary = false,
@@ -118,7 +115,6 @@ class AppBtn extends StatelessWidget {
   final Color? bgColor;
   final bool pressEffect;
   final bool hoverEffect;
-  final Color? hoverColor;
 
   @override
   Widget build(BuildContext context) {
