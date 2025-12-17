@@ -86,11 +86,14 @@ class _RangeSelectorState extends State<RangeSelector> {
             child: _getDragDetector(
               onUpdate: _handleMidDrag,
               dragWidth: dragWidth,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: $styles.colors.offWhite.withOpacity(0),
-                  border: Border.symmetric(
-                    horizontal: BorderSide(color: $styles.colors.white.withOpacity(0.75), width: 2),
+              child: Semantics(
+                label: $strings.bottomScrubberSemanticTimeline,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: $styles.colors.offWhite.withOpacity(0),
+                    border: Border.symmetric(
+                      horizontal: BorderSide(color: $styles.colors.white.withOpacity(0.75), width: 2),
+                    ),
                   ),
                 ),
               ),
@@ -107,19 +110,22 @@ class _RangeSelectorState extends State<RangeSelector> {
     return _getDragDetector(
       onUpdate: isRight ? _handleRightDrag : _handleLeftDrag,
       dragWidth: dragWidth,
-      child: Transform.scale(
-        scaleX: isRight ? 1 : -1,
-        child: Container(
-          alignment: Alignment.center,
-          width: RangeSelector.handleWidth,
-          decoration: BoxDecoration(
-            color: $styles.colors.white.withOpacity(0.75),
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular($styles.corners.md),
-              bottomRight: Radius.circular($styles.corners.md),
+      child: Semantics(
+        label: $strings.rangeSelector,
+        child: Transform.scale(
+          scaleX: isRight ? 1 : -1,
+          child: Container(
+            alignment: Alignment.center,
+            width: RangeSelector.handleWidth,
+            decoration: BoxDecoration(
+              color: $styles.colors.white.withOpacity(0.75),
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular($styles.corners.md),
+                bottomRight: Radius.circular($styles.corners.md),
+              ),
             ),
+            child: Icon(Icons.chevron_right, color: $styles.colors.greyStrong, size: RangeSelector.handleWidth),
           ),
-          child: Icon(Icons.chevron_right, color: $styles.colors.greyStrong, size: RangeSelector.handleWidth),
         ),
       ),
     );

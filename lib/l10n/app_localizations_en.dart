@@ -36,6 +36,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Timeline Scrubber, drag horizontally to navigate the timeline.';
 
   @override
+  String get rangeSelector =>
+      'Range selector, drag horizontally to adjust the range.';
+
+  @override
   String collectionLabelDiscovered(Object percentage) {
     return '$percentage% discovered';
   }

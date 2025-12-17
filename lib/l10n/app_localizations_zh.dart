@@ -36,6 +36,9 @@ class AppLocalizationsZh extends AppLocalizations {
       'Timeline Scrubber，水平拖动可在历史年表中导航。';
 
   @override
+  String get rangeSelector => 'Range selector, 水平拖动即可调整范围。';
+
+  @override
   String collectionLabelDiscovered(Object percentage) {
     return '已发现 $percentage% ';
   }

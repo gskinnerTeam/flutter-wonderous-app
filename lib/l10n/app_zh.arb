@@ -7,6 +7,7 @@
 	"appBarTitleLocation": "地理位置",
 	"bottomScrubberSemanticScrubber": "scrubber",
 	"bottomScrubberSemanticTimeline": "Timeline Scrubber，水平拖动可在历史年表中导航。",
+	"rangeSelector": "Range selector, 水平拖动即可调整范围。",
 	"collectionLabelDiscovered": "已发现 {percentage}% ",
 	"collectionLabelCount": "{count}/{total}",
 	"collectionButtonReset": "重置收藏夹",

@@ -8,6 +8,7 @@
 	"appBarTitleLocation": "Location Info",
 	"bottomScrubberSemanticScrubber": "scrubber",
 	"bottomScrubberSemanticTimeline": "Timeline Scrubber, drag horizontally to navigate the timeline.",
+	"rangeSelector": "Range selector, drag horizontally to adjust the range.",
 	"collectionLabelDiscovered": "{percentage}% discovered",
 	"@collectionLabelDiscovered": {"placeholders": {"percentage": {}}},
 	"collectionLabelCount": "{count} of {total}",
