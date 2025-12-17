@@ -129,28 +129,28 @@ class _HomeMenuState extends State<HomeMenu> {
       builder: (_, __, ___) {
         return SeparatedColumn(
           separatorBuilder: () => Divider(thickness: 1.5, height: 1).maybeAnimate().scale(
-                duration: $styles.times.slow,
-                delay: $styles.times.pageTransition + 200.delayMs,
-                curve: Curves.easeOutBack,
-              ),
+            duration: $styles.times.slow,
+            delay: $styles.times.pageTransition + 200.delayMs,
+            curve: Curves.easeOutBack,
+          ),
           children: [
             _MenuTextBtn(
-                label: $strings.homeMenuButtonExplore,
-                icon: AppIcons.timeline,
-                onPressed: () => _handleTimelinePressed(context)),
+              label: $strings.homeMenuButtonExplore,
+              icon: AppIcons.timeline,
+              onPressed: () => _handleTimelinePressed(context)),
             _MenuTextBtn(
-                label: $strings.homeMenuButtonView,
-                icon: AppIcons.collection,
-                onPressed: () => _handleCollectionPressed(context)),
+              label: $strings.homeMenuButtonView,
+              icon: AppIcons.collection,
+              onPressed: () => _handleCollectionPressed(context)),
             _MenuTextBtn(
               label: $strings.homeMenuButtonAbout,
               icon: AppIcons.info,
               onPressed: () => _handleAboutPressed(context),
             ),
           ]
-              .animate(interval: 50.delayMs)
-              .fade(delay: $styles.times.pageTransition + 50.delayMs)
-              .slide(begin: Offset(0, .1), curve: Curves.easeOut),
+            .animate(interval: 50.delayMs)
+            .fade(delay: $styles.times.pageTransition + 50.delayMs)
+            .slide(begin: Offset(0, .1), curve: Curves.easeOut),
         );
       }
     );
@@ -187,13 +187,13 @@ class _GridBtnState extends State<_GridBtn> {
         boxShadow: !isSelected
           ? null
           : [
-              BoxShadow(
-                color: Colors.black.withOpacity(.3),
-                blurRadius: 3,
-                spreadRadius: 3,
-                offset: Offset(0, 2),
-              ),
-            ],
+            BoxShadow(
+              color: Colors.black.withOpacity(.3),
+              blurRadius: 3,
+              spreadRadius: 3,
+              offset: Offset(0, 2),
+            ),
+          ],
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular($styles.corners.md),
