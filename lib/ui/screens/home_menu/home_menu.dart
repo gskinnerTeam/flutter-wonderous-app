@@ -168,7 +168,7 @@ class _GridBtn extends StatefulWidget {
 }
 
 class _GridBtnState extends State<_GridBtn> {
-  bool isOver = false;
+  bool _isOver = false;
 
   void _handleWonderPressed(BuildContext context, WonderData data) => Navigator.pop(context, data.type);
 
@@ -208,7 +208,7 @@ class _GridBtnState extends State<_GridBtn> {
               alignment: Alignment.center,
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeInOut,
-              scale: isOver ? 1.1 : 1.0,
+              scale: _isOver ? 1.1 : 1.0,
               child: iconImage
             ) : iconImage,
           ),
@@ -218,8 +218,8 @@ class _GridBtnState extends State<_GridBtn> {
 
     return kIsWeb ? 
       MouseRegion(
-        onEnter: (_)=> setState(() => isOver = true),
-        onExit: (_)=> setState(() => isOver = false),
+        onEnter: (_)=> setState(() => _isOver = true),
+        onExit: (_)=> setState(() => _isOver = false),
         child: gridBtn,
       ) : gridBtn;
   }
