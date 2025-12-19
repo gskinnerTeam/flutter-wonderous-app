@@ -220,13 +220,19 @@ class _MapsThumbnail extends StatefulWidget {
 }
 
 class _MapsThumbnailState extends State<_MapsThumbnail> {
-  late Future<void> _loadGoogleMap;
   late dynamic startPos;
 
   @override
   void initState() {
     super.initState();
-    _loadGoogleMap = googleMap.loadLibrary();
+  }
+
+  Future<void> _loadGoogleMap() async {
+    try {
+      await googleMap.loadLibrary();
+    } catch (e) {
+      debugPrint('Error loading Google Map: $e');
+    }
   }
 
   @override
@@ -251,7 +257,7 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
                       Positioned.fill(child: ColoredBox(color: Colors.transparent)),
                       IgnorePointer(
                         child: FutureBuilder<void>(
-                          future: _loadGoogleMap,
+                          future: _loadGoogleMap(),
                           builder: (context, snapshot) {
                             if (snapshot.connectionState == ConnectionState.done) {
                               if (snapshot.hasError) {
