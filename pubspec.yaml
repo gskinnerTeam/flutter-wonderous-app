@@ -1,7 +1,7 @@
 name: wonders
 description: Explore the famous wonders of the world.
 publish_to: "none"
-version: 2.2.6+232
+version: 2.2.6+234
 
 environment:
   sdk: ^3.3.0
