@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/ignore_pointer.dart';
@@ -15,6 +16,7 @@ class AppBtn extends StatelessWidget {
     required this.semanticLabel,
     this.enableFeedback = true,
     this.pressEffect = true,
+    this.hoverEffect = true,
     this.child,
     this.padding,
     this.expand = false,
@@ -32,6 +34,7 @@ class AppBtn extends StatelessWidget {
     required this.onPressed,
     this.enableFeedback = true,
     this.pressEffect = true,
+    this.hoverEffect = true,
     this.padding,
     this.expand = false,
     this.isSecondary = false,
@@ -76,6 +79,7 @@ class AppBtn extends StatelessWidget {
     required this.semanticLabel,
     this.enableFeedback = true,
     this.pressEffect = true,
+    this.hoverEffect = true,
     this.child,
     this.padding = EdgeInsets.zero,
     this.isSecondary = false,
@@ -110,6 +114,7 @@ class AppBtn extends StatelessWidget {
   final BorderSide? border;
   final Color? bgColor;
   final bool pressEffect;
+  final bool hoverEffect;
 
   @override
   Widget build(BuildContext context) {
@@ -168,6 +173,7 @@ class AppBtn extends StatelessWidget {
 
     // add press effect:
     if (pressEffect && onPressed != null) button = _ButtonPressEffect(button);
+    if (hoverEffect && kIsWeb) button = _ButtonHoverEffect(button, circular);
 
     // add semantics?
     if (semanticLabel.isEmpty) return button;
@@ -175,6 +181,7 @@ class AppBtn extends StatelessWidget {
       label: semanticLabel,
       button: true,
       container: true,
+      onTap: () => onPressed?.call(),
       child: ExcludeSemantics(child: button),
     );
   }
@@ -207,6 +214,40 @@ class _ButtonPressEffectState extends State<_ButtonPressEffect> {
         opacity: _isDown ? 0.7 : 1,
         child: ExcludeSemantics(child: widget.child),
       ),
+    );
+  }
+}
+
+/// //////////////////////////////////////////////////
+/// _ButtonDecorator
+/// Add a transparency-based press effect to buttons.
+/// //////////////////////////////////////////////////
+class _ButtonHoverEffect extends StatefulWidget {
+  const _ButtonHoverEffect(this.child, this.isCircular);
+  final Widget child;
+  final bool isCircular;
+
+  @override
+  State<_ButtonHoverEffect> createState() => _ButtonHoverEffectState();
+}
+
+class _ButtonHoverEffectState extends State<_ButtonHoverEffect> {
+  bool _isOver = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_)=> setState(() => _isOver = true),
+      onExit: (_)=> setState(() => _isOver = false),
+      child: AnimatedContainer(
+        foregroundDecoration: BoxDecoration(
+          color: _isOver ? $styles.colors.white.withAlpha(30) : $styles.colors.white.withAlpha(0) ,
+          borderRadius: BorderRadius.circular(widget.isCircular ? 9999 : $styles.corners.md),
+        ),
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.easeInOut,
+        child: widget.child
+      )
     );
   }
 }

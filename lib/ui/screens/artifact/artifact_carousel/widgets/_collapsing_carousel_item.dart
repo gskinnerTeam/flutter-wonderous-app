@@ -43,7 +43,7 @@ class _CollapsingCarouselItem extends StatelessWidget {
       ),
     );
     if (indexOffset > 2) return content;
-    return AppBtn.basic(onPressed: onPressed, semanticLabel: title, child: content);
+    return AppBtn.basic(onPressed: onPressed, semanticLabel: title, hoverEffect: false, child: content);
   }
 }
 

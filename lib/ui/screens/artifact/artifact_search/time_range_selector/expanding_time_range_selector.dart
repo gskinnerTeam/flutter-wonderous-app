@@ -258,18 +258,16 @@ class _OpenedTimeRange extends StatelessWidget {
 
               // Time slider itself
               Positioned.fill(
-                child: MergeSemantics(
-                  child: Semantics(
-                    label: $strings.bottomScrubberSemanticTimeline,
-                    child: RangeSelector(
-                      key: ValueKey('RangeSelectorIsWonderTime'),
-                      min: wondersLogic.timelineStartYear * 1.0,
-                      max: wondersLogic.timelineEndYear * 1.0,
-                      minDelta: 500,
-                      start: startYear,
-                      end: endYear,
-                      onUpdated: onChange,
-                    ),
+                child: Semantics(
+                  label: $strings.bottomScrubberSemanticTimeline,
+                  child: RangeSelector(
+                    key: ValueKey('RangeSelectorIsWonderTime'),
+                    min: wondersLogic.timelineStartYear * 1.0,
+                    max: wondersLogic.timelineEndYear * 1.0,
+                    minDelta: 500,
+                    start: startYear,
+                    end: endYear,
+                    onUpdated: onChange,
                   ),
                 ),
               ),

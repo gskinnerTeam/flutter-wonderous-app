@@ -9,6 +9,7 @@ class PopNavigatorUnderlay extends StatelessWidget {
       child: AppBtn.basic(
         onPressed: () => Navigator.of(context).pop(),
         semanticLabel: '',
+        hoverEffect: false,
         child: const SizedBox.expand(),
       ),
     );
