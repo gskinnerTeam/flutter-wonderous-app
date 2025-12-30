@@ -19,7 +19,7 @@ class _BlurredImageBg extends StatelessWidget {
       alignment: Alignment(0, 0.8),
       child: Container(
         foregroundDecoration: BoxDecoration(
-          color: $styles.colors.black.withOpacity(fgOpacity),
+          color: $styles.colors.black.withValues(alpha: fgOpacity),
         ),
         child: settingsLogic.useBlurs
             ? ImageFiltered(

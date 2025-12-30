@@ -90,9 +90,9 @@ class _RangeSelectorState extends State<RangeSelector> {
                 label: $strings.bottomScrubberSemanticTimeline,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: $styles.colors.offWhite.withOpacity(0),
+                    color: $styles.colors.offWhite.withValues(alpha: 0),
                     border: Border.symmetric(
-                      horizontal: BorderSide(color: $styles.colors.white.withOpacity(0.75), width: 2),
+                      horizontal: BorderSide(color: $styles.colors.white.withValues(alpha: 0.75), width: 2),
                     ),
                   ),
                 ),
@@ -118,7 +118,7 @@ class _RangeSelectorState extends State<RangeSelector> {
             alignment: Alignment.center,
             width: RangeSelector.handleWidth,
             decoration: BoxDecoration(
-              color: $styles.colors.white.withOpacity(0.75),
+              color: $styles.colors.white.withValues(alpha: 0.75),
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular($styles.corners.md),
                 bottomRight: Radius.circular($styles.corners.md),

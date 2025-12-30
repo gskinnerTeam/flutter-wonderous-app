@@ -14,7 +14,7 @@ class _CollectionFooter extends StatelessWidget {
       // Transform.translate(
       //   offset: Offset(0, -$styles.insets.xl),
       //   child: VtGradient(
-      //     [$styles.colors.greyStrong.withOpacity(0), $styles.colors.greyStrong],
+      //     [$styles.colors.greyStrong.withValues(alpha:0), $styles.colors.greyStrong],
       //     const [0, 1],
       //     height: $styles.insets.xl,
       //   ),
@@ -61,7 +61,7 @@ class _CollectionFooter extends StatelessWidget {
       child: Container(
         height: $styles.insets.xs,
         decoration: BoxDecoration(
-          color: $styles.colors.white.withOpacity(0.25),
+          color: $styles.colors.white.withValues(alpha: 0.25),
           borderRadius: BorderRadius.circular(1000),
         ),
         child: Container(

@@ -12,6 +12,10 @@ class ListOverscollGradient extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = color ?? $styles.colors.black;
-    return VtGradient([c.withOpacity(bottomUp ? 0 : 1), c.withOpacity(bottomUp ? 1 : 0)], const [0, 1], height: size);
+    return VtGradient(
+      [c.withValues(alpha: bottomUp ? 0 : 1), c.withValues(alpha: bottomUp ? 1 : 0)],
+      const [0, 1],
+      height: size,
+    );
   }
 }
