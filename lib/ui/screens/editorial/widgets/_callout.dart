@@ -6,7 +6,7 @@ class _Callout extends StatelessWidget {
   const _Callout({super.key, required this.text});
   @override
   Widget build(BuildContext context) {
-    return Focus( 
+    return Focus(
       child: IntrinsicHeight(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -18,10 +18,10 @@ class _Callout extends StatelessWidget {
                 text,
                 style: $styles.text.callout,
               ),
-            )
+            ),
           ],
         ),
-      )
+      ),
     );
   }
 }

@@ -35,7 +35,10 @@ class ScreenPaths {
     final currentUri = appRouter.routeInformationProvider.value.uri;
     Map<String, dynamic> params = Map.of(currentUri.queryParameters);
     params.addAll(newPathUri.queryParameters);
-    Uri? loc = Uri(path: '${currentUri.path}/${newPathUri.path}'.replaceAll('//', '/'), queryParameters: params);
+    Uri? loc = Uri(
+      path: '${currentUri.path}/${newPathUri.path}'.replaceAll('//', '/'),
+      queryParameters: params,
+    );
     return loc.toString();
   }
 }
@@ -63,13 +66,19 @@ final appRouter = GoRouter(
   errorPageBuilder: (context, state) => MaterialPage(child: PageNotFound(state.uri.toString())),
   routes: [
     ShellRoute(
-        builder: (context, router, navigator) {
-          return WondersAppScaffold(child: navigator);
-        },
-        routes: [
-          AppRoute(ScreenPaths.splash, (_) => Container(color: $styles.colors.greyStrong)), // This will be hidden
-          AppRoute(ScreenPaths.intro, (_) => IntroScreen()),
-          AppRoute(ScreenPaths.home, (_) => HomeScreen(), routes: [
+      builder: (context, router, navigator) {
+        return WondersAppScaffold(child: navigator);
+      },
+      routes: [
+        AppRoute(
+          ScreenPaths.splash,
+          (_) => Container(color: $styles.colors.greyStrong),
+        ), // This will be hidden
+        AppRoute(ScreenPaths.intro, (_) => IntroScreen()),
+        AppRoute(
+          ScreenPaths.home,
+          (_) => HomeScreen(),
+          routes: [
             _timelineRoute,
             _collectionRoute,
             AppRoute(
@@ -96,7 +105,9 @@ final appRouter = GoRouter(
                 AppRoute(
                   'search/:searchType',
                   (s) {
-                    return ArtifactSearchScreen(type: _parseWonderType(s.pathParameters['searchType']));
+                    return ArtifactSearchScreen(
+                      type: _parseWonderType(s.pathParameters['searchType']),
+                    );
                   },
                   routes: [
                     _artifactRoute,
@@ -105,41 +116,47 @@ final appRouter = GoRouter(
 
                 // Maps
                 AppRoute(
-                    'maps/:mapsType',
-                    (s) => FullscreenMapsViewer(
-                          type: _parseWonderType(s.pathParameters['mapsType']),
-                        )),
+                  'maps/:mapsType',
+                  (s) => FullscreenMapsViewer(
+                    type: _parseWonderType(s.pathParameters['mapsType']),
+                  ),
+                ),
               ],
             ),
-          ]),
-        ]),
+          ],
+        ),
+      ],
+    ),
   ],
 );
 
 /// Custom GoRoute sub-class to make the router declaration easier to read
 class AppRoute extends GoRoute {
-  AppRoute(String path, Widget Function(GoRouterState s) builder,
-      {List<GoRoute> routes = const [], this.useFade = false})
-      : super(
-          path: path,
-          routes: routes,
-          pageBuilder: (context, state) {
-            final pageContent = Scaffold(
-              body: builder(state),
-              resizeToAvoidBottomInset: false,
-            );
-            if (useFade || $styles.disableAnimations) {
-              return CustomTransitionPage(
-                key: state.pageKey,
-                child: pageContent,
-                transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                  return FadeTransition(opacity: animation, child: child);
-                },
-              );
-            }
-            return CupertinoPage(child: pageContent);
-          },
-        );
+  AppRoute(
+    String path,
+    Widget Function(GoRouterState s) builder, {
+    List<GoRoute> routes = const [],
+    this.useFade = false,
+  }) : super(
+         path: path,
+         routes: routes,
+         pageBuilder: (context, state) {
+           final pageContent = Scaffold(
+             body: builder(state),
+             resizeToAvoidBottomInset: false,
+           );
+           if (useFade || $styles.disableAnimations) {
+             return CustomTransitionPage(
+               key: state.pageKey,
+               child: pageContent,
+               transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                 return FadeTransition(opacity: animation, child: child);
+               },
+             );
+           }
+           return CupertinoPage(child: pageContent);
+         },
+       );
   final bool useFade;
 }
 

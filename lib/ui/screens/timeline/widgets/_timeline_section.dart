@@ -16,10 +16,11 @@ class TimelineSection extends StatelessWidget {
     fraction = fraction.clamp(0, 1);
 
     return Semantics(
-      label: '${data.title}, ${$strings.timelineSemanticDate(
-        StringUtils.formatYr(data.startYr),
-        StringUtils.formatYr(data.endYr),
-      )}',
+      label:
+          '${data.title}, ${$strings.timelineSemanticDate(
+            StringUtils.formatYr(data.startYr),
+            StringUtils.formatYr(data.endYr),
+          )}',
       child: IgnorePointerKeepSemantics(
         child: Container(
           alignment: Alignment(0, -1 + fraction * 2),

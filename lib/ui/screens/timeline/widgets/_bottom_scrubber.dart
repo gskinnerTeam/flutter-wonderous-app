@@ -1,8 +1,13 @@
 part of '../timeline_screen.dart';
 
 class _BottomScrubber extends StatelessWidget {
-  const _BottomScrubber(this.scroller,
-      {super.key, required this.timelineMinSize, required this.size, required this.selectedWonder});
+  const _BottomScrubber(
+    this.scroller, {
+    super.key,
+    required this.timelineMinSize,
+    required this.size,
+    required this.selectedWonder,
+  });
   final ScrollController? scroller;
   final double timelineMinSize;
   final double size;
@@ -29,70 +34,72 @@ class _BottomScrubber extends StatelessWidget {
     /// It might take a frame until we receive a valid scroller
     if (scroller == null) return SizedBox.shrink();
 
-    return LayoutBuilder(builder: (context, constraints) {
-      void handleScrubberPan(DragUpdateDetails details) {
-        final totalWidth = constraints.maxWidth;
-        if (!scroller.hasClients) return;
-        double dragMultiplier = (scroller.position.maxScrollExtent + timelineMinSize) / totalWidth;
-        double newPos = scroller.position.pixels + details.delta.dx * dragMultiplier;
-        scroller.position.jumpTo(newPos.clamp(0, scroller.position.maxScrollExtent));
-      }
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        void handleScrubberPan(DragUpdateDetails details) {
+          final totalWidth = constraints.maxWidth;
+          if (!scroller.hasClients) return;
+          double dragMultiplier = (scroller.position.maxScrollExtent + timelineMinSize) / totalWidth;
+          double newPos = scroller.position.pixels + details.delta.dx * dragMultiplier;
+          scroller.position.jumpTo(newPos.clamp(0, scroller.position.maxScrollExtent));
+        }
 
-      return SizedBox(
-        height: size,
-        child: Stack(
-          children: [
-            /// Timeline background
-            Container(
-              padding: EdgeInsets.all($styles.insets.md),
-              decoration: BoxDecoration(
-                color: $styles.colors.greyStrong,
-                borderRadius: BorderRadius.circular($styles.corners.md),
+        return SizedBox(
+          height: size,
+          child: Stack(
+            children: [
+              /// Timeline background
+              Container(
+                padding: EdgeInsets.all($styles.insets.md),
+                decoration: BoxDecoration(
+                  color: $styles.colors.greyStrong,
+                  borderRadius: BorderRadius.circular($styles.corners.md),
+                ),
+                child: WondersTimelineBuilder(
+                  crossAxisGap: 4,
+                  selectedWonders: selectedWonder != null ? [selectedWonder!] : [],
+                ),
               ),
-              child: WondersTimelineBuilder(
-                crossAxisGap: 4,
-                selectedWonders: selectedWonder != null ? [selectedWonder!] : [],
-              ),
-            ),
 
-            /// Visible area, follows the position of scroller
-            AnimatedBuilder(
-              animation: scroller,
-              builder: (_, __) {
-                ScrollPosition? pos;
-                if (scroller.hasClients) pos = scroller.position;
-                // Get current scroll offset and move the viewport to match
-                double scrollFraction = _calculateScrollFraction(pos);
-                double viewPortFraction = _calculateViewPortFraction(pos);
-                final scrubberAlign = Alignment(-1 + scrollFraction * 2, 0);
+              /// Visible area, follows the position of scroller
+              AnimatedBuilder(
+                animation: scroller,
+                builder: (_, __) {
+                  ScrollPosition? pos;
+                  if (scroller.hasClients) pos = scroller.position;
+                  // Get current scroll offset and move the viewport to match
+                  double scrollFraction = _calculateScrollFraction(pos);
+                  double viewPortFraction = _calculateViewPortFraction(pos);
+                  final scrubberAlign = Alignment(-1 + scrollFraction * 2, 0);
 
-                return Positioned.fill(
-                  child: Semantics(
-                    container: true,
-                    slider: true,
-                    label: $strings.bottomScrubberSemanticTimeline,
-                    child: GestureDetector(
-                      behavior: HitTestBehavior.translucent,
-                      onPanUpdate: handleScrubberPan,
+                  return Positioned.fill(
+                    child: Semantics(
+                      container: true,
+                      slider: true,
+                      label: $strings.bottomScrubberSemanticTimeline,
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onPanUpdate: handleScrubberPan,
 
-                      /// Scrub area
-                      child: Align(
-                        alignment: scrubberAlign,
-                        child: FractionallySizedBox(
-                          widthFactor: viewPortFraction,
-                          heightFactor: 1,
-                          child: _buildOutlineBox(context, scrubberAlign),
+                        /// Scrub area
+                        child: Align(
+                          alignment: scrubberAlign,
+                          child: FractionallySizedBox(
+                            widthFactor: viewPortFraction,
+                            heightFactor: 1,
+                            child: _buildOutlineBox(context, scrubberAlign),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                );
-              },
-            )
-          ],
-        ),
-      );
-    });
+                  );
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   Container _buildOutlineBox(BuildContext context, Alignment alignment) {

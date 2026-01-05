@@ -10,7 +10,7 @@ extension WonderColorExtensions on WonderType {
       WonderType.chichenItza => const Color(0xFF164F2A),
       WonderType.machuPicchu => const Color(0xFF0E4064),
       WonderType.tajMahal => const Color(0xFFC96454),
-      WonderType.christRedeemer => const Color(0xFF1C4D46)
+      WonderType.christRedeemer => const Color(0xFF1C4D46),
     };
   }
 
@@ -23,7 +23,7 @@ extension WonderColorExtensions on WonderType {
       WonderType.chichenItza => const Color(0xFFE2CFBB),
       WonderType.machuPicchu => const Color(0xFFC1D9D1),
       WonderType.tajMahal => const Color(0xFF642828),
-      WonderType.christRedeemer => const Color(0xFFED7967)
+      WonderType.christRedeemer => const Color(0xFFED7967),
     };
   }
 }

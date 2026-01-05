@@ -98,8 +98,13 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
                             if (data.pullQuote1Author.isNotEmpty) ...[
                               Container(
                                 margin: const EdgeInsets.only(top: 16),
-                                child: buildText('- ${data.pullQuote1Author}', collapseAmt, top: false, isAuthor: true),
-                              )
+                                child: buildText(
+                                  '- ${data.pullQuote1Author}',
+                                  collapseAmt,
+                                  top: false,
+                                  isAuthor: true,
+                                ),
+                              ),
                             ],
                           ],
                         ),

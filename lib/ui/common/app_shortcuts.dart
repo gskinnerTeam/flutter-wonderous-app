@@ -27,10 +27,14 @@ class AppShortcuts {
     SingleActivator(LogicalKeyboardKey.arrowDown): ScrollIntent(direction: AxisDirection.down),
     SingleActivator(LogicalKeyboardKey.arrowLeft): ScrollIntent(direction: AxisDirection.left),
     SingleActivator(LogicalKeyboardKey.arrowRight): ScrollIntent(direction: AxisDirection.right),
-    SingleActivator(LogicalKeyboardKey.pageUp):
-        ScrollIntent(direction: AxisDirection.up, type: ScrollIncrementType.page),
-    SingleActivator(LogicalKeyboardKey.pageDown):
-        ScrollIntent(direction: AxisDirection.down, type: ScrollIncrementType.page),
+    SingleActivator(LogicalKeyboardKey.pageUp): ScrollIntent(
+      direction: AxisDirection.up,
+      type: ScrollIncrementType.page,
+    ),
+    SingleActivator(LogicalKeyboardKey.pageDown): ScrollIntent(
+      direction: AxisDirection.down,
+      type: ScrollIncrementType.page,
+    ),
   };
 
   static Map<ShortcutActivator, Intent>? get defaults {
@@ -38,7 +42,7 @@ class AppShortcuts {
       // fall back to default shortcuts for ios and android
       TargetPlatform.iOS || TargetPlatform.android => null,
       // unify shortcuts for desktop/web
-      _ => _defaultWebAndDesktopShortcuts
+      _ => _defaultWebAndDesktopShortcuts,
     };
   }
 }

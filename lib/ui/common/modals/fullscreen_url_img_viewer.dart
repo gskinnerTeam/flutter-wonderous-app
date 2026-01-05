@@ -110,14 +110,14 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
                             flipIcon: true,
                             onPressed: page == widget.urls.length - 1 ? null : () => _animateToPage(page + 1),
                             semanticLabel: $strings.semanticsNext(''),
-                          )
+                          ),
                         ],
                       );
                     },
                   ),
                 ),
-              )
-            }
+              ),
+            },
           ],
         ),
       ),

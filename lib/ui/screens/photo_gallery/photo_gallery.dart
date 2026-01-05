@@ -16,7 +16,12 @@ import 'package:wonders/ui/common/utils/app_haptics.dart';
 part 'widgets/_animated_cutout_overlay.dart';
 
 class PhotoGallery extends StatefulWidget {
-  const PhotoGallery({super.key, this.imageSize, required this.collectionId, required this.wonderType});
+  const PhotoGallery({
+    super.key,
+    this.imageSize,
+    required this.collectionId,
+    required this.wonderType,
+  });
   final Size? imageSize;
   final String collectionId;
   final WonderType wonderType;
@@ -73,7 +78,10 @@ class _PhotoGalleryState extends State<PhotoGallery> {
     double halfCount = (_gridSize / 2).floorToDouble();
     Size paddedImageSize = Size(size.width + padding, size.height + padding);
     // Get the starting offset that would show the top-left image (index 0)
-    final originOffset = Offset(halfCount * paddedImageSize.width, halfCount * paddedImageSize.height);
+    final originOffset = Offset(
+      halfCount * paddedImageSize.width,
+      halfCount * paddedImageSize.height,
+    );
     // Add the offset for the row/col
     int col = _index % _gridSize;
     int row = (_index / _gridSize).floor();
@@ -87,7 +95,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
       WonderType.chichenItza || WonderType.petra => 0,
       WonderType.colosseum || WonderType.pyramidsGiza => _gridSize - 1,
       WonderType.christRedeemer || WonderType.machuPicchu => _imgCount - 1,
-      WonderType.greatWall || WonderType.tajMahal => _imgCount - _gridSize
+      WonderType.greatWall || WonderType.tajMahal => _imgCount - _gridSize,
     };
   }
 
@@ -220,7 +228,10 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                         childAspectRatio: imgSize.aspectRatio,
                         mainAxisSpacing: padding,
                         crossAxisSpacing: padding,
-                        children: List.generate(_imgCount, (i) => _buildImage(i, swipeDuration, imgSize)),
+                        children: List.generate(
+                          _imgCount,
+                          (i) => _buildImage(i, swipeDuration, imgSize),
+                        ),
                       ),
                     ),
                   ),
@@ -238,73 +249,79 @@ class _PhotoGalleryState extends State<PhotoGallery> {
     return FocusTraversalOrder(
       order: NumericFocusOrder(index.toDouble()),
       child: ValueListenableBuilder(
-          valueListenable: collectiblesLogic.statesById,
-          builder: (_, __, ___) {
-            bool isSelected = index == _index;
-            final imgUrl = _photoIds.value[index];
-            late String semanticLbl;
-            if (_checkCollectibleIndex(index)) {
-              semanticLbl = $strings.collectibleItemSemanticCollectible;
-            } else {
-              semanticLbl = !isSelected
-                  ? $strings.photoGallerySemanticFocus(index + 1, _imgCount)
-                  : $strings.photoGallerySemanticFullscreen(index + 1, _imgCount);
-            }
+        valueListenable: collectiblesLogic.statesById,
+        builder: (_, __, ___) {
+          bool isSelected = index == _index;
+          final imgUrl = _photoIds.value[index];
+          late String semanticLbl;
+          if (_checkCollectibleIndex(index)) {
+            semanticLbl = $strings.collectibleItemSemanticCollectible;
+          } else {
+            semanticLbl = !isSelected
+                ? $strings.photoGallerySemanticFocus(index + 1, _imgCount)
+                : $strings.photoGallerySemanticFullscreen(index + 1, _imgCount);
+          }
 
-            final photoWidget = TweenAnimationBuilder<double>(
-              duration: $styles.times.med,
-              curve: Curves.easeOut,
-              tween: Tween(begin: 1, end: isSelected ? 1.15 : 1),
-              builder: (_, value, child) => Transform.scale(scale: value, child: child),
-              child: UnsplashPhoto(
-                imgUrl,
-                fit: BoxFit.cover,
-                size: UnsplashPhotoSize.large,
-              ).maybeAnimate().fade(),
-            );
+          final photoWidget = TweenAnimationBuilder<double>(
+            duration: $styles.times.med,
+            curve: Curves.easeOut,
+            tween: Tween(begin: 1, end: isSelected ? 1.15 : 1),
+            builder: (_, value, child) => Transform.scale(scale: value, child: child),
+            child: UnsplashPhoto(
+              imgUrl,
+              fit: BoxFit.cover,
+              size: UnsplashPhotoSize.large,
+            ).maybeAnimate().fade(),
+          );
 
-            return MergeSemantics(
-              child: Semantics(
-                focused: isSelected,
-                image: !_checkCollectibleIndex(index),
-                liveRegion: isSelected,
-                onIncrease: () => _handleImageTapped(_index + 1, false),
-                onDecrease: () => _handleImageTapped(_index - 1, false),
-                child: _checkCollectibleIndex(index)
-                    ? Center(
-                        child: HiddenCollectible(widget.wonderType, index: 1, size: 100, focus: _focusNodes[index]),
-                      )
-                    : AppBtn.basic(
-                        semanticLabel: semanticLbl,
-                        focusNode: _focusNodes[index],
-                        onFocusChanged: (isFocused) => _handleImageFocusChanged(index, isFocused),
-                        onPressed: () => _handleImageTapped(index, isSelected),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: SizedBox(
-                            width: imgSize.width,
-                            height: imgSize.height,
-                            child: (useClipPathWorkAroundForWeb == false)
-                                ? photoWidget
-                                : Stack(
-                                    children: [
-                                      photoWidget,
-                                      // Because the web platform doesn't support clipPath, we use a workaround to highlight the selected image
-                                      Positioned.fill(
-                                        child: AnimatedOpacity(
-                                          duration: $styles.times.med,
-                                          opacity: isSelected ? 0 : ($styles.highContrast ? 0.4 : 0.7),
-                                          child: ColoredBox(color: $styles.colors.black),
-                                        ),
+          return MergeSemantics(
+            child: Semantics(
+              focused: isSelected,
+              image: !_checkCollectibleIndex(index),
+              liveRegion: isSelected,
+              onIncrease: () => _handleImageTapped(_index + 1, false),
+              onDecrease: () => _handleImageTapped(_index - 1, false),
+              child: _checkCollectibleIndex(index)
+                  ? Center(
+                      child: HiddenCollectible(
+                        widget.wonderType,
+                        index: 1,
+                        size: 100,
+                        focus: _focusNodes[index],
+                      ),
+                    )
+                  : AppBtn.basic(
+                      semanticLabel: semanticLbl,
+                      focusNode: _focusNodes[index],
+                      onFocusChanged: (isFocused) => _handleImageFocusChanged(index, isFocused),
+                      onPressed: () => _handleImageTapped(index, isSelected),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: SizedBox(
+                          width: imgSize.width,
+                          height: imgSize.height,
+                          child: (useClipPathWorkAroundForWeb == false)
+                              ? photoWidget
+                              : Stack(
+                                  children: [
+                                    photoWidget,
+                                    // Because the web platform doesn't support clipPath, we use a workaround to highlight the selected image
+                                    Positioned.fill(
+                                      child: AnimatedOpacity(
+                                        duration: $styles.times.med,
+                                        opacity: isSelected ? 0 : ($styles.highContrast ? 0.4 : 0.7),
+                                        child: ColoredBox(color: $styles.colors.black),
                                       ),
-                                    ],
-                                  ),
-                          ),
+                                    ),
+                                  ],
+                                ),
                         ),
                       ),
-              ),
-            );
-          }),
+                    ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

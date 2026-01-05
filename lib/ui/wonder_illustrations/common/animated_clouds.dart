@@ -9,8 +9,13 @@ import 'package:wonders/ui/common/utils/duration_utils.dart';
 // When value-key is changed, a new set of clouds will animate into place and the old ones will animate out.
 // Uses a random seed system, to make sure we get the same set of clouds for each wonder, without actually having to hand-position them.
 class AnimatedClouds extends StatefulWidget with GetItStatefulWidgetMixin {
-  AnimatedClouds(
-      {super.key, this.enableAnimations = true, required this.wonderType, required this.opacity, this.cloudSize = 500});
+  AnimatedClouds({
+    super.key,
+    this.enableAnimations = true,
+    required this.wonderType,
+    required this.opacity,
+    this.cloudSize = 500,
+  });
   final WonderType wonderType;
   final bool enableAnimations;
   final double opacity;
@@ -58,7 +63,7 @@ class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProvid
       WonderType.machuPicchu => 37,
       WonderType.petra => 111,
       WonderType.pyramidsGiza => 15,
-      WonderType.tajMahal => 2
+      WonderType.tajMahal => 2,
     };
   }
 
@@ -123,8 +128,14 @@ class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProvid
 }
 
 class _Cloud extends StatelessWidget {
-  const _Cloud(this.pos,
-      {this.scale = 1, this.flipX = false, this.flipY = false, required this.opacity, required this.size});
+  const _Cloud(
+    this.pos, {
+    this.scale = 1,
+    this.flipX = false,
+    this.flipY = false,
+    required this.opacity,
+    required this.size,
+  });
 
   final Offset pos;
   final double scale;
@@ -135,14 +146,14 @@ class _Cloud extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Transform.scale(
-        scaleX: scale * (flipX ? -1 : 1),
-        scaleY: scale * (flipY ? -1 : 1),
-        child: Image.asset(
-          ImagePaths.cloud,
-          excludeFromSemantics: true,
-          opacity: AlwaysStoppedAnimation(.4 * opacity),
-          width: size * scale,
-          fit: BoxFit.fitWidth,
-        ),
-      );
+    scaleX: scale * (flipX ? -1 : 1),
+    scaleY: scale * (flipY ? -1 : 1),
+    child: Image.asset(
+      ImagePaths.cloud,
+      excludeFromSemantics: true,
+      opacity: AlwaysStoppedAnimation(.4 * opacity),
+      width: size * scale,
+      fit: BoxFit.fitWidth,
+    ),
+  );
 }

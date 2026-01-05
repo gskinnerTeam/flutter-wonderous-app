@@ -13,8 +13,9 @@ class ArtifactAPILogic {
   /// Returns artifact data by ID. Returns null if artifact cannot be found. */
   Future<ArtifactData?> getArtifactByID(String id, {bool selfHosted = false}) async {
     if (_artifactCache.containsKey(id)) return _artifactCache[id];
-    ServiceResult<ArtifactData?> result =
-        (await (selfHosted ? service.getSelfHostedObjectByID(id) : service.getMetObjectByID(id)));
+    ServiceResult<ArtifactData?> result = (await (selfHosted
+        ? service.getSelfHostedObjectByID(id)
+        : service.getMetObjectByID(id)));
     if (!result.success) throw $strings.artifactDetailsErrorNotFound(id);
     ArtifactData? artifact = result.content;
     return _artifactCache[id] = artifact;

@@ -8,10 +8,10 @@ class WonderousLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Image.asset(
-        ImagePaths.appLogoPlain,
-        excludeFromSemantics: true,
-        fit: BoxFit.cover,
-        width: width,
-        filterQuality: FilterQuality.high,
-      );
+    ImagePaths.appLogoPlain,
+    excludeFromSemantics: true,
+    fit: BoxFit.cover,
+    width: width,
+    filterQuality: FilterQuality.high,
+  );
 }

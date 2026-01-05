@@ -13,7 +13,7 @@ class TimelineLogic {
           w.startYr,
           $strings.timelineLabelConstruction(w.title),
         ),
-      )
+      ),
     ];
   }
 }

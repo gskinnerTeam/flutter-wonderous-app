@@ -40,10 +40,11 @@ class OkModal extends StatelessWidget {
       msg: msg,
       buttons: [
         AppBtn.from(
-            text: $strings.appModalsButtonOk,
-            expand: true,
-            isSecondary: true,
-            onPressed: () => Navigator.of(context).pop(true)),
+          text: $strings.appModalsButtonOk,
+          expand: true,
+          isSecondary: true,
+          onPressed: () => Navigator.of(context).pop(true),
+        ),
       ],
       child: child,
     );
@@ -63,13 +64,17 @@ class OkCancelModal extends StatelessWidget {
       msg: msg,
       buttons: [
         AppBtn.from(
-            text: $strings.appModalsButtonOk,
-            expand: true,
-            isSecondary: true,
-            onPressed: () => Navigator.of(context).pop(true)),
+          text: $strings.appModalsButtonOk,
+          expand: true,
+          isSecondary: true,
+          onPressed: () => Navigator.of(context).pop(true),
+        ),
         Gap($styles.insets.xs),
         AppBtn.from(
-            text: $strings.appModalsButtonCancel, expand: true, onPressed: () => Navigator.of(context).pop(false)),
+          text: $strings.appModalsButtonCancel,
+          expand: true,
+          onPressed: () => Navigator.of(context).pop(false),
+        ),
       ],
       child: child,
     );
@@ -102,7 +107,7 @@ class _BaseContentModal extends StatelessWidget {
                   if (child != null) child!,
                   if (msg != null) Text(msg!, style: $styles.text.body),
                   Gap($styles.insets.md),
-                  Column(children: buttons.map((e) => e).toList())
+                  Column(children: buttons.map((e) => e).toList()),
                 ],
               ),
             ),

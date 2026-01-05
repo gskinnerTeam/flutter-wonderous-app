@@ -92,7 +92,7 @@ class _ScrollingViewportController extends ChangeNotifier {
   }
 
   void _handleScaleUpdateMouse(double scale) {
-    setZoom( Math.max(0, Math.min(1, _zoom + scale)) );
+    setZoom(Math.max(0, Math.min(1, _zoom + scale)));
   }
 
   /// Maintain current yr when the app changes size

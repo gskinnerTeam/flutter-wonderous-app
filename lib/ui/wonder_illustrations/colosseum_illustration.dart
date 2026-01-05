@@ -53,7 +53,7 @@ class ColosseumIllustration extends StatelessWidget {
         minHeight: 200,
         zoomAmt: .15,
         fractionalOffset: Offset(0, config.shortMode ? .10 : -.1),
-      )
+      ),
     ];
   }
 

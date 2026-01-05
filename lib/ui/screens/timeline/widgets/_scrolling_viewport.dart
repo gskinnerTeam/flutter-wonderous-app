@@ -85,7 +85,7 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
             ),
           ],
         ),
-      )
+      ),
     );
   }
 
@@ -164,10 +164,11 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
 
             /// Event Popups, rebuilds when [_currentEventMarker] changes
             ValueListenableBuilder<TimelineEvent?>(
-                valueListenable: _currentEventMarker,
-                builder: (_, data, __) {
-                  return _EventPopups(currentEvent: data);
-                })
+              valueListenable: _currentEventMarker,
+              builder: (_, data, __) {
+                return _EventPopups(currentEvent: data);
+              },
+            ),
           ],
         );
       },

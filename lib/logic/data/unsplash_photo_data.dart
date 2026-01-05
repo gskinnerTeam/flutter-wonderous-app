@@ -17,7 +17,7 @@ class UnsplashPhotoData {
     int size = switch (targetSize) {
       UnsplashPhotoSize.med => 400,
       UnsplashPhotoSize.large => 800,
-      UnsplashPhotoSize.xl => 1200
+      UnsplashPhotoSize.xl => 1200,
     };
     if (PlatformInfo.pixelRatio >= 1.5 || PlatformInfo.isDesktop) {
       size *= 2;
@@ -51,7 +51,7 @@ class UnsplashPhotoData {
       '_iklK8oQKPs',
       'Yt0GMo9DcTg',
       '9h9bzwTzZHc',
-      'MeBRK0Ypo9M'
+      'MeBRK0Ypo9M',
     ],
     '684IRta86_c': [
       'gwraJHxsMd0',
@@ -77,7 +77,7 @@ class UnsplashPhotoData {
       'mwV6PsB-7Bk',
       'VmVk172z034',
       '0pG9XKXCj4s',
-      'eU4pipU_8HA'
+      'eU4pipU_8HA',
     ],
     'dPgX5iK8Ufo': [
       '0jcM54HBO4c',
@@ -103,7 +103,7 @@ class UnsplashPhotoData {
       'ka-HD2cZYec',
       '8tTh9isJoos',
       'OkiDIla7K8Q',
-      'xaIEq6owYvM'
+      'xaIEq6owYvM',
     ],
     'VPdti8Kjq9o': [
       'rhRk8J33Bcc',
@@ -129,7 +129,7 @@ class UnsplashPhotoData {
       'VFRTXGw1VjU',
       'ckotRXopwRM',
       'CzKI2-nejUk',
-      'Q4g0Q-eVVEg'
+      'Q4g0Q-eVVEg',
     ],
     'Kg_h04xvZEo': [
       'eq4OpDuGN7w',
@@ -155,7 +155,7 @@ class UnsplashPhotoData {
       'lzwT4n05p20',
       'OXL47qN9brQ',
       'vhKZvNFmpPU',
-      '2s1chnvuMQ4'
+      '2s1chnvuMQ4',
     ],
     'wUhgZTyUnl8': [
       'UiUtIG0xLPM',
@@ -181,7 +181,7 @@ class UnsplashPhotoData {
       'PO7CGnoDFUI',
       '7bBaW4UPk7A',
       'iyYMqhLwDQE',
-      'BtYpDZNIeFc'
+      'BtYpDZNIeFc',
     ],
     'qWQJbDvCMW8': [
       'I4PEltFE6v8',
@@ -207,7 +207,7 @@ class UnsplashPhotoData {
       'Pm1hCH1X2r0',
       'sYMgkKkHpGI',
       '5_Bu25SV6X8',
-      'py8omnp-hko'
+      'py8omnp-hko',
     ],
     'CSEvB5Tza9E': [
       '-tnS9O1ubn8',
@@ -233,7 +233,7 @@ class UnsplashPhotoData {
       'boyXZfqpwpU',
       'rxv2qwYPe6s',
       'zpAwgjaI3lI',
-      'MoonoldXeqs'
-    ]
+      'MoonoldXeqs',
+    ],
   };
 }

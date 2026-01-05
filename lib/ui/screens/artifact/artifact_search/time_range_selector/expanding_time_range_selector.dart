@@ -46,50 +46,52 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
     final bool isOpen = widget.panelController.value;
     double safeBottom = max($styles.insets.md, MediaQuery.of(context).padding.bottom);
 
-    return LayoutBuilder(builder: (_, constraints) {
-      return BottomCenter(
-        child: AnimatedPadding(
-          duration: $styles.times.fast,
-          padding: isOpen ? EdgeInsets.zero : EdgeInsets.only(bottom: safeBottom + $styles.insets.xxs),
-          child: AppBtn.basic(
-            onPressed: () => widget.panelController.toggle(),
-            semanticLabel: '',
-            pressEffect: false,
-            child: OpeningCard(
-              isOpen: isOpen,
-              padding: EdgeInsets.symmetric(horizontal: pad, vertical: $styles.insets.xs),
-              background: Container(
-                decoration: BoxDecoration(
-                  color: $styles.colors.black.withValues(alpha: 0.85),
-                  borderRadius: BorderRadius.circular($styles.corners.md),
-                  boxShadow: [
-                    BoxShadow(
-                      color: $styles.colors.black.withValues(alpha: 0.66),
-                      offset: Offset(0, 4),
-                      blurRadius: 4,
-                    )
-                  ],
+    return LayoutBuilder(
+      builder: (_, constraints) {
+        return BottomCenter(
+          child: AnimatedPadding(
+            duration: $styles.times.fast,
+            padding: isOpen ? EdgeInsets.zero : EdgeInsets.only(bottom: safeBottom + $styles.insets.xxs),
+            child: AppBtn.basic(
+              onPressed: () => widget.panelController.toggle(),
+              semanticLabel: '',
+              pressEffect: false,
+              child: OpeningCard(
+                isOpen: isOpen,
+                padding: EdgeInsets.symmetric(horizontal: pad, vertical: $styles.insets.xs),
+                background: Container(
+                  decoration: BoxDecoration(
+                    color: $styles.colors.black.withValues(alpha: 0.85),
+                    borderRadius: BorderRadius.circular($styles.corners.md),
+                    boxShadow: [
+                      BoxShadow(
+                        color: $styles.colors.black.withValues(alpha: 0.66),
+                        offset: Offset(0, 4),
+                        blurRadius: 4,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              closedBuilder: (_) => _ClosedTimeRange(startYear: widget.startYear, endYear: widget.endYear),
-              openBuilder: (_) => SizedBox(
-                width: constraints.maxWidth - pad * 2,
-                child: Center(
-                  child: _OpenedTimeRange(
-                    startYear: widget.startYear,
-                    endYear: widget.endYear,
-                    onChange: widget.onChanged,
-                    wonder: widget.wonder,
-                    painter: _painter,
-                    onClose: widget.panelController.toggle,
+                closedBuilder: (_) => _ClosedTimeRange(startYear: widget.startYear, endYear: widget.endYear),
+                openBuilder: (_) => SizedBox(
+                  width: constraints.maxWidth - pad * 2,
+                  child: Center(
+                    child: _OpenedTimeRange(
+                      startYear: widget.startYear,
+                      endYear: widget.endYear,
+                      onChange: widget.onChanged,
+                      wonder: widget.wonder,
+                      painter: _painter,
+                      onClose: widget.panelController.toggle,
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }
 
@@ -110,7 +112,11 @@ class _ClosedTimeRange extends StatelessWidget {
         children: [
           Text(text, style: $styles.text.title2.copyWith(color: $styles.colors.offWhite)),
           Gap($styles.insets.xs),
-          Icon(Icons.edit_calendar_outlined, color: $styles.colors.accent1, size: $styles.insets.md),
+          Icon(
+            Icons.edit_calendar_outlined,
+            color: $styles.colors.accent1,
+            size: $styles.insets.md,
+          ),
         ],
       ),
     );
@@ -133,7 +139,12 @@ class _OpenedTimeRange extends StatelessWidget {
   final TimeRangePainter painter;
   final void Function() onClose;
 
-  Widget _buildChineseDateLayout(TextStyle headingTextStyle, TextStyle captionTextStyle, int startYr, int endYr) {
+  Widget _buildChineseDateLayout(
+    TextStyle headingTextStyle,
+    TextStyle captionTextStyle,
+    int startYr,
+    int endYr,
+  ) {
     return MergeSemantics(
       child: Row(
         children: [
@@ -153,7 +164,12 @@ class _OpenedTimeRange extends StatelessWidget {
     );
   }
 
-  Widget _buildDefaultDateLayout(TextStyle headingTextStyle, TextStyle captionTextStyle, int startYr, int endYr) {
+  Widget _buildDefaultDateLayout(
+    TextStyle headingTextStyle,
+    TextStyle captionTextStyle,
+    int startYr,
+    int endYr,
+  ) {
     return MergeSemantics(
       child: Row(
         children: [
@@ -174,9 +190,15 @@ class _OpenedTimeRange extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double safeBottom = max($styles.insets.sm, MediaQuery.of(context).padding.bottom);
-    List<Widget> timelineGrid = List.generate(5, (_) => Container(width: 1, color: $styles.colors.black));
+    List<Widget> timelineGrid = List.generate(
+      5,
+      (_) => Container(width: 1, color: $styles.colors.black),
+    );
 
-    final headingTextStyle = $styles.text.title1.copyWith(color: $styles.colors.offWhite, fontSize: 20 * $styles.scale);
+    final headingTextStyle = $styles.text.title1.copyWith(
+      color: $styles.colors.offWhite,
+      fontSize: 20 * $styles.scale,
+    );
     final captionTextStyle = $styles.text.bodySmall.copyWith(color: $styles.colors.greyMedium);
 
     final startYr = startYear.round(), endYr = endYear.round();
@@ -241,7 +263,10 @@ class _OpenedTimeRange extends StatelessWidget {
               // wonder minimap:
               Positioned.fill(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: RangeSelector.handleWidth, vertical: 12),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: RangeSelector.handleWidth,
+                    vertical: 12,
+                  ),
                   child: WondersTimelineBuilder(
                     crossAxisGap: 6,
                     minSize: 16,

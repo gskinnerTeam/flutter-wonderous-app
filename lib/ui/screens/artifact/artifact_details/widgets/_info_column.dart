@@ -33,22 +33,23 @@ class _InfoColumn extends StatelessWidget {
               ),
               Gap($styles.insets.lg),
               Animate().toggle(
-                  delay: 500.delayMs,
-                  builder: (_, value, __) {
-                    return CompassDivider(isExpanded: !value, duration: $styles.times.med);
-                  }),
+                delay: 500.delayMs,
+                builder: (_, value, __) {
+                  return CompassDivider(isExpanded: !value, duration: $styles.times.med);
+                },
+              ),
               Gap($styles.insets.lg),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ...[
-                    _InfoRow($strings.artifactDetailsLabelDate, data.date),
-                    _InfoRow($strings.artifactDetailsLabelPeriod, data.period),
-                    _InfoRow($strings.artifactDetailsLabelGeography, data.country),
-                    _InfoRow($strings.artifactDetailsLabelMedium, data.medium),
-                    _InfoRow($strings.artifactDetailsLabelDimension, data.dimension),
-                    _InfoRow($strings.artifactDetailsLabelClassification, data.classification),
-                  ]
+                        _InfoRow($strings.artifactDetailsLabelDate, data.date),
+                        _InfoRow($strings.artifactDetailsLabelPeriod, data.period),
+                        _InfoRow($strings.artifactDetailsLabelGeography, data.country),
+                        _InfoRow($strings.artifactDetailsLabelMedium, data.medium),
+                        _InfoRow($strings.artifactDetailsLabelDimension, data.dimension),
+                        _InfoRow($strings.artifactDetailsLabelClassification, data.classification),
+                      ]
                       .animate(interval: 100.delayMs)
                       .fadeIn(delay: 600.delayMs, duration: $styles.times.med)
                       .slide(begin: Offset(0.2, 0), curve: Curves.easeOut),
@@ -63,7 +64,7 @@ class _InfoColumn extends StatelessWidget {
             ],
           ),
         ),
-      )
+      ),
     );
   }
 }
@@ -81,22 +82,24 @@ class _InfoRow extends StatelessWidget {
       child: MergeSemantics(
         child: Padding(
           padding: EdgeInsets.only(bottom: $styles.insets.sm),
-          child: Row(children: [
-            Expanded(
-              flex: 40,
-              child: Text(
-                label.toUpperCase(),
-                style: $styles.text.titleFont.copyWith(color: $styles.colors.accent2),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 40,
+                child: Text(
+                  label.toUpperCase(),
+                  style: $styles.text.titleFont.copyWith(color: $styles.colors.accent2),
+                ),
               ),
-            ),
-            Expanded(
-              flex: 60,
-              child: Text(
-                value.isEmpty ? '--' : value,
-                style: $styles.text.body.copyWith(color: $styles.colors.offWhite),
+              Expanded(
+                flex: 60,
+                child: Text(
+                  value.isEmpty ? '--' : value,
+                  style: $styles.text.body.copyWith(color: $styles.colors.offWhite),
+                ),
               ),
-            ),
-          ]),
+            ],
+          ),
         ),
       ),
     );

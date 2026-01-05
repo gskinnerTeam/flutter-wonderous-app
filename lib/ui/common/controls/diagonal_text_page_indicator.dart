@@ -13,42 +13,49 @@ class DiagonalTextPageIndicator extends StatelessWidget {
     final size = _fontSize * 1.5;
     return StaticTextScale(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: textStyle.fontSize! * .4).copyWith(top: textStyle.fontSize! * .2),
-        child: Stack(children: [
-          ClipPath(
-            clipper: _DiagonalClipper(leftSide: true),
-            child: Transform.translate(
-              offset: Offset(-_fontSize * .7, 0),
-              child: SizedBox(
-                  width: size, height: size, child: Text('0$current', style: textStyle, textAlign: TextAlign.right)),
+        padding: EdgeInsets.symmetric(
+          horizontal: textStyle.fontSize! * .4,
+        ).copyWith(top: textStyle.fontSize! * .2),
+        child: Stack(
+          children: [
+            ClipPath(
+              clipper: _DiagonalClipper(leftSide: true),
+              child: Transform.translate(
+                offset: Offset(-_fontSize * .7, 0),
+                child: SizedBox(
+                  width: size,
+                  height: size,
+                  child: Text('0$current', style: textStyle, textAlign: TextAlign.right),
+                ),
+              ),
             ),
-          ),
-          ClipPath(
-            clipper: _DiagonalClipper(leftSide: false),
-            child: Transform.translate(
-              offset: Offset(_fontSize * .45, _fontSize * .6),
-              child: SizedBox(
-                width: size,
-                height: size,
-                child: Opacity(
-                  opacity: .5,
-                  child: Text(
-                    '0$total',
-                    style: textStyle, //.copyWith(shadows: $styles.shadows.textStrong),
+            ClipPath(
+              clipper: _DiagonalClipper(leftSide: false),
+              child: Transform.translate(
+                offset: Offset(_fontSize * .45, _fontSize * .6),
+                child: SizedBox(
+                  width: size,
+                  height: size,
+                  child: Opacity(
+                    opacity: .5,
+                    child: Text(
+                      '0$total',
+                      style: textStyle, //.copyWith(shadows: $styles.shadows.textStrong),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          Positioned.fill(
-            child: Center(
-              child: Transform.rotate(
-                angle: pi * -.25,
-                child: Container(height: 2, color: Colors.white),
+            Positioned.fill(
+              child: Center(
+                child: Transform.rotate(
+                  angle: pi * -.25,
+                  child: Container(height: 2, color: Colors.white),
+                ),
               ),
             ),
-          ),
-        ]),
+          ],
+        ),
       ),
     );
   }

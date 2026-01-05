@@ -8,13 +8,13 @@ class CenteredBox extends StatelessWidget {
   final EdgeInsets? padding;
   @override
   Widget build(BuildContext context) => Padding(
-        padding: padding ?? EdgeInsets.zero,
-        child: Center(
-          child: SizedBox(
-            width: width,
-            height: height,
-            child: child,
-          ),
-        ),
-      );
+    padding: padding ?? EdgeInsets.zero,
+    child: Center(
+      child: SizedBox(
+        width: width,
+        height: height,
+        child: child,
+      ),
+    ),
+  );
 }

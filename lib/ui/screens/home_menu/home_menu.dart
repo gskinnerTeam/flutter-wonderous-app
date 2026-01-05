@@ -93,10 +93,10 @@ class _HomeMenuState extends State<HomeMenu> {
 
   Widget _buildIconGrid(BuildContext context) {
     Widget buildRow(List<Widget> children) => SeparatedRow(
-          mainAxisAlignment: MainAxisAlignment.center,
-          separatorBuilder: () => Gap($styles.insets.sm),
-          children: children,
-        );
+      mainAxisAlignment: MainAxisAlignment.center,
+      separatorBuilder: () => Gap($styles.insets.sm),
+      children: children,
+    );
     return SeparatedColumn(
       separatorBuilder: () => Gap($styles.insets.sm),
       mainAxisSize: MainAxisSize.min,
@@ -110,7 +110,10 @@ class _HomeMenuState extends State<HomeMenu> {
           _GridBtn(wondersLogic.all[3], widget.data),
           SizedBox(
             width: _btnSize(context),
-            child: SvgPicture.asset(SvgPaths.compassFull, colorFilter: $styles.colors.offWhite.colorFilter),
+            child: SvgPicture.asset(
+              SvgPaths.compassFull,
+              colorFilter: $styles.colors.offWhite.colorFilter,
+            ),
           ),
           _GridBtn(wondersLogic.all[4], widget.data),
         ]),
@@ -125,34 +128,38 @@ class _HomeMenuState extends State<HomeMenu> {
 
   Widget _buildBottomBtns(BuildContext context) {
     return ValueListenableBuilder(
-        valueListenable: settingsLogic.currentLocale,
-        builder: (_, __, ___) {
-          return SeparatedColumn(
-            separatorBuilder: () => Divider(thickness: 1.5, height: 1).maybeAnimate().scale(
-                  duration: $styles.times.slow,
-                  delay: $styles.times.pageTransition + 200.delayMs,
-                  curve: Curves.easeOutBack,
-                ),
-            children: [
-              _MenuTextBtn(
-                  label: $strings.homeMenuButtonExplore,
-                  icon: AppIcons.timeline,
-                  onPressed: () => _handleTimelinePressed(context)),
-              _MenuTextBtn(
-                  label: $strings.homeMenuButtonView,
-                  icon: AppIcons.collection,
-                  onPressed: () => _handleCollectionPressed(context)),
-              _MenuTextBtn(
-                label: $strings.homeMenuButtonAbout,
-                icon: AppIcons.info,
-                onPressed: () => _handleAboutPressed(context),
-              ),
-            ]
-                .animate(interval: 50.delayMs)
-                .fade(delay: $styles.times.pageTransition + 50.delayMs)
-                .slide(begin: Offset(0, .1), curve: Curves.easeOut),
-          );
-        });
+      valueListenable: settingsLogic.currentLocale,
+      builder: (_, __, ___) {
+        return SeparatedColumn(
+          separatorBuilder: () => Divider(thickness: 1.5, height: 1).maybeAnimate().scale(
+            duration: $styles.times.slow,
+            delay: $styles.times.pageTransition + 200.delayMs,
+            curve: Curves.easeOutBack,
+          ),
+          children:
+              [
+                    _MenuTextBtn(
+                      label: $strings.homeMenuButtonExplore,
+                      icon: AppIcons.timeline,
+                      onPressed: () => _handleTimelinePressed(context),
+                    ),
+                    _MenuTextBtn(
+                      label: $strings.homeMenuButtonView,
+                      icon: AppIcons.collection,
+                      onPressed: () => _handleCollectionPressed(context),
+                    ),
+                    _MenuTextBtn(
+                      label: $strings.homeMenuButtonAbout,
+                      icon: AppIcons.info,
+                      onPressed: () => _handleAboutPressed(context),
+                    ),
+                  ]
+                  .animate(interval: 50.delayMs)
+                  .fade(delay: $styles.times.pageTransition + 50.delayMs)
+                  .slide(begin: Offset(0, .1), curve: Curves.easeOut),
+        );
+      },
+    );
   }
 }
 
@@ -209,7 +216,8 @@ class _GridBtnState extends State<_GridBtn> {
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.easeInOut,
                     scale: _isOver ? 1.1 : 1.0,
-                    child: iconImage)
+                    child: iconImage,
+                  )
                 : iconImage,
           ),
         ),

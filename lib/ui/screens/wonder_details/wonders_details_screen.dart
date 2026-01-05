@@ -90,11 +90,12 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
             child: MeasurableWidget(
               onChange: _handleTabMenuSized,
               child: WonderDetailsTabMenu(
-                  tabController: _tabController,
-                  onTap: _handleTabTapped,
-                  wonderType: wonder.type,
-                  showBg: showTabBarBg,
-                  axis: _useNavRail ? Axis.vertical : Axis.horizontal),
+                tabController: _tabController,
+                onTap: _handleTabTapped,
+                wonderType: wonder.type,
+                showBg: showTabBarBg,
+                axis: _useNavRail ? Axis.vertical : Axis.horizontal,
+              ),
             ),
           ),
         ],

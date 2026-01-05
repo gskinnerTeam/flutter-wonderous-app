@@ -47,19 +47,19 @@ class PetraIllustration extends StatelessWidget {
   }
 
   List<Widget> _buildMg(BuildContext context, Animation<double> anim) => [
-        FractionallySizedBox(
-          heightFactor: config.shortMode ? 1 : .8,
-          alignment: Alignment.bottomCenter,
-          child: IllustrationPiece(
-            fileName: 'petra.png',
-            heightFactor: .65,
-            minHeight: 500,
-            zoomAmt: config.shortMode ? -0.1 : -1,
-            enableHero: true,
-            fractionalOffset: Offset(0, config.shortMode ? .025 : 0),
-          ),
-        ),
-      ];
+    FractionallySizedBox(
+      heightFactor: config.shortMode ? 1 : .8,
+      alignment: Alignment.bottomCenter,
+      child: IllustrationPiece(
+        fileName: 'petra.png',
+        heightFactor: .65,
+        minHeight: 500,
+        zoomAmt: config.shortMode ? -0.1 : -1,
+        enableHero: true,
+        fractionalOffset: Offset(0, config.shortMode ? .025 : 0),
+      ),
+    ),
+  ];
 
   List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
     return [
@@ -78,7 +78,9 @@ class PetraIllustration extends StatelessWidget {
           return FractionalTranslation(
             translation: Offset(-1 - scaleX / 2, 0),
             child: Transform.scale(
-                scaleX: 5, child: Container(color: WonderType.petra.fgColor.withValues(alpha: anim.value))),
+              scaleX: 5,
+              child: Container(color: WonderType.petra.fgColor.withValues(alpha: anim.value)),
+            ),
           );
         },
       ),
@@ -96,7 +98,9 @@ class PetraIllustration extends StatelessWidget {
           return FractionalTranslation(
             translation: Offset(1 + scaleX / 2, 0),
             child: Transform.scale(
-                scaleX: 5, child: Container(color: WonderType.petra.fgColor.withValues(alpha: anim.value))),
+              scaleX: 5,
+              child: Container(color: WonderType.petra.fgColor.withValues(alpha: anim.value)),
+            ),
           );
         },
       ),

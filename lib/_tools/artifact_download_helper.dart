@@ -72,7 +72,8 @@ class _ArtifactDownloadHelperState extends State<ArtifactDownloadHelper> {
     }
 
     /// Download search artifacts
-    final searchData = ChichenItzaData().searchData +
+    final searchData =
+        ChichenItzaData().searchData +
         ChristRedeemerData().searchData +
         ColosseumData().searchData +
         GreatWallData().searchData +

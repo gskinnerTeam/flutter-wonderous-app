@@ -1,8 +1,12 @@
 part of '../editorial_screen.dart';
 
 class _CircularTitleBar extends StatelessWidget {
-  const _CircularTitleBar({super.key, required this.titles, required this.icons, required this.index})
-      : assert(titles.length == icons.length, 'The number of titles and icons do not match.');
+  const _CircularTitleBar({
+    super.key,
+    required this.titles,
+    required this.icons,
+    required this.index,
+  }) : assert(titles.length == icons.length, 'The number of titles and icons do not match.');
   final List<String> titles;
   final List<String> icons;
   final int index;
@@ -21,7 +25,9 @@ class _CircularTitleBar extends StatelessWidget {
         child: Stack(
           children: [
             // Bg
-            BottomCenter(child: Container(height: barSize - barTopPadding, color: $styles.colors.offWhite)),
+            BottomCenter(
+              child: Container(height: barSize - barTopPadding, color: $styles.colors.offWhite),
+            ),
 
             ClipRect(
               child: OverflowBox(
@@ -34,8 +40,15 @@ class _CircularTitleBar extends StatelessWidget {
             BottomCenter(
               child: Padding(
                 padding: EdgeInsets.only(bottom: 20),
-                child: Image.asset('${ImagePaths.common}/${icons[index]}').maybeAnimate(key: ValueKey(index)).fade().scale(
-                    begin: Offset(.5, .5), end: Offset(1, 1), curve: Curves.easeOutBack, duration: $styles.times.med),
+                child: Image.asset('${ImagePaths.common}/${icons[index]}')
+                    .maybeAnimate(key: ValueKey(index))
+                    .fade()
+                    .scale(
+                      begin: Offset(.5, .5),
+                      end: Offset(1, 1),
+                      curve: Curves.easeOutBack,
+                      duration: $styles.times.med,
+                    ),
               ),
             ),
           ],
@@ -119,7 +132,7 @@ class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with S
                         angle: _anim.isCompleted ? 0 : rot,
                         child: _buildCircularText(_anim.isCompleted ? oldTitle : newTitle),
                       ),
-                    ]
+                    ],
                   ],
                 ),
               ),

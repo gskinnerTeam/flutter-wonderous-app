@@ -57,7 +57,7 @@ class ChristRedeemerIllustration extends StatelessWidget {
           fractionalOffset: Offset(0, config.shortMode ? .5 : .1),
           zoomAmt: .7,
         ),
-      )
+      ),
       //
     ];
   }

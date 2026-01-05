@@ -46,21 +46,26 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
             semanticLabel: $strings.collectibleItemSemanticCollectible,
             onPressed: () => _handleTap(context),
             enableFeedback: false,
-            child: Hero(
-              tag: 'collectible_icon_${collectible.id}',
-              child: Image(
-                image: collectible.icon,
-                width: size,
-                height: size,
-                fit: BoxFit.contain,
-              ),
-            )
-                .maybeAnimate(onPlay: (controller) => controller.repeat())
-                .shimmer(delay: 4000.delayMs, duration: $styles.times.med * 3)
-                .shake(curve: Curves.easeInOutCubic, hz: 4)
-                .scale(begin: Offset(1.0, 1.0), end: Offset(1.1, 1.1), duration: $styles.times.med)
-                .then(delay: $styles.times.med)
-                .scale(begin: Offset(1.0, 1.0), end: Offset(1 / 1.1, 1 / 1.1)),
+            child:
+                Hero(
+                      tag: 'collectible_icon_${collectible.id}',
+                      child: Image(
+                        image: collectible.icon,
+                        width: size,
+                        height: size,
+                        fit: BoxFit.contain,
+                      ),
+                    )
+                    .maybeAnimate(onPlay: (controller) => controller.repeat())
+                    .shimmer(delay: 4000.delayMs, duration: $styles.times.med * 3)
+                    .shake(curve: Curves.easeInOutCubic, hz: 4)
+                    .scale(
+                      begin: Offset(1.0, 1.0),
+                      end: Offset(1.1, 1.1),
+                      duration: $styles.times.med,
+                    )
+                    .then(delay: $styles.times.med)
+                    .scale(begin: Offset(1.0, 1.0), end: Offset(1 / 1.1, 1 / 1.1)),
           ),
         ),
       ),

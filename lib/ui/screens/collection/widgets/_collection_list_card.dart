@@ -1,7 +1,13 @@
 part of '../collection_screen.dart';
 
 class _CollectionListCard extends StatelessWidget with GetItMixin {
-  _CollectionListCard({super.key, this.width, this.height, required this.data, required this.fromId});
+  _CollectionListCard({
+    super.key,
+    this.width,
+    this.height,
+    required this.data,
+    required this.fromId,
+  });
 
   final double? width;
   final double? height;
@@ -10,7 +16,9 @@ class _CollectionListCard extends StatelessWidget with GetItMixin {
 
   void _showDetails(BuildContext context, CollectibleData collectible) {
     context.go(ScreenPaths.artifact(collectible.artifactId));
-    Future.delayed(300.delayMs).then((_) => collectiblesLogic.setState(collectible.id, CollectibleState.explored));
+    Future.delayed(
+      300.delayMs,
+    ).then((_) => collectiblesLogic.setState(collectible.id, CollectibleState.explored));
   }
 
   @override
@@ -35,22 +43,23 @@ class _CollectionListCard extends StatelessWidget with GetItMixin {
             /// Images
             Expanded(
               child: SeparatedRow(
-                  separatorBuilder: () => Gap($styles.insets.sm),
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    ...collectibles.map((e) {
-                      int state = states[e.id] ?? CollectibleState.lost;
-                      return Flexible(
-                        child: _CollectibleImage(
-                          collectible: e,
-                          state: state,
-                          onPressed: (c) => _showDetails(context, c),
-                          heroTag: e.id == fromId ? 'collectible_image_$fromId' : null,
-                        ),
-                      );
-                    })
-                  ]),
-            )
+                separatorBuilder: () => Gap($styles.insets.sm),
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ...collectibles.map((e) {
+                    int state = states[e.id] ?? CollectibleState.lost;
+                    return Flexible(
+                      child: _CollectibleImage(
+                        collectible: e,
+                        state: state,
+                        onPressed: (c) => _showDetails(context, c),
+                        heroTag: e.id == fromId ? 'collectible_image_$fromId' : null,
+                      ),
+                    );
+                  }),
+                ],
+              ),
+            ),
           ],
         ),
       ),
