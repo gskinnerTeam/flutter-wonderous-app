@@ -142,7 +142,9 @@ class AppLogic {
       urls.add('${ImagePaths.common}/tab-artifacts${i == 0 ? '-active' : ''}.png');
       urls.add('${ImagePaths.common}/tab-timeline${i == 0 ? '-active' : ''}.png');
     }
-    urls.forEach((url) => precacheUrl(url, context));
+    for (var url in urls) {
+      precacheUrl(url, context);
+    }
   }
 
   void precacheWonderImages(BuildContext context) {
@@ -195,16 +197,18 @@ class AppLogic {
     ];
 
     // Universals.
-    folderNames.forEach((name) {
+    for (var name in folderNames) {
       urls.add('${ImagePaths.root}/$name/flattened.jpg');
       urls.add('${ImagePaths.root}/$name/wonder-button.png');
       urls.add('${ImagePaths.root}/$name/photo-1.jpg');
       urls.add('${ImagePaths.root}/$name/photo-2.jpg');
       urls.add('${ImagePaths.root}/$name/photo-3.jpg');
       urls.add('${ImagePaths.root}/$name/photo-4.jpg');
-    });
+    }
 
-    urls.forEach((url) => precacheUrl(url, context));
+    for (var url in urls) {
+      precacheUrl(url, context);
+    }
   }
 }
 

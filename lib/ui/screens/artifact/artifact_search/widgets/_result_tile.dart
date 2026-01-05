@@ -14,7 +14,7 @@ class _ResultTile extends StatelessWidget {
       fit: BoxFit.cover,
       scale: 0.5,
       distractor: true,
-      color: $styles.colors.greyMedium.withOpacity(0.2),
+      color: $styles.colors.greyMedium.withValues(alpha: 0.2),
     );
 
     return AspectRatio(

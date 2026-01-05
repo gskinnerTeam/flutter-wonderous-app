@@ -26,7 +26,7 @@ class _HomeMenuState extends State<HomeMenu> {
 
   void _handleAboutPressed(BuildContext context) async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    if (!mounted) return;
+    if (!context.mounted) return;
     showAboutDialog(
       context: context,
       applicationName: $strings.appName,
@@ -53,7 +53,7 @@ class _HomeMenuState extends State<HomeMenu> {
         /// Backdrop / Underlay
         AppBackdrop(
           strength: .5,
-          child: Container(color: $styles.colors.greyStrong.withOpacity(.5)),
+          child: Container(color: $styles.colors.greyStrong.withValues(alpha: 0.5)),
         ),
 
         PopNavigatorUnderlay(),
@@ -69,9 +69,9 @@ class _HomeMenuState extends State<HomeMenu> {
                   Gap(50),
                   Gap($styles.insets.md),
                   _buildIconGrid(context)
-                    .maybeAnimate()
-                    .fade(duration: $styles.times.fast)
-                    .scale(begin: Offset(.8, .8), curve: Curves.easeOut),
+                      .maybeAnimate()
+                      .fade(duration: $styles.times.fast)
+                      .scale(begin: Offset(.8, .8), curve: Curves.easeOut),
                   Gap($styles.insets.lg),
                   _buildBottomBtns(context),
                   //Spacer(),
@@ -93,10 +93,10 @@ class _HomeMenuState extends State<HomeMenu> {
 
   Widget _buildIconGrid(BuildContext context) {
     Widget buildRow(List<Widget> children) => SeparatedRow(
-      mainAxisAlignment: MainAxisAlignment.center,
-      separatorBuilder: () => Gap($styles.insets.sm),
-      children: children,
-    );
+          mainAxisAlignment: MainAxisAlignment.center,
+          separatorBuilder: () => Gap($styles.insets.sm),
+          children: children,
+        );
     return SeparatedColumn(
       separatorBuilder: () => Gap($styles.insets.sm),
       mainAxisSize: MainAxisSize.min,
@@ -125,35 +125,34 @@ class _HomeMenuState extends State<HomeMenu> {
 
   Widget _buildBottomBtns(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: settingsLogic.currentLocale,
-      builder: (_, __, ___) {
-        return SeparatedColumn(
-          separatorBuilder: () => Divider(thickness: 1.5, height: 1).maybeAnimate().scale(
-            duration: $styles.times.slow,
-            delay: $styles.times.pageTransition + 200.delayMs,
-            curve: Curves.easeOutBack,
-          ),
-          children: [
-            _MenuTextBtn(
-              label: $strings.homeMenuButtonExplore,
-              icon: AppIcons.timeline,
-              onPressed: () => _handleTimelinePressed(context)),
-            _MenuTextBtn(
-              label: $strings.homeMenuButtonView,
-              icon: AppIcons.collection,
-              onPressed: () => _handleCollectionPressed(context)),
-            _MenuTextBtn(
-              label: $strings.homeMenuButtonAbout,
-              icon: AppIcons.info,
-              onPressed: () => _handleAboutPressed(context),
-            ),
-          ]
-            .animate(interval: 50.delayMs)
-            .fade(delay: $styles.times.pageTransition + 50.delayMs)
-            .slide(begin: Offset(0, .1), curve: Curves.easeOut),
-        );
-      }
-    );
+        valueListenable: settingsLogic.currentLocale,
+        builder: (_, __, ___) {
+          return SeparatedColumn(
+            separatorBuilder: () => Divider(thickness: 1.5, height: 1).maybeAnimate().scale(
+                  duration: $styles.times.slow,
+                  delay: $styles.times.pageTransition + 200.delayMs,
+                  curve: Curves.easeOutBack,
+                ),
+            children: [
+              _MenuTextBtn(
+                  label: $strings.homeMenuButtonExplore,
+                  icon: AppIcons.timeline,
+                  onPressed: () => _handleTimelinePressed(context)),
+              _MenuTextBtn(
+                  label: $strings.homeMenuButtonView,
+                  icon: AppIcons.collection,
+                  onPressed: () => _handleCollectionPressed(context)),
+              _MenuTextBtn(
+                label: $strings.homeMenuButtonAbout,
+                icon: AppIcons.info,
+                onPressed: () => _handleAboutPressed(context),
+              ),
+            ]
+                .animate(interval: 50.delayMs)
+                .fade(delay: $styles.times.pageTransition + 50.delayMs)
+                .slide(begin: Offset(0, .1), curve: Curves.easeOut),
+          );
+        });
   }
 }
 
@@ -162,7 +161,7 @@ class _GridBtn extends StatefulWidget {
   final WonderData btnData;
   final WonderData selectedData;
   double _btnSize(BuildContext context) => (context.sizePx.shortestSide / 5).clamp(60, 100);
-  
+
   @override
   State<_GridBtn> createState() => _GridBtnState();
 }
@@ -185,15 +184,15 @@ class _GridBtnState extends State<_GridBtn> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular($styles.corners.md),
         boxShadow: !isSelected
-          ? null
-          : [
-            BoxShadow(
-              color: Colors.black.withOpacity(.3),
-              blurRadius: 3,
-              spreadRadius: 3,
-              offset: Offset(0, 2),
-            ),
-          ],
+            ? null
+            : [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.3),
+                  blurRadius: 3,
+                  spreadRadius: 3,
+                  offset: Offset(0, 2),
+                ),
+              ],
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular($styles.corners.md),
@@ -204,24 +203,26 @@ class _GridBtnState extends State<_GridBtn> {
           padding: EdgeInsets.zero,
           semanticLabel: btnData.title,
           child: SizedBox.expand(
-            child: kIsWeb ? AnimatedScale(
-              alignment: Alignment.center,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-              scale: _isOver ? 1.1 : 1.0,
-              child: iconImage
-            ) : iconImage,
+            child: kIsWeb
+                ? AnimatedScale(
+                    alignment: Alignment.center,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                    scale: _isOver ? 1.1 : 1.0,
+                    child: iconImage)
+                : iconImage,
           ),
         ),
       ),
     );
 
-    return kIsWeb ? 
-      MouseRegion(
-        onEnter: (_)=> setState(() => _isOver = true),
-        onExit: (_)=> setState(() => _isOver = false),
-        child: gridBtn,
-      ) : gridBtn;
+    return kIsWeb
+        ? MouseRegion(
+            onEnter: (_) => setState(() => _isOver = true),
+            onExit: (_) => setState(() => _isOver = false),
+            child: gridBtn,
+          )
+        : gridBtn;
   }
 }
 
