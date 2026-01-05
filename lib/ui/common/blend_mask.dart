@@ -5,7 +5,12 @@ class BlendMask extends SingleChildRenderObjectWidget {
   final List<BlendMode> blendModes;
   final double opacity;
 
-  const BlendMask({required this.blendModes, this.opacity = 1.0, super.key, required Widget super.child});
+  const BlendMask({
+    required this.blendModes,
+    this.opacity = 1.0,
+    super.key,
+    required Widget super.child,
+  });
 
   @override
   RenderObject createRenderObject(context) => RenderBlendMask(blendModes, opacity);

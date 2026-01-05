@@ -25,7 +25,8 @@ class WonderIllustrationBuilder extends StatefulWidget {
   State<WonderIllustrationBuilder> createState() => WonderIllustrationBuilderState();
 }
 
-class WonderIllustrationBuilderState extends State<WonderIllustrationBuilder> with SingleTickerProviderStateMixin {
+class WonderIllustrationBuilderState extends State<WonderIllustrationBuilder>
+    with SingleTickerProviderStateMixin {
   late final anim = AnimationController(vsync: this, duration: $styles.times.med * .75)
     ..addListener(() => setState(() {}));
 

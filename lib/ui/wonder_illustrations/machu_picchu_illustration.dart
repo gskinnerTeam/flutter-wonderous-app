@@ -41,21 +41,23 @@ class MachuPicchuIllustration extends StatelessWidget {
         enableHero: true,
         heightFactor: config.shortMode ? .15 : .15,
         minHeight: 100,
-        offset: config.shortMode ? Offset(150, context.heightPx * -.08) : Offset(150, context.heightPx * -.35),
+        offset: config.shortMode
+            ? Offset(150, context.heightPx * -.08)
+            : Offset(150, context.heightPx * -.35),
       ),
     ];
   }
 
   List<Widget> _buildMg(BuildContext context, Animation<double> anim) => [
-        IllustrationPiece(
-          fileName: 'machu-picchu.png',
-          heightFactor: .65,
-          minHeight: 230,
-          zoomAmt: config.shortMode ? .1 : -1,
-          enableHero: true,
-          fractionalOffset: Offset(config.shortMode ? 0 : -.05, config.shortMode ? 0.12 : -.12),
-        ),
-      ];
+    IllustrationPiece(
+      fileName: 'machu-picchu.png',
+      heightFactor: .65,
+      minHeight: 230,
+      zoomAmt: config.shortMode ? .1 : -1,
+      enableHero: true,
+      fractionalOffset: Offset(config.shortMode ? 0 : -.05, config.shortMode ? 0.12 : -.12),
+    ),
+  ];
 
   List<Widget> _buildFg(BuildContext context, Animation<double> anim) {
     return [

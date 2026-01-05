@@ -25,7 +25,7 @@ class WonderIllustration extends StatelessWidget {
       WonderType.machuPicchu => MachuPicchuIllustration(config: config),
       WonderType.petra => PetraIllustration(config: config),
       WonderType.pyramidsGiza => PyramidsGizaIllustration(config: config),
-      WonderType.tajMahal => TajMahalIllustration(config: config)
+      WonderType.tajMahal => TajMahalIllustration(config: config),
     };
   }
 }

@@ -68,7 +68,9 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
     int tabIndex = _tabController.index;
     bool showTabBarBg = tabIndex != 1;
     final tabBarSize = _tabBarSize ?? 0;
-    final menuPadding = _useNavRail ? EdgeInsets.only(left: tabBarSize) : EdgeInsets.only(bottom: tabBarSize);
+    final menuPadding = _useNavRail
+        ? EdgeInsets.only(left: tabBarSize)
+        : EdgeInsets.only(bottom: tabBarSize);
     return ColoredBox(
       color: Colors.black,
       child: Stack(
@@ -90,11 +92,12 @@ class _WonderDetailsScreenState extends State<WonderDetailsScreen>
             child: MeasurableWidget(
               onChange: _handleTabMenuSized,
               child: WonderDetailsTabMenu(
-                  tabController: _tabController,
-                  onTap: _handleTabTapped,
-                  wonderType: wonder.type,
-                  showBg: showTabBarBg,
-                  axis: _useNavRail ? Axis.vertical : Axis.horizontal),
+                tabController: _tabController,
+                onTap: _handleTabTapped,
+                wonderType: wonder.type,
+                showBg: showTabBarBg,
+                axis: _useNavRail ? Axis.vertical : Axis.horizontal,
+              ),
             ),
           ),
         ],

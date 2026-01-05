@@ -1,13 +1,14 @@
 part of '../artifact_carousel_screen.dart';
 
 class _BottomTextContent extends StatelessWidget {
-  const _BottomTextContent(
-    {super.key,
+  const _BottomTextContent({
+    super.key,
     required this.artifact,
     required this.height,
     required this.state,
     required this.shortMode,
-    required this.overlapMode});
+    required this.overlapMode,
+  });
 
   final HighlightData artifact;
   final double height;
@@ -55,14 +56,15 @@ class _BottomTextContent extends StatelessWidget {
                           // Stop text from scaling to make layout a little easier, it's already quite large
                           StaticTextScale(
                             child: overlapMode
-                              ? Container(
-                                padding: EdgeInsets.all($styles.insets.xxs),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular($styles.corners.md),
-                                  color: $styles.colors.white.withAlpha(130),
-                                ),
-                                child: textContent)
-                              : textContent,
+                                ? Container(
+                                    padding: EdgeInsets.all($styles.insets.xxs),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular($styles.corners.md),
+                                      color: $styles.colors.white.withAlpha(130),
+                                    ),
+                                    child: textContent,
+                                  )
+                                : textContent,
                           ),
                           if (!shortMode) ...[
                             Gap($styles.insets.xxs),
@@ -71,7 +73,7 @@ class _BottomTextContent extends StatelessWidget {
                               style: $styles.text.body,
                               textAlign: TextAlign.center,
                             ),
-                          ]
+                          ],
                         ],
                       ).maybeAnimate(key: ValueKey(artifact.artifactId)).fadeIn(),
                     ),

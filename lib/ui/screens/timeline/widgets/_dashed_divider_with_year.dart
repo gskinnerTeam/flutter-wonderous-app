@@ -20,7 +20,10 @@ class _DashedDividerWithYear extends StatelessWidget {
                 children: [
                   Text(
                     '${roundedYr.abs()}',
-                    style: $styles.text.h2.copyWith(color: $styles.colors.white, shadows: $styles.shadows.text),
+                    style: $styles.text.h2.copyWith(
+                      color: $styles.colors.white,
+                      shadows: $styles.shadows.text,
+                    ),
                   ),
                   Gap($styles.insets.xs),
                   Text(
@@ -35,7 +38,7 @@ class _DashedDividerWithYear extends StatelessWidget {
               ),
             ),
           ),
-        )
+        ),
       ],
     );
   }

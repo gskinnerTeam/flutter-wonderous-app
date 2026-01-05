@@ -10,7 +10,8 @@ class HighlightData {
     required this.date,
   });
 
-  static HighlightData? fromId(String? id) => id == null ? null : _highlights.firstWhereOrNull((o) => o.id == id);
+  static HighlightData? fromId(String? id) =>
+      id == null ? null : _highlights.firstWhereOrNull((o) => o.id == id);
   static List<HighlightData> forWonder(WonderType wonder) =>
       _highlights.where((o) => o.wonder == wonder).toList(growable: false);
   static List<HighlightData> get all => _highlights;
@@ -79,7 +80,7 @@ List<HighlightData> _highlights = [
     date: '10th–11th century',
   ),
 
-// christRedeemer
+  // christRedeemer
   HighlightData(
     title: '[Studio Portrait: Male Street Vendor Holding Box of Flowers, Brazil]',
     wonder: WonderType.christRedeemer,
@@ -116,7 +117,7 @@ List<HighlightData> _highlights = [
     date: 'late 19th century',
   ),
 
-// colosseum
+  // colosseum
   HighlightData(
     title: 'Marble portrait of a young woman',
     wonder: WonderType.colosseum,
@@ -160,7 +161,7 @@ List<HighlightData> _highlights = [
     date: '4th century A.D.',
   ),
 
-// greatWall
+  // greatWall
   HighlightData(
     title: 'Cape',
     wonder: WonderType.greatWall,
@@ -204,7 +205,7 @@ List<HighlightData> _highlights = [
     date: 'early 15th century',
   ),
 
-// machuPicchu
+  // machuPicchu
   HighlightData(
     title: 'Face Beaker',
     wonder: WonderType.machuPicchu,
@@ -248,7 +249,7 @@ List<HighlightData> _highlights = [
     date: '1400–1521',
   ),
 
-// petra
+  // petra
   HighlightData(
     title: 'Unguentarium',
     wonder: WonderType.petra,
@@ -292,7 +293,7 @@ List<HighlightData> _highlights = [
     date: 'ca. 1st century A.D.',
   ),
 
-// pyramidsGiza
+  // pyramidsGiza
   HighlightData(
     title: 'Guardian Figure',
     wonder: WonderType.pyramidsGiza,
@@ -336,7 +337,7 @@ List<HighlightData> _highlights = [
     date: 'ca. 1336–1327 B.C.',
   ),
 
-// tajMahal
+  // tajMahal
   HighlightData(
     title: 'Mango-Shaped Flask',
     wonder: WonderType.tajMahal,

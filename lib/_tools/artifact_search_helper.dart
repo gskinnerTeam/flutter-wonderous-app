@@ -194,19 +194,23 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
     Completer<double?> completer = Completer<double?>();
     NetworkImage image = NetworkImage(imagePath);
     ImageStream stream = image.resolve(ImageConfiguration());
-    stream.addListener(ImageStreamListener(
-      (info, _) => completer.complete(info.image.width / info.image.height),
-      onError: (_, __) => completer.complete(null),
-    ));
+    stream.addListener(
+      ImageStreamListener(
+        (info, _) => completer.complete(info.image.width / info.image.height),
+        onError: (_, __) => completer.complete(null),
+      ),
+    );
     return completer.future;
   }
 
   String _getKeywords(Map json) {
-    String str = '${json['objectName'] ?? ''}|${json['medium'] ?? ''}|${json['classification'] ?? ''}';
+    String str =
+        '${json['objectName'] ?? ''}|${json['medium'] ?? ''}|${json['classification'] ?? ''}';
     return _escape(str.toLowerCase());
   }
 
-  String _escape(String str) => str.replaceAll("'", "\\'").replaceAll('\r', ' ').replaceAll('\n', ' ');
+  String _escape(String str) =>
+      str.replaceAll("'", "\\'").replaceAll('\r', ' ').replaceAll('\n', ' ');
 
   void _completeId() {
     --activeRequestCount;
@@ -228,7 +232,8 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
       entryStr += '  ${entries[i].write()},\n';
     }
 
-    String output = '// ${wonder!.title} (${entries.length})\nList<SearchData> _searchData = const [\n$entryStr];';
+    String output =
+        '// ${wonder!.title} (${entries.length})\nList<SearchData> _searchData = const [\n$entryStr];';
 
     String suggestions = _getSuggestions(entries);
 
@@ -253,7 +258,9 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
   }
 
   void _complete() {
-    _log('\n----------\nCompleted with ${errors.length} unique errors in ${timer.elapsed.inSeconds} seconds.');
+    _log(
+      '\n----------\nCompleted with ${errors.length} unique errors in ${timer.elapsed.inSeconds} seconds.',
+    );
     String errorStr = '';
     errors.forEach((key, value) {
       errorStr += '$key (${value.length})\n';
@@ -308,7 +315,7 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
         'four',
         'part',
         'called',
-        'over'
+        'over',
       ]);
       SearchData o = data[i];
       RegExp re = RegExp(r'\b\w{3,}\b');
@@ -341,35 +348,42 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
         // input:
         SizedBox(
           width: 200,
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text('Wonder to run:'),
-            _buildWonderPicker(context),
-            Gap(16),
-            Text('Max items:'),
-            TextFormField(
-              initialValue: maxIds.toString(),
-              onChanged: (s) => setState(() => maxIds = int.parse(s)),
-            ),
-            Gap(16),
-            Text('Max priority items:'),
-            TextFormField(
-              initialValue: maxPriority.toString(),
-              onChanged: (s) => setState(() => maxPriority = int.parse(s)),
-            ),
-            Gap(16),
-            CheckboxListTile(
-                title: Text('check images'), value: checkImages, onChanged: (b) => setState(() => checkImages = b!)),
-            Gap(32),
-            MaterialButton(onPressed: () => _run(), child: Text('RUN')),
-          ]),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Wonder to run:'),
+              _buildWonderPicker(context),
+              Gap(16),
+              Text('Max items:'),
+              TextFormField(
+                initialValue: maxIds.toString(),
+                onChanged: (s) => setState(() => maxIds = int.parse(s)),
+              ),
+              Gap(16),
+              Text('Max priority items:'),
+              TextFormField(
+                initialValue: maxPriority.toString(),
+                onChanged: (s) => setState(() => maxPriority = int.parse(s)),
+              ),
+              Gap(16),
+              CheckboxListTile(
+                title: Text('check images'),
+                value: checkImages,
+                onChanged: (b) => setState(() => checkImages = b!),
+              ),
+              Gap(32),
+              MaterialButton(onPressed: () => _run(), child: Text('RUN')),
+            ],
+          ),
         ),
         Gap(40),
 
         // output:
         Expanded(
-            child: ListView(
-          children: log.map<Widget>((o) => Text(o)).toList(growable: false),
-        )),
+          child: ListView(
+            children: log.map<Widget>((o) => Text(o)).toList(growable: false),
+          ),
+        ),
       ],
     );
   }
@@ -405,7 +419,8 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
 const String _baseArtifactUri = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
 
 // ! as first char indicates a priority query
-const String _baseQueryUri = 'https://collectionapi.metmuseum.org/public/collection/v1/search?hasImage=true&';
+const String _baseQueryUri =
+    'https://collectionapi.metmuseum.org/public/collection/v1/search?hasImage=true&';
 const Map<WonderType, List<String>> queries = {
   WonderType.chichenItza: [
     // 550 1550

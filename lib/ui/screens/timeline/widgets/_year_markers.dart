@@ -14,34 +14,36 @@ class _YearMarkers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IgnorePointerKeepSemantics(
-      child: LayoutBuilder(builder: (_, constraints) {
-        int interval = 100;
-        if (constraints.maxHeight < 800) {
-          interval = 500;
-        } else if (constraints.maxHeight < 1500) {
-          interval = 250;
-        }
+      child: LayoutBuilder(
+        builder: (_, constraints) {
+          int interval = 100;
+          if (constraints.maxHeight < 800) {
+            interval = 500;
+          } else if (constraints.maxHeight < 1500) {
+            interval = 250;
+          }
 
-        // If interval is 100 and time is 0 - 1000 yrs, make a list of 11 items:
-        // [0, 100, 200, ..., 1000 ]
-        int numMarkers = (_totalYrs / interval).round() + 1;
-        late final markers = List.generate(numMarkers, (i) {
-          return startYr + i * interval;
-        });
+          // If interval is 100 and time is 0 - 1000 yrs, make a list of 11 items:
+          // [0, 100, 200, ..., 1000 ]
+          int numMarkers = (_totalYrs / interval).round() + 1;
+          late final markers = List.generate(numMarkers, (i) {
+            return startYr + i * interval;
+          });
 
-        return SizedBox(
-          width: 100,
-          child: AnimatedSwitcher(
-            duration: $styles.times.med,
-            child: Stack(
-              key: ValueKey(interval),
-              children: markers.map((yr) {
-                return _YearMarker(yr, _calculateOffsetY(yr));
-              }).toList(),
+          return SizedBox(
+            width: 100,
+            child: AnimatedSwitcher(
+              duration: $styles.times.med,
+              child: Stack(
+                key: ValueKey(interval),
+                children: markers.map((yr) {
+                  return _YearMarker(yr, _calculateOffsetY(yr));
+                }).toList(),
+              ),
             ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 }
@@ -66,8 +68,12 @@ class _YearMarker extends StatelessWidget {
             maxHeight: 100,
             maxWidth: 100,
             child: FractionalTranslation(
-                translation: Offset(0, -.5),
-                child: Text('${yr.abs()}', style: $styles.text.body.copyWith(color: Colors.white, height: 1))),
+              translation: Offset(0, -.5),
+              child: Text(
+                '${yr.abs()}',
+                style: $styles.text.body.copyWith(color: Colors.white, height: 1),
+              ),
+            ),
           ),
         ),
         //child:,

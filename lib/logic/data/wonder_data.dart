@@ -73,8 +73,10 @@ class WonderData extends Equatable {
   final String artifactGeolocation;
   final double lat;
   final double lng;
-  final List<String> highlightArtifacts; // IDs used to assemble HighlightsData, should not be used directly
-  final List<String> hiddenArtifacts; // IDs used to assemble CollectibleData, should not be used directly
+  final List<String>
+  highlightArtifacts; // IDs used to assemble HighlightsData, should not be used directly
+  final List<String>
+  hiddenArtifacts; // IDs used to assemble CollectibleData, should not be used directly
   final Map<int, String> events;
   final List<SearchData> searchData;
   final List<String> searchSuggestions;

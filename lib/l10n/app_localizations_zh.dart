@@ -32,8 +32,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get bottomScrubberSemanticScrubber => 'scrubber';
 
   @override
-  String get bottomScrubberSemanticTimeline =>
-      'Timeline Scrubber，水平拖动可在历史年表中导航。';
+  String get bottomScrubberSemanticTimeline => 'Timeline Scrubber，水平拖动可在历史年表中导航。';
 
   @override
   String get rangeSelector => 'Range selector, 水平拖动即可调整范围。';
@@ -418,8 +417,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get chichenItzaPullQuote2Author => '联合国教科文组织';
 
   @override
-  String get chichenItzaCallout1 =>
-      '奇琴伊察的遗址展示了多种建筑风格，其中包括墨西哥中部的风格以及玛雅北部低地的Puuc和Chenes风格。';
+  String get chichenItzaCallout1 => '奇琴伊察的遗址展示了多种建筑风格，其中包括墨西哥中部的风格以及玛雅北部低地的Puuc和Chenes风格。';
 
   @override
   String get chichenItzaCallout2 => '这座城市由至少1.9平方英里(5平方公里)密集的建筑组成。';
@@ -435,8 +433,7 @@ class AppLocalizationsZh extends AppLocalizations {
       '奇琴伊察是玛雅文明的一座强大的地区首都，控制着从尤卡坦州中部到北海岸的一片土地。最早的象形文字在奇琴伊察发现的日期相当于公元832年，而最后一个已知的日期记录在998年的奥萨里奥神庙中。卡斯蒂略金字塔坐落在奇琴伊察北部平台。第一批看到这座金字塔的西班牙人将其命名为“卡斯蒂略” (意为“城堡”)，人们至今仍以这个名字称呼它。';
 
   @override
-  String get chichenItzaHistoryInfo2 =>
-      '该市可能是玛雅世界中人口最多样化的地区，这可能是导致该地点建筑风格多样化的一个因素。';
+  String get chichenItzaHistoryInfo2 => '该市可能是玛雅世界中人口最多样化的地区，这可能是导致该地点建筑风格多样化的一个因素。';
 
   @override
   String get chichenItzaConstructionInfo1 =>
@@ -549,16 +546,13 @@ class AppLocalizationsZh extends AppLocalizations {
       '科尔科瓦多，在葡萄牙语中是“驼背”的意思，是巴西里约热内卢中部的一座山。它是一座2329英尺(710米)高的花岗岩山峰，位于Tijuca森林国家公园。';
 
   @override
-  String get christRedeemerLocationInfo2 =>
-      '科尔科瓦多山位于市中心以西，但完全在市区范围内，从很远的地方就可以看到。';
+  String get christRedeemerLocationInfo2 => '科尔科瓦多山位于市中心以西，但完全在市区范围内，从很远的地方就可以看到。';
 
   @override
-  String get christRedeemer1850ce =>
-      '天主教祭司佩德罗·玛丽亚·博斯提议在科尔科瓦多山上建一座基督教纪念碑，但该项目未获批准。';
+  String get christRedeemer1850ce => '天主教祭司佩德罗·玛丽亚·博斯提议在科尔科瓦多山上建一座基督教纪念碑，但该项目未获批准。';
 
   @override
-  String get christRedeemer1921ce =>
-      '罗马天主教总教区提出了一项新计划。在里约热内卢的市民向总统请愿后，该计划最终获得批准。';
+  String get christRedeemer1921ce => '罗马天主教总教区提出了一项新计划。在里约热内卢的市民向总统请愿后，该计划最终获得批准。';
 
   @override
   String get christRedeemer1922ce => '为了纪念巴西从葡萄牙独立，雕像的地基被隆重布置';
@@ -618,8 +612,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get colosseumPullQuote2Author => '拜伦';
 
   @override
-  String get colosseumCallout1 =>
-      '罗马斗兽场用来进行角斗士的比赛、动物狩猎、海战表演、处决、重要战役的历史重演、以及演出以罗马神话为基础的戏剧。';
+  String get colosseumCallout1 => '罗马斗兽场用来进行角斗士的比赛、动物狩猎、海战表演、处决、重要战役的历史重演、以及演出以罗马神话为基础的戏剧。';
 
   @override
   String get colosseumCallout2 => '罗马斗兽场是迄今为止建造的最大的古代圆形剧场，至今仍是世界上最大的站立式圆形剧场。';
@@ -631,8 +624,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get colosseumMapCaption => '显示罗马斗兽场位于意大利罗马市的地图。';
 
   @override
-  String get colosseumHistoryInfo1 =>
-      '罗马斗兽场是位于意大利罗马市中心的椭圆形圆形剧场。与建在山坡上的罗马剧院不同，罗马斗兽场是一个完全独立的结构。';
+  String get colosseumHistoryInfo1 => '罗马斗兽场是位于意大利罗马市中心的椭圆形圆形剧场。与建在山坡上的罗马剧院不同，罗马斗兽场是一个完全独立的结构。';
 
   @override
   String get colosseumHistoryInfo2 =>
@@ -643,38 +635,32 @@ class AppLocalizationsZh extends AppLocalizations {
       '罗马斗兽场的建造始于公元72年，在皇帝韦斯巴芗 (公元69-79年) 的统治下，并在他的继任者提图斯 (公元79-81年) 的统治下于公元80年完成。在图密善统治时期 (公元81-96年) 进行了进一步的修改。罗马斗兽场由石灰华(洞石)、凝灰岩 (火山岩) 和砖面混凝土建造而成。它的外墙是用超过350万立方英尺的石灰华石头建造的，这些石头没有用灰浆凝结，而是用300吨的铁夹子固定在一起。';
 
   @override
-  String get colosseumConstructionInfo2 =>
-      '罗马斗兽场在历史上不同时期预计可容纳5万至8万名观众，平均观众约为6.5万名。';
+  String get colosseumConstructionInfo2 => '罗马斗兽场在历史上不同时期预计可容纳5万至8万名观众，平均观众约为6.5万名。';
 
   @override
   String get colosseumLocationInfo1 =>
       '在公元64年的罗马大火之后，尼禄皇帝利用大部分被摧毁的地区建造了他的宏伟的Domus Aurea(“黄金屋”)。这座奢华的宫殿给尼禄的继任者带来了极大的尴尬。大约1平方英里的宫殿场地后来被填满了泥土，并盖上了新的建筑。';
 
   @override
-  String get colosseumLocationInfo2 =>
-      '在湖的原址上，在宫殿的中央，韦斯巴芗皇帝将建造了罗马斗兽场，以代表罗马的复兴。';
+  String get colosseumLocationInfo2 => '在湖的原址上，在宫殿的中央，韦斯巴芗皇帝将建造了罗马斗兽场，以代表罗马的复兴。';
 
   @override
-  String get colosseum70ce =>
-      '罗马斗兽场在韦斯巴芗统治时期开始建造，位于前四位皇帝的私人湖泊之上。这样做是为了使罗马从他们的暴虐统治中复兴。';
+  String get colosseum70ce => '罗马斗兽场在韦斯巴芗统治时期开始建造，位于前四位皇帝的私人湖泊之上。这样做是为了使罗马从他们的暴虐统治中复兴。';
 
   @override
   String get colosseum82ce => '在图密善的统治下，最上层建成，场地整个结构正式完成。';
 
   @override
-  String get colosseum1140ce =>
-      'Franangipane 和 Annibaldi 贵族家族将斗兽场改造成了堡垒。斗兽场也曾一度被用作教堂。';
+  String get colosseum1140ce => 'Franangipane 和 Annibaldi 贵族家族将斗兽场改造成了堡垒。斗兽场也曾一度被用作教堂。';
 
   @override
   String get colosseum1490ce => '教皇亚历山大六世允许斗兽场用作采石场，用于储存和回收建筑材料。';
 
   @override
-  String get colosseum1829ce =>
-      '在经历了一千多年的破败和破坏之后，罗马斗兽场正式开始了保护工作。教皇庇护八世特别致力于这项工程。';
+  String get colosseum1829ce => '在经历了一千多年的破败和破坏之后，罗马斗兽场正式开始了保护工作。教皇庇护八世特别致力于这项工程。';
 
   @override
-  String get colosseum1990ce =>
-      '罗马斗兽场进行了修复工程，以确保它仍然是罗马的主要旅游景点。目前，它是意大利最大的旅游收入来源之一。';
+  String get colosseum1990ce => '罗马斗兽场进行了修复工程，以确保它仍然是罗马的主要旅游景点。目前，它是意大利最大的旅游收入来源之一。';
 
   @override
   String get colosseumCollectible1Title => '玻璃六角双耳瓶';
@@ -725,8 +711,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get greatWallCallout1 => '长城最著名的部分主要建于明朝 (1368-1644)。';
 
   @override
-  String get greatWallCallout2 =>
-      '然而，在明朝时期，砖石在长城的许多地方都被大量使用，同时使用的还有瓦片、石灰和石头等材料。';
+  String get greatWallCallout2 => '然而，在明朝时期，砖石在长城的许多地方都被大量使用，同时使用的还有瓦片、石灰和石头等材料。';
 
   @override
   String get greatWallVideoCaption => '“从空中看长城 | 国家地理频道。” Youtube，由《国家地理》上传';
@@ -759,20 +744,17 @@ class AppLocalizationsZh extends AppLocalizations {
       '除了防御游牧部落的入侵之外，长城的其他用途还包括边境控制、对丝绸之路运输的货物征收关税、监管或鼓励贸易、以及控制移民和出境。';
 
   @override
-  String get greatWall700bce =>
-      '长城的第一个标志性建筑最初是围绕楚国的方形城墙。多年来，为了扩大和连接领土，人们修建了更多的墙。';
+  String get greatWall700bce => '长城的第一个标志性建筑最初是围绕楚国的方形城墙。多年来，为了扩大和连接领土，人们修建了更多的墙。';
 
   @override
-  String get greatWall214bce =>
-      '秦始皇统一中国后，将秦国、燕国、赵国的城墙连接起来，形成了中国长城，耗时10年，耗费数十万劳工。';
+  String get greatWall214bce => '秦始皇统一中国后，将秦国、燕国、赵国的城墙连接起来，形成了中国长城，耗时10年，耗费数十万劳工。';
 
   @override
   String get greatWall121bce =>
       '汉朝皇帝开始了一项为期20年的建设工程，建造长城的东西部分，包括烽火台、塔楼和城堡。目的不仅是为了防御，也是为了控制丝绸之路以及类似的贸易路线。';
 
   @override
-  String get greatWall556ce =>
-      '北齐国启动了几项建设工程，使用180多万工人来修复和延长长城的部分，增加它的长度，甚至在山西周围建造了第二道内墙。';
+  String get greatWall556ce => '北齐国启动了几项建设工程，使用180多万工人来修复和延长长城的部分，增加它的长度，甚至在山西周围建造了第二道内墙。';
 
   @override
   String get greatWall618ce => '长城在隋朝经过修复，用来防御突厥人的攻击。隋朝前后，长城很少被使用，年久失修。';
@@ -829,12 +811,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get machuPicchuPullQuote2Author => '海勒姆·宾厄姆';
 
   @override
-  String get machuPicchuCallout1 =>
-      '在马丘比丘被用作皇家庄园期间，据估计约有750人居住在那里，其中大多数是长期居住的后勤人员。';
+  String get machuPicchuCallout1 => '在马丘比丘被用作皇家庄园期间，据估计约有750人居住在那里，其中大多数是长期居住的后勤人员。';
 
   @override
-  String get machuPicchuCallout2 =>
-      '印加人精通一种被称为“琢石”的技术，这种技术不需要砂浆就能将一块块切割好的石头拼在一起。';
+  String get machuPicchuCallout2 => '印加人精通一种被称为“琢石”的技术，这种技术不需要砂浆就能将一块块切割好的石头拼在一起。';
 
   @override
   String get machuPicchuVideoCaption => '《马丘比丘101 | 国家地理》Youtube，由国家地理上传。';
@@ -876,16 +856,14 @@ class AppLocalizationsZh extends AppLocalizations {
   String get machuPicchu1867ce => '据推测，马丘比丘最初由德国探险家奥古斯托·伯恩斯重新发现，但他的发现从未被公开。';
 
   @override
-  String get machuPicchu1911ce =>
-      '耶鲁大学的海勒姆·宾厄姆在寻找“失落的印加之城”比尔卡班巴的过程中，在当地人的带领下来到马丘比丘，并将它介绍给全世界。';
+  String get machuPicchu1911ce => '耶鲁大学的海勒姆·宾厄姆在寻找“失落的印加之城”比尔卡班巴的过程中，在当地人的带领下来到马丘比丘，并将它介绍给全世界。';
 
   @override
   String get machuPicchu1964ce =>
       '美国探险家吉恩·萨沃伊(Gene Savoy)彻底挖掘了周围的遗址，他在名为Espíritu Pampa的废墟中发现了一个更适合比尔卡班巴的遗址。';
 
   @override
-  String get machuPicchu1997ce =>
-      '自马丘比丘被重新发现以来，每年都有越来越多的游客前来参观，2017年的游客人数超过了140万。';
+  String get machuPicchu1997ce => '自马丘比丘被重新发现以来，每年都有越来越多的游客前来参观，2017年的游客人数超过了140万。';
 
   @override
   String get machuPicchuCollectible1Title => '8点星束腰外衣';
@@ -1038,12 +1016,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get pyramidsGizaCallout1 => '金字塔不仅是法老的坟墓，也是他死后各种物品的储存坑。';
 
   @override
-  String get pyramidsGizaCallout2 =>
-      '据估计，大金字塔由230万块石块组成。大约550万吨石灰石、8000吨花岗岩和50万吨砂浆被用于建造。';
+  String get pyramidsGizaCallout2 => '据估计，大金字塔由230万块石块组成。大约550万吨石灰石、8000吨花岗岩和50万吨砂浆被用于建造。';
 
   @override
-  String get pyramidsGizaVideoCaption =>
-      '“吉萨大金字塔 ｜古代埃及的奥秘 ｜英国国家地理频道。” Youtube，由英国国家地理上传。';
+  String get pyramidsGizaVideoCaption => '“吉萨大金字塔 ｜古代埃及的奥秘 ｜英国国家地理频道。” Youtube，由英国国家地理上传。';
 
   @override
   String get pyramidsGizaMapCaption => '显示吉萨金字塔位于埃及大开罗地区的地图。';
@@ -1069,30 +1045,25 @@ class AppLocalizationsZh extends AppLocalizations {
       '金字塔遗址位于西部沙漠的边缘，位于尼罗河以西约5.6英里(9公里)的吉萨市，距开罗市中心西南约8英里(13公里)。';
 
   @override
-  String get pyramidsGizaLocationInfo2 =>
-      '金字塔位于西部沙漠的西北侧，它被认为是世界上辨识度最高、参观人数最多的旅游景点之一。';
+  String get pyramidsGizaLocationInfo2 => '金字塔位于西部沙漠的西北侧，它被认为是世界上辨识度最高、参观人数最多的旅游景点之一。';
 
   @override
   String get pyramidsGiza2575bce => '埃及人开始为第四王朝的三位法老胡夫、卡夫拉、孟卡拉建造三座金字塔。';
 
   @override
-  String get pyramidsGiza2465bce =>
-      '埃及人开始为第五和第六王朝的皇室建造 Mastabas，也就是金字塔周围更小的结构。';
+  String get pyramidsGiza2465bce => '埃及人开始为第五和第六王朝的皇室建造 Mastabas，也就是金字塔周围更小的结构。';
 
   @override
-  String get pyramidsGiza443bce =>
-      '希腊作家希罗多德推测，金字塔是在20年的时间内建成的，共有10万多名奴隶劳工。这种假设持续了1500多年。';
+  String get pyramidsGiza443bce => '希腊作家希罗多德推测，金字塔是在20年的时间内建成的，共有10万多名奴隶劳工。这种假设持续了1500多年。';
 
   @override
-  String get pyramidsGiza1925ce =>
-      '王后Hetepheres的坟墓被发现，里面有家具和珠宝。经过多年的掠夺后，这座古墓是最后剩下的装满宝藏的墓穴之一。';
+  String get pyramidsGiza1925ce => '王后Hetepheres的坟墓被发现，里面有家具和珠宝。经过多年的掠夺后，这座古墓是最后剩下的装满宝藏的墓穴之一。';
 
   @override
   String get pyramidsGiza1979ce => '金字塔被联合国教科文组织指定为世界遗产，以防止任何未经授权的掠夺和破坏行为。';
 
   @override
-  String get pyramidsGiza1990ce =>
-      '劳工区的发现表明建造金字塔的工人并不是奴隶。他们巧妙的建造方法证明，建造如此巨大的建筑只需要相对较小的劳动力。';
+  String get pyramidsGiza1990ce => '劳工区的发现表明建造金字塔的工人并不是奴隶。他们巧妙的建造方法证明，建造如此巨大的建筑只需要相对较小的劳动力。';
 
   @override
   String get pyramidsGizaCollectible1Title => '两张莎草纸';
@@ -1149,8 +1120,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tajMahalCallout2 => '泰姬陵的建造花费了2.2万名工人、画家、刺绣艺术家和石匠的心血。';
 
   @override
-  String get tajMahalVideoCaption =>
-      '“印度的泰姬陵是永恒的爱情纪念碑 | 国家地理。” Youtube，由国家地理上传。';
+  String get tajMahalVideoCaption => '“印度的泰姬陵是永恒的爱情纪念碑 | 国家地理。” Youtube，由国家地理上传。';
 
   @override
   String get tajMahalMapCaption => '显示泰姬陵位于印度北方邦的地图。';
@@ -1175,8 +1145,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tajMahalLocationInfo1 => '它是印度最著名的建筑，位于阿格拉市东部亚穆纳河南岸，阿格拉堡以东近1英里。';
 
   @override
-  String get tajMahalLocationInfo2 =>
-      '泰姬陵建在阿格拉市南部的一块土地上。沙贾汗将阿格拉市中心的一座大宫殿赠送给印度王公贾伊辛格，以换取这块土地。';
+  String get tajMahalLocationInfo2 => '泰姬陵建在阿格拉市南部的一块土地上。沙贾汗将阿格拉市中心的一座大宫殿赠送给印度王公贾伊辛格，以换取这块土地。';
 
   @override
   String get tajMahal1631ce => '莫卧儿王朝皇帝沙贾汗为纪念亡妻而建造。';
@@ -1185,16 +1154,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tajMahal1647ce => '施工完成。该项目涉及两万多名工人，占地42英亩。';
 
   @override
-  String get tajMahal1658ce =>
-      '尽管沙贾汗计划为自己的遗体建造第二座陵墓，但他的余生被儿子囚禁在阿格拉堡，第二座陵墓从未实现。';
+  String get tajMahal1658ce => '尽管沙贾汗计划为自己的遗体建造第二座陵墓，但他的余生被儿子囚禁在阿格拉堡，第二座陵墓从未实现。';
 
   @override
-  String get tajMahal1901ce =>
-      '在经历了350多年的工厂污染和废气的腐蚀后，柯松勋爵和英国印度总督对这座遗址进行了一次重大修复。';
+  String get tajMahal1901ce => '在经历了350多年的工厂污染和废气的腐蚀后，柯松勋爵和英国印度总督对这座遗址进行了一次重大修复。';
 
   @override
-  String get tajMahal1984ce =>
-      '为了保护这座建筑不受锡克教武装分子和一些印度教民族主义团体的影响，游客被禁止观看夜景。这项禁令将持续20年。';
+  String get tajMahal1984ce => '为了保护这座建筑不受锡克教武装分子和一些印度教民族主义团体的影响，游客被禁止观看夜景。这项禁令将持续20年。';
 
   @override
   String get tajMahal1998ce => '修复和研究计划付诸行动，以帮助保护遗址。';

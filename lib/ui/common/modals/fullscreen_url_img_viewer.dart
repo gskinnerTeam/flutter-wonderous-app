@@ -19,7 +19,8 @@ class FullscreenUrlImgViewer extends StatefulWidget {
 
 class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
   final _isZoomed = ValueNotifier(false);
-  late final _controller = PageController(initialPage: widget.index)..addListener(_handlePageChanged);
+  late final _controller = PageController(initialPage: widget.index)
+    ..addListener(_handlePageChanged);
   late final ValueNotifier<int> _currentPage = ValueNotifier(widget.index);
 
   @override
@@ -108,16 +109,18 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
                           CircleIconBtn(
                             icon: AppIcons.prev,
                             flipIcon: true,
-                            onPressed: page == widget.urls.length - 1 ? null : () => _animateToPage(page + 1),
+                            onPressed: page == widget.urls.length - 1
+                                ? null
+                                : () => _animateToPage(page + 1),
                             semanticLabel: $strings.semanticsNext(''),
-                          )
+                          ),
                         ],
                       );
                     },
                   ),
                 ),
-              )
-            }
+              ),
+            },
           ],
         ),
       ),

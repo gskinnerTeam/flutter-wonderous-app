@@ -38,10 +38,16 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
             content = Center(child: AppLoadingIndicator());
           } else {
             content = hzMode
-                ? Row(children: [
-                    Expanded(child: _ArtifactImageBtn(data: data!)),
-                    Expanded(child: Center(child: SizedBox(width: 600, child: _InfoColumn(data: data)))),
-                  ])
+                ? Row(
+                    children: [
+                      Expanded(child: _ArtifactImageBtn(data: data!)),
+                      Expanded(
+                        child: Center(
+                          child: SizedBox(width: 600, child: _InfoColumn(data: data)),
+                        ),
+                      ),
+                    ],
+                  )
                 : CustomScrollView(
                     slivers: [
                       SliverAppBar(
@@ -57,10 +63,12 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
                   );
           }
 
-          return Stack(children: [
-            content,
-            AppHeader(isTransparent: true),
-          ]);
+          return Stack(
+            children: [
+              content,
+              AppHeader(isTransparent: true),
+            ],
+          );
         },
       ),
     );
@@ -72,11 +80,12 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Center(
-            child: Icon(
-          Icons.warning_amber_outlined,
-          color: $styles.colors.accent1,
-          size: $styles.insets.lg,
-        )),
+          child: Icon(
+            Icons.warning_amber_outlined,
+            color: $styles.colors.accent1,
+            size: $styles.insets.lg,
+          ),
+        ),
         Gap($styles.insets.xs),
         SizedBox(
           width: $styles.insets.xxl * 3,

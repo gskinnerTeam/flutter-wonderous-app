@@ -21,8 +21,9 @@ class _EventsList extends StatefulWidget {
 }
 
 class _EventsListState extends State<_EventsList> {
-  late final ScrollController _scroller = ScrollController(initialScrollOffset: widget.initialScrollOffset)
-    ..addListener(() => widget.onScroll(_scroller.offset));
+  late final ScrollController _scroller = ScrollController(
+    initialScrollOffset: widget.initialScrollOffset,
+  )..addListener(() => widget.onScroll(_scroller.offset));
 
   @override
   void dispose() {
@@ -32,7 +33,9 @@ class _EventsListState extends State<_EventsList> {
 
   @override
   Widget build(BuildContext context) {
-    return FocusTraversalGroup(child: widget.blurOnScroll ? _buildScrollingListWithBlur() : _buildScrollingList());
+    return FocusTraversalGroup(
+      child: widget.blurOnScroll ? _buildScrollingListWithBlur() : _buildScrollingList(),
+    );
   }
 
   /// The actual content of the scrolling list
@@ -41,7 +44,10 @@ class _EventsListState extends State<_EventsList> {
       return Container(
         width: 35,
         height: 5,
-        decoration: BoxDecoration(color: $styles.colors.greyMedium, borderRadius: BorderRadius.circular(99)),
+        decoration: BoxDecoration(
+          color: $styles.colors.greyMedium,
+          borderRadius: BorderRadius.circular(99),
+        ),
       );
     }
 
@@ -119,12 +125,13 @@ class _EventsListState extends State<_EventsList> {
           children: [
             if (showBackdrop) ...[
               AppBackdrop(
-                  strength: backdropAmt,
-                  child: IgnorePointer(
-                    child: Container(
-                      color: $styles.colors.black.withValues(alpha: backdropAmt * .6),
-                    ),
-                  )),
+                strength: backdropAmt,
+                child: IgnorePointer(
+                  child: Container(
+                    color: $styles.colors.black.withValues(alpha: backdropAmt * .6),
+                  ),
+                ),
+              ),
             ],
             child!,
           ],

@@ -28,18 +28,19 @@ class AppColors {
     TextTheme txtTheme = (isDark ? ThemeData.dark() : ThemeData.light()).textTheme;
     Color txtColor = white;
     ColorScheme colorScheme = ColorScheme(
-        // Map our custom theme to the Material ColorScheme
-        brightness: isDark ? Brightness.dark : Brightness.light,
-        primary: accent1,
-        primaryContainer: accent1,
-        secondary: accent1,
-        secondaryContainer: accent1,
-        surface: offWhite,
-        onSurface: txtColor,
-        onError: Colors.white,
-        onPrimary: Colors.white,
-        onSecondary: Colors.white,
-        error: Colors.red.shade400);
+      // Map our custom theme to the Material ColorScheme
+      brightness: isDark ? Brightness.dark : Brightness.light,
+      primary: accent1,
+      primaryContainer: accent1,
+      secondary: accent1,
+      secondaryContainer: accent1,
+      surface: offWhite,
+      onSurface: txtColor,
+      onError: Colors.white,
+      onPrimary: Colors.white,
+      onSecondary: Colors.white,
+      error: Colors.red.shade400,
+    );
 
     /// Now that we have ColorScheme and TextTheme, we can create the ThemeData
     /// Also add on some extra properties that ColorScheme seems to miss

@@ -39,7 +39,9 @@ class ColosseumIllustration extends StatelessWidget {
         enableHero: true,
         heightFactor: config.shortMode ? .25 : .25,
         minHeight: 100,
-        offset: config.shortMode ? Offset(50, context.heightPx * -.07) : Offset(80, context.heightPx * -.28),
+        offset: config.shortMode
+            ? Offset(50, context.heightPx * -.07)
+            : Offset(80, context.heightPx * -.28),
       ),
     ];
   }
@@ -53,7 +55,7 @@ class ColosseumIllustration extends StatelessWidget {
         minHeight: 200,
         zoomAmt: .15,
         fractionalOffset: Offset(0, config.shortMode ? .10 : -.1),
-      )
+      ),
     ];
   }
 

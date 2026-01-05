@@ -89,7 +89,11 @@ class AppLogic {
     }
   }
 
-  Future<T?> showFullscreenDialogRoute<T>(BuildContext context, Widget child, {bool transparent = false}) async {
+  Future<T?> showFullscreenDialogRoute<T>(
+    BuildContext context,
+    Widget child, {
+    bool transparent = false,
+  }) async {
     return await Navigator.of(context).push<T>(
       PageRoutes.dialog<T>(child, duration: $styles.times.pageTransition),
     );
@@ -128,9 +132,13 @@ class AppLogic {
   }
 
   void precacheUrl(String url, BuildContext context) async {
-    await precacheImage(AssetImage(url), context, onError: (error, stackTrace) {
-      print('Loading $url failed - ${error.toString()}');
-    });
+    await precacheImage(
+      AssetImage(url),
+      context,
+      onError: (error, stackTrace) {
+        print('Loading $url failed - ${error.toString()}');
+      },
+    );
   }
 
   void precacheIcons(BuildContext context) {
@@ -193,7 +201,7 @@ class AppLogic {
       'machu_picchu',
       'petra',
       'pyramids',
-      'taj_mahal'
+      'taj_mahal',
     ];
 
     // Universals.

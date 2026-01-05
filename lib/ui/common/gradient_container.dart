@@ -2,16 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:wonders/ui/common/ignore_pointer.dart';
 
 class GradientContainer extends StatelessWidget {
-  const GradientContainer(this.colors, this.stops,
-      {super.key,
-      this.child,
-      this.width,
-      this.height,
-      this.alignment,
-      this.begin,
-      this.end,
-      this.blendMode,
-      this.borderRadius});
+  const GradientContainer(
+    this.colors,
+    this.stops, {
+    super.key,
+    this.child,
+    this.width,
+    this.height,
+    this.alignment,
+    this.begin,
+    this.end,
+    this.blendMode,
+    this.borderRadius,
+  });
   final List<Color> colors;
   final List<double> stops;
   final double? width;
@@ -45,12 +48,29 @@ class GradientContainer extends StatelessWidget {
 }
 
 class HzGradient extends GradientContainer {
-  const HzGradient(super.colors, super.stops,
-      {super.key, super.child, super.width, super.height, super.alignment, super.blendMode, super.borderRadius});
+  const HzGradient(
+    super.colors,
+    super.stops, {
+    super.key,
+    super.child,
+    super.width,
+    super.height,
+    super.alignment,
+    super.blendMode,
+    super.borderRadius,
+  });
 }
 
 class VtGradient extends GradientContainer {
-  const VtGradient(super.colors, super.stops,
-      {super.key, super.child, super.width, super.height, super.alignment, super.blendMode, super.borderRadius})
-      : super(begin: Alignment.topCenter, end: Alignment.bottomCenter);
+  const VtGradient(
+    super.colors,
+    super.stops, {
+    super.key,
+    super.child,
+    super.width,
+    super.height,
+    super.alignment,
+    super.blendMode,
+    super.borderRadius,
+  }) : super(begin: Alignment.topCenter, end: Alignment.bottomCenter);
 }

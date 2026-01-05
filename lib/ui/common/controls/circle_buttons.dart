@@ -102,13 +102,14 @@ class BackBtn extends StatelessWidget {
   final String? semanticLabel;
 
   BackBtn.close({Key? key, VoidCallback? onPressed, Color? bgColor, Color? iconColor})
-      : this(
-            key: key,
-            icon: AppIcons.close,
-            onPressed: onPressed,
-            semanticLabel: $strings.circleButtonsSemanticClose,
-            bgColor: bgColor,
-            iconColor: iconColor);
+    : this(
+        key: key,
+        icon: AppIcons.close,
+        onPressed: onPressed,
+        semanticLabel: $strings.circleButtonsSemanticClose,
+        bgColor: bgColor,
+        iconColor: iconColor,
+      );
 
   bool _handleKeyDown(BuildContext context, KeyDownEvent event) {
     if (event.logicalKey == LogicalKeyboardKey.escape) {
@@ -126,7 +127,8 @@ class BackBtn extends StatelessWidget {
         icon: icon,
         bgColor: bgColor,
         color: iconColor,
-        onPressed: onPressed ??
+        onPressed:
+            onPressed ??
             () {
               final nav = Navigator.of(context);
               if (nav.canPop()) {

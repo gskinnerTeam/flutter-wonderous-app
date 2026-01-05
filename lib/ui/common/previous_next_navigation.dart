@@ -5,15 +5,16 @@ import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/fullscreen_keyboard_listener.dart';
 
 class PreviousNextNavigation extends StatefulWidget {
-  const PreviousNextNavigation(
-      {super.key,
-      required this.onPreviousPressed,
-      required this.onNextPressed,
-      required this.child,
-      this.maxWidth = 1000,
-      this.nextBtnColor,
-      this.previousBtnColor,
-      this.listenToMouseWheel = true});
+  const PreviousNextNavigation({
+    super.key,
+    required this.onPreviousPressed,
+    required this.onNextPressed,
+    required this.child,
+    this.maxWidth = 1000,
+    this.nextBtnColor,
+    this.previousBtnColor,
+    this.listenToMouseWheel = true,
+  });
   final VoidCallback? onPreviousPressed;
   final VoidCallback? onNextPressed;
   final Color? nextBtnColor;
@@ -45,7 +46,8 @@ class _PreviousNextNavigationState extends State<PreviousNextNavigation> {
   void _handleMouseScroll(event) {
     if (event is PointerScrollEvent) {
       // Cooldown, ignore scroll events that are too close together
-      if (DateTime.now().millisecondsSinceEpoch - _lastMouseScrollTime.millisecondsSinceEpoch < _scrollCooldownMs) {
+      if (DateTime.now().millisecondsSinceEpoch - _lastMouseScrollTime.millisecondsSinceEpoch <
+          _scrollCooldownMs) {
         return;
       }
       _lastMouseScrollTime = DateTime.now();
@@ -87,7 +89,7 @@ class _PreviousNextNavigationState extends State<PreviousNextNavigation> {
                         semanticLabel: 'Next',
                         flipIcon: true,
                         bgColor: widget.nextBtnColor,
-                      )
+                      ),
                     ],
                   ),
                 ),

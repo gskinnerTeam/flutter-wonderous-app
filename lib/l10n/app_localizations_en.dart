@@ -36,8 +36,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Timeline Scrubber, drag horizontally to navigate the timeline.';
 
   @override
-  String get rangeSelector =>
-      'Range selector, drag horizontally to adjust the range.';
+  String get rangeSelector => 'Range selector, drag horizontally to adjust the range.';
 
   @override
   String collectionLabelDiscovered(Object percentage) {
@@ -207,8 +206,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get collectionTitleCollection => 'Collection';
 
   @override
-  String get collectionPopupResetConfirm =>
-      'Are you sure you want to reset your collection?';
+  String get collectionPopupResetConfirm => 'Are you sure you want to reset your collection?';
 
   @override
   String get eightWaySemanticSwipeDetector => 'eight-way swipe detector';
@@ -217,8 +215,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get expandingTimeSelectorSemanticSelector => 'time range selector';
 
   @override
-  String get fullscreenImageViewerSemanticFull =>
-      'full screen image, no description available';
+  String get fullscreenImageViewerSemanticFull => 'full screen image, no description available';
 
   @override
   String get homeMenuButtonExplore => 'Explore the timeline';
@@ -280,8 +277,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get introTitleJourney => 'Journey to the past';
 
   @override
-  String get introDescriptionNavigate =>
-      'Navigate the intersection of time, art, and culture.';
+  String get introDescriptionNavigate => 'Navigate the intersection of time, art, and culture.';
 
   @override
   String get introTitleExplore => 'Explore places';
@@ -471,23 +467,19 @@ class AppLocalizationsEn extends AppLocalizations {
       'Chichen Itza rises to regional prominence toward the end of the Early Classic period';
 
   @override
-  String get chichenItza832ce =>
-      'The earliest hieroglyphic date discovered at Chichen Itza';
+  String get chichenItza832ce => 'The earliest hieroglyphic date discovered at Chichen Itza';
 
   @override
-  String get chichenItza998ce =>
-      'Last known date recorded in the Osario temple';
+  String get chichenItza998ce => 'Last known date recorded in the Osario temple';
 
   @override
   String get chichenItza1100ce => 'Chichen Itza declines as a regional center';
 
   @override
-  String get chichenItza1527ce =>
-      'Invaded by Spanish Conquistador Francisco de Montejo';
+  String get chichenItza1527ce => 'Invaded by Spanish Conquistador Francisco de Montejo';
 
   @override
-  String get chichenItza1535ce =>
-      'All Spanish are driven from the Yucatán Peninsula';
+  String get chichenItza1535ce => 'All Spanish are driven from the Yucatán Peninsula';
 
   @override
   String get chichenItzaCollectible1Title => 'Pendant';
@@ -655,8 +647,7 @@ class AppLocalizationsEn extends AppLocalizations {
       '“Ancient Rome 101 | National Geographic.” Youtube, uploaded by National Geographic.';
 
   @override
-  String get colosseumMapCaption =>
-      'Map showing location of Colosseum in Rome, Italy,';
+  String get colosseumMapCaption => 'Map showing location of Colosseum in Rome, Italy,';
 
   @override
   String get colosseumHistoryInfo1 =>
@@ -713,8 +704,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get colosseumCollectible1Icon => 'vase';
 
   @override
-  String get colosseumCollectible2Title =>
-      'Bronze plaque of Mithras slaying the bull';
+  String get colosseumCollectible2Title => 'Bronze plaque of Mithras slaying the bull';
 
   @override
   String get colosseumCollectible2Icon => 'statue';
@@ -818,8 +808,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Hongzhi Emperor split the walls into north and south lines, eventually shaping it into how it is today. Since then, it has gradually fallen into disrepair and remains mostly unused.';
 
   @override
-  String get greatWallCollectible1Title =>
-      'Biographies of Lian Po and Lin Xiangru';
+  String get greatWallCollectible1Title => 'Biographies of Lian Po and Lin Xiangru';
 
   @override
   String get greatWallCollectible1Icon => 'scroll';
@@ -993,8 +982,7 @@ class AppLocalizationsEn extends AppLocalizations {
       '“Stunning Stone Monuments of Petra | National Geographic.” Youtube, uploaded by National Geographic.';
 
   @override
-  String get petraMapCaption =>
-      'Map showing location of Petra in Ma’an Governorate, Jordan.';
+  String get petraMapCaption => 'Map showing location of Petra in Ma’an Governorate, Jordan.';
 
   @override
   String get petraHistoryInfo1 =>
@@ -1021,8 +1009,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'The area around Petra has been inhabited from as early as 7000 BC, and the Nabataeans might have settled in what would become the capital city of their kingdom as early as the 4th century BC.\nArchaeological work has only discovered evidence of Nabataean presence dating back to the second century BC, by which time Petra had become their capital. The Nabataeans were nomadic Arabs who invested in Petra\'s proximity to the incense trade routes by establishing it as a major regional trading hub.';
 
   @override
-  String get petra1200bce =>
-      'First Edomites occupied the area and established a foothold.';
+  String get petra1200bce => 'First Edomites occupied the area and established a foothold.';
 
   @override
   String get petra106bce => 'Became part of the Roman province Arabia';
@@ -1032,16 +1019,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'After being damaged by earthquakes, habitation of the city all but ceased.';
 
   @override
-  String get petra1812ce =>
-      'Rediscovered by the Swiss traveler Johann Ludwig Burckhardt.';
+  String get petra1812ce => 'Rediscovered by the Swiss traveler Johann Ludwig Burckhardt.';
 
   @override
   String get petra1958ce =>
       'Excavations led on the site by the British School of Archaeology and the American Center of Oriental Research.';
 
   @override
-  String get petra1989ce =>
-      'Appeared in the film Indiana Jones and The Last Crusade.';
+  String get petra1989ce => 'Appeared in the film Indiana Jones and The Last Crusade.';
 
   @override
   String get petraCollectible1Title => 'Camel and riders';
@@ -1080,8 +1065,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pyramidsGizaPullQuote1Top => 'The Tallest Structures on Earth';
 
   @override
-  String get pyramidsGizaPullQuote1Bottom =>
-      'Until the Advent of Modern Skyscrapers';
+  String get pyramidsGizaPullQuote1Bottom => 'Until the Advent of Modern Skyscrapers';
 
   @override
   String get pyramidsGizaPullQuote2 =>
@@ -1216,8 +1200,7 @@ class AppLocalizationsEn extends AppLocalizations {
       '“India’s Taj Mahal Is an Enduring Monument to Love | National Geographic.” Youtube, uploaded by National Geographic.';
 
   @override
-  String get tajMahalMapCaption =>
-      'Map showing location of Taj Mahal in Uttar Pradesh, India.';
+  String get tajMahalMapCaption => 'Map showing location of Taj Mahal in Uttar Pradesh, India.';
 
   @override
   String get tajMahalHistoryInfo1 =>
@@ -1292,12 +1275,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get timelineEvent2700bce => 'The Old Kingdom begins in Egypt';
 
   @override
-  String get timelineEvent2600bce =>
-      'Emergence of Mayan culture in the Yucatán Peninsula';
+  String get timelineEvent2600bce => 'Emergence of Mayan culture in the Yucatán Peninsula';
 
   @override
-  String get timelineEvent2560bce =>
-      'King Khufu completes the Great Pyramid of Giza';
+  String get timelineEvent2560bce => 'King Khufu completes the Great Pyramid of Giza';
 
   @override
   String get timelineEvent2500bce => 'The mammoth goes extinct';
@@ -1321,33 +1302,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get timelineEvent753bce => 'Founding of Rome';
 
   @override
-  String get timelineEvent447bce =>
-      'Building of the Parthenon at Athens started';
+  String get timelineEvent447bce => 'Building of the Parthenon at Athens started';
 
   @override
   String get timelineEvent427bce => 'Birth of Greek Philosopher Plato';
 
   @override
-  String get timelineEvent322bce =>
-      'Death of Aristotle (61), the first genuine scientist';
+  String get timelineEvent322bce => 'Death of Aristotle (61), the first genuine scientist';
 
   @override
   String get timelineEvent200bce => 'Paper is invented in the Han Dynasty';
 
   @override
-  String get timelineEvent44bce =>
-      'Death of Julius Caesar; beginning of the Roman Empire';
+  String get timelineEvent44bce => 'Death of Julius Caesar; beginning of the Roman Empire';
 
   @override
   String get timelineEvent4bce => 'Birth of Jesus Christ';
 
   @override
-  String get timelineEvent43ce =>
-      'The Roman Empire enters Great Britain for the first time';
+  String get timelineEvent43ce => 'The Roman Empire enters Great Britain for the first time';
 
   @override
-  String get timelineEvent79ce =>
-      'Destruction of Pompeii by the volcano Vesuvius';
+  String get timelineEvent79ce => 'Destruction of Pompeii by the volcano Vesuvius';
 
   @override
   String get timelineEvent455ce => 'End of the Roman Empire';
@@ -1369,8 +1345,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Leif Erikson settles during the winter in present-day eastern Canada';
 
   @override
-  String get timelineEvent1077ce =>
-      'The Construction of the Tower of London begins';
+  String get timelineEvent1077ce => 'The Construction of the Tower of London begins';
 
   @override
   String get timelineEvent1117ce => 'The University of Oxford is founded';
@@ -1393,12 +1368,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get timelineEvent1428ce => 'Birth of the Aztec Empire in Mexico';
 
   @override
-  String get timelineEvent1439ce =>
-      'Johannes Gutenberg invents the printing press';
+  String get timelineEvent1439ce => 'Johannes Gutenberg invents the printing press';
 
   @override
-  String get timelineEvent1492ce =>
-      'Christopher Columbus reaches the New World';
+  String get timelineEvent1492ce => 'Christopher Columbus reaches the New World';
 
   @override
   String get timelineEvent1760ce => 'The industrial revolution begins';
@@ -1417,8 +1390,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get timelineEvent1914ce => 'World War I';
 
   @override
-  String get timelineEvent1929ce =>
-      'Black Tuesday signals the beginning of the Great Depression';
+  String get timelineEvent1929ce => 'Black Tuesday signals the beginning of the Great Depression';
 
   @override
   String get timelineEvent1939ce => 'World War II';
@@ -1441,6 +1413,5 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pageNotFoundBackButton => 'Back to civilization';
 
   @override
-  String get pageNotFoundMessage =>
-      'The page you are looking for does not exist.';
+  String get pageNotFoundMessage => 'The page you are looking for does not exist.';
 }

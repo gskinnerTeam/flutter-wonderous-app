@@ -3,7 +3,13 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/utils/duration_utils.dart';
 
 class CompassDivider extends StatelessWidget {
-  const CompassDivider({super.key, required this.isExpanded, this.duration, this.linesColor, this.compassColor});
+  const CompassDivider({
+    super.key,
+    required this.isExpanded,
+    this.duration,
+    this.linesColor,
+    this.compassColor,
+  });
   final bool isExpanded;
   final Duration? duration;
   final Color? linesColor;
@@ -41,12 +47,13 @@ class CompassDivider extends StatelessWidget {
             child: child,
           ),
           child: SizedBox(
-              height: 32,
-              width: 32,
-              child: SvgPicture.asset(
-                SvgPaths.compassFull,
-                colorFilter: (compassColor ?? $styles.colors.accent2).colorFilter,
-              )),
+            height: 32,
+            width: 32,
+            child: SvgPicture.asset(
+              SvgPaths.compassFull,
+              colorFilter: (compassColor ?? $styles.colors.accent2).colorFilter,
+            ),
+          ),
         ),
         Gap($styles.insets.sm),
         Expanded(child: buildHzAnimatedDivider(alignLeft: true)),

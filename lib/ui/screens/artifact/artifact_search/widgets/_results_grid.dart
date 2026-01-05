@@ -38,7 +38,9 @@ class _ResultsGridState extends State<_ResultsGrid> {
           slivers: [
             SliverToBoxAdapter(child: _buildLanguageMessage(context)),
             SliverPadding(
-              padding: EdgeInsets.all($styles.insets.sm).copyWith(bottom: $styles.insets.offset * 1.5),
+              padding: EdgeInsets.all(
+                $styles.insets.sm,
+              ).copyWith(bottom: $styles.insets.offset * 1.5),
               sliver: SliverMasonryGrid.count(
                 crossAxisCount: (context.widthPx / 300).ceil(),
                 mainAxisSpacing: $styles.insets.sm,

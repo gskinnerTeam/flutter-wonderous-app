@@ -72,7 +72,9 @@ class _IllustrationPieceState extends State<IllustrationPiece> {
     final imgPath = '${type.assetPath}/${widget.fileName}';
     // Dynamically determine the aspect ratio of the image, so we can more easily position it
     if (!aspectRatioLoadCalled) {
-      setState(() => aspectRatioLoadCalled = true); // indicates load has started, so we don't run twice
+      setState(
+        () => aspectRatioLoadCalled = true,
+      ); // indicates load has started, so we don't run twice
       rootBundle.load(imgPath).then((img) async {
         var image = await decodeImageFromList(img.buffer.asUint8List());
         if (!mounted) return;
@@ -88,10 +90,10 @@ class _IllustrationPieceState extends State<IllustrationPiece> {
           final curvedAnim = Curves.easeOut.transform(anim.value);
           final config = wonderBuilder.widget.config;
           Widget img = Image.asset(
-            imgPath, 
+            imgPath,
             excludeFromSemantics: true,
-            opacity: anim, 
-            fit: BoxFit.fitHeight
+            opacity: anim,
+            fit: BoxFit.fitHeight,
           );
           // Add overflow box so image doesn't get clipped as we translate it around
           img = OverflowBox(maxWidth: 2500, child: img);
@@ -99,7 +101,10 @@ class _IllustrationPieceState extends State<IllustrationPiece> {
           final double introZoom = (widget.initialScale - 1) * (1 - curvedAnim);
 
           /// Determine target height
-          final double height = max(widget.minHeight ?? 0, constraints.maxHeight * widget.heightFactor);
+          final double height = max(
+            widget.minHeight ?? 0,
+            constraints.maxHeight * widget.heightFactor,
+          );
 
           /// Combine all the translations, initial + offset + dynamicHzOffset + fractionalOffset
           Offset finalTranslation = widget.offset;
@@ -134,12 +139,15 @@ class _IllustrationPieceState extends State<IllustrationPiece> {
             children: [
               if (widget.bottom != null) Positioned.fill(child: widget.bottom!.call(context)),
               ...[
-                widget.enableHero && !$styles.disableAnimations ? Hero(tag: '$type-${widget.fileName}', child: content) : content,
+                widget.enableHero && !$styles.disableAnimations
+                    ? Hero(tag: '$type-${widget.fileName}', child: content)
+                    : content,
               ],
               if (widget.top != null) Positioned.fill(child: widget.top!.call(context)),
             ],
           );
-        }),
+        },
+      ),
     );
   }
 }

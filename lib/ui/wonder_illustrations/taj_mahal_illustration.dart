@@ -45,27 +45,30 @@ class TajMahalIllustration extends StatelessWidget {
         enableHero: true,
         heightFactor: .3,
         minHeight: 140,
-        offset: config.shortMode ? Offset(-100, context.heightPx * -.02) : Offset(-150, context.heightPx * -.34),
+        offset: config.shortMode
+            ? Offset(-100, context.heightPx * -.02)
+            : Offset(-150, context.heightPx * -.34),
       ),
     ];
   }
 
   List<Widget> _buildMg(BuildContext context, Animation<double> anim) {
     return [
-      LayoutBuilder(builder: (_, constraints) {
-        const double minHeight = 230, heightFactor = .6, poolScale = 1;
-        return Stack(
-          children: [
-            IllustrationPiece(
-              fileName: 'taj-mahal.png',
-              heightFactor: heightFactor,
-              minHeight: minHeight,
-              enableHero: true,
-              zoomAmt: .05,
-              fractionalOffset: Offset(0, config.shortMode ? .12 : -.15),
-              top: config.shortMode
-                  ? null
-                  : (_) => FractionalTranslation(
+      LayoutBuilder(
+        builder: (_, constraints) {
+          const double minHeight = 230, heightFactor = .6, poolScale = 1;
+          return Stack(
+            children: [
+              IllustrationPiece(
+                fileName: 'taj-mahal.png',
+                heightFactor: heightFactor,
+                minHeight: minHeight,
+                enableHero: true,
+                zoomAmt: .05,
+                fractionalOffset: Offset(0, config.shortMode ? .12 : -.15),
+                top: config.shortMode
+                    ? null
+                    : (_) => FractionalTranslation(
                         translation: Offset(0, heightFactor),
                         child: IllustrationPiece(
                           fileName: 'pool.png',
@@ -74,10 +77,11 @@ class TajMahalIllustration extends StatelessWidget {
                           zoomAmt: .05,
                         ),
                       ),
-            ),
-          ],
-        );
-      }),
+              ),
+            ],
+          );
+        },
+      ),
     ];
   }
 

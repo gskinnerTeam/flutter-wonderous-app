@@ -78,14 +78,18 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
       // whole word search on title and keywords.
       // this is a somewhat naive search, but is sufficient for demoing the UI.
       final RegExp q = RegExp('\\b${_query}s?\\b', caseSensitive: false);
-      _searchResults = wonder.searchData.where((o) => o.title.contains(q) || o.keywords.contains(q)).toList();
+      _searchResults = wonder.searchData
+          .where((o) => o.title.contains(q) || o.keywords.contains(q))
+          .toList();
     }
     vizController.value = _searchResults;
     _updateFilter();
   }
 
   void _updateFilter() {
-    _filteredResults = _searchResults.where((o) => o.year >= _startYear && o.year <= _endYear).toList();
+    _filteredResults = _searchResults
+        .where((o) => o.year >= _startYear && o.year <= _endYear)
+        .toList();
     setState(() {});
   }
 
@@ -101,7 +105,12 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
           AppHeader(title: $strings.artifactsSearchTitleBrowse, subtitle: wonder.title),
           Container(
             color: $styles.colors.black,
-            padding: EdgeInsets.fromLTRB($styles.insets.sm, $styles.insets.sm, $styles.insets.sm, 0),
+            padding: EdgeInsets.fromLTRB(
+              $styles.insets.sm,
+              $styles.insets.sm,
+              $styles.insets.sm,
+              0,
+            ),
             child: _SearchInput(onSubmit: _handleSearchSubmitted, wonder: wonder),
           ),
           Container(
@@ -123,21 +132,25 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
       ),
     );
 
-    return Stack(children: [
-      Positioned.fill(child: ColoredBox(color: $styles.colors.greyStrong, child: content)),
-      Positioned.fill(
-        child: RepaintBoundary(
-          child: ExpandingTimeRangeSelector(
-            wonder: wonder,
-            startYear: _startYear,
-            endYear: _endYear,
-            panelController: panelController,
-            vizController: vizController,
-            onChanged: _handleTimelineChanged,
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: ColoredBox(color: $styles.colors.greyStrong, child: content),
+        ),
+        Positioned.fill(
+          child: RepaintBoundary(
+            child: ExpandingTimeRangeSelector(
+              wonder: wonder,
+              startYear: _startYear,
+              endYear: _endYear,
+              panelController: panelController,
+              vizController: vizController,
+              onChanged: _handleTimelineChanged,
+            ),
           ),
         ),
-      ),
-    ]);
+      ],
+    );
   }
 
   Widget _buildStatusText(BuildContext context) {
@@ -154,25 +167,28 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
     }
     return MergeSemantics(
       child: StaticTextScale(
-        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Gap($styles.insets.sm),
-          Text(
-            $strings.artifactsSearchLabelFound(_searchResults.length, _filteredResults.length),
-            textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
-            style: statusStyle,
-          ),
-          AppBtn.basic(
-            semanticLabel: $strings.artifactsSearchButtonToggle,
-            onPressed: () => panelController.toggle(),
-            enableFeedback: false, // handled when panelController changes.
-            child: Text(
-              $strings.artifactsSearchSemanticTimeframe,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Gap($styles.insets.sm),
+            Text(
+              $strings.artifactsSearchLabelFound(_searchResults.length, _filteredResults.length),
               textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
-              style: statusStyle.copyWith(decoration: TextDecoration.underline),
+              style: statusStyle,
             ),
-          ),
-          Gap($styles.insets.sm),
-        ]),
+            AppBtn.basic(
+              semanticLabel: $strings.artifactsSearchButtonToggle,
+              onPressed: () => panelController.toggle(),
+              enableFeedback: false, // handled when panelController changes.
+              child: Text(
+                $strings.artifactsSearchSemanticTimeframe,
+                textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+                style: statusStyle.copyWith(decoration: TextDecoration.underline),
+              ),
+            ),
+            Gap($styles.insets.sm),
+          ],
+        ),
       ),
     );
   }

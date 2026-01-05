@@ -41,7 +41,9 @@ class GreatWallIllustration extends StatelessWidget {
         enableHero: true,
         heightFactor: config.shortMode ? .07 : .25,
         minHeight: 120,
-        offset: config.shortMode ? Offset(-40, context.heightPx * -.06) : Offset(-65, context.heightPx * -.3),
+        offset: config.shortMode
+            ? Offset(-40, context.heightPx * -.06)
+            : Offset(-65, context.heightPx * -.3),
       ),
     ];
   }

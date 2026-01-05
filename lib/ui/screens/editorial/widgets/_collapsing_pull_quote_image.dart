@@ -36,7 +36,8 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
         final yPos = ContextUtils.getGlobalPos(context)?.dy;
         if (yPos != null && yPos < collapseStartPx) {
           // Get a normalized value, 0 - 1, representing the current amount of collapse.
-          collapseAmt = (collapseStartPx - max(collapseEndPx, yPos)) / (collapseStartPx - collapseEndPx);
+          collapseAmt =
+              (collapseStartPx - max(collapseEndPx, yPos)) / (collapseStartPx - collapseEndPx);
         }
 
         // The sized boxes in the column collapse to a zero height, allowing the quotes to naturally sit over top of the image
@@ -98,8 +99,13 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
                             if (data.pullQuote1Author.isNotEmpty) ...[
                               Container(
                                 margin: const EdgeInsets.only(top: 16),
-                                child: buildText('- ${data.pullQuote1Author}', collapseAmt, top: false, isAuthor: true),
-                              )
+                                child: buildText(
+                                  '- ${data.pullQuote1Author}',
+                                  collapseAmt,
+                                  top: false,
+                                  isAuthor: true,
+                                ),
+                              ),
                             ],
                           ],
                         ),

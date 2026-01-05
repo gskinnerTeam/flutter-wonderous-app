@@ -31,12 +31,18 @@ class _SearchInput extends StatelessWidget {
 
     return wonder.searchSuggestions.where((str) {
       return str.startsWith(textEditingValue.text.toLowerCase());
-    }).toList()
-      ..sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
+    }).toList()..sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
   }
 
-  Widget _buildSuggestionsView(BuildContext context, onSelected, Iterable<String> results, BoxConstraints constraints) {
-    List<Widget> items = results.map((str) => _buildSuggestion(context, str, () => onSelected(str))).toList();
+  Widget _buildSuggestionsView(
+    BuildContext context,
+    onSelected,
+    Iterable<String> results,
+    BoxConstraints constraints,
+  ) {
+    List<Widget> items = results
+        .map((str) => _buildSuggestion(context, str, () => onSelected(str)))
+        .toList();
     items.insert(0, _buildSuggestionTitle(context));
     return Stack(
       children: [
@@ -86,8 +92,9 @@ class _SearchInput extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all($styles.insets.xs).copyWith(top: 0),
       margin: EdgeInsets.only(bottom: $styles.insets.xxs),
-      decoration:
-          BoxDecoration(border: Border(bottom: BorderSide(color: $styles.colors.greyStrong.withValues(alpha: 0.1)))),
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: $styles.colors.greyStrong.withValues(alpha: 0.1))),
+      ),
       child: CenterLeft(
         child: DefaultTextStyle(
           style: $styles.text.title2.copyWith(color: $styles.colors.black),
@@ -121,7 +128,12 @@ class _SearchInput extends StatelessWidget {
     );
   }
 
-  Widget _buildInput(BuildContext context, TextEditingController textController, FocusNode focusNode, _) {
+  Widget _buildInput(
+    BuildContext context,
+    TextEditingController textController,
+    FocusNode focusNode,
+    _,
+  ) {
     Color captionColor = $styles.colors.caption;
     return Container(
       constraints: BoxConstraints(maxWidth: _inputWidth),
@@ -174,7 +186,7 @@ class _SearchInput extends StatelessWidget {
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

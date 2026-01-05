@@ -28,46 +28,43 @@ class WonderIllustrationConfig {
     bool enableHero = true,
     bool enableAnims = true,
     bool shortMode = false,
-  }) =>
-      WonderIllustrationConfig(
-        zoom: zoom,
-        isShowing: isShowing,
-        enableHero: enableHero,
-        enableAnims: enableAnims,
-        enableBg: false,
-        enableMg: false,
-        shortMode: shortMode,
-      );
+  }) => WonderIllustrationConfig(
+    zoom: zoom,
+    isShowing: isShowing,
+    enableHero: enableHero,
+    enableAnims: enableAnims,
+    enableBg: false,
+    enableMg: false,
+    shortMode: shortMode,
+  );
   factory WonderIllustrationConfig.bg({
     double zoom = _defaultZoom,
     bool isShowing = true,
     bool enableHero = true,
     bool enableAnims = true,
     bool shortMode = false,
-  }) =>
-      WonderIllustrationConfig(
-        zoom: zoom,
-        isShowing: isShowing,
-        enableHero: enableHero,
-        enableAnims: enableAnims,
-        enableFg: false,
-        enableMg: false,
-        shortMode: shortMode,
-      );
+  }) => WonderIllustrationConfig(
+    zoom: zoom,
+    isShowing: isShowing,
+    enableHero: enableHero,
+    enableAnims: enableAnims,
+    enableFg: false,
+    enableMg: false,
+    shortMode: shortMode,
+  );
   factory WonderIllustrationConfig.mg({
     double zoom = _defaultZoom,
     bool isShowing = true,
     bool enableHero = true,
     bool enableAnims = true,
     bool shortMode = false,
-  }) =>
-      WonderIllustrationConfig(
-        zoom: zoom,
-        isShowing: isShowing,
-        enableHero: enableHero,
-        enableAnims: enableAnims,
-        enableBg: false,
-        enableFg: false,
-        shortMode: shortMode,
-      );
+  }) => WonderIllustrationConfig(
+    zoom: zoom,
+    isShowing: isShowing,
+    enableHero: enableHero,
+    enableAnims: enableAnims,
+    enableBg: false,
+    enableFg: false,
+    shortMode: shortMode,
+  );
 }

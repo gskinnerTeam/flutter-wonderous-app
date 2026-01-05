@@ -51,7 +51,7 @@ extension WonderAssetExtensions on WonderType {
       WonderType.chichenItza => '${ImagePaths.root}/chichen_itza',
       WonderType.machuPicchu => '${ImagePaths.root}/machu_picchu',
       WonderType.tajMahal => '${ImagePaths.root}/taj_mahal',
-      WonderType.christRedeemer => '${ImagePaths.root}/christ_the_redeemer'
+      WonderType.christRedeemer => '${ImagePaths.root}/christ_the_redeemer',
     };
   }
 

@@ -16,7 +16,7 @@ class _AnimatedArrowButton extends StatelessWidget {
   // Holds top alignment for first half, then jumps down and slides back up
   final _slideDown = TweenSequence<double>([
     TweenSequenceItem(tween: Tween(begin: 1, end: 1), weight: .5),
-    TweenSequenceItem(tween: Tween(begin: -1, end: 1), weight: .5)
+    TweenSequenceItem(tween: Tween(begin: -1, end: 1), weight: .5),
   ]);
 
   @override
