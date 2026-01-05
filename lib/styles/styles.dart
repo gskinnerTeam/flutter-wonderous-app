@@ -177,12 +177,12 @@ class _Insets {
 @immutable
 class _Shadows {
   final textSoft = [
-    Shadow(color: Colors.black.withOpacity(.25), offset: Offset(0, 2), blurRadius: 4),
+    Shadow(color: Colors.black.withValues(alpha: .25), offset: Offset(0, 2), blurRadius: 4),
   ];
   final text = [
-    Shadow(color: Colors.black.withOpacity(.6), offset: Offset(0, 2), blurRadius: 2),
+    Shadow(color: Colors.black.withValues(alpha: .6), offset: Offset(0, 2), blurRadius: 2),
   ];
   final textStrong = [
-    Shadow(color: Colors.black.withOpacity(.6), offset: Offset(0, 4), blurRadius: 6),
+    Shadow(color: Colors.black.withValues(alpha: .6), offset: Offset(0, 4), blurRadius: 6),
   ];
 }

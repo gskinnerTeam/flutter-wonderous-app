@@ -187,7 +187,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Spacer(),
-        Icon(icon, size: $styles.insets.xl, color: color.withOpacity(0.5)),
+        Icon(icon, size: $styles.insets.xl, color: color.withValues(alpha: 0.5)),
         Gap($styles.insets.xs),
         Text(text, style: $styles.text.body.copyWith(color: color)),
         Spacer(

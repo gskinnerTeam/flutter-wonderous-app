@@ -233,8 +233,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    fgColor.withOpacity(0),
-                    fgColor.withOpacity(.5 + fgColor.opacity * .25 + (isPointerDown ? .05 : 0) + swipeAmt * .20),
+                    fgColor.withValues(alpha: 0),
+                    fgColor.withValues(alpha: .5 + fgColor.a * .25 + (isPointerDown ? .05 : 0) + swipeAmt * .20),
                   ],
                   stops: const [0, 1],
                 ),
@@ -249,7 +249,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     return Stack(children: [
       /// Foreground gradient-1, gets darker when swiping up
       BottomCenter(
-        child: buildSwipeableBgGradient(gradientColor.withOpacity(.65)),
+        child: buildSwipeableBgGradient(gradientColor.withValues(alpha: .65)),
       ),
 
       /// Foreground decorators
@@ -344,7 +344,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                             );
                           },
                           child: VtGradient(
-                            [$styles.colors.white.withOpacity(0), $styles.colors.white.withOpacity(1)],
+                            [$styles.colors.white.withValues(alpha: 0), $styles.colors.white.withValues(alpha: 1)],
                             const [.3, 1],
                             borderRadius: BorderRadius.circular(99),
                           ),

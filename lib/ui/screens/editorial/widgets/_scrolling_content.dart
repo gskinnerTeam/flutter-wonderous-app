@@ -24,8 +24,8 @@ class _ScrollingContent extends StatelessWidget {
       final TextStyle dropStyle = $styles.text.dropCase;
       final TextStyle bodyStyle = $styles.text.body;
       final String dropChar = value.substring(0, 1);
-      final textScale = MediaQuery.of(context).textScaleFactor;
-      final double dropCapWidth = StringUtils.measure(dropChar, dropStyle).width * textScale;
+      final scaleFactor = MediaQuery.textScalerOf(context).scale(1.0);
+      final double dropCapWidth = StringUtils.measure(dropChar, dropStyle).width * scaleFactor;
       return Focus(
         child: Semantics(
           label: value,
@@ -187,7 +187,7 @@ class _YouTubeThumbnail extends StatelessWidget {
                     child: Container(
                       padding: EdgeInsets.all($styles.insets.xs),
                       decoration: BoxDecoration(
-                        color: $styles.colors.black.withOpacity(0.66),
+                        color: $styles.colors.black.withValues(alpha: 0.66),
                         borderRadius: BorderRadius.circular(999),
                       ),
                       child: Icon(
