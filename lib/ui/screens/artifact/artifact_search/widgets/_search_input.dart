@@ -40,9 +40,7 @@ class _SearchInput extends StatelessWidget {
     Iterable<String> results,
     BoxConstraints constraints,
   ) {
-    List<Widget> items = results
-        .map((str) => _buildSuggestion(context, str, () => onSelected(str)))
-        .toList();
+    List<Widget> items = results.map((str) => _buildSuggestion(context, str, () => onSelected(str))).toList();
     items.insert(0, _buildSuggestionTitle(context));
     return Stack(
       children: [

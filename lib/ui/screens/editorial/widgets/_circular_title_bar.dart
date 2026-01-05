@@ -72,8 +72,7 @@ class _AnimatedCircleWithText extends StatefulWidget {
   State<_AnimatedCircleWithText> createState() => _AnimatedCircleWithTextState();
 }
 
-class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText>
-    with SingleTickerProviderStateMixin {
+class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with SingleTickerProviderStateMixin {
   int _prevIndex = -1;
   String get oldTitle => _prevIndex == -1 ? '' : widget.titles[_prevIndex];
   String get newTitle => widget.titles[widget.index];

@@ -51,9 +51,7 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
         return BottomCenter(
           child: AnimatedPadding(
             duration: $styles.times.fast,
-            padding: isOpen
-                ? EdgeInsets.zero
-                : EdgeInsets.only(bottom: safeBottom + $styles.insets.xxs),
+            padding: isOpen ? EdgeInsets.zero : EdgeInsets.only(bottom: safeBottom + $styles.insets.xxs),
             child: AppBtn.basic(
               onPressed: () => widget.panelController.toggle(),
               semanticLabel: '',
@@ -74,8 +72,7 @@ class _ExpandingTimeRangeSelectorState extends State<ExpandingTimeRangeSelector>
                     ],
                   ),
                 ),
-                closedBuilder: (_) =>
-                    _ClosedTimeRange(startYear: widget.startYear, endYear: widget.endYear),
+                closedBuilder: (_) => _ClosedTimeRange(startYear: widget.startYear, endYear: widget.endYear),
                 openBuilder: (_) => SizedBox(
                   width: constraints.maxWidth - pad * 2,
                   child: Center(
@@ -107,8 +104,7 @@ class _ClosedTimeRange extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String text =
-        '${StringUtils.formatYr(startYear.round())} - ${StringUtils.formatYr(endYear.round())}';
+    final String text = '${StringUtils.formatYr(startYear.round())} - ${StringUtils.formatYr(endYear.round())}';
 
     return Padding(
       padding: EdgeInsets.symmetric(vertical: $styles.insets.xs),

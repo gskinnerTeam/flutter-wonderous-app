@@ -28,8 +28,7 @@ class CollectiblesLogic with ThrottledSaveLoadMixin {
 
   void init() => _nativeWidget.init();
 
-  CollectibleData? fromId(String? id) =>
-      id == null ? null : all.firstWhereOrNull((o) => o.id == id);
+  CollectibleData? fromId(String? id) => id == null ? null : all.firstWhereOrNull((o) => o.id == id);
 
   List<CollectibleData> forWonder(WonderType wonder) {
     return all.where((o) => o.wonder == wonder).toList(growable: false);

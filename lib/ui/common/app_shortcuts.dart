@@ -2,8 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:wonders/common_libs.dart';
 
 class AppShortcuts {
-  static final Map<ShortcutActivator, Intent>
-  _defaultWebAndDesktopShortcuts = <ShortcutActivator, Intent>{
+  static final Map<ShortcutActivator, Intent> _defaultWebAndDesktopShortcuts = <ShortcutActivator, Intent>{
     // Activation
     if (kIsWeb) ...{
       // On the web, enter activates buttons, but not other controls.

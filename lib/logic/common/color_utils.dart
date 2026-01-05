@@ -6,8 +6,7 @@ class ColorUtils {
     return hslc.withLightness((hslc.lightness + amt).clamp(0.0, 1.0)).toColor();
   }
 
-  static Color parseHex(String value) =>
-      Color(int.parse(value.substring(1, 7), radix: 16) + 0xFF000000);
+  static Color parseHex(String value) => Color(int.parse(value.substring(1, 7), radix: 16) + 0xFF000000);
 
   static Color blend(Color dst, Color src, double opacity) {
     return Color.fromARGB(

@@ -46,8 +46,7 @@ class _PreviousNextNavigationState extends State<PreviousNextNavigation> {
   void _handleMouseScroll(event) {
     if (event is PointerScrollEvent) {
       // Cooldown, ignore scroll events that are too close together
-      if (DateTime.now().millisecondsSinceEpoch - _lastMouseScrollTime.millisecondsSinceEpoch <
-          _scrollCooldownMs) {
+      if (DateTime.now().millisecondsSinceEpoch - _lastMouseScrollTime.millisecondsSinceEpoch < _scrollCooldownMs) {
         return;
       }
       _lastMouseScrollTime = DateTime.now();

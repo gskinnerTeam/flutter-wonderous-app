@@ -16,7 +16,7 @@ analyzer:
 
 formatter:
   trailing_commas: preserve
-  page_width: 100
+  page_width: 120
   
 linter:
   # The lint rules applied to this project can be customized in the

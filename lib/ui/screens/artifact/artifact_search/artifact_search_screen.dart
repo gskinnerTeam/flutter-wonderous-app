@@ -78,18 +78,14 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
       // whole word search on title and keywords.
       // this is a somewhat naive search, but is sufficient for demoing the UI.
       final RegExp q = RegExp('\\b${_query}s?\\b', caseSensitive: false);
-      _searchResults = wonder.searchData
-          .where((o) => o.title.contains(q) || o.keywords.contains(q))
-          .toList();
+      _searchResults = wonder.searchData.where((o) => o.title.contains(q) || o.keywords.contains(q)).toList();
     }
     vizController.value = _searchResults;
     _updateFilter();
   }
 
   void _updateFilter() {
-    _filteredResults = _searchResults
-        .where((o) => o.year >= _startYear && o.year <= _endYear)
-        .toList();
+    _filteredResults = _searchResults.where((o) => o.year >= _startYear && o.year <= _endYear).toList();
     setState(() {});
   }
 

@@ -27,8 +27,7 @@ class WonderDetailsTabMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     Color iconColor = showBg ? $styles.colors.black : $styles.colors.white;
     // Measure available size after subtracting the home button size and insets
-    final availableSize =
-        ((isVertical ? context.heightPx : context.widthPx) - homeBtnSize - $styles.insets.md);
+    final availableSize = ((isVertical ? context.heightPx : context.widthPx) - homeBtnSize - $styles.insets.md);
     // Calculate tabBtnSize based on availableSize
     final double tabBtnSize = (availableSize / 4).clamp(minTabSize, maxTabSize);
     // Figure out some extra gap, in the case that the tabBtns are wider than the homeBtn
@@ -36,9 +35,7 @@ class WonderDetailsTabMenu extends StatelessWidget {
     // Store off safe areas which we will need to respect in the layout below
     final double safeAreaBtm = context.mq.padding.bottom, safeAreaTop = context.mq.padding.top;
     // Insets the bg from the rounded wonder icon making it appear offset. The tab btns will use the same padding.
-    final buttonInsetPadding = isVertical
-        ? EdgeInsets.only(right: buttonInset)
-        : EdgeInsets.only(top: buttonInset);
+    final buttonInsetPadding = isVertical ? EdgeInsets.only(right: buttonInset) : EdgeInsets.only(top: buttonInset);
     return Padding(
       padding: isVertical ? EdgeInsets.only(top: safeAreaTop) : EdgeInsets.zero,
       child: Stack(
@@ -54,9 +51,7 @@ class WonderDetailsTabMenu extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     color: $styles.colors.white,
-                    borderRadius: isVertical
-                        ? BorderRadius.only(topRight: Radius.circular(32))
-                        : null,
+                    borderRadius: isVertical ? BorderRadius.only(topRight: Radius.circular(32)) : null,
                   ),
                 ),
               ),
@@ -229,9 +224,7 @@ class _TabBtn extends StatelessWidget {
           child: AppBtn.basic(
             onPressed: () => onTap(index),
             semanticLabel: label,
-            minimumSize: _isVertical
-                ? Size(crossBtnSize, mainAxisSize)
-                : Size(mainAxisSize, crossBtnSize),
+            minimumSize: _isVertical ? Size(crossBtnSize, mainAxisSize) : Size(mainAxisSize, crossBtnSize),
             // Image icon
             child: Image.asset(
               iconImgPath,

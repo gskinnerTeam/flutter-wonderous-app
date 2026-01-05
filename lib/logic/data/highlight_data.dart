@@ -10,8 +10,7 @@ class HighlightData {
     required this.date,
   });
 
-  static HighlightData? fromId(String? id) =>
-      id == null ? null : _highlights.firstWhereOrNull((o) => o.id == id);
+  static HighlightData? fromId(String? id) => id == null ? null : _highlights.firstWhereOrNull((o) => o.id == id);
   static List<HighlightData> forWonder(WonderType wonder) =>
       _highlights.where((o) => o.wonder == wonder).toList(growable: false);
   static List<HighlightData> get all => _highlights;

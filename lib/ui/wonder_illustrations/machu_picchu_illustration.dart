@@ -41,9 +41,7 @@ class MachuPicchuIllustration extends StatelessWidget {
         enableHero: true,
         heightFactor: config.shortMode ? .15 : .15,
         minHeight: 100,
-        offset: config.shortMode
-            ? Offset(150, context.heightPx * -.08)
-            : Offset(150, context.heightPx * -.35),
+        offset: config.shortMode ? Offset(150, context.heightPx * -.08) : Offset(150, context.heightPx * -.35),
       ),
     ];
   }

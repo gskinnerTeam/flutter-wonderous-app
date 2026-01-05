@@ -45,9 +45,7 @@ class TajMahalIllustration extends StatelessWidget {
         enableHero: true,
         heightFactor: .3,
         minHeight: 140,
-        offset: config.shortMode
-            ? Offset(-100, context.heightPx * -.02)
-            : Offset(-150, context.heightPx * -.34),
+        offset: config.shortMode ? Offset(-100, context.heightPx * -.02) : Offset(-150, context.heightPx * -.34),
       ),
     ];
   }

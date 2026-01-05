@@ -43,8 +43,7 @@ class _HomeMenuState extends State<HomeMenu> {
 
   void _handleCollectionPressed(BuildContext context) => context.go(ScreenPaths.collection(''));
 
-  void _handleTimelinePressed(BuildContext context) =>
-      context.go(ScreenPaths.timeline(widget.data.type));
+  void _handleTimelinePressed(BuildContext context) => context.go(ScreenPaths.timeline(widget.data.type));
 
   @override
   Widget build(BuildContext context) {
@@ -177,8 +176,7 @@ class _GridBtn extends StatefulWidget {
 class _GridBtnState extends State<_GridBtn> {
   bool _isOver = false;
 
-  void _handleWonderPressed(BuildContext context, WonderData data) =>
-      Navigator.pop(context, data.type);
+  void _handleWonderPressed(BuildContext context, WonderData data) => Navigator.pop(context, data.type);
 
   @override
   Widget build(BuildContext context) {

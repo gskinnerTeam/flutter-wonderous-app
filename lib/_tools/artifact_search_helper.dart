@@ -204,13 +204,11 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
   }
 
   String _getKeywords(Map json) {
-    String str =
-        '${json['objectName'] ?? ''}|${json['medium'] ?? ''}|${json['classification'] ?? ''}';
+    String str = '${json['objectName'] ?? ''}|${json['medium'] ?? ''}|${json['classification'] ?? ''}';
     return _escape(str.toLowerCase());
   }
 
-  String _escape(String str) =>
-      str.replaceAll("'", "\\'").replaceAll('\r', ' ').replaceAll('\n', ' ');
+  String _escape(String str) => str.replaceAll("'", "\\'").replaceAll('\r', ' ').replaceAll('\n', ' ');
 
   void _completeId() {
     --activeRequestCount;
@@ -232,8 +230,7 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
       entryStr += '  ${entries[i].write()},\n';
     }
 
-    String output =
-        '// ${wonder!.title} (${entries.length})\nList<SearchData> _searchData = const [\n$entryStr];';
+    String output = '// ${wonder!.title} (${entries.length})\nList<SearchData> _searchData = const [\n$entryStr];';
 
     String suggestions = _getSuggestions(entries);
 
@@ -419,8 +416,7 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
 const String _baseArtifactUri = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
 
 // ! as first char indicates a priority query
-const String _baseQueryUri =
-    'https://collectionapi.metmuseum.org/public/collection/v1/search?hasImage=true&';
+const String _baseQueryUri = 'https://collectionapi.metmuseum.org/public/collection/v1/search?hasImage=true&';
 const Map<WonderType, List<String>> queries = {
   WonderType.chichenItza: [
     // 550 1550

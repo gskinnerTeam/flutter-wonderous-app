@@ -36,8 +36,7 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
         final yPos = ContextUtils.getGlobalPos(context)?.dy;
         if (yPos != null && yPos < collapseStartPx) {
           // Get a normalized value, 0 - 1, representing the current amount of collapse.
-          collapseAmt =
-              (collapseStartPx - max(collapseEndPx, yPos)) / (collapseStartPx - collapseEndPx);
+          collapseAmt = (collapseStartPx - max(collapseEndPx, yPos)) / (collapseStartPx - collapseEndPx);
         }
 
         // The sized boxes in the column collapse to a zero height, allowing the quotes to naturally sit over top of the image

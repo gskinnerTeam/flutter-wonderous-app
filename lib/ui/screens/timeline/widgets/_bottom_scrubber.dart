@@ -39,8 +39,7 @@ class _BottomScrubber extends StatelessWidget {
         void handleScrubberPan(DragUpdateDetails details) {
           final totalWidth = constraints.maxWidth;
           if (!scroller.hasClients) return;
-          double dragMultiplier =
-              (scroller.position.maxScrollExtent + timelineMinSize) / totalWidth;
+          double dragMultiplier = (scroller.position.maxScrollExtent + timelineMinSize) / totalWidth;
           double newPos = scroller.position.pixels + details.delta.dx * dragMultiplier;
           scroller.position.jumpTo(newPos.clamp(0, scroller.position.maxScrollExtent));
         }

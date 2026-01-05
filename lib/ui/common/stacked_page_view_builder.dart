@@ -19,8 +19,7 @@ class StackedPageViewBuilder extends StatefulWidget {
   });
   final int initialIndex;
   final int pageCount;
-  final Widget Function(BuildContext builder, PageController controller, PageController follower)
-  builder;
+  final Widget Function(BuildContext builder, PageController controller, PageController follower) builder;
   final void Function(PageController controller, PageController follower)? onInit;
   @override
   State<StackedPageViewBuilder> createState() => _StackedPageViewBuilderState();

@@ -70,9 +70,7 @@ class AppBtn extends StatelessWidget {
               style: $styles.text.btn,
               textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
             );
-      Widget? icn = icon == null
-          ? null
-          : _buildIcon(context, icon, isSecondary: isSecondary, size: iconSize);
+      Widget? icn = icon == null ? null : _buildIcon(context, icon, isSecondary: isSecondary, size: iconSize);
       if (txt != null && icn != null) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,

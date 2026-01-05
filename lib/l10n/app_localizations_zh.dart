@@ -444,8 +444,7 @@ class AppLocalizationsZh extends AppLocalizations {
       '这座城市是建立在破碎的地形上的，为了建立主要的建筑群，人为地将其夷为平地，对Castillo金字塔以及相关建筑物的平坦度上进行了最大的努力。这些重要的建筑物通过密集的铺装过道相互连接，称为萨科布。';
 
   @override
-  String get chichenItzaLocationInfo1 =>
-      '奇琴伊察位于墨西哥尤卡坦州的东部。它附近有四个可见的自然沉孔，称为 cenotes ，这可能会为奇琴伊察全年提供充足的水源，使其成为定居点的吸引力。';
+  String get chichenItzaLocationInfo1 => '奇琴伊察位于墨西哥尤卡坦州的东部。它附近有四个可见的自然沉孔，称为 cenotes ，这可能会为奇琴伊察全年提供充足的水源，使其成为定居点的吸引力。';
 
   @override
   String get chichenItzaLocationInfo2 =>
@@ -515,8 +514,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get christRedeemerCallout1 => '救世主基督的雕像被选中，张开双臂，象征和平。';
 
   @override
-  String get christRedeemerCallout2 =>
-      '建筑耗时9年，从1922年到1931年，花费了相当于25万美元(相当于2020年的360万美元)，于1931年10月12日开放。';
+  String get christRedeemerCallout2 => '建筑耗时9年，从1922年到1931年，花费了相当于25万美元(相当于2020年的360万美元)，于1931年10月12日开放。';
 
   @override
   String get christRedeemerVideoCaption =>
@@ -720,28 +718,23 @@ class AppLocalizationsZh extends AppLocalizations {
   String get greatWallMapCaption => '显示长城位于中国北方的地图。';
 
   @override
-  String get greatWallHistoryInfo1 =>
-      '长城是中国古代一系列军事防御建筑的统称，它跨越了古代中原的北部边界，用来防御不同时期来自欧亚草原游牧部落的侵袭。长城的总长度超过13000英里。';
+  String get greatWallHistoryInfo1 => '长城是中国古代一系列军事防御建筑的统称，它跨越了古代中原的北部边界，用来防御不同时期来自欧亚草原游牧部落的侵袭。长城的总长度超过13000英里。';
 
   @override
   String get greatWallHistoryInfo2 =>
       '早在公元前7世纪，就有几道墙被修建，后来中国的第一位皇帝秦始皇 (公元前220-206年) 将它们连接起来。如今，秦长城只留下断断续续的遗迹。后来，边境墙被许多朝代连续重建、维护和加强。';
 
   @override
-  String get greatWallConstructionInfo1 =>
-      '运输大量的建筑材料非常困难，所以建筑人士总是试图利用当地的资源。山上的石头被用在山脉上的建筑，而夯土则用于平原上的建筑。';
+  String get greatWallConstructionInfo1 => '运输大量的建筑材料非常困难，所以建筑人士总是试图利用当地的资源。山上的石头被用在山脉上的建筑，而夯土则用于平原上的建筑。';
 
   @override
-  String get greatWallConstructionInfo2 =>
-      '城墙的基础、内外边缘和入口是用被切割成矩形的石头来建造的。在清朝的统治下，中国的边界延伸到城墙之外，蒙古被并入大清国，因此，工程停止了。';
+  String get greatWallConstructionInfo2 => '城墙的基础、内外边缘和入口是用被切割成矩形的石头来建造的。在清朝的统治下，中国的边界延伸到城墙之外，蒙古被并入大清国，因此，工程停止了。';
 
   @override
-  String get greatWallLocationInfo1 =>
-      '不同朝代修筑的边墙创造了不同的路线。整体来说，长城的建筑沿着蒙古大草原边缘的弧线，东起辽东，西至罗布湖，北起今中俄边境，南至洮河。';
+  String get greatWallLocationInfo1 => '不同朝代修筑的边墙创造了不同的路线。整体来说，长城的建筑沿着蒙古大草原边缘的弧线，东起辽东，西至罗布湖，北起今中俄边境，南至洮河。';
 
   @override
-  String get greatWallLocationInfo2 =>
-      '除了防御游牧部落的入侵之外，长城的其他用途还包括边境控制、对丝绸之路运输的货物征收关税、监管或鼓励贸易、以及控制移民和出境。';
+  String get greatWallLocationInfo2 => '除了防御游牧部落的入侵之外，长城的其他用途还包括边境控制、对丝绸之路运输的货物征收关税、监管或鼓励贸易、以及控制移民和出境。';
 
   @override
   String get greatWall700bce => '长城的第一个标志性建筑最初是围绕楚国的方形城墙。多年来，为了扩大和连接领土，人们修建了更多的墙。';
@@ -750,8 +743,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get greatWall214bce => '秦始皇统一中国后，将秦国、燕国、赵国的城墙连接起来，形成了中国长城，耗时10年，耗费数十万劳工。';
 
   @override
-  String get greatWall121bce =>
-      '汉朝皇帝开始了一项为期20年的建设工程，建造长城的东西部分，包括烽火台、塔楼和城堡。目的不仅是为了防御，也是为了控制丝绸之路以及类似的贸易路线。';
+  String get greatWall121bce => '汉朝皇帝开始了一项为期20年的建设工程，建造长城的东西部分，包括烽火台、塔楼和城堡。目的不仅是为了防御，也是为了控制丝绸之路以及类似的贸易路线。';
 
   @override
   String get greatWall556ce => '北齐国启动了几项建设工程，使用180多万工人来修复和延长长城的部分，增加它的长度，甚至在山西周围建造了第二道内墙。';
@@ -835,16 +827,14 @@ class AppLocalizationsZh extends AppLocalizations {
       '中心建筑采用了经典的印加建筑风格，抛光的规则形状的干石墙。印加的墙壁有许多稳定的特点:门窗是梯形的，从下到上变窄;角通常是圆形的;内角通常略微向房间内倾斜，外角通常用“L”形的木块连接在一起。';
 
   @override
-  String get machuPicchuConstructionInfo2 =>
-      '这种精确的建造方法使马丘比丘的结构能够抵抗地震活动。这个地点本身可能是有意建在断层线上的，这样可以提供更好的排水系统和现成的碎石供应。';
+  String get machuPicchuConstructionInfo2 => '这种精确的建造方法使马丘比丘的结构能够抵抗地震活动。这个地点本身可能是有意建在断层线上的，这样可以提供更好的排水系统和现成的碎石供应。';
 
   @override
   String get machuPicchuLocationInfo1 =>
       '马丘比丘位于乌鲁班巴河之上，乌鲁班巴河三面围绕着遗址，悬崖从1480英尺(450米)垂直下降到河流的底部。这座城市的位置是一个军事机密，它的深崖和陡峭的山脉提供了天然的防御。';
 
   @override
-  String get machuPicchuLocationInfo2 =>
-      '印加桥，一座横跨乌鲁班巴河的印加草绳桥，为印加军队提供了秘密入口。另一座印加桥建在马丘比丘以西的树干桥上，在悬崖上有一个20英尺(6米)的缺口。';
+  String get machuPicchuLocationInfo2 => '印加桥，一座横跨乌鲁班巴河的印加草绳桥，为印加军队提供了秘密入口。另一座印加桥建在马丘比丘以西的树干桥上，在悬崖上有一个20英尺(6米)的缺口。';
 
   @override
   String get machuPicchu1438ce => '马丘比丘由印加统治者帕查庫特克·印卡·尤潘基建造。';
@@ -859,8 +849,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get machuPicchu1911ce => '耶鲁大学的海勒姆·宾厄姆在寻找“失落的印加之城”比尔卡班巴的过程中，在当地人的带领下来到马丘比丘，并将它介绍给全世界。';
 
   @override
-  String get machuPicchu1964ce =>
-      '美国探险家吉恩·萨沃伊(Gene Savoy)彻底挖掘了周围的遗址，他在名为Espíritu Pampa的废墟中发现了一个更适合比尔卡班巴的遗址。';
+  String get machuPicchu1964ce => '美国探险家吉恩·萨沃伊(Gene Savoy)彻底挖掘了周围的遗址，他在名为Espíritu Pampa的废墟中发现了一个更适合比尔卡班巴的遗址。';
 
   @override
   String get machuPicchu1997ce => '自马丘比丘被重新发现以来，每年都有越来越多的游客前来参观，2017年的游客人数超过了140万。';
@@ -942,8 +931,7 @@ class AppLocalizationsZh extends AppLocalizations {
       '宝库的正面是一个破碎的三角楣，里面有一个中央圆顶，两个方尖碑在顶部似乎形成了佩特拉的岩石。在宝库底部附近，我们看到了双胞胎希腊神波鲁克斯和卡斯特，在旅途中保护旅行者。在靠近宝库顶部的地方，可以看到两个胜利雕像分别站在梭罗上的女性雕像的两侧。这个女性形象被认为是伊西斯-堤喀，伊西斯是埃及女神，而堤喀是希腊的好运女神。';
 
   @override
-  String get petraLocationInfo1 =>
-      '佩特拉位于约旦南部。它毗邻Jabal Al-Madbah山，在一个被山脉包围的盆地中，形成了从死海到亚喀巴湾的阿拉伯山谷的东侧。';
+  String get petraLocationInfo1 => '佩特拉位于约旦南部。它毗邻Jabal Al-Madbah山，在一个被山脉包围的盆地中，形成了从死海到亚喀巴湾的阿拉伯山谷的东侧。';
 
   @override
   String get petraLocationInfo2 =>
@@ -1041,8 +1029,7 @@ class AppLocalizationsZh extends AppLocalizations {
       '大金字塔内部的大部分石头似乎都是在建筑工地的南面开采的。金字塔光滑的外表是由尼罗河上开采的优质白色石灰石制成的。为了确保金字塔保持对称，外部外壳的石头都必须在高度和宽度相等。工人们可能已经在所有的石块上做了标记，以表明金字塔墙壁的角度，并仔细地修整表面，以便将石块拼在一起。在施工过程中，石头的外表面是光滑的石灰石;随着时间的推移，多余的石头已被侵蚀。';
 
   @override
-  String get pyramidsGizaLocationInfo1 =>
-      '金字塔遗址位于西部沙漠的边缘，位于尼罗河以西约5.6英里(9公里)的吉萨市，距开罗市中心西南约8英里(13公里)。';
+  String get pyramidsGizaLocationInfo1 => '金字塔遗址位于西部沙漠的边缘，位于尼罗河以西约5.6英里(9公里)的吉萨市，距开罗市中心西南约8英里(13公里)。';
 
   @override
   String get pyramidsGizaLocationInfo2 => '金字塔位于西部沙漠的西北侧，它被认为是世界上辨识度最高、参观人数最多的旅游景点之一。';
@@ -1130,8 +1117,7 @@ class AppLocalizationsZh extends AppLocalizations {
       '泰姬陵是位于印度北方邦阿格拉市亚穆纳河右岸的一座用白色大理石建造的陵墓。它是莫卧儿王朝皇帝沙贾汗为了纪念他最喜爱的妻子—已故皇后姬蔓·芭奴而兴建的陵墓，沙贾汗本人身故后亦合葬于此。';
 
   @override
-  String get tajMahalHistoryInfo2 =>
-      '这座陵墓是一个42英亩(17公顷)的建筑群的中心，其中包括两座清真寺建筑(对称地安置在陵墓的两侧)，一个招待所，坐落在三面城墙围成的花园中。';
+  String get tajMahalHistoryInfo2 => '这座陵墓是一个42英亩(17公顷)的建筑群的中心，其中包括两座清真寺建筑(对称地安置在陵墓的两侧)，一个招待所，坐落在三面城墙围成的花园中。';
 
   @override
   String get tajMahalConstructionInfo1 =>

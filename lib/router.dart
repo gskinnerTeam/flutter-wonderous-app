@@ -19,19 +19,16 @@ class ScreenPaths {
   static String home = '/home';
   static String settings = '/settings';
 
-  static String wonderDetails(WonderType type, {required int tabIndex}) =>
-      '$home/wonder/${type.name}?t=$tabIndex';
+  static String wonderDetails(WonderType type, {required int tabIndex}) => '$home/wonder/${type.name}?t=$tabIndex';
 
   /// Dynamically nested pages, always added on to the existing path
   static String video(String id) => _appendToCurrentPath('/video/$id');
   static String search(WonderType type) => _appendToCurrentPath('/search/${type.name}');
   static String maps(WonderType type) => _appendToCurrentPath('/maps/${type.name}');
-  static String timeline(WonderType? type) =>
-      _appendToCurrentPath('/timeline?type=${type?.name ?? ''}');
+  static String timeline(WonderType? type) => _appendToCurrentPath('/timeline?type=${type?.name ?? ''}');
   static String artifact(String id, {bool append = true}) =>
       append ? _appendToCurrentPath('/artifact/$id') : '/artifact/$id';
-  static String collection(String id) =>
-      _appendToCurrentPath('/collection${id.isEmpty ? '' : '?id=$id'}');
+  static String collection(String id) => _appendToCurrentPath('/collection${id.isEmpty ? '' : '?id=$id'}');
 
   static String _appendToCurrentPath(String newPath) {
     final newPathUri = Uri.parse(newPath);

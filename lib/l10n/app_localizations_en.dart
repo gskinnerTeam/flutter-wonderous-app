@@ -32,8 +32,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bottomScrubberSemanticScrubber => 'scrubber';
 
   @override
-  String get bottomScrubberSemanticTimeline =>
-      'Timeline Scrubber, drag horizontally to navigate the timeline.';
+  String get bottomScrubberSemanticTimeline => 'Timeline Scrubber, drag horizontally to navigate the timeline.';
 
   @override
   String get rangeSelector => 'Range selector, drag horizontally to adjust the range.';
@@ -227,8 +226,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeMenuButtonAbout => 'About this app';
 
   @override
-  String get homeMenuAboutWonderous =>
-      'Wonderous is a visual showcase of eight wonders of the world. ';
+  String get homeMenuAboutWonderous => 'Wonderous is a visual showcase of eight wonders of the world. ';
 
   @override
   String homeMenuAboutBuilt(Object flutterUrl, Object gskinnerUrl) {
@@ -283,15 +281,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get introTitleExplore => 'Explore places';
 
   @override
-  String get introDescriptionUncover =>
-      'Uncover remarkable human-made structures from around the world.';
+  String get introDescriptionUncover => 'Uncover remarkable human-made structures from around the world.';
 
   @override
   String get introTitleDiscover => 'Discover artifacts';
 
   @override
-  String get introDescriptionLearn =>
-      'Learn about cultures throughout time by examining things they left behind.';
+  String get introDescriptionLearn => 'Learn about cultures throughout time by examining things they left behind.';
 
   @override
   String get introSemanticNavigate => 'Navigate';
@@ -435,8 +431,7 @@ class AppLocalizationsEn extends AppLocalizations {
       '“Ancient Maya 101 | National Geographic.” Youtube, uploaded by National Geographic.';
 
   @override
-  String get chichenItzaMapCaption =>
-      'Map showing location of Chichen Itza in Yucatán State, Mexico.';
+  String get chichenItzaMapCaption => 'Map showing location of Chichen Itza in Yucatán State, Mexico.';
 
   @override
   String get chichenItzaHistoryInfo1 =>
@@ -463,8 +458,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Of these cenotes, the \"Cenote Sagrado\" or Sacred Cenote, was used for the sacrifice of precious objects and human beings as a form of worship to the Maya rain god Chaac.';
 
   @override
-  String get chichenItza600ce =>
-      'Chichen Itza rises to regional prominence toward the end of the Early Classic period';
+  String get chichenItza600ce => 'Chichen Itza rises to regional prominence toward the end of the Early Classic period';
 
   @override
   String get chichenItza832ce => 'The earliest hieroglyphic date discovered at Chichen Itza';
@@ -537,8 +531,7 @@ class AppLocalizationsEn extends AppLocalizations {
       '“The Majestic Statue of Christ the Redeemer - Seven Wonders of the Modern World - See U in History.” Youtube, uploaded by See U in History / Mythology.';
 
   @override
-  String get christRedeemerMapCaption =>
-      'Map showing location of Christ the Redeemer in Rio de Janeiro, Brazil.';
+  String get christRedeemerMapCaption => 'Map showing location of Christ the Redeemer in Rio de Janeiro, Brazil.';
 
   @override
   String get christRedeemerHistoryInfo1 =>
@@ -628,8 +621,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get colosseumPullQuote1Bottom => 'Amphitheater in the World Today';
 
   @override
-  String get colosseumPullQuote2 =>
-      'When falls the Coliseum, Rome shall fall; And when Rome falls - the World.';
+  String get colosseumPullQuote2 => 'When falls the Coliseum, Rome shall fall; And when Rome falls - the World.';
 
   @override
   String get colosseumPullQuote2Author => 'Lord Byron';
@@ -678,8 +670,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Colosseum construction was started during the Vespasian reign overtop what used to be a private lake for the previous four emperors. This was done in an attempt to revitalize Rome from their tyrannical reign.';
 
   @override
-  String get colosseum82ce =>
-      'The uppermost floor was built, and the structure was officially completed by Domitian.';
+  String get colosseum82ce => 'The uppermost floor was built, and the structure was officially completed by Domitian.';
 
   @override
   String get colosseum1140ce =>
@@ -744,8 +735,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get greatWallPullQuote2Author => 'UNESCO';
 
   @override
-  String get greatWallCallout1 =>
-      'The best-known sections of the wall were built by the Ming dynasty (1368-1644).';
+  String get greatWallCallout1 => 'The best-known sections of the wall were built by the Ming dynasty (1368-1644).';
 
   @override
   String get greatWallCallout2 =>
@@ -756,8 +746,7 @@ class AppLocalizationsEn extends AppLocalizations {
       '“See China’s Iconic Great Wall From Above | National Geographic.” Youtube, uploaded by National Geographic.';
 
   @override
-  String get greatWallMapCaption =>
-      'Map showing location of Great Wall of China in northern China.';
+  String get greatWallMapCaption => 'Map showing location of Great Wall of China in northern China.';
 
   @override
   String get greatWallHistoryInfo1 =>
@@ -897,8 +886,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'The Inca Bridge, an Inca grass rope bridge, across the Urubamba River in the Pongo de Mainique, provided a secret entrance for the Inca army. Another Inca bridge was built to the west of Machu Picchu, the tree-trunk bridge, at a location where a gap occurs in the cliff that measures 20 feet (6 m).';
 
   @override
-  String get machuPicchu1438ce =>
-      'Speculated to be built and occupied by Inca ruler Pachacuti Inca Yupanqui.';
+  String get machuPicchu1438ce => 'Speculated to be built and occupied by Inca ruler Pachacuti Inca Yupanqui.';
 
   @override
   String get machuPicchu1572ce =>
@@ -970,8 +958,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get petraPullQuote2Author => 'Edward Dawson';
 
   @override
-  String get petraCallout1 =>
-      'They were particularly skillful in harvesting rainwater, agriculture and stone carving.';
+  String get petraCallout1 => 'They were particularly skillful in harvesting rainwater, agriculture and stone carving.';
 
   @override
   String get petraCallout2 =>
@@ -1015,8 +1002,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get petra106bce => 'Became part of the Roman province Arabia';
 
   @override
-  String get petra551ce =>
-      'After being damaged by earthquakes, habitation of the city all but ceased.';
+  String get petra551ce => 'After being damaged by earthquakes, habitation of the city all but ceased.';
 
   @override
   String get petra1812ce => 'Rediscovered by the Swiss traveler Johann Ludwig Burckhardt.';
@@ -1068,8 +1054,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pyramidsGizaPullQuote1Bottom => 'Until the Advent of Modern Skyscrapers';
 
   @override
-  String get pyramidsGizaPullQuote2 =>
-      'From the heights of these pyramids, forty centuries look down on us.';
+  String get pyramidsGizaPullQuote2 => 'From the heights of these pyramids, forty centuries look down on us.';
 
   @override
   String get pyramidsGizaPullQuote2Author => 'Napoleon Bonaparte';
@@ -1087,8 +1072,7 @@ class AppLocalizationsEn extends AppLocalizations {
       '“The Great Pyramids of Giza | Egypt’s Ancient Mysteries | National Geographic UK.” Youtube, uploaded by National Geographic UK.';
 
   @override
-  String get pyramidsGizaMapCaption =>
-      'Map showing location of Giza Pyramids in Greater Cairo, Egypt.';
+  String get pyramidsGizaMapCaption => 'Map showing location of Giza Pyramids in Greater Cairo, Egypt.';
 
   @override
   String get pyramidsGizaHistoryInfo1 =>
@@ -1227,12 +1211,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The Taj Mahal is built on a parcel of land to the south of the walled city of Agra. Shah Jahan presented Maharaja Jai Singh with a large palace in the center of Agra in exchange for the land.';
 
   @override
-  String get tajMahal1631ce =>
-      'Built by Mughal Emperor Shah Jahān to immortalize his deceased wife.';
+  String get tajMahal1631ce => 'Built by Mughal Emperor Shah Jahān to immortalize his deceased wife.';
 
   @override
-  String get tajMahal1647ce =>
-      'Construction completed. The project involved over 20,000 workers and spanned 42 acres.';
+  String get tajMahal1647ce => 'Construction completed. The project involved over 20,000 workers and spanned 42 acres.';
 
   @override
   String get tajMahal1658ce =>
@@ -1247,8 +1229,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'To protect the structure from Sikh militants and some Hindu nationalist groups, night viewing was banned to tourists. This ban would last 20 years.';
 
   @override
-  String get tajMahal1998ce =>
-      'Restoration and research program put into action to help preserve the monument.';
+  String get tajMahal1998ce => 'Restoration and research program put into action to help preserve the monument.';
 
   @override
   String get tajMahalCollectible1Title => 'Dagger with Scabbard';
@@ -1341,8 +1322,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get timelineEvent800ce => 'Gunpowder is invented in China';
 
   @override
-  String get timelineEvent1001ce =>
-      'Leif Erikson settles during the winter in present-day eastern Canada';
+  String get timelineEvent1001ce => 'Leif Erikson settles during the winter in present-day eastern Canada';
 
   @override
   String get timelineEvent1077ce => 'The Construction of the Tower of London begins';
@@ -1357,8 +1337,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get timelineEvent1227ce => 'Death of Genghis Khan (65)';
 
   @override
-  String get timelineEvent1337ce =>
-      'The Hundred Years\' War begins as England and France struggle for dominance.';
+  String get timelineEvent1337ce => 'The Hundred Years\' War begins as England and France struggle for dominance.';
 
   @override
   String get timelineEvent1347ce =>
@@ -1380,8 +1359,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get timelineEvent1763ce => 'Development of the Watt steam engine';
 
   @override
-  String get timelineEvent1783ce =>
-      'End of the American War of Independence from the British Empire';
+  String get timelineEvent1783ce => 'End of the American War of Independence from the British Empire';
 
   @override
   String get timelineEvent1789ce => 'The French Revolution begins';

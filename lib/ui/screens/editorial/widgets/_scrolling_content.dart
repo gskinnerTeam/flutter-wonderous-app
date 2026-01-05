@@ -353,11 +353,9 @@ class RenderSliverBackgroundColor extends RenderProxySliver {
   @override
   void paint(PaintingContext context, Offset offset) {
     if (child != null && child!.geometry!.visible) {
-      final SliverPhysicalParentData childParentData =
-          child!.parentData! as SliverPhysicalParentData;
+      final SliverPhysicalParentData childParentData = child!.parentData! as SliverPhysicalParentData;
       final Rect childRect =
-          offset + childParentData.paintOffset &
-          Size(constraints.crossAxisExtent, child!.geometry!.paintExtent);
+          offset + childParentData.paintOffset & Size(constraints.crossAxisExtent, child!.geometry!.paintExtent);
       context.canvas.drawRect(
         childRect,
         Paint()

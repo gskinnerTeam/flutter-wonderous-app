@@ -24,8 +24,7 @@ class AnimatedClouds extends StatefulWidget with GetItStatefulWidgetMixin {
   State<AnimatedClouds> createState() => _AnimatedCloudsState();
 }
 
-class _AnimatedCloudsState extends State<AnimatedClouds>
-    with SingleTickerProviderStateMixin, GetItStateMixin {
+class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProviderStateMixin, GetItStateMixin {
   late List<_Cloud> _clouds = [];
   List<_Cloud> _oldClouds = [];
   late final AnimationController _anim = AnimationController(vsync: this, duration: 1500.animateMs);
