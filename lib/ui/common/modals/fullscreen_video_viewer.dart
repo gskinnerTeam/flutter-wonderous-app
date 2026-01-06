@@ -13,9 +13,11 @@ class FullscreenVideoViewer extends StatefulWidget {
 }
 
 class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
-  late final _controller = YoutubePlayerController.fromVideoId(
-    videoId: widget.id,
-    params: const YoutubePlayerParams(),
+  late final _controller = YoutubePlayerController(
+    params: const YoutubePlayerParams(
+      origin: 'https://www.youtube-nocookie.com',
+      enableCaption: true
+    ),
   );
 
   bool get _enableVideo => PlatformInfo.isMobile;
@@ -24,6 +26,7 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
   void initState() {
     super.initState();
     appLogic.supportedOrientationsOverride = [Axis.horizontal, Axis.vertical];
+    _controller.cueVideoByUrl(mediaContentUrl: 'https://www.youtube.com/v/${widget.id}');
     RawKeyboard.instance.addListener(_handleKeyDown);
   }
 
