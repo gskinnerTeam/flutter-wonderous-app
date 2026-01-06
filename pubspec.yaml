@@ -54,7 +54,7 @@ dependencies:
   unsplash_client: ^3.0.0
   url_launcher: ^6.1.14
   webview_flutter: ^4.0.2
-  youtube_player_iframe: ^5.1.2
+  youtube_player_iframe: ^5.2.2
 
 dev_dependencies:
   icons_launcher: ^3.0.0
