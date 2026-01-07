@@ -77,6 +77,7 @@ class _InfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool shortWidth = context.widthPx < 550;
     return ExcludeSemantics(
       excluding: value.isEmpty,
       child: MergeSemantics(
@@ -85,14 +86,14 @@ class _InfoRow extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
-                flex: 40,
+                flex: shortWidth ? 50 : 40,
                 child: Text(
                   label.toUpperCase(),
                   style: $styles.text.titleFont.copyWith(color: $styles.colors.accent2),
                 ),
               ),
               Expanded(
-                flex: 60,
+                flex: shortWidth ? 50 : 60,
                 child: Text(
                   value.isEmpty ? '--' : value,
                   style: $styles.text.body.copyWith(color: $styles.colors.offWhite),
