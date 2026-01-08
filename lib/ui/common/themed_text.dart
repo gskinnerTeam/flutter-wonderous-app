@@ -20,9 +20,9 @@ class LightText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => DefaultTextColor(
-        color: Colors.white,
-        child: child,
-      );
+    color: Colors.white,
+    child: child,
+  );
 }
 
 class DarkText extends StatelessWidget {
@@ -31,7 +31,7 @@ class DarkText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => DefaultTextColor(
-        color: $styles.colors.black,
-        child: child,
-      );
+    color: $styles.colors.black,
+    child: child,
+  );
 }

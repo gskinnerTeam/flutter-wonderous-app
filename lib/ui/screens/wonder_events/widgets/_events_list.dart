@@ -21,8 +21,9 @@ class _EventsList extends StatefulWidget {
 }
 
 class _EventsListState extends State<_EventsList> {
-  late final ScrollController _scroller = ScrollController(initialScrollOffset: widget.initialScrollOffset)
-    ..addListener(() => widget.onScroll(_scroller.offset));
+  late final ScrollController _scroller = ScrollController(
+    initialScrollOffset: widget.initialScrollOffset,
+  )..addListener(() => widget.onScroll(_scroller.offset));
 
   @override
   void dispose() {
@@ -32,7 +33,9 @@ class _EventsListState extends State<_EventsList> {
 
   @override
   Widget build(BuildContext context) {
-    return FocusTraversalGroup(child: widget.blurOnScroll ? _buildScrollingListWithBlur() : _buildScrollingList());
+    return FocusTraversalGroup(
+      child: widget.blurOnScroll ? _buildScrollingListWithBlur() : _buildScrollingList(),
+    );
   }
 
   /// The actual content of the scrolling list
@@ -41,7 +44,10 @@ class _EventsListState extends State<_EventsList> {
       return Container(
         width: 35,
         height: 5,
-        decoration: BoxDecoration(color: $styles.colors.greyMedium, borderRadius: BorderRadius.circular(99)),
+        decoration: BoxDecoration(
+          color: $styles.colors.greyMedium,
+          borderRadius: BorderRadius.circular(99),
+        ),
       );
     }
 
@@ -49,11 +55,11 @@ class _EventsListState extends State<_EventsList> {
 
     final listItems = <Widget>[];
     for (var e in events.entries) {
-      final delay = 100.ms + (100 * listItems.length).ms;
+      final delay = (100 + (100 * listItems.length)).delayMs;
       listItems.add(
         TimelineEventCard(year: e.key, text: e.value, darkMode: true)
-            .animate()
-            .fade(delay: delay, duration: $styles.times.med * 1.5)
+            .maybeAnimate()
+            .fade(delay: delay, duration: $styles.times.slow)
             .slide(begin: Offset(0, 1), curve: Curves.easeOutBack),
       );
     }
@@ -64,7 +70,7 @@ class _EventsListState extends State<_EventsList> {
           key: PageStorageKey('eventsList'),
           child: Column(
             children: [
-              IgnorePointerWithSemantics(child: Gap(widget.topHeight)),
+              IgnorePointer(child: Gap(widget.topHeight)),
               Container(
                 decoration: BoxDecoration(
                   color: $styles.colors.black,
@@ -119,12 +125,13 @@ class _EventsListState extends State<_EventsList> {
           children: [
             if (showBackdrop) ...[
               AppBackdrop(
-                  strength: backdropAmt,
-                  child: IgnorePointerWithSemantics(
-                    child: Container(
-                      color: $styles.colors.black.withOpacity(backdropAmt * .6),
-                    ),
-                  )),
+                strength: backdropAmt,
+                child: IgnorePointer(
+                  child: Container(
+                    color: $styles.colors.black.withValues(alpha: backdropAmt * .6),
+                  ),
+                ),
+              ),
             ],
             child!,
           ],

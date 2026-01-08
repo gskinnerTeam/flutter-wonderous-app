@@ -101,7 +101,12 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
           AppHeader(title: $strings.artifactsSearchTitleBrowse, subtitle: wonder.title),
           Container(
             color: $styles.colors.black,
-            padding: EdgeInsets.fromLTRB($styles.insets.sm, $styles.insets.sm, $styles.insets.sm, 0),
+            padding: EdgeInsets.fromLTRB(
+              $styles.insets.sm,
+              $styles.insets.sm,
+              $styles.insets.sm,
+              0,
+            ),
             child: _SearchInput(onSubmit: _handleSearchSubmitted, wonder: wonder),
           ),
           Container(
@@ -123,21 +128,25 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
       ),
     );
 
-    return Stack(children: [
-      Positioned.fill(child: ColoredBox(color: $styles.colors.greyStrong, child: content)),
-      Positioned.fill(
-        child: RepaintBoundary(
-          child: ExpandingTimeRangeSelector(
-            wonder: wonder,
-            startYear: _startYear,
-            endYear: _endYear,
-            panelController: panelController,
-            vizController: vizController,
-            onChanged: _handleTimelineChanged,
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: ColoredBox(color: $styles.colors.greyStrong, child: content),
+        ),
+        Positioned.fill(
+          child: RepaintBoundary(
+            child: ExpandingTimeRangeSelector(
+              wonder: wonder,
+              startYear: _startYear,
+              endYear: _endYear,
+              panelController: panelController,
+              vizController: vizController,
+              onChanged: _handleTimelineChanged,
+            ),
           ),
         ),
-      ),
-    ]);
+      ],
+    );
   }
 
   Widget _buildStatusText(BuildContext context) {
@@ -154,25 +163,28 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
     }
     return MergeSemantics(
       child: StaticTextScale(
-        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Gap($styles.insets.sm),
-          Text(
-            $strings.artifactsSearchLabelFound(_searchResults.length, _filteredResults.length),
-            textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
-            style: statusStyle,
-          ),
-          AppBtn.basic(
-            semanticLabel: $strings.artifactsSearchButtonToggle,
-            onPressed: () => panelController.toggle(),
-            enableFeedback: false, // handled when panelController changes.
-            child: Text(
-              $strings.artifactsSearchSemanticTimeframe,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Gap($styles.insets.sm),
+            Text(
+              $strings.artifactsSearchLabelFound(_searchResults.length, _filteredResults.length),
               textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
-              style: statusStyle.copyWith(decoration: TextDecoration.underline),
+              style: statusStyle,
             ),
-          ),
-          Gap($styles.insets.sm),
-        ]),
+            AppBtn.basic(
+              semanticLabel: $strings.artifactsSearchButtonToggle,
+              onPressed: () => panelController.toggle(),
+              enableFeedback: false, // handled when panelController changes.
+              child: Text(
+                $strings.artifactsSearchSemanticTimeframe,
+                textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+                style: statusStyle.copyWith(decoration: TextDecoration.underline),
+              ),
+            ),
+            Gap($styles.insets.sm),
+          ],
+        ),
       ),
     );
   }
@@ -187,7 +199,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Spacer(),
-        Icon(icon, size: $styles.insets.xl, color: color.withOpacity(0.5)),
+        Icon(icon, size: $styles.insets.xl, color: color.withValues(alpha: 0.5)),
         Gap($styles.insets.xs),
         Text(text, style: $styles.text.body.copyWith(color: color)),
         Spacer(

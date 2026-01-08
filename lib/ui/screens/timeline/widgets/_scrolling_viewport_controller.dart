@@ -25,7 +25,7 @@ class _ScrollingViewportController extends ChangeNotifier {
         final data = wondersLogic.getData(w);
         final pos = calculateScrollPosFromYear(data.startYr);
         scroller.jumpTo(pos - 200);
-        scroller.animateTo(pos, duration: 1.35.seconds, curve: Curves.easeOutCubic);
+        scroller.animateTo(pos, duration: $styles.times.extraSlow, curve: Curves.easeOutCubic);
         scroller.addListener(_updateCurrentYear);
       }
     });
@@ -89,6 +89,10 @@ class _ScrollingViewportController extends ChangeNotifier {
 
   void _handleScaleUpdate(ScaleUpdateDetails details) {
     setZoom(details.scale * _zoomOnScaleStart);
+  }
+
+  void _handleScaleUpdateMouse(double scale) {
+    setZoom(Math.max(0, Math.min(1, _zoom + scale)));
   }
 
   /// Maintain current yr when the app changes size

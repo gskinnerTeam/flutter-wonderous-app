@@ -7,8 +7,9 @@ class StringUtils {
 
   static bool isNotEmpty(String? s) => !isEmpty(s);
 
-  static bool isLink(String str) =>
-      str.contains(RegExp(r'^(https?:\/\/)?([\w\d_-]+)\.([\w\d_\.-]+)\/?\??([^#\n\r]*)?#?([^\n\r]*)'));
+  static bool isLink(String str) => str.contains(
+    RegExp(r'^(https?:\/\/)?([\w\d_-]+)\.([\w\d_\.-]+)\/?\??([^#\n\r]*)?#?([^\n\r]*)'),
+  );
 
   static String truncateWithEllipsis(int cutoff, String myString) {
     return (myString.length <= cutoff) ? myString : '${myString.substring(0, cutoff)}...';
@@ -20,10 +21,17 @@ class StringUtils {
     return str;
   }
 
-  static Size measure(String text, TextStyle style, {int maxLines = 1, TextDirection direction = TextDirection.ltr}) {
-    final TextPainter textPainter =
-        TextPainter(text: TextSpan(text: text, style: style), maxLines: maxLines, textDirection: direction)
-          ..layout(minWidth: 0, maxWidth: double.infinity);
+  static Size measure(
+    String text,
+    TextStyle style, {
+    int maxLines = 1,
+    TextDirection direction = TextDirection.ltr,
+  }) {
+    final TextPainter textPainter = TextPainter(
+      text: TextSpan(text: text, style: style),
+      maxLines: maxLines,
+      textDirection: direction,
+    )..layout(minWidth: 0, maxWidth: double.infinity);
     return textPainter.size;
   }
 

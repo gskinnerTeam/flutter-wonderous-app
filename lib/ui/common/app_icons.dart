@@ -15,8 +15,13 @@ class AppIcon extends StatelessWidget {
       width: size,
       height: size,
       child: Center(
-        child: Image.asset(path,
-            width: size, height: size, color: color ?? $styles.colors.offWhite, filterQuality: FilterQuality.high),
+        child: Image.asset(
+          path,
+          width: size,
+          height: size,
+          color: color ?? $styles.colors.offWhite,
+          filterQuality: FilterQuality.high,
+        ),
       ),
     );
   }
@@ -42,5 +47,5 @@ enum AppIcons {
   timeline,
   wallpaper,
   zoom_in,
-  zoom_out
+  zoom_out,
 }

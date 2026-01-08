@@ -57,27 +57,34 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
       scheduleMicrotask(controller._handleResize);
     }
     _prevSize = context.mq.size;
-    return GestureDetector(
-      // Handle pinch to zoom
-      onScaleUpdate: controller._handleScaleUpdate,
-      onScaleStart: controller._handleScaleStart,
-      behavior: HitTestBehavior.translucent,
-      // Fade in entire view when first shown
-      child: Stack(
-        children: [
-          // Main content area
-          _buildScrollingArea(context).animate().fadeIn(),
+    return Listener(
+      onPointerSignal: (PointerSignalEvent e) {
+        if (HardwareKeyboard.instance.isControlPressed) {
+          controller._handleScaleUpdateMouse(((e as PointerScaleEvent).scale - 1) * 0.25);
+        }
+      },
+      child: GestureDetector(
+        // Handle pinch to zoom
+        onScaleUpdate: controller._handleScaleUpdate,
+        onScaleStart: controller._handleScaleStart,
+        behavior: HitTestBehavior.translucent,
+        // Fade in entire view when first shown
+        child: Stack(
+          children: [
+            // Main content area
+            _buildScrollingArea(context).maybeAnimate().fadeIn(),
 
-          // Dashed line with a year that changes as we scroll
-          IgnorePointerWithSemantics(
-            child: AnimatedBuilder(
-              animation: controller.scroller,
-              builder: (_, __) {
-                return _DashedDividerWithYear(controller.calculateYearFromScrollPos());
-              },
+            // Dashed line with a year that changes as we scroll
+            IgnorePointerKeepSemantics(
+              child: AnimatedBuilder(
+                animation: controller.scroller,
+                builder: (_, __) {
+                  return _DashedDividerWithYear(controller.calculateYearFromScrollPos());
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -157,10 +164,11 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
 
             /// Event Popups, rebuilds when [_currentEventMarker] changes
             ValueListenableBuilder<TimelineEvent?>(
-                valueListenable: _currentEventMarker,
-                builder: (_, data, __) {
-                  return _EventPopups(currentEvent: data);
-                })
+              valueListenable: _currentEventMarker,
+              builder: (_, data, __) {
+                return _EventPopups(currentEvent: data);
+              },
+            ),
           ],
         );
       },

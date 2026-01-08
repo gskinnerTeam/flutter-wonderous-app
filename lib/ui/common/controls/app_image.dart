@@ -64,20 +64,24 @@ class _AppImageState extends State<AppImage> {
       syncDuration: widget.syncDuration ?? 0.ms,
       loadingBuilder: (_, value, ___) {
         if (!widget.distractor && !widget.progress) return SizedBox();
-        return Center(child: AppLoadingIndicator(value: widget.progress ? value : null, color: widget.color));
+        return Center(
+          child: AppLoadingIndicator(value: widget.progress ? value : null, color: widget.color),
+        );
       },
       errorBuilder: (_, __) => Container(
         padding: EdgeInsets.all($styles.insets.xs),
         alignment: Alignment.center,
-        child: LayoutBuilder(builder: (_, constraints) {
-          double size = min(constraints.biggest.width, constraints.biggest.height);
-          if (size < 16) return SizedBox();
-          return Icon(
-            Icons.image_not_supported_outlined,
-            color: $styles.colors.white.withOpacity(0.1),
-            size: min(size, $styles.insets.lg),
-          );
-        }),
+        child: LayoutBuilder(
+          builder: (_, constraints) {
+            double size = min(constraints.biggest.width, constraints.biggest.height);
+            if (size < 16) return SizedBox();
+            return Icon(
+              Icons.image_not_supported_outlined,
+              color: $styles.colors.white.withValues(alpha: 0.1),
+              size: min(size, $styles.insets.lg),
+            );
+          },
+        ),
       ),
     );
   }

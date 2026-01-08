@@ -21,7 +21,7 @@ class AppBackdrop extends StatelessWidget {
         child: child ?? SizedBox.expand(),
       );
     }
-    final fill = Container(color: $styles.colors.black.withOpacity(.8 * strength));
+    final fill = Container(color: $styles.colors.black.withValues(alpha: .8 * strength));
     return child == null
         ? fill
         : Stack(

@@ -2,7 +2,13 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/unsplash_photo_data.dart';
 
 class UnsplashPhoto extends StatelessWidget {
-  const UnsplashPhoto(this.id, {super.key, this.fit = BoxFit.cover, required this.size, this.showCredits = false});
+  const UnsplashPhoto(
+    this.id, {
+    super.key,
+    this.fit = BoxFit.cover,
+    required this.size,
+    this.showCredits = false,
+  });
   final String id;
   final BoxFit fit;
   final UnsplashPhotoSize size;

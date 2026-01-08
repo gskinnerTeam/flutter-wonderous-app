@@ -2,7 +2,12 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
 
 class SimpleCheckbox extends StatelessWidget {
-  const SimpleCheckbox({super.key, required this.active, required this.onToggled, required this.label});
+  const SimpleCheckbox({
+    super.key,
+    required this.active,
+    required this.onToggled,
+    required this.label,
+  });
   final bool active;
   final String label;
   final Function(bool? onToggle) onToggled;
@@ -19,15 +24,18 @@ class SimpleCheckbox extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular($styles.corners.sm)),
           ),
           child: Checkbox(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular($styles.corners.sm))),
-              value: active,
-              visualDensity: VisualDensity(horizontal: 0.5, vertical: 0.5),
-              checkColor: $styles.colors.black.withOpacity(0.75),
-              activeColor: $styles.colors.white.withOpacity(0.75),
-              onChanged: (bool? active) {
-                AppHaptics.mediumImpact();
-                onToggled.call(active);
-              }),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular($styles.corners.sm)),
+            ),
+            value: active,
+            visualDensity: VisualDensity(horizontal: 0.5, vertical: 0.5),
+            checkColor: $styles.colors.black.withValues(alpha: 0.75),
+            activeColor: $styles.colors.white.withValues(alpha: 0.75),
+            onChanged: (bool? active) {
+              AppHaptics.mediumImpact();
+              onToggled.call(active);
+            },
+          ),
         ),
         Gap($styles.insets.xs),
         Text(label, style: $styles.text.body.copyWith(color: $styles.colors.offWhite)),

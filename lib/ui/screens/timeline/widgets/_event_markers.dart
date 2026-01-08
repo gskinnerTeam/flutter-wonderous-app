@@ -3,7 +3,12 @@ part of '../timeline_screen.dart';
 /// A vertically aligned stack of dots that represent global events
 /// The event closest to the [selectedYr] param will be visible selected
 class _EventMarkers extends StatefulWidget {
-  const _EventMarkers(this.selectedYr, {super.key, required this.onEventChanged, required this.onMarkerPressed});
+  const _EventMarkers(
+    this.selectedYr, {
+    super.key,
+    required this.onEventChanged,
+    required this.onMarkerPressed,
+  });
 
   final void Function(TimelineEvent? event) onEventChanged;
   final void Function(TimelineEvent event) onMarkerPressed;
@@ -54,45 +59,47 @@ class _EventMarkersState extends State<_EventMarkers> {
 
   @override
   Widget build(BuildContext context) {
-    return IgnorePointerWithSemantics(
-      child: LayoutBuilder(builder: (_, constraints) {
-        /// Figure out which event is "selected"
-        _updateSelectedEvent(constraints.maxHeight);
+    return IgnorePointerKeepSemantics(
+      child: LayoutBuilder(
+        builder: (_, constraints) {
+          /// Figure out which event is "selected"
+          _updateSelectedEvent(constraints.maxHeight);
 
-        /// Create a marker for each event
-        List<Widget> markers = timelineLogic.events.map((event) {
-          double offsetY = _calculateOffsetY(event.year);
-          return _EventMarker(
-            offsetY,
-            event: event,
-            isSelected: event == selectedEvent,
-            onPressed: widget.onMarkerPressed,
-          );
-        }).toList();
+          /// Create a marker for each event
+          List<Widget> markers = timelineLogic.events.map((event) {
+            double offsetY = _calculateOffsetY(event.year);
+            return _EventMarker(
+              offsetY,
+              event: event,
+              isSelected: event == selectedEvent,
+              onPressed: widget.onMarkerPressed,
+            );
+          }).toList();
 
-        /// Stack of fractionally positioned markers
-        return FocusTraversalGroup(
-          policy: WidgetOrderTraversalPolicy(),
-          child: Container(
-            alignment: Alignment.topLeft,
-            padding: EdgeInsets.only(left: 75),
-            child: SizedBox(
-              width: 20,
-              child: Stack(
-                children: [
-                  ...markers,
-                  if (showReferenceMarkers) ..._buildReferenceMarkers(),
-                ],
+          /// Stack of fractionally positioned markers
+          return FocusTraversalGroup(
+            policy: WidgetOrderTraversalPolicy(),
+            child: Container(
+              alignment: Alignment.topLeft,
+              padding: EdgeInsets.only(left: 75),
+              child: SizedBox(
+                width: 20,
+                child: Stack(
+                  children: [
+                    ...markers,
+                    if (showReferenceMarkers) ..._buildReferenceMarkers(),
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 
   List<Widget> _buildReferenceMarkers() {
-    final marker = Container(color: Colors.red.withOpacity(.4), width: 10, height: 10);
+    final marker = Container(color: Colors.red.withValues(alpha: .4), width: 10, height: 10);
     return [
       Align(
         alignment: Alignment.topCenter,
@@ -148,7 +155,10 @@ class _EventMarker extends StatelessWidget {
                   color: $styles.colors.accent1,
                   boxShadow: [
                     BoxShadow(
-                        color: $styles.colors.accent1.withOpacity(isSelected ? .5 : 0), spreadRadius: 3, blurRadius: 3),
+                      color: $styles.colors.accent1.withValues(alpha: isSelected ? .5 : 0),
+                      spreadRadius: 3,
+                      blurRadius: 3,
+                    ),
                   ],
                 ),
               ),

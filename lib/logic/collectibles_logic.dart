@@ -97,7 +97,11 @@ class CollectiblesLogic with ThrottledSaveLoadMixin {
     scheduleSave();
   }
 
-  Future<void> _updateNativeHomeWidgetData({String title = '', String id = '', String imageUrl = ''}) async {
+  Future<void> _updateNativeHomeWidgetData({
+    String title = '',
+    String id = '',
+    String imageUrl = '',
+  }) async {
     if (!_nativeWidget.isSupported) return;
     // Save title
     await _nativeWidget.save<String>('lastDiscoveredTitle', title);

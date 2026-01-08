@@ -44,7 +44,7 @@ class PageNotFound extends StatelessWidget {
                   style: $styles.text.btn.copyWith(fontSize: 12),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

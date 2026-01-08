@@ -9,7 +9,10 @@ class _TopIllustration extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        WonderIllustration(type, config: WonderIllustrationConfig.bg(enableAnims: false, shortMode: true)),
+        WonderIllustration(
+          type,
+          config: WonderIllustrationConfig.bg(enableAnims: false, shortMode: true),
+        ),
         Transform.translate(
           // Small bump down to make sure we cover the edge between the editorial page and the sky.
           offset: fgOffset + Offset(0, 10),

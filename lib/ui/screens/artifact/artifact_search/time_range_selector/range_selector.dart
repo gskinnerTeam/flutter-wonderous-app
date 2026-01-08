@@ -75,51 +75,66 @@ class _RangeSelectorState extends State<RangeSelector> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (_, constraints) {
-      double dragWidth = constraints.maxWidth - RangeSelector.handleWidth * 2;
+    return LayoutBuilder(
+      builder: (_, constraints) {
+        double dragWidth = constraints.maxWidth - RangeSelector.handleWidth * 2;
 
-      return Row(
-        children: [
-          Gap(dragWidth * (_start - _min) / _delta),
-          _getHandle(dragWidth: dragWidth),
-          Expanded(
-            child: _getDragDetector(
-              onUpdate: _handleMidDrag,
-              dragWidth: dragWidth,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: $styles.colors.offWhite.withOpacity(0),
-                  border: Border.symmetric(
-                    horizontal: BorderSide(color: $styles.colors.white.withOpacity(0.75), width: 2),
+        return Row(
+          children: [
+            Gap(dragWidth * (_start - _min) / _delta),
+            _getHandle(dragWidth: dragWidth),
+            Expanded(
+              child: _getDragDetector(
+                onUpdate: _handleMidDrag,
+                dragWidth: dragWidth,
+                child: Semantics(
+                  label: $strings.bottomScrubberSemanticTimeline,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: $styles.colors.offWhite.withValues(alpha: 0),
+                      border: Border.symmetric(
+                        horizontal: BorderSide(
+                          color: $styles.colors.white.withValues(alpha: 0.75),
+                          width: 2,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          _getHandle(dragWidth: dragWidth, isRight: true),
-          Gap(dragWidth * (1 - (_end - _min) / _delta)),
-        ],
-      );
-    });
+            _getHandle(dragWidth: dragWidth, isRight: true),
+            Gap(dragWidth * (1 - (_end - _min) / _delta)),
+          ],
+        );
+      },
+    );
   }
 
   Widget _getHandle({required double dragWidth, bool isRight = false}) {
     return _getDragDetector(
       onUpdate: isRight ? _handleRightDrag : _handleLeftDrag,
       dragWidth: dragWidth,
-      child: Transform.scale(
-        scaleX: isRight ? 1 : -1,
-        child: Container(
-          alignment: Alignment.center,
-          width: RangeSelector.handleWidth,
-          decoration: BoxDecoration(
-            color: $styles.colors.white.withOpacity(0.75),
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular($styles.corners.md),
-              bottomRight: Radius.circular($styles.corners.md),
+      child: Semantics(
+        label: $strings.rangeSelector,
+        child: Transform.scale(
+          scaleX: isRight ? 1 : -1,
+          child: Container(
+            alignment: Alignment.center,
+            width: RangeSelector.handleWidth,
+            decoration: BoxDecoration(
+              color: $styles.colors.white.withValues(alpha: 0.75),
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular($styles.corners.md),
+                bottomRight: Radius.circular($styles.corners.md),
+              ),
+            ),
+            child: Icon(
+              Icons.chevron_right,
+              color: $styles.colors.greyStrong,
+              size: RangeSelector.handleWidth,
             ),
           ),
-          child: Icon(Icons.chevron_right, color: $styles.colors.greyStrong, size: RangeSelector.handleWidth),
         ),
       ),
     );

@@ -2,13 +2,14 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/measurable_widget.dart';
 
 class OpeningCard extends StatefulWidget {
-  const OpeningCard(
-      {super.key,
-      required this.closedBuilder,
-      required this.openBuilder,
-      required this.isOpen,
-      this.background,
-      this.padding});
+  const OpeningCard({
+    super.key,
+    required this.closedBuilder,
+    required this.openBuilder,
+    required this.isOpen,
+    this.background,
+    this.padding,
+  });
 
   final Widget Function(BuildContext) closedBuilder;
   final Widget Function(BuildContext) openBuilder;

@@ -53,7 +53,7 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
 
   void _animateToPage(int page) {
     if (page >= 0 || page < widget.urls.length) {
-      _controller.animateToPage(page, duration: 300.ms, curve: Curves.easeOut);
+      _controller.animateToPage(page, duration: $styles.times.fast, curve: Curves.easeOut);
     }
   }
 
@@ -110,14 +110,14 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
                             flipIcon: true,
                             onPressed: page == widget.urls.length - 1 ? null : () => _animateToPage(page + 1),
                             semanticLabel: $strings.semanticsNext(''),
-                          )
+                          ),
                         ],
                       );
                     },
                   ),
                 ),
-              )
-            }
+              ),
+            },
           ],
         ),
       ),

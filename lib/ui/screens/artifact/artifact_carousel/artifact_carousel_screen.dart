@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/animate_utils.dart';
 import 'package:wonders/logic/data/highlight_data.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_header.dart';
@@ -13,7 +14,11 @@ part 'widgets/_bottom_text_content.dart';
 part 'widgets/_collapsing_carousel_item.dart';
 
 class ArtifactCarouselScreen extends StatefulWidget {
-  const ArtifactCarouselScreen({super.key, required this.type, this.contentPadding = EdgeInsets.zero});
+  const ArtifactCarouselScreen({
+    super.key,
+    required this.type,
+    this.contentPadding = EdgeInsets.zero,
+  });
   final WonderType type;
   final EdgeInsets contentPadding;
 
@@ -54,7 +59,8 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
   @override
   Widget build(BuildContext context) {
     bool shortMode = context.heightPx <= 800;
-    final double bottomHeight = context.heightPx / 2.75; // Prev 340, dynamic seems to work better
+    bool overlapMode = context.heightPx <= 450;
+    final double bottomHeight = context.heightPx / (overlapMode ? 2 : 2.75); // Prev 340, dynamic seems to work better
     // Allow objects to become wider as the screen becomes tall, this allows
     // them to grow taller as well, filling the available space better.
     double itemHeight = (context.heightPx - 200 - bottomHeight).clamp(250, 400);
@@ -78,67 +84,70 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
         /// Blurred Bg
         Positioned.fill(
           child: ValueListenableBuilder<int>(
-              valueListenable: _currentArtifactIndex,
-              builder: (_, value, __) {
-                return _BlurredImageBg(url: _artifacts[value].imageUrl);
-              }),
+            valueListenable: _currentArtifactIndex,
+            builder: (_, value, __) {
+              return _BlurredImageBg(url: _artifacts[value].imageUrl);
+            },
+          ),
         ),
 
         Padding(
-            padding: widget.contentPadding,
-            child: Stack(
-              children: [
-                /// BgCircle
-                _buildBgCircle(bottomHeight),
+          padding: widget.contentPadding,
+          child: Stack(
+            children: [
+              /// BgCircle
+              _buildBgCircle(bottomHeight),
 
-                /// Carousel Items
-                PageView.builder(
-                  controller: _pageController,
-                  itemBuilder: (_, index) {
-                    final wrappedIndex = index % pages.length;
-                    final child = pages[wrappedIndex];
-                    return ValueListenableBuilder<double>(
-                      valueListenable: _currentPage,
-                      builder: (_, value, __) {
-                        final int offset = (value.round() - index).abs();
-                        return _CollapsingCarouselItem(
-                          width: itemWidth,
-                          indexOffset: min(3, offset),
-                          onPressed: () => _handleArtifactTap(index),
-                          title: _artifacts[wrappedIndex].title,
-                          child: child,
-                        );
-                      },
-                    );
-                  },
-                ),
+              /// Carousel Items
+              PageView.builder(
+                controller: _pageController,
+                itemBuilder: (_, index) {
+                  final wrappedIndex = index % pages.length;
+                  final child = pages[wrappedIndex];
+                  return ValueListenableBuilder<double>(
+                    valueListenable: _currentPage,
+                    builder: (_, value, __) {
+                      final int offset = (value.round() - index).abs();
+                      return _CollapsingCarouselItem(
+                        width: itemWidth,
+                        indexOffset: min(3, offset),
+                        onPressed: () => _handleArtifactTap(index),
+                        title: _artifacts[wrappedIndex].title,
+                        child: child,
+                      );
+                    },
+                  );
+                },
+              ),
 
-                /// Bottom Text
-                BottomCenter(
-                  child: ValueListenableBuilder<int>(
-                    valueListenable: _currentArtifactIndex,
-                    builder: (_, value, __) => _BottomTextContent(
-                      artifact: _artifacts[value],
-                      height: bottomHeight,
-                      shortMode: shortMode,
-                      state: this,
-                    ),
+              /// Bottom Text
+              BottomCenter(
+                child: ValueListenableBuilder<int>(
+                  valueListenable: _currentArtifactIndex,
+                  builder: (_, value, __) => _BottomTextContent(
+                    artifact: _artifacts[value],
+                    height: bottomHeight,
+                    shortMode: shortMode,
+                    overlapMode: overlapMode,
+                    state: this,
                   ),
                 ),
+              ),
 
-                /// Header
-                AppHeader(
-                  title: $strings.artifactsTitleArtifacts,
-                  showBackBtn: false,
-                  isTransparent: true,
-                  trailing: (context) => CircleBtn(
-                    semanticLabel: $strings.artifactsButtonBrowse,
-                    onPressed: _handleSearchTap,
-                    child: AppIcon(AppIcons.search),
-                  ),
+              /// Header
+              AppHeader(
+                title: $strings.artifactsTitleArtifacts,
+                showBackBtn: false,
+                isTransparent: true,
+                trailing: (context) => CircleBtn(
+                  semanticLabel: $strings.artifactsButtonBrowse,
+                  onPressed: _handleSearchTap,
+                  child: AppIcon(AppIcons.search),
                 ),
-              ],
-            ))
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }
@@ -152,7 +161,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
         offset: Offset(0, size / 2),
         child: Container(
           decoration: BoxDecoration(
-            color: $styles.colors.offWhite.withOpacity(0.8),
+            color: $styles.colors.offWhite.withValues(alpha: 0.8),
             borderRadius: BorderRadius.vertical(top: Radius.circular(size)),
           ),
         ),

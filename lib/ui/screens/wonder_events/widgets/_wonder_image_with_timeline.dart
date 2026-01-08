@@ -8,8 +8,16 @@ class _WonderImageWithTimeline extends StatelessWidget {
   Color _fixLuminance(Color color, [double luminance = 0.2]) {
     double d = luminance - color.computeLuminance();
     if (d <= 0) return color;
-    int r = color.red, g = color.green, b = color.blue;
-    return Color.fromARGB(255, (r + (255 - r) * d).toInt(), (g + (255 - g) * d).toInt(), (b + (255 - b) * d).toInt());
+
+    int r = (color.r * 255).toInt();
+    int g = (color.g * 255).toInt();
+    int b = (color.b * 255).toInt();
+    return Color.fromARGB(
+      255,
+      (r + (255 - r) * d).toInt(),
+      (g + (255 - g) * d).toInt(),
+      (b + (255 - b) * d).toInt(),
+    );
   }
 
   @override
@@ -24,17 +32,19 @@ class _WonderImageWithTimeline extends StatelessWidget {
             children: [
               /// Text and image in a stack
               Expanded(
-                child: Stack(children: [
-                  /// Image with fade on btm
-                  Center(
-                    child: _buildImageWithFade(context),
-                  ),
+                child: Stack(
+                  children: [
+                    /// Image with fade on btm
+                    Center(
+                      child: _buildImageWithFade(context),
+                    ),
 
-                  /// Title text
-                  BottomCenter(
-                    child: WonderTitleText(data, enableHero: false),
-                  )
-                ]),
+                    /// Title text
+                    BottomCenter(
+                      child: WonderTitleText(data, enableHero: false),
+                    ),
+                  ],
+                ),
               ),
 
               /// Bottom timeline
@@ -42,21 +52,22 @@ class _WonderImageWithTimeline extends StatelessWidget {
                 child: SizedBox(
                   height: 50,
                   child: WondersTimelineBuilder(
-                      selectedWonders: [data.type],
-                      timelineBuilder: (_, data, isSelected) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            color: isSelected ? _fixLuminance(data.type.fgColor) : Colors.transparent,
-                            border: isSelected
-                                ? Border.all(color: Colors.transparent)
-                                : Border.all(color: $styles.colors.greyMedium),
-                            borderRadius: BorderRadius.circular($styles.corners.md),
-                          ),
-                        );
-                      }),
+                    selectedWonders: [data.type],
+                    timelineBuilder: (_, data, isSelected) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          color: isSelected ? _fixLuminance(data.type.fgColor) : Colors.transparent,
+                          border: isSelected
+                              ? Border.all(color: Colors.transparent)
+                              : Border.all(color: $styles.colors.greyMedium),
+                          borderRadius: BorderRadius.circular($styles.corners.md),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
-              _buildEraTextRow(context)
+              _buildEraTextRow(context),
             ],
           ),
         ),
@@ -85,7 +96,7 @@ class _WonderImageWithTimeline extends StatelessWidget {
             child: BottomCenter(
               child: ListOverscollGradient(bottomUp: true, size: 200),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -108,14 +119,17 @@ class _WonderImageWithTimeline extends StatelessWidget {
         _buildDot(context),
         Text(StringUtils.getEra(data.startYr), style: textStyle),
       ],
-    ).animate().fade(delay: $styles.times.pageTransition);
+    ).maybeAnimate().fade(delay: $styles.times.pageTransition);
   }
 
   Widget _buildDot(BuildContext context) {
     return Container(
       width: 4,
       height: 4,
-      decoration: BoxDecoration(color: $styles.colors.accent2, borderRadius: BorderRadius.circular(99)),
+      decoration: BoxDecoration(
+        color: $styles.colors.accent2,
+        borderRadius: BorderRadius.circular(99),
+      ),
     );
   }
 }

@@ -12,7 +12,7 @@ class _ArtifactImageBtn extends StatelessWidget {
           child: Transform.translate(
             offset: Offset(0, $styles.insets.xl - 1),
             child: VtGradient(
-              [$styles.colors.greyStrong, $styles.colors.greyStrong.withOpacity(0)],
+              [$styles.colors.greyStrong, $styles.colors.greyStrong.withValues(alpha: 0)],
               const [0, 1],
               height: $styles.insets.xl,
             ),
@@ -44,6 +44,9 @@ class _ArtifactImageBtn extends StatelessWidget {
   }
 
   void _handleImagePressed(BuildContext context) {
-    appLogic.showFullscreenDialogRoute(context, FullscreenUrlImgViewer(urls: [data.selfHostedImageUrl]));
+    appLogic.showFullscreenDialogRoute(
+      context,
+      FullscreenUrlImgViewer(urls: [data.selfHostedImageUrl]),
+    );
   }
 }

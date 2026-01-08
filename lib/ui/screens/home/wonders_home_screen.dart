@@ -1,13 +1,16 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/animate_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/controls/app_page_indicator.dart';
+import 'package:wonders/ui/common/controls/trackpad_listener.dart';
 import 'package:wonders/ui/common/gradient_container.dart';
 import 'package:wonders/ui/common/ignore_pointer.dart';
 import 'package:wonders/ui/common/previous_next_navigation.dart';
 import 'package:wonders/ui/common/themed_text.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
+import 'package:wonders/ui/common/utils/duration_utils.dart';
 import 'package:wonders/ui/screens/home_menu/home_menu.dart';
 import 'package:wonders/ui/wonder_illustrations/common/animated_clouds.dart';
 import 'package:wonders/ui/wonder_illustrations/common/wonder_illustration.dart';
@@ -48,7 +51,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   WonderData get currentWonder => _wonders[_wonderIndex];
 
-  late final _VerticalSwipeController _swipeController = _VerticalSwipeController(this, _showDetailsPage);
+  late final _VerticalSwipeController _swipeController = _VerticalSwipeController(
+    this,
+    _showDetailsPage,
+  );
 
   bool _isSelected(WonderType t) => t == currentWonder.type;
 
@@ -103,7 +109,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     final pos = ((_pageController.page ?? 0) / _numWonders).floor() * _numWonders;
     final newIndex = pos + index;
     if (animate == true) {
-      _pageController.animateToPage(newIndex, duration: $styles.times.med, curve: Curves.easeOutCubic);
+      _pageController.animateToPage(
+        newIndex,
+        duration: $styles.times.med,
+        curve: Curves.easeOutCubic,
+      );
     } else {
       _pageController.jumpToPage(newIndex);
     }
@@ -112,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   void _showDetailsPage() async {
     _swipeOverride = _swipeController.swipeAmt.value;
     context.go(ScreenPaths.wonderDetails(currentWonder.type, tabIndex: 0));
-    await Future.delayed(100.ms);
+    await Future.delayed(100.delayMs);
     _swipeOverride = null;
     _fadeInOnNextBuild = true;
   }
@@ -122,12 +132,18 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       for (var a in _fadeAnims) {
         a.value = 0;
       }
-      await Future.delayed(300.ms);
+      await Future.delayed(300.delayMs);
       for (var a in _fadeAnims) {
         a.forward();
       }
     } on Exception catch (e) {
       debugPrint(e.toString());
+    }
+  }
+
+  void _handleTrackpadScroll(Offset direction) {
+    if (direction.dy < 0) {
+      _showDetailsPage();
     }
   }
 
@@ -138,29 +154,35 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       _fadeInOnNextBuild = false;
     }
 
-    return _swipeController.wrapGestureDetector(Container(
-      color: $styles.colors.black,
-      child: PreviousNextNavigation(
-        listenToMouseWheel: false,
-        onPreviousPressed: () => _handlePrevNext(-1),
-        onNextPressed: () => _handlePrevNext(1),
-        child: Stack(
-          children: [
-            /// Background
-            ..._buildBgAndClouds(),
+    return _swipeController.wrapGestureDetector(
+      Container(
+        color: $styles.colors.black,
+        child: TrackpadListener(
+          scrollSensitivity: 60,
+          onScroll: _handleTrackpadScroll,
+          child: PreviousNextNavigation(
+            listenToMouseWheel: false,
+            onPreviousPressed: () => _handlePrevNext(-1),
+            onNextPressed: () => _handlePrevNext(1),
+            child: Stack(
+              children: [
+                /// Background
+                ..._buildBgAndClouds(),
 
-            /// Wonders Illustrations (main content)
-            _buildMgPageView(),
+                /// Wonders Illustrations (main content)
+                _buildMgPageView(),
 
-            /// Foreground illustrations and gradients
-            _buildFgAndGradients(),
+                /// Foreground illustrations and gradients
+                _buildFgAndGradients(),
 
-            /// Controls that float on top of the various illustrations
-            _buildFloatingUi(),
-          ],
-        ).animate().fadeIn(),
+                /// Controls that float on top of the various illustrations
+                _buildFloatingUi(),
+              ],
+            ).maybeAnimate().fadeIn(),
+          ),
+        ),
       ),
-    ));
+    );
   }
 
   @override
@@ -204,165 +226,183 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         widthFactor: 1,
         heightFactor: .5,
         child: AnimatedClouds(wonderType: currentWonder.type, opacity: 1),
-      )
+      ),
     ];
   }
 
   Widget _buildFgAndGradients() {
     Widget buildSwipeableBgGradient(Color fgColor) {
-      return _swipeController.buildListener(builder: (swipeAmt, isPointerDown, _) {
-        return IgnorePointerWithSemantics(
-          child: FractionallySizedBox(
-            heightFactor: .6,
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    fgColor.withOpacity(0),
-                    fgColor.withOpacity(.5 + fgColor.opacity * .25 + (isPointerDown ? .05 : 0) + swipeAmt * .20),
+      return _swipeController.buildListener(
+        builder: (swipeAmt, isPointerDown, _) {
+          return IgnorePointerAndSemantics(
+            child: FractionallySizedBox(
+              heightFactor: .6,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      fgColor.withValues(alpha: 0),
+                      fgColor.withValues(
+                        alpha: .5 + fgColor.a * .25 + (isPointerDown ? .05 : 0) + swipeAmt * .20,
+                      ),
+                    ],
+                    stops: const [0, 1],
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    }
+
+    final gradientColor = currentWonder.type.bgColor;
+    return Stack(
+      children: [
+        /// Foreground gradient-1, gets darker when swiping up
+        BottomCenter(
+          child: buildSwipeableBgGradient(gradientColor.withValues(alpha: .65)),
+        ),
+
+        /// Foreground decorators
+        ..._wonders.map((e) {
+          return _swipeController.buildListener(
+            builder: (swipeAmt, _, child) {
+              final config = WonderIllustrationConfig.fg(
+                isShowing: _isSelected(e.type),
+                zoom: .4 * (_swipeOverride ?? swipeAmt),
+              );
+              return Animate(
+                effects: const [FadeEffect()],
+                onPlay: _handleFadeAnimInit,
+                child: IgnorePointerAndSemantics(child: WonderIllustration(e.type, config: config)),
+              );
+            },
+          );
+        }),
+
+        /// Foreground gradient-2, gets darker when swiping up
+        BottomCenter(
+          child: buildSwipeableBgGradient(gradientColor),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFloatingUi() {
+    return Stack(
+      children: [
+        /// Floating controls / UI
+        AnimatedSwitcher(
+          duration: $styles.times.fast,
+          child: AnimatedOpacity(
+            opacity: _isMenuOpen ? 0 : 1,
+            duration: $styles.times.med,
+            child: RepaintBoundary(
+              child: OverflowBox(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(width: double.infinity),
+                    const Spacer(),
+
+                    /// Title Content
+                    LightText(
+                      child: IgnorePointerKeepSemantics(
+                        child: Transform.translate(
+                          offset: Offset(0, 30),
+                          child: Column(
+                            children: [
+                              Semantics(
+                                liveRegion: true,
+                                button: true,
+                                header: true,
+                                onIncrease: () => _setPageIndex(_wonderIndex + 1),
+                                onDecrease: () => _setPageIndex(_wonderIndex - 1),
+                                onTap: () => _showDetailsPage(),
+                                // Hide the title when the menu is open for visual polish
+                                child: WonderTitleText(currentWonder, enableShadows: true),
+                              ),
+                              Gap($styles.insets.md),
+                              AppPageIndicator(
+                                count: _numWonders,
+                                controller: _pageController,
+                                color: $styles.colors.white,
+                                dotSize: 8,
+                                onDotPressed: _handlePageIndicatorDotPressed,
+                                semanticPageTitle: $strings.homeSemanticWonder,
+                              ),
+                              Gap($styles.insets.md),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    /// Animated arrow and background
+                    /// Wrap in a container that is full-width to make it easier to find for screen readers
+                    Container(
+                      width: double.infinity,
+                      alignment: Alignment.center,
+
+                      /// Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
+                      key: ValueKey(_wonderIndex),
+                      child: Stack(
+                        children: [
+                          /// Expanding rounded rect that grows in height as user swipes up
+                          Positioned.fill(
+                            child: _swipeController.buildListener(
+                              builder: (swipeAmt, _, child) {
+                                double heightFactor = .5 + .5 * (1 + swipeAmt * 4);
+                                return FractionallySizedBox(
+                                  alignment: Alignment.bottomCenter,
+                                  heightFactor: heightFactor,
+                                  child: Opacity(opacity: swipeAmt * .5, child: child),
+                                );
+                              },
+                              child: VtGradient(
+                                [
+                                  $styles.colors.white.withValues(alpha: 0),
+                                  $styles.colors.white.withValues(alpha: 1),
+                                ],
+                                const [.3, 1],
+                                borderRadius: BorderRadius.circular(99),
+                              ),
+                            ),
+                          ),
+
+                          /// Arrow Btn that fades in and out
+                          _AnimatedArrowButton(
+                            onTap: _showDetailsPage,
+                            semanticTitle: currentWonder.title,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Gap($styles.insets.md),
                   ],
-                  stops: const [0, 1],
                 ),
               ),
             ),
           ),
-        );
-      });
-    }
+        ),
 
-    final gradientColor = currentWonder.type.bgColor;
-    return Stack(children: [
-      /// Foreground gradient-1, gets darker when swiping up
-      BottomCenter(
-        child: buildSwipeableBgGradient(gradientColor.withOpacity(.65)),
-      ),
-
-      /// Foreground decorators
-      ..._wonders.map((e) {
-        return _swipeController.buildListener(builder: (swipeAmt, _, child) {
-          final config = WonderIllustrationConfig.fg(
-            isShowing: _isSelected(e.type),
-            zoom: .4 * (_swipeOverride ?? swipeAmt),
-          );
-          return Animate(
-              effects: const [FadeEffect()],
-              onPlay: _handleFadeAnimInit,
-              child: IgnorePointerWithSemantics(child: WonderIllustration(e.type, config: config)));
-        });
-      }),
-
-      /// Foreground gradient-2, gets darker when swiping up
-      BottomCenter(
-        child: buildSwipeableBgGradient(gradientColor),
-      ),
-    ]);
-  }
-
-  Widget _buildFloatingUi() {
-    return Stack(children: [
-      /// Floating controls / UI
-      AnimatedSwitcher(
-        duration: $styles.times.fast,
-        child: AnimatedOpacity(
-          opacity: _isMenuOpen ? 0 : 1,
-          duration: $styles.times.med,
-          child: RepaintBoundary(
-            child: OverflowBox(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(width: double.infinity),
-                  const Spacer(),
-
-                  /// Title Content
-                  LightText(
-                    child: IgnorePointerWithSemantics(
-                      child: Transform.translate(
-                        offset: Offset(0, 30),
-                        child: Column(
-                          children: [
-                            Semantics(
-                              liveRegion: true,
-                              button: true,
-                              header: true,
-                              onIncrease: () => _setPageIndex(_wonderIndex + 1),
-                              onDecrease: () => _setPageIndex(_wonderIndex - 1),
-                              onTap: () => _showDetailsPage(),
-                              // Hide the title when the menu is open for visual polish
-                              child: WonderTitleText(currentWonder, enableShadows: true),
-                            ),
-                            Gap($styles.insets.md),
-                            AppPageIndicator(
-                              count: _numWonders,
-                              controller: _pageController,
-                              color: $styles.colors.white,
-                              dotSize: 8,
-                              onDotPressed: _handlePageIndicatorDotPressed,
-                              semanticPageTitle: $strings.homeSemanticWonder,
-                            ),
-                            Gap($styles.insets.md),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  /// Animated arrow and background
-                  /// Wrap in a container that is full-width to make it easier to find for screen readers
-                  Container(
-                    width: double.infinity,
-                    alignment: Alignment.center,
-
-                    /// Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
-                    key: ValueKey(_wonderIndex),
-                    child: Stack(
-                      children: [
-                        /// Expanding rounded rect that grows in height as user swipes up
-                        Positioned.fill(
-                            child: _swipeController.buildListener(
-                          builder: (swipeAmt, _, child) {
-                            double heightFactor = .5 + .5 * (1 + swipeAmt * 4);
-                            return FractionallySizedBox(
-                              alignment: Alignment.bottomCenter,
-                              heightFactor: heightFactor,
-                              child: Opacity(opacity: swipeAmt * .5, child: child),
-                            );
-                          },
-                          child: VtGradient(
-                            [$styles.colors.white.withOpacity(0), $styles.colors.white.withOpacity(1)],
-                            const [.3, 1],
-                            borderRadius: BorderRadius.circular(99),
-                          ),
-                        )),
-
-                        /// Arrow Btn that fades in and out
-                        _AnimatedArrowButton(onTap: _showDetailsPage, semanticTitle: currentWonder.title),
-                      ],
-                    ),
-                  ),
-                  Gap($styles.insets.md),
-                ],
-              ),
+        /// Menu Btn
+        TopLeft(
+          child: AnimatedOpacity(
+            duration: $styles.times.fast,
+            opacity: _isMenuOpen ? 0 : 1,
+            child: AppHeader(
+              backIcon: AppIcons.menu,
+              backBtnSemantics: $strings.homeSemanticOpenMain,
+              onBack: _handleOpenMenuPressed,
+              isTransparent: true,
             ),
           ),
         ),
-      ),
-
-      /// Menu Btn
-      TopLeft(
-        child: AnimatedOpacity(
-          duration: $styles.times.fast,
-          opacity: _isMenuOpen ? 0 : 1,
-          child: AppHeader(
-            backIcon: AppIcons.menu,
-            backBtnSemantics: $strings.homeSemanticOpenMain,
-            onBack: _handleOpenMenuPressed,
-            isTransparent: true,
-          ),
-        ),
-      ),
-    ]);
+      ],
+    );
   }
 }

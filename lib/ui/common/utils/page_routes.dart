@@ -3,7 +3,11 @@ import 'package:flutter/cupertino.dart';
 class PageRoutes {
   static const Duration kDefaultDuration = Duration(milliseconds: 300);
 
-  static Route<T> dialog<T>(Widget child, {Duration duration = kDefaultDuration, bool opaque = false}) {
+  static Route<T> dialog<T>(
+    Widget child, {
+    Duration duration = kDefaultDuration,
+    bool opaque = false,
+  }) {
     // Use cupertino routes for all dialogs so we get the 'swipe right to go back' behavior
     if (opaque) {
       return CupertinoPageRoute(builder: (_) => child);

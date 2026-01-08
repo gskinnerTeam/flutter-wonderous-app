@@ -36,7 +36,12 @@ class WonderTitleText extends StatelessWidget {
         text = StringUtils.capitalize(text);
       }
       return TextSpan(
-        text: '$text${addLinebreak ? '\n' : addSpace ? ' ' : ''}',
+        text:
+            '$text${addLinebreak
+                ? '\n'
+                : addSpace
+                ? ' '
+                : ''}',
         style: useSmallText ? textStyle.copyWith(fontSize: 20 * $styles.scale) : textStyle,
       );
     }

@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:math' as Math;
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/animate_utils.dart';
 import 'package:wonders/logic/common/debouncer.dart';
 import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/logic/data/timeline_data.dart';
@@ -15,6 +18,7 @@ import 'package:wonders/ui/common/ignore_pointer.dart';
 import 'package:wonders/ui/common/list_gradient.dart';
 import 'package:wonders/ui/common/timeline_event_card.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
+import 'package:wonders/ui/common/utils/duration_utils.dart';
 import 'package:wonders/ui/common/wonders_timeline_builder.dart';
 
 part 'widgets/_animated_era_text.dart';
@@ -45,56 +49,58 @@ class _TimelineScreenState extends State<TimelineScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (_, constraints) {
-      // Determine min and max size of the timeline based on the size available to this widget
-      const double scrubberSize = 80;
-      const double minSize = 1200;
-      const double maxSize = 5500;
-      return Container(
-        color: $styles.colors.black,
-        child: Padding(
-          padding: EdgeInsets.only(bottom: 0),
-          child: Column(
-            children: [
-              AppHeader(title: $strings.timelineTitleGlobalTimeline),
+    return LayoutBuilder(
+      builder: (_, constraints) {
+        // Determine min and max size of the timeline based on the size available to this widget
+        const double scrubberSize = 80;
+        const double minSize = 1200;
+        const double maxSize = 5500;
+        return Container(
+          color: $styles.colors.black,
+          child: Padding(
+            padding: EdgeInsets.only(bottom: 0),
+            child: Column(
+              children: [
+                AppHeader(title: $strings.timelineTitleGlobalTimeline),
 
-              /// Vertically scrolling timeline, manages a ScrollController.
-              Expanded(
-                child: _ScrollingViewport(
-                  scroller: _scroller,
-                  minSize: minSize,
-                  maxSize: maxSize,
-                  selectedWonder: widget.type,
-                  onYearChanged: _handleViewportYearChanged,
-                ),
-              ),
-
-              /// Era Text (classical, modern etc)
-              ValueListenableBuilder<int>(
-                valueListenable: _year,
-                builder: (_, value, __) => _AnimatedEraText(value),
-              ),
-              Gap($styles.insets.xs),
-
-              /// Mini Horizontal timeline, reacts to the state of the larger scrolling timeline,
-              /// and changes the timelines scroll position on Hz drag
-              CenteredBox(
-                width: $styles.sizes.maxContentWidth1,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: $styles.insets.lg),
-                  child: _BottomScrubber(
-                    _scroller,
-                    size: scrubberSize,
-                    timelineMinSize: minSize,
+                /// Vertically scrolling timeline, manages a ScrollController.
+                Expanded(
+                  child: _ScrollingViewport(
+                    scroller: _scroller,
+                    minSize: minSize,
+                    maxSize: maxSize,
                     selectedWonder: widget.type,
+                    onYearChanged: _handleViewportYearChanged,
                   ),
                 ),
-              ),
-              Gap($styles.insets.lg),
-            ],
+
+                /// Era Text (classical, modern etc)
+                ValueListenableBuilder<int>(
+                  valueListenable: _year,
+                  builder: (_, value, __) => _AnimatedEraText(value),
+                ),
+                Gap($styles.insets.xs),
+
+                /// Mini Horizontal timeline, reacts to the state of the larger scrolling timeline,
+                /// and changes the timelines scroll position on Hz drag
+                CenteredBox(
+                  width: $styles.sizes.maxContentWidth1,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: $styles.insets.lg),
+                    child: _BottomScrubber(
+                      _scroller,
+                      size: scrubberSize,
+                      timelineMinSize: minSize,
+                      selectedWonder: widget.type,
+                    ),
+                  ),
+                ),
+                Gap($styles.insets.lg),
+              ],
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }

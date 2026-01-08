@@ -9,7 +9,7 @@ class _EventPopups extends StatefulWidget {
 }
 
 class _EventPopupsState extends State<_EventPopups> {
-  final _debouncer = Debouncer(500.ms);
+  final _debouncer = Debouncer(500.animateMs);
   TimelineEvent? _eventToShow;
 
   @override
@@ -35,7 +35,7 @@ class _EventPopupsState extends State<_EventPopups> {
     final evt = _eventToShow;
     return TopCenter(
       child: ClipRect(
-        child: IgnorePointerWithSemantics(
+        child: IgnorePointerKeepSemantics(
           child: AnimatedSwitcher(
             duration: $styles.times.fast,
             child: evt == null

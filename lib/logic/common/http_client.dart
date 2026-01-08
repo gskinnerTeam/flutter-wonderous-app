@@ -23,12 +23,14 @@ class HttpClient {
     });
   }
 
-  static Future<HttpResponse> send(String url,
-      {Map<String, dynamic>? urlParams,
-      MethodType method = MethodType.get,
-      Map<String, String>? headers,
-      dynamic body,
-      Encoding? encoding}) async {
+  static Future<HttpResponse> send(
+    String url, {
+    Map<String, dynamic>? urlParams,
+    MethodType method = MethodType.get,
+    Map<String, String>? headers,
+    dynamic body,
+    Encoding? encoding,
+  }) async {
     HttpResponse? response;
 
     if (urlParams != null) {

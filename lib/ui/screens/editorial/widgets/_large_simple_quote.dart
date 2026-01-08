@@ -18,7 +18,7 @@ class _LargeSimpleQuote extends StatelessWidget {
               child: Text(
                 '“',
                 style: $styles.text.quote1.copyWith(
-                  color: $styles.colors.accent1,
+                  color: $styles.colors.accent3,
                   fontSize: 90 * $styles.scale,
                   height: .7,
                 ),
@@ -32,7 +32,7 @@ class _LargeSimpleQuote extends StatelessWidget {
             Gap($styles.insets.md),
             Text(
               '- $author',
-              style: $styles.text.quote2Sub.copyWith(color: $styles.colors.accent1),
+              style: $styles.text.quote2Sub.copyWith(color: $styles.colors.accent3),
             ),
           ],
         ),

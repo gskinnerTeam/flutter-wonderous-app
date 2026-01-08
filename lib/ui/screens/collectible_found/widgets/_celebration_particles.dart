@@ -27,7 +27,9 @@ class _CelebrationParticles extends StatelessWidget {
             final double v = d * 0.08;
 
             // calculate an opacity multiplier based on time elapsed (ie. fade out):
-            controller.opacity = Curves.easeOutExpo.transform(max(0, 1 - elapsed.inMilliseconds / fadeMs));
+            controller.opacity = Curves.easeOutExpo.transform(
+              max(0, 1 - elapsed.inMilliseconds / fadeMs),
+            );
             if (controller.opacity == 0) return;
 
             // add new particles, reducing the number added each tick:
@@ -35,14 +37,16 @@ class _CelebrationParticles extends StatelessWidget {
             particleCount -= addCount;
             while (--addCount > 0) {
               final double angle = rnd.getRad();
-              particles.add(Particle(
-                // adding random variation makes it more visually interesting:
-                x: cos(angle) * d * rnd(0.8, 1),
-                y: sin(angle) * d * rnd(0.8, 1),
-                vx: cos(angle) * v * rnd(0.5, 1.5),
-                vy: sin(angle) * v * rnd(0.5, 1.5),
-                color: color.withOpacity(rnd(0.5, 1)),
-              ));
+              particles.add(
+                Particle(
+                  // adding random variation makes it more visually interesting:
+                  x: cos(angle) * d * rnd(0.8, 1),
+                  y: sin(angle) * d * rnd(0.8, 1),
+                  vx: cos(angle) * v * rnd(0.5, 1.5),
+                  vy: sin(angle) * v * rnd(0.5, 1.5),
+                  color: color.withValues(alpha: rnd(0.5, 1)),
+                ),
+              );
             }
 
             // update existing particles & remove old ones:

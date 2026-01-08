@@ -2,16 +2,17 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 
 class AppHeader extends StatelessWidget {
-  const AppHeader(
-      {super.key,
-      this.title,
-      this.subtitle,
-      this.showBackBtn = true,
-      this.isTransparent = false,
-      this.onBack,
-      this.trailing,
-      this.backIcon = AppIcons.prev,
-      this.backBtnSemantics});
+  const AppHeader({
+    super.key,
+    this.title,
+    this.subtitle,
+    this.showBackBtn = true,
+    this.isTransparent = false,
+    this.onBack,
+    this.trailing,
+    this.backIcon = AppIcons.prev,
+    this.backBtnSemantics,
+  });
   final String? title;
   final String? subtitle;
   final bool showBackBtn;
@@ -60,19 +61,21 @@ class AppHeader extends StatelessWidget {
               ),
               Positioned.fill(
                 child: Center(
-                  child: Row(children: [
-                    Gap($styles.insets.sm),
-                    if (showBackBtn)
-                      BackBtn(
-                        onPressed: onBack,
-                        icon: backIcon,
-                        semanticLabel: backBtnSemantics,
-                      ),
-                    Spacer(),
-                    if (trailing != null) trailing!.call(context),
-                    Gap($styles.insets.sm),
-                    //if (showBackBtn) Container(width: $styles.insets.lg * 2, alignment: Alignment.centerLeft, child: child),
-                  ]),
+                  child: Row(
+                    children: [
+                      Gap($styles.insets.sm),
+                      if (showBackBtn)
+                        BackBtn(
+                          onPressed: onBack,
+                          icon: backIcon,
+                          semanticLabel: backBtnSemantics,
+                        ),
+                      Spacer(),
+                      if (trailing != null) trailing!.call(context),
+                      Gap($styles.insets.sm),
+                      //if (showBackBtn) Container(width: $styles.insets.lg * 2, alignment: Alignment.centerLeft, child: child),
+                    ],
+                  ),
                 ),
               ),
             ],

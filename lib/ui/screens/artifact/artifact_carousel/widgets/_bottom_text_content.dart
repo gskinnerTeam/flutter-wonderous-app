@@ -1,17 +1,32 @@
 part of '../artifact_carousel_screen.dart';
 
 class _BottomTextContent extends StatelessWidget {
-  const _BottomTextContent(
-      {super.key, required this.artifact, required this.height, required this.state, required this.shortMode});
+  const _BottomTextContent({
+    super.key,
+    required this.artifact,
+    required this.height,
+    required this.state,
+    required this.shortMode,
+    required this.overlapMode,
+  });
 
   final HighlightData artifact;
   final double height;
   final _ArtifactScreenState state;
   final bool shortMode;
+  final bool overlapMode;
   int get _currentPage => state._currentPage.value.round();
 
   @override
   Widget build(BuildContext context) {
+    Widget textContent = Text(
+      artifact.title,
+      overflow: TextOverflow.ellipsis,
+      style: $styles.text.h2.copyWith(color: $styles.colors.black, height: 1.2, fontSize: 32),
+      textAlign: TextAlign.center,
+      maxLines: 2,
+    );
+
     return Container(
       width: $styles.sizes.maxContentWidth2,
       height: height,
@@ -26,7 +41,7 @@ class _BottomTextContent extends StatelessWidget {
               Gap($styles.insets.md),
               Column(
                 children: [
-                  IgnorePointerWithSemantics(
+                  IgnorePointerKeepSemantics(
                     child: Semantics(
                       button: true,
                       onIncrease: () => state._handleArtifactTap(_currentPage + 1),
@@ -40,13 +55,16 @@ class _BottomTextContent extends StatelessWidget {
                           SizedBox(width: double.infinity),
                           // Stop text from scaling to make layout a little easier, it's already quite large
                           StaticTextScale(
-                            child: Text(
-                              artifact.title,
-                              overflow: TextOverflow.ellipsis,
-                              style: $styles.text.h2.copyWith(color: $styles.colors.black, height: 1.2, fontSize: 32),
-                              textAlign: TextAlign.center,
-                              maxLines: 2,
-                            ),
+                            child: overlapMode
+                                ? Container(
+                                    padding: EdgeInsets.all($styles.insets.xxs),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular($styles.corners.md),
+                                      color: $styles.colors.white.withAlpha(130),
+                                    ),
+                                    child: textContent,
+                                  )
+                                : textContent,
                           ),
                           if (!shortMode) ...[
                             Gap($styles.insets.xxs),
@@ -55,9 +73,9 @@ class _BottomTextContent extends StatelessWidget {
                               style: $styles.text.body,
                               textAlign: TextAlign.center,
                             ),
-                          ]
+                          ],
                         ],
-                      ).animate(key: ValueKey(artifact.artifactId)).fadeIn(),
+                      ).maybeAnimate(key: ValueKey(artifact.artifactId)).fadeIn(),
                     ),
                   ),
                 ],
@@ -70,13 +88,13 @@ class _BottomTextContent extends StatelessWidget {
                   controller: state._pageController!,
                   semanticPageTitle: $strings.artifactsSemanticArtifact,
                 ),
-              Gap($styles.insets.md),
+              if (!shortMode) Gap($styles.insets.md),
               AppBtn.from(
                 text: $strings.artifactsButtonBrowse,
                 expand: true,
                 onPressed: state._handleSearchTap,
               ),
-              Gap($styles.insets.lg),
+              if (!shortMode) Gap($styles.insets.lg) else Gap($styles.insets.md),
             ],
           ),
         ],

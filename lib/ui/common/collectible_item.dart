@@ -1,8 +1,10 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/collectibles_logic.dart';
+import 'package:wonders/logic/common/animate_utils.dart';
 import 'package:wonders/logic/data/collectible_data.dart';
 import 'package:wonders/ui/common/opening_card.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
+import 'package:wonders/ui/common/utils/duration_utils.dart';
 import 'package:wonders/ui/screens/collectible_found/collectible_found_screen.dart';
 
 class CollectibleItem extends StatelessWidget with GetItMixin {
@@ -44,21 +46,26 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
             semanticLabel: $strings.collectibleItemSemanticCollectible,
             onPressed: () => _handleTap(context),
             enableFeedback: false,
-            child: Hero(
-              tag: 'collectible_icon_${collectible.id}',
-              child: Image(
-                image: collectible.icon,
-                width: size,
-                height: size,
-                fit: BoxFit.contain,
-              ),
-            )
-                .animate(onPlay: (controller) => controller.repeat())
-                .shimmer(delay: 4000.ms, duration: $styles.times.med * 3)
-                .shake(curve: Curves.easeInOutCubic, hz: 4)
-                .scale(begin: Offset(1.0, 1.0), end: Offset(1.1, 1.1), duration: $styles.times.med)
-                .then(delay: $styles.times.med)
-                .scale(begin: Offset(1.0, 1.0), end: Offset(1 / 1.1, 1 / 1.1)),
+            child:
+                Hero(
+                      tag: 'collectible_icon_${collectible.id}',
+                      child: Image(
+                        image: collectible.icon,
+                        width: size,
+                        height: size,
+                        fit: BoxFit.contain,
+                      ),
+                    )
+                    .maybeAnimate(onPlay: (controller) => controller.repeat())
+                    .shimmer(delay: 4000.delayMs, duration: $styles.times.med * 3)
+                    .shake(curve: Curves.easeInOutCubic, hz: 4)
+                    .scale(
+                      begin: Offset(1.0, 1.0),
+                      end: Offset(1.1, 1.1),
+                      duration: $styles.times.med,
+                    )
+                    .then(delay: $styles.times.med)
+                    .scale(begin: Offset(1.0, 1.0), end: Offset(1 / 1.1, 1 / 1.1)),
           ),
         ),
       ),

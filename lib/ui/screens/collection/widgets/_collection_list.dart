@@ -70,7 +70,7 @@ class _CollectionListState extends State<_CollectionList> with GetItStateMixin {
           fromId: widget.fromId,
           data: d,
         );
-      })
+      }),
     ];
     // Scroll view adapts to scroll vertically or horizontally
     return Listener(
@@ -102,6 +102,10 @@ class _CollectionListState extends State<_CollectionList> with GetItStateMixin {
       isSecondary: true,
       expand: true,
     );
-    return AnimatedOpacity(opacity: widget.onReset == null ? 0.25 : 1, duration: $styles.times.fast, child: btn);
+    return AnimatedOpacity(
+      opacity: widget.onReset == null ? 0.25 : 1,
+      duration: $styles.times.fast,
+      child: btn,
+    );
   }
 }
