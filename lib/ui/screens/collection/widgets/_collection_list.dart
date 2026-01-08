@@ -47,6 +47,13 @@ class _CollectionListState extends State<_CollectionList> with GetItStateMixin {
     }
   }
 
+  void _handleMouseWheel(PointerSignalEvent event) {
+    if (event is PointerScrollEvent && event.kind == PointerDeviceKind.mouse && _vtMode.value == false) {
+      final offset = event.scrollDelta.dy;
+      scrollController.jumpTo(scrollController.offset + offset);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     watchX((CollectiblesLogic o) => o.statesById);
@@ -66,20 +73,23 @@ class _CollectionListState extends State<_CollectionList> with GetItStateMixin {
       }),
     ];
     // Scroll view adapts to scroll vertically or horizontally
-    return SingleChildScrollView(
-      controller: scrollController,
-      scrollDirection: _vtMode.value ? Axis.vertical : Axis.horizontal,
-      child: Padding(
-        padding: EdgeInsets.all($styles.insets.lg),
-        child: SeparatedFlex(
-          direction: _vtMode.value ? Axis.vertical : Axis.horizontal,
-          mainAxisSize: MainAxisSize.min,
-          separatorBuilder: () => Gap($styles.insets.lg),
-          children: [
-            ...collections,
-            Gap($styles.insets.sm),
-            if (kDebugMode) _buildResetBtn(context),
-          ],
+    return Listener(
+      onPointerSignal: _handleMouseWheel,
+      child: SingleChildScrollView(
+        controller: scrollController,
+        scrollDirection: _vtMode.value ? Axis.vertical : Axis.horizontal,
+        child: Padding(
+          padding: EdgeInsets.all($styles.insets.lg),
+          child: SeparatedFlex(
+            direction: _vtMode.value ? Axis.vertical : Axis.horizontal,
+            mainAxisSize: MainAxisSize.min,
+            separatorBuilder: () => Gap($styles.insets.lg),
+            children: [
+              ...collections,
+              Gap($styles.insets.sm),
+              if (kDebugMode) _buildResetBtn(context),
+            ],
+          ),
         ),
       ),
     );
