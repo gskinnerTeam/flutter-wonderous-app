@@ -103,13 +103,14 @@ class _InfoRow extends StatelessWidget {
       child: MergeSemantics(
         child: Padding(
           padding: EdgeInsets.only(bottom: $styles.insets.sm),
-          child: shortMode ? 
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: infoChildren
-            ) : Row( children: infoChildren ),
+          child: shortMode
+              ? Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: infoChildren,
+                )
+              : Row(children: infoChildren),
         ),
       ),
     );

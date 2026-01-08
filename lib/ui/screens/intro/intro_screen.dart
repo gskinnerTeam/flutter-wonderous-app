@@ -293,7 +293,11 @@ class _Page extends StatelessWidget {
         child: Column(
           children: [
             Spacer(),
-            Gap(smallMode ? (_IntroScreenState._imageSizeSmall + _IntroScreenState._logoHeightSmall) : (_IntroScreenState._imageSize + _IntroScreenState._logoHeight)),
+            Gap(
+              smallMode
+                  ? (_IntroScreenState._imageSizeSmall + _IntroScreenState._logoHeightSmall)
+                  : (_IntroScreenState._imageSize + _IntroScreenState._logoHeight),
+            ),
             SizedBox(
               height: smallMode ? _IntroScreenState._textHeightSmall : _IntroScreenState._textHeight,
               width: smallMode ? 300 : 400,

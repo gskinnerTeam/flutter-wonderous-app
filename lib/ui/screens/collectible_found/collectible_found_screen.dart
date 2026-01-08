@@ -68,6 +68,7 @@ class CollectibleFoundScreen extends StatelessWidget {
 
   Widget _buildDetail(BuildContext context) {
     Duration t = $styles.times.fast;
+    bool smallMode = context.heightPx < 550;
     return Stack(
       key: ValueKey('detail'),
       children: [
@@ -89,7 +90,7 @@ class CollectibleFoundScreen extends StatelessWidget {
             width: $styles.sizes.maxContentWidth3,
             child: Column(
               children: [
-                Gap($styles.insets.lg),
+                Gap(smallMode ? $styles.insets.sm : $styles.insets.lg),
                 Spacer(),
                 SizedBox(
                   height: context.heightPx * .35,
@@ -100,13 +101,13 @@ class CollectibleFoundScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Gap($styles.insets.lg),
+                Gap(smallMode ? $styles.insets.sm : $styles.insets.lg),
                 _buildRibbon(context),
                 Gap($styles.insets.sm),
                 _buildTitle(
                   context,
                   collectible.title,
-                  $styles.text.h2,
+                  smallMode ? $styles.text.h2.copyWith(fontSize: 26) : $styles.text.h2,
                   $styles.colors.offWhite,
                   t * 1.5,
                 ),
@@ -119,9 +120,9 @@ class CollectibleFoundScreen extends StatelessWidget {
                   t * 2,
                 ),
                 Spacer(),
-                Gap($styles.insets.lg),
+                Gap(smallMode ? $styles.insets.sm : $styles.insets.lg),
                 _buildCollectionButton(context),
-                Gap($styles.insets.lg),
+                Gap(smallMode ? $styles.insets.sm : $styles.insets.lg),
                 Spacer(),
               ],
             ),
