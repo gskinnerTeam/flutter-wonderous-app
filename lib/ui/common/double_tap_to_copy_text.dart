@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:wonders/common_libs.dart';
 
 class DoubleTapToCopyText extends StatelessWidget {
@@ -19,9 +20,9 @@ class DoubleTapToCopyText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return kIsWeb ? GestureDetector(
       onDoubleTap: () => onCopyText(context, text),
       child: child,
-    );
+    ) : child;
   }
 }
