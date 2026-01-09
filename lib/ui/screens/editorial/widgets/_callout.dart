@@ -7,19 +7,22 @@ class _Callout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Focus(
-      child: IntrinsicHeight(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(color: $styles.colors.accent1, width: 1),
-            Gap($styles.insets.sm),
-            Expanded(
-              child: Text(
-                text,
-                style: $styles.text.callout,
+      child: GestureDetector(
+        onDoubleTap: () => GlobalInteractions.onCopyText(context, text),
+        child: IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(color: $styles.colors.accent1, width: 1),
+              Gap($styles.insets.sm),
+              Expanded(
+                child: Text(
+                  text,
+                  style: $styles.text.callout,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
