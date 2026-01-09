@@ -7,8 +7,8 @@ class _Callout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Focus(
-      child: GestureDetector(
-        onDoubleTap: () => GlobalInteractions.onCopyText(context, text),
+      child: DoubleTapToCopyText(
+        text: text,
         child: IntrinsicHeight(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,

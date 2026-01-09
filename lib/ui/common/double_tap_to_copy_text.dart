@@ -1,6 +1,11 @@
 import 'package:wonders/common_libs.dart';
 
-class GlobalInteractions {
+class DoubleTapToCopyText extends StatelessWidget {
+  final String text;
+  final Widget child;
+
+  const DoubleTapToCopyText({super.key, required this.text, required this.child});
+
   static void onCopyText(BuildContext context, String text) {
     Clipboard.setData(ClipboardData(text: text));
     ScaffoldMessenger.of(context).showSnackBar(
@@ -9,6 +14,14 @@ class GlobalInteractions {
         content: Text($strings.scrollingContentCopiedToClipboard),
         duration: Duration(seconds: 2),
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onDoubleTap: () => onCopyText(context, text),
+      child: child,
     );
   }
 }

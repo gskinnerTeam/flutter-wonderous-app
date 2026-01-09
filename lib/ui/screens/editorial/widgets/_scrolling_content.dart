@@ -35,8 +35,8 @@ class _ScrollingContent extends StatelessWidget {
       return Focus(
         child: Semantics(
           label: value,
-          child: GestureDetector(
-            onDoubleTap: () => GlobalInteractions.onCopyText(context, value),
+          child: DoubleTapToCopyText(
+            text: value,
             child: ExcludeSemantics(
               child: skipCaps
                   ? Text(_fixNewlines(value), style: bodyStyle)

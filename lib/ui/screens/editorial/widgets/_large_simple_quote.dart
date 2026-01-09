@@ -8,8 +8,8 @@ class _LargeSimpleQuote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MergeSemantics(
-      child: GestureDetector(
-        onDoubleTap: () => GlobalInteractions.onCopyText(context, '$text  - $author'),
+      child: DoubleTapToCopyText(
+        text: '$text  - $author',
         child: CenteredBox(
           width: 300,
           padding: EdgeInsets.symmetric(horizontal: $styles.insets.lg, vertical: $styles.insets.xl),
