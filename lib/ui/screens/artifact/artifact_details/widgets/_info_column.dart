@@ -83,14 +83,14 @@ class _InfoRow extends StatelessWidget {
 
     List<Expanded> infoChildren = [
       Expanded(
-        flex: shortMode ? 50 : 40,
+        flex: shortMode ? 0 : 40,
         child: Text(
           label.toUpperCase(),
           style: $styles.text.titleFont.copyWith(color: $styles.colors.accent2),
         ),
       ),
       Expanded(
-        flex: shortMode ? 50 : 60,
+        flex: shortMode ? 0 : 60,
         child: Text(
           value.isEmpty ? '--' : value,
           style: $styles.text.body.copyWith(color: $styles.colors.offWhite),
@@ -105,7 +105,6 @@ class _InfoRow extends StatelessWidget {
           padding: EdgeInsets.only(bottom: $styles.insets.sm),
           child: shortMode
               ? Column(
-                  mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: infoChildren,
