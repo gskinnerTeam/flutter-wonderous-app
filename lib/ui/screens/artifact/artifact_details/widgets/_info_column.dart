@@ -6,12 +6,13 @@ class _InfoColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: $styles.insets.lg),
-      child: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: $styles.insets.lg),
         child: Focus(
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Gap($styles.insets.xl),
               if (data.culture.isNotEmpty) ...[
@@ -40,7 +41,8 @@ class _InfoColumn extends StatelessWidget {
               ),
               Gap($styles.insets.lg),
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   ...[
                         _InfoRow($strings.artifactDetailsLabelDate, data.date),
@@ -77,29 +79,37 @@ class _InfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool shortMode = context.widthPx < 800;
+
+    List<Expanded> infoChildren = [
+      Expanded(
+        flex: shortMode ? 0 : 40,
+        child: Text(
+          label.toUpperCase(),
+          style: $styles.text.titleFont.copyWith(color: $styles.colors.accent2),
+        ),
+      ),
+      Expanded(
+        flex: shortMode ? 0 : 60,
+        child: Text(
+          value.isEmpty ? '--' : value,
+          style: $styles.text.body.copyWith(color: $styles.colors.offWhite),
+        ),
+      ),
+    ];
+
     return ExcludeSemantics(
       excluding: value.isEmpty,
       child: MergeSemantics(
         child: Padding(
           padding: EdgeInsets.only(bottom: $styles.insets.sm),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 40,
-                child: Text(
-                  label.toUpperCase(),
-                  style: $styles.text.titleFont.copyWith(color: $styles.colors.accent2),
-                ),
-              ),
-              Expanded(
-                flex: 60,
-                child: Text(
-                  value.isEmpty ? '--' : value,
-                  style: $styles.text.body.copyWith(color: $styles.colors.offWhite),
-                ),
-              ),
-            ],
-          ),
+          child: shortMode
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: infoChildren,
+                )
+              : Row(children: infoChildren),
         ),
       ),
     );

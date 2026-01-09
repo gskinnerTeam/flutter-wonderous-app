@@ -20,8 +20,11 @@ class IntroScreen extends StatefulWidget {
 
 class _IntroScreenState extends State<IntroScreen> {
   static const double _imageSize = 250;
+  static const double _imageSizeSmall = 150;
   static const double _logoHeight = 126;
+  static const double _logoHeightSmall = 96;
   static const double _textHeight = 110;
+  static const double _textHeightSmall = 100;
   static const double _pageIndicatorHeight = 55;
 
   static List<_PageData> pageData = [];
@@ -73,6 +76,8 @@ class _IntroScreenState extends State<IntroScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool smallMode = context.heightPx < 550;
+
     // Set the page data, as strings may have changed based on locale
     pageData = [
       _PageData($strings.introTitleJourney, $strings.introDescriptionNavigate, 'camel', '1'),
@@ -130,7 +135,7 @@ class _IntroScreenState extends State<IntroScreen> {
                         Semantics(
                           header: true,
                           child: Container(
-                            height: _logoHeight,
+                            height: smallMode ? _logoHeightSmall : _logoHeight,
                             alignment: Alignment.center,
                             child: _WonderousLogo(),
                           ),
@@ -138,8 +143,8 @@ class _IntroScreenState extends State<IntroScreen> {
 
                         // masked image:
                         SizedBox(
-                          height: _imageSize,
-                          width: _imageSize,
+                          height: smallMode ? _imageSizeSmall : _imageSize,
+                          width: smallMode ? _imageSizeSmall : _imageSize,
                           child: ValueListenableBuilder<int>(
                             valueListenable: _currentPage,
                             builder: (_, value, __) {
@@ -157,7 +162,7 @@ class _IntroScreenState extends State<IntroScreen> {
                         ),
 
                         // placeholder gap for text:
-                        Gap(_IntroScreenState._textHeight),
+                        Gap(smallMode ? _IntroScreenState._textHeightSmall : _IntroScreenState._textHeight),
 
                         // page indicator:
                         Container(
@@ -279,6 +284,8 @@ class _Page extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool smallMode = context.heightPx < 550;
+
     return Semantics(
       liveRegion: true,
       child: Padding(
@@ -286,10 +293,14 @@ class _Page extends StatelessWidget {
         child: Column(
           children: [
             Spacer(),
-            Gap(_IntroScreenState._imageSize + _IntroScreenState._logoHeight),
+            Gap(
+              smallMode
+                  ? (_IntroScreenState._imageSizeSmall + _IntroScreenState._logoHeightSmall)
+                  : (_IntroScreenState._imageSize + _IntroScreenState._logoHeight),
+            ),
             SizedBox(
-              height: _IntroScreenState._textHeight,
-              width: 400,
+              height: smallMode ? _IntroScreenState._textHeightSmall : _IntroScreenState._textHeight,
+              width: smallMode ? 300 : 400,
               child: StaticTextScale(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
