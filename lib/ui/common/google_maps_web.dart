@@ -8,10 +8,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:web/web.dart' as web;
 
 class GoogleMapsWeb extends StatefulWidget {
-  const GoogleMapsWeb({super.key, required this.lat, required this.lng, required this.zoom});
+  const GoogleMapsWeb({super.key, required this.lat, required this.lng, this.zoom = 3, this.fullscreen = false});
   final double lat;
   final double lng;
   final double zoom;
+  final bool fullscreen;
 
   @override
   State<GoogleMapsWeb> createState() => _GoogleMapsWebState();
@@ -45,7 +46,14 @@ class _GoogleMapsWebState extends State<GoogleMapsWeb> {
     });
   }
 
-   void _initializeMap() {
+  @override
+  void dispose() {
+    _map = null;
+    _marker = null;
+    super.dispose();
+  }
+
+  void _initializeMap() {
     if (_map != null || !kIsWeb) {
       return;
     }
@@ -56,12 +64,12 @@ class _GoogleMapsWebState extends State<GoogleMapsWeb> {
         _mapElement,
         googleMaps.MapOptions(
           mapId: MarkerId('0').value,
+          mapTypeId: widget.fullscreen ? googleMaps.MapTypeId.HYBRID : googleMaps.MapTypeId.ROADMAP,
           center: center,
-          zoom: 3,
-          zoomControl: false,
-          mapTypeControl: false,
-          streetViewControl: false,
-          fullscreenControl: false,
+          zoom: widget.zoom,
+          zoomControl: widget.fullscreen,
+          mapTypeControl: widget.fullscreen,
+          streetViewControl: widget.fullscreen,
         ),
       );
 

@@ -20,7 +20,7 @@ class FullscreenMapsViewer extends StatelessWidget {
         SafeArea(
           top: false,
           child: kIsWeb ? 
-            GoogleMapsWeb(lat: data.lat, lng: data.lng, zoom: 17) : 
+            GoogleMapsWeb(lat: data.lat, lng: data.lng, zoom: 17, fullscreen: true) : 
             GoogleMap(
               mapType: MapType.hybrid,
               markers: {getMapsMarker(startPos.target)},

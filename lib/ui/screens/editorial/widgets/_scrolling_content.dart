@@ -267,7 +267,7 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
                       Positioned.fill(child: ColoredBox(color: Colors.transparent)),
                       IgnorePointer(
                         child: kIsWeb ? 
-                          GoogleMapsWeb(lat: widget.data.lat, lng: widget.data.lng, zoom: 3) : 
+                          GoogleMapsWeb(lat: widget.data.lat, lng: widget.data.lng) : 
                           FutureBuilder<void>(
                             future: _loadGoogleMap(),
                             builder: (context, snapshot) {
