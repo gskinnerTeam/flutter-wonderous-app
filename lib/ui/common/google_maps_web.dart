@@ -72,7 +72,6 @@ class _GoogleMapsWebState extends State<GoogleMapsWeb> {
           googleMaps.AdvancedMarkerElementOptions(
             map: map,
             position: center,
-            title: 'San Francisco',
           ),
         );
       } catch (_) {
@@ -80,7 +79,6 @@ class _GoogleMapsWebState extends State<GoogleMapsWeb> {
           googleMaps.MarkerOptions(
             map: map,
             position: center,
-            title: 'San Francisco',
           ),
         );
       }
