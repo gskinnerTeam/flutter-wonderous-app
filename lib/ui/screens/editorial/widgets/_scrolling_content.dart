@@ -266,34 +266,36 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
                     children: [
                       Positioned.fill(child: ColoredBox(color: Colors.transparent)),
                       IgnorePointer(
-                        child: FutureBuilder<void>(
-                          future: _loadGoogleMap(),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState == ConnectionState.done) {
-                              if (snapshot.hasError) {
-                                return Text(
-                                  'Google Map Load Error: ${snapshot.error}',
-                                  style: $styles.text.bodySmallBold.copyWith(
-                                    color: $styles.colors.accent3,
-                                  ),
+                        child: kIsWeb ? 
+                          GoogleMapsWeb(lat: widget.data.lat, lng: widget.data.lng) : 
+                          FutureBuilder<void>(
+                            future: _loadGoogleMap(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState == ConnectionState.done) {
+                                if (snapshot.hasError) {
+                                  return Text(
+                                    'Google Map Load Error: ${snapshot.error}',
+                                    style: $styles.text.bodySmallBold.copyWith(
+                                      color: $styles.colors.accent3,
+                                    ),
+                                  );
+                                }
+                                startPos = googleMap.CameraPosition(
+                                  target: googleMap.LatLng(widget.data.lat, widget.data.lng),
+                                  zoom: 3,
+                                );
+                                return googleMap.GoogleMap(
+                                  markers: {getMapsMarker(startPos.target)},
+                                  zoomControlsEnabled: false,
+                                  mapType: googleMap.MapType.normal,
+                                  mapToolbarEnabled: false,
+                                  initialCameraPosition: startPos,
+                                  myLocationButtonEnabled: false,
                                 );
                               }
-                              startPos = googleMap.CameraPosition(
-                                target: googleMap.LatLng(widget.data.lat, widget.data.lng),
-                                zoom: 3,
-                              );
-                              return googleMap.GoogleMap(
-                                markers: {getMapsMarker(startPos.target)},
-                                zoomControlsEnabled: false,
-                                mapType: googleMap.MapType.normal,
-                                mapToolbarEnabled: false,
-                                initialCameraPosition: startPos,
-                                myLocationButtonEnabled: false,
-                              );
-                            }
-                            return const CircularProgressIndicator();
-                          },
-                        ),
+                              return const CircularProgressIndicator();
+                            },
+                          ),
                       ),
                     ],
                   ),

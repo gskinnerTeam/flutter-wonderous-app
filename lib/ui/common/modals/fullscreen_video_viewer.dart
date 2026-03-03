@@ -26,7 +26,11 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
   void initState() {
     super.initState();
     appLogic.supportedOrientationsOverride = [Axis.horizontal, Axis.vertical];
-    _controller.cueVideoByUrl(mediaContentUrl: 'https://www.youtube.com/v/${widget.id}');
+    try {
+      _controller.cueVideoByUrl(mediaContentUrl: 'https://www.youtube.com/v/${widget.id}');
+    } catch (e) {
+      debugPrint(e.toString());
+    }
     RawKeyboard.instance.addListener(_handleKeyDown);
   }
 
@@ -64,11 +68,11 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
         children: [
           Center(
             child: (PlatformInfo.isMobile || kIsWeb)
-                ? YoutubePlayer(
-                    controller: _controller,
-                    aspectRatio: aspect,
-                  )
-                : Placeholder(),
+              ? YoutubePlayer(
+                  controller: _controller,
+                  aspectRatio: aspect,
+                )
+              : Placeholder(),
           ),
           SafeArea(
             child: Padding(
