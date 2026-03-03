@@ -62,14 +62,7 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
       backgroundColor: Colors.black,
       body: Stack(
         children: [
-          Center(
-            child: (PlatformInfo.isMobile || kIsWeb)
-                ? YoutubePlayer(
-                    controller: _controller,
-                    aspectRatio: aspect,
-                  )
-                : Placeholder(),
-          ),
+          Text('Oops, nothing here!'),
           SafeArea(
             child: Padding(
               padding: EdgeInsets.all($styles.insets.md),
