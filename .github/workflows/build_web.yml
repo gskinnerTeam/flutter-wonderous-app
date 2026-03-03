@@ -42,7 +42,7 @@ jobs:
 
     - name: Build Flutter web app - no WASM
       if: ${{ !inputs.wasm }}
-      run: flutter build web --no-wasm
+      run: flutter build web
 
     - name: Upload build artifact
       uses: actions/upload-artifact@v4
