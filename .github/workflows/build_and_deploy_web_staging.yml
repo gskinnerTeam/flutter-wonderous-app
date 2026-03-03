@@ -2,6 +2,12 @@ name: Build and Stage
 
 on:
   workflow_dispatch:
+    inputs:
+      wasm:
+        description: Build using WebAssembly
+        required: false
+        default: true
+        type: boolean
 
 env:
   BASE_HREF: "web"
@@ -9,6 +15,8 @@ env:
 jobs:
   build:
     uses: ./.github/workflows/build_web.yml
+    with:
+      wasm: ${{ inputs.wasm }}
 
   deploy:
     needs: build
