@@ -30,6 +30,9 @@ jobs:
         flutter-version: '3.35.7'
         channel: 'stable'
 
+    - name: Clean build folder
+      run: flutter clean
+
     - name: Get dependencies
       run: flutter pub get
 
