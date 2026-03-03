@@ -4,6 +4,7 @@ import 'dart:ui_web' as ui_web;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps/google_maps.dart' as googleMaps;
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:web/web.dart' as web;
 
 class GoogleMapsWeb extends StatefulWidget {
@@ -54,6 +55,7 @@ class _GoogleMapsWebState extends State<GoogleMapsWeb> {
       final map = googleMaps.Map(
         _mapElement,
         googleMaps.MapOptions(
+          mapId: MarkerId('0').value,
           center: center,
           zoom: 3,
           zoomControl: false,
