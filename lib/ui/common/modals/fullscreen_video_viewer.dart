@@ -68,11 +68,11 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
         children: [
           Center(
             child: (PlatformInfo.isMobile || kIsWeb)
-                ? YoutubePlayer(
-                    controller: _controller,
-                    aspectRatio: aspect,
-                  )
-                : Placeholder(),
+              ? YoutubePlayer(
+                  controller: _controller,
+                  aspectRatio: aspect,
+                )
+              : Placeholder(),
           ),
           SafeArea(
             child: Padding(
