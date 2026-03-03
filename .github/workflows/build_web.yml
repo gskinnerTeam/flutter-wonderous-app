@@ -2,8 +2,20 @@ name: Build Flutter Web
 
 on:
   workflow_dispatch:
+    inputs:
+      wasm:
+        description: Build using WebAssembly
+        required: false
+        default: true
+        type: boolean
   workflow_call:
-  
+    inputs:
+      wasm:
+        description: Build using WebAssembly
+        required: false
+        default: true
+        type: boolean
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -24,8 +36,13 @@ jobs:
     - name: Enable Flutter web
       run: flutter config --enable-web
 
-    - name: Build Flutter web app
+    - name: Build Flutter web app - with WASM
+      if: ${{ inputs.wasm }}
       run: flutter build web --wasm
+
+    - name: Build Flutter web app - no WASM
+      if: ${{ !inputs.wasm }}
+      run: flutter build web
 
     - name: Upload build artifact
       uses: actions/upload-artifact@v4
