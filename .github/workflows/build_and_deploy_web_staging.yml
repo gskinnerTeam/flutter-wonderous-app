@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       wasm:
-        description: Build using WebAssembly
+        description: Build using WebAssembly (WASM)
         required: false
         default: true
         type: boolean
