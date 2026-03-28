@@ -13,39 +13,51 @@ class FullscreenVideoViewer extends StatefulWidget {
 }
 
 class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
-  late final _controller = YoutubePlayerController(
-    params: const YoutubePlayerParams(
-      origin: 'https://www.youtube-nocookie.com',
-      enableCaption: true
-    ),
-  );
+  late YoutubePlayerController _controller;
 
   bool get _enableVideo => PlatformInfo.isMobile;
 
   @override
   void initState() {
-    super.initState();
     appLogic.supportedOrientationsOverride = [Axis.horizontal, Axis.vertical];
+    HardwareKeyboard.instance.addHandler(onKeyEvent);
+
+    _controller = YoutubePlayerController(
+      key: 'youtube-player',
+      params: const YoutubePlayerParams(
+        origin: 'https://www.youtube-nocookie.com',
+        enableCaption: false
+      ),
+    );
+    WidgetsBinding.instance.addPostFrameCallback((_) => loadPlayer());
+    super.initState();
+  }
+
+  void loadPlayer() {
     try {
-      _controller.cueVideoByUrl(mediaContentUrl: 'https://www.youtube.com/v/${widget.id}');
+      _controller.cueVideoByUrl(mediaContentUrl: 'https://www.youtube-nocookie.com/v/${widget.id}');
     } catch (e) {
       debugPrint('VP Error: $e');
     }
-    RawKeyboard.instance.addListener(_handleKeyDown);
   }
 
   @override
   void dispose() {
     // when view closes, remove the override
     appLogic.supportedOrientationsOverride = null;
-    RawKeyboard.instance.removeListener(_handleKeyDown);
+    HardwareKeyboard.instance.removeHandler(onKeyEvent);
     _controller.close();
     super.dispose();
   }
 
-  Future<void> _handleKeyDown(RawKeyEvent value) async {
-    if (value.repeat) return;
-    if (value is RawKeyDownEvent) {
+  bool onKeyEvent(KeyEvent event) {
+    _handleKeyDown(event);
+    return true;
+  }
+
+  Future<KeyEventResult> _handleKeyDown(KeyEvent value) async {
+    if (value is KeyRepeatEvent) return KeyEventResult.ignored;
+    if (value is KeyDownEvent) {
       final k = value.logicalKey;
       if (k == LogicalKeyboardKey.enter || k == LogicalKeyboardKey.space) {
         if (_enableVideo) {
@@ -58,22 +70,25 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
         }
       }
     }
+    return KeyEventResult.handled;
   }
 
   @override
   Widget build(BuildContext context) {
     double aspect = context.isLandscape ? MediaQuery.of(context).size.aspectRatio : 9 / 9;
-    return Scaffold(
+
+    PlatformDispatcher.instance.onError = (error, stack) {
+      return true;
+    };
+    
+    return YoutubePlayerScaffold(
       backgroundColor: Colors.black,
-      body: Stack(
+      controller: _controller,
+      aspectRatio: aspect,
+      builder:(context, player) => Stack(
         children: [
           Center(
-            child: (PlatformInfo.isMobile || kIsWeb)
-              ? YoutubePlayer(
-                  controller: _controller,
-                  aspectRatio: aspect,
-                )
-              : Placeholder(),
+            child: (PlatformInfo.isMobile || kIsWeb) ? player : Placeholder(),
           ),
           SafeArea(
             child: Padding(
