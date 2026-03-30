@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/platform_info.dart';
+import 'package:wonders/ui/common/fullscreen_keyboard_listener.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class FullscreenVideoViewer extends StatefulWidget {
@@ -15,18 +16,16 @@ class FullscreenVideoViewer extends StatefulWidget {
 class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
   late YoutubePlayerController _controller;
 
-  bool get _enableVideo => PlatformInfo.isMobile;
+  bool get _enableVideo => PlatformInfo.isMobile || kIsWeb;
 
   @override
   void initState() {
     appLogic.supportedOrientationsOverride = [Axis.horizontal, Axis.vertical];
-    HardwareKeyboard.instance.addHandler(onKeyEvent);
-
     _controller = YoutubePlayerController(
       key: 'youtube-player',
       params: const YoutubePlayerParams(
         origin: 'https://www.youtube-nocookie.com',
-        enableCaption: false
+        enableCaption: false,
       ),
     );
     WidgetsBinding.instance.addPostFrameCallback((_) => loadPlayer());
@@ -45,7 +44,6 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
   void dispose() {
     // when view closes, remove the override
     appLogic.supportedOrientationsOverride = null;
-    HardwareKeyboard.instance.removeHandler(onKeyEvent);
     _controller.close();
     super.dispose();
   }
@@ -87,8 +85,11 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
       aspectRatio: aspect,
       builder:(context, player) => Stack(
         children: [
-          Center(
-            child: (PlatformInfo.isMobile || kIsWeb) ? player : Placeholder(),
+          FullscreenKeyboardListener(
+            onKeyDown: onKeyEvent,
+            child: Center(
+              child: (PlatformInfo.isMobile || kIsWeb) ? player : Placeholder(),
+            ),
           ),
           SafeArea(
             child: Padding(
