@@ -53,12 +53,20 @@ This application is released under the [MIT license](LICENSE). You can use the c
 
 During each monthly maintenance round, it would be ideal to get out a new build with the updates done.
 
-1: In github, check out flutter-wonderous-app-private in github app. Set branch and pull latest from "private-builds".
-2: In Repository > Repo Settings, set the remote repo to flutter-wonderous-app.
-3: Checkout private-build branch - should come from the flutter-wonderous-app-private repo.
-4: With private-builds as your current repo, merge in the latest from master.
+1: Update the version number in pubspec.yaml before pushing, and tag the release in github with the same version number.
+2: In github, check out flutter-wonderous-app-private in github app. Set branch and pull latest from "private-builds".
+4: Checkout private-build branch - should come from the flutter-wonderous-app-private repo.
+3: In Repository > Repo Settings, set the remote repo to flutter-wonderous-app.
+5: Run a fetch call. The branch status will now say "publish". Don't do this.
+5: Merge in the latest from main.
   - To rebase, go into Branch > Rebase and select main. It will apply its 114 commits on top of origin/main, which will involve a lot of merge errors.
-5: In Repository > Repo Settings, switch back to flutter-wonderous-app-private.
-6: Call a fetch, and then you should be able to push that to the latest build.
-7: Don't forget to update the version number.
-8: Locally make a build from the private-builds branch via `flutter build appbundle` to upload to Play Store / Test Flight.
+6: In Repository > Repo Settings, switch back to flutter-wonderous-app-private.
+7: Run another fetch call, and then you should be able to push the changes to the latest build on the private repo.
+
+# Android Build
+
+Locally make a build from the private-builds branch via `flutter build appbundle` to upload to Play Store. The resulting appbundle file can be directly uploaded to the Play Store account.
+
+# iOS Build
+
+In XCode, open the ios/Runner.xcworkspace file after `flutter pub get`. Then make an archive build to upload to Test Flight. You will need to do this again to create a build for deployment too.
