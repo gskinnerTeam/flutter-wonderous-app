@@ -217,18 +217,23 @@ class _OpenedTimeRange extends StatelessWidget {
             },
             Spacer(),
             SizedBox(
-              width: $styles.insets.xl,
-              child: AppBtn.from(
-                onPressed: onClose,
-                semanticLabel: $strings.circleButtonsSemanticClose,
-                enableFeedback: false, // handled when panelController changes.
-                icon: AppIcons.close,
-                iconSize: 20,
-                padding: EdgeInsets.symmetric(vertical: $styles.insets.xxs),
-                bgColor: Colors.transparent,
+              width: $styles.insets.md,
+              height: $styles.insets.md,
+              child: Align(
+                alignment: Alignment.center,
+                child: AppBtn.from(
+                  onPressed: onClose,
+                  semanticLabel: $strings.circleButtonsSemanticClose,
+                  enableFeedback: false, // handled when panelController changes.
+                  icon: AppIcons.close,
+                  iconSize: 20,
+                  padding: EdgeInsets.symmetric(vertical: $styles.insets.xxs),
+                  bgColor: Colors.transparent,
+                ),
               ),
             ),
           ],
+          r,
         ),
 
         Gap($styles.insets.xs * 1.5),
