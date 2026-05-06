@@ -233,7 +233,6 @@ class _OpenedTimeRange extends StatelessWidget {
               ),
             ),
           ],
-          r,
         ),
 
         Gap($styles.insets.xs * 1.5),
