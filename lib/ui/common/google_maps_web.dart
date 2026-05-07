@@ -74,22 +74,12 @@ class _GoogleMapsWebState extends State<GoogleMapsWeb> {
       );
 
       _map = map;
-
-      try {
-        _marker = googleMaps.AdvancedMarkerElement(
-          googleMaps.AdvancedMarkerElementOptions(
-            map: map,
-            position: center,
-          ),
-        );
-      } catch (_) {
-        _marker = googleMaps.Marker(
-          googleMaps.MarkerOptions(
-            map: map,
-            position: center,
-          ),
-        );
-      }
+      _marker = googleMaps.AdvancedMarkerElement(
+        googleMaps.AdvancedMarkerElementOptions(
+          map: map,
+          position: center,
+        ),
+      );
     } catch (error) {
       if (_remainingInitAttempts > 0) {
         _remainingInitAttempts -= 1;
@@ -106,7 +96,7 @@ class _GoogleMapsWebState extends State<GoogleMapsWeb> {
       });
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     if (!kIsWeb) {
