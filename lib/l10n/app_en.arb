@@ -117,6 +117,7 @@
 	"yearFormat": "{date} {era}",
 	"@yearFormat": {"placeholders": {"date": {}, "era": {}}},
 	"year": "Year",
+	"scrollingContentCopiedToClipboard": "Content copied to clipboard",
 	"timelineLabelConstruction": "Construction of {title} begins.",
 	"@timelineLabelConstruction": {"placeholders": {"title": {}}},
 	"timelineTitleGlobalTimeline": "Global Timeline",

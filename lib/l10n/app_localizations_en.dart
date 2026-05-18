@@ -344,6 +344,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get year => 'Year';
 
   @override
+  String get scrollingContentCopiedToClipboard => 'Content copied to clipboard';
+
+  @override
   String timelineLabelConstruction(Object title) {
     return 'Construction of $title begins.';
   }
