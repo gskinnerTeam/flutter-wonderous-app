@@ -34,7 +34,6 @@ dependencies:
   get_it_mixin: ^4.2.2
   google_maps: ^8.2.0
   google_maps_flutter: ^2.17.0
-  google_maps_flutter_web: ^0.6.2
   go_router: ^17.0.1
   home_widget: ^0.9.0 # use the forked version when on `main` flutter branch
 #    git:

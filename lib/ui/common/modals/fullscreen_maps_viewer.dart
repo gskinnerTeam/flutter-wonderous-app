@@ -1,10 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/controls/app_header.dart';
 import 'package:wonders/ui/common/google_maps_marker.dart';
-import 'package:wonders/ui/common/google_maps_web.dart';
 
 class FullscreenMapsViewer extends StatelessWidget {
   FullscreenMapsViewer({super.key, required this.type});
@@ -19,16 +17,14 @@ class FullscreenMapsViewer extends StatelessWidget {
       children: [
         SafeArea(
           top: false,
-          child: kIsWeb
-              ? GoogleMapsWeb(lat: data.lat, lng: data.lng, zoom: 17, fullscreen: true)
-              : GoogleMap(
-                  mapId: MarkerId('0').value,
-                  mapType: MapType.hybrid,
-                  markers: {getMapsMarker(startPos.target)},
-                  markerType: GoogleMapMarkerType.advancedMarker,
-                  initialCameraPosition: startPos,
-                  myLocationButtonEnabled: false,
-                ),
+          child: GoogleMap(
+            mapId: MarkerId('0').value,
+            mapType: MapType.hybrid,
+            markers: {getMapsMarker(startPos.target)},
+            markerType: GoogleMapMarkerType.advancedMarker,
+            initialCameraPosition: startPos,
+            myLocationButtonEnabled: false,
+          ),
         ),
         AppHeader(isTransparent: true),
       ],
