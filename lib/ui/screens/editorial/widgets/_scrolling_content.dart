@@ -284,7 +284,7 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
                               );
                               return googleMap.GoogleMap(
                                 zoomControlsEnabled: false,
-                                mapId: MarkerId('0').value,
+                                mapId: googleMap.MarkerId('0').value,
                                 mapType: googleMap.MapType.normal,
                                 markers: {getMapsMarker(startPos.target)},
                                 markerType: googleMap.GoogleMapMarkerType.advancedMarker,
