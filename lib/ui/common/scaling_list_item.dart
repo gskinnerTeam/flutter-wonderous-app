@@ -1,6 +1,5 @@
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/ui/common/global_coords_builder.dart';
-import 'package:wonders/ui/common/utils/context_utils.dart';
 
 class AnimatedListItem extends StatelessWidget {
   const AnimatedListItem({super.key, required this.scrollPos, required this.builder});
