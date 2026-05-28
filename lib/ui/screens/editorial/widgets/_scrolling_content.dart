@@ -230,8 +230,11 @@ class _MapsThumbnail extends StatefulWidget {
 }
 
 class _MapsThumbnailState extends State<_MapsThumbnail> {
+  late final Future<void> _mapFuture;
+
   @override
   void initState() {
+    _mapFuture = _loadGoogleMap();
     super.initState();
   }
 
@@ -265,7 +268,7 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
                       Positioned.fill(child: ColoredBox(color: Colors.transparent)),
                       IgnorePointer(
                         child: FutureBuilder<void>(
-                          future: _loadGoogleMap(),
+                          future: _mapFuture,
                           builder: (context, snapshot) {
                             if (snapshot.connectionState == ConnectionState.done) {
                               if (snapshot.hasError) {
@@ -282,7 +285,7 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
                               );
                               return googleMap.GoogleMap(
                                 zoomControlsEnabled: false,
-                                mapId: googleMap.MarkerId('0').value,
+                                mapId: googleMap.MarkerId('DEMO_MAP_ID').value,
                                 mapType: googleMap.MapType.normal,
                                 markers: {getMapsMarker(startPos.target)},
                                 markerType: googleMap.GoogleMapMarkerType.advancedMarker,
