@@ -29,8 +29,13 @@ class _GlobalCoordsBuilderState extends State<GlobalCoordsBuilder> {
     if (context != null) {
       final RenderBox? box = context.findRenderObject() as RenderBox?;
       if (box != null && box.hasSize && mounted) {
-        Offset newOffset = box.localToGlobal(Offset.zero);
-        if (_globalOffset != newOffset || _size != box.size) {
+        Offset? newOffset;
+        try {
+          newOffset = box.localToGlobal(Offset.zero);
+        } catch (_) {
+          return;
+        }
+        if (newOffset != null && (_globalOffset != newOffset || _size != box.size)) {
           setState(() {
             _globalOffset = newOffset;
             _size = box.size;
