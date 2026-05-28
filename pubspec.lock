@@ -338,7 +338,7 @@ packages:
     source: hosted
     version: "17.0.1"
   google_maps:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: google_maps
       sha256: "5d410c32112d7c6eb7858d359275b2aa04778eed3e36c745aeae905fb2fa6468"
@@ -967,7 +967,7 @@ packages:
     source: hosted
     version: "1.2.0"
   web:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: web
       sha256: "868d88a33d8a87b18ffc05f9f030ba328ffefba92d6c127917a2ba740f9cfe4a"
