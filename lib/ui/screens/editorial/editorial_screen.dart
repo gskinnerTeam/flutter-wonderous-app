@@ -81,7 +81,8 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
     return LayoutBuilder(
       builder: (_, constraints) {
         bool shortMode = constraints.biggest.height < 700;
-        double illustrationHeight = shortMode ? 250 : 280;
+        bool shorterMode = constraints.biggest.height < 525;
+        double illustrationHeight = shorterMode ? 150 : (shortMode ? 250 : 280);
         double minAppBarHeight = shortMode ? 80 : 150;
 
         /// Attempt to maintain a similar aspect ratio for the image within the app-bar
