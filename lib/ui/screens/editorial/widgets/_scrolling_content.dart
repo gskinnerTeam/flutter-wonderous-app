@@ -230,8 +230,6 @@ class _MapsThumbnail extends StatefulWidget {
 }
 
 class _MapsThumbnailState extends State<_MapsThumbnail> {
-  late dynamic startPos;
-
   @override
   void initState() {
     super.initState();
@@ -278,7 +276,7 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
                                   ),
                                 );
                               }
-                              startPos = googleMap.CameraPosition(
+                              final startPos = googleMap.CameraPosition(
                                 target: googleMap.LatLng(widget.data.lat, widget.data.lng),
                                 zoom: 3,
                               );
