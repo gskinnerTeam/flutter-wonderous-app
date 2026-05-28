@@ -243,6 +243,7 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
       await googleMap.loadLibrary();
     } catch (e) {
       debugPrint('Error loading Google Map: $e');
+      rethrow;
     }
   }
 
