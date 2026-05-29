@@ -25,7 +25,7 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
     _controller = YoutubePlayerController(
       key: 'youtube-player',
       params: const YoutubePlayerParams(
-        origin: 'https://www.youtube-nocookie.com',
+        privacyEnhancedMode: true,
         enableCaption: true,
       ),
     );
@@ -49,7 +49,8 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
   }
 
   bool onKeyDownEvent(KeyDownEvent event) {
-    if (event.logicalKey == LogicalKeyboardKey.space || event.logicalKey == LogicalKeyboardKey.enter && _enableVideo) {
+    if ((event.logicalKey == LogicalKeyboardKey.space || event.logicalKey == LogicalKeyboardKey.enter) &&
+        _enableVideo) {
       _handleKeyDown(event).ignore();
       return true;
     }
@@ -70,28 +71,33 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
   Widget build(BuildContext context) {
     double aspect = context.isLandscape ? MediaQuery.of(context).size.aspectRatio : (16 / 9);
 
-    return YoutubePlayerScaffold(
-      backgroundColor: Colors.black,
+    return YoutubePlayerControllerProvider(
       controller: _controller,
-      aspectRatio: aspect,
-      builder: (context, player) => Stack(
-        children: [
-          FullscreenKeyboardListener(
-            onKeyDown: onKeyDownEvent,
-            child: Center(
-              child: (PlatformInfo.isMobile || kIsWeb) ? player : Placeholder(),
-            ),
-          ),
-          SafeArea(
-            child: Padding(
-              padding: EdgeInsets.all($styles.insets.md),
-              // Wrap btn in a PointerInterceptor to prevent the HTML video player from intercepting the pointer (https://pub.dev/packages/pointer_interceptor)
-              child: PointerInterceptor(
-                child: const BackBtn(),
+      child: Container(
+        color: Colors.black,
+        child: Stack(
+          children: [
+            FullscreenKeyboardListener(
+              onKeyDown: onKeyDownEvent,
+              child: Center(
+                child: (PlatformInfo.isMobile || kIsWeb)
+                    ? YoutubePlayer(
+                        controller: _controller,
+                        aspectRatio: aspect,
+                      )
+                    : Placeholder(),
               ),
             ),
-          ),
-        ],
+            SafeArea(
+              child: Padding(
+                padding: EdgeInsets.all($styles.insets.md),
+                child: PointerInterceptor(
+                  child: const BackBtn(),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
