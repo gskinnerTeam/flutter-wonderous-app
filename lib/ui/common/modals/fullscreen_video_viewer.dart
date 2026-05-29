@@ -48,23 +48,20 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
     super.dispose();
   }
 
-  bool onKeyEvent(KeyEvent event) {
-    _handleKeyDown(event);
+  bool onKeyDownEvent(KeyDownEvent event) {
+    _handleKeyDown(event).ignore();
     return true;
   }
 
-  Future<KeyEventResult> _handleKeyDown(KeyEvent value) async {
-    if (value is KeyRepeatEvent) return KeyEventResult.ignored;
-    if (value is KeyDownEvent) {
-      final k = value.logicalKey;
-      if (k == LogicalKeyboardKey.enter || k == LogicalKeyboardKey.space) {
-        if (_enableVideo) {
-          final state = await _controller.playerState;
-          if (state == PlayerState.playing) {
-            _controller.pauseVideo();
-          } else {
-            _controller.playVideo();
-          }
+  Future<KeyEventResult> _handleKeyDown(KeyDownEvent value) async {
+    final k = value.logicalKey;
+    if (k == LogicalKeyboardKey.enter || k == LogicalKeyboardKey.space) {
+      if (_enableVideo) {
+        final state = await _controller.playerState;
+        if (state == PlayerState.playing) {
+          _controller.pauseVideo();
+        } else {
+          _controller.playVideo();
         }
       }
     }
@@ -73,11 +70,7 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
 
   @override
   Widget build(BuildContext context) {
-    double aspect = context.isLandscape ? MediaQuery.of(context).size.aspectRatio : 9 / 9;
-
-    PlatformDispatcher.instance.onError = (error, stack) {
-      return true;
-    };
+    double aspect = context.isLandscape ? MediaQuery.of(context).size.aspectRatio : (16 / 9);
 
     return YoutubePlayerScaffold(
       backgroundColor: Colors.black,
@@ -86,7 +79,7 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
       builder: (context, player) => Stack(
         children: [
           FullscreenKeyboardListener(
-            onKeyDown: onKeyEvent,
+            onKeyDown: onKeyDownEvent,
             child: Center(
               child: (PlatformInfo.isMobile || kIsWeb) ? player : Placeholder(),
             ),
