@@ -43,7 +43,7 @@ class AppLogic {
 
     if (kIsWeb) {
       // SB: This is intentionally not a debugPrint, as it's a message for users who open the console on web.
-          // Display if running in WASM mode.
+      // Display if running in WASM mode.
       const isRunningWithWasm = bool.fromEnvironment('dart.tool.dart2wasm');
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
       print(

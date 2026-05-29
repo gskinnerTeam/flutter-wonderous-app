@@ -20,16 +20,16 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
 
   @override
   void initState() {
+    super.initState();
     appLogic.supportedOrientationsOverride = [Axis.horizontal, Axis.vertical];
     _controller = YoutubePlayerController(
       key: 'youtube-player',
       params: const YoutubePlayerParams(
         origin: 'https://www.youtube-nocookie.com',
-        enableCaption: false,
+        enableCaption: true,
       ),
     );
     WidgetsBinding.instance.addPostFrameCallback((_) => loadPlayer());
-    super.initState();
   }
 
   void loadPlayer() {
@@ -78,12 +78,12 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
     PlatformDispatcher.instance.onError = (error, stack) {
       return true;
     };
-    
+
     return YoutubePlayerScaffold(
       backgroundColor: Colors.black,
       controller: _controller,
       aspectRatio: aspect,
-      builder:(context, player) => Stack(
+      builder: (context, player) => Stack(
         children: [
           FullscreenKeyboardListener(
             onKeyDown: onKeyEvent,
