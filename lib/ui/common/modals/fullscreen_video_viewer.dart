@@ -49,21 +49,19 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
   }
 
   bool onKeyDownEvent(KeyDownEvent event) {
-    _handleKeyDown(event).ignore();
-    return true;
+    if (event.logicalKey == LogicalKeyboardKey.space || event.logicalKey == LogicalKeyboardKey.enter && _enableVideo) {
+      _handleKeyDown(event).ignore();
+      return true;
+    }
+    return false;
   }
 
   Future<KeyEventResult> _handleKeyDown(KeyDownEvent value) async {
-    final k = value.logicalKey;
-    if (k == LogicalKeyboardKey.enter || k == LogicalKeyboardKey.space) {
-      if (_enableVideo) {
-        final state = await _controller.playerState;
-        if (state == PlayerState.playing) {
-          _controller.pauseVideo();
-        } else {
-          _controller.playVideo();
-        }
-      }
+    final state = await _controller.playerState;
+    if (state == PlayerState.playing) {
+      _controller.pauseVideo();
+    } else {
+      _controller.playVideo();
     }
     return KeyEventResult.handled;
   }
