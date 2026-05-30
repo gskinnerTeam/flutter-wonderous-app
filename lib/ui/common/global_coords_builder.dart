@@ -35,7 +35,7 @@ class _GlobalCoordsBuilderState extends State<GlobalCoordsBuilder> {
         } catch (_) {
           return;
         }
-        if (newOffset != null && (_globalOffset != newOffset || _size != box.size)) {
+        if (_globalOffset != newOffset || _size != box.size) {
           setState(() {
             _globalOffset = newOffset;
             _size = box.size;
@@ -54,7 +54,6 @@ class _GlobalCoordsBuilderState extends State<GlobalCoordsBuilder> {
       },
       child: LayoutBuilder(
         builder: (context, constraints) {
-          // Update on layout changes too
           WidgetsBinding.instance.addPostFrameCallback((_) => _updateOffset());
           return Container(
             key: _key,
