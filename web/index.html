@@ -97,7 +97,21 @@
     <source srcset="splash/img/dark-1x.png 1x, splash/img/dark-2x.png 2x, splash/img/dark-3x.png 3x, splash/img/dark-4x.png 4x" media="(prefers-color-scheme: dark)">
     <img class="center" aria-hidden="true" src="splash/img/light-1x.png" alt="">
   </picture>
-  <!-- Flutter -->
-  <script src="flutter_bootstrap.js" async></script>
+  <!-- Flutter Bootstrap -->
+  <script>
+    {{flutter_js}}
+    {{flutter_build_config}}
+    const userConfig = {'wasmAllowList': {'gecko': true, 'webkit': true}};
+    const searchParams = new URLSearchParams(window.location.search);
+    const mode = searchParams.get('mode');
+    if (mode === 'canvaskit') {
+        userConfig.renderer = 'canvaskit';
+    } else if (mode === 'wimp') {
+        userConfig.enableWimp = true;
+    } else if (mode === 'skwasm-st') {
+        userConfig.forceSingleThreadedSkwasm = true;
+    }
+    _flutter.loader.load({config: userConfig});
+  </script>
 </body>
 </html>
