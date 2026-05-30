@@ -88,7 +88,7 @@ SPEC CHECKSUMS:
   pointer_interceptor_ios: 96d852586525ebe60a7271713d523dc618df8e67
   shared_preferences_foundation: 917411e2dd7130cf577e2c25417049cf93346383
   url_launcher_ios: 721d8feb3e61388f1d51185538814449e72600d7
-  webview_flutter_wkwebview: e01cbe375096f2cf95467b2266ea4eb02caad3e4
+  webview_flutter_wkwebview: 8ebf4fded22593026f7dbff1fbff31ea98573c8d
 
 PODFILE CHECKSUM: 775997f741c536251164e3eacf6e34abf2eb7a17
 
