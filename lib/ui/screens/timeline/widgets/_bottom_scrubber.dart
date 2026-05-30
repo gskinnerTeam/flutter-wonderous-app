@@ -77,6 +77,10 @@ class _BottomScrubber extends StatelessWidget {
                       container: true,
                       slider: true,
                       label: $strings.bottomScrubberSemanticTimeline,
+                      onScrollLeft: () =>
+                          handleScrubberPan(DragUpdateDetails(delta: Offset(-10, 0), globalPosition: Offset(0, 0))),
+                      onScrollRight: () =>
+                          handleScrubberPan(DragUpdateDetails(delta: Offset(10, 0), globalPosition: Offset(0, 0))),
                       child: GestureDetector(
                         behavior: HitTestBehavior.translucent,
                         onPanUpdate: handleScrubberPan,
