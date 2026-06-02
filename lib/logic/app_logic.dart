@@ -7,6 +7,7 @@ import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/platform_info.dart';
+import 'package:wonders/logic/common/web_wasm_info.dart';
 import 'package:wonders/ui/common/modals/fullscreen_video_viewer.dart';
 import 'package:wonders/ui/common/utils/page_routes.dart';
 
@@ -44,7 +45,8 @@ class AppLogic {
     if (kIsWeb) {
       // SB: This is intentionally not a debugPrint, as it's a message for users who open the console on web.
       // Display if running in WASM mode.
-      const isRunningWithWasm = bool.fromEnvironment('dart.tool.dart2wasm');
+      const isCompiledWithWasm = bool.fromEnvironment('dart.tool.dart2wasm');
+      final isRunningWithWasm = isCompiledWithWasm || isWasmOptInFromBootstrap;
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
       print(
         '''Thanks for checking out Wonderous on the web!
