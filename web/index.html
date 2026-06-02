@@ -101,9 +101,17 @@
   <script>
     {{flutter_js}}
     {{flutter_build_config}}
-    const userConfig = {'wasmAllowList': {'gecko': true, 'webkit': true}};
+    const userConfig = {};
+    // Web query parameter docs: see README.md -> WASM -> Web query parameters.
     const searchParams = new URLSearchParams(window.location.search);
     const mode = searchParams.get('mode');
+    const wasm = searchParams.get('wasm');
+    const wasmOptIn = wasm === '1' || wasm === 'true';
+
+    if (wasmOptIn) {
+      userConfig.wasmAllowList = {'gecko': true, 'webkit': true};
+    }
+
     if (mode === 'canvaskit') {
         userConfig.renderer = 'canvaskit';
     } else if (mode === 'wimp') {
