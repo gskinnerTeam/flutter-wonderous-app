@@ -101,19 +101,22 @@
   <script>
     {{flutter_js}}
     {{flutter_build_config}}
-    const userConfig = {};
-    // Web query parameter docs: see README.md -> WASM -> Web query parameters.
     const searchParams = new URLSearchParams(window.location.search);
     const mode = searchParams.get('mode');
     const wasm = searchParams.get('wasm');
-    const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    const ua = navigator.userAgent;
+    const vendor = navigator.vendor || '';
+    const isFirefox = /Firefox\/\d+/i.test(ua);
+    const isSafari =
+      /Safari\/\d+/i.test(ua) &&
+      /Apple/i.test(vendor) &&
+      !/Chrome|CriOS|Edg|OPR|FxiOS|Android/i.test(ua);
     const wasmOptIn = (isFirefox || isSafari) ? (wasm === '1' || wasm === 'true') : true;
-
+    
+    const userConfig = {};
     if (wasmOptIn) {
       userConfig.wasmAllowList = {'gecko': true, 'webkit': true};
     }
-
     if (mode === 'canvaskit') {
         userConfig.renderer = 'canvaskit';
     } else if (mode === 'wimp') {
@@ -121,6 +124,7 @@
     } else if (mode === 'skwasm-st') {
         userConfig.forceSingleThreadedSkwasm = true;
     }
+    console.log('Made it: ', userConfig);
     _flutter.loader.load({config: userConfig});
   </script>
 </body>
