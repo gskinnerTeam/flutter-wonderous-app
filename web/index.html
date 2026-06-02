@@ -111,7 +111,11 @@
       /Safari\/\d+/i.test(ua) &&
       /Apple/i.test(vendor) &&
       !/Chrome|CriOS|Edg|OPR|FxiOS|Android/i.test(ua);
-    const wasmOptIn = (isFirefox || isSafari) ? (wasm === '1' || wasm === 'true') : true;
+    const hasWasmParam = searchParams.has('wasm');
+    const wasmParam = (wasm ?? '').toLowerCase();
+    const explicitWasmSetting = wasmParam == '1' || wasmParam == 'true';
+    const defaultWasmSetting = !(isFirefox || isSafari);
+    const wasmOptIn = hasWasmParam ? explicitWasmSetting : defaultWasmSetting;
     
     const userConfig = {};
     if (wasmOptIn) {
