@@ -106,7 +106,9 @@
     const searchParams = new URLSearchParams(window.location.search);
     const mode = searchParams.get('mode');
     const wasm = searchParams.get('wasm');
-    const wasmOptIn = wasm === '1' || wasm === 'true';
+    const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    const wasmOptIn = (isFirefox || isSafari) ? (wasm === '1' || wasm === 'true') : true;
 
     if (wasmOptIn) {
       userConfig.wasmAllowList = {'gecko': true, 'webkit': true};
