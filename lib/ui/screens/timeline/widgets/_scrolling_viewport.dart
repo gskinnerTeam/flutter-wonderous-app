@@ -44,7 +44,7 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
     AppHaptics.selectionClick();
   }
 
-  void _handleMarkerPressed(event) {
+  void _handleMarkerPressed(TimelineEvent event) {
     final pos = controller.calculateScrollPosFromYear(event.year);
     controller.scroller.animateTo(pos, duration: $styles.times.med, curve: Curves.easeOutBack);
   }
