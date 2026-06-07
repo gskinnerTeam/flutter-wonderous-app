@@ -97,10 +97,12 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
         borderRadius: BorderRadius.circular(99),
         child: AnimatedBuilder(
           animation: controller.scroller,
-          builder: (_, __) => TimelineSection(
-            data,
-            controller.calculateYearFromScrollPos(),
-            selectedWonder: widget.selectedWonder,
+          builder: (_, __) => Provider<WonderData>(
+            create: (_) => data,
+            child: TimelineSection(
+              controller.calculateYearFromScrollPos(),
+              selectedWonder: widget.selectedWonder,
+            ),
           ),
         ),
       );
