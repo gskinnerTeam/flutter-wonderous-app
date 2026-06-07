@@ -7,7 +7,7 @@ class _BottomScrubber extends StatelessWidget {
     required this.timelineMinSize,
     required this.size,
   });
-  final ScrollController? scroller;
+  final ScrollController scroller;
   final double timelineMinSize;
   final double size;
 
@@ -27,11 +27,6 @@ class _BottomScrubber extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scroller = this.scroller;
-
-    /// It might take a frame until we receive a valid scroller
-    if (scroller == null) return SizedBox.shrink();
-
     final selectedWonder = context.watch<WonderType?>();
     return LayoutBuilder(
       builder: (context, constraints) {
