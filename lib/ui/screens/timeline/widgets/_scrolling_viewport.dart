@@ -134,14 +134,9 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
                       ),
                     ),
 
-                    /// Event Markers, rebuilds on scroll
-                    AnimatedBuilder(
-                      animation: controller.scroller,
-                      builder: (_, __) => _EventMarkers(
-                        controller.calculateYearFromScrollPos(),
-                        onEventChanged: _handleEventMarkerChanged,
-                        onMarkerPressed: _handleMarkerPressed,
-                      ),
+                    _EventMarkers(
+                      onEventChanged: _handleEventMarkerChanged,
+                      onMarkerPressed: _handleMarkerPressed,
                     ),
                   ],
                 ),
