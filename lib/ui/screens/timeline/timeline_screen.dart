@@ -92,7 +92,6 @@ class _TimelineScreenState extends State<TimelineScreen> {
                         _scroller,
                         size: scrubberSize,
                         timelineMinSize: minSize,
-                        selectedWonder: widget.type,
                       ),
                     ),
                   ),
