@@ -17,10 +17,9 @@ class _ScrollingViewportController extends ChangeNotifier {
       () => state.widget.onYearChanged?.call(_currentYr.value),
     );
 
-  void init() {
+  void init(WonderType? w) {
     scheduleMicrotask(() {
       setZoom(.5);
-      final w = widget.selectedWonder;
       if (w != null) {
         final data = wondersLogic.getData(w);
         final pos = calculateScrollPosFromYear(data.startYr);

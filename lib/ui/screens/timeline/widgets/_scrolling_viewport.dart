@@ -8,13 +8,11 @@ class _ScrollingViewport extends StatefulWidget {
     required this.scroller,
     required this.minSize,
     required this.maxSize,
-    required this.selectedWonder,
     this.onYearChanged,
   });
   final double minSize;
   final double maxSize;
   final ScrollController scroller;
-  final WonderType? selectedWonder;
   final void Function(int year)? onYearChanged;
   final void Function(_ScrollingViewportController controller)? onInit;
 
@@ -31,7 +29,7 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
   @override
   void initState() {
     super.initState();
-    controller.init();
+    controller.init(context.read<WonderType?>());
     widget.onInit?.call(controller);
   }
 
