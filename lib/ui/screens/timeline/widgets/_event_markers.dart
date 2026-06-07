@@ -39,7 +39,7 @@ class _EventMarkersState extends State<_EventMarkers> {
     TimelineEvent? closestEvent;
     double closestDistance = double.infinity;
     // Convert current yr to a px position
-    double currentYearPx = _calculateOffsetY(_currentYr.value) * _constraints.maxHeight;
+    double currentYearPx = _calculateOffsetY(_notifier.value) * _constraints.maxHeight;
     for (var e in timelineLogic.events) {
       // Convert both the event.yr to px, and compare with currentYearPx
       double eventPx = _eventOffsetCache[e]! * _constraints.maxHeight;
@@ -63,18 +63,18 @@ class _EventMarkersState extends State<_EventMarkers> {
   );
 
   //Store reference to the notifier for listeners
-  late ValueNotifier<int> _currentYr;
+  late CurrentYearNotifier _notifier;
 
   @override
   void initState() {
     super.initState();
-    _currentYr = context.read<CurrentYearNotifier>();
-    _currentYr.addListener(_updateSelectedEvent);
+    _notifier = context.read<CurrentYearNotifier>();
+    _notifier.addListener(_updateSelectedEvent);
   }
 
   @override
   void dispose() {
-    _currentYr.removeListener(_updateSelectedEvent);
+    _notifier.removeListener(_updateSelectedEvent);
     super.dispose();
   }
 
