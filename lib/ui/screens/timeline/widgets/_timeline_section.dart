@@ -1,32 +1,37 @@
 part of '../timeline_screen.dart';
 
 class TimelineSection extends StatelessWidget {
-  const TimelineSection(this.selectedYr, {super.key});
-  final int selectedYr;
+  const TimelineSection({super.key});
 
   @override
   Widget build(BuildContext context) {
     final data = context.watch<WonderData>();
-    // get a fraction from 0 - 1 based on selected yr and start/end yr of the wonder
-    // 500, 250, 750
-    int startYr = data.startYr, endYr = data.endYr;
-    double fraction = (selectedYr - startYr) / (endYr - startYr);
-    fraction = fraction.clamp(0, 1);
 
-    return Semantics(
-      label:
-          '${data.title}, ${$strings.timelineSemanticDate(
-            StringUtils.formatYr(data.startYr),
-            StringUtils.formatYr(data.endYr),
-          )}',
-      child: IgnorePointerKeepSemantics(
-        child: Container(
-          alignment: Alignment(0, -1 + fraction * 2),
-          padding: EdgeInsets.all($styles.insets.xs),
-          decoration: BoxDecoration(color: data.type.fgColor),
-          child: const _WonderImage(),
-        ),
-      ),
+    return ValueListenableBuilder(
+      valueListenable: context.watch<CurrentYearNotifier>(),
+      builder: (_, currentYear, child) {
+        // get a fraction from 0 - 1 based on selected yr and start/end yr of the wonder
+        // 500, 250, 750
+        int startYr = data.startYr, endYr = data.endYr;
+        double fraction = (currentYear - startYr) / (endYr - startYr);
+        fraction = fraction.clamp(0, 1);
+        return Semantics(
+          label:
+              '${data.title}, ${$strings.timelineSemanticDate(
+                StringUtils.formatYr(data.startYr),
+                StringUtils.formatYr(data.endYr),
+              )}',
+          child: IgnorePointerKeepSemantics(
+            child: Container(
+              alignment: Alignment(0, -1 + fraction * 2),
+              padding: EdgeInsets.all($styles.insets.xs),
+              decoration: BoxDecoration(color: data.type.fgColor),
+              child: child,
+            ),
+          ),
+        );
+      },
+      child: const _WonderImage(),
     );
   }
 }
