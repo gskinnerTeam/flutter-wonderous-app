@@ -34,14 +34,14 @@ class _ScrollingViewportController extends ChangeNotifier {
     });
   }
 
-  void _updateCurrentYear() => _currentYr.value = calculateYearFromScrollPos();
+  void _updateCurrentYear() => currentYr.value = _calculateYearFromScrollPos();
 
   /// Allows ancestors to set zoom directly
   void setZoom(double d) {
     // ignore: invalid_use_of_protected_member
     state.setState(() {
       // Determine current yr, based on scroll position
-      int currentYr = calculateYearFromScrollPos();
+      int currentYr = _calculateYearFromScrollPos();
 
       // Change zoom, which will scale our content, and change our scroll position
       _zoom = d;
@@ -71,7 +71,7 @@ class _ScrollingViewportController extends ChangeNotifier {
   }
 
   /// Derive current yr based on the scroll position and the current content height.
-  int calculateYearFromScrollPos() {
+  int _calculateYearFromScrollPos() {
     if (scroller.hasClients == false) return startYr;
     int totalYrs = endYr - startYr;
     double currentPx = scroller.position.pixels;
@@ -99,5 +99,5 @@ class _ScrollingViewportController extends ChangeNotifier {
   }
 
   /// Maintain current yr when the app changes size
-  void _handleResize() => jumpToYear(_currentYr.value);
+  void _handleResize() => jumpToYear(currentYr.value);
 }
