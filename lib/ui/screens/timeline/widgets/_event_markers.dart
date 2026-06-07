@@ -63,7 +63,7 @@ class _EventMarkersState extends State<_EventMarkers> {
   );
 
   //Store reference to the notifier for listeners
-  late CurrentYearNotifier _notifier;
+  late final CurrentYearNotifier _notifier;
 
   @override
   void initState() {
@@ -152,7 +152,6 @@ class _EventMarker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("marker");
     return Align(
       alignment: Alignment(0, -1 + offset * 2),
       // Use an OverflowBox wrapped in a zero-height sized box so that al
