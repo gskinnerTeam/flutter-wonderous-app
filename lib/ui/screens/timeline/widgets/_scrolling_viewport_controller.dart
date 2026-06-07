@@ -1,5 +1,9 @@
 part of '../timeline_screen.dart';
 
+class CurrentYearNotifier extends ValueNotifier<int> {
+  CurrentYearNotifier(super.value);
+}
+
 class _ScrollingViewportController extends ChangeNotifier {
   _ScrollingViewportController(this.state);
   final _ScalingViewportState state;
@@ -12,9 +16,9 @@ class _ScrollingViewportController extends ChangeNotifier {
   late BoxConstraints _constraints;
   _ScrollingViewport get widget => state.widget;
   ScrollController get scroller => widget.scroller;
-  late final ValueNotifier<int> _currentYr = ValueNotifier(startYr)
+  late final CurrentYearNotifier currentYr = CurrentYearNotifier(startYr)
     ..addListener(
-      () => state.widget.onYearChanged?.call(_currentYr.value),
+      () => state.widget.onYearChanged?.call(currentYr.value),
     );
 
   void init(WonderType? w) {
