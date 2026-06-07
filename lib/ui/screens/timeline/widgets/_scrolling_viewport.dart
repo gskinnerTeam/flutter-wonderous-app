@@ -101,7 +101,6 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
             create: (_) => data,
             child: TimelineSection(
               controller.calculateYearFromScrollPos(),
-              selectedWonder: widget.selectedWonder,
             ),
           ),
         ),
