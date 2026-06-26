@@ -94,7 +94,7 @@ class _BottomTextContent extends StatelessWidget {
                 expand: true,
                 onPressed: state._handleSearchTap,
               ),
-              if (!shortMode) Gap($styles.insets.lg) else Gap($styles.insets.md),
+              if (!shortMode) Gap($styles.insets.md) else Gap($styles.insets.sm),
             ],
           ),
         ],
