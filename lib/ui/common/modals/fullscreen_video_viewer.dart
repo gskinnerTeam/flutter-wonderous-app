@@ -27,6 +27,7 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
       params: const YoutubePlayerParams(
         privacyEnhancedMode: true,
         enableCaption: true,
+        origin: 'https://www.youtube-nocookie.com',
       ),
     );
     WidgetsBinding.instance.addPostFrameCallback((_) => loadPlayer());
