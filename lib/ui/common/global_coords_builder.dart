@@ -43,6 +43,12 @@ class _GlobalCoordsBuilderState extends State<GlobalCoordsBuilder> {
         try {
           newOffset = box.localToGlobal(Offset.zero);
         } catch (_) {
+          if (_globalOffset != null || _size != null) {
+            setState(() {
+              _globalOffset = null;
+              _size = null;
+            });
+          }
           return;
         }
         if (_globalOffset != newOffset || _size != box.size) {
