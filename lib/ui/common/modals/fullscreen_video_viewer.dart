@@ -27,7 +27,6 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
       params: const YoutubePlayerParams(
         privacyEnhancedMode: true,
         enableCaption: true,
-        origin: 'https://www.youtube-nocookie.com',
       ),
     );
     WidgetsBinding.instance.addPostFrameCallback((_) => loadPlayer());
@@ -37,7 +36,13 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
     try {
       _controller.cueVideoByUrl(mediaContentUrl: 'https://www.youtube-nocookie.com/v/${widget.id}');
     } catch (e) {
-      debugPrint('VP Error: $e');
+      FlutterError.dumpErrorToConsole(
+        FlutterErrorDetails(
+          exception: e,
+          library: 'FullscreenVideoViewer',
+          context: ErrorDescription('while loading video'),
+        ),
+      );
     }
   }
 
