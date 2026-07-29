@@ -18,8 +18,10 @@ class FullscreenMapsViewer extends StatelessWidget {
         SafeArea(
           top: false,
           child: GoogleMap(
+            mapId: 'DEMO_MAP_ID',
             mapType: MapType.hybrid,
             markers: {getMapsMarker(startPos.target)},
+            markerType: GoogleMapMarkerType.advancedMarker,
             initialCameraPosition: startPos,
             myLocationButtonEnabled: false,
           ),
