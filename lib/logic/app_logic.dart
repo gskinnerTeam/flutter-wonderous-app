@@ -82,10 +82,23 @@ class AppLogic {
 
     // Load initial view (replace empty initial view which is covered by a native splash screen)
     bool showIntro = settingsLogic.hasCompletedOnboarding.value == false;
-    if (showIntro) {
-      appRouter.go(ScreenPaths.intro);
+
+    // Use Router.neglect so /splash is replaced in browser history, preventing /splash from appearing as a back-navigation target.
+    final navigatorContext = appRouter.routerDelegate.navigatorKey.currentContext;
+    void doNavigate() {
+      if (showIntro) {
+        debugPrint('Shifting to intro screen');
+        appRouter.go(ScreenPaths.intro);
+      } else {
+        debugPrint('Shifting to initialDeeplink: $initialDeeplink (or home)');
+        appRouter.go(initialDeeplink ?? ScreenPaths.home);
+      }
+    }
+
+    if (navigatorContext != null) {
+      Router.neglect(navigatorContext, doNavigate);
     } else {
-      appRouter.go(initialDeeplink ?? ScreenPaths.home);
+      doNavigate();
     }
   }
 
