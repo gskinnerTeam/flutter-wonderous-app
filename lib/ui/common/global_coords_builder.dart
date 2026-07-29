@@ -17,11 +17,21 @@ class _GlobalCoordsBuilderState extends State<GlobalCoordsBuilder> {
   final GlobalKey _key = GlobalKey();
   Offset? _globalOffset;
   Size? _size;
+  bool _pendingUpdate = false;
 
   @override
   void initState() {
     super.initState();
-    SchedulerBinding.instance.addPostFrameCallback((_) => _updateOffset());
+    _scheduleUpdate();
+  }
+
+  void _scheduleUpdate() {
+    if (_pendingUpdate) return;
+    _pendingUpdate = true;
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _pendingUpdate = false;
+      _updateOffset();
+    });
   }
 
   void _updateOffset() {
@@ -47,22 +57,27 @@ class _GlobalCoordsBuilderState extends State<GlobalCoordsBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    return NotificationListener<SizeChangedLayoutNotification>(
+    return NotificationListener<ScrollNotification>(
       onNotification: (_) {
-        _updateOffset();
+        _scheduleUpdate();
         return false;
       },
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          WidgetsBinding.instance.addPostFrameCallback((_) => _updateOffset());
-          return Container(
-            key: _key,
-            constraints: constraints,
-            child: Builder(
-              builder: (context) => widget.builder(context, _globalOffset, _size),
-            ),
-          );
+      child: NotificationListener<SizeChangedLayoutNotification>(
+        onNotification: (_) {
+          _scheduleUpdate();
+          return false;
         },
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Container(
+              key: _key,
+              constraints: constraints,
+              child: Builder(
+                builder: (context) => widget.builder(context, _globalOffset, _size),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
