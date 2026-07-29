@@ -63,6 +63,7 @@ AppRoute get _collectionRoute => AppRoute(
 /// Routing table, matches string paths to UI Screens, optionally parses params from the paths
 final appRouter = GoRouter(
   redirect: _handleRedirect,
+  initialLocation: ScreenPaths.splash,
   errorPageBuilder: (context, state) => MaterialPage(child: PageNotFound(state.uri.toString())),
   routes: [
     ShellRoute(
@@ -172,6 +173,13 @@ String? _handleRedirect(BuildContext context, GoRouterState state) {
   }
   if (appLogic.isBootstrapComplete && state.uri.path == ScreenPaths.splash) {
     debugPrint('Redirecting from ${state.uri.path} to ${ScreenPaths.home}');
+    return ScreenPaths.home;
+  }
+  // Redirect away from the intro screen if onboarding is already complete.
+  if (appLogic.isBootstrapComplete &&
+      state.uri.path == ScreenPaths.intro &&
+      settingsLogic.hasCompletedOnboarding.value == true) {
+    debugPrint('Redirecting from ${state.uri.path} to ${ScreenPaths.home} (onboarding complete)');
     return ScreenPaths.home;
   }
   if (!kIsWeb) debugPrint('Navigate to: ${state.uri}');
