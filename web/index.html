@@ -97,7 +97,38 @@
     <source srcset="splash/img/dark-1x.png 1x, splash/img/dark-2x.png 2x, splash/img/dark-3x.png 3x, splash/img/dark-4x.png 4x" media="(prefers-color-scheme: dark)">
     <img class="center" aria-hidden="true" src="splash/img/light-1x.png" alt="">
   </picture>
-  <!-- Flutter -->
-  <script src="flutter_bootstrap.js" async></script>
+  <!-- Flutter Bootstrap -->
+  <script>
+    {{flutter_js}}
+    {{flutter_build_config}}
+    const searchParams = new URLSearchParams(window.location.search);
+    const mode = searchParams.get('mode');
+    const wasm = searchParams.get('wasm');
+    const ua = navigator.userAgent;
+    const vendor = navigator.vendor || '';
+    const isFirefox = /Firefox\/\d+/i.test(ua);
+    const isSafari =
+      /Safari\/\d+/i.test(ua) &&
+      /Apple/i.test(vendor) &&
+      !/Chrome|CriOS|Edg|OPR|FxiOS|Android/i.test(ua);
+    const hasWasmParam = searchParams.has('wasm');
+    const wasmParam = (wasm ?? '').toLowerCase();
+    const explicitWasmSetting = wasmParam == '1' || wasmParam == 'true';
+    const defaultWasmSetting = !(isFirefox || isSafari);
+    const wasmOptIn = hasWasmParam ? explicitWasmSetting : defaultWasmSetting;
+    
+    const userConfig = {};
+    if (wasmOptIn) {
+      userConfig.wasmAllowList = {'gecko': true, 'webkit': true};
+    }
+    if (mode === 'canvaskit') {
+        userConfig.renderer = 'canvaskit';
+    } else if (mode === 'wimp') {
+        userConfig.enableWimp = true;
+    } else if (mode === 'skwasm-st') {
+        userConfig.forceSingleThreadedSkwasm = true;
+    }
+    _flutter.loader.load({config: userConfig});
+  </script>
 </body>
 </html>
