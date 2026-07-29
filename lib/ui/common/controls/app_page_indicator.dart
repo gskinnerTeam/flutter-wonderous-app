@@ -7,6 +7,8 @@ class AppPageIndicator extends StatefulWidget {
     required this.count,
     required this.controller,
     this.onDotPressed,
+    this.onSemanticScrollLeft,
+    this.onSemanticScrollRight,
     this.color,
     this.dotSize,
     String? semanticPageTitle,
@@ -14,6 +16,8 @@ class AppPageIndicator extends StatefulWidget {
   final int count;
   final PageController controller;
   final void Function(int index)? onDotPressed;
+  final void Function()? onSemanticScrollLeft;
+  final void Function()? onSemanticScrollRight;
   final Color? color;
   final double? dotSize;
   final String semanticPageTitle;
@@ -52,6 +56,8 @@ class _AppPageIndicatorState extends State<AppPageIndicator> {
                 liveRegion: true,
                 focusable: false,
                 readOnly: true,
+                onScrollLeft: widget.onSemanticScrollLeft != null ? () => widget.onSemanticScrollLeft!() : null,
+                onScrollRight: widget.onSemanticScrollRight != null ? () => widget.onSemanticScrollRight!() : null,
                 label: $strings.appPageSemanticSwipe(
                   widget.semanticPageTitle,
                   (_controllerPage % (widget.count) + 1),
