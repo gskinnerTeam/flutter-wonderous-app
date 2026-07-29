@@ -30,40 +30,42 @@ class _SlidingImageStack extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: ValueListenableBuilder(
           valueListenable: scrollPos,
-          builder: (context, value, child) {
-            double pctVisible = 0;
-            final yPos = ContextUtils.getGlobalPos(context)?.dy;
-            final height = ContextUtils.getSize(context)?.height;
-            if (yPos != null && height != null) {
-              final amtVisible = context.heightPx - yPos;
-              pctVisible = (amtVisible / height).clamp(0, 3);
-            }
-            return Stack(
-              children: [
-                TopRight(
-                  child: FractionalTranslation(
-                    translation: Offset(0, -.1 + .2 * pctVisible),
-                    child: buildPhoto(
-                      .73,
-                      type.photo3,
-                      Alignment(0, -.3 + .6 * pctVisible),
+          builder: (context, value, child) => GlobalCoordsBuilder(
+            builder: (_, globalOffset, size) {
+              double pctVisible = 0;
+              final yPos = globalOffset?.dy;
+              final height = size?.height;
+              if (yPos != null && height != null) {
+                final amtVisible = context.heightPx - yPos;
+                pctVisible = (amtVisible / height).clamp(0, 3);
+              }
+              return Stack(
+                children: [
+                  TopRight(
+                    child: FractionalTranslation(
+                      translation: Offset(0, -.1 + .2 * pctVisible),
+                      child: buildPhoto(
+                        .73,
+                        type.photo3,
+                        Alignment(0, -.3 + .6 * pctVisible),
+                      ),
                     ),
                   ),
-                ),
-                BottomLeft(
-                  child: FractionalTranslation(
-                    translation: Offset(0, -.14 * pctVisible),
-                    child: buildPhoto(
-                      .45,
-                      type.photo4,
-                      Alignment(0, .3 - .6 * pctVisible),
-                      top: false,
+                  BottomLeft(
+                    child: FractionalTranslation(
+                      translation: Offset(0, -.14 * pctVisible),
+                      child: buildPhoto(
+                        .45,
+                        type.photo4,
+                        Alignment(0, .3 - .6 * pctVisible),
+                        top: false,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            );
-          },
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

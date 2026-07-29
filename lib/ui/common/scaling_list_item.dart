@@ -1,5 +1,5 @@
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/common/utils/context_utils.dart';
+import 'package:wonders/ui/common/global_coords_builder.dart';
 
 class AnimatedListItem extends StatelessWidget {
   const AnimatedListItem({super.key, required this.scrollPos, required this.builder});
@@ -14,17 +14,18 @@ class AnimatedListItem extends StatelessWidget {
         valueListenable: scrollPos,
         builder: (_, value, __) {
           return LayoutBuilder(
-            builder: (_, constraints) {
-              Offset? pos = ContextUtils.getGlobalPos(context);
-              final yPos = pos?.dy;
-              final widgetHeight = constraints.maxHeight;
-              double pctVisible = 0;
-              if (yPos != null) {
-                final amtVisible = context.heightPx - yPos;
-                pctVisible = (amtVisible / widgetHeight * .5).clamp(0, 1);
-              }
-              return builder(context, pctVisible);
-            },
+            builder: (_, constraints) => GlobalCoordsBuilder(
+              builder: (_, globalOffset, size) {
+                final yPos = globalOffset?.dy;
+                final widgetHeight = constraints.maxHeight;
+                double pctVisible = 0;
+                if (yPos != null) {
+                  final amtVisible = context.heightPx - yPos;
+                  pctVisible = (amtVisible / widgetHeight * .5).clamp(0, 1);
+                }
+                return builder(context, pctVisible);
+              },
+            ),
           );
         },
       ),

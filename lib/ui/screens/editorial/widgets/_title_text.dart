@@ -51,11 +51,13 @@ class _TitleText extends StatelessWidget {
                     sortKey: OrdinalSortKey(0),
                     child: AnimatedBuilder(
                       animation: scroller,
-                      builder: (_, __) {
-                        final yPos = ContextUtils.getGlobalPos(context)?.dy ?? 0;
-                        bool enableHero = yPos > -100;
-                        return WonderTitleText(data, enableHero: enableHero);
-                      },
+                      builder: (context, _) => GlobalCoordsBuilder(
+                        builder: (context, globalOffset, size) {
+                          final yPos = globalOffset?.dy ?? 0;
+                          bool enableHero = yPos > -100;
+                          return WonderTitleText(data, enableHero: enableHero);
+                        },
+                      ),
                     ),
                   ),
                   Gap($styles.insets.xs),
