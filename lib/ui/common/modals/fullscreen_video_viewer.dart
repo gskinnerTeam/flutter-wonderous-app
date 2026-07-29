@@ -14,10 +14,7 @@ class FullscreenVideoViewer extends StatefulWidget {
 
 class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
   late final _controller = YoutubePlayerController(
-    params: const YoutubePlayerParams(
-      origin: 'https://www.youtube-nocookie.com',
-      enableCaption: true
-    ),
+    params: const YoutubePlayerParams(origin: 'https://www.youtube-nocookie.com', enableCaption: true),
   );
 
   bool get _enableVideo => PlatformInfo.isMobile;
