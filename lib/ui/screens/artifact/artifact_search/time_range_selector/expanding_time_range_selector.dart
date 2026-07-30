@@ -189,6 +189,7 @@ class _OpenedTimeRange extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const double timeRangeFontSize = 20;
     double safeBottom = max($styles.insets.sm, MediaQuery.of(context).padding.bottom);
     List<Widget> timelineGrid = List.generate(
       5,
@@ -197,7 +198,7 @@ class _OpenedTimeRange extends StatelessWidget {
 
     final headingTextStyle = $styles.text.title1.copyWith(
       color: $styles.colors.offWhite,
-      fontSize: 20 * $styles.scale,
+      fontSize: timeRangeFontSize * $styles.scale,
     );
     final captionTextStyle = $styles.text.bodySmall.copyWith(color: $styles.colors.greyMedium);
 
@@ -217,15 +218,19 @@ class _OpenedTimeRange extends StatelessWidget {
             },
             Spacer(),
             SizedBox(
-              width: $styles.insets.xl,
-              child: AppBtn.from(
-                onPressed: onClose,
-                semanticLabel: $strings.circleButtonsSemanticClose,
-                enableFeedback: false, // handled when panelController changes.
-                icon: AppIcons.close,
-                iconSize: 20,
-                padding: EdgeInsets.symmetric(vertical: $styles.insets.xxs),
-                bgColor: Colors.transparent,
+              width: timeRangeFontSize + ($styles.insets.xxs * 2),
+              height: timeRangeFontSize + ($styles.insets.xxs * 2),
+              child: Align(
+                alignment: Alignment.center,
+                child: AppBtn.from(
+                  onPressed: onClose,
+                  semanticLabel: $strings.circleButtonsSemanticClose,
+                  enableFeedback: false, // handled when panelController changes.
+                  icon: AppIcons.close,
+                  iconSize: timeRangeFontSize,
+                  padding: EdgeInsets.symmetric(vertical: $styles.insets.xxs),
+                  bgColor: Colors.transparent,
+                ),
               ),
             ),
           ],
