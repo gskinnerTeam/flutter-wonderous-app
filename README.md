@@ -36,6 +36,24 @@ Once Flutter is setup, you can use the latest `stable` channel:
 ### WASM
 
 [Wonderous](https://wonderous.app/web/) is deployed using the Web Assembly target for Flutter Web (WASM). To test WASM locally you can use the command `flutter run -d chrome --wasm`.
+
+#### Web query parameters
+
+The web bootstrap in `web/index.html` supports a small set of URL query parameters:
+
+* `wasm=1` or `wasm=true`: Opt in to WASM allowlisting for Safari (WebKit) and Firefox (Gecko).
+	* By default, Safari/Firefox are not allowlisted.
+	* Chromium browsers (for example, Chrome) continue using the default Flutter behavior.
+* `mode=canvaskit`: Force the CanvasKit renderer.
+* `mode=wimp`: Enable WIMP mode.
+* `mode=skwasm-st`: Force single-threaded SKWASM.
+
+Examples:
+
+* `/?wasm=1`
+* `/?wasm=1&mode=canvaskit`
+* `/?wasm=true&mode=skwasm-st`
+
 ### Impeller Rendering
 
 This app uses the new [Impeller Runtime](https://docs.flutter.dev/perf/impeller) by default on iOS.
@@ -48,17 +66,3 @@ We build innovative digital experiences for smart clients, and we love how Flutt
 This application is released under the [MIT license](LICENSE). You can use the code for any purpose, including commercial projects.
 
 [![license](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
-# Private Build
-
-During each monthly maintenance round, it would be ideal to get out a new build with the updates done.
-
-1: In github, check out flutter-wonderous-app-private in github app. Set branch and pull latest from "private-builds".
-2: In Repository > Repo Settings, set the remote repo to flutter-wonderous-app.
-3: Checkout private-build branch - should come from the flutter-wonderous-app-private repo.
-4: With private-builds as your current repo, merge in the latest from master.
-  - To rebase, go into Branch > Rebase and select main. It will apply its 114 commits on top of origin/main, which will involve a lot of merge errors.
-5: In Repository > Repo Settings, switch back to flutter-wonderous-app-private.
-6: Call a fetch, and then you should be able to push that to the latest build.
-7: Don't forget to update the version number.
-8: Locally make a build from the private-builds branch via `flutter build appbundle` to upload to Play Store / Test Flight.

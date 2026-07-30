@@ -230,10 +230,11 @@ class _MapsThumbnail extends StatefulWidget {
 }
 
 class _MapsThumbnailState extends State<_MapsThumbnail> {
-  late dynamic startPos;
+  late final Future<void> _mapFuture;
 
   @override
   void initState() {
+    _mapFuture = _loadGoogleMap();
     super.initState();
   }
 
@@ -242,6 +243,7 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
       await googleMap.loadLibrary();
     } catch (e) {
       debugPrint('Error loading Google Map: $e');
+      rethrow;
     }
   }
 
@@ -267,7 +269,7 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
                       Positioned.fill(child: ColoredBox(color: Colors.transparent)),
                       IgnorePointer(
                         child: FutureBuilder<void>(
-                          future: _loadGoogleMap(),
+                          future: _mapFuture,
                           builder: (context, snapshot) {
                             if (snapshot.connectionState == ConnectionState.done) {
                               if (snapshot.hasError) {
@@ -278,14 +280,16 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
                                   ),
                                 );
                               }
-                              startPos = googleMap.CameraPosition(
+                              final startPos = googleMap.CameraPosition(
                                 target: googleMap.LatLng(widget.data.lat, widget.data.lng),
                                 zoom: 3,
                               );
                               return googleMap.GoogleMap(
-                                markers: {getMapsMarker(startPos.target)},
                                 zoomControlsEnabled: false,
+                                mapId: 'DEMO_MAP_ID',
                                 mapType: googleMap.MapType.normal,
+                                markers: {getMapsMarker(startPos.target)},
+                                markerType: googleMap.GoogleMapMarkerType.advancedMarker,
                                 mapToolbarEnabled: false,
                                 initialCameraPosition: startPos,
                                 myLocationButtonEnabled: false,
