@@ -79,10 +79,12 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (_, constraints) {
-        bool shortMode = constraints.biggest.height < 700;
-        bool shorterMode = constraints.biggest.height < 525;
-        double illustrationHeight = shorterMode ? 150 : (shortMode ? 250 : 280);
-        double minAppBarHeight = shortMode ? 80 : 150;
+        double illustrationHeight = switch (constraints.biggest.height) {
+          < 525 => 150,
+          < 700 => 250,
+          _ => 280,
+        };
+        double minAppBarHeight = constraints.biggest.height < 700 ? 80 : 150;
 
         /// Attempt to maintain a similar aspect ratio for the image within the app-bar
         double maxAppBarHeight = min(context.widthPx, $styles.sizes.maxContentWidth1) * 1.2;

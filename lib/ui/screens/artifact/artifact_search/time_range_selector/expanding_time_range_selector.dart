@@ -8,8 +8,6 @@ import 'package:wonders/ui/screens/artifact/artifact_search/artifact_search_scre
 import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/range_selector.dart';
 import 'package:wonders/ui/screens/artifact/artifact_search/time_range_selector/time_range_painter.dart';
 
-const double timeRangeFontSize = 20;
-
 // Expandable timerange selector component that further refines Artifact Search based on date range.
 class ExpandingTimeRangeSelector extends StatefulWidget {
   const ExpandingTimeRangeSelector({
@@ -191,6 +189,7 @@ class _OpenedTimeRange extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const double timeRangeFontSize = 20;
     double safeBottom = max($styles.insets.sm, MediaQuery.of(context).padding.bottom);
     List<Widget> timelineGrid = List.generate(
       5,
