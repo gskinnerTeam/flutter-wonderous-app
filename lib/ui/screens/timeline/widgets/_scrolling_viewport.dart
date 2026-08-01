@@ -8,13 +8,11 @@ class _ScrollingViewport extends StatefulWidget {
     required this.scroller,
     required this.minSize,
     required this.maxSize,
-    required this.selectedWonder,
     this.onYearChanged,
   });
   final double minSize;
   final double maxSize;
   final ScrollController scroller;
-  final WonderType? selectedWonder;
   final void Function(int year)? onYearChanged;
   final void Function(_ScrollingViewportController controller)? onInit;
 
@@ -31,7 +29,7 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
   @override
   void initState() {
     super.initState();
-    controller.init();
+    controller.init(context.read<WonderType?>());
     widget.onInit?.call(controller);
   }
 
@@ -46,7 +44,7 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
     AppHaptics.selectionClick();
   }
 
-  void _handleMarkerPressed(event) {
+  void _handleMarkerPressed(TimelineEvent event) {
     final pos = controller.calculateScrollPosFromYear(event.year);
     controller.scroller.animateTo(pos, duration: $styles.times.med, curve: Curves.easeOutBack);
   }
@@ -57,33 +55,31 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
       scheduleMicrotask(controller._handleResize);
     }
     _prevSize = context.mq.size;
-    return Listener(
-      onPointerSignal: (PointerSignalEvent e) {
-        if (HardwareKeyboard.instance.isControlPressed) {
-          controller._handleScaleUpdateMouse(((e as PointerScaleEvent).scale - 1) * 0.25);
-        }
-      },
-      child: GestureDetector(
-        // Handle pinch to zoom
-        onScaleUpdate: controller._handleScaleUpdate,
-        onScaleStart: controller._handleScaleStart,
-        behavior: HitTestBehavior.translucent,
-        // Fade in entire view when first shown
-        child: Stack(
-          children: [
-            // Main content area
-            _buildScrollingArea(context).maybeAnimate().fadeIn(),
+    return ChangeNotifierProvider<CurrentYearNotifier>(
+      create: (_) => controller.currentYr,
+      child: Listener(
+        onPointerSignal: (PointerSignalEvent e) {
+          if (HardwareKeyboard.instance.isControlPressed) {
+            controller._handleScaleUpdateMouse(((e as PointerScaleEvent).scale - 1) * 0.25);
+          }
+        },
+        child: GestureDetector(
+          // Handle pinch to zoom
+          onScaleUpdate: controller._handleScaleUpdate,
+          onScaleStart: controller._handleScaleStart,
+          behavior: HitTestBehavior.translucent,
+          // Fade in entire view when first shown
+          child: Stack(
+            children: [
+              // Main content area
+              _buildScrollingArea(context).maybeAnimate().fadeIn(),
 
-            // Dashed line with a year that changes as we scroll
-            IgnorePointerKeepSemantics(
-              child: AnimatedBuilder(
-                animation: controller.scroller,
-                builder: (_, __) {
-                  return _DashedDividerWithYear(controller.calculateYearFromScrollPos());
-                },
+              // Dashed line with a year that changes as we scroll
+              const IgnorePointerKeepSemantics(
+                child: _DashedDividerWithYear(),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -95,13 +91,9 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
     Widget buildTimelineSection(WonderData data) {
       return ClipRRect(
         borderRadius: BorderRadius.circular(99),
-        child: AnimatedBuilder(
-          animation: controller.scroller,
-          builder: (_, __) => TimelineSection(
-            data,
-            controller.calculateYearFromScrollPos(),
-            selectedWonder: widget.selectedWonder,
-          ),
+        child: Provider<WonderData>(
+          create: (_) => data,
+          child: const TimelineSection(),
         ),
       );
     }
@@ -142,14 +134,9 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
                       ),
                     ),
 
-                    /// Event Markers, rebuilds on scroll
-                    AnimatedBuilder(
-                      animation: controller.scroller,
-                      builder: (_, __) => _EventMarkers(
-                        controller.calculateYearFromScrollPos(),
-                        onEventChanged: _handleEventMarkerChanged,
-                        onMarkerPressed: _handleMarkerPressed,
-                      ),
+                    _EventMarkers(
+                      onEventChanged: _handleEventMarkerChanged,
+                      onMarkerPressed: _handleMarkerPressed,
                     ),
                   ],
                 ),

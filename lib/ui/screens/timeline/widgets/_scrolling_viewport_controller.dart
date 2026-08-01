@@ -1,5 +1,9 @@
 part of '../timeline_screen.dart';
 
+class CurrentYearNotifier extends ValueNotifier<int> {
+  CurrentYearNotifier(super.value);
+}
+
 class _ScrollingViewportController extends ChangeNotifier {
   _ScrollingViewportController(this.state);
   final _ScalingViewportState state;
@@ -12,15 +16,14 @@ class _ScrollingViewportController extends ChangeNotifier {
   late BoxConstraints _constraints;
   _ScrollingViewport get widget => state.widget;
   ScrollController get scroller => widget.scroller;
-  late final ValueNotifier<int> _currentYr = ValueNotifier(startYr)
+  late final CurrentYearNotifier currentYr = CurrentYearNotifier(startYr)
     ..addListener(
-      () => state.widget.onYearChanged?.call(_currentYr.value),
+      () => state.widget.onYearChanged?.call(currentYr.value),
     );
 
-  void init() {
+  void init(WonderType? w) {
     scheduleMicrotask(() {
       setZoom(.5);
-      final w = widget.selectedWonder;
       if (w != null) {
         final data = wondersLogic.getData(w);
         final pos = calculateScrollPosFromYear(data.startYr);
@@ -31,14 +34,14 @@ class _ScrollingViewportController extends ChangeNotifier {
     });
   }
 
-  void _updateCurrentYear() => _currentYr.value = calculateYearFromScrollPos();
+  void _updateCurrentYear() => currentYr.value = _calculateYearFromScrollPos();
 
   /// Allows ancestors to set zoom directly
   void setZoom(double d) {
     // ignore: invalid_use_of_protected_member
     state.setState(() {
       // Determine current yr, based on scroll position
-      int currentYr = calculateYearFromScrollPos();
+      int currentYr = _calculateYearFromScrollPos();
 
       // Change zoom, which will scale our content, and change our scroll position
       _zoom = d;
@@ -68,7 +71,7 @@ class _ScrollingViewportController extends ChangeNotifier {
   }
 
   /// Derive current yr based on the scroll position and the current content height.
-  int calculateYearFromScrollPos() {
+  int _calculateYearFromScrollPos() {
     if (scroller.hasClients == false) return startYr;
     int totalYrs = endYr - startYr;
     double currentPx = scroller.position.pixels;
@@ -96,5 +99,5 @@ class _ScrollingViewportController extends ChangeNotifier {
   }
 
   /// Maintain current yr when the app changes size
-  void _handleResize() => jumpToYear(_currentYr.value);
+  void _handleResize() => jumpToYear(currentYr.value);
 }

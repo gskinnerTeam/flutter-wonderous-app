@@ -3,8 +3,7 @@ part of '../timeline_screen.dart';
 /// A vertically aligned stack of dots that represent global events
 /// The event closest to the [selectedYr] param will be visible selected
 class _EventMarkers extends StatefulWidget {
-  const _EventMarkers(
-    this.selectedYr, {
+  const _EventMarkers({
     super.key,
     required this.onEventChanged,
     required this.onMarkerPressed,
@@ -12,7 +11,6 @@ class _EventMarkers extends StatefulWidget {
 
   final void Function(TimelineEvent? event) onEventChanged;
   final void Function(TimelineEvent event) onMarkerPressed;
-  final int selectedYr;
 
   @override
   State<_EventMarkers> createState() => _EventMarkersState();
@@ -31,18 +29,20 @@ class _EventMarkersState extends State<_EventMarkers> {
   /// Normalizes a given year to a value from 0 - 1, based on start and end yr.
   double _calculateOffsetY(int yr) => (yr - startYr) / _totalYrs;
 
+  late BoxConstraints _constraints;
+
   /// Loops through the global events, and does a px-based check to see whether
   /// one of them should be selected  (as oppose to year-based proximity).
   /// This ensures consistent UX at different zoom levels.
-  void _updateSelectedEvent(double maxPxHeight) {
+  void _updateSelectedEvent() {
     const double minDistance = 10;
     TimelineEvent? closestEvent;
     double closestDistance = double.infinity;
     // Convert current yr to a px position
-    double currentYearPx = _calculateOffsetY(widget.selectedYr) * maxPxHeight;
+    double currentYearPx = _calculateOffsetY(_notifier.value) * _constraints.maxHeight;
     for (var e in timelineLogic.events) {
       // Convert both the event.yr to px, and compare with currentYearPx
-      double eventPx = _calculateOffsetY(e.year) * maxPxHeight;
+      double eventPx = _eventOffsetCache[e]! * _constraints.maxHeight;
       double d = (eventPx - currentYearPx).abs();
       // Keep the closest event that is within minDistance
       if (d <= minDistance && d < closestDistance) {
@@ -53,8 +53,29 @@ class _EventMarkersState extends State<_EventMarkers> {
     // Dispatch if event has actually changed since last time
     if (closestEvent != selectedEvent) {
       scheduleMicrotask(() => widget.onEventChanged(closestEvent));
+      setState(() => selectedEvent = closestEvent);
     }
-    selectedEvent = closestEvent;
+  }
+
+  //Calculate the offsets for each event only once
+  late final Map<TimelineEvent, double> _eventOffsetCache = Map.fromEntries(
+    timelineLogic.events.map((e) => MapEntry(e, _calculateOffsetY(e.year))),
+  );
+
+  //Store reference to the notifier for listeners
+  late final CurrentYearNotifier _notifier;
+
+  @override
+  void initState() {
+    super.initState();
+    _notifier = context.read<CurrentYearNotifier>();
+    _notifier.addListener(_updateSelectedEvent);
+  }
+
+  @override
+  void dispose() {
+    _notifier.removeListener(_updateSelectedEvent);
+    super.dispose();
   }
 
   @override
@@ -62,19 +83,19 @@ class _EventMarkersState extends State<_EventMarkers> {
     return IgnorePointerKeepSemantics(
       child: LayoutBuilder(
         builder: (_, constraints) {
-          /// Figure out which event is "selected"
-          _updateSelectedEvent(constraints.maxHeight);
+          //Store latest constraints in local variable
+          _constraints = constraints;
 
           /// Create a marker for each event
-          List<Widget> markers = timelineLogic.events.map((event) {
-            double offsetY = _calculateOffsetY(event.year);
+          final markers = timelineLogic.events.map((event) {
+            double offsetY = _eventOffsetCache[event]!;
             return _EventMarker(
               offsetY,
               event: event,
               isSelected: event == selectedEvent,
               onPressed: widget.onMarkerPressed,
             );
-          }).toList();
+          });
 
           /// Stack of fractionally positioned markers
           return FocusTraversalGroup(

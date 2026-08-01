@@ -6,12 +6,10 @@ class _BottomScrubber extends StatelessWidget {
     super.key,
     required this.timelineMinSize,
     required this.size,
-    required this.selectedWonder,
   });
-  final ScrollController? scroller;
+  final ScrollController scroller;
   final double timelineMinSize;
   final double size;
-  final WonderType? selectedWonder;
 
   /// Calculate what fraction the scroller has travelled
   double _calculateScrollFraction(ScrollPosition? pos) {
@@ -29,11 +27,7 @@ class _BottomScrubber extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scroller = this.scroller;
-
-    /// It might take a frame until we receive a valid scroller
-    if (scroller == null) return SizedBox.shrink();
-
+    final selectedWonder = context.watch<WonderType?>();
     return LayoutBuilder(
       builder: (context, constraints) {
         void handleScrubberPan(DragUpdateDetails details) {
