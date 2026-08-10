@@ -15,6 +15,7 @@ import 'package:wonders/ui/common/centered_box.dart';
 import 'package:wonders/ui/common/compass_divider.dart';
 import 'package:wonders/ui/common/controls/trackpad_listener.dart';
 import 'package:wonders/ui/common/curved_clippers.dart';
+import 'package:wonders/ui/common/double_tap_to_copy_text.dart';
 import 'package:wonders/ui/common/fullscreen_keyboard_list_scroller.dart';
 import 'package:wonders/ui/common/google_maps_marker.dart';
 import 'package:wonders/ui/common/gradient_container.dart';

@@ -680,6 +680,12 @@ abstract class AppLocalizations {
   /// **'Year'**
   String get year;
 
+  /// No description provided for @scrollingContentCopiedToClipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Content copied to clipboard'**
+  String get scrollingContentCopiedToClipboard;
+
   /// No description provided for @timelineLabelConstruction.
   ///
   /// In en, this message translates to:

@@ -343,6 +343,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get year => '年';
 
   @override
+  String get scrollingContentCopiedToClipboard => '复制到剪贴板的文本';
+
+  @override
   String timelineLabelConstruction(Object title) {
     return '$title的建造开始。';
   }
