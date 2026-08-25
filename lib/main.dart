@@ -19,6 +19,7 @@ void main() async {
   if (!kIsWeb) {
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   }
+
   GoRouter.optionURLReflectsImperativeAPIs = true;
 
   // Start app

@@ -36,6 +36,24 @@ Once Flutter is setup, you can use the latest `stable` channel:
 ### WASM
 
 [Wonderous](https://wonderous.app/web/) is deployed using the Web Assembly target for Flutter Web (WASM). To test WASM locally you can use the command `flutter run -d chrome --wasm`.
+
+#### Web query parameters
+
+The web bootstrap in `web/index.html` supports a small set of URL query parameters:
+
+* `wasm=1` or `wasm=true`: Opt in to WASM allowlisting for Safari (WebKit) and Firefox (Gecko).
+	* By default, Safari/Firefox are not allowlisted.
+	* Chromium browsers (for example, Chrome) continue using the default Flutter behavior.
+* `mode=canvaskit`: Force the CanvasKit renderer.
+* `mode=wimp`: Enable WIMP mode.
+* `mode=skwasm-st`: Force single-threaded SKWASM.
+
+Examples:
+
+* `/?wasm=1`
+* `/?wasm=1&mode=canvaskit`
+* `/?wasm=true&mode=skwasm-st`
+
 ### Impeller Rendering
 
 This app uses the new [Impeller Runtime](https://docs.flutter.dev/perf/impeller) by default on iOS.
