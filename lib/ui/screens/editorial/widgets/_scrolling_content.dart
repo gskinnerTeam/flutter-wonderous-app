@@ -65,7 +65,7 @@ class _ScrollingContent extends StatelessWidget {
         ),
       );
 
-      return isScreanReaderActive
+      return isScreenReaderActive
           ? Focus(
               child: mainElement,
             )
