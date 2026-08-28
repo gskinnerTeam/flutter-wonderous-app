@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/animate_utils.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
