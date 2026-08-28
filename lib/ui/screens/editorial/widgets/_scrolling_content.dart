@@ -31,7 +31,7 @@ class _ScrollingContent extends StatelessWidget {
       final String dropChar = value.substring(0, 1);
       final scaleFactor = MediaQuery.textScalerOf(context).scale(1.0);
       final double dropCapWidth = StringUtils.measure(dropChar, dropStyle).width * scaleFactor;
-      final bool isScreenReaderActive = MediaQuery.of(context).accessibleNavigation;
+      final bool isScreenReaderActive = MediaQuery.of(context).accessibleNavigation && !kIsWeb;
 
       Widget mainElement = Semantics(
         label: value,
@@ -65,11 +65,11 @@ class _ScrollingContent extends StatelessWidget {
         ),
       );
 
-      return isScreenReaderActive
-          ? Focus(
-              child: mainElement,
-            )
-          : mainElement;
+      return Focus(
+        canRequestFocus: isScreenReaderActive,
+        includeSemantics: isScreenReaderActive,
+        child: mainElement,
+      );
     }
 
     Widget buildHiddenCollectible({required int slot}) {
