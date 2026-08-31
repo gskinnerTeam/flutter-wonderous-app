@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/string_utils.dart';
 import 'package:wonders/ui/common/themed_text.dart';
@@ -16,8 +15,7 @@ class TimelineEventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isScreenReaderActive = MediaQuery.of(context).accessibleNavigation && !kIsWeb;
-    ;
+    final bool isScreenReaderActive = MediaQuery.of(context).accessibleNavigation;
 
     return MergeSemantics(
       child: Padding(
@@ -52,14 +50,9 @@ class TimelineEventCard extends StatelessWidget {
 
                   /// Text content
                   Expanded(
-                    child: Focus(
-                      canRequestFocus: isScreenReaderActive,
-                      includeSemantics: isScreenReaderActive,
-                      child: SelectableText(
-                        text,
-                        style: $styles.text.body,
-                      ),
-                    ),
+                    child: isScreenReaderActive
+                        ? Focus(child: Text(text, style: $styles.text.body))
+                        : Text(text, style: $styles.text.body),
                   ),
                 ],
               ),

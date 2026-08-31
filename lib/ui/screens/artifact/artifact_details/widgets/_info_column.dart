@@ -6,7 +6,7 @@ class _InfoColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isScreenReaderActive = MediaQuery.of(context).accessibleNavigation && !kIsWeb;
+    final bool isScreenReaderActive = MediaQuery.of(context).accessibleNavigation;
     Widget mainElement = Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -66,11 +66,11 @@ class _InfoColumn extends StatelessWidget {
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: $styles.insets.lg),
-        child: Focus(
-          canRequestFocus: isScreenReaderActive,
-          includeSemantics: isScreenReaderActive,
-          child: mainElement,
-        ),
+        child: isScreenReaderActive
+            ? Focus(
+                child: mainElement,
+              )
+            : mainElement,
       ),
     );
   }

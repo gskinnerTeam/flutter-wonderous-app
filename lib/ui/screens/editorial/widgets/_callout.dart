@@ -6,7 +6,7 @@ class _Callout extends StatelessWidget {
   const _Callout({super.key, required this.text});
   @override
   Widget build(BuildContext context) {
-    final bool isScreenReaderActive = MediaQuery.of(context).accessibleNavigation && !kIsWeb;
+    final bool isScreenReaderActive = MediaQuery.of(context).accessibleNavigation;
     Widget mainElement = IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -22,10 +22,10 @@ class _Callout extends StatelessWidget {
         ],
       ),
     );
-    return Focus(
-      canRequestFocus: isScreenReaderActive,
-      includeSemantics: isScreenReaderActive,
-      child: mainElement,
-    );
+    return isScreenReaderActive
+        ? Focus(
+            child: mainElement,
+          )
+        : mainElement;
   }
 }
