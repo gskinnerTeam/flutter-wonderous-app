@@ -90,7 +90,7 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
         Gap($styles.insets.xs),
         SizedBox(
           width: $styles.insets.xxl * 3,
-          child: Text(
+          child: SelectableText(
             $strings.artifactDetailsErrorNotFound(widget.artifactId),
             style: $styles.text.body.copyWith(color: $styles.colors.offWhite),
             textAlign: TextAlign.center,

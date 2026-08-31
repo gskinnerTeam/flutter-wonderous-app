@@ -14,7 +14,7 @@ class _Callout extends StatelessWidget {
           Container(color: $styles.colors.accent1, width: 1),
           Gap($styles.insets.sm),
           Expanded(
-            child: Text(
+            child: SelectableText(
               text,
               style: $styles.text.callout,
             ),

@@ -19,7 +19,7 @@ class _NewlyDiscoveredItemsBtn extends StatelessWidget {
         height: 40,
         color: $styles.colors.black,
         padding: EdgeInsets.symmetric(vertical: $styles.insets.xs),
-        child: Text(
+        child: SelectableText(
           $strings.newlyDiscoveredLabelNew(count, count == 1 ? '' : 's'),
           textAlign: TextAlign.center,
           textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),

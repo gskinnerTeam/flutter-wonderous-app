@@ -218,7 +218,7 @@ class _YouTubeThumbnail extends StatelessWidget {
             Gap($styles.insets.xs),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
-              child: Text(caption, style: $styles.text.caption),
+              child: SelectableText(caption, style: $styles.text.caption),
             ),
           ],
         ),
@@ -279,7 +279,7 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
                           builder: (context, snapshot) {
                             if (snapshot.connectionState == ConnectionState.done) {
                               if (snapshot.hasError) {
-                                return Text(
+                                return SelectableText(
                                   'Google Map Load Error: ${snapshot.error}',
                                   style: $styles.text.bodySmallBold.copyWith(
                                     color: $styles.colors.accent3,
@@ -315,7 +315,7 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
               sortKey: OrdinalSortKey(0),
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
-                child: Text(widget.data.mapCaption, style: $styles.text.caption),
+                child: SelectableText(widget.data.mapCaption, style: $styles.text.caption),
               ),
             ),
           ],

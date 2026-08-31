@@ -253,7 +253,7 @@ class _MenuTextBtn extends StatelessWidget {
         children: [
           AppIcon(icon, color: $styles.colors.offWhite),
           Gap($styles.insets.xs),
-          Text(label, style: $styles.text.bodyBold.copyWith(height: 1)),
+          SelectableText(label, style: $styles.text.bodyBold.copyWith(height: 1)),
         ],
       ),
     );
