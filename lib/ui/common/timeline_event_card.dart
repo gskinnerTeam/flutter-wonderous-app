@@ -15,8 +15,6 @@ class TimelineEventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isScreenReaderActive = MediaQuery.of(context).accessibleNavigation;
-
     return MergeSemantics(
       child: Padding(
         padding: EdgeInsets.only(bottom: $styles.insets.sm),
@@ -50,9 +48,7 @@ class TimelineEventCard extends StatelessWidget {
 
                   /// Text content
                   Expanded(
-                    child: isScreenReaderActive
-                        ? Focus(child: Text(text, style: $styles.text.body))
-                        : Text(text, style: $styles.text.body),
+                    child: Focus(child: Text(text, style: $styles.text.body)),
                   ),
                 ],
               ),
