@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/animate_utils.dart';
 import 'package:wonders/logic/data/artifact_data.dart';
@@ -89,7 +90,7 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
         Gap($styles.insets.xs),
         SizedBox(
           width: $styles.insets.xxl * 3,
-          child: Text(
+          child: SelectableText(
             $strings.artifactDetailsErrorNotFound(widget.artifactId),
             style: $styles.text.body.copyWith(color: $styles.colors.offWhite),
             textAlign: TextAlign.center,

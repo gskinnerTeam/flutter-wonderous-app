@@ -33,7 +33,7 @@ class _CollectionListCard extends StatelessWidget with GetItMixin {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             /// Title
-            Text(
+            SelectableText(
               data.title.toUpperCase(),
               textAlign: TextAlign.left,
               style: $styles.text.title1.copyWith(color: $styles.colors.offWhite),

@@ -25,7 +25,7 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
       if (top) offsetY *= -1; // flip?
       return Transform.translate(
         offset: Offset(0, offsetY),
-        child: Text(value, style: quoteStyle, textAlign: TextAlign.center),
+        child: SelectableText(value, style: quoteStyle, textAlign: TextAlign.center),
       );
     }
 
