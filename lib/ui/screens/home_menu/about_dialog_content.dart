@@ -56,71 +56,69 @@ class AboutDialogContent extends StatelessWidget {
       child: Column(
         children: [
           Gap($styles.insets.sm),
-          SelectionArea(
-            child: RichText(
-              text: TextSpan(
-                style: $styles.text.bodySmall.copyWith(color: Colors.black, fontSize: fontSize),
-                children: [
-                  ...buildSpan($strings.homeMenuAboutWonderous),
-                  ...buildSpan(
-                    $strings.homeMenuAboutBuilt('{flutterUrl}', '{gskinnerUrl}'),
-                    linkSupplants: {
-                      '{flutterUrl}': [$strings.homeMenuAboutFlutter, 'https://flutter.dev'],
-                      '{gskinnerUrl}': [
-                        $strings.homeMenuAboutGskinner,
-                        'https://gskinner.com/flutter',
-                      ],
-                    },
-                  ),
-                  ...buildSpan('\n\n'),
-                  ...buildSpan(
-                    '${$strings.homeMenuAboutLearn('{wonderousUrl}')} ',
-                    linkSupplants: {
-                      '{wonderousUrl}': [
-                        $strings.homeMenuAboutApp,
-                        'https://flutter.gskinner.com/wonderous/',
-                      ],
-                    },
-                  ),
-                  ...buildSpan(
-                    $strings.homeMenuAboutSource('{githubUrl}'),
-                    linkSupplants: {
-                      '{githubUrl}': [
-                        ($strings.homeMenuAboutRepo),
-                        'https://github.com/gskinnerTeam/flutter-wonderous-app',
-                      ],
-                    },
-                  ),
-                  ...buildSpan(
-                    ' ${$strings.privacyStatement('{privacyUrl}')}',
-                    linkSupplants: {
-                      '{privacyUrl}': [
-                        $strings.privacyPolicy,
-                        'https://flutter.gskinner.com/wonderous/privacy/',
-                      ],
-                    },
-                  ),
-                  ...buildSpan('\n\n'),
-                  ...buildSpan(
-                    '${$strings.homeMenuAboutPublic('{metUrl}')} ',
-                    linkSupplants: {
-                      '{metUrl}': [
-                        $strings.homeMenuAboutMet,
-                        'https://www.metmuseum.org/about-the-met/policies-and-documents/open-access',
-                      ],
-                    },
-                  ),
-                  ...buildSpan(
-                    $strings.homeMenuAboutPhotography('{unsplashUrl}'),
-                    linkSupplants: {
-                      '{unsplashUrl}': [
-                        $strings.homeMenuAboutUnsplash,
-                        'https://unsplash.com/@gskinner/collections',
-                      ],
-                    },
-                  ),
-                ],
-              ),
+          RichText(
+            text: TextSpan(
+              style: $styles.text.bodySmall.copyWith(color: Colors.black, fontSize: fontSize),
+              children: [
+                ...buildSpan($strings.homeMenuAboutWonderous),
+                ...buildSpan(
+                  $strings.homeMenuAboutBuilt('{flutterUrl}', '{gskinnerUrl}'),
+                  linkSupplants: {
+                    '{flutterUrl}': [$strings.homeMenuAboutFlutter, 'https://flutter.dev'],
+                    '{gskinnerUrl}': [
+                      $strings.homeMenuAboutGskinner,
+                      'https://gskinner.com/flutter',
+                    ],
+                  },
+                ),
+                ...buildSpan('\n\n'),
+                ...buildSpan(
+                  '${$strings.homeMenuAboutLearn('{wonderousUrl}')} ',
+                  linkSupplants: {
+                    '{wonderousUrl}': [
+                      $strings.homeMenuAboutApp,
+                      'https://flutter.gskinner.com/wonderous/',
+                    ],
+                  },
+                ),
+                ...buildSpan(
+                  $strings.homeMenuAboutSource('{githubUrl}'),
+                  linkSupplants: {
+                    '{githubUrl}': [
+                      ($strings.homeMenuAboutRepo),
+                      'https://github.com/gskinnerTeam/flutter-wonderous-app',
+                    ],
+                  },
+                ),
+                ...buildSpan(
+                  ' ${$strings.privacyStatement('{privacyUrl}')}',
+                  linkSupplants: {
+                    '{privacyUrl}': [
+                      $strings.privacyPolicy,
+                      'https://flutter.gskinner.com/wonderous/privacy/',
+                    ],
+                  },
+                ),
+                ...buildSpan('\n\n'),
+                ...buildSpan(
+                  '${$strings.homeMenuAboutPublic('{metUrl}')} ',
+                  linkSupplants: {
+                    '{metUrl}': [
+                      $strings.homeMenuAboutMet,
+                      'https://www.metmuseum.org/about-the-met/policies-and-documents/open-access',
+                    ],
+                  },
+                ),
+                ...buildSpan(
+                  $strings.homeMenuAboutPhotography('{unsplashUrl}'),
+                  linkSupplants: {
+                    '{unsplashUrl}': [
+                      $strings.homeMenuAboutUnsplash,
+                      'https://unsplash.com/@gskinner/collections',
+                    ],
+                  },
+                ),
+              ],
             ),
           ),
         ],

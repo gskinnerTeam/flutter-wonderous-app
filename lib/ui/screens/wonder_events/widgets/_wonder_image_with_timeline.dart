@@ -109,7 +109,7 @@ class _WonderImageWithTimeline extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SelectableText(
+        Text(
           $strings.titleLabelDate(
             StringUtils.formatYr(data.startYr),
             StringUtils.formatYr(data.endYr),
@@ -117,7 +117,7 @@ class _WonderImageWithTimeline extends StatelessWidget {
           style: textStyle,
         ),
         _buildDot(context),
-        SelectableText(StringUtils.getEra(data.startYr), style: textStyle),
+        Text(StringUtils.getEra(data.startYr), style: textStyle),
       ],
     ).maybeAnimate().fade(delay: $styles.times.pageTransition);
   }

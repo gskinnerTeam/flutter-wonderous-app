@@ -19,8 +19,9 @@ class _BottomTextContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget textContent = SelectableText(
+    Widget textContent = Text(
       artifact.title,
+      overflow: TextOverflow.ellipsis,
       style: $styles.text.h2.copyWith(color: $styles.colors.black, height: 1.2, fontSize: 32),
       textAlign: TextAlign.center,
       maxLines: 2,
@@ -67,7 +68,7 @@ class _BottomTextContent extends StatelessWidget {
                           ),
                           if (!shortMode) ...[
                             Gap($styles.insets.xxs),
-                            SelectableText(
+                            Text(
                               artifact.date.isEmpty ? '--' : artifact.date,
                               style: $styles.text.body,
                               textAlign: TextAlign.center,

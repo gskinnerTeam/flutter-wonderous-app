@@ -70,7 +70,7 @@ class _ResultsGridState extends State<_ResultsGrid> {
             child: Row(
               children: [
                 Flexible(
-                  child: SelectableText($strings.resultsPopupEnglishContent),
+                  child: Text($strings.resultsPopupEnglishContent),
                 ),
                 Icon(
                   Icons.close,

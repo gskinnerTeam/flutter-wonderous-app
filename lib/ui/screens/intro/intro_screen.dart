@@ -260,7 +260,7 @@ class _IntroScreenState extends State<IntroScreen> {
           child: Semantics(
             onTapHint: $strings.introSemanticNavigate,
             onTap: _isOnLastPage ? null : _handleNavTextSemanticTap,
-            child: SelectableText($strings.introSemanticSwipeLeft, style: $styles.text.bodySmall),
+            child: Text($strings.introSemanticSwipeLeft, style: $styles.text.bodySmall),
           ),
         );
       },
@@ -306,12 +306,12 @@ class _Page extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SelectableText(
+                    Text(
                       data.title,
                       style: $styles.text.wonderTitle.copyWith(fontSize: 24 * $styles.scale),
                     ),
                     Gap($styles.insets.sm),
-                    SelectableText(data.desc, style: $styles.text.body, textAlign: TextAlign.center),
+                    Text(data.desc, style: $styles.text.body, textAlign: TextAlign.center),
                   ],
                 ),
               ),
@@ -340,7 +340,7 @@ class _WonderousLogo extends StatelessWidget {
         ),
         Gap($styles.insets.xs),
         StaticTextScale(
-          child: SelectableText(
+          child: Text(
             $strings.introSemanticWonderous,
             style: $styles.text.wonderTitle.copyWith(
               fontSize: 32 * $styles.scale,

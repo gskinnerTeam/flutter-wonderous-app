@@ -13,7 +13,7 @@ class _InfoColumn extends StatelessWidget {
       children: [
         Gap($styles.insets.xl),
         if (data.culture.isNotEmpty) ...[
-          SelectableText(
+          Text(
             data.culture.toUpperCase(),
             style: $styles.text.titleFont.copyWith(color: $styles.colors.accent1),
           ).maybeAnimate().fade(delay: 150.delayMs, duration: 600.animateMs),
@@ -21,11 +21,12 @@ class _InfoColumn extends StatelessWidget {
         ],
         Semantics(
           header: true,
-          child: SelectableText(
+          child: Text(
             data.title,
             textAlign: TextAlign.center,
             style: $styles.text.h2.copyWith(color: $styles.colors.offWhite, height: 1.2),
             maxLines: 5,
+            overflow: TextOverflow.ellipsis,
           ).maybeAnimate().fade(delay: 250.delayMs, duration: 600.animateMs),
         ),
         Gap($styles.insets.lg),
@@ -54,7 +55,7 @@ class _InfoColumn extends StatelessWidget {
           ],
         ),
         Gap($styles.insets.md),
-        SelectableText(
+        Text(
           $strings.homeMenuAboutMet,
           style: $styles.text.caption.copyWith(color: $styles.colors.accent2),
         ).maybeAnimate(delay: 1500.delayMs).fadeIn().slide(begin: Offset(0.2, 0), curve: Curves.easeOut),
@@ -88,14 +89,14 @@ class _InfoRow extends StatelessWidget {
     List<Expanded> infoChildren = [
       Expanded(
         flex: shortMode ? 0 : 40,
-        child: SelectableText(
+        child: Text(
           label.toUpperCase(),
           style: $styles.text.titleFont.copyWith(color: $styles.colors.accent2),
         ),
       ),
       Expanded(
         flex: shortMode ? 0 : 60,
-        child: SelectableText(
+        child: Text(
           value.isEmpty ? '--' : value,
           style: $styles.text.body.copyWith(color: $styles.colors.offWhite),
         ),

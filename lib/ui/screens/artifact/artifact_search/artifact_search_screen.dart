@@ -153,7 +153,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
     final TextStyle statusStyle = $styles.text.body.copyWith(color: $styles.colors.accent1);
     if (_searchResults.isEmpty) {
       return StaticTextScale(
-        child: SelectableText(
+        child: Text(
           $strings.artifactsSearchLabelNotFound,
           textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
           style: statusStyle,
@@ -167,7 +167,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Gap($styles.insets.sm),
-            SelectableText(
+            Text(
               $strings.artifactsSearchLabelFound(_searchResults.length, _filteredResults.length),
               textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
               style: statusStyle,
@@ -176,7 +176,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
               semanticLabel: $strings.artifactsSearchButtonToggle,
               onPressed: () => panelController.toggle(),
               enableFeedback: false, // handled when panelController changes.
-              child: SelectableText(
+              child: Text(
                 $strings.artifactsSearchSemanticTimeframe,
                 textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
                 style: statusStyle.copyWith(decoration: TextDecoration.underline),
@@ -201,7 +201,7 @@ class _ArtifactSearchScreenState extends State<ArtifactSearchScreen> with GetItS
         Spacer(),
         Icon(icon, size: $styles.insets.xl, color: color.withValues(alpha: 0.5)),
         Gap($styles.insets.xs),
-        SelectableText(text, style: $styles.text.body.copyWith(color: color)),
+        Text(text, style: $styles.text.body.copyWith(color: color)),
         Spacer(
           flex: 3,
         ),

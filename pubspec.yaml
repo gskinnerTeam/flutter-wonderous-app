@@ -16,7 +16,10 @@ dependencies:
 
   collection: ^1.17.0
   desktop_window: ^0.4.0
-  flutter_drop_cap_text: ^1.0.1
+  drop_cap_text:
+    git:
+      url: https://github.com/parlough/drop_cap_text
+      ref: feat/adapt-for-deprecations
   equatable: ^2.0.5
   extra_alignments: ^1.0.0+1
   flextras: ^1.0.0

@@ -217,9 +217,10 @@ class CollectibleFoundScreen extends StatelessWidget {
       child: Animate().custom(
         delay: delay,
         duration: t * 2,
-        builder: (_, m, __) => SelectableText(
+        builder: (_, m, __) => Text(
           text,
           maxLines: 2,
+          overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.center,
           style: style.copyWith(color: color.withValues(alpha: m)),
         ),

@@ -28,7 +28,7 @@ class _AnimatedRibbon extends StatelessWidget {
           // this aligns the text vertically, without expanding the container:
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [SelectableText(text, textAlign: TextAlign.center, style: $styles.text.title1)],
+            children: [Text(text, textAlign: TextAlign.center, style: $styles.text.title1)],
           ),
         ),
       ],

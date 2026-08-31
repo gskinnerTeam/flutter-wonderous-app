@@ -110,7 +110,7 @@ class _ClosedTimeRange extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: $styles.insets.xs),
       child: Row(
         children: [
-          SelectableText(text, style: $styles.text.title2.copyWith(color: $styles.colors.offWhite)),
+          Text(text, style: $styles.text.title2.copyWith(color: $styles.colors.offWhite)),
           Gap($styles.insets.xs),
           Icon(
             Icons.edit_calendar_outlined,
@@ -148,17 +148,17 @@ class _OpenedTimeRange extends StatelessWidget {
     return MergeSemantics(
       child: Row(
         children: [
-          SelectableText(StringUtils.getYrSuffix(startYr), style: captionTextStyle),
+          Text(StringUtils.getYrSuffix(startYr), style: captionTextStyle),
           Gap($styles.insets.xxs),
-          SelectableText(startYr.abs().toString(), style: headingTextStyle),
-          SelectableText($strings.year, style: captionTextStyle),
+          Text(startYr.abs().toString(), style: headingTextStyle),
+          Text($strings.year, style: captionTextStyle),
           Gap($styles.insets.xs),
-          SelectableText('~', style: captionTextStyle),
+          Text('~', style: captionTextStyle),
           Gap($styles.insets.xs),
-          SelectableText(StringUtils.getYrSuffix(endYr.round()), style: captionTextStyle),
+          Text(StringUtils.getYrSuffix(endYr.round()), style: captionTextStyle),
           Gap($styles.insets.xxs),
-          SelectableText(endYr.abs().toString(), style: headingTextStyle),
-          SelectableText($strings.year, style: captionTextStyle),
+          Text(endYr.abs().toString(), style: headingTextStyle),
+          Text($strings.year, style: captionTextStyle),
         ],
       ),
     );
@@ -173,15 +173,15 @@ class _OpenedTimeRange extends StatelessWidget {
     return MergeSemantics(
       child: Row(
         children: [
-          SelectableText(startYr.abs().toString(), style: headingTextStyle),
+          Text(startYr.abs().toString(), style: headingTextStyle),
           Gap($styles.insets.xxs),
-          SelectableText(StringUtils.getYrSuffix(startYr), style: captionTextStyle),
+          Text(StringUtils.getYrSuffix(startYr), style: captionTextStyle),
           Gap($styles.insets.xs),
-          SelectableText('—', style: captionTextStyle),
+          Text('—', style: captionTextStyle),
           Gap($styles.insets.xs),
-          SelectableText(endYr.abs().toString(), style: headingTextStyle),
+          Text(endYr.abs().toString(), style: headingTextStyle),
           Gap($styles.insets.xxs),
-          SelectableText(StringUtils.getYrSuffix(endYr.round()), style: captionTextStyle),
+          Text(StringUtils.getYrSuffix(endYr.round()), style: captionTextStyle),
         ],
       ),
     );

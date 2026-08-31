@@ -38,7 +38,7 @@ class SimpleCheckbox extends StatelessWidget {
           ),
         ),
         Gap($styles.insets.xs),
-        SelectableText(label, style: $styles.text.body.copyWith(color: $styles.colors.offWhite)),
+        Text(label, style: $styles.text.body.copyWith(color: $styles.colors.offWhite)),
       ],
     );
   }

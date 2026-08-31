@@ -15,7 +15,7 @@ class _LargeSimpleQuote extends StatelessWidget {
           children: [
             FractionalTranslation(
               translation: Offset(0, .5),
-              child: SelectableText(
+              child: Text(
                 '“',
                 style: $styles.text.quote1.copyWith(
                   color: $styles.colors.accent3,
@@ -24,13 +24,13 @@ class _LargeSimpleQuote extends StatelessWidget {
                 ),
               ),
             ),
-            SelectableText(
+            Text(
               text,
               style: $styles.text.quote2,
               textAlign: TextAlign.center,
             ),
             Gap($styles.insets.md),
-            SelectableText(
+            Text(
               '- $author',
               style: $styles.text.quote2Sub.copyWith(color: $styles.colors.accent3),
             ),

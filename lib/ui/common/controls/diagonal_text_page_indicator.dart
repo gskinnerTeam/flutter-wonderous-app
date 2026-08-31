@@ -25,7 +25,7 @@ class DiagonalTextPageIndicator extends StatelessWidget {
                 child: SizedBox(
                   width: size,
                   height: size,
-                  child: SelectableText('0$current', style: textStyle, textAlign: TextAlign.right),
+                  child: Text('0$current', style: textStyle, textAlign: TextAlign.right),
                 ),
               ),
             ),
@@ -38,7 +38,7 @@ class DiagonalTextPageIndicator extends StatelessWidget {
                   height: size,
                   child: Opacity(
                     opacity: .5,
-                    child: SelectableText(
+                    child: Text(
                       '0$total',
                       style: textStyle, //.copyWith(shadows: $styles.shadows.textStrong),
                     ),

@@ -103,9 +103,9 @@ class _BaseContentModal extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 separatorBuilder: () => Gap($styles.insets.md),
                 children: [
-                  if (title != null) SelectableText(title!, style: $styles.text.h2),
+                  if (title != null) Text(title!, style: $styles.text.h2),
                   if (child != null) child!,
-                  if (msg != null) SelectableText(msg!, style: $styles.text.body),
+                  if (msg != null) Text(msg!, style: $styles.text.body),
                   Gap($styles.insets.md),
                   Column(children: buttons.map((e) => e).toList()),
                 ],
