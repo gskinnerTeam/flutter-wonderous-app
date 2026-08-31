@@ -161,15 +161,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.4"
-  drop_cap_text:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: "feat/adapt-for-deprecations"
-      resolved-ref: f9829062aefa2bea73e7ece99bf850f5d43259cc
-      url: "https://github.com/parlough/drop_cap_text"
-    source: git
-    version: "1.2.0"
   equatable:
     dependency: "direct main"
     description:
@@ -247,6 +238,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.0"
+  flutter_drop_cap_text:
+    dependency: "direct main"
+    description:
+      name: flutter_drop_cap_text
+      sha256: "745a1a48639ea12e8fc5cad97e318561900910246c37eee30ea9f2e8a5113c69"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   flutter_lints:
     dependency: "direct dev"
     description:

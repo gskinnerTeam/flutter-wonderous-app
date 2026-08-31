@@ -47,11 +47,13 @@ class WonderTitleText extends StatelessWidget {
     }
 
     List<Shadow> shadows = enableShadows ? $styles.shadows.textSoft : [];
-    var content = RichText(
-      textAlign: TextAlign.center,
-      text: TextSpan(
-        style: textStyle.copyWith(shadows: shadows),
-        children: pieces.map(buildTextSpan).toList(),
+    var content = SelectionArea(
+      child: RichText(
+        textAlign: TextAlign.center,
+        text: TextSpan(
+          style: textStyle.copyWith(shadows: shadows),
+          children: pieces.map(buildTextSpan).toList(),
+        ),
       ),
     );
     return enableHero

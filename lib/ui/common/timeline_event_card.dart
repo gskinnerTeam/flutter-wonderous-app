@@ -36,11 +36,11 @@ class TimelineEventCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        SelectableText(
                           '${year.abs()}',
                           style: $styles.text.h3.copyWith(fontWeight: FontWeight.w400, height: 1),
                         ),
-                        Text(StringUtils.getYrSuffix(year), style: $styles.text.bodySmall),
+                        SelectableText(StringUtils.getYrSuffix(year), style: $styles.text.bodySmall),
                       ],
                     ),
                   ),

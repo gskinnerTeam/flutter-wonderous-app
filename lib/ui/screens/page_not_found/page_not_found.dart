@@ -20,17 +20,17 @@ class PageNotFound extends StatelessWidget {
           children: [
             WonderousLogo(),
             Gap(10),
-            Text(
+            SelectableText(
               'Wonderous',
               style: $styles.text.wonderTitle.copyWith(color: $styles.colors.accent1, fontSize: 28),
             ),
             Gap(70),
-            Text(
+            SelectableText(
               $strings.pageNotFoundMessage,
               style: $styles.text.body.copyWith(color: $styles.colors.offWhite),
             ),
             if (PlatformInfo.isDesktop) ...{
-              LightText(child: Text('Path: $url', style: $styles.text.bodySmall)),
+              LightText(child: SelectableText('Path: $url', style: $styles.text.bodySmall)),
             },
             Gap(70),
             AppBtn(
@@ -39,7 +39,7 @@ class PageNotFound extends StatelessWidget {
               onPressed: handleHomePressed,
               semanticLabel: 'Back',
               child: DarkText(
-                child: Text(
+                child: SelectableText(
                   $strings.pageNotFoundBackButton,
                   style: $styles.text.btn.copyWith(fontSize: 12),
                 ),
