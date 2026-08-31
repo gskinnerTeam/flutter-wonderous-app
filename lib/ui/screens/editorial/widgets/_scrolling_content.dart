@@ -35,33 +35,15 @@ class _ScrollingContent extends StatelessWidget {
 
       Widget mainElement = Semantics(
         label: value,
-        child: ExcludeSemantics(
-          child: skipCaps
-              ? Text(_fixNewlines(value), style: bodyStyle)
-              : DropCapText(
-                  _fixNewlines(value).substring(1),
-                  dropCap: DropCap(
-                    width: dropCapWidth,
-                    height: $styles.text.body.fontSize! * $styles.text.body.height! * 2,
-                    child: Transform.translate(
-                      offset: Offset(0, bodyStyle.fontSize! * (bodyStyle.height! - 1) - 2),
-                      child: Text(
-                        dropChar,
-                        overflow: TextOverflow.visible,
-                        style: $styles.text.dropCase.copyWith(
-                          color: $styles.colors.accent3,
-                          height: 1,
-                        ),
-                      ),
-                    ),
+        child: SelectionArea(
+          child: ExcludeSemantics(
+            child: skipCaps
+                ? Text(_fixNewlines(value), style: bodyStyle)
+                : DropCapParagraph(
+                    _fixNewlines(value),
+                    style: $styles.text.body,
                   ),
-                  style: $styles.text.body,
-                  dropCapPadding: EdgeInsets.only(right: 6),
-                  dropCapStyle: $styles.text.dropCase.copyWith(
-                    color: $styles.colors.accent3,
-                    height: 1,
-                  ),
-                ),
+          ),
         ),
       );
 
@@ -374,5 +356,46 @@ class RenderSliverBackgroundColor extends RenderProxySliver {
       );
       context.paintChild(child!, offset + childParentData.paintOffset);
     }
+  }
+}
+
+class DropCapParagraph extends StatelessWidget {
+  const DropCapParagraph(this.text, {super.key, this.style});
+  final String text;
+  final TextStyle? style;
+
+  @override
+  Widget build(BuildContext context) {
+    final bodyStyle = $styles.text.body;
+    return SelectionArea(
+      child: SelectableText.rich(
+        TextSpan(
+          children: [
+            // The Drop Cap Letter
+            WidgetSpan(
+              alignment: PlaceholderAlignment.aboveBaseline,
+              baseline: TextBaseline.alphabetic,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 6),
+                child: Transform.translate(
+                  offset: Offset(0, bodyStyle.fontSize! * (bodyStyle.height! - 1) + 1),
+                  child: Text(
+                    text.substring(0, 1).toUpperCase(),
+                    style: $styles.text.dropCase.copyWith(
+                      color: $styles.colors.accent3,
+                      height: 1,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            TextSpan(
+              text: text.substring(1),
+              style: style,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
