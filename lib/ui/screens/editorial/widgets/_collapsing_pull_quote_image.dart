@@ -31,92 +31,94 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
 
     return ValueListenableBuilder<double>(
       valueListenable: scrollPos,
-      builder: (context, value, __) {
-        double collapseAmt = 1.0;
-        final yPos = ContextUtils.getGlobalPos(context)?.dy;
-        if (yPos != null && yPos < collapseStartPx) {
-          // Get a normalized value, 0 - 1, representing the current amount of collapse.
-          collapseAmt = (collapseStartPx - max(collapseEndPx, yPos)) / (collapseStartPx - collapseEndPx);
-        }
+      builder: (context, value, __) => GlobalCoordsBuilder(
+        builder: (_, globalOffset, size) {
+          double collapseAmt = 1.0;
+          final yPos = globalOffset?.dy;
+          if (yPos != null && yPos < collapseStartPx) {
+            // Get a normalized value, 0 - 1, representing the current amount of collapse.
+            collapseAmt = (collapseStartPx - max(collapseEndPx, yPos)) / (collapseStartPx - collapseEndPx);
+          }
 
-        // The sized boxes in the column collapse to a zero height, allowing the quotes to naturally sit over top of the image
-        return MergeSemantics(
-          child: CenteredBox(
-            padding: EdgeInsets.symmetric(vertical: outerPadding),
-            width: imgHeight * .66,
-            child: Stack(
-              children: [
-                Container(
-                  width: context.widthPx,
-                  height: imgHeight,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: $styles.colors.accent2),
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(context.widthPx / 2),
-                      topLeft: Radius.circular(context.widthPx / 2),
-                    ),
-                  ),
-                ),
-
-                /// Main image
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(
-                      height: imgHeight,
-
-                      // Clip the image with an curved top
-                      child: Stack(
-                        children: [
-                          Container(
-                            alignment: Alignment.topRight,
-                            margin: const EdgeInsets.all(12),
-                            child: ClipPath(
-                              clipper: CurvedTopClipper(),
-                              child: _buildImage(collapseAmt),
-                            ),
-                          ),
-                        ],
+          // The sized boxes in the column collapse to a zero height, allowing the quotes to naturally sit over top of the image
+          return MergeSemantics(
+            child: CenteredBox(
+              padding: EdgeInsets.symmetric(vertical: outerPadding),
+              width: imgHeight * .66,
+              child: Stack(
+                children: [
+                  Container(
+                    width: context.widthPx,
+                    height: imgHeight,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: $styles.colors.accent2),
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(context.widthPx / 2),
+                        topLeft: Radius.circular(context.widthPx / 2),
                       ),
                     ),
-                  ],
-                ),
+                  ),
 
-                /// Collapsing text
-                Positioned.fill(
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 24),
-                    child: BlendMask(
-                      blendModes: const [BlendMode.colorBurn],
-                      child: StaticTextScale(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                  /// Main image
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(
+                        height: imgHeight,
+
+                        // Clip the image with an curved top
+                        child: Stack(
                           children: [
-                            SizedBox(height: 32), // push down vertical centre
-                            buildText(data.pullQuote1Top, collapseAmt, top: true),
-                            buildText(data.pullQuote1Bottom, collapseAmt, top: false),
-                            if (data.pullQuote1Author.isNotEmpty) ...[
-                              Container(
-                                margin: const EdgeInsets.only(top: 16),
-                                child: buildText(
-                                  '- ${data.pullQuote1Author}',
-                                  collapseAmt,
-                                  top: false,
-                                  isAuthor: true,
-                                ),
+                            Container(
+                              alignment: Alignment.topRight,
+                              margin: const EdgeInsets.all(12),
+                              child: ClipPath(
+                                clipper: CurvedTopClipper(),
+                                child: _buildImage(collapseAmt),
                               ),
-                            ],
+                            ),
                           ],
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  /// Collapsing text
+                  Positioned.fill(
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 24),
+                      child: BlendMask(
+                        blendModes: const [BlendMode.colorBurn],
+                        child: StaticTextScale(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(height: 32), // push down vertical centre
+                              buildText(data.pullQuote1Top, collapseAmt, top: true),
+                              buildText(data.pullQuote1Bottom, collapseAmt, top: false),
+                              if (data.pullQuote1Author.isNotEmpty) ...[
+                                Container(
+                                  margin: const EdgeInsets.only(top: 16),
+                                  child: buildText(
+                                    '- ${data.pullQuote1Author}',
+                                    collapseAmt,
+                                    top: false,
+                                    isAuthor: true,
+                                  ),
+                                ),
+                              ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
