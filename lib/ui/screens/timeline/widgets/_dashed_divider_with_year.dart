@@ -18,7 +18,7 @@ class _DashedDividerWithYear extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
+                  SelectableText(
                     '${roundedYr.abs()}',
                     style: $styles.text.h2.copyWith(
                       color: $styles.colors.white,
@@ -26,7 +26,7 @@ class _DashedDividerWithYear extends StatelessWidget {
                     ),
                   ),
                   Gap($styles.insets.xs),
-                  Text(
+                  SelectableText(
                     StringUtils.getYrSuffix(roundedYr),
                     style: $styles.text.body.copyWith(
                       color: Colors.white,

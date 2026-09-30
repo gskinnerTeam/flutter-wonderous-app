@@ -96,9 +96,8 @@ class _SearchInput extends StatelessWidget {
       child: CenterLeft(
         child: DefaultTextStyle(
           style: $styles.text.title2.copyWith(color: $styles.colors.black),
-          child: Text(
+          child: SelectableText(
             $strings.searchInputTitleSuggestions.toUpperCase(),
-            overflow: TextOverflow.ellipsis,
             textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
           ),
         ),
@@ -115,9 +114,8 @@ class _SearchInput extends StatelessWidget {
         child: CenterLeft(
           child: DefaultTextStyle(
             style: $styles.text.bodySmall.copyWith(color: $styles.colors.greyStrong),
-            child: Text(
+            child: SelectableText(
               suggestion,
-              overflow: TextOverflow.ellipsis,
               textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
             ),
           ),

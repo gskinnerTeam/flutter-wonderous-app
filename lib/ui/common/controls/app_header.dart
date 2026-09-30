@@ -40,7 +40,7 @@ class AppHeader extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         if (title != null)
-                          Text(
+                          SelectableText(
                             title!.toUpperCase(),
                             textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
                             style: $styles.text.h4.copyWith(
@@ -49,7 +49,7 @@ class AppHeader extends StatelessWidget {
                             ),
                           ),
                         if (subtitle != null)
-                          Text(
+                          SelectableText(
                             subtitle!.toUpperCase(),
                             textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
                             style: $styles.text.title1.copyWith(color: $styles.colors.accent1),

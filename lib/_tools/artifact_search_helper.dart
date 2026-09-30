@@ -348,28 +348,28 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Wonder to run:'),
+              SelectableText('Wonder to run:'),
               _buildWonderPicker(context),
               Gap(16),
-              Text('Max items:'),
+              SelectableText('Max items:'),
               TextFormField(
                 initialValue: maxIds.toString(),
                 onChanged: (s) => setState(() => maxIds = int.parse(s)),
               ),
               Gap(16),
-              Text('Max priority items:'),
+              SelectableText('Max priority items:'),
               TextFormField(
                 initialValue: maxPriority.toString(),
                 onChanged: (s) => setState(() => maxPriority = int.parse(s)),
               ),
               Gap(16),
               CheckboxListTile(
-                title: Text('check images'),
+                title: SelectableText('check images'),
                 value: checkImages,
                 onChanged: (b) => setState(() => checkImages = b!),
               ),
               Gap(32),
-              MaterialButton(onPressed: () => _run(), child: Text('RUN')),
+              MaterialButton(onPressed: () => _run(), child: SelectableText('RUN')),
             ],
           ),
         ),
@@ -378,7 +378,7 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
         // output:
         Expanded(
           child: ListView(
-            children: log.map<Widget>((o) => Text(o)).toList(growable: false),
+            children: log.map<Widget>((o) => SelectableText(o)).toList(growable: false),
           ),
         ),
       ],
@@ -406,7 +406,7 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
       items: items.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
-          child: Text(value),
+          child: SelectableText(value),
         );
       }).toList(),
     );

@@ -47,12 +47,12 @@ class _CollectionFooter extends StatelessWidget {
     int percent = (count / total * 100).round();
     return Row(
       children: [
-        Text(
+        SelectableText(
           $strings.collectionLabelDiscovered(percent),
           style: $styles.text.body.copyWith(color: $styles.colors.accent1),
         ),
         Spacer(),
-        Text(
+        SelectableText(
           $strings.collectionLabelCount(count, total),
           style: $styles.text.body.copyWith(color: $styles.colors.offWhite),
         ),

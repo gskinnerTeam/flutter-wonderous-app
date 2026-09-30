@@ -32,7 +32,7 @@ class _TitleText extends StatelessWidget {
                       Semantics(
                         header: true,
                         sortKey: OrdinalSortKey(1),
-                        child: Text(
+                        child: SelectableText(
                           data.subTitle.toUpperCase(),
                           style: $styles.text.title2,
                         ).maybeAnimate().fade(delay: 100.delayMs),
@@ -61,7 +61,7 @@ class _TitleText extends StatelessWidget {
                   Gap($styles.insets.xs),
 
                   /// Region
-                  Text(
+                  SelectableText(
                     data.regionTitle.toUpperCase(),
                     style: $styles.text.title1,
                     textAlign: TextAlign.center,
@@ -85,7 +85,7 @@ class _TitleText extends StatelessWidget {
                   Gap($styles.insets.sm),
 
                   /// Date
-                  Text(
+                  SelectableText(
                     $strings.titleLabelDate(
                       StringUtils.formatYr(data.startYr),
                       StringUtils.formatYr(data.endYr),
