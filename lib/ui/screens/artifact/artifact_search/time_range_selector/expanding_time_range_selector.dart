@@ -189,6 +189,8 @@ class _OpenedTimeRange extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const double timeRangeFontSize = 20;
+    const double minTapSize = 44;
     double safeBottom = max($styles.insets.sm, MediaQuery.of(context).padding.bottom);
     List<Widget> timelineGrid = List.generate(
       5,
@@ -197,7 +199,7 @@ class _OpenedTimeRange extends StatelessWidget {
 
     final headingTextStyle = $styles.text.title1.copyWith(
       color: $styles.colors.offWhite,
-      fontSize: 20 * $styles.scale,
+      fontSize: timeRangeFontSize * $styles.scale,
     );
     final captionTextStyle = $styles.text.bodySmall.copyWith(color: $styles.colors.greyMedium);
 
@@ -209,24 +211,35 @@ class _OpenedTimeRange extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Gap($styles.insets.xl),
-            Spacer(),
-            if (localeLogic.strings.localeName == 'zh') ...{
-              _buildChineseDateLayout(headingTextStyle, captionTextStyle, startYr, endYr),
-            } else ...{
-              _buildDefaultDateLayout(headingTextStyle, captionTextStyle, startYr, endYr),
-            },
-            Spacer(),
-            SizedBox(
-              width: $styles.insets.xl,
-              child: AppBtn.from(
-                onPressed: onClose,
-                semanticLabel: $strings.circleButtonsSemanticClose,
-                enableFeedback: false, // handled when panelController changes.
-                icon: AppIcons.close,
-                iconSize: 20,
-                padding: EdgeInsets.symmetric(vertical: $styles.insets.xxs),
-                bgColor: Colors.transparent,
+            // Centred between the gap and the close button; at large text scales the dates shrink to fit
+            // instead of overflowing the row.
+            Expanded(
+              child: Center(
+                heightFactor: 1,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: localeLogic.strings.localeName == 'zh'
+                      ? _buildChineseDateLayout(headingTextStyle, captionTextStyle, startYr, endYr)
+                      : _buildDefaultDateLayout(headingTextStyle, captionTextStyle, startYr, endYr),
+                ),
               ),
+            ),
+            // The icon sits xxs from the right edge, but the padding around it keeps the tap target at least
+            // minTapSize square (the accessibility minimum).
+            AppBtn.from(
+              onPressed: onClose,
+              semanticLabel: $strings.circleButtonsSemanticClose,
+              enableFeedback: false, // handled when panelController changes.
+              icon: AppIcons.close,
+              iconSize: timeRangeFontSize,
+              minimumSize: Size.square(minTapSize),
+              padding: EdgeInsets.fromLTRB(
+                max(0, minTapSize - timeRangeFontSize - $styles.insets.xxs),
+                (minTapSize - timeRangeFontSize) / 2,
+                $styles.insets.xxs,
+                (minTapSize - timeRangeFontSize) / 2,
+              ),
+              bgColor: Colors.transparent,
             ),
           ],
         ),
