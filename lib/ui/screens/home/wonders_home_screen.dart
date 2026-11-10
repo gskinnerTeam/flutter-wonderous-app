@@ -119,10 +119,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       _pageController.jumpToPage(newIndex);
     }
 
+    // Announce the target wonder: on the animated path the page (and currentWonder) hasn't changed yet.
     SemanticsService.sendAnnouncement(
       View.of(context),
-      currentWonder.title,
-      TextDirection.ltr,
+      _wonders[index % _numWonders].title,
+      Directionality.of(context),
     );
   }
 
@@ -326,8 +327,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                 liveRegion: false,
                                 button: true,
                                 header: true,
-                                onScrollLeft: () => _setPageIndex(_wonderIndex - 1),
-                                onScrollRight: () => _setPageIndex(_wonderIndex + 1),
+                                onScrollLeft: () => _setPageIndex(_wonderIndex + 1),
+                                onScrollRight: () => _setPageIndex(_wonderIndex - 1),
                                 onIncrease: () => _setPageIndex(_wonderIndex + 1),
                                 onDecrease: () => _setPageIndex(_wonderIndex - 1),
                                 onTap: () => _showDetailsPage(),
@@ -341,8 +342,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                 color: $styles.colors.white,
                                 dotSize: 8,
                                 onDotPressed: _handlePageIndicatorDotPressed,
-                                onSemanticScrollLeft: () => _setPageIndex(_wonderIndex - 1),
-                                onSemanticScrollRight: () => _setPageIndex(_wonderIndex + 1),
+                                onSemanticScrollLeft: () => _setPageIndex(_wonderIndex + 1),
+                                onSemanticScrollRight: () => _setPageIndex(_wonderIndex - 1),
                                 semanticPageTitle: $strings.homeSemanticWonder,
                               ),
                               Gap($styles.insets.md),
