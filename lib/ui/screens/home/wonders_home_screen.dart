@@ -1,3 +1,4 @@
+import 'package:flutter/rendering.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/animate_utils.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
@@ -117,6 +118,13 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     } else {
       _pageController.jumpToPage(newIndex);
     }
+
+    // Announce the target wonder: on the animated path the page (and currentWonder) hasn't changed yet.
+    SemanticsService.sendAnnouncement(
+      View.of(context),
+      _wonders[index % _numWonders].title,
+      Directionality.of(context),
+    );
   }
 
   void _showDetailsPage() async {
@@ -316,9 +324,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           child: Column(
                             children: [
                               Semantics(
-                                liveRegion: true,
+                                liveRegion: false,
                                 button: true,
                                 header: true,
+                                onScrollLeft: () => _setPageIndex(_wonderIndex + 1),
+                                onScrollRight: () => _setPageIndex(_wonderIndex - 1),
                                 onIncrease: () => _setPageIndex(_wonderIndex + 1),
                                 onDecrease: () => _setPageIndex(_wonderIndex - 1),
                                 onTap: () => _showDetailsPage(),
@@ -332,6 +342,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                 color: $styles.colors.white,
                                 dotSize: 8,
                                 onDotPressed: _handlePageIndicatorDotPressed,
+                                onSemanticScrollLeft: () => _setPageIndex(_wonderIndex + 1),
+                                onSemanticScrollRight: () => _setPageIndex(_wonderIndex - 1),
                                 semanticPageTitle: $strings.homeSemanticWonder,
                               ),
                               Gap($styles.insets.md),
