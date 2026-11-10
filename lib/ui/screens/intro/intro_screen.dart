@@ -43,8 +43,9 @@ class _IntroScreenState extends State<IntroScreen> {
 
   void _handleIntroCompletePressed() {
     if (_currentPage.value == pageData.length - 1) {
-      context.go(ScreenPaths.home);
       settingsLogic.hasCompletedOnboarding.value = true;
+      // Use Router.neglect to prevent /welcome from remaining in browser history as a back-navigation target.
+      Router.neglect(context, () => context.go(ScreenPaths.home));
     }
   }
 
