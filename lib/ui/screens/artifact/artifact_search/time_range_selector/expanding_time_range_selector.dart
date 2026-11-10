@@ -271,7 +271,7 @@ class _OpenedTimeRange extends StatelessWidget {
                     crossAxisGap: 6,
                     minSize: 16,
                     selectedWonders: [wonder.type],
-                    timelineBuilder: (_, __, sel) => Container(
+                    timelineBuilder: (_, _, sel) => Container(
                       decoration: BoxDecoration(
                         color: $styles.colors.offWhite.withValues(alpha: sel ? 0.75 : 0.25),
                         borderRadius: BorderRadius.circular(999),

@@ -1,7 +1,7 @@
 part of '../timeline_screen.dart';
 
 class _DashedDividerWithYear extends StatelessWidget {
-  const _DashedDividerWithYear(this.year, {super.key});
+  const _DashedDividerWithYear(this.year);
   final int year;
 
   @override

@@ -3,7 +3,6 @@ part of '../collection_screen.dart';
 @immutable
 class _CollectionList extends StatefulWidget with GetItStatefulWidgetMixin {
   _CollectionList({
-    super.key,
     this.onReset,
     required this.fromId,
     this.scrollKey,

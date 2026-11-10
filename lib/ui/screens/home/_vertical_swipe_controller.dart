@@ -45,9 +45,9 @@ class _VerticalSwipeController {
   }) {
     return ValueListenableBuilder<double>(
       valueListenable: swipeAmt,
-      builder: (_, swipeAmt, __) => ValueListenableBuilder<bool>(
+      builder: (_, swipeAmt, _) => ValueListenableBuilder<bool>(
         valueListenable: isPointerDown,
-        builder: (_, isPointerDown, __) {
+        builder: (_, isPointerDown, _) {
           return builder(swipeAmt, isPointerDown, child);
         },
       ),

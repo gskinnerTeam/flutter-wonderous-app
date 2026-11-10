@@ -1,7 +1,7 @@
 part of '../wonder_events.dart';
 
 class _WonderImageWithTimeline extends StatelessWidget {
-  const _WonderImageWithTimeline({super.key, required this.data, required this.height});
+  const _WonderImageWithTimeline({required this.data, required this.height});
   final WonderData data;
   final double height;
 

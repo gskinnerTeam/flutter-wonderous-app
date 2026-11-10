@@ -2,7 +2,6 @@ part of '../collection_screen.dart';
 
 class _CollectibleImage extends StatelessWidget {
   const _CollectibleImage({
-    super.key,
     required this.collectible,
     required this.state,
     required this.onPressed,

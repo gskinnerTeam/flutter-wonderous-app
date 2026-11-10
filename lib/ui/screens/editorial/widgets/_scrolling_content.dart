@@ -3,7 +3,6 @@ part of '../editorial_screen.dart';
 class _ScrollingContent extends StatelessWidget {
   const _ScrollingContent(
     this.data, {
-    super.key,
     required this.scrollPos,
     required this.sectionNotifier,
   });
@@ -168,7 +167,7 @@ class _ScrollingContent extends StatelessWidget {
 }
 
 class _YouTubeThumbnail extends StatelessWidget {
-  const _YouTubeThumbnail({super.key, required this.id, required this.caption});
+  const _YouTubeThumbnail({required this.id, required this.caption});
   final String id;
   final String caption;
 
@@ -222,7 +221,7 @@ class _YouTubeThumbnail extends StatelessWidget {
 }
 
 class _MapsThumbnail extends StatefulWidget {
-  const _MapsThumbnail(this.data, {super.key});
+  const _MapsThumbnail(this.data);
   final WonderData data;
 
   @override

@@ -2,7 +2,6 @@ part of '../editorial_screen.dart';
 
 class _CircularTitleBar extends StatelessWidget {
   const _CircularTitleBar({
-    super.key,
     required this.titles,
     required this.icons,
     required this.index,
@@ -60,7 +59,6 @@ class _CircularTitleBar extends StatelessWidget {
 
 class _AnimatedCircleWithText extends StatefulWidget {
   const _AnimatedCircleWithText({
-    super.key,
     required this.titles,
     required this.index,
   });
@@ -106,7 +104,7 @@ class _AnimatedCircleWithTextState extends State<_AnimatedCircleWithText> with S
   Widget build(_) {
     return AnimatedBuilder(
       animation: _anim,
-      builder: (_, __) {
+      builder: (_, _) {
         var rot = _prevIndex > widget.index ? -pi : pi;
         return Transform.rotate(
           angle: Curves.easeInOut.transform(_anim.value) * rot,
