@@ -3,7 +3,7 @@ part of '../editorial_screen.dart';
 class _Callout extends StatelessWidget {
   final String text;
 
-  const _Callout({super.key, required this.text});
+  const _Callout({required this.text});
   @override
   Widget build(BuildContext context) {
     return Focus(

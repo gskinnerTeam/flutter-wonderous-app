@@ -129,7 +129,7 @@ class _HomeMenuState extends State<HomeMenu> {
   Widget _buildBottomBtns(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: settingsLogic.currentLocale,
-      builder: (_, __, ___) {
+      builder: (_, _, _) {
         return SeparatedColumn(
           separatorBuilder: () => Divider(thickness: 1.5, height: 1).maybeAnimate().scale(
             duration: $styles.times.slow,

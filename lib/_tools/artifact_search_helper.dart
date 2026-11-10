@@ -197,7 +197,7 @@ class _ArtifactSearchHelperState extends State<ArtifactSearchHelper> {
     stream.addListener(
       ImageStreamListener(
         (info, _) => completer.complete(info.image.width / info.image.height),
-        onError: (_, __) => completer.complete(null),
+        onError: (_, _) => completer.complete(null),
       ),
     );
     return completer.future;

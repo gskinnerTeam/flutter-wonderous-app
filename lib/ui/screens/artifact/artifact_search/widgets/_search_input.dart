@@ -4,7 +4,7 @@ part of '../artifact_search_screen.dart';
 const double _inputWidth = 400;
 
 class _SearchInput extends StatelessWidget {
-  const _SearchInput({super.key, required this.onSubmit, required this.wonder});
+  const _SearchInput({required this.onSubmit, required this.wonder});
   final void Function(String) onSubmit;
   final WonderData wonder;
 
@@ -166,7 +166,7 @@ class _SearchInput extends StatelessWidget {
           Gap($styles.insets.xs),
           ValueListenableBuilder(
             valueListenable: textController,
-            builder: (_, value, __) => Visibility(
+            builder: (_, value, _) => Visibility(
               visible: textController.value.text.isNotEmpty,
               child: Padding(
                 padding: EdgeInsets.only(right: $styles.insets.xs),

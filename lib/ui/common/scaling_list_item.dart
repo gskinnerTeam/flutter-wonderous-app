@@ -1,5 +1,5 @@
 import 'package:wonders/common_libs.dart';
-import 'package:wonders/ui/common/utils/context_utils.dart';
+import 'package:wonders/ui/common/global_coords_builder.dart';
 
 class AnimatedListItem extends StatelessWidget {
   const AnimatedListItem({super.key, required this.scrollPos, required this.builder});
@@ -10,21 +10,22 @@ class AnimatedListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     // Use Animate.toggle to build the child twice, this will allow it to properly measure its size and position.
     return Animate().toggle(
-      builder: (_, value, __) => ValueListenableBuilder(
+      builder: (_, value, _) => ValueListenableBuilder(
         valueListenable: scrollPos,
-        builder: (_, value, __) {
+        builder: (_, value, _) {
           return LayoutBuilder(
-            builder: (_, constraints) {
-              Offset? pos = ContextUtils.getGlobalPos(context);
-              final yPos = pos?.dy;
-              final widgetHeight = constraints.maxHeight;
-              double pctVisible = 0;
-              if (yPos != null) {
-                final amtVisible = context.heightPx - yPos;
-                pctVisible = (amtVisible / widgetHeight * .5).clamp(0, 1);
-              }
-              return builder(context, pctVisible);
-            },
+            builder: (_, constraints) => GlobalCoordsBuilder(
+              builder: (_, globalOffset, size) {
+                final yPos = globalOffset?.dy;
+                final widgetHeight = constraints.maxHeight;
+                double pctVisible = 0;
+                if (yPos != null) {
+                  final amtVisible = context.heightPx - yPos;
+                  pctVisible = (amtVisible / widgetHeight * .5).clamp(0, 1);
+                }
+                return builder(context, pctVisible);
+              },
+            ),
           );
         },
       ),

@@ -1,7 +1,7 @@
 part of '../artifact_search_screen.dart';
 
 class _ResultTile extends StatelessWidget {
-  const _ResultTile({super.key, required this.onPressed, required this.data});
+  const _ResultTile({required this.onPressed, required this.data});
 
   final void Function(SearchData data) onPressed;
   final SearchData data;

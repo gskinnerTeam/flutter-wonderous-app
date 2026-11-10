@@ -1,7 +1,7 @@
 part of '../collectible_found_screen.dart';
 
 class _CelebrationParticles extends StatelessWidget {
-  const _CelebrationParticles({super.key, this.fadeMs = 1000});
+  const _CelebrationParticles({this.fadeMs = 1000});
 
   final int fadeMs;
 

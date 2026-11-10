@@ -11,7 +11,7 @@ class CollectibleItem extends StatelessWidget with GetItMixin {
   CollectibleItem(this.collectible, {this.size = 64.0, super.key, this.focus}) {
     // pre-fetch the image, so it's ready if we show the collectible found screen.
     _imageProvider = NetworkImage(collectible.imageUrl);
-    _imageProvider.resolve(ImageConfiguration()).addListener(ImageStreamListener((_, __) {}));
+    _imageProvider.resolve(ImageConfiguration()).addListener(ImageStreamListener((_, _) {}));
   }
 
   final CollectibleData collectible;

@@ -85,7 +85,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
         Positioned.fill(
           child: ValueListenableBuilder<int>(
             valueListenable: _currentArtifactIndex,
-            builder: (_, value, __) {
+            builder: (_, value, _) {
               return _BlurredImageBg(url: _artifacts[value].imageUrl);
             },
           ),
@@ -106,7 +106,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
                   final child = pages[wrappedIndex];
                   return ValueListenableBuilder<double>(
                     valueListenable: _currentPage,
-                    builder: (_, value, __) {
+                    builder: (_, value, _) {
                       final int offset = (value.round() - index).abs();
                       return _CollapsingCarouselItem(
                         width: itemWidth,
@@ -124,7 +124,7 @@ class _ArtifactScreenState extends State<ArtifactCarouselScreen> {
               BottomCenter(
                 child: ValueListenableBuilder<int>(
                   valueListenable: _currentArtifactIndex,
-                  builder: (_, value, __) => _BottomTextContent(
+                  builder: (_, value, _) => _BottomTextContent(
                     artifact: _artifacts[value],
                     height: bottomHeight,
                     shortMode: shortMode,

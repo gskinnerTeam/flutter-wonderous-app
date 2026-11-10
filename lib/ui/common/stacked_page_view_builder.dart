@@ -52,7 +52,7 @@ class _StackedPageViewBuilderState extends State<StackedPageViewBuilder> {
             child: PageView.builder(
               itemCount: widget.pageCount,
               controller: _controller,
-              itemBuilder: (_, __) => Container(color: Colors.transparent),
+              itemBuilder: (_, _) => Container(color: Colors.transparent),
             ),
           ),
         ),

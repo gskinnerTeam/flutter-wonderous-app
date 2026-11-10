@@ -62,13 +62,13 @@ class _AppImageState extends State<AppImage> {
       alignment: widget.alignment,
       duration: widget.duration ?? $styles.times.fast,
       syncDuration: widget.syncDuration ?? 0.ms,
-      loadingBuilder: (_, value, ___) {
+      loadingBuilder: (_, value, _) {
         if (!widget.distractor && !widget.progress) return SizedBox();
         return Center(
           child: AppLoadingIndicator(value: widget.progress ? value : null, color: widget.color),
         );
       },
-      errorBuilder: (_, __) => Container(
+      errorBuilder: (_, _) => Container(
         padding: EdgeInsets.all($styles.insets.xs),
         alignment: Alignment.center,
         child: LayoutBuilder(

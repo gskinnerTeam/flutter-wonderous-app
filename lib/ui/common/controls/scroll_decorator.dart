@@ -129,7 +129,7 @@ class _ScrollDecoratorState extends State<ScrollDecorator> {
     content = widget.builder(currentController);
     return AnimatedBuilder(
       animation: currentController,
-      builder: (_, __) {
+      builder: (_, _) {
         return Stack(
           children: [
             if (widget.bgBuilder != null) ...[
