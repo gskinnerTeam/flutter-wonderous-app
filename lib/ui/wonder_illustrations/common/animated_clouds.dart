@@ -92,7 +92,7 @@ class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProvid
         child: OverflowBox(
           child: AnimatedBuilder(
             animation: _anim,
-            builder: (_, __) {
+            builder: (_, _) {
               // A stack with 2 sets of clouds, one set is moving out of view while the other moves in.
               return Stack(
                 clipBehavior: Clip.hardEdge,

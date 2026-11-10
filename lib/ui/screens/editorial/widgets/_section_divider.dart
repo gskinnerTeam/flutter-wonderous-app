@@ -4,7 +4,6 @@ class _SectionDivider extends StatefulWidget {
   const _SectionDivider(
     this.scrollNotifier,
     this.sectionNotifier, {
-    super.key,
     required this.index,
   });
   final int index;
@@ -45,7 +44,7 @@ class _SectionDividerState extends State<_SectionDivider> with SingleTickerProvi
           _checkPosition(context, globalOffset);
           return ValueListenableBuilder<bool>(
             valueListenable: _isActivated,
-            builder: (_, value, __) => Padding(
+            builder: (_, value, _) => Padding(
               padding: EdgeInsets.symmetric(vertical: $styles.insets.xl * 2),
               child: CompassDivider(isExpanded: value),
             ),

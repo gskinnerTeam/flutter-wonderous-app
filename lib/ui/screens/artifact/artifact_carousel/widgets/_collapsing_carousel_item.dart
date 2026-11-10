@@ -4,7 +4,6 @@ part of '../artifact_carousel_screen.dart';
 /// This lets the child simply render it's contents
 class _CollapsingCarouselItem extends StatelessWidget {
   const _CollapsingCarouselItem({
-    super.key,
     required this.child,
     required this.indexOffset,
     required this.width,
@@ -55,7 +54,6 @@ class _CollapsingCarouselItem extends StatelessWidget {
 
 class _AnimatedTranslate extends StatelessWidget {
   const _AnimatedTranslate({
-    super.key,
     required this.duration,
     required this.offset,
     required this.child,
@@ -76,7 +74,7 @@ class _AnimatedTranslate extends StatelessWidget {
 }
 
 class _DoubleBorderImage extends StatelessWidget {
-  const _DoubleBorderImage(this.data, {super.key});
+  const _DoubleBorderImage(this.data);
   final HighlightData data;
   @override
   Widget build(BuildContext context) => Container(

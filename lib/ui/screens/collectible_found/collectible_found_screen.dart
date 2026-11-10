@@ -24,7 +24,7 @@ class CollectibleFoundScreen extends StatelessWidget {
     return RepaintBoundary(
       child: _buildIntro(context).animate().swap(
         delay: 1050.animateMs,
-        builder: (_, __) => _buildDetail(context),
+        builder: (_, _) => _buildDetail(context),
       ),
     );
   }
@@ -217,7 +217,7 @@ class CollectibleFoundScreen extends StatelessWidget {
       child: Animate().custom(
         delay: delay,
         duration: t * 2,
-        builder: (_, m, __) => Text(
+        builder: (_, m, _) => Text(
           text,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,

@@ -10,6 +10,6 @@ class FadeColorTransition extends StatelessWidget {
   @override
   Widget build(BuildContext context) => AnimatedBuilder(
     animation: animation,
-    builder: (_, __) => Container(color: color.withValues(alpha: animation.value)),
+    builder: (_, _) => Container(color: color.withValues(alpha: animation.value)),
   );
 }

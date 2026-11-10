@@ -8,7 +8,6 @@ import 'package:wonders/ui/common/controls/app_loading_indicator.dart';
 import 'package:wonders/ui/common/controls/eight_way_swipe_detector.dart';
 import 'package:wonders/ui/common/fullscreen_keyboard_listener.dart';
 import 'package:wonders/ui/common/hidden_collectible.dart';
-import 'package:wonders/ui/common/ignore_pointer.dart';
 import 'package:wonders/ui/common/modals/fullscreen_url_img_viewer.dart';
 import 'package:wonders/ui/common/unsplash_photo.dart';
 import 'package:wonders/ui/common/utils/app_haptics.dart';
@@ -182,7 +181,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
       onKeyDown: _handleKeyDown,
       child: ValueListenableBuilder<List<String>>(
         valueListenable: _photoIds,
-        builder: (_, value, __) {
+        builder: (_, value, _) {
           if (value.isEmpty) {
             return Center(child: AppLoadingIndicator());
           }
@@ -250,7 +249,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
       order: NumericFocusOrder(index.toDouble()),
       child: ValueListenableBuilder(
         valueListenable: collectiblesLogic.statesById,
-        builder: (_, __, ___) {
+        builder: (_, _, _) {
           bool isSelected = index == _index;
           final imgUrl = _photoIds.value[index];
           late String semanticLbl;

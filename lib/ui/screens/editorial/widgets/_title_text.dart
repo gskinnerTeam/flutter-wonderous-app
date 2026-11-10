@@ -1,7 +1,7 @@
 part of '../editorial_screen.dart';
 
 class _TitleText extends StatelessWidget {
-  const _TitleText(this.data, {super.key, required this.scroller});
+  const _TitleText(this.data, {required this.scroller});
   final WonderData data;
   final ScrollController scroller;
 
@@ -76,7 +76,7 @@ class _TitleText extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: $styles.insets.sm),
                       child: AnimatedBuilder(
                         animation: scroller,
-                        builder: (_, __) => CompassDivider(
+                        builder: (_, _) => CompassDivider(
                           isExpanded: scroller.position.pixels <= 0,
                           linesColor: data.type.fgColor,
                           compassColor: $styles.colors.offWhite,
