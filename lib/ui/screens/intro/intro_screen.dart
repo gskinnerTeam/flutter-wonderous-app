@@ -147,7 +147,7 @@ class _IntroScreenState extends State<IntroScreen> {
                           width: smallMode ? _imageSizeSmall : _imageSize,
                           child: ValueListenableBuilder<int>(
                             valueListenable: _currentPage,
-                            builder: (_, value, __) {
+                            builder: (_, value, _) {
                               return AnimatedSwitcher(
                                 duration: $styles.times.slow,
                                 child: KeyedSubtree(
@@ -212,7 +212,7 @@ class _IntroScreenState extends State<IntroScreen> {
   Widget _buildFinishBtn(BuildContext context) {
     return ValueListenableBuilder<int>(
       valueListenable: _currentPage,
-      builder: (_, pageIndex, __) {
+      builder: (_, pageIndex, _) {
         return AnimatedOpacity(
           opacity: pageIndex == pageData.length - 1 ? 1 : 0,
           duration: $styles.times.fast,
@@ -252,7 +252,7 @@ class _IntroScreenState extends State<IntroScreen> {
   Widget _buildNavText(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: _currentPage,
-      builder: (_, pageIndex, __) {
+      builder: (_, pageIndex, _) {
         return AnimatedOpacity(
           opacity: pageIndex == pageData.length - 1 ? 0 : 1,
           duration: $styles.times.fast,

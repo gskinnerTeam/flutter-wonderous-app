@@ -5,7 +5,6 @@ part of '../timeline_screen.dart';
 class _EventMarkers extends StatefulWidget {
   const _EventMarkers(
     this.selectedYr, {
-    super.key,
     required this.onEventChanged,
     required this.onMarkerPressed,
   });
@@ -119,7 +118,6 @@ class _EventMarkersState extends State<_EventMarkers> {
 class _EventMarker extends StatelessWidget {
   const _EventMarker(
     this.offset, {
-    super.key,
     required this.isSelected,
     required this.event,
     required this.onPressed,

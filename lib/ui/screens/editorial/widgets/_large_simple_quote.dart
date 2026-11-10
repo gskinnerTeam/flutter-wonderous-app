@@ -1,7 +1,7 @@
 part of '../editorial_screen.dart';
 
 class _LargeSimpleQuote extends StatelessWidget {
-  const _LargeSimpleQuote({super.key, required this.text, required this.author});
+  const _LargeSimpleQuote({required this.text, required this.author});
   final String text;
   final String author;
 

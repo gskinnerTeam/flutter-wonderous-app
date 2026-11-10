@@ -1,7 +1,7 @@
 part of '../editorial_screen.dart';
 
 class _CollapsingPullQuoteImage extends StatelessWidget {
-  const _CollapsingPullQuoteImage({super.key, required this.scrollPos, required this.data});
+  const _CollapsingPullQuoteImage({required this.scrollPos, required this.data});
   final ValueNotifier<double> scrollPos;
   final WonderData data;
 
@@ -31,7 +31,7 @@ class _CollapsingPullQuoteImage extends StatelessWidget {
 
     return ValueListenableBuilder<double>(
       valueListenable: scrollPos,
-      builder: (context, value, __) {
+      builder: (context, value, _) {
         double collapseAmt = 1.0;
         final yPos = ContextUtils.getGlobalPos(context)?.dy;
         if (yPos != null && yPos < collapseStartPx) {

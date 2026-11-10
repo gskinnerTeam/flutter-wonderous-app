@@ -3,7 +3,6 @@ part of '../timeline_screen.dart';
 class _BottomScrubber extends StatelessWidget {
   const _BottomScrubber(
     this.scroller, {
-    super.key,
     required this.timelineMinSize,
     required this.size,
     required this.selectedWonder,
@@ -64,7 +63,7 @@ class _BottomScrubber extends StatelessWidget {
               /// Visible area, follows the position of scroller
               AnimatedBuilder(
                 animation: scroller,
-                builder: (_, __) {
+                builder: (_, _) {
                   ScrollPosition? pos;
                   if (scroller.hasClients) pos = scroller.position;
                   // Get current scroll offset and move the viewport to match

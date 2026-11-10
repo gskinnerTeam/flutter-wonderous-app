@@ -61,7 +61,7 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
   Widget build(BuildContext context) {
     Widget content = AnimatedBuilder(
       animation: _isZoomed,
-      builder: (_, __) {
+      builder: (_, _) {
         final bool enableSwipe = !_isZoomed.value && widget.urls.length > 1;
         return PageView.builder(
           physics: enableSwipe ? PageScrollPhysics() : NeverScrollableScrollPhysics(),
@@ -95,7 +95,7 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
                   padding: EdgeInsets.only(bottom: $styles.insets.md),
                   child: ValueListenableBuilder(
                     valueListenable: _currentPage,
-                    builder: (_, int page, __) {
+                    builder: (_, int page, _) {
                       return Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [

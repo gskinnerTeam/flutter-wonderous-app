@@ -2,7 +2,6 @@ part of '../artifact_carousel_screen.dart';
 
 class _BottomTextContent extends StatelessWidget {
   const _BottomTextContent({
-    super.key,
     required this.artifact,
     required this.height,
     required this.state,

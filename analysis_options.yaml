@@ -13,6 +13,14 @@ analyzer:
   errors:
     prefer_const_constructors: ignore
     unused_element: ignore # mostly because of super.key
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
 
 formatter:
   trailing_commas: preserve
