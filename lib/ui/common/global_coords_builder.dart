@@ -25,6 +25,17 @@ class _GlobalCoordsBuilderState extends State<GlobalCoordsBuilder> {
     _scheduleUpdate();
   }
 
+  /// The callers sit inside scroll-driven builders (ValueListenableBuilder / AnimatedBuilder),
+  /// so the parent rebuilds on every scroll tick. Ancestor scrolling doesn't bubble a
+  /// ScrollNotification down to us, so re-measure here after the frame lays out.
+  /// No loop: our own setState calls build(), never didUpdateWidget(), and setState only runs
+  /// when the measured value actually changed.
+  @override
+  void didUpdateWidget(covariant GlobalCoordsBuilder oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _scheduleUpdate();
+  }
+
   void _scheduleUpdate() {
     if (_pendingUpdate) return;
     _pendingUpdate = true;
@@ -35,10 +46,11 @@ class _GlobalCoordsBuilderState extends State<GlobalCoordsBuilder> {
   }
 
   void _updateOffset() {
+    if (!mounted) return;
     final context = _key.currentContext;
     if (context != null) {
       final RenderBox? box = context.findRenderObject() as RenderBox?;
-      if (box != null && box.hasSize && mounted) {
+      if (box != null && box.attached && box.hasSize) {
         Offset? newOffset;
         try {
           newOffset = box.localToGlobal(Offset.zero);
