@@ -253,7 +253,10 @@ class _MenuTextBtn extends StatelessWidget {
         children: [
           AppIcon(icon, color: $styles.colors.offWhite),
           Gap($styles.insets.xs),
-          Text(label, style: $styles.text.bodyBold.copyWith(height: 1)),
+          // Flexible lets long labels wrap at large text scales instead of running off the edge.
+          Flexible(
+            child: Text(label, textAlign: TextAlign.center, style: $styles.text.bodyBold.copyWith(height: 1)),
+          ),
         ],
       ),
     );

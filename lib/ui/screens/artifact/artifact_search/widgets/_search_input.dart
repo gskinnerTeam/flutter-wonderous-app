@@ -134,8 +134,8 @@ class _SearchInput extends StatelessWidget {
   ) {
     Color captionColor = $styles.colors.caption;
     return Container(
-      constraints: BoxConstraints(maxWidth: _inputWidth),
-      height: $styles.insets.xl,
+      // A min (not fixed) height lets the field grow with large text scales instead of clipping the text.
+      constraints: BoxConstraints(maxWidth: _inputWidth, minHeight: $styles.insets.xl),
       decoration: BoxDecoration(
         color: $styles.colors.offWhite,
         borderRadius: BorderRadius.circular($styles.insets.xs),
@@ -160,6 +160,8 @@ class _SearchInput extends StatelessWidget {
                 focusedBorder: OutlineInputBorder(borderSide: BorderSide.none),
                 enabledBorder: UnderlineInputBorder(borderSide: BorderSide.none),
                 hintText: $strings.searchInputHintSearch,
+                // Let the hint wrap at large text scales rather than being cut off.
+                hintMaxLines: 3,
               ),
             ),
           ),

@@ -45,13 +45,16 @@ class _CollectionFooter extends StatelessWidget {
 
   Widget _buildProgressRow(BuildContext context) {
     int percent = (count / total * 100).round();
-    return Row(
+    // A Wrap (rather than a Row with a Spacer) keeps both labels at opposite ends when they fit, and moves the count
+    // onto its own line at large text scales instead of overflowing.
+    return Wrap(
+      alignment: WrapAlignment.spaceBetween,
+      runSpacing: $styles.insets.xxs,
       children: [
         Text(
           $strings.collectionLabelDiscovered(percent),
           style: $styles.text.body.copyWith(color: $styles.colors.accent1),
         ),
-        Spacer(),
         Text(
           $strings.collectionLabelCount(count, total),
           style: $styles.text.body.copyWith(color: $styles.colors.offWhite),

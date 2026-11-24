@@ -104,21 +104,27 @@ class _WonderImageWithTimeline extends StatelessWidget {
 
   Widget _buildEraTextRow(BuildContext context) {
     final textStyle = $styles.text.body.copyWith(color: $styles.colors.accent2, height: 1);
-    return SeparatedRow(
-      separatorBuilder: () => Gap($styles.insets.sm),
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          $strings.titleLabelDate(
-            StringUtils.formatYr(data.startYr),
-            StringUtils.formatYr(data.endYr),
+    // This sits in a fixed-height header, so at large text scales the single line shrinks to fit instead of
+    // overflowing.
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: SeparatedRow(
+        separatorBuilder: () => Gap($styles.insets.sm),
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            $strings.titleLabelDate(
+              StringUtils.formatYr(data.startYr),
+              StringUtils.formatYr(data.endYr),
+            ),
+            style: textStyle,
           ),
-          style: textStyle,
-        ),
-        _buildDot(context),
-        Text(StringUtils.getEra(data.startYr), style: textStyle),
-      ],
+          _buildDot(context),
+          Text(StringUtils.getEra(data.startYr), style: textStyle),
+        ],
+      ),
     ).maybeAnimate().fade(delay: $styles.times.pageTransition);
   }
 
