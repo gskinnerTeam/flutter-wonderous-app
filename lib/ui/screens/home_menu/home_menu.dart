@@ -130,33 +130,37 @@ class _HomeMenuState extends State<HomeMenu> {
     return ValueListenableBuilder(
       valueListenable: settingsLogic.currentLocale,
       builder: (_, _, _) {
-        return SeparatedColumn(
-          separatorBuilder: () => Divider(thickness: 1.5, height: 1).maybeAnimate().scale(
-            duration: $styles.times.slow,
-            delay: $styles.times.pageTransition + 200.delayMs,
-            curve: Curves.easeOutBack,
+        // IntrinsicWidth gives all three buttons the width of the widest one, so their start-aligned icons share a left edge.
+        return IntrinsicWidth(
+          child: SeparatedColumn(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            separatorBuilder: () => Divider(thickness: 1.5, height: 1).maybeAnimate().scale(
+              duration: $styles.times.slow,
+              delay: $styles.times.pageTransition + 200.delayMs,
+              curve: Curves.easeOutBack,
+            ),
+            children:
+                [
+                      _MenuTextBtn(
+                        label: $strings.homeMenuButtonExplore,
+                        icon: AppIcons.timeline,
+                        onPressed: () => _handleTimelinePressed(context),
+                      ),
+                      _MenuTextBtn(
+                        label: $strings.homeMenuButtonView,
+                        icon: AppIcons.collection,
+                        onPressed: () => _handleCollectionPressed(context),
+                      ),
+                      _MenuTextBtn(
+                        label: $strings.homeMenuButtonAbout,
+                        icon: AppIcons.info,
+                        onPressed: () => _handleAboutPressed(context),
+                      ),
+                    ]
+                    .animate(interval: 50.delayMs)
+                    .fade(delay: $styles.times.pageTransition + 50.delayMs)
+                    .slide(begin: Offset(0, .1), curve: Curves.easeOut),
           ),
-          children:
-              [
-                    _MenuTextBtn(
-                      label: $strings.homeMenuButtonExplore,
-                      icon: AppIcons.timeline,
-                      onPressed: () => _handleTimelinePressed(context),
-                    ),
-                    _MenuTextBtn(
-                      label: $strings.homeMenuButtonView,
-                      icon: AppIcons.collection,
-                      onPressed: () => _handleCollectionPressed(context),
-                    ),
-                    _MenuTextBtn(
-                      label: $strings.homeMenuButtonAbout,
-                      icon: AppIcons.info,
-                      onPressed: () => _handleAboutPressed(context),
-                    ),
-                  ]
-                  .animate(interval: 50.delayMs)
-                  .fade(delay: $styles.times.pageTransition + 50.delayMs)
-                  .slide(begin: Offset(0, .1), curve: Curves.easeOut),
         );
       },
     );
@@ -244,18 +248,19 @@ class _MenuTextBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBtn(
       expand: true,
-      padding: EdgeInsets.symmetric(vertical: $styles.insets.md),
+      padding: EdgeInsets.symmetric(horizontal: $styles.insets.sm, vertical: $styles.insets.md),
       onPressed: onPressed,
       bgColor: Colors.transparent,
       semanticLabel: label,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           AppIcon(icon, color: $styles.colors.offWhite),
           Gap($styles.insets.xs),
           // Flexible lets long labels wrap at large text scales instead of running off the edge.
           Flexible(
-            child: Text(label, textAlign: TextAlign.center, style: $styles.text.bodyBold.copyWith(height: 1)),
+            child: Text(label, style: $styles.text.bodyBold.copyWith(height: 1)),
           ),
         ],
       ),
