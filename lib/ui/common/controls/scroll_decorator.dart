@@ -36,14 +36,14 @@ class ScrollDecorator extends StatefulWidget {
           if (begin != null)
             AnimatedOpacity(
               duration: duration,
-              opacity: controller.hasClients && controller.position.extentBefore > 3 ? 1 : 0,
+              opacity: _isLaidOut(controller) && controller.position.extentBefore > 3 ? 1 : 0,
               child: begin,
             ),
           Spacer(),
           if (end != null)
             AnimatedOpacity(
               duration: duration,
-              opacity: controller.hasClients && controller.position.extentAfter > 3 ? 1 : 0,
+              opacity: _isLaidOut(controller) && controller.position.extentAfter > 3 ? 1 : 0,
               child: end,
             ),
         ],
@@ -64,7 +64,7 @@ class ScrollDecorator extends StatefulWidget {
   }) {
     bgBuilder = null;
     fgBuilder = (controller) {
-      final double ratio = controller.hasClients ? min(1, controller.position.extentBefore / 60) : 0;
+      final double ratio = _isLaidOut(controller) ? min(1, controller.position.extentBefore / 60) : 0;
       return IgnorePointerAndSemantics(
         child: Container(
           height: 24,
@@ -145,6 +145,12 @@ class _ScrollDecoratorState extends State<ScrollDecorator> {
     );
   }
 }
+
+/// Whether the controller is attached to a position that has been laid out. Scroll extents (eg. `extentBefore`) throw
+/// until the scrollable has completed layout, which can happen when a decorator builds before its scroll view
+/// (eg. when a route is restored underneath another page on web deep links).
+bool _isLaidOut(ScrollController controller) =>
+    controller.hasClients && controller.positions.length == 1 && controller.position.hasContentDimensions;
 
 /// Builder function type for use with ScrollDecorator.
 typedef ScrollBuilder = Widget Function(ScrollController controller);
