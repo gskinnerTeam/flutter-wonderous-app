@@ -14,11 +14,11 @@ class TimelineEventCard extends StatelessWidget {
   final bool darkMode;
 
   /// Above this text scale, the year column is too narrow for the text beside it, so the card stacks vertically.
-  static const double _stackedTextScale = 2;
+  static const double stackedTextScale = 2;
 
   @override
   Widget build(BuildContext context) {
-    final bool stacked = MediaQuery.textScalerOf(context).scale(1) >= _stackedTextScale;
+    final bool stacked = MediaQuery.textScalerOf(context).scale(1) >= stackedTextScale;
     final Color dividerColor = darkMode ? Colors.white : $styles.colors.black;
     // Years are a single line of display text, so they shrink to fit their column rather than wrapping digits.
     final Widget date = FittedBox(

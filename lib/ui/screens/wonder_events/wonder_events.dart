@@ -135,8 +135,13 @@ class _WonderEventsState extends State<WonderEvents> {
     return LayoutBuilder(
       builder: (_, constraints) {
         double topHeight = max(constraints.maxHeight * .55, 200);
+        // At large text sizes the default content width leaves the event cards too narrow on tablets, so use most of the screen.
+        final bool largeText = MediaQuery.textScalerOf(context).scale(1) >= TimelineEventCard.stackedTextScale;
+        final double contentWidth = largeText
+            ? max($styles.sizes.maxContentWidth2, constraints.maxWidth * .9)
+            : $styles.sizes.maxContentWidth2;
         return CenteredBox(
-          width: $styles.sizes.maxContentWidth2,
+          width: contentWidth,
           child: Stack(
             children: [
               /// Top content, sits underneath scrolling list
