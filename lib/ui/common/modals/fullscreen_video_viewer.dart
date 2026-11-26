@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/platform_info.dart';
+import 'package:wonders/logic/common/window_controls.dart';
 import 'package:wonders/ui/common/fullscreen_keyboard_listener.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
@@ -98,7 +99,7 @@ class _FullscreenVideoViewerState extends State<FullscreenVideoViewer> {
               child: Padding(
                 padding: EdgeInsets.all($styles.insets.md),
                 child: PointerInterceptor(
-                  child: const BackBtn(),
+                  child: const WindowControlsPadding(child: BackBtn()),
                 ),
               ),
             ),

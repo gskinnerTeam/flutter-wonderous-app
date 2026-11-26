@@ -8,6 +8,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/logic/common/animate_utils.dart';
 import 'package:wonders/logic/common/platform_info.dart';
 import 'package:wonders/logic/common/string_utils.dart';
+import 'package:wonders/logic/common/window_controls.dart';
 import 'package:wonders/logic/data/wonder_data.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/blend_mask.dart';
@@ -205,7 +206,9 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                       alignment: backBtnAlign,
                       child: Padding(
                         padding: EdgeInsets.all($styles.insets.sm),
-                        child: BackBtn(icon: AppIcons.north, onPressed: _handleBackPressed),
+                        child: WindowControlsPadding(
+                          child: BackBtn(icon: AppIcons.north, onPressed: _handleBackPressed),
+                        ),
                       ),
                     ),
                   ),
