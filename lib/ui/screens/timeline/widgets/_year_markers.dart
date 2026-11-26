@@ -69,9 +69,15 @@ class _YearMarker extends StatelessWidget {
             maxWidth: 100,
             child: FractionalTranslation(
               translation: Offset(0, -.5),
-              child: Text(
-                '${yr.abs()}',
-                style: $styles.text.body.copyWith(color: Colors.white, height: 1),
+              // Years are a single line; at large text sizes shrink to fit the 100px column instead of wrapping digits.
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  '${yr.abs()}',
+                  maxLines: 1,
+                  softWrap: false,
+                  style: $styles.text.body.copyWith(color: Colors.white, height: 1),
+                ),
               ),
             ),
           ),
