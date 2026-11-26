@@ -37,25 +37,37 @@ class AppHeader extends StatelessWidget {
                 child: Semantics(
                   header: true,
                   child: Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (title != null)
-                          Text(
-                            title!.toUpperCase(),
-                            textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
-                            style: $styles.text.h4.copyWith(
-                              color: $styles.colors.offWhite,
-                              fontWeight: FontWeight.w500,
+                    child: ValueListenableBuilder(
+                      valueListenable: WindowControls.leftInset,
+                      builder: (_, inset, child) {
+                        if (inset == 0) return child!;
+                        // The back button is shifted right by the window controls, so keep the title clear of it
+                        // (on both sides, to stay centered) and let it shrink rather than overlap.
+                        return Padding(
+                          padding: EdgeInsets.symmetric(horizontal: inset + $styles.insets.sm + CircleBtn.defaultSize),
+                          child: FittedBox(fit: BoxFit.scaleDown, child: child),
+                        );
+                      },
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (title != null)
+                            Text(
+                              title!.toUpperCase(),
+                              textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+                              style: $styles.text.h4.copyWith(
+                                color: $styles.colors.offWhite,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                          ),
-                        if (subtitle != null)
-                          Text(
-                            subtitle!.toUpperCase(),
-                            textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
-                            style: $styles.text.title1.copyWith(color: $styles.colors.accent1),
-                          ),
-                      ],
+                          if (subtitle != null)
+                            Text(
+                              subtitle!.toUpperCase(),
+                              textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+                              style: $styles.text.title1.copyWith(color: $styles.colors.accent1),
+                            ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
