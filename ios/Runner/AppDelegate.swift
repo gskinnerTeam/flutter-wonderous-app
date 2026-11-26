@@ -17,45 +17,36 @@ import GoogleMaps
   }
 }
 
+/// Reports the space taken by the iPadOS 26+ window controls (close/minimize/zoom) to Flutter,
+/// since they aren't part of the safe area Flutter receives. See lib/logic/common/window_controls.dart.
 class WindowControlsFlutterViewController: FlutterViewController {
   private var channel: FlutterMethodChannel?
-  private var lastLeft: CGFloat = -1
+  private var lastInset: Double?
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    let ch = FlutterMethodChannel(name: "wonderous/window_controls", binaryMessenger: binaryMessenger)
-    ch.setMethodCallHandler { [weak self] call, result in
-      guard call.method == "getInsets" else { return result(FlutterMethodNotImplemented) }
-      result(["left": Double(self?.windowControlsLeftInset() ?? 0)])
-    }
-    channel = ch
+    channel = FlutterMethodChannel(name: "wonderous/window_controls", binaryMessenger: binaryMessenger)
+    channel?.setMethodCallHandler { [weak self] _, result in result(self?.windowControlsInset ?? 0) }
   }
 
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
-    pushIfChanged()
+    let inset = windowControlsInset
+    if inset != lastInset {
+      lastInset = inset
+      channel?.invokeMethod("insetChanged", arguments: inset)
+    }
   }
 
-  override func viewSafeAreaInsetsDidChange() {
-    super.viewSafeAreaInsetsDidChange()
-    pushIfChanged()
-  }
-
-  private func windowControlsLeftInset() -> CGFloat {
+  /// Left inset needed beyond the regular safe area, which Flutter already handles.
+  private var windowControlsInset: Double {
     guard UIDevice.current.userInterfaceIdiom == .pad else { return 0 }
     #if compiler(>=6.2)
     if #available(iOS 26.0, *) {
       let adapted = view.edgeInsets(for: .safeArea(cornerAdaptation: .horizontal))
-      return max(0, adapted.left - view.safeAreaInsets.left)
+      return Double(max(0, adapted.left - view.safeAreaInsets.left))
     }
     #endif
     return 0
-  }
-
-  private func pushIfChanged() {
-    let left = windowControlsLeftInset()
-    guard abs(left - lastLeft) > 0.5 else { return }
-    lastLeft = left
-    channel?.invokeMethod("insetsChanged", arguments: ["left": Double(left)])
   }
 }

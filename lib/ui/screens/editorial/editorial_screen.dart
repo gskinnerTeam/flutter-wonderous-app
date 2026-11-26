@@ -207,7 +207,6 @@ class _WonderEditorialScreenState extends State<WonderEditorialScreen> {
                       child: Padding(
                         padding: EdgeInsets.all($styles.insets.sm),
                         child: WindowControlsPadding(
-                          enabled: backBtnAlign == Alignment.topLeft,
                           child: BackBtn(icon: AppIcons.north, onPressed: _handleBackPressed),
                         ),
                       ),
