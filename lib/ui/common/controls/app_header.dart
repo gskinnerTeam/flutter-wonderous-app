@@ -44,7 +44,7 @@ class AppHeader extends StatelessWidget {
                         // The back button is shifted right by the window controls, so keep the title clear of it
                         // (on both sides, to stay centered) and let it shrink rather than overlap.
                         return Padding(
-                          padding: EdgeInsets.symmetric(horizontal: inset + $styles.insets.sm + CircleBtn.defaultSize),
+                          padding: EdgeInsets.symmetric(horizontal: inset + $styles.insets.xs + CircleBtn.defaultSize),
                           child: FittedBox(fit: BoxFit.scaleDown, child: child),
                         );
                       },

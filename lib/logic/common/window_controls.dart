@@ -26,7 +26,8 @@ class WindowControlsPadding extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: WindowControls.leftInset,
       builder: (_, inset, child) => Padding(
-        padding: EdgeInsets.only(left: inset),
+        // Next to the window controls, use a tighter gap than at a screen edge (xs instead of the usual sm).
+        padding: EdgeInsets.only(left: inset > 0 ? inset - $styles.insets.xs : 0),
         child: child,
       ),
       child: child,
