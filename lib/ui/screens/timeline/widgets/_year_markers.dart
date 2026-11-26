@@ -53,8 +53,13 @@ class _YearMarker extends StatelessWidget {
   final int yr;
   final double offset;
 
+  /// Right edge of the year labels when text is scaled up, leaving room for the event markers that sit to their right.
+  static const double scaledTextRightInset = 32;
+
   @override
   Widget build(BuildContext context) {
+    // Once text is scaled up, centred years grow into the event markers, so right-align them just short of the markers.
+    final bool scaledText = MediaQuery.textScalerOf(context).scale(1) > 1;
     return ExcludeSemantics(
       child: Align(
         alignment: Alignment(0, -1 + offset * 2),
@@ -64,19 +69,22 @@ class _YearMarker extends StatelessWidget {
         child: SizedBox(
           height: 0,
           child: OverflowBox(
-            alignment: Alignment.topCenter,
+            alignment: scaledText ? Alignment.topRight : Alignment.topCenter,
             maxHeight: 100,
             maxWidth: 100,
-            child: FractionalTranslation(
-              translation: Offset(0, -.5),
-              // Years are a single line; at large text sizes shrink to fit the 100px column instead of wrapping digits.
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  '${yr.abs()}',
-                  maxLines: 1,
-                  softWrap: false,
-                  style: $styles.text.body.copyWith(color: Colors.white, height: 1),
+            child: Padding(
+              padding: EdgeInsets.only(right: scaledText ? scaledTextRightInset : 0),
+              child: FractionalTranslation(
+                translation: Offset(0, -.5),
+                // Years are a single line; at large text sizes shrink to fit the column instead of wrapping digits.
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    '${yr.abs()}',
+                    maxLines: 1,
+                    softWrap: false,
+                    style: $styles.text.body.copyWith(color: Colors.white, height: 1),
+                  ),
                 ),
               ),
             ),
