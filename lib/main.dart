@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -5,6 +7,7 @@ import 'package:wonders/common_libs.dart';
 import 'package:wonders/l10n/app_localizations.dart';
 import 'package:wonders/logic/artifact_api_logic.dart';
 import 'package:wonders/logic/artifact_api_service.dart';
+import 'package:wonders/logic/common/window_controls.dart';
 import 'package:wonders/logic/collectibles_logic.dart';
 import 'package:wonders/logic/locale_logic.dart';
 import 'package:wonders/logic/native_widget_service.dart';
@@ -15,6 +18,7 @@ import 'package:wonders/ui/common/app_shortcuts.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  unawaited(WindowControls.init());
   // Keep native splash screen up until app is finished bootstrapping
   if (!kIsWeb) {
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);

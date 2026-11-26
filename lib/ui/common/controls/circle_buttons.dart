@@ -1,4 +1,5 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/window_controls.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 import 'package:wonders/ui/common/fullscreen_keyboard_listener.dart';
 
@@ -168,7 +169,7 @@ class _SafeAreaWithPadding extends StatelessWidget {
       bottom: false,
       child: Padding(
         padding: EdgeInsets.all($styles.insets.sm),
-        child: child,
+        child: WindowControlsPadding(child: child),
       ),
     );
   }

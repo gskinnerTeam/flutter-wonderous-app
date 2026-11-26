@@ -1,4 +1,5 @@
 import 'package:wonders/common_libs.dart';
+import 'package:wonders/logic/common/window_controls.dart';
 import 'package:wonders/ui/common/app_icons.dart';
 
 class AppHeader extends StatelessWidget {
@@ -65,10 +66,12 @@ class AppHeader extends StatelessWidget {
                     children: [
                       Gap($styles.insets.sm),
                       if (showBackBtn)
-                        BackBtn(
-                          onPressed: onBack,
-                          icon: backIcon,
-                          semanticLabel: backBtnSemantics,
+                        WindowControlsPadding(
+                          child: BackBtn(
+                            onPressed: onBack,
+                            icon: backIcon,
+                            semanticLabel: backBtnSemantics,
+                          ),
                         ),
                       Spacer(),
                       if (trailing != null) trailing!.call(context),
