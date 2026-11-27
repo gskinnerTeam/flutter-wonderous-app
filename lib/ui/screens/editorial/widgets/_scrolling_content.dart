@@ -24,11 +24,12 @@ class _ScrollingContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget buildText(String value, bool useDropCaps) {
-      final bool skipCaps = !localeLogic.isEnglish || !useDropCaps;
+      final scaleFactor = MediaQuery.textScalerOf(context).scale(1.0);
+      // At large text scales DropCapText splits the text beside the cap mid-word, so fall back to plain text.
+      final bool skipCaps = !localeLogic.isEnglish || !useDropCaps || scaleFactor >= 1.5;
       final TextStyle dropStyle = $styles.text.dropCase;
       final TextStyle bodyStyle = $styles.text.body;
       final String dropChar = value.substring(0, 1);
-      final scaleFactor = MediaQuery.textScalerOf(context).scale(1.0);
       final double dropCapWidth = StringUtils.measure(dropChar, dropStyle).width * scaleFactor;
       return Focus(
         child: Semantics(
@@ -250,69 +251,92 @@ class _MapsThumbnailState extends State<_MapsThumbnail> {
   Widget build(BuildContext context) {
     void handlePressed() => context.go(ScreenPaths.maps(widget.data.type));
     if (PlatformInfo.isDesktop) return SizedBox.shrink();
-    return AspectRatio(
-      aspectRatio: 1.65,
-      child: MergeSemantics(
-        child: Column(
-          children: [
-            Flexible(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular($styles.corners.md),
-                child: AppBtn.basic(
-                  semanticLabel: $strings.scrollingContentSemanticOpen,
-                  onPressed: handlePressed,
+    // The map and caption share a 1.65 aspect-ratio box, with the map taking whatever height the caption doesn't need.
+    // At large text scales the caption would squeeze the map to nothing, so the map keeps a minimum height and the
+    // caption is allowed to extend below the box.
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final double boxHeight = constraints.maxWidth / 1.65;
+        final double captionHeight = _measureCaptionHeight(context, constraints.maxWidth - $styles.insets.md * 2);
+        final double mapHeight = max(boxHeight - $styles.insets.xs - captionHeight, boxHeight * .6);
+        return _buildContent(handlePressed, mapHeight);
+      },
+    );
+  }
 
-                  /// To prevent the map widget from absorbing the onPressed action, use a Stack + IgnorePointer + a transparent Container
-                  child: Stack(
-                    children: [
-                      Positioned.fill(child: ColoredBox(color: Colors.transparent)),
-                      IgnorePointer(
-                        child: FutureBuilder<void>(
-                          future: _mapFuture,
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState == ConnectionState.done) {
-                              if (snapshot.hasError) {
-                                return Text(
-                                  'Google Map Load Error: ${snapshot.error}',
-                                  style: $styles.text.bodySmallBold.copyWith(
-                                    color: $styles.colors.accent3,
-                                  ),
-                                );
-                              }
-                              final startPos = googleMap.CameraPosition(
-                                target: googleMap.LatLng(widget.data.lat, widget.data.lng),
-                                zoom: 3,
-                              );
-                              return googleMap.GoogleMap(
-                                zoomControlsEnabled: false,
-                                mapId: 'DEMO_MAP_ID',
-                                mapType: googleMap.MapType.normal,
-                                markers: {getMapsMarker(startPos.target)},
-                                markerType: googleMap.GoogleMapMarkerType.advancedMarker,
-                                mapToolbarEnabled: false,
-                                initialCameraPosition: startPos,
-                                myLocationButtonEnabled: false,
+  double _measureCaptionHeight(BuildContext context, double maxWidth) {
+    final painter = TextPainter(
+      text: TextSpan(text: widget.data.mapCaption, style: $styles.text.caption),
+      textScaler: MediaQuery.textScalerOf(context),
+      textDirection: Directionality.of(context),
+    )..layout(maxWidth: maxWidth);
+    final double height = painter.height;
+    painter.dispose();
+    return height;
+  }
+
+  Widget _buildContent(VoidCallback handlePressed, double mapHeight) {
+    return MergeSemantics(
+      child: Column(
+        children: [
+          SizedBox(
+            height: mapHeight,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular($styles.corners.md),
+              child: AppBtn.basic(
+                semanticLabel: $strings.scrollingContentSemanticOpen,
+                onPressed: handlePressed,
+
+                /// To prevent the map widget from absorbing the onPressed action, use a Stack + IgnorePointer + a transparent Container
+                child: Stack(
+                  children: [
+                    Positioned.fill(child: ColoredBox(color: Colors.transparent)),
+                    IgnorePointer(
+                      child: FutureBuilder<void>(
+                        future: _mapFuture,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.done) {
+                            if (snapshot.hasError) {
+                              return Text(
+                                'Google Map Load Error: ${snapshot.error}',
+                                style: $styles.text.bodySmallBold.copyWith(
+                                  color: $styles.colors.accent3,
+                                ),
                               );
                             }
-                            return const CircularProgressIndicator();
-                          },
-                        ),
+                            final startPos = googleMap.CameraPosition(
+                              target: googleMap.LatLng(widget.data.lat, widget.data.lng),
+                              zoom: 3,
+                            );
+                            return googleMap.GoogleMap(
+                              zoomControlsEnabled: false,
+                              mapId: 'DEMO_MAP_ID',
+                              mapType: googleMap.MapType.normal,
+                              markers: {getMapsMarker(startPos.target)},
+                              markerType: googleMap.GoogleMapMarkerType.advancedMarker,
+                              mapToolbarEnabled: false,
+                              initialCameraPosition: startPos,
+                              myLocationButtonEnabled: false,
+                            );
+                          }
+                          return const CircularProgressIndicator();
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
-            Gap($styles.insets.xs),
-            Semantics(
-              sortKey: OrdinalSortKey(0),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
-                child: Text(widget.data.mapCaption, style: $styles.text.caption),
-              ),
+          ),
+          Gap($styles.insets.xs),
+          Semantics(
+            sortKey: OrdinalSortKey(0),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
+              child: Text(widget.data.mapCaption, style: $styles.text.caption),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

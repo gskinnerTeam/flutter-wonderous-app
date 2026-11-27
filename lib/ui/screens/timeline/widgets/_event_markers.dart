@@ -129,6 +129,9 @@ class _EventMarker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Grow the dots with the system text size so they stay in proportion with the enlarged year labels.
+    final double scale = Math.max(1.0, MediaQuery.textScalerOf(context).scale(1));
+    final double size = (isSelected ? 6 : 2) * scale;
     return Align(
       alignment: Alignment(0, -1 + offset * 2),
       // Use an OverflowBox wrapped in a zero-height sized box so that al
@@ -144,8 +147,8 @@ class _EventMarker extends StatelessWidget {
               alignment: Alignment.center,
               height: 30,
               child: AnimatedContainer(
-                width: isSelected ? 6 : 2,
-                height: isSelected ? 6 : 2,
+                width: size,
+                height: size,
                 curve: Curves.easeOutBack,
                 duration: $styles.times.med,
                 decoration: BoxDecoration(
@@ -154,8 +157,8 @@ class _EventMarker extends StatelessWidget {
                   boxShadow: [
                     BoxShadow(
                       color: $styles.colors.accent1.withValues(alpha: isSelected ? .5 : 0),
-                      spreadRadius: 3,
-                      blurRadius: 3,
+                      spreadRadius: 3 * scale,
+                      blurRadius: 3 * scale,
                     ),
                   ],
                 ),

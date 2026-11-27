@@ -26,21 +26,25 @@ class _BottomTextContent extends StatelessWidget {
       maxLines: 2,
     );
 
-    return Container(
-      width: $styles.sizes.maxContentWidth2,
-      height: height,
-      padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
-      alignment: Alignment.center,
-      child: Stack(
-        children: [
-          /// Text
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Gap($styles.insets.md),
-              Column(
-                children: [
-                  IgnorePointerKeepSemantics(
+    // This area has a fixed height, so cap how far its text scales; otherwise the button crowds out the date.
+    return MediaQuery.withClampedTextScaling(
+      maxScaleFactor: 1.5,
+      child: Container(
+        width: $styles.sizes.maxContentWidth2,
+        height: height,
+        padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
+        alignment: Alignment.center,
+        child: Stack(
+          children: [
+            /// Text
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Gap($styles.insets.md),
+                // Takes the space the page indicator and button don't need (this used to be a Spacer below the text),
+                // so at large text scales the date can shrink to fit instead of overflowing.
+                Expanded(
+                  child: IgnorePointerKeepSemantics(
                     child: Semantics(
                       button: true,
                       onIncrease: () => state._handleArtifactTap(_currentPage + 1),
@@ -67,36 +71,39 @@ class _BottomTextContent extends StatelessWidget {
                           ),
                           if (!shortMode) ...[
                             Gap($styles.insets.xxs),
-                            Text(
-                              artifact.date.isEmpty ? '--' : artifact.date,
-                              style: $styles.text.body,
-                              textAlign: TextAlign.center,
+                            Flexible(
+                              child: ScaleDownToFit(
+                                child: Text(
+                                  artifact.date.isEmpty ? '--' : artifact.date,
+                                  style: $styles.text.body,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
                             ),
                           ],
                         ],
                       ).maybeAnimate(key: ValueKey(artifact.artifactId)).fadeIn(),
                     ),
                   ),
-                ],
-              ),
-              if (!shortMode) Gap($styles.insets.sm),
-              Spacer(),
-              if (!shortMode)
-                AppPageIndicator(
-                  count: state._artifacts.length,
-                  controller: state._pageController!,
-                  semanticPageTitle: $strings.artifactsSemanticArtifact,
                 ),
-              if (!shortMode) Gap($styles.insets.md),
-              AppBtn.from(
-                text: $strings.artifactsButtonBrowse,
-                expand: true,
-                onPressed: state._handleSearchTap,
-              ),
-              Gap(shortMode ? $styles.insets.sm : $styles.insets.md),
-            ],
-          ),
-        ],
+                if (!shortMode) Gap($styles.insets.sm),
+                if (!shortMode)
+                  AppPageIndicator(
+                    count: state._artifacts.length,
+                    controller: state._pageController!,
+                    semanticPageTitle: $strings.artifactsSemanticArtifact,
+                  ),
+                if (!shortMode) Gap($styles.insets.md),
+                AppBtn.from(
+                  text: $strings.artifactsButtonBrowse,
+                  expand: true,
+                  onPressed: state._handleSearchTap,
+                ),
+                Gap(shortMode ? $styles.insets.sm : $styles.insets.md),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

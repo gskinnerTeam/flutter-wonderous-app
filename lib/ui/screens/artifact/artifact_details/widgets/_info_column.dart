@@ -24,13 +24,16 @@ class _InfoColumn extends StatelessWidget {
               ],
               Semantics(
                 header: true,
-                child: Text(
-                  data.title,
-                  textAlign: TextAlign.center,
-                  style: $styles.text.h2.copyWith(color: $styles.colors.offWhite, height: 1.2),
-                  maxLines: 5,
-                  overflow: TextOverflow.ellipsis,
-                ).maybeAnimate().fade(delay: 250.delayMs, duration: 600.animateMs),
+                // The title is already large, so cap how far it scales; beyond this, long words break mid-word.
+                // It sits in a scroll view, so it isn't line-limited (that cut off long titles at large text scales).
+                child: MediaQuery.withClampedTextScaling(
+                  maxScaleFactor: 1.5,
+                  child: Text(
+                    data.title,
+                    textAlign: TextAlign.center,
+                    style: $styles.text.h2.copyWith(color: $styles.colors.offWhite, height: 1.2),
+                  ).maybeAnimate().fade(delay: 250.delayMs, duration: 600.animateMs),
+                ),
               ),
               Gap($styles.insets.lg),
               Animate().toggle(
