@@ -52,19 +52,24 @@ class _EventPopupsState extends State<_EventPopups> {
           // Stop just above the centre-line year label, which sits directly above the middle of this viewport.
           final double maxHeight = max(
             0.0,
-            constraints.maxHeight / 2 - _DashedDividerWithYear.largeTextHeight - $styles.insets.xs,
+            constraints.maxHeight / 2 - _DashedDividerWithYear.labelHeight(context) - $styles.insets.xs,
           );
+          // Start where the timeline sections do (right of the year column, see _ScrollingViewport) so the years stay visible.
+          final double contentWidth = min($styles.sizes.maxContentWidth2, constraints.maxWidth);
+          final double left = (constraints.maxWidth - contentWidth) / 2 + _YearMarkers.width;
           return SizedBox(
-            // Matches WonderEvents: use most of the screen width on tablets.
-            width: max($styles.sizes.maxContentWidth3, constraints.maxWidth * .9),
-            child: ConstrainedBox(
-              constraints: BoxConstraints(maxHeight: maxHeight),
-              child: Scrollbar(
-                child: SingleChildScrollView(
-                  primary: false,
-                  padding: EdgeInsets.symmetric(horizontal: $styles.insets.sm, vertical: $styles.insets.xs),
-                  // Compact one-line year so the description is visible without scrolling on phones.
-                  child: TimelineEventCard(text: evt.description, year: evt.year, compactYear: true),
+            width: constraints.maxWidth,
+            child: Padding(
+              padding: EdgeInsets.only(left: left, right: $styles.insets.sm),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxHeight: maxHeight),
+                child: Scrollbar(
+                  child: SingleChildScrollView(
+                    primary: false,
+                    padding: EdgeInsets.only(top: $styles.insets.xs),
+                    // Compact one-line year so the description is visible without scrolling on phones.
+                    child: TimelineEventCard(text: evt.description, year: evt.year, compactYear: true),
+                  ),
                 ),
               ),
             ),

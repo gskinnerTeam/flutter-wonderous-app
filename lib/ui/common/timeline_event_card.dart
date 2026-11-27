@@ -21,8 +21,8 @@ class TimelineEventCard extends StatelessWidget {
   /// Max text scale for the compact year header.
   static const double compactYearMaxTextScale = 1.5;
 
-  /// Above this text scale, the year column is too narrow for the text beside it, so the card stacks vertically.
-  static const double stackedTextScale = 2;
+  /// Above this text scale, the year column is too narrow for the text beside it, so the card stacks vertically. (Text scale is capped app-wide at [WondersApp.maxTextScale].)
+  static const double stackedTextScale = 1.5;
 
   @override
   Widget build(BuildContext context) {
@@ -68,9 +68,7 @@ class TimelineEventCard extends StatelessWidget {
           color: darkMode ? Colors.white : Colors.black,
           child: Container(
             color: darkMode ? $styles.colors.greyStrong : $styles.colors.offWhite,
-            padding: compact
-                ? EdgeInsets.symmetric(horizontal: $styles.insets.sm, vertical: $styles.insets.xs)
-                : EdgeInsets.all($styles.insets.sm),
+            padding: EdgeInsets.all($styles.insets.sm),
             child: stacked
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,

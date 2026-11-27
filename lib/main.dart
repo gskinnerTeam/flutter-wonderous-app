@@ -36,6 +36,9 @@ void main() async {
 class WondersApp extends StatefulWidget with GetItStatefulWidgetMixin {
   WondersApp({super.key});
 
+  /// Upper limit for the system text size. Text still grows with the OS setting (200%, Android's maximum), but iOS's largest accessibility sizes (up to ~3.1x) don't break fixed-size layouts.
+  static const double maxTextScale = 2;
+
   @override
   State<WondersApp> createState() => _WondersAppState();
 }
@@ -61,6 +64,8 @@ class _WondersAppState extends State<WondersApp> with GetItStateMixin {
       routeInformationParser: appRouter.routeInformationParser,
       locale: locale == null ? null : Locale(locale),
       debugShowCheckedModeBanner: false,
+      builder: (context, child) =>
+          MediaQuery.withClampedTextScaling(maxScaleFactor: WondersApp.maxTextScale, child: child!),
       routerDelegate: appRouter.routerDelegate,
       shortcuts: AppShortcuts.defaults,
       theme: ThemeData(fontFamily: $styles.text.body.fontFamily, useMaterial3: true),

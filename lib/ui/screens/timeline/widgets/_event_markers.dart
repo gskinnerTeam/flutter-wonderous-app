@@ -127,13 +127,10 @@ class _EventMarker extends StatelessWidget {
   final bool isSelected;
   final void Function(TimelineEvent event) onPressed;
 
-  /// Largest factor the markers grow by with the system text size; at this size a selected dot just fits its 20px column.
-  static const double maxTextScale = 3;
-
   @override
   Widget build(BuildContext context) {
     // Grow the dots with the system text size so they stay in proportion with the enlarged year labels.
-    final double scale = MediaQuery.textScalerOf(context).scale(1).clamp(1, maxTextScale);
+    final double scale = Math.max(1.0, MediaQuery.textScalerOf(context).scale(1));
     final double size = (isSelected ? 6 : 2) * scale;
     return Align(
       alignment: Alignment(0, -1 + offset * 2),

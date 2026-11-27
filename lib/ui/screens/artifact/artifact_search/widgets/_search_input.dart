@@ -160,8 +160,6 @@ class _SearchInput extends StatelessWidget {
                 focusedBorder: OutlineInputBorder(borderSide: BorderSide.none),
                 enabledBorder: UnderlineInputBorder(borderSide: BorderSide.none),
                 hintText: $strings.searchInputHintSearch,
-                // Let the hint wrap at large text scales rather than being cut off.
-                hintMaxLines: 3,
               ),
             ),
           ),

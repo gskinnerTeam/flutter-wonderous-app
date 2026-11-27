@@ -4,12 +4,13 @@ class _DashedDividerWithYear extends StatelessWidget {
   const _DashedDividerWithYear(this.year);
   final int year;
 
-  /// At large text sizes the label's text scale is capped at this value so it stays clear of the event popup.
-  static const double largeTextMaxScale = 2;
+  /// The label is already display-sized, so it stops growing sooner than body text to stay clear of the timeline columns.
+  static const double maxTextScale = 1.5;
 
-  /// The label's height at [largeTextMaxScale]; it sits directly above the dashed line.
-  static double get largeTextHeight =>
-      $styles.text.h2.fontSize! * ($styles.text.h2.height ?? 1.2) * largeTextMaxScale;
+  /// Height of the year label at the current (capped) text scale; it sits directly above the dashed line.
+  static double labelHeight(BuildContext context) =>
+      MediaQuery.textScalerOf(context).clamp(maxScaleFactor: maxTextScale).scale($styles.text.h2.fontSize!) *
+      ($styles.text.h2.height ?? 1.2);
 
   @override
   Widget build(BuildContext context) {
@@ -40,15 +41,13 @@ class _DashedDividerWithYear extends StatelessWidget {
       ),
     );
     if (largeText) {
-      // Cap the scale and keep the label within half the screen width, so it doesn't swamp the popup and timeline.
-      label = MediaQuery.withClampedTextScaling(
-        maxScaleFactor: largeTextMaxScale,
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: MediaQuery.sizeOf(context).width / 2),
-          child: FittedBox(fit: BoxFit.scaleDown, alignment: Alignment.centerRight, child: label),
-        ),
+      // Keep the label within half the screen width, so it doesn't swamp the popup and timeline.
+      label = ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: MediaQuery.sizeOf(context).width / 2),
+        child: FittedBox(fit: BoxFit.scaleDown, alignment: Alignment.centerRight, child: label),
       );
     }
+    label = MediaQuery.withClampedTextScaling(maxScaleFactor: maxTextScale, child: label);
     return Stack(
       children: [
         Center(child: DashedLine()),

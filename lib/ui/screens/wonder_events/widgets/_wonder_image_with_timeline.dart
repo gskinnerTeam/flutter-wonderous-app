@@ -105,25 +105,28 @@ class _WonderImageWithTimeline extends StatelessWidget {
   Widget _buildEraTextRow(BuildContext context) {
     final textStyle = $styles.text.body.copyWith(color: $styles.colors.accent2, height: 1);
     // This sits in a fixed-height header, so at large text scales the single line shrinks to fit instead of
-    // overflowing.
-    return FittedBox(
-      fit: BoxFit.scaleDown,
-      child: SeparatedRow(
-        separatorBuilder: () => Gap($styles.insets.sm),
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            $strings.titleLabelDate(
-              StringUtils.formatYr(data.startYr),
-              StringUtils.formatYr(data.endYr),
+    // overflowing, keeping the same side margin as the events list below it.
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: SeparatedRow(
+          separatorBuilder: () => Gap($styles.insets.sm),
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              $strings.titleLabelDate(
+                StringUtils.formatYr(data.startYr),
+                StringUtils.formatYr(data.endYr),
+              ),
+              style: textStyle,
             ),
-            style: textStyle,
-          ),
-          _buildDot(context),
-          Text(StringUtils.getEra(data.startYr), style: textStyle),
-        ],
+            _buildDot(context),
+            Text(StringUtils.getEra(data.startYr), style: textStyle),
+          ],
+        ),
       ),
     ).maybeAnimate().fade(delay: $styles.times.pageTransition);
   }

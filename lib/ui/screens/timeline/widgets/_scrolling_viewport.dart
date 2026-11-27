@@ -126,7 +126,7 @@ class _ScalingViewportState extends State<_ScrollingViewport> {
 
                     /// individual timeline sections
                     Positioned.fill(
-                      left: 100,
+                      left: _YearMarkers.width,
                       right: $styles.insets.sm,
                       child: FocusTraversalGroup(
                         //child: Placeholder(),

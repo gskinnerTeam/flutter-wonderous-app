@@ -3,6 +3,9 @@ part of '../timeline_screen.dart';
 class _YearMarkers extends StatelessWidget {
   _YearMarkers();
 
+  /// Width of the year column on the left of the timeline; the timeline sections start at this offset.
+  static const double width = 100;
+
   int get startYr => wondersLogic.timelineStartYear;
   int get endYr => wondersLogic.timelineEndYear;
 
@@ -31,7 +34,7 @@ class _YearMarkers extends StatelessWidget {
           });
 
           return SizedBox(
-            width: 100,
+            width: width,
             child: AnimatedSwitcher(
               duration: $styles.times.med,
               child: Stack(
